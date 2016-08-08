@@ -1,0 +1,299 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{A03A7BB2-4F0B-467B-84B2-9A76E6AAE6FB}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>POGOProtos</RootNamespace>
+    <AssemblyName>POGOProtos</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Google.Protobuf, Version=3.0.0.0, Culture=neutral, PublicKeyToken=a7d26565bac4d604, processorArchitecture=MSIL">
+      <HintPath>$(SolutionDir)\packages\Google.Protobuf.3.0.0-beta4\lib\net45\Google.Protobuf.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Data\AssetDigestEntry.cs" />
+    <Compile Include="Data\Battle\BattleAction.cs" />
+    <Compile Include="Data\Battle\BattleActionType.cs" />
+    <Compile Include="Data\Battle\BattleLog.cs" />
+    <Compile Include="Data\Battle\BattleParticipant.cs" />
+    <Compile Include="Data\Battle\BattlePokemonInfo.cs" />
+    <Compile Include="Data\Battle\BattleResults.cs" />
+    <Compile Include="Data\Battle\BattleState.cs" />
+    <Compile Include="Data\Battle\BattleType.cs" />
+    <Compile Include="Data\Capture\CaptureAward.cs" />
+    <Compile Include="Data\Capture\CaptureProbability.cs" />
+    <Compile Include="Data\DownloadUrlEntry.cs" />
+    <Compile Include="Data\Gym\GymMembership.cs" />
+    <Compile Include="Data\Gym\GymState.cs" />
+    <Compile Include="Data\Logs\ActionLogEntry.cs" />
+    <Compile Include="Data\Logs\CatchPokemonLogEntry.cs" />
+    <Compile Include="Data\Logs\FortSearchLogEntry.cs" />
+    <Compile Include="Data\PlayerBadge.cs" />
+    <Compile Include="Data\PlayerData.cs" />
+    <Compile Include="Data\Player\ContactSettings.cs" />
+    <Compile Include="Data\Player\Currency.cs" />
+    <Compile Include="Data\Player\DailyBonus.cs" />
+    <Compile Include="Data\Player\EquippedBadge.cs" />
+    <Compile Include="Data\Player\PlayerAvatar.cs" />
+    <Compile Include="Data\Player\PlayerCamera.cs" />
+    <Compile Include="Data\Player\PlayerCurrency.cs" />
+    <Compile Include="Data\Player\PlayerPublicProfile.cs" />
+    <Compile Include="Data\Player\PlayerStats.cs" />
+    <Compile Include="Data\PokedexEntry.cs" />
+    <Compile Include="Data\PokemonData.cs" />
+    <Compile Include="Enums\ActivityType.cs" />
+    <Compile Include="Enums\BadgeType.cs" />
+    <Compile Include="Enums\CameraInterpolation.cs" />
+    <Compile Include="Enums\CameraTarget.cs" />
+    <Compile Include="Enums\Gender.cs" />
+    <Compile Include="Enums\IapItemCategory.cs" />
+    <Compile Include="Enums\ItemCategory.cs" />
+    <Compile Include="Enums\ItemEffect.cs" />
+    <Compile Include="Enums\Platform.cs" />
+    <Compile Include="Enums\PokemonFamilyId.cs" />
+    <Compile Include="Enums\PokemonId.cs" />
+    <Compile Include="Enums\PokemonMove.cs" />
+    <Compile Include="Enums\PokemonMovementType.cs" />
+    <Compile Include="Enums\PokemonRarity.cs" />
+    <Compile Include="Enums\PokemonType.cs" />
+    <Compile Include="Enums\TeamColor.cs" />
+    <Compile Include="Enums\TutorialState.cs" />
+    <Compile Include="Inventory\AppliedItem.cs" />
+    <Compile Include="Inventory\AppliedItems.cs" />
+    <Compile Include="Inventory\Candy.cs" />
+    <Compile Include="Inventory\EggIncubator.cs" />
+    <Compile Include="Inventory\EggIncubators.cs" />
+    <Compile Include="Inventory\EggIncubatorType.cs" />
+    <Compile Include="Inventory\InventoryDelta.cs" />
+    <Compile Include="Inventory\InventoryItem.cs" />
+    <Compile Include="Inventory\InventoryItemData.cs" />
+    <Compile Include="Inventory\InventoryUpgrade.cs" />
+    <Compile Include="Inventory\InventoryUpgrades.cs" />
+    <Compile Include="Inventory\InventoryUpgradeType.cs" />
+    <Compile Include="Inventory\Item\ItemAward.cs" />
+    <Compile Include="Inventory\Item\ItemData.cs" />
+    <Compile Include="Inventory\Item\ItemId.cs" />
+    <Compile Include="Inventory\Item\ItemType.cs" />
+    <Compile Include="Map\Fort\FortData.cs" />
+    <Compile Include="Map\Fort\FortLureInfo.cs" />
+    <Compile Include="Map\Fort\FortModifier.cs" />
+    <Compile Include="Map\Fort\FortRenderingType.cs" />
+    <Compile Include="Map\Fort\FortSponsor.cs" />
+    <Compile Include="Map\Fort\FortSummary.cs" />
+    <Compile Include="Map\Fort\FortType.cs" />
+    <Compile Include="Map\MapCell.cs" />
+    <Compile Include="Map\MapObjectsStatus.cs" />
+    <Compile Include="Map\Pokemon\MapPokemon.cs" />
+    <Compile Include="Map\Pokemon\NearbyPokemon.cs" />
+    <Compile Include="Map\Pokemon\WildPokemon.cs" />
+    <Compile Include="Map\SpawnPoint.cs" />
+    <Compile Include="Networking\Envelopes\AuthTicket.cs" />
+    <Compile Include="Networking\Envelopes\RequestEnvelope.cs" />
+    <Compile Include="Networking\Envelopes\ResponseEnvelope.cs" />
+    <Compile Include="Networking\Envelopes\Unknown6.cs" />
+    <Compile Include="Networking\Envelopes\Unknown6Response.cs" />
+    <Compile Include="Networking\Requests\Messages\AddFortModifierMessage.cs" />
+    <Compile Include="Networking\Requests\Messages\AttackGymMessage.cs" />
+    <Compile Include="Networking\Requests\Messages\CatchPokemonMessage.cs" />
+    <Compile Include="Networking\Requests\Messages\CheckAwardedBadgesMessage.cs" />
+    <Compile Include="Networking\Requests\Messages\CheckCodenameAvailableMessage.cs" />
+    <Compile Include="Networking\Requests\Messages\ClaimCodenameMessage.cs" />
+    <Compile Include="Networking\Requests\Messages\CollectDailyBonusMessage.cs" />
+    <Compile Include="Networking\Requests\Messages\CollectDailyDefenderBonusMessage.cs" />
+    <Compile Include="Networking\Requests\Messages\DiskEncounterMessage.cs" />
+    <Compile Include="Networking\Requests\Messages\DownloadItemTemplatesMessage.cs" />
+    <Compile Include="Networking\Requests\Messages\DownloadRemoteConfigVersionMessage.cs" />
+    <Compile Include="Networking\Requests\Messages\DownloadSettingsMessage.cs" />
+    <Compile Include="Networking\Requests\Messages\EchoMessage.cs" />
+    <Compile Include="Networking\Requests\Messages\EncounterMessage.cs" />
+    <Compile Include="Networking\Requests\Messages\EncounterTutorialCompleteMessage.cs" />
+    <Compile Include="Networking\Requests\Messages\EquipBadgeMessage.cs" />
+    <Compile Include="Networking\Requests\Messages\EvolvePokemonMessage.cs" />
+    <Compile Include="Networking\Requests\Messages\FortDeployPokemonMessage.cs" />
+    <Compile Include="Networking\Requests\Messages\FortDetailsMessage.cs" />
+    <Compile Include="Networking\Requests\Messages\FortRecallPokemonMessage.cs" />
+    <Compile Include="Networking\Requests\Messages\FortSearchMessage.cs" />
+    <Compile Include="Networking\Requests\Messages\GetAssetDigestMessage.cs" />
+    <Compile Include="Networking\Requests\Messages\GetDownloadUrlsMessage.cs" />
+    <Compile Include="Networking\Requests\Messages\GetGymDetailsMessage.cs" />
+    <Compile Include="Networking\Requests\Messages\GetHatchedEggsMessage.cs" />
+    <Compile Include="Networking\Requests\Messages\GetIncensePokemonMessage.cs" />
+    <Compile Include="Networking\Requests\Messages\GetInventoryMessage.cs" />
+    <Compile Include="Networking\Requests\Messages\GetMapObjectsMessage.cs" />
+    <Compile Include="Networking\Requests\Messages\GetPlayerMessage.cs" />
+    <Compile Include="Networking\Requests\Messages\GetPlayerProfileMessage.cs" />
+    <Compile Include="Networking\Requests\Messages\GetSuggestedCodenamesMessage.cs" />
+    <Compile Include="Networking\Requests\Messages\IncenseEncounterMessage.cs" />
+    <Compile Include="Networking\Requests\Messages\LevelUpRewardsMessage.cs" />
+    <Compile Include="Networking\Requests\Messages\MarkTutorialCompleteMessage.cs" />
+    <Compile Include="Networking\Requests\Messages\NicknamePokemonMessage.cs" />
+    <Compile Include="Networking\Requests\Messages\PlayerUpdateMessage.cs" />
+    <Compile Include="Networking\Requests\Messages\RecycleInventoryItemMessage.cs" />
+    <Compile Include="Networking\Requests\Messages\ReleasePokemonMessage.cs" />
+    <Compile Include="Networking\Requests\Messages\SetAvatarMessage.cs" />
+    <Compile Include="Networking\Requests\Messages\SetContactSettingsMessage.cs" />
+    <Compile Include="Networking\Requests\Messages\SetFavoritePokemonMessage.cs" />
+    <Compile Include="Networking\Requests\Messages\SetPlayerTeamMessage.cs" />
+    <Compile Include="Networking\Requests\Messages\SfidaActionLogMessage.cs" />
+    <Compile Include="Networking\Requests\Messages\StartGymBattleMessage.cs" />
+    <Compile Include="Networking\Requests\Messages\UpgradePokemonMessage.cs" />
+    <Compile Include="Networking\Requests\Messages\UseIncenseMessage.cs" />
+    <Compile Include="Networking\Requests\Messages\UseItemCaptureMessage.cs" />
+    <Compile Include="Networking\Requests\Messages\UseItemEggIncubatorMessage.cs" />
+    <Compile Include="Networking\Requests\Messages\UseItemGymMessage.cs" />
+    <Compile Include="Networking\Requests\Messages\UseItemPotionMessage.cs" />
+    <Compile Include="Networking\Requests\Messages\UseItemReviveMessage.cs" />
+    <Compile Include="Networking\Requests\Messages\UseItemXpBoostMessage.cs" />
+    <Compile Include="Networking\Requests\Request.cs" />
+    <Compile Include="Networking\Requests\RequestType.cs" />
+    <Compile Include="Networking\Responses\AddFortModifierResponse.cs" />
+    <Compile Include="Networking\Responses\AttackGymResponse.cs" />
+    <Compile Include="Networking\Responses\CatchPokemonResponse.cs" />
+    <Compile Include="Networking\Responses\CheckAwardedBadgesResponse.cs" />
+    <Compile Include="Networking\Responses\CheckCodenameAvailableResponse.cs" />
+    <Compile Include="Networking\Responses\ClaimCodenameResponse.cs" />
+    <Compile Include="Networking\Responses\CollectDailyBonusResponse.cs" />
+    <Compile Include="Networking\Responses\CollectDailyDefenderBonusResponse.cs" />
+    <Compile Include="Networking\Responses\DiskEncounterResponse.cs" />
+    <Compile Include="Networking\Responses\DownloadItemTemplatesResponse.cs" />
+    <Compile Include="Networking\Responses\DownloadRemoteConfigVersionResponse.cs" />
+    <Compile Include="Networking\Responses\DownloadSettingsResponse.cs" />
+    <Compile Include="Networking\Responses\EchoResponse.cs" />
+    <Compile Include="Networking\Responses\EncounterResponse.cs" />
+    <Compile Include="Networking\Responses\EncounterTutorialCompleteResponse.cs" />
+    <Compile Include="Networking\Responses\EquipBadgeResponse.cs" />
+    <Compile Include="Networking\Responses\EvolvePokemonResponse.cs" />
+    <Compile Include="Networking\Responses\FortDeployPokemonResponse.cs" />
+    <Compile Include="Networking\Responses\FortDetailsResponse.cs" />
+    <Compile Include="Networking\Responses\FortRecallPokemonResponse.cs" />
+    <Compile Include="Networking\Responses\FortSearchResponse.cs" />
+    <Compile Include="Networking\Responses\GetAssetDigestResponse.cs" />
+    <Compile Include="Networking\Responses\GetDownloadUrlsResponse.cs" />
+    <Compile Include="Networking\Responses\GetGymDetailsResponse.cs" />
+    <Compile Include="Networking\Responses\GetHatchedEggsResponse.cs" />
+    <Compile Include="Networking\Responses\GetIncensePokemonResponse.cs" />
+    <Compile Include="Networking\Responses\GetInventoryResponse.cs" />
+    <Compile Include="Networking\Responses\GetMapObjectsResponse.cs" />
+    <Compile Include="Networking\Responses\GetPlayerProfileResponse.cs" />
+    <Compile Include="Networking\Responses\GetPlayerResponse.cs" />
+    <Compile Include="Networking\Responses\GetSuggestedCodenamesResponse.cs" />
+    <Compile Include="Networking\Responses\IncenseEncounterResponse.cs" />
+    <Compile Include="Networking\Responses\LevelUpRewardsResponse.cs" />
+    <Compile Include="Networking\Responses\MarkTutorialCompleteResponse.cs" />
+    <Compile Include="Networking\Responses\NicknamePokemonResponse.cs" />
+    <Compile Include="Networking\Responses\PlayerUpdateResponse.cs" />
+    <Compile Include="Networking\Responses\RecycleInventoryItemResponse.cs" />
+    <Compile Include="Networking\Responses\ReleasePokemonResponse.cs" />
+    <Compile Include="Networking\Responses\SetAvatarResponse.cs" />
+    <Compile Include="Networking\Responses\SetContactSettingsResponse.cs" />
+    <Compile Include="Networking\Responses\SetFavoritePokemonResponse.cs" />
+    <Compile Include="Networking\Responses\SetPlayerTeamResponse.cs" />
+    <Compile Include="Networking\Responses\SfidaActionLogResponse.cs" />
+    <Compile Include="Networking\Responses\StartGymBattleResponse.cs" />
+    <Compile Include="Networking\Responses\UpgradePokemonResponse.cs" />
+    <Compile Include="Networking\Responses\UseIncenseResponse.cs" />
+    <Compile Include="Networking\Responses\UseItemCaptureResponse.cs" />
+    <Compile Include="Networking\Responses\UseItemEggIncubatorResponse.cs" />
+    <Compile Include="Networking\Responses\UseItemGymResponse.cs" />
+    <Compile Include="Networking\Responses\UseItemPotionResponse.cs" />
+    <Compile Include="Networking\Responses\UseItemReviveResponse.cs" />
+    <Compile Include="Networking\Responses\UseItemXpBoostResponse.cs" />
+    <Compile Include="Networking\Signature.cs" />
+    <Compile Include="Settings\DownloadSettingsAction.cs" />
+    <Compile Include="Settings\FortSettings.cs" />
+    <Compile Include="Settings\GlobalSettings.cs" />
+    <Compile Include="Settings\InventorySettings.cs" />
+    <Compile Include="Settings\LevelSettings.cs" />
+    <Compile Include="Settings\MapSettings.cs" />
+    <Compile Include="Settings\Master\BadgeSettings.cs" />
+    <Compile Include="Settings\Master\CameraSettings.cs" />
+    <Compile Include="Settings\Master\EncounterSettings.cs" />
+    <Compile Include="Settings\Master\EquippedBadgeSettings.cs" />
+    <Compile Include="Settings\Master\GymBattleSettings.cs" />
+    <Compile Include="Settings\Master\GymLevelSettings.cs" />
+    <Compile Include="Settings\Master\IapItemDisplay.cs" />
+    <Compile Include="Settings\Master\IapSettings.cs" />
+    <Compile Include="Settings\Master\ItemSettings.cs" />
+    <Compile Include="Settings\Master\Item\BattleAttributes.cs" />
+    <Compile Include="Settings\Master\Item\EggIncubatorAttributes.cs" />
+    <Compile Include="Settings\Master\Item\ExperienceBoostAttributes.cs" />
+    <Compile Include="Settings\Master\Item\FoodAttributes.cs" />
+    <Compile Include="Settings\Master\Item\FortModifierAttributes.cs" />
+    <Compile Include="Settings\Master\Item\IncenseAttributes.cs" />
+    <Compile Include="Settings\Master\Item\InventoryUpgradeAttributes.cs" />
+    <Compile Include="Settings\Master\Item\PokeballAttributes.cs" />
+    <Compile Include="Settings\Master\Item\PotionAttributes.cs" />
+    <Compile Include="Settings\Master\Item\ReviveAttributes.cs" />
+    <Compile Include="Settings\Master\MoveSequenceSettings.cs" />
+    <Compile Include="Settings\Master\MoveSettings.cs" />
+    <Compile Include="Settings\Master\PlayerLevelSettings.cs" />
+    <Compile Include="Settings\Master\PokemonSettings.cs" />
+    <Compile Include="Settings\Master\PokemonUpgradeSettings.cs" />
+    <Compile Include="Settings\Master\Pokemon\CameraAttributes.cs" />
+    <Compile Include="Settings\Master\Pokemon\EncounterAttributes.cs" />
+    <Compile Include="Settings\Master\Pokemon\StatsAttributes.cs" />
+    <Compile Include="Settings\Master\TypeEffectiveSettings.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
