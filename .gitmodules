@@ -1,0 +1,3 @@
+[submodule "PokemonGoAPI"]
+	path = PokemonGoAPI
+	url = https://github.com/Lunat1q/PokemonGoAPI
