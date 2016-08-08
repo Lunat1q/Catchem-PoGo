@@ -1,5 +1,6 @@
 <h1>Catchem PokemonGO bot <i>with modern UI</i></h1>
 <h4>Based on PokeMobBot project</h4>
+<h5>also some code was taken from NecroBot project</h5>
 
 In action: [Gifv](http://i.imgur.com/UXGkHS4.gifv)
 <h3>UI map/console window</h3>
