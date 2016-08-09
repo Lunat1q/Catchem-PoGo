@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -41,10 +42,80 @@ namespace Catchem
             }
         }
 
+        public static bool GetDouble(this string value, out double result)
+        {
+            //Try parsing in the current culture
+            return double.TryParse(value, NumberStyles.Any, CultureInfo.CurrentCulture, out result) 
+                || double.TryParse(value, NumberStyles.Any, CultureInfo.GetCultureInfo("en-US"), out result) 
+                || double.TryParse(value, NumberStyles.Any, CultureInfo.InvariantCulture, out result);
+        }
+        public static bool GetInt(this string value, out int result)
+        {
+            //Try parsing in the current culture
+            return int.TryParse(value, NumberStyles.Any, CultureInfo.CurrentCulture, out result)
+                || int.TryParse(value, NumberStyles.Any, CultureInfo.GetCultureInfo("en-US"), out result)
+                || int.TryParse(value, NumberStyles.Any, CultureInfo.InvariantCulture, out result);
+        }
+        public static bool GetFloat(this string value, out float result)
+        {
+            //Try parsing in the current culture
+            return float.TryParse(value, NumberStyles.Any, CultureInfo.CurrentCulture, out result)
+                || float.TryParse(value, NumberStyles.Any, CultureInfo.GetCultureInfo("en-US"), out result)
+                || float.TryParse(value, NumberStyles.Any, CultureInfo.InvariantCulture, out result);
+        }
+        public static bool GetVal<T>(this string value, out T resultVal) where T : IConvertible
+        {
+            //Try parsing in the current culture
+            resultVal = default(T);
+            if (resultVal == null) return false;
+            var typeCode = resultVal.GetTypeCode();
+            switch (typeCode)
+            {
+                case TypeCode.Double:
+                {
+                    double result;
+                    var res = double.TryParse(value, NumberStyles.Any, CultureInfo.CurrentCulture, out result)
+                              ||
+                              double.TryParse(value, NumberStyles.Any, CultureInfo.GetCultureInfo("en-US"), out result)
+                              || double.TryParse(value, NumberStyles.Any, CultureInfo.InvariantCulture, out result);
+                    if (!res) return false;
+                    var changeType = Convert.ChangeType(result, typeCode);
+                    if (changeType != null)
+                        resultVal = (T) changeType;
+                    return true;
+                }
+                case TypeCode.Single:
+                {
+                    float result;
+                    var res = float.TryParse(value, NumberStyles.Any, CultureInfo.CurrentCulture, out result)
+                              ||
+                              float.TryParse(value, NumberStyles.Any, CultureInfo.GetCultureInfo("en-US"), out result)
+                              || float.TryParse(value, NumberStyles.Any, CultureInfo.InvariantCulture, out result);
+                    if (!res) return false;
+                    var changeType = Convert.ChangeType(result, typeCode);
+                    if (changeType != null)
+                        resultVal = (T) changeType;
+                    return true;
+                }
+                case TypeCode.Int32:
+                {
+                    int result;
+                    var res = int.TryParse(value, NumberStyles.Any, CultureInfo.CurrentCulture, out result)
+                              || int.TryParse(value, NumberStyles.Any, CultureInfo.GetCultureInfo("en-US"), out result)
+                              || int.TryParse(value, NumberStyles.Any, CultureInfo.InvariantCulture, out result);
+                    if (!res) return false;
+                    var changeType = Convert.ChangeType(result, typeCode);
+                    if (changeType != null)
+                        resultVal = (T) changeType;
+                    return true;
+                }
+            }
+            return false;
+        }
+
         public static void AppendText(this RichTextBox box, string text, System.Windows.Media.Color color)
         {
-            TextRange tr = new TextRange(box.Document.ContentEnd, box.Document.ContentEnd);
-            tr.Text = text;
+            var tr = new TextRange(box.Document.ContentEnd, box.Document.ContentEnd) {Text = text};
             try
             {
                 tr.ApplyPropertyValue(TextElement.ForegroundProperty, new SolidColorBrush(color));

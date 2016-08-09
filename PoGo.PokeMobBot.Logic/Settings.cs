@@ -217,7 +217,7 @@ namespace PoGo.PokeMobBot.Logic
         public string ProfileConfigPath;
 
         //bot start
-        public bool AutoUpdate = true;
+        public bool AutoUpdate = false;
         public bool TransferConfigAndAuthOnUpdate = true;
         public bool DumpPokemonStats = false;
         public int AmountOfPokemonToDisplayOnStart = 10;

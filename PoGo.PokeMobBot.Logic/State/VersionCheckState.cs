@@ -12,7 +12,6 @@ using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using PoGo.PokeMobBot.Logic.Common;
 using PoGo.PokeMobBot.Logic.Event;
-using PoGo.PokeMobBot.Logic.Logging;
 
 #endregion
 
@@ -20,14 +19,14 @@ namespace PoGo.PokeMobBot.Logic.State
 {
     public class VersionCheckState : IState
     {
-        public const string VersionUri =
-            "https://raw.githubusercontent.com/Lunat1q/Catchem/Catchem/PoGo.PokeMobBot.Logic/Properties/AssemblyInfo.cs";
+        public const string VersionUri = 
+            "https://raw.githubusercontent.com/Lunat1q/Catchem-PoGo/master/Catchem/Properties/AssemblyInfo.cs";
 
         public const string LatestReleaseApi =
-            "https://api.github.com/repos/Lunat1q/Catchem/releases/latest";
+            "https://api.github.com/repos/Lunat1q/Catchem-PoGo/releases/latest";
 
         private const string LatestRelease =
-            "https://github.com/Lunat1q/Catchem/releases";
+            "https://github.com/Lunat1q/Catchem-PoGo/releases";
 
         public static Version RemoteVersion;
 
@@ -61,8 +60,8 @@ namespace PoGo.PokeMobBot.Logic.State
                 Message = session.Translation.GetTranslation(TranslationString.DownloadingUpdate)
             });
             var remoteReleaseUrl =
-                $"https://github.com/PocketMobsters/PokeMobBot/releases/download/v{RemoteVersion}/";
-            const string zipName = "Release.zip";
+                $"https://github.com/Lunat1q/Catchem-PoGo/releases/download/v{RemoteVersion}/";
+            string zipName = $"Catchem_{RemoteVersion}.7zip";
             var downloadLink = remoteReleaseUrl + zipName;
             var baseDir = Directory.GetCurrentDirectory();
             var downloadFilePath = Path.Combine(baseDir, zipName);

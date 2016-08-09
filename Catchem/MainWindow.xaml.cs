@@ -975,19 +975,19 @@ namespace Catchem
                 if (property.PropertyType == typeof(int))
                 {
                     int val;
-                    if (int.TryParse(((string)value).Replace('.', ',').Trim(), out val))
+                    if (((string)value).GetVal(out val))
                         property.SetValue(Bot.GlobalSettings, val);
                 }
                 else if (property.PropertyType == typeof(double))
                 {
                     double val;
-                    if (double.TryParse(((string)value).Replace('.', ',').Trim(), out val))
+                    if (((string)value).GetVal(out val))
                         property.SetValue(Bot.GlobalSettings, val);
                 }
                 else if (property.PropertyType == typeof(float))
                 {
                     float val;
-                    if (float.TryParse(((string)value).Replace('.', ',').Trim(), out val))
+                    if (((string)value).GetVal(out val))
                         property.SetValue(Bot.GlobalSettings, val);
                 }
                 else
@@ -1000,19 +1000,19 @@ namespace Catchem
                 if (property.PropertyType == typeof(int))
                 {
                     int val;
-                    if (int.TryParse(((string)value).Replace('.', ',').Trim(), out val))
+                    if (((string)value).GetVal(out val))
                         property.SetValue(Bot.GlobalSettings.Auth, val);
                 }
                 else if (property.PropertyType == typeof(double))
                 {
                     double val;
-                    if (double.TryParse(((string)value).Replace('.', ',').Trim(), out val))
+                    if (((string)value).GetVal(out val))
                         property.SetValue(Bot.GlobalSettings.Auth, val);
                 }
                 else if (property.PropertyType == typeof(float))
                 {
                     float val;
-                    if (float.TryParse(((string)value).Replace('.', ',').Trim(), out val))
+                    if (((string)value).GetVal(out val))
                         property.SetValue(Bot.GlobalSettings.Auth, val);
                 }
                 else
@@ -1025,19 +1025,19 @@ namespace Catchem
                 if (property.FieldType == typeof(int))
                 {
                     int val;
-                    if (int.TryParse(((string)value).Replace('.', ',').Trim(), out val))
+                    if (((string)value).GetVal(out val))
                         property.SetValue(Bot.GlobalSettings.Auth, val);
                 }
                 else if (property.FieldType == typeof(double))
                 {
                     double val;
-                    if (double.TryParse(((string)value).Replace('.', ',').Trim(), out val))
+                    if (((string)value).GetVal(out val))
                         property.SetValue(Bot.GlobalSettings.Auth, val);
                 }
                 else if (property.FieldType == typeof(float))
                 {
                     float val;
-                    if (float.TryParse(((string)value).Replace('.', ',').Trim(), out val))
+                    if (((string)value).GetVal(out val))
                         property.SetValue(Bot.GlobalSettings.Auth, val);
                 }
                 else
@@ -1050,19 +1050,19 @@ namespace Catchem
                 if (property.FieldType == typeof(int))
                 {
                     int val;
-                    if (int.TryParse(((string)value).Replace('.', ',').Trim(), out val))
+                    if (((string)value).GetVal(out val))
                         property.SetValue(Bot.GlobalSettings, val);
                 }
                 else if (property.FieldType == typeof(double))
                 {
                     double val;
-                    if (double.TryParse(((string)value).Replace('.', ',').Trim(), out val))
+                    if (((string)value).GetVal(out val))
                         property.SetValue(Bot.GlobalSettings, val);
                 }
                 else if (property.FieldType == typeof(float))
                 {
                     float val;
-                    if (float.TryParse(((string)value).Replace('.', ',').Trim(), out val))
+                    if (((string)value).GetVal(out val))
                         property.SetValue(Bot.GlobalSettings, val);
                 }
                 else
@@ -1076,17 +1076,21 @@ namespace Catchem
             var box = uiElement as TextBox;
             if (box != null)
             {
-                var tb = box;
-                var propName = tb.Name.Replace("c_", "");
-                BotGlobalSettingsChange(propName, tb.Text);
+                var propName = box.Name.Replace("c_", "");
+                BotGlobalSettingsChange(propName, box.Text);
                 return;
             }
             var checkBox = uiElement as CheckBox;
             if (checkBox != null)
             {
-                var chb = checkBox;
-                var propName = chb.Name.Replace("c_", "");
-                BotGlobalSettingsChange(propName, chb.IsChecked);
+                var propName = checkBox.Name.Replace("c_", "");
+                BotGlobalSettingsChange(propName, checkBox.IsChecked);
+            }
+            var passBox = uiElement as PasswordBox;
+            if (passBox != null)
+            {
+                var propName = passBox.Name.Replace("c_", "");
+                BotGlobalSettingsChange(propName, passBox.Password);
             }
         }
 
