@@ -18,7 +18,7 @@ In action: [Gifv](http://i.imgur.com/UXGkHS4.gifv)
  - [All settings from UI]
  - [You can set startup location from the map, just select the bot (don't hit Start), go to the map tab, and just double-click to desired position]
  
-Get Divice data from real android device:
+Get Device data from real android device:
  1. [Enable USB debugging at your phone settings]
  2. [Ensure what your PC have proper ADB drivers installed]
  3. [Click "Get Data from Your Android Phone" button at the Settings tab - you are awesome]
