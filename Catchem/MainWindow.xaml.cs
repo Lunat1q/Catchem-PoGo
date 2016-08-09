@@ -705,30 +705,40 @@ namespace Catchem
 
             rec.MouseLeftButtonDown += delegate (object o, MouseButtonEventArgs args)
             {
-                if (Bot != null)
-                {
-                    Bot.GlobalSettings.StoreData(subPath + "\\" + Bot.ProfileName);
-                    Bot.EnqueData();
-                    ClearPokemonData();
-                }
-                foreach (var marker in newBot.MapMarkers.Values)
-                {
-                    pokeMap.Markers.Add(marker);
-                }
-                _curSession = session;
-                if (Bot != null)
-                {
-                    pokeMap.Position = new PointLatLng(Bot._lat, Bot._lng);
-                    DrawPlayerMarker();
-                    StatsOnDirtyEvent(Bot);
-                }
-                foreach (var item in botPanel.GetLogicalChildCollection<Rectangle>())
-                {
-                    item.Fill = !Equals(item, o) ? new SolidColorBrush(Color.FromArgb(255, 97, 97, 97)) : new SolidColorBrush(Color.FromArgb(255, 97, 97, 225));
-                }
-                RebuildUi();   
+                selectBot(o, newBot, session);
             };
+
+            if (_openedSessions.Count == 1)
+            {
+                selectBot(rec, newBot, session);
+            }
             #endregion
+        }
+
+        private void selectBot(object o, BotWindowData newBot, Session session)
+        {
+            if (Bot != null)
+            {
+                Bot.GlobalSettings.StoreData(subPath + "\\" + Bot.ProfileName);
+                Bot.EnqueData();
+                ClearPokemonData();
+            }
+            foreach (var marker in newBot.MapMarkers.Values)
+            {
+                pokeMap.Markers.Add(marker);
+            }
+            _curSession = session;
+            if (Bot != null)
+            {
+                pokeMap.Position = new PointLatLng(Bot._lat, Bot._lng);
+                DrawPlayerMarker();
+                StatsOnDirtyEvent(Bot);
+            }
+            foreach (var item in botPanel.GetLogicalChildCollection<Rectangle>())
+            {
+                item.Fill = !Equals(item, o) ? new SolidColorBrush(Color.FromArgb(255, 97, 97, 97)) : new SolidColorBrush(Color.FromArgb(255, 97, 97, 225));
+            }
+            RebuildUi();
         }
 
         private void UpdateCollection(ISession session)

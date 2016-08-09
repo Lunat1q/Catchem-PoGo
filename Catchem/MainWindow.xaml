@@ -50,12 +50,12 @@
             </Setter>
         </Style>
         <DataTemplate x:Key="PokemonDataTemplate">
-            <Grid Height="150" Width="150" Margin="5">
+            <Grid Height="150" Width="150" Margin="1">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <Rectangle Fill="#FFFDFDFD" HorizontalAlignment="Stretch" Height="Auto" VerticalAlignment="Stretch" Width="Auto" Grid.ColumnSpan="2"/>
+                <Rectangle Fill="White" HorizontalAlignment="Stretch" Height="Auto" VerticalAlignment="Stretch" Width="Auto" Grid.ColumnSpan="2" RadiusX="7" RadiusY="7"/>
                 <Grid HorizontalAlignment="Left" Height="90" VerticalAlignment="Top" Width="150" Grid.ColumnSpan="2">
                     <Image Source="{Binding Path=Image}" x:Name="image" HorizontalAlignment="Center" Height="Auto" Margin="0" VerticalAlignment="Center" Width="Auto"/>
                 </Grid>
@@ -412,15 +412,15 @@
                             </LinearGradientBrush>
                         </Button.Background>
                     </Button>
-                    <ListBox ItemsSource="{Binding}" x:Name="PokeListBox" Margin="11,130,10,46" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemTemplate="{DynamicResource PokemonDataTemplate}">
+                    <ListBox ItemsSource="{Binding}" x:Name="PokeListBox" Margin="11,130,10,46" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemTemplate="{DynamicResource PokemonDataTemplate}" BorderBrush="#FF04C17C" Background="#FFEFFFF8">
                         <ListBox.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <WrapPanel />
                             </ItemsPanelTemplate>
                         </ListBox.ItemsPanel>
                     </ListBox>
-                    <Label x:Name="l_poke_inventory" Content="(HAVE/MAX)" HorizontalAlignment="Left" Margin="328,102,0,0" VerticalAlignment="Top" Foreground="#FF324AB4" FontSize="15" TextOptions.TextFormattingMode="Display" FontFamily="Source Sans Pro Semibold" Height="28" Width="100" HorizontalContentAlignment="Right"/>
-                    <ListBox x:Name="listBox" Grid.Column="1" Margin="10,130,10,0"/>
+                    <Label x:Name="l_poke_inventory" Content="(HAVE/MAX)" HorizontalAlignment="Right" Margin="0,102,10,0" VerticalAlignment="Top" Foreground="#FF324AB4" FontSize="15" TextOptions.TextFormattingMode="Display" FontFamily="Source Sans Pro Semibold" Height="28" Width="100" HorizontalContentAlignment="Right"/>
+                    <ListBox x:Name="listBox" Grid.Column="1" Margin="10,130,10,46"/>
                     <Label x:Name="label6_Copy6" Content="INVENTORY" HorizontalAlignment="Left" Margin="10,102,0,0" VerticalAlignment="Top" Foreground="#FF363636" FontSize="15" TextOptions.TextFormattingMode="Display" FontFamily="Source Sans Pro Semibold" Height="28" Width="89" Grid.Column="1"/>
                     <Label x:Name="l_inventory" Content="(HAVE/MAX)" HorizontalAlignment="Right" Margin="0,102,10,0" VerticalAlignment="Top" Foreground="#FF324AB4" FontSize="15" TextOptions.TextFormattingMode="Display" FontFamily="Source Sans Pro Semibold" Height="28" Width="100" HorizontalContentAlignment="Right" Grid.Column="1"/>
                 </Grid>
@@ -452,7 +452,7 @@
             <Grid Background="Black" Opacity="0.45"/>
             <Border
             MinWidth="250"
-            CornerRadius="7,7,7,7" Margin="488,222,475,197" HorizontalAlignment="Center" VerticalAlignment="Center">
+            CornerRadius="7,7,7,7" HorizontalAlignment="Center" VerticalAlignment="Center">
                 <Border.Background>
                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                         <LinearGradientBrush.RelativeTransform>
@@ -464,7 +464,7 @@
                             </TransformGroup>
                         </LinearGradientBrush.RelativeTransform>
                         <GradientStop Color="#FFF8FFF7"/>
-                        <GradientStop Color="#FFEFFFED" Offset="1"/>
+                        <GradientStop Color="#FFC5F3BF" Offset="1"/>
                     </LinearGradientBrush>
                 </Border.Background>
                 <Grid>
