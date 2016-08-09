@@ -41,31 +41,8 @@ namespace Catchem
                 }
             }
         }
-
-        public static bool GetDouble(this string value, out double result)
-        {
-            //Try parsing in the current culture
-            return double.TryParse(value, NumberStyles.Any, CultureInfo.CurrentCulture, out result) 
-                || double.TryParse(value, NumberStyles.Any, CultureInfo.GetCultureInfo("en-US"), out result) 
-                || double.TryParse(value, NumberStyles.Any, CultureInfo.InvariantCulture, out result);
-        }
-        public static bool GetInt(this string value, out int result)
-        {
-            //Try parsing in the current culture
-            return int.TryParse(value, NumberStyles.Any, CultureInfo.CurrentCulture, out result)
-                || int.TryParse(value, NumberStyles.Any, CultureInfo.GetCultureInfo("en-US"), out result)
-                || int.TryParse(value, NumberStyles.Any, CultureInfo.InvariantCulture, out result);
-        }
-        public static bool GetFloat(this string value, out float result)
-        {
-            //Try parsing in the current culture
-            return float.TryParse(value, NumberStyles.Any, CultureInfo.CurrentCulture, out result)
-                || float.TryParse(value, NumberStyles.Any, CultureInfo.GetCultureInfo("en-US"), out result)
-                || float.TryParse(value, NumberStyles.Any, CultureInfo.InvariantCulture, out result);
-        }
         public static bool GetVal<T>(this string value, out T resultVal) where T : IConvertible
         {
-            //Try parsing in the current culture
             resultVal = default(T);
             if (resultVal == null) return false;
             var typeCode = resultVal.GetTypeCode();
@@ -135,36 +112,45 @@ namespace Catchem
 
         public static System.Windows.Controls.Image ToImage(this PokemonId pid)
         {
-            System.Windows.Controls.Image img = new System.Windows.Controls.Image();
-            img.Source = pid.ToBitmap().loadBitmap();
-            var tt = new ToolTip();
-            tt.Content = pid.ToString();
+            var img = new System.Windows.Controls.Image {Source = pid.ToBitmap().LoadBitmap()};
+            var tt = new ToolTip {Content = pid.ToString()};
             img.ToolTip = tt;
             return img;
         }
 
-        public static System.Windows.Controls.Image ToImage(this System.Drawing.Bitmap source, string toolTipText = "no_text")
+        public static System.Windows.Controls.Image ToInventoryImage(this PokemonId pid)
         {
-            System.Windows.Controls.Image img = new System.Windows.Controls.Image();
-            img.Source = source.loadBitmap();
-            var tt = new ToolTip();
-            tt.Content = toolTipText;
+            var img = new System.Windows.Controls.Image { Source = pid.ToInventoryBitmap().LoadBitmap() };
+            var tt = new ToolTip { Content = pid.ToString() };
+            img.ToolTip = tt;
+            return img;
+        }
+
+        public static BitmapSource ToInventorySource(this PokemonId pid)
+        {
+            return pid.ToInventoryBitmap().LoadBitmap();
+        }
+
+        public static System.Windows.Controls.Image ToImage(this Bitmap source, string toolTipText = "no_text")
+        {
+            var img = new System.Windows.Controls.Image {Source = source.LoadBitmap()};
+            var tt = new ToolTip {Content = toolTipText};
             img.ToolTip = tt;
             return img;
         }
 
         [DllImport("gdi32")]
-        static extern int DeleteObject(IntPtr o);
+        private static extern int DeleteObject(IntPtr o);
 
-        public static BitmapSource loadBitmap(this System.Drawing.Bitmap source)
+        public static BitmapSource LoadBitmap(this Bitmap source)
         {
-            IntPtr ip = source.GetHbitmap();
-            BitmapSource bs = null;
+            var ip = source.GetHbitmap();
+            BitmapSource bs;
             try
             {
                 bs = System.Windows.Interop.Imaging.CreateBitmapSourceFromHBitmap(ip,
                    IntPtr.Zero, Int32Rect.Empty,
-                   System.Windows.Media.Imaging.BitmapSizeOptions.FromEmptyOptions());
+                   BitmapSizeOptions.FromEmptyOptions());
             }
             finally
             {
@@ -628,6 +614,317 @@ namespace Catchem
                 ;
                 case PokemonId.Mew:
                     return Properties.Resources._151;
+            }
+            return Properties.Resources.no_name;
+        }
+        public static Bitmap ToInventoryBitmap(this PokemonId pid)
+        {
+            switch (pid)
+            {
+                case PokemonId.Missingno:
+                    return Properties.Resources.no_name;
+                case PokemonId.Bulbasaur:
+                    return Properties.Resources._001_inv;
+                case PokemonId.Ivysaur:
+                    return Properties.Resources._002_inv;
+                case PokemonId.Venusaur:
+                    return Properties.Resources._003_inv;
+                case PokemonId.Charmander:
+                    return Properties.Resources._004_inv;
+                case PokemonId.Charmeleon:
+                    return Properties.Resources._005_inv;
+                case PokemonId.Charizard:
+                    return Properties.Resources._006_inv;
+                case PokemonId.Squirtle:
+                    return Properties.Resources._007_inv;
+                case PokemonId.Wartortle:
+                    return Properties.Resources._008_inv;
+                case PokemonId.Blastoise:
+                    return Properties.Resources._009_inv;
+                case PokemonId.Caterpie:
+                    return Properties.Resources._010_inv;
+                case PokemonId.Metapod:
+                    return Properties.Resources._011_inv;
+                case PokemonId.Butterfree:
+                    return Properties.Resources._012_inv;
+                case PokemonId.Weedle:
+                    return Properties.Resources._013_inv;
+                case PokemonId.Kakuna:
+                    return Properties.Resources._014_inv;
+                case PokemonId.Beedrill:
+                    return Properties.Resources._015_inv;
+                case PokemonId.Pidgey:
+                    return Properties.Resources._016_inv;
+                case PokemonId.Pidgeotto:
+                    return Properties.Resources._017_inv;
+                case PokemonId.Pidgeot:
+                    return Properties.Resources._018_inv;
+                case PokemonId.Rattata:
+                    return Properties.Resources._019_inv;
+                case PokemonId.Raticate:
+                    return Properties.Resources._020_inv;
+                case PokemonId.Spearow:
+                    return Properties.Resources._021_inv;
+                case PokemonId.Fearow:
+                    return Properties.Resources._022_inv;
+                case PokemonId.Ekans:
+                    return Properties.Resources._023_inv;
+                case PokemonId.Arbok:
+                    return Properties.Resources._024_inv;
+                case PokemonId.Pikachu:
+                    return Properties.Resources._025_inv;
+                case PokemonId.Raichu:
+                    return Properties.Resources._026_inv;
+                case PokemonId.Sandshrew:
+                    return Properties.Resources._027_inv;
+                case PokemonId.Sandslash:
+                    return Properties.Resources._028_inv;
+                case PokemonId.NidoranFemale:
+                    return Properties.Resources._029_inv;
+                case PokemonId.Nidorina:
+                    return Properties.Resources._030_inv;
+                case PokemonId.Nidoqueen:
+                    return Properties.Resources._031_inv;
+                case PokemonId.NidoranMale:
+                    return Properties.Resources._032_inv;
+                case PokemonId.Nidorino:
+                    return Properties.Resources._033_inv;
+                case PokemonId.Nidoking:
+                    return Properties.Resources._034_inv;
+                case PokemonId.Clefairy:
+                    return Properties.Resources._035_inv;
+                case PokemonId.Clefable:
+                    return Properties.Resources._036_inv;
+                case PokemonId.Vulpix:
+                    return Properties.Resources._037_inv;
+                case PokemonId.Ninetales:
+                    return Properties.Resources._038_inv;
+                case PokemonId.Jigglypuff:
+                    return Properties.Resources._039_inv;
+                case PokemonId.Wigglytuff:
+                    return Properties.Resources._040_inv;
+                case PokemonId.Zubat:
+                    return Properties.Resources._041_inv;
+                case PokemonId.Golbat:
+                    return Properties.Resources._042_inv;
+                case PokemonId.Oddish:
+                    return Properties.Resources._043_inv;
+                case PokemonId.Gloom:
+                    return Properties.Resources._044_inv;
+                case PokemonId.Vileplume:
+                    return Properties.Resources._045_inv;
+                case PokemonId.Paras:
+                    return Properties.Resources._046_inv;
+                case PokemonId.Parasect:
+                    return Properties.Resources._047_inv;
+                case PokemonId.Venonat:
+                    return Properties.Resources._048_inv;
+                case PokemonId.Venomoth:
+                    return Properties.Resources._049_inv;
+                case PokemonId.Diglett:
+                    return Properties.Resources._050_inv;
+                case PokemonId.Dugtrio:
+                    return Properties.Resources._051_inv;
+                case PokemonId.Meowth:
+                    return Properties.Resources._052_inv;
+                case PokemonId.Persian:
+                    return Properties.Resources._053_inv;
+                case PokemonId.Psyduck:
+                    return Properties.Resources._054_inv;
+                case PokemonId.Golduck:
+                    return Properties.Resources._055_inv;
+                case PokemonId.Mankey:
+                    return Properties.Resources._056_inv;
+                case PokemonId.Primeape:
+                    return Properties.Resources._057_inv;
+                case PokemonId.Growlithe:
+                    return Properties.Resources._058_inv;
+                case PokemonId.Arcanine:
+                    return Properties.Resources._059_inv;
+                case PokemonId.Poliwag:
+                    return Properties.Resources._060_inv;
+                case PokemonId.Poliwhirl:
+                    return Properties.Resources._061_inv;
+                case PokemonId.Poliwrath:
+                    return Properties.Resources._062_inv;
+                case PokemonId.Abra:
+                    return Properties.Resources._063_inv;
+                case PokemonId.Kadabra:
+                    return Properties.Resources._064_inv;
+                case PokemonId.Alakazam:
+                    return Properties.Resources._065_inv;
+                case PokemonId.Machop:
+                    return Properties.Resources._066_inv;
+                case PokemonId.Machoke:
+                    return Properties.Resources._067_inv;
+                case PokemonId.Machamp:
+                    return Properties.Resources._068_inv;
+                case PokemonId.Bellsprout:
+                    return Properties.Resources._069_inv;
+                case PokemonId.Weepinbell:
+                    return Properties.Resources._070_inv;
+                case PokemonId.Victreebel:
+                    return Properties.Resources._071_inv;
+                case PokemonId.Tentacool:
+                    return Properties.Resources._072_inv;
+                case PokemonId.Tentacruel:
+                    return Properties.Resources._073_inv;
+                case PokemonId.Geodude:
+                    return Properties.Resources._074_inv;
+                case PokemonId.Graveler:
+                    return Properties.Resources._075_inv;
+                case PokemonId.Golem:
+                    return Properties.Resources._076_inv;
+                case PokemonId.Ponyta:
+                    return Properties.Resources._077_inv;
+                case PokemonId.Rapidash:
+                    return Properties.Resources._078_inv;
+                case PokemonId.Slowpoke:
+                    return Properties.Resources._079_inv;
+                case PokemonId.Slowbro:
+                    return Properties.Resources._080_inv;
+                case PokemonId.Magnemite:
+                    return Properties.Resources._081_inv;
+                case PokemonId.Magneton:
+                    return Properties.Resources._082_inv;
+                case PokemonId.Farfetchd:
+                    return Properties.Resources._083_inv;
+                case PokemonId.Doduo:
+                    return Properties.Resources._084_inv;
+                case PokemonId.Dodrio:
+                    return Properties.Resources._085_inv;
+                case PokemonId.Seel:
+                    return Properties.Resources._086_inv;
+                case PokemonId.Dewgong:
+                    return Properties.Resources._087_inv;
+                case PokemonId.Grimer:
+                    return Properties.Resources._088_inv;
+                case PokemonId.Muk:
+                    return Properties.Resources._089_inv;
+                case PokemonId.Shellder:
+                    return Properties.Resources._090_inv;
+                case PokemonId.Cloyster:
+                    return Properties.Resources._091_inv;
+                case PokemonId.Gastly:
+                    return Properties.Resources._092_inv;
+                case PokemonId.Haunter:
+                    return Properties.Resources._093_inv;
+                case PokemonId.Gengar:
+                    return Properties.Resources._094_inv;
+                case PokemonId.Onix:
+                    return Properties.Resources._095_inv;
+                case PokemonId.Drowzee:
+                    return Properties.Resources._096_inv;
+                case PokemonId.Hypno:
+                    return Properties.Resources._097_inv;
+                case PokemonId.Krabby:
+                    return Properties.Resources._098_inv;
+                case PokemonId.Kingler:
+                    return Properties.Resources._099_inv;
+                case PokemonId.Voltorb:
+                    return Properties.Resources._100_inv;
+                case PokemonId.Electrode:
+                    return Properties.Resources._101_inv;
+                case PokemonId.Exeggcute:
+                    return Properties.Resources._102_inv;
+                case PokemonId.Exeggutor:
+                    return Properties.Resources._103_inv;
+                case PokemonId.Cubone:
+                    return Properties.Resources._104_inv;
+                case PokemonId.Marowak:
+                    return Properties.Resources._105_inv;
+                case PokemonId.Hitmonlee:
+                    return Properties.Resources._106_inv;
+                case PokemonId.Hitmonchan:
+                    return Properties.Resources._107_inv;
+                case PokemonId.Lickitung:
+                    return Properties.Resources._108_inv;
+                case PokemonId.Koffing:
+                    return Properties.Resources._109_inv;
+                case PokemonId.Weezing:
+                    return Properties.Resources._110_inv;
+                case PokemonId.Rhyhorn:
+                    return Properties.Resources._111_inv;
+                case PokemonId.Rhydon:
+                    return Properties.Resources._112_inv;
+                case PokemonId.Chansey:
+                    return Properties.Resources._113_inv;
+                case PokemonId.Tangela:
+                    return Properties.Resources._114_inv;
+                case PokemonId.Kangaskhan:
+                    return Properties.Resources._115_inv;
+                case PokemonId.Horsea:
+                    return Properties.Resources._116_inv;
+                case PokemonId.Seadra:
+                    return Properties.Resources._117_inv;
+                case PokemonId.Goldeen:
+                    return Properties.Resources._118_inv;
+                case PokemonId.Seaking:
+                    return Properties.Resources._119_inv;
+                case PokemonId.Staryu:
+                    return Properties.Resources._120_inv;
+                case PokemonId.Starmie:
+                    return Properties.Resources._121_inv;
+                case PokemonId.MrMime:
+                    return Properties.Resources._122_inv;
+                case PokemonId.Scyther:
+                    return Properties.Resources._123_inv;
+                case PokemonId.Jynx:
+                    return Properties.Resources._124_inv;
+                case PokemonId.Electabuzz:
+                    return Properties.Resources._125_inv;
+                case PokemonId.Magmar:
+                    return Properties.Resources._126_inv;
+                case PokemonId.Pinsir:
+                    return Properties.Resources._127_inv;
+                case PokemonId.Tauros:
+                    return Properties.Resources._128_inv;
+                case PokemonId.Magikarp:
+                    return Properties.Resources._129_inv;
+                case PokemonId.Gyarados:
+                    return Properties.Resources._130_inv;
+                case PokemonId.Lapras:
+                    return Properties.Resources._131_inv;
+                case PokemonId.Ditto:
+                    return Properties.Resources._132_inv;
+                case PokemonId.Eevee:
+                    return Properties.Resources._133_inv;
+                case PokemonId.Vaporeon:
+                    return Properties.Resources._134_inv;
+                case PokemonId.Jolteon:
+                    return Properties.Resources._135_inv;
+                case PokemonId.Flareon:
+                    return Properties.Resources._136_inv;
+                case PokemonId.Porygon:
+                    return Properties.Resources._137_inv;
+                case PokemonId.Omanyte:
+                    return Properties.Resources._138_inv;
+                case PokemonId.Omastar:
+                    return Properties.Resources._139_inv;
+                case PokemonId.Kabuto:
+                    return Properties.Resources._140_inv;
+                case PokemonId.Kabutops:
+                    return Properties.Resources._141_inv;
+                case PokemonId.Aerodactyl:
+                    return Properties.Resources._142_inv;
+                case PokemonId.Snorlax:
+                    return Properties.Resources._143_inv;
+                case PokemonId.Articuno:
+                    return Properties.Resources._144_inv;
+                case PokemonId.Zapdos:
+                    return Properties.Resources._145_inv;
+                case PokemonId.Moltres:
+                    return Properties.Resources._146_inv;
+                case PokemonId.Dratini:
+                    return Properties.Resources._147_inv;
+                case PokemonId.Dragonair:
+                    return Properties.Resources._148_inv;
+                case PokemonId.Dragonite:
+                    return Properties.Resources._149_inv;
+                case PokemonId.Mewtwo:
+                    return Properties.Resources._150_inv;
+                case PokemonId.Mew:
+                    return Properties.Resources._151_inv;
             }
             return Properties.Resources.no_name;
         }

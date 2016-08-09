@@ -8,6 +8,7 @@ namespace PoGo.PokeMobBot.Logic.Event
 {
     public class TransferPokemonEvent : IEvent
     {
+        public ulong Uid;
         public int BestCp;
         public double BestPerfection;
         public int Cp;

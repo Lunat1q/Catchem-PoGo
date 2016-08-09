@@ -3,7 +3,6 @@
 #region using directives
 
 using System;
-using System.Globalization;
 using System.Linq;
 using POGOProtos.Networking.Responses;
 
@@ -45,7 +44,6 @@ namespace PoGo.PokeMobBot.Logic.Utils
 
         public StatsExport GetCurrentInfo(Inventory inventory)
         {
-            var pokemons = inventory.GetPokemons().Result.Count();
             var stats = inventory.GetPlayerStats().Result;
             StatsExport output = null;
             var stat = stats.FirstOrDefault();

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using PoGo.PokeMobBot.Logic.Event;
+using PoGo.PokeMobBot.Logic.PoGoUtils;
 using PoGo.PokeMobBot.Logic.State;
 using PoGo.PokeMobBot.Logic.Utils;
 using POGOProtos.Inventory.Item;
@@ -62,11 +63,18 @@ namespace PoGo.PokeMobBot.Logic.Tasks
 
                     session.EventDispatcher.Send(new PokemonEvolveEvent
                     {
+                        Uid = pokemon.Id,
                         Id = pokemon.PokemonId,
                         Exp = evolveResponse.ExperienceAwarded,
                         Result = evolveResponse.Result
                     });
-
+                    session.EventDispatcher.Send(new PokemonEvolveDoneEvent
+                    {
+                        Uid = evolveResponse.EvolvedPokemonData.Id,
+                        Id = evolveResponse.EvolvedPokemonData.PokemonId,
+                        Cp = evolveResponse.EvolvedPokemonData.Cp,
+                        Perfection = PokemonInfo.CalculatePokemonPerfection(evolveResponse.EvolvedPokemonData)
+                    });
                     await DelayingEvolveUtils.Delay(session.LogicSettings.DelayEvolvePokemon, 0, session.LogicSettings.DelayEvolveVariation);
                 }
             }

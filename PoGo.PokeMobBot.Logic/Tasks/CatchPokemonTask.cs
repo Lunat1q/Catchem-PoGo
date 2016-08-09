@@ -121,6 +121,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                 if (caughtPokemonResponse.Status == CatchPokemonResponse.Types.CatchStatus.CatchSuccess)
                 {
                     var totalExp = 0;
+                    evt.Uid = caughtPokemonResponse.CapturedPokemonId;
 
                     foreach (var xp in caughtPokemonResponse.CaptureAward.Xp)
                     {
@@ -135,7 +136,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                     var pokemonFamilies = await session.Inventory.GetPokemonFamilies();
 
                     var setting =
-                        pokemonSettings.FirstOrDefault(q => pokemon != null && q.PokemonId == pokemon.PokemonId);
+                        pokemonSettings.FirstOrDefault(q => q.PokemonId == pokemon?.PokemonId);
                     var family = pokemonFamilies.FirstOrDefault(q => setting != null && q.FamilyId == setting.FamilyId);
 
                     if (family != null)

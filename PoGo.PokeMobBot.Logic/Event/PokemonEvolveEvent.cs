@@ -9,6 +9,7 @@ namespace PoGo.PokeMobBot.Logic.Event
 {
     public class PokemonEvolveEvent : IEvent
     {
+        public ulong Uid;
         public int Exp;
         public PokemonId Id;
         public EvolvePokemonResponse.Types.Result Result;

@@ -25,13 +25,23 @@ namespace PoGo.PokeMobBot.Logic.Tasks
             if (pokemon == null) return;
 
             var evolveResponse = await session.Client.Inventory.EvolvePokemon(pokemon.Id);
-
+            
             session.EventDispatcher.Send(new PokemonEvolveEvent
             {
+                Uid = pokemon.Id,
                 Id = pokemon.PokemonId,
                 Exp = evolveResponse.ExperienceAwarded,
                 Result = evolveResponse.Result
             });
+
+            session.EventDispatcher.Send(new PokemonEvolveDoneEvent
+            {
+                Uid = evolveResponse.EvolvedPokemonData.Id,
+                Id = evolveResponse.EvolvedPokemonData.PokemonId,
+                Cp = evolveResponse.EvolvedPokemonData.Cp,
+                Perfection = PokemonInfo.CalculatePokemonPerfection(evolveResponse.EvolvedPokemonData)
+            });
+
             await DelayingUtils.Delay(session.LogicSettings.DelayBetweenPlayerActions, 2000);
         }
     }

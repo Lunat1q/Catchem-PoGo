@@ -14,6 +14,7 @@ namespace PoGo.PokeMobBot.Logic.Event
         public int BallAmount;
         public string CatchType;
         public int Cp;
+        public ulong Uid;
         public double Distance;
         public int Exp;
         public int FamilyCandies;

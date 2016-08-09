@@ -14,6 +14,7 @@ using PokemonGo.RocketAPI.Enums;
 using PokemonGo.RocketAPI.Extensions;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -23,8 +24,10 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using POGOProtos.Data;
 using static System.String;
 using LogLevel = PoGo.PokeMobBot.Logic.Logging.LogLevel;
 
@@ -157,24 +160,110 @@ namespace Catchem
                 case "p_loc":
                     UpdateCoords(session, objData);
                     break;
+                case "pm_list":
+                    Dispatcher.BeginInvoke(new ThreadStart(delegate
+                    {
+                        BuildPokemonList(session, objData);
+                    }));
+                    break;
+                case "pm_new":
+                    Dispatcher.BeginInvoke(new ThreadStart(delegate
+                    {
+                        GotNewPokemon(session, objData);
+                    }));
+                    break;
+                case "pm_rem":
+                    Dispatcher.BeginInvoke(new ThreadStart(delegate
+                    {
+                        LostPokemon(session, objData);
+                    }));
+                    break;
+                case "profile_data":
+                    Dispatcher.BeginInvoke(new ThreadStart(delegate
+                    {
+                        UpdateProfileInfo(session, objData);
+                    }));
+                    break;
                 case "forcemove_done":
                     PushRemoveForceMoveMarker(session);
                     break;
             }
         }
 
+        private void UpdateProfileInfo(ISession session, object[] objData)
+        {
+            Playername.Content = (string)objData[0];
+            var targetBot = _openedSessions[session];
+            targetBot.MaxItemStorageSize = (int) objData[1];
+            targetBot.MaxPokemonStorageSize = (int)objData[2];
+            l_coins.Content = (int)objData[3];
+        }
+
+        private void LostPokemon(ISession session, object[] objData)
+        {
+            try
+            {
+                var receiverBot = _openedSessions[session];
+                var targetPokemon = receiverBot.PokemonList.FirstOrDefault(x => x.Id == (ulong) objData[0]);
+                if (targetPokemon == null) return;
+
+                receiverBot.PokemonList.Remove(targetPokemon);
+            }
+            catch (Exception ex)
+            {
+                // ignored
+            }
+        }
+
+        private void GotNewPokemon(ISession session, object[] objData)
+        {
+            try
+            {
+                if ((ulong) objData[0] == 0) return;
+                var receiverBot = _openedSessions[session];
+                var pokemonId = (PokemonId) objData[1];
+                receiverBot.PokemonList.Add(new PokemonUiData((ulong) objData[0], pokemonId.ToInventorySource(),
+                    pokemonId.ToString(), (int) objData[2], (double) objData[3]));
+            }
+            catch (Exception ex)
+            {
+                // ignored
+            }
+        }
+
+        private void BuildPokemonList(ISession session, object[] objData)
+        {
+            try
+            {
+                var receiverBot = _openedSessions[session];
+                receiverBot.PokemonList = new ObservableCollection<PokemonUiData>();
+                receiverBot.PokemonList.CollectionChanged += delegate
+                {
+                    UpdateCollection(session);
+                };
+                ((List<Tuple<PokemonData, double>>) objData[0]).ForEach(x => receiverBot.PokemonList.Add(
+                    new PokemonUiData(x.Item1.Id, x.Item1.PokemonId.ToInventorySource(),
+                        (x.Item1.Nickname == "" ? x.Item1.PokemonId.ToString() : x.Item1.Nickname),
+                        x.Item1.Cp, x.Item2)));
+                if (session != _curSession) return;
+
+                PokeListBox.ItemsSource = Bot.PokemonList;
+            }
+            catch (Exception ex)
+            {
+                // ignored
+            }
+        }
         private void UpdateCoords(ISession session, object[] objData)
         {
             try
             {
                 if (session != _curSession)
                 {
-                    if (_openedSessions.ContainsKey(session))
-                    {
-                        var botReceiver = _openedSessions[session];
-                        botReceiver.Lat = botReceiver._lat = (double)objData[0];
-                        botReceiver.Lng = botReceiver._lng = (double)objData[1];
-                    }
+                    if (!_openedSessions.ContainsKey(session)) return;
+                    var botReceiver = _openedSessions[session];
+                    botReceiver.Lat = botReceiver._lat = (double)objData[0];
+                    botReceiver.Lng = botReceiver._lng = (double)objData[1];
                 }
                 else
                 {
@@ -223,6 +312,8 @@ namespace Catchem
             if (Bot.ForceMoveMarker != null)
                 pokeMap.Markers.Add(Bot.ForceMoveMarker);
         }
+
+        #region DataFlow - Push
 
         private void PushNewConsoleRow(ISession session, string rowText, Color rowColor)
         {
@@ -304,6 +395,9 @@ namespace Catchem
                 }
             }
         }
+        #endregion
+
+        #region Async Workers
 
         private async void MovePlayer()
         {
@@ -406,7 +500,7 @@ namespace Catchem
 
         private void CreatePokemonMarker(NewMapObject newMapObj)
         {
-            PokemonId pokemon = (PokemonId)Enum.Parse(typeof(PokemonId), newMapObj.OName);
+            var pokemon = (PokemonId)Enum.Parse(typeof(PokemonId), newMapObj.OName);
 
             var marker = new GMapMarker(new PointLatLng(newMapObj.Lat, newMapObj.Lng))
             {
@@ -432,147 +526,7 @@ namespace Catchem
             }
         }
 
-
-        private class BotWindowData
-        {
-            public readonly string ProfileName;
-            private CancellationTokenSource _cts;
-            public CancellationToken CancellationToken => _cts.Token;
-            internal GMapMarker ForceMoveMarker;
-            public List<Tuple<string, Color>> Log = new List<Tuple<string, Color>>();
-            public Queue<Tuple<string, Color>> LogQueue = new Queue<Tuple<string, Color>>();
-            public Dictionary<string, GMapMarker> MapMarkers = new Dictionary<string, GMapMarker>();
-            public Queue<NewMapObject> MarkersQueue = new Queue<NewMapObject>();
-            public readonly StateMachine Machine;
-            public readonly Statistics Stats;
-            public readonly StatisticsAggregator Aggregator;
-            public readonly WpfEventListener Listener;
-            public readonly ClientSettings Settings;
-            public readonly LogicSettings Logic;
-            public readonly GlobalSettings GlobalSettings;
-
-            public Label RunTime;
-            public Label Xpph;
-            public bool Started;
-
-            private readonly DispatcherTimer _timer;
-            private TimeSpan _ts;
-
-            public double Lat;
-            public double Lng;
-            public bool GotNewCoord;
-            public bool MoveRequired;
-            private double _la, _ln;
-
-            // ReSharper disable once InconsistentNaming
-            internal double _lat
-            {
-                get { return _la; }
-                set
-                {
-                    GlobalSettings.DefaultLatitude = value;
-                    _la = value;
-                }
-            }
-
-            // ReSharper disable once InconsistentNaming
-            internal double _lng
-            {
-                get { return _ln; }
-                set
-                {
-                    GlobalSettings.DefaultLongitude = value;
-                    _ln = value;
-                }
-            }
-            public double LatStep, LngStep;
-
-            public BotWindowData(string name, GlobalSettings gs, StateMachine sm, Statistics st, StatisticsAggregator sa, WpfEventListener wel, ClientSettings cs, LogicSettings l)
-            {
-                ProfileName = name;
-                Settings = new ClientSettings(gs);
-                Logic = new LogicSettings(gs);
-                GlobalSettings = gs;
-                Machine = sm;
-                Stats = st;
-                Aggregator = sa;
-                Listener = wel;
-                Settings = cs;
-                Logic = l;
-
-                _ts = new TimeSpan();
-                _timer = new DispatcherTimer {Interval = new TimeSpan(0, 0, 1)};
-                _timer.Tick += delegate
-                {
-                    _ts += new TimeSpan(0, 0, 1);
-                    RunTime.Content = _ts.ToString();
-                };
-                _cts = new CancellationTokenSource();
-            }
-
-            public void UpdateXppH()
-            {
-                if (Stats == null || Math.Abs(_ts.TotalHours) < 0.0000001)
-                    Xpph.Content = 0;
-                else
-                    Xpph.Content = "Xp/h: " + (Stats.TotalExperience / _ts.TotalHours).ToString("0.0");
-            }
-
-            private void WipeData()
-            {
-                Log = new List<Tuple<string, Color>>();
-                MapMarkers = new Dictionary<string, GMapMarker>();
-                MarkersQueue = new Queue<NewMapObject>();
-                LogQueue = new Queue<Tuple<string, Color>>();
-            }
-
-            public void Stop()
-            {
-                TimerStop();
-                _cts.Cancel();
-                WipeData();
-                _ts = new TimeSpan();
-                Started = false;
-            }
-
-            public void Start()
-            {
-                TimerStart();
-                _cts.Dispose();
-                _cts = new CancellationTokenSource();
-                Started = true;
-            }
-
-            private void TimerStart() => _timer?.Start();
-
-            private void TimerStop() => _timer?.Stop();
-
-            internal void EnqueData()
-            {
-                while (LogQueue.Count > 0)
-                    Log.Add(LogQueue.Dequeue());
-                foreach (var item in Log)                
-                    LogQueue.Enqueue(item);
-                Log = new List<Tuple<string, Color>>();
-            }
-        }
-
-        internal class NewMapObject
-        {
-            public string OType;
-            public string OName;
-            public double Lat;
-            public double Lng;
-            internal string Uid;
-            public NewMapObject(string oType, string oName, double lat, double lng, string uid)
-            {
-                OType = oType;
-                OName = oName;
-                Lat = lat;
-                Lng = lng;
-                Uid = uid;
-            }
-        }
+        #endregion
 
         #region Controll's events
         private void authBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -631,8 +585,6 @@ namespace Catchem
 
             var session = new Session(newBot.Settings, newBot.Logic);
             session.Client.ApiFailure = new ApiFailureStrategy(session);
-
-            
 
             session.EventDispatcher.EventReceived += evt => newBot.Listener.Listen(evt, session);
             session.EventDispatcher.EventReceived += evt => newBot.Aggregator.Listen(evt, session);
@@ -779,6 +731,13 @@ namespace Catchem
             #endregion
         }
 
+        private void UpdateCollection(ISession session)
+        {
+            if (Bot == null || session != _curSession) return;
+            //PokeListBox.Items.Refresh();
+            l_poke_inventory.Content = $"({Bot.PokemonList.Count}/{Bot.MaxPokemonStorageSize})";
+        }
+
         // ReSharper disable once InconsistentNaming
         private void StatsOnDirtyEvent(BotWindowData _bot)
         {
@@ -788,12 +747,10 @@ namespace Catchem
             {
                 Dispatcher.BeginInvoke(new ThreadStart(delegate
                 {
-                    Playername.Content = _curSession.Profile?.PlayerData?.Username;
                     l_StarDust.Content = Bot.Stats?.TotalStardust;
                     l_Stardust_farmed.Content = Bot.Stats?.TotalStardust == 0 ? 0 : Bot.Stats?.TotalStardust - _curSession?.Profile?.PlayerData?.Currencies[1].Amount;
                     l_xp.Content = Bot.Stats?.ExportStats?.CurrentXp;
                     l_xp_farmed.Content = Bot.Stats?.TotalExperience;
-                    l_coins.Content = _curSession.Profile?.PlayerData?.Currencies[0].Amount;
                     l_Pokemons_farmed.Content = Bot.Stats?.TotalPokemons;
                     l_Pokemons_transfered.Content = Bot.Stats?.TotalPokemonsTransfered;
                     l_Pokestops_farmed.Content = Bot.Stats?.TotalPokestops;
@@ -808,6 +765,15 @@ namespace Catchem
             consoleBox.Document.Blocks.Clear();
             pokeMap.Markers.Clear();
             _playerMarker = null;
+        }
+
+        private static BotWindowData CreateBowWindowData(GlobalSettings s, string name)
+        {
+            var stats = new Statistics();
+
+            return new BotWindowData(name, s, new StateMachine(), stats, new StatisticsAggregator(stats),
+                new WpfEventListener(), new ClientSettings(s), new LogicSettings(s));
+
         }
 
         private void RebuildUi()
@@ -887,23 +853,19 @@ namespace Catchem
             }
             #endregion
 
+            PokeListBox.ItemsSource = Bot.PokemonList;
+
             _loadingUi = false;
         }
 
+
+        #region Windows UI Methods
         private void UpdateCoordBoxes()
         {
             c_DefaultLatitude.Text = Bot.GlobalSettings.DefaultLatitude.ToString(CultureInfo.InvariantCulture);
             c_DefaultLongitude.Text = Bot.GlobalSettings.DefaultLongitude.ToString(CultureInfo.InvariantCulture);
         }
 
-        private static BotWindowData CreateBowWindowData(GlobalSettings s, string name)
-        {
-            var stats = new Statistics();
-
-            return new BotWindowData(name, s, new StateMachine(), stats, new StatisticsAggregator(stats),
-                new WpfEventListener(), new ClientSettings(s), new LogicSettings(s));
-
-        }
 
         private void NoButton_Click(object sender, RoutedEventArgs e)
         {
@@ -964,6 +926,26 @@ namespace Catchem
                 b.Stop();
             }
         }
+
+        private void SortByCpClick(object sender, RoutedEventArgs e)
+        {
+            if (Bot == null || _loadingUi) return;
+            PokeListBox.Items.SortDescriptions.Clear();
+            PokeListBox.Items.SortDescriptions.Add(new System.ComponentModel.SortDescription("Cp", System.ComponentModel.ListSortDirection.Descending));
+        }
+        private void SortByIvClick(object sender, RoutedEventArgs e)
+        {
+            if (Bot == null || _loadingUi) return;
+            PokeListBox.Items.SortDescriptions.Clear();
+            PokeListBox.Items.SortDescriptions.Add(new System.ComponentModel.SortDescription("Iv", System.ComponentModel.ListSortDirection.Descending));
+        }
+        private void sortByAz_Click(object sender, RoutedEventArgs e)
+        {
+            if (Bot == null || _loadingUi) return;
+            PokeListBox.Items.SortDescriptions.Clear();
+            PokeListBox.Items.SortDescriptions.Add(new System.ComponentModel.SortDescription("Name", System.ComponentModel.ListSortDirection.Ascending));
+        }
+        #endregion
 
         #region Property <-> Settings
         private void BotGlobalSettingsChange(string propertyName, object value)
@@ -1135,5 +1117,170 @@ namespace Catchem
         #endregion
 
 
+        internal class NewMapObject
+        {
+            public string OType;
+            public string OName;
+            public double Lat;
+            public double Lng;
+            internal string Uid;
+            public NewMapObject(string oType, string oName, double lat, double lng, string uid)
+            {
+                OType = oType;
+                OName = oName;
+                Lat = lat;
+                Lng = lng;
+                Uid = uid;
+            }
+        }
+
+        private class BotWindowData
+        {
+            public readonly string ProfileName;
+            private CancellationTokenSource _cts;
+            public CancellationToken CancellationToken => _cts.Token;
+            internal GMapMarker ForceMoveMarker;
+            public List<Tuple<string, Color>> Log = new List<Tuple<string, Color>>();
+            public Queue<Tuple<string, Color>> LogQueue = new Queue<Tuple<string, Color>>();
+            public Dictionary<string, GMapMarker> MapMarkers = new Dictionary<string, GMapMarker>();
+            public Queue<NewMapObject> MarkersQueue = new Queue<NewMapObject>();
+            public readonly StateMachine Machine;
+            public readonly Statistics Stats;
+            public readonly StatisticsAggregator Aggregator;
+            public readonly WpfEventListener Listener;
+            public readonly ClientSettings Settings;
+            public readonly LogicSettings Logic;
+            public readonly GlobalSettings GlobalSettings;
+            public int MaxItemStorageSize;
+            public int MaxPokemonStorageSize;
+            //public Dictionary<ulong, PokemonUiData> PokemonList = new Dictionary<ulong, PokemonUiData>();
+            public ObservableCollection<PokemonUiData> PokemonList = new ObservableCollection<PokemonUiData>();
+
+            public Label RunTime;
+            public Label Xpph;
+            public bool Started;
+
+            private readonly DispatcherTimer _timer;
+            private TimeSpan _ts;
+
+            public double Lat;
+            public double Lng;
+            public bool GotNewCoord;
+            public bool MoveRequired;
+            private double _la, _ln;
+
+            // ReSharper disable once InconsistentNaming
+            internal double _lat
+            {
+                get { return _la; }
+                set
+                {
+                    GlobalSettings.DefaultLatitude = value;
+                    _la = value;
+                }
+            }
+
+            // ReSharper disable once InconsistentNaming
+            internal double _lng
+            {
+                get { return _ln; }
+                set
+                {
+                    GlobalSettings.DefaultLongitude = value;
+                    _ln = value;
+                }
+            }
+            public double LatStep, LngStep;
+
+            public BotWindowData(string name, GlobalSettings gs, StateMachine sm, Statistics st, StatisticsAggregator sa, WpfEventListener wel, ClientSettings cs, LogicSettings l)
+            {
+                ProfileName = name;
+                Settings = new ClientSettings(gs);
+                Logic = new LogicSettings(gs);
+                GlobalSettings = gs;
+                Machine = sm;
+                Stats = st;
+                Aggregator = sa;
+                Listener = wel;
+                Settings = cs;
+                Logic = l;
+
+                _ts = new TimeSpan();
+                _timer = new DispatcherTimer { Interval = new TimeSpan(0, 0, 1) };
+                _timer.Tick += delegate
+                {
+                    _ts += new TimeSpan(0, 0, 1);
+                    RunTime.Content = _ts.ToString();
+                };
+                _cts = new CancellationTokenSource();
+            }
+
+            public void UpdateXppH()
+            {
+                if (Stats == null || Math.Abs(_ts.TotalHours) < 0.0000001)
+                    Xpph.Content = 0;
+                else
+                    Xpph.Content = "Xp/h: " + (Stats.TotalExperience / _ts.TotalHours).ToString("0.0");
+            }
+
+            private void WipeData()
+            {
+                Log = new List<Tuple<string, Color>>();
+                MapMarkers = new Dictionary<string, GMapMarker>();
+                MarkersQueue = new Queue<NewMapObject>();
+                LogQueue = new Queue<Tuple<string, Color>>();
+            }
+
+            public void Stop()
+            {
+                TimerStop();
+                _cts.Cancel();
+                WipeData();
+                _ts = new TimeSpan();
+                Started = false;
+            }
+
+            public void Start()
+            {
+                TimerStart();
+                _cts.Dispose();
+                _cts = new CancellationTokenSource();
+                Started = true;
+            }
+
+            private void TimerStart() => _timer?.Start();
+
+            private void TimerStop() => _timer?.Stop();
+
+            internal void EnqueData()
+            {
+                while (LogQueue.Count > 0)
+                    Log.Add(LogQueue.Dequeue());
+                foreach (var item in Log)
+                    LogQueue.Enqueue(item);
+                Log = new List<Tuple<string, Color>>();
+            }
+        }
+
+        public class PokemonUiData
+        {
+            //public Grid PokemonGrid;
+            public ulong Id { get; set; }
+            public BitmapSource Image { get; set; }
+            public string Name { get; set; }
+            public int Cp { get; set; }
+            public double Iv { get; set; }
+
+            public PokemonUiData(ulong id, BitmapSource img, string name, int cp, double iv)
+            {
+                Id = id;
+                Image = img;
+                Name = name;
+                Cp = cp;
+                Iv = iv;
+            }
+        }
+
+       
     }
 }

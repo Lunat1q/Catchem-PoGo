@@ -56,6 +56,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
 
                 session.EventDispatcher.Send(new TransferPokemonEvent
                 {
+                    Uid = duplicatePokemon.Id,
                     Id = duplicatePokemon.PokemonId,
                     Perfection = PokemonInfo.CalculatePokemonPerfection(duplicatePokemon),
                     Cp = duplicatePokemon.Cp,

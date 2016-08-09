@@ -6,11 +6,7 @@ using POGOProtos.Enums;
 using POGOProtos.Inventory.Item;
 using POGOProtos.Networking.Responses;
 using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Catchem
 {
@@ -20,6 +16,11 @@ namespace Catchem
         {
             Logger.Write(session.Translation.GetTranslation(TranslationString.EventProfileLogin,
                 evt.Profile.PlayerData.Username ?? ""), session: session);
+            var playerData = session.Profile?.PlayerData;
+            if (playerData == null) return;
+            Logger.PushToUi("profile_data", session, playerData.Username,
+                playerData.MaxItemStorage, playerData.MaxPokemonStorage,
+                playerData.Currencies[0].Amount);
         }
 
         public void HandleEvent(ErrorEvent evt, ISession session)
@@ -51,8 +52,7 @@ namespace Catchem
 
         public void HandleEvent(UseLuckyEggMinPokemonEvent evt, ISession session)
         {
-            Logger.Write(session.Translation.GetTranslation(TranslationString.EventUseLuckyEggMinPokemonCheck, evt.Diff, evt.CurrCount, evt.MinPokemon),
-                LogLevel.Info);
+            Logger.Write(session.Translation.GetTranslation(TranslationString.EventUseLuckyEggMinPokemonCheck, evt.Diff, evt.CurrCount, evt.MinPokemon));
         }
 
         public void HandleEvent(PokemonEvolveEvent evt, ISession session)
@@ -62,11 +62,19 @@ namespace Catchem
                 : session.Translation.GetTranslation(TranslationString.EventPokemonEvolvedFailed, session.Translation.GetPokemonName(evt.Id), evt.Result,
                     evt.Id),
                 LogLevel.Evolve, session: session);
+
+            Logger.PushToUi("pm_rem", session, evt.Uid);
+        }
+        public void HandleEvent(PokemonEvolveDoneEvent evt, ISession session)
+        {
+            Logger.Write($"Evolved into {evt.Id} CP: {evt.Cp} Iv: {evt.Perfection.ToString("0.00")}%");
+
+            Logger.PushToUi("pm_new", session, evt.Uid, evt.Id, evt.Cp, evt.Perfection);
         }
 
         public void HandleEvent(UpdatePositionEvent evt, ISession session)
         {
-            Logger.PushToUi("p_loc", session, new object[] { evt.Latitude, evt.Longitude });
+            Logger.PushToUi("p_loc", session, evt.Latitude, evt.Longitude);
         }
 
         public void HandleEvent(TransferPokemonEvent evt, ISession session)
@@ -74,30 +82,31 @@ namespace Catchem
             Logger.Write(session.Translation.GetTranslation(TranslationString.EventPokemonTransferred, session.Translation.GetPokemonName(evt.Id), evt.Cp,
                     evt.Perfection.ToString("0.00"), evt.BestCp, evt.BestPerfection.ToString("0.00"), evt.FamilyCandies),
                 LogLevel.Transfer, session: session);
+            Logger.PushToUi("pm_rem", session, evt.Uid);
         }
 
         public void HandleEvent(PokeStopListEvent evt, ISession session)
         {
-            Logger.PushToUi("ps", session, new object[] { evt.Forts });
+            Logger.PushToUi("ps", session, evt.Forts);
         }
 
         public void HandleEvent(ForceMoveDoneEvent evt, ISession session)
         {
-            Logger.PushToUi("forcemove_done", session, new object[] { });
+            Logger.PushToUi("forcemove_done", session);
         }
 
         public void HandleEvent(PokemonsFoundEvent evt, ISession session)
         {
-            Logger.PushToUi("pm", session, new object[] { evt.Pokemons });
+            Logger.PushToUi("pm", session, evt.Pokemons);
         }
         public void HandleEvent(PokemonsWildFoundEvent evt, ISession session)
         {
-            Logger.PushToUi("pmw", session, new object[] { evt.Pokemons });
+            Logger.PushToUi("pmw", session, evt.Pokemons);
         }        
 
         public void HandleEvent(PokemonDisappearEvent evt, ISession session)
         {
-            Logger.PushToUi("pm_rm", session, new object[] { evt.Pokemon });
+            Logger.PushToUi("pm_rm", session, evt.Pokemon);
         }
 
         public void HandleEvent(ItemRecycledEvent evt, ISession session)
@@ -119,6 +128,7 @@ namespace Catchem
             Logger.Write(session.Translation.GetTranslation(TranslationString.IncubatorEggHatched,
                 session.Translation.GetPokemonName(evt.PokemonId), evt.Level, evt.Cp, evt.MaxCp, evt.Perfection),
                 LogLevel.Egg, session: session);
+            Logger.PushToUi("pm_new", session, evt.Id, evt.PokemonId, evt.Cp, evt.Perfection);
         }
 
         public void HandleEvent(FortUsedEvent evt, ISession session)
@@ -182,6 +192,7 @@ namespace Catchem
                     break;
                 case CatchPokemonResponse.Types.CatchStatus.CatchSuccess:
                     strStatus = session.Translation.GetTranslation(TranslationString.CatchStatusSuccess);
+                    Logger.PushToUi("pm_new", session, evt.Uid, evt.Id, evt.Cp, evt.Perfection);
                     break;
                 default:
                     strStatus = evt.Status.ToString();
@@ -222,6 +233,11 @@ namespace Catchem
                 : session.Translation.GetTranslation(TranslationString.SnipeScanEx, session.Translation.GetPokemonName(evt.PokemonId),
                     evt.Iv > 0 ? evt.Iv.ToString(CultureInfo.InvariantCulture) : "unknown",
                     $"{evt.Bounds.Latitude},{evt.Bounds.Longitude}"), session: session);
+        }
+
+        public void HandleEvent(PokemonListEvent evt, ISession session)
+        {
+            Logger.PushToUi("pm_list", session, evt.PokemonList);
         }
 
         public void HandleEvent(DisplayHighestsPokemonEvent evt, ISession session)
