@@ -3,7 +3,9 @@
 <h5>also some code was taken from NecroBot project</h5>
 
 <h2>See it in action:</h2>
- [<h3>Basic map</h3>](http://i.imgur.com/UXGkHS4.gifv) - [<h3>List of Pokemons</h3>](http://i.imgur.com/R7nNNrk.gifv)
+ [<h3>Basic map</h3>](http://i.imgur.com/UXGkHS4.gifv)
+ 
+ [<h3>List of Pokemons</h3>](http://i.imgur.com/R7nNNrk.gifv)
 
 <h2>Extra features (from PokeMobBot) project)</h2>
 
