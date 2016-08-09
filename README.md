@@ -2,13 +2,8 @@
 <h4>Based on PokeMobBot project</h4>
 <h5>also some code was taken from NecroBot project</h5>
 
-In action: [Basic map](http://i.imgur.com/UXGkHS4.gifv) - [List of Pokemons](http://i.imgur.com/R7nNNrk.gifv)
-<h3>UI map/console window</h3>
-![botUI1](http://i.imgur.com/JjeQpCn.png)
-<h3>UI settings window</h3>
-![botUI2](http://i.imgur.com/9aWAK9l.png)
-<h3>UI information window, red - farmed amount</h3>
-![botUI3](http://i.imgur.com/wnAksr7.png)
+<h2>See it in action:</h2>
+ [<h3>Basic map</h3>](http://i.imgur.com/UXGkHS4.gifv) - [<h3>List of Pokemons</h3>](http://i.imgur.com/R7nNNrk.gifv)
 
 <h2>Extra features (from PokeMobBot) project)</h2>
 
