@@ -2,7 +2,7 @@
 <h4>Based on PokeMobBot project</h4>
 <h5>also some code was taken from NecroBot project</h5>
 
-In action: [Basic map](http://i.imgur.com/UXGkHS4.gifv) [List of Pokemons](http://i.imgur.com/R7nNNrk.gifv)
+In action: [Basic map](http://i.imgur.com/UXGkHS4.gifv) - [List of Pokemons](http://i.imgur.com/R7nNNrk.gifv)
 <h3>UI map/console window</h3>
 ![botUI1](http://i.imgur.com/JjeQpCn.png)
 <h3>UI settings window</h3>
