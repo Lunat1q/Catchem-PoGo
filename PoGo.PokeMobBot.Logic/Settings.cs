@@ -273,6 +273,8 @@ namespace PoGo.PokeMobBot.Logic
         public bool UseGpxPathing = false;
         public string GpxFile = "GPXPath.GPX";
 		public bool UseDiscoveryPathing = true;
+        [JsonIgnore]
+        public double MoveSpeedFactor = 1;
     }
 
     public class CatchSettings
@@ -931,6 +933,11 @@ namespace PoGo.PokeMobBot.Logic
             get { return _settings.Auth.ProxyUri; }
             set { _settings.Auth.ProxyUri = value; }
         }
+        double ISettings.MoveSpeedFactor
+        {
+            get { return _settings.LocationSettings.MoveSpeedFactor; }
+            set { _settings.LocationSettings.MoveSpeedFactor = value; }
+        }
     }
 
     public class LogicSettings : ILogicSettings
@@ -1052,6 +1059,5 @@ namespace PoGo.PokeMobBot.Logic
         public bool UseDiscoveryPathing => _settings.LocationSettings.UseDiscoveryPathing;
         public double UseMasterBallBelowCatchProbability => _settings.CatchSettings.UseMasterBallBelowCatchProbability;
         public bool CatchWildPokemon => _settings.CatchSettings.CatchWildPokemon;
-
     }
 }

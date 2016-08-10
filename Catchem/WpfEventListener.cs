@@ -20,7 +20,7 @@ namespace Catchem
             if (playerData == null) return;
             Logger.PushToUi("profile_data", session, playerData.Username,
                 playerData.MaxItemStorage, playerData.MaxPokemonStorage,
-                playerData.Currencies[0].Amount);
+                playerData.Currencies[0].Amount, playerData.Team);
         }
 
         public void HandleEvent(ErrorEvent evt, ISession session)

@@ -79,7 +79,7 @@ namespace PoGo.PokeMobBot.Logic
                 }
 
                 nextWaypointDistance = Math.Min(currentDistanceToTarget,
-                    (millisecondsUntilGetUpdatePlayerLocationResponse/1000*speedInMetersPerSecond) * (1 + _client.rnd.NextDouble() * 0.2 - 0.1));
+                    (millisecondsUntilGetUpdatePlayerLocationResponse/1000*speedInMetersPerSecond) * (1 + _client.rnd.NextDouble() * 0.2 - 0.1) * _client.Settings.MoveSpeedFactor);
                 nextWaypointBearing = LocationUtils.DegreeBearing(sourceLocation, targetLocation) * (1 + _client.rnd.NextDouble() * 0.06 - 0.03);
                 waypoint = LocationUtils.CreateWaypoint(sourceLocation, nextWaypointDistance, nextWaypointBearing);
 

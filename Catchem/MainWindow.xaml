@@ -331,10 +331,11 @@
                 </ScrollViewer>
             </TabItem>
             <TabItem Header="Map &amp; Console">
-                <Grid Background="#FFE5E5E5" Margin="0,2,0,-2">
+                <Grid Background="#FFE5E5E5" Margin="0">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="220"/>
-                        <RowDefinition Height="302*"/>
+                        <RowDefinition/>
+                        <RowDefinition Height="33"/>
                     </Grid.RowDefinitions>
                     <RichTextBox x:Name="consoleBox" Background="#FF252525" Foreground="#FFCDCDCD" VerticalScrollBarVisibility="Visible" Block.LineHeight="1">
                         <FlowDocument>
@@ -348,7 +349,21 @@
                             </LinearGradientBrush>
                         </GridSplitter.Background>
                     </GridSplitter>
-                    <WindowsPresentation:GMapControl x:Name="pokeMap" Margin="0,3,0,0" Grid.Row="1" MouseDoubleClick="pokeMap_MouseDoubleClick"/>
+                    <WindowsPresentation:GMapControl x:Name="pokeMap" Margin="0,3,0,1" Grid.Row="1" MouseDoubleClick="pokeMap_MouseDoubleClick"/>
+                    <Grid Margin="0,0,0,0" Grid.Row="2">
+                        <Rectangle Margin="0">
+                            <Rectangle.Fill>
+                                <LinearGradientBrush EndPoint="0,0.5" StartPoint="1,0.5">
+                                    <GradientStop Color="#FF9AFF7D"/>
+                                    <GradientStop Color="#FF97FFC2" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Rectangle.Fill>
+                        </Rectangle>
+                        <CheckBox x:Name="cb_mapFollowThePlayer" Content="Follow the Player marker" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="155" Checked="mapFollowThePlayer_Checked" Unchecked="mapFollowThePlayer_Checked"/>
+                        <Slider x:Name="sl_moveSpeedFactor" HorizontalAlignment="Left" Margin="295,8,0,0" VerticalAlignment="Top" RenderTransformOrigin="3.583,0.25" Width="349" Height="25" Minimum="0.3" Maximum="3" TickPlacement="BottomRight" Value="1" ValueChanged="sl_moveSpeedFactor_ValueChanged" TickFrequency="0.1" SmallChange="0" />
+                        <Label x:Name="label5" Content="Move Speed Factor:" HorizontalAlignment="Left" Margin="184,5,0,0" VerticalAlignment="Top" Width="126"/>
+                        <Label x:Name="l_moveSpeedFactor" Content="1" HorizontalAlignment="Left" Margin="644,5,0,0" VerticalAlignment="Top" Width="32"/>
+                    </Grid>
                 </Grid>
             </TabItem>
             <TabItem Header="Information">
@@ -374,7 +389,6 @@
                             </LinearGradientBrush>
                         </Label.Foreground>
                     </Label>
-                    <Label x:Name="label5" Content="TEAM&#xA;LOGO&#xA;HERE" HorizontalAlignment="Right" VerticalAlignment="Top" FontFamily="Source Sans Pro Black" FontWeight="Bold" FontSize="24" Foreground="#7F6AABAE" Height="102" Width="97" Grid.Column="2"/>
                     <Label x:Name="label6" Content="STARDUST" HorizontalAlignment="Left" Margin="10,48,0,0" VerticalAlignment="Top" Foreground="#FF363636" FontSize="15" TextOptions.TextFormattingMode="Display" FontFamily="Source Sans Pro Semibold" Height="28" Width="82"/>
                     <Label x:Name="l_StarDust" Content="AMOUNT" HorizontalAlignment="Left" Margin="11,69,0,0" VerticalAlignment="Top" Foreground="#FF324AB4" FontSize="15" TextOptions.TextFormattingMode="Display" FontFamily="Source Sans Pro Semibold" Height="28" Width="73"/>
                     <Label x:Name="l_Stardust_farmed" Content="+FARMED" HorizontalAlignment="Left" Margin="83,69,0,0" VerticalAlignment="Top" Foreground="#FFBF4F2E" FontSize="15" TextOptions.TextFormattingMode="Display" FontFamily="Source Sans Pro Semibold" Height="28" Width="78"/>
@@ -481,6 +495,7 @@
                     <ListBox x:Name="ItemListBox" Grid.Column="2" Margin="10,130,10,46" BorderBrush="#FF04C17C" Background="#FFEFFFF8" ItemTemplate="{DynamicResource InventoryItemTemplate}" HorizontalContentAlignment="Stretch"/>
                     <Label x:Name="label6_Copy6" Content="INVENTORY" HorizontalAlignment="Left" Margin="10,102,0,0" VerticalAlignment="Top" Foreground="#FF363636" FontSize="15" TextOptions.TextFormattingMode="Display" FontFamily="Source Sans Pro Semibold" Height="28" Width="89" Grid.Column="2"/>
                     <Label x:Name="l_inventory" Content="(HAVE/MAX)" HorizontalAlignment="Right" Margin="0,102,10,0" VerticalAlignment="Top" Foreground="#FF324AB4" FontSize="15" TextOptions.TextFormattingMode="Display" FontFamily="Source Sans Pro Semibold" Height="28" Width="100" HorizontalContentAlignment="Right" Grid.Column="2"/>
+                    <Image x:Name="team_image" Grid.Column="2" HorizontalAlignment="Right" Height="100" Margin="202,0,0,0" VerticalAlignment="Top" Width="100" Source="pack://siteoforigin:,,,/Resources/team_instinct.png"/>
                 </Grid>
             </TabItem>
 

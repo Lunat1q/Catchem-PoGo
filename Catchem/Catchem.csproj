@@ -643,6 +643,10 @@
     <Content Include="adb\AdbWinUsbApi.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\team_neutral.png" />
+    <None Include="Resources\team_valor.png" />
+    <None Include="Resources\team_mystic.png" />
+    <None Include="Resources\team_instinct.png" />
     <None Include="Resources\revive_2.png" />
     <None Include="Resources\revive_1.png" />
     <None Include="Resources\potion_4.png" />
