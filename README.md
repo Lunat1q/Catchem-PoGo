@@ -7,6 +7,8 @@ I you really liked this project, feel free to buy us all a beer, by using PayPal
 [![Donate](https://www.paypalobjects.com/en_US/GB/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=RFAU4PYCAAGML)<br/>
 
 <h2>See it in action:</h2>
+ [<h3>How to setup + Main Action clip :)</h3>](http://i.imgur.com/febaZmj.gifv)
+ 
  [<h3>Basic map</h3>](http://i.imgur.com/UXGkHS4.gifv)
  
  [<h3>List of Pokemons</h3>](http://i.imgur.com/R7nNNrk.gifv)
@@ -18,6 +20,13 @@ I you really liked this project, feel free to buy us all a beer, by using PayPal
  - [Proxy support]
  - [All settings from UI]
  - [You can set startup location from the map, just select the bot (don't hit Start), go to the map tab, and just double-click to desired position]
+
+<br/>
+<h2>Screenshots</h2>
+![Player info tab](http://i.imgur.com/6gBSiHO.png)<br/>
+![Map/Console tab](http://i.imgur.com/NGjPmGW.png)<br/>
+![Settings tab](http://i.imgur.com/2ubVVqi.png)<br/>
+
  
 Get Device data from real android device:
  1. [Enable USB debugging at your phone settings]
