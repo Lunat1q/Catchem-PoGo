@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Catchem"
         xmlns:WindowsPresentation="clr-namespace:GMap.NET.WindowsPresentation;assembly=GMap.NET.WindowsPresentation" x:Class="Catchem.MainWindow"
         mc:Ignorable="d"
-        Title="Catchem" Height="703" Width="1043.5" MinWidth="1075" MinHeight="775" Closing="Window_Closing" Icon="unnamed.ico">
+        Title="Catchem" Height="775" Width="1075" MinWidth="1075" MinHeight="775" Closing="Window_Closing" Icon="unnamed.ico">
     <Window.Background>
         <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
             <GradientStop Color="#FFB2EF9C" Offset="0"/>
@@ -160,7 +160,7 @@
 
                             </Grid>
                         </GroupBox>
-                        <GroupBox x:Name="groupBox4" Grid.Column="1" Header="Snipe" Margin="0,943,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.479,0.565" Height="200">
+                        <GroupBox x:Name="groupBox4" Grid.Column="1" Header="Snipe" Margin="0,943,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.479,0.565" Height="224">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="181*"/>
@@ -175,6 +175,8 @@
                                 <CheckBox x:Name="c_SnipeAtPokestops" Content="Snipe At Pokestops" HorizontalAlignment="Left" Margin="10,107,0,0" VerticalAlignment="Top" Width="171" Checked="BotPropertyChanged" Unchecked="BotPropertyChanged"/>
                                 <CheckBox x:Name="c_SnipeIgnoreUnknownIv" Content="Snipe Ignore Unknown Iv" HorizontalAlignment="Left" Margin="10,128,0,0" VerticalAlignment="Top" Width="171" Checked="BotPropertyChanged" Unchecked="BotPropertyChanged"/>
                                 <CheckBox x:Name="c_UseTransferIvForSnipe" Content="Use Transfer Iv For Snipe" HorizontalAlignment="Left" Margin="10,149,0,0" VerticalAlignment="Top" Width="171" Checked="BotPropertyChanged" Unchecked="BotPropertyChanged"/>
+                                <Label x:Name="label9_Copy23" Content="Sniping Scan Offset" Margin="10,170,0,0" VerticalAlignment="Top" Height="26"/>
+                                <TextBox Template="{StaticResource pogo}" x:Name="c_SnipingScanOffset" Height="29" Margin="5,169,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Column="1" TextChanged="BotPropertyChanged"/>
 
                             </Grid>
                         </GroupBox>
@@ -267,6 +269,47 @@
                                 <TextBox Template="{StaticResource pogo}" x:Name="c_FirmwareFingerprint" Grid.Column="1" Height="29" Margin="10,421,10,0" TextWrapping="Wrap" VerticalAlignment="Top" TextChanged="BotPropertyChanged" />
                                 <Button x:Name="b_getDataFromRealPhone" Content="Get Data from Your Android Phone" Margin="10,455,0,0" VerticalAlignment="Top" Width="195" Grid.Column="1" Click="b_getDataFromRealPhone_Click" />
                                 <Button x:Name="b_generateRandomDeviceId" Content="Random" HorizontalAlignment="Right" Margin="0,17,10,0" VerticalAlignment="Top" Width="62" Grid.Column="1" Click="b_generateRandomDeviceId_Click" />
+
+                            </Grid>
+                        </GroupBox>
+                        <GroupBox x:Name="groupBox4_Copy2" Header="Delays" Margin="0,1167,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.479,0.565" Height="573" Grid.Column="1">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="181*"/>
+                                    <ColumnDefinition Width="108*"/>
+                                </Grid.ColumnDefinitions>
+                                <Label x:Name="label12" Content="Delay Between Player Actions" Margin="10,8,0,0" VerticalAlignment="Top" Height="26"/>
+                                <TextBox Template="{StaticResource pogo}" x:Name="c_DelayBetweenPlayerActions" Height="29" Margin="5,7,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Column="1" Text="0" TextChanged="BotPropertyChanged" />
+                                <Label x:Name="label9_Copy7" Content="Delay Position Check State" Margin="10,42,0,0" VerticalAlignment="Top" Height="26"/>
+                                <TextBox Template="{StaticResource pogo}" x:Name="c_DelayPositionCheckState" Height="29" Margin="5,41,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Column="1" Text="0" TextChanged="BotPropertyChanged" />
+                                <Label x:Name="label9_Copy8" Content="Delay Pokestop" Margin="10,76,0,0" VerticalAlignment="Top" Height="26"/>
+                                <TextBox Template="{StaticResource pogo}" x:Name="c_DelayPokestop" Height="29" Margin="5,75,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Column="1" Text="0" TextChanged="BotPropertyChanged" />
+                                <Label x:Name="label9_Copy9" Content="Delay Catch Nearby Pokemon" Margin="10,178,0,0" VerticalAlignment="Top" Height="26"/>
+                                <TextBox Template="{StaticResource pogo}" x:Name="c_DelayCatchNearbyPokemon" Height="29" Margin="5,177,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Column="1" TextChanged="BotPropertyChanged"/>
+                                <Label x:Name="label9_Copy10" Content="Delay Between Pokemon Catch" Margin="10,144,0,0" VerticalAlignment="Top" Height="26"/>
+                                <TextBox Template="{StaticResource pogo}" x:Name="c_DelayBetweenPokemonCatch" Height="29" Margin="5,143,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Column="1" Text="0" TextChanged="BotPropertyChanged"/>
+                                <Label x:Name="label9_Copy11" Content="Delay Catch Pokemon" Margin="10,110,0,0" VerticalAlignment="Top" Height="26"/>
+                                <TextBox Template="{StaticResource pogo}" x:Name="c_DelayCatchPokemon" Height="29" Margin="5,109,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Column="1" Text="0" TextChanged="BotPropertyChanged" />
+                                <Label x:Name="label9_Copy12" Content="Delay Catch Lure Pokemon" Margin="10,212,0,0" VerticalAlignment="Top" Height="26"/>
+                                <TextBox Template="{StaticResource pogo}" x:Name="c_DelayCatchLurePokemon" Height="29" Margin="5,211,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Column="1" TextChanged="BotPropertyChanged"/>
+                                <Label x:Name="label9_Copy13" Content="Delay Catch Incense Pokemon" Margin="10,246,0,0" VerticalAlignment="Top" Height="26"/>
+                                <TextBox Template="{StaticResource pogo}" x:Name="c_DelayCatchIncensePokemon" Height="29" Margin="5,245,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Column="1" TextChanged="BotPropertyChanged"/>
+                                <Label x:Name="label9_Copy14" Content="Delay Evolve Pokemon" Margin="10,280,0,0" VerticalAlignment="Top" Height="26"/>
+                                <TextBox Template="{StaticResource pogo}" x:Name="c_DelayEvolvePokemon" Height="29" Margin="5,279,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Column="1" TextChanged="BotPropertyChanged"/>
+                                <Label x:Name="label9_Copy15" Content="Delay Evolve Variation" Margin="10,314,0,0" VerticalAlignment="Top" Height="26"/>
+                                <TextBox Template="{StaticResource pogo}" x:Name="c_DelayEvolveVariation" Height="29" Margin="5,313,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Column="1" TextChanged="BotPropertyChanged"/>
+                                <Label x:Name="label9_Copy16" Content="Delay Transfer Pokemon" Margin="10,348,0,0" VerticalAlignment="Top" Height="26"/>
+                                <TextBox Template="{StaticResource pogo}" x:Name="c_DelayTransferPokemon" Height="29" Margin="5,347,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Column="1" TextChanged="BotPropertyChanged"/>
+                                <Label x:Name="label9_Copy17" Content="Delay Display Pokemon" Margin="10,382,0,0" VerticalAlignment="Top" Height="26"/>
+                                <TextBox Template="{StaticResource pogo}" x:Name="c_DelayDisplayPokemon" Height="29" Margin="5,381,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Column="1" TextChanged="BotPropertyChanged"/>
+                                <Label x:Name="label9_Copy18" Content="Delay Use Lucky Egg" Margin="10,416,0,0" VerticalAlignment="Top" Height="26"/>
+                                <TextBox Template="{StaticResource pogo}" x:Name="c_DelayUseLuckyEgg" Height="29" Margin="5,415,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Column="1" TextChanged="BotPropertyChanged"/>
+                                <Label x:Name="label9_Copy19" Content="Delay Softban Retry" Margin="10,450,0,0" VerticalAlignment="Top" Height="26"/>
+                                <TextBox Template="{StaticResource pogo}" x:Name="c_DelaySoftbanRetry" Height="29" Margin="5,449,10,-2" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Column="1" TextChanged="BotPropertyChanged"/>
+                                <Label x:Name="label9_Copy20" Content="Delay Recyle Item" Margin="10,484,0,-34" VerticalAlignment="Top" Height="26"/>
+                                <TextBox Template="{StaticResource pogo}" x:Name="c_DelayRecyleItem" Height="29" Margin="5,483,10,-36" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Column="1" TextChanged="BotPropertyChanged"/>
+                                <Label x:Name="label9_Copy21" Content="Delay Snipe Pokemon" Margin="10,518,0,0" VerticalAlignment="Top" Height="26"/>
+                                <TextBox Template="{StaticResource pogo}" x:Name="c_DelaySnipePokemon" Height="29" Margin="5,517,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Column="1" TextChanged="BotPropertyChanged"/>
 
                             </Grid>
                         </GroupBox>

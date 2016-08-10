@@ -189,21 +189,21 @@ namespace PoGo.PokeMobBot.Logic
 	
 	public class DelaySettings
     {//delays
-        public int DelayBetweenPlayerActions = 5;
+        public int DelayBetweenPlayerActions = 1000;
         public int DelayPositionCheckState = 200;
-        public int DelayPokestop = 1000;
-        public int DelayCatchPokemon = 5;
-        public int DelayBetweenPokemonCatch = 5;
-        public int DelayCatchNearbyPokemon = 5;
-        public int DelayCatchLurePokemon = 5;
-        public int DelayCatchIncensePokemon = 5;
-        public int DelayEvolvePokemon = 5;
+        public int DelayPokestop = 2000;
+        public int DelayCatchPokemon = 2000;
+        public int DelayBetweenPokemonCatch = 2000;
+        public int DelayCatchNearbyPokemon = 2000;
+        public int DelayCatchLurePokemon = 3000;
+        public int DelayCatchIncensePokemon = 3000;
+        public int DelayEvolvePokemon = 5000;
         public double DelayEvolveVariation = 0.3;
-        public int DelayTransferPokemon = 5;
+        public int DelayTransferPokemon = 1000;
         public int DelayDisplayPokemon = 5;
-        public int DelayUseLuckyEgg = 5;
-        public int DelaySoftbanRetry = 5;
-        public int DelayRecyleItem = 5;
+        public int DelayUseLuckyEgg = 1500;
+        public int DelaySoftbanRetry = 250;
+        public int DelayRecyleItem = 2500;
         public int DelaySnipePokemon = 250;
         public int MinDelayBetweenSnipes = 10000;
         public double SnipingScanOffset = 0.003;

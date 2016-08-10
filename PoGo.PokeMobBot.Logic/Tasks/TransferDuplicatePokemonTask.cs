@@ -75,7 +75,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                     FamilyCandies = family.Candy_
                 });
                 if(session.LogicSettings.Teleport)
-                    await Task.Delay(session.LogicSettings.DelayTransferPokemon);
+                    await Task.Delay(session.LogicSettings.DelayTransferPokemon, cancellationToken);
                 else
                     await DelayingUtils.Delay(session.LogicSettings.DelayBetweenPlayerActions, 0);
             }

@@ -241,7 +241,7 @@ namespace Catchem
                 {
                     UpdateCollection(session);
                 };
-                ((List<Tuple<PokemonData, double>>) objData[0]).ForEach(x => receiverBot.PokemonList.Add(
+                ((List<Tuple<PokemonData, double, int>>) objData[0]).ForEach(x => receiverBot.PokemonList.Add(
                     new PokemonUiData(x.Item1.Id, x.Item1.PokemonId.ToInventorySource(),
                         (x.Item1.Nickname == "" ? x.Item1.PokemonId.ToString() : x.Item1.Nickname),
                         x.Item1.Cp, x.Item2)));

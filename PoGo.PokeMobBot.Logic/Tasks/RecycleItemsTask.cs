@@ -168,60 +168,61 @@ namespace PoGo.PokeMobBot.Logic.Tasks
             //int pinapToRecycle = pinapCount - pinapToKeep;
             //int weparToRecycle = weparCount - weparToKeep;
 
-            if (!session.LogicSettings.AutomaticInventoryManagement)
+            //if (!session.LogicSettings.AutomaticInventoryManagement)
+            //{
+            _diff = totalBerryCount - session.LogicSettings.TotalAmountOfRazzToKeep;
+            if (_diff > 0)
             {
-                if (razzCount > razzToKeep)
-                {
-                    await RemoveItems(razzToRecycle, ItemId.ItemRazzBerry, cancellationToken, session);
-                }
-                //if (blukCount > blukToKeep)
-                //{
-                //    await RemoveItems(blukToRecycle, ItemId.ItemBlukBerry, cancellationToken, session);
-                //}
-                //if nanabCount > nanabToKeep)
-                //{
-                //    await RemoveItems(nanabToRecycle, ItemId.ItemNanabBerry, cancellationToken, session);
-                //}
-                //if (pinapCount > pinapToKeep)
-                //{
-                //    await RemoveItems(pinapToRecycle, ItemId.ItemPinapBerry, cancellationToken, session);
-                //}
-                //if (weparCount > weparToKeep)
-                //{
-                //    await RemoveItems(weparToRecycle, ItemId.ItemWeparBerry, cancellationToken, session);
-                //}
+                await RemoveItems(razzCount, ItemId.ItemRazzBerry, cancellationToken, session);
             }
-            else
+            if (_diff > 0)
             {
-                if (totalBerryCount > session.LogicSettings.AutomaticMaxAllBerries)
-                {
-                    _diff = totalBerryCount - session.LogicSettings.AutomaticMaxAllBerries;
-                    if (_diff > 0)
-                    {
-                        await RemoveItems(razzCount, ItemId.ItemRazzBerry, cancellationToken, session);
-                    }
-
-                    if (_diff > 0)
-                    {
-                        await RemoveItems(blukCount, ItemId.ItemBlukBerry, cancellationToken, session);
-                    }
-
-                    if (_diff > 0)
-                    {
-                        await RemoveItems(nanabCount, ItemId.ItemNanabBerry, cancellationToken, session);
-                    }
-
-                    if (_diff > 0)
-                    {
-                        await RemoveItems(pinapCount, ItemId.ItemPinapBerry, cancellationToken, session);
-                    }
-
-                    if (_diff > 0)
-                    {
-                        await RemoveItems(weparCount, ItemId.ItemWeparBerry, cancellationToken, session);
-                    }
-                }
+                await RemoveItems(blukCount, ItemId.ItemBlukBerry, cancellationToken, session);
             }
+            if (_diff > 0)
+            {
+                await RemoveItems(nanabCount, ItemId.ItemNanabBerry, cancellationToken, session);
+            }
+            if (_diff > 0)
+            {
+                await RemoveItems(pinapCount, ItemId.ItemPinapBerry, cancellationToken, session);
+            }
+            if (_diff > 0)
+            {
+                await RemoveItems(weparCount, ItemId.ItemWeparBerry, cancellationToken, session);
+            }
+            //}
+            //else
+            //{
+            //    if (totalBerryCount > session.LogicSettings.AutomaticMaxAllBerries)
+            //    {
+            //        _diff = totalBerryCount - session.LogicSettings.AutomaticMaxAllBerries;
+            //        if (_diff > 0)
+            //        {
+            //            await RemoveItems(razzCount, ItemId.ItemRazzBerry, cancellationToken, session);
+            //        }
+
+            //        if (_diff > 0)
+            //        {
+            //            await RemoveItems(blukCount, ItemId.ItemBlukBerry, cancellationToken, session);
+            //        }
+
+            //        if (_diff > 0)
+            //        {
+            //            await RemoveItems(nanabCount, ItemId.ItemNanabBerry, cancellationToken, session);
+            //        }
+
+            //        if (_diff > 0)
+            //        {
+            //            await RemoveItems(pinapCount, ItemId.ItemPinapBerry, cancellationToken, session);
+            //        }
+
+            //        if (_diff > 0)
+            //        {
+            //            await RemoveItems(weparCount, ItemId.ItemWeparBerry, cancellationToken, session);
+            //        }
+            //    }
+            //}
         }
 
         private static async Task OptimizedRecycleRevives(ISession session, CancellationToken cancellationToken)
@@ -266,20 +267,14 @@ namespace PoGo.PokeMobBot.Logic.Tasks
 
         private static async Task RemoveItems(int itemCount, ItemId item, CancellationToken cancellationToken, ISession session)
         {
-            int itemsToRecycle;
-            if (session.LogicSettings.AutomaticInventoryManagement)
-            {  
-                int itemsToKeep = itemCount - _diff;
-                if (itemsToKeep < 0)
-                {
-                    itemsToKeep = 0;
-                }
-                itemsToRecycle = itemCount - itemsToKeep;
-                _diff -= itemsToRecycle;
-            } else
+            var itemsToKeep = itemCount - _diff;
+            if (itemsToKeep < 0)
             {
-                itemsToRecycle = itemCount;
+                itemsToKeep = 0;
             }
+            var itemsToRecycle = itemCount - itemsToKeep;
+            _diff -= itemsToRecycle;
+
             if (itemsToRecycle != 0)
             {
                 cancellationToken.ThrowIfCancellationRequested();
