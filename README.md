@@ -2,6 +2,7 @@
 <h4>Based on PokeMobBot project</h4>
 <h5>also some code was taken from NecroBot project</h5>
 
+ [<h2>Discord invite</h2>](https://discord.gg/pPwxX8Q)<h2>
 <h2>Donating</h2>
 I you really liked this project, feel free to buy us all a beer, by using PayPal:<br/><br/>
 [![Donate](https://www.paypalobjects.com/en_US/GB/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=RFAU4PYCAAGML)<br/>
