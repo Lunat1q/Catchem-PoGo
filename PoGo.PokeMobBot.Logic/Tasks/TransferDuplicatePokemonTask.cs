@@ -72,7 +72,8 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                     Cp = duplicatePokemon.Cp,
                     BestCp = bestPokemonOfType.Cp,
                     BestPerfection = PokemonInfo.CalculatePokemonPerfection(bestPokemonOfType),
-                    FamilyCandies = family.Candy_
+                    FamilyCandies = family.Candy_,
+                    Family = family.FamilyId
                 });
 
                 if(session.LogicSettings.Teleport)

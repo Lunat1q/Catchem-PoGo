@@ -153,7 +153,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                     if (family != null)
                     {
                         family.Candy_ += caughtPokemonResponse.CaptureAward.Candy.Sum();
-
+                        evt.Family = family.FamilyId;
                         evt.FamilyCandies = family.Candy_;
                     }
                     else

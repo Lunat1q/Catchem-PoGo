@@ -12,6 +12,7 @@ namespace PoGo.PokeMobBot.Logic.Event
         public int BestCp;
         public double BestPerfection;
         public int Cp;
+        public PokemonFamilyId Family;
         public int FamilyCandies;
         public PokemonId Id;
         public double Perfection;

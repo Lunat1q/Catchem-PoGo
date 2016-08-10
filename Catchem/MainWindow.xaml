@@ -50,7 +50,7 @@
             </Setter>
         </Style>
         <DataTemplate x:Key="PokemonDataTemplate">
-            <Grid Height="150" Width="150" Margin="1">
+            <Grid Height="160" Width="150" Margin="1">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
                     <ColumnDefinition/>
@@ -60,8 +60,9 @@
                     <Image Source="{Binding Path=Image}" x:Name="image" HorizontalAlignment="Center" Height="Auto" Margin="0" VerticalAlignment="Center" Width="Auto"/>
                 </Grid>
                 <TextBlock Text="{Binding Name, FallbackValue=NoName}" HorizontalAlignment="Left" Margin="0,95,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2" Width="150" Padding="0" Foreground="#FF59C3B0" FontSize="16" TextAlignment="Center"/>
-                <TextBlock Text="{Binding Cp, FallbackValue=0, StringFormat='Cp: {0}'}" HorizontalAlignment="Left" Margin="0,121,0,0" VerticalAlignment="Top" Grid.ColumnSpan="1" Width="75" Padding="0" Foreground="#FF59C3B0" FontSize="14" TextAlignment="Center" />
-                <TextBlock Text="{Binding Iv, FallbackValue=0, StringFormat='Iv: {0:N1}%'}" HorizontalAlignment="Left" Margin="0,121,0,0" VerticalAlignment="Top" Width="75" Padding="0" Foreground="#FF59C3B0" Grid.Column="1" FontSize="14" TextAlignment="Center" />
+                <TextBlock Text="{Binding Cp, FallbackValue='Cp: 0', StringFormat='Cp: {0}'}" HorizontalAlignment="Left" Margin="0,121,0,0" VerticalAlignment="Top" Grid.ColumnSpan="1" Width="75" Padding="0" Foreground="#FF59C3B0" FontSize="14" TextAlignment="Center" />
+                <TextBlock Text="{Binding Iv, FallbackValue='Iv: 0%', StringFormat='Iv: {0:N1}%'}" HorizontalAlignment="Left" Margin="0,121,0,0" VerticalAlignment="Top" Width="75" Padding="0" Foreground="#FF59C3B0" Grid.Column="1" FontSize="14" TextAlignment="Center" />
+                <TextBlock Text="{Binding Candy, FallbackValue='Candy: 0', StringFormat='Candy: {0}'}" HorizontalAlignment="Left" Margin="0,140,0,0" VerticalAlignment="Top" Width="75" Padding="0" Foreground="#FF59C3B0" Grid.Column="1" FontSize="12" TextAlignment="Center" />
             </Grid>
         </DataTemplate>
         <DataTemplate x:Key="InventoryItemTemplate">

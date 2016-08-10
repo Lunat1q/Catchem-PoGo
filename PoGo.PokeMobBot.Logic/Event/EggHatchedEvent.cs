@@ -14,5 +14,7 @@ namespace PoGo.PokeMobBot.Logic.Event
         public int MaxCp;
         public double Perfection;
         public PokemonId PokemonId;
+        public PokemonFamilyId Family;
+        public int Candy;
     }
 }

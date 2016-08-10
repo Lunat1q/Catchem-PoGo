@@ -14,5 +14,7 @@ namespace PoGo.PokeMobBot.Logic.Event
         public ulong Uid;
         public PokemonId Id;
         public double Perfection;
+        public PokemonFamilyId Family;
+        public int Candy;
     }
 }

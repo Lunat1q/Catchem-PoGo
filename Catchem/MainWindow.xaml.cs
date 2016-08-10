@@ -285,6 +285,15 @@ namespace Catchem
                 var targetPokemon = receiverBot.PokemonList.FirstOrDefault(x => x.Id == (ulong) objData[0]);
                 if (targetPokemon == null) return;
                 receiverBot.PokemonList.Remove(targetPokemon);
+                if (objData[1] != null && objData[2] != null)
+                {
+                    var family = (PokemonFamilyId)objData[1];
+                    var candy = (int)objData[2];
+                    foreach (var pokemon in receiverBot.PokemonList.Where(x => x.Family == family))
+                    {
+                        pokemon.Candy = candy;
+                    }
+                }
             }
             catch (Exception)
             {
@@ -299,7 +308,20 @@ namespace Catchem
                 if ((ulong) objData[0] == 0) return;
                 var receiverBot = _openedSessions[session];
                 var pokemonId = (PokemonId) objData[1];
-                receiverBot.PokemonList.Add(new PokemonUiData((ulong) objData[0], pokemonId.ToInventorySource(), pokemonId.ToString(), (int) objData[2], (double) objData[3]));
+                var family = (PokemonFamilyId) objData[4];
+                var candy = (int)objData[5];
+                receiverBot.PokemonList.Add(new PokemonUiData(
+                    (ulong) objData[0], 
+                    pokemonId.ToInventorySource(), 
+                    pokemonId.ToString(), 
+                    (int) objData[2], 
+                    (double) objData[3],
+                    family,
+                    candy));
+                foreach (var pokemon in receiverBot.PokemonList.Where(x => x.Family == family))
+                {
+                    pokemon.Candy = candy;
+                }
             }
             catch (Exception)
             {
@@ -307,15 +329,28 @@ namespace Catchem
             }
         }
 
-        private void BuildPokemonList(ISession session, object[] objData)
+        private async void BuildPokemonList(ISession session, object[] objData)
         {
             try
             {
                 var receiverBot = _openedSessions[session];
                 receiverBot.PokemonList = new ObservableCollection<PokemonUiData>();
                 receiverBot.PokemonList.CollectionChanged += delegate { UpdatePokemonCollection(session); };
-                ((List<Tuple<PokemonData, double, int>>) objData[0]).ForEach(x => receiverBot.PokemonList.Add(new PokemonUiData(x.Item1.Id, x.Item1.PokemonId.ToInventorySource(), (x.Item1.Nickname == "" ? x.Item1.PokemonId.ToString() : x.Item1.Nickname), x.Item1.Cp, x.Item2)));
-                if (session != _curSession) return;
+                var pokemonFamilies = await session.Inventory.GetPokemonFamilies();
+                var pokemonSettings = await session.Inventory.GetPokemonSettings();
+                foreach (var pokemon in (List<Tuple<PokemonData, double, int>>)objData[0])
+                {
+                    var setting = pokemonSettings.Single(q => q.PokemonId == pokemon.Item1.PokemonId);
+                    var family = pokemonFamilies.First(q => q.FamilyId == setting.FamilyId);
+                    receiverBot.PokemonList.Add(new PokemonUiData(
+                    pokemon.Item1.Id,
+                    pokemon.Item1.PokemonId.ToInventorySource(),
+                    (pokemon.Item1.Nickname == "" ? pokemon.Item1.PokemonId.ToString() : pokemon.Item1.Nickname),
+                    pokemon.Item1.Cp,
+                    pokemon.Item2,
+                    family.FamilyId, 
+                    family.Candy_));
+                }
 
                 PokeListBox.ItemsSource = Bot.PokemonList;
             }
@@ -1240,21 +1275,40 @@ namespace Catchem
             }
         }
 
-        public class PokemonUiData
+        public class PokemonUiData : INotifyPropertyChanged
         {
+            public event PropertyChangedEventHandler PropertyChanged;
+
+            protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
+            {
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            }
+
             public ulong Id { get; set; }
             public BitmapSource Image { get; set; }
             public string Name { get; set; }
             public int Cp { get; set; }
             public double Iv { get; set; }
+            public PokemonFamilyId Family { get; set; }
+            private int _candy;
+            public int Candy {
+                get { return _candy; }
+                set
+                {
+                    _candy = value;
+                    OnPropertyChanged();
+                }
+            }
 
-            public PokemonUiData(ulong id, BitmapSource img, string name, int cp, double iv)
+            public PokemonUiData(ulong id, BitmapSource img, string name, int cp, double iv, PokemonFamilyId family, int candy)
             {
                 Id = id;
                 Image = img;
                 Name = name;
                 Cp = cp;
                 Iv = iv;
+                Candy = candy;
+                Family = family;
             }
         }
 

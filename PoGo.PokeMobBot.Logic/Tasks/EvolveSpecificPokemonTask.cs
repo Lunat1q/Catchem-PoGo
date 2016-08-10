@@ -34,13 +34,22 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                 Result = evolveResponse.Result
             });
 
-            session.EventDispatcher.Send(new PokemonEvolveDoneEvent
+            if (evolveResponse.EvolvedPokemonData != null)
             {
-                Uid = evolveResponse.EvolvedPokemonData.Id,
-                Id = evolveResponse.EvolvedPokemonData.PokemonId,
-                Cp = evolveResponse.EvolvedPokemonData.Cp,
-                Perfection = PokemonInfo.CalculatePokemonPerfection(evolveResponse.EvolvedPokemonData)
-            });
+                var pokemonFamilies = session.Inventory.GetPokemonFamilies().Result;
+                var pokemonSettings = session.Inventory.GetPokemonSettings().Result.ToList();
+                var setting = pokemonSettings.Single(q => q.PokemonId == evolveResponse.EvolvedPokemonData.PokemonId);
+                var family = pokemonFamilies.First(q => q.FamilyId == setting.FamilyId);
+                session.EventDispatcher.Send(new PokemonEvolveDoneEvent
+                {
+                    Uid = evolveResponse.EvolvedPokemonData.Id,
+                    Id = evolveResponse.EvolvedPokemonData.PokemonId,
+                    Cp = evolveResponse.EvolvedPokemonData.Cp,
+                    Perfection = PokemonInfo.CalculatePokemonPerfection(evolveResponse.EvolvedPokemonData),
+                    Family = family.FamilyId,
+                    Candy = family.Candy_
+                });
+            }
             await DelayingUtils.Delay(session.LogicSettings.DelayBetweenPlayerActions, 2000);
         }
     }

@@ -433,8 +433,8 @@ namespace PoGo.PokeMobBot.Logic
         {
             var inventory = await GetCachedInventory();
             return
-                inventory.InventoryDelta.InventoryItems.Select(i => i.InventoryItemData?.PokemonData)
-                    .Where(p => p != null && p.PokemonId > 0).Count();
+                inventory.InventoryDelta.InventoryItems
+                    .Select(i => i.InventoryItemData?.PokemonData).Count(p => p != null && p.PokemonId > 0);
         }
 
         public async Task<IEnumerable<PokemonSettings>> GetPokemonSettings()

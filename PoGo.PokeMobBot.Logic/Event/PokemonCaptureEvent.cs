@@ -18,6 +18,7 @@ namespace PoGo.PokeMobBot.Logic.Event
         public double Distance;
         public int Exp;
         public int FamilyCandies;
+        public PokemonFamilyId Family;
         public PokemonId Id;
         public double Level;
         public int MaxCp;

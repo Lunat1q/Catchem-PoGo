@@ -55,7 +55,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                         return;
                     }
                 }
-
+                var pokemonFamilies = session.Inventory.GetPokemonFamilies().Result;
                 foreach (var pokemon in pokemonToEvolve)
                 {
                     // no cancellationToken.ThrowIfCancellationRequested here, otherwise the lucky egg would be wasted.
@@ -68,13 +68,23 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                         Exp = evolveResponse.ExperienceAwarded,
                         Result = evolveResponse.Result
                     });
-                    session.EventDispatcher.Send(new PokemonEvolveDoneEvent
+                    
+                    
+                    if (evolveResponse.EvolvedPokemonData != null)
                     {
-                        Uid = evolveResponse.EvolvedPokemonData.Id,
-                        Id = evolveResponse.EvolvedPokemonData.PokemonId,
-                        Cp = evolveResponse.EvolvedPokemonData.Cp,
-                        Perfection = PokemonInfo.CalculatePokemonPerfection(evolveResponse.EvolvedPokemonData)
-                    });
+                        var pokemonSettings = session.Inventory.GetPokemonSettings().Result.ToList();
+                        var setting = pokemonSettings.Single(q => q.PokemonId == evolveResponse.EvolvedPokemonData.PokemonId);
+                        var family = pokemonFamilies.First(q => q.FamilyId == setting.FamilyId);
+                        session.EventDispatcher.Send(new PokemonEvolveDoneEvent
+                        {
+                            Uid = evolveResponse.EvolvedPokemonData.Id,
+                            Id = evolveResponse.EvolvedPokemonData.PokemonId,
+                            Cp = evolveResponse.EvolvedPokemonData.Cp,
+                            Perfection = PokemonInfo.CalculatePokemonPerfection(evolveResponse.EvolvedPokemonData),
+                            Family = family.FamilyId,
+                            Candy = family.Candy_
+                        });
+                    }
                     await DelayingEvolveUtils.Delay(session.LogicSettings.DelayEvolvePokemon, 0, session.LogicSettings.DelayEvolveVariation);
                 }
             }

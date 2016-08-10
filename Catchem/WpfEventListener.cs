@@ -63,13 +63,14 @@ namespace Catchem
                     evt.Id),
                 LogLevel.Evolve, session: session);
 
-            Logger.PushToUi("pm_rem", session, evt.Uid);
+            if (evt.Result == EvolvePokemonResponse.Types.Result.Success)
+                Logger.PushToUi("pm_rem", session, evt.Uid, null, null);
         }
         public void HandleEvent(PokemonEvolveDoneEvent evt, ISession session)
         {
             Logger.Write($"Evolved into {evt.Id} CP: {evt.Cp} Iv: {evt.Perfection.ToString("0.00")}%");
 
-            Logger.PushToUi("pm_new", session, evt.Uid, evt.Id, evt.Cp, evt.Perfection);
+            Logger.PushToUi("pm_new", session, evt.Uid, evt.Id, evt.Cp, evt.Perfection, evt.Family, evt.Candy);
         }
 
         public void HandleEvent(UpdatePositionEvent evt, ISession session)
@@ -82,7 +83,7 @@ namespace Catchem
             Logger.Write(session.Translation.GetTranslation(TranslationString.EventPokemonTransferred, session.Translation.GetPokemonName(evt.Id), evt.Cp,
                     evt.Perfection.ToString("0.00"), evt.BestCp, evt.BestPerfection.ToString("0.00"), evt.FamilyCandies),
                 LogLevel.Transfer, session: session);
-            Logger.PushToUi("pm_rem", session, evt.Uid);
+            Logger.PushToUi("pm_rem", session, evt.Uid, evt.Family, evt.FamilyCandies);
         }
 
         public void HandleEvent(PokeStopListEvent evt, ISession session)
@@ -129,7 +130,7 @@ namespace Catchem
             Logger.Write(session.Translation.GetTranslation(TranslationString.IncubatorEggHatched,
                 session.Translation.GetPokemonName(evt.PokemonId), evt.Level, evt.Cp, evt.MaxCp, evt.Perfection),
                 LogLevel.Egg, session: session);
-            Logger.PushToUi("pm_new", session, evt.Id, evt.PokemonId, evt.Cp, evt.Perfection);
+            Logger.PushToUi("pm_new", session, evt.Id, evt.PokemonId, evt.Cp, evt.Perfection, evt.Family, evt.Candy);
         }
 
         public void HandleEvent(FortUsedEvent evt, ISession session)
@@ -193,7 +194,7 @@ namespace Catchem
                     break;
                 case CatchPokemonResponse.Types.CatchStatus.CatchSuccess:
                     strStatus = session.Translation.GetTranslation(TranslationString.CatchStatusSuccess);
-                    Logger.PushToUi("pm_new", session, evt.Uid, evt.Id, evt.Cp, evt.Perfection);
+                    Logger.PushToUi("pm_new", session, evt.Uid, evt.Id, evt.Cp, evt.Perfection, evt.Family, evt.FamilyCandies);
                     break;
                 default:
                     strStatus = evt.Status.ToString();
