@@ -29,10 +29,11 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                 await Teleport(session, cancellationToken);
             else
                 await NoTeleport(session, cancellationToken);
-
         }
+
         public static async Task Teleport(ISession session, CancellationToken cancellationToken)
         {
+            bool ShownSoftBanMessage = false;
             int stopsToHit = 20; //We should return to the main loop after some point, might as well limit this.
             //Not sure where else we could put this? Configs maybe if we incorporate
             //deciding how many pokestops in a row we want to hit before doing things like recycling?
@@ -41,7 +42,8 @@ namespace PoGo.PokeMobBot.Logic.Tasks
 
             //TODO: run through this with a fine-tooth comb and optimize it.
             var pokestopList = await GetPokeStops(session);
-            for (int stopsHit = 0; stopsHit < stopsToHit; stopsHit++) {
+            for (int stopsHit = 0; stopsHit < stopsToHit; stopsHit++)
+            {
                 if (pokestopList.Count > 0)
                 {
                     //start at 0 ends with 19 = 20 for the leechers{
@@ -91,7 +93,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                     //resort
                     pokestopList =
                         pokestopList.OrderBy(
-                            i =>
+                            i => 
                                 LocationUtils.CalculateDistanceInMeters(session.Client.CurrentLatitude,
                                     session.Client.CurrentLongitude, i.Latitude, i.Longitude)).ToList();
                     var pokeStop = pokestopList[0];
@@ -112,10 +114,13 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                         session.LogicSettings.WalkingSpeedInKilometerPerHour,
                         async () =>
                         {
-                        // Catch normal map Pokemon
-                        await CatchNearbyPokemonsTask.Execute(session, cancellationToken);
-                        //Catch Incense Pokemon
-                        await CatchIncensePokemonsTask.Execute(session, cancellationToken);
+                            if (session.LogicSettings.CatchWildPokemon)
+                            {
+                                // Catch normal map Pokemon
+                                await CatchNearbyPokemonsTask.Execute(session, cancellationToken);
+                                //Catch Incense Pokemon
+                                await CatchIncensePokemonsTask.Execute(session, cancellationToken);
+                            }
                             return true;
                         }, cancellationToken);
                     }
@@ -146,12 +151,16 @@ namespace PoGo.PokeMobBot.Logic.Tasks
 
                                 fortTry += 1;
 
-                                session.EventDispatcher.Send(new FortFailedEvent
+                                if (!ShownSoftBanMessage)
                                 {
-                                    Name = fortInfo.Name,
-                                    Try = fortTry,
-                                    Max = retryNumber - zeroCheck
-                                });
+                                    session.EventDispatcher.Send(new FortFailedEvent
+                                    {
+                                        Name = fortInfo.Name,
+                                        Try = fortTry,
+                                        Max = retryNumber - zeroCheck
+                                    });
+                                    ShownSoftBanMessage = true;
+                                }
                                 if (session.LogicSettings.Teleport)
                                     await Task.Delay(session.LogicSettings.DelaySoftbanRetry);
                                 else
@@ -179,7 +188,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                     } while (fortTry < retryNumber - zeroCheck);
                     //Stop trying if softban is cleaned earlier or if 40 times fort looting failed.
 
-
+                    ShownSoftBanMessage = false;
                     if (session.LogicSettings.Teleport)
                         await Task.Delay(session.LogicSettings.DelayPokestop);
                     else
@@ -188,13 +197,19 @@ namespace PoGo.PokeMobBot.Logic.Tasks
 
                     //Catch Lure Pokemon
 
-
-                    if (pokeStop.LureInfo != null)
+                    if (session.LogicSettings.CatchWildPokemon)
                     {
-                        await CatchLurePokemonsTask.Execute(session, pokeStop, cancellationToken);
+                        if (pokeStop.LureInfo != null)
+                        {
+                            await CatchLurePokemonsTask.Execute(session, pokeStop, cancellationToken);
+                        }
+                        // Catch normal map Pokemon
+                        if (session.LogicSettings.Teleport)
+                            await CatchNearbyPokemonsTask.Execute(session, cancellationToken);
+                        //Catch Incense Pokemon
+                        await CatchIncensePokemonsTask.Execute(session, cancellationToken);
                     }
-                    if (session.LogicSettings.Teleport)
-                        await CatchNearbyPokemonsTask.Execute(session, cancellationToken);
+                    
 
                     await eggWalker.ApplyDistance(distance, cancellationToken);
 
@@ -239,7 +254,8 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                 }
             }
         }
-        public static async Task NoTeleport(ISession session, CancellationToken cancellationToken) {
+
+        public static async Task NoTeleport(ISession session, CancellationToken cancellationToken) { 
             cancellationToken.ThrowIfCancellationRequested();
 
             var distanceFromStart = LocationUtils.CalculateDistanceInMeters(
@@ -274,8 +290,6 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                 });
             }
 
-            session.EventDispatcher.Send(new PokeStopListEvent { Forts = pokestopList });
-
             while (pokestopList.Any())
             {
                 cancellationToken.ThrowIfCancellationRequested();
@@ -299,21 +313,23 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                     session.Client.CurrentLongitude, pokeStop.Latitude, pokeStop.Longitude);
                 var fortInfo = await session.Client.Fort.GetFort(pokeStop.Id, pokeStop.Latitude, pokeStop.Longitude);
 
-                session.EventDispatcher.Send(new FortTargetEvent { Id = fortInfo.FortId, Name = fortInfo.Name, Distance = distance, Latitude = fortInfo.Latitude, Longitude = fortInfo.Longitude, Description = fortInfo.Description, url = fortInfo.ImageUrls[0] });
+                session.EventDispatcher.Send(new FortTargetEvent { Id = fortInfo.FortId, Name = fortInfo.Name, Distance = distance,Latitude = fortInfo.Latitude, Longitude = fortInfo.Longitude, Description = fortInfo.Description, url = fortInfo.ImageUrls?.Count > 0 ? fortInfo.ImageUrls[0] : ""});
                 if (session.LogicSettings.Teleport)
-                    await session.Client.Player.UpdatePlayerLocation(fortInfo.Latitude, fortInfo.Longitude,
-                        session.Client.Settings.DefaultAltitude);
-
+                    await session.Navigation.Teleport(new GeoCoordinate(fortInfo.Latitude, fortInfo.Longitude,
+                       session.Client.Settings.DefaultAltitude));
                 else
                 {
                     await session.Navigation.HumanLikeWalking(new GeoCoordinate(pokeStop.Latitude, pokeStop.Longitude),
                     session.LogicSettings.WalkingSpeedInKilometerPerHour,
                     async () =>
                     {
-                        // Catch normal map Pokemon
-                        await CatchNearbyPokemonsTask.Execute(session, cancellationToken);
-                        //Catch Incense Pokemon
-                        await CatchIncensePokemonsTask.Execute(session, cancellationToken);
+                        if (session.LogicSettings.CatchWildPokemon)
+                        {
+                            // Catch normal map Pokemon
+                            await CatchNearbyPokemonsTask.Execute(session, cancellationToken);
+                            //Catch Incense Pokemon
+                            await CatchIncensePokemonsTask.Execute(session, cancellationToken);
+                        }
                         return true;
                     }, cancellationToken);
                 }
@@ -329,6 +345,10 @@ namespace PoGo.PokeMobBot.Logic.Tasks
 
                     fortSearch =
                         await session.Client.Fort.SearchFort(pokeStop.Id, pokeStop.Latitude, pokeStop.Longitude);
+                    if (fortSearch.Result == FortSearchResponse.Types.Result.InventoryFull)
+                    {
+                        await RecycleItemsTask.Execute(session, cancellationToken);
+                    }
                     if (fortSearch.ExperienceAwarded > 0 && timesZeroXPawarded > 0) timesZeroXPawarded = 0;
                     if (fortSearch.ExperienceAwarded == 0)
                     {
@@ -336,10 +356,10 @@ namespace PoGo.PokeMobBot.Logic.Tasks
 
                         if (timesZeroXPawarded > zeroCheck)
                         {
-                            if ((int)fortSearch.CooldownCompleteTimestampMs != 0)
+                            if ((int) fortSearch.CooldownCompleteTimestampMs != 0)
                             {
                                 break;
-                                // Check if successfully looted, if so program can continue as this was "false alarm".
+                                    // Check if successfully looted, if so program can continue as this was "false alarm".
                             }
 
                             fortTry += 1;
@@ -350,7 +370,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                                 Try = fortTry,
                                 Max = retryNumber - zeroCheck
                             });
-                            if (session.LogicSettings.Teleport)
+                            if(session.LogicSettings.Teleport)
                                 await Task.Delay(session.LogicSettings.DelaySoftbanRetry);
                             else
                                 await DelayingUtils.Delay(session.LogicSettings.DelayBetweenPlayerActions, 400);
@@ -369,16 +389,16 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                             Longitude = pokeStop.Longitude,
                             InventoryFull = fortSearch.Result == FortSearchResponse.Types.Result.InventoryFull,
                             Description = fortInfo.Description,
-                            url = fortInfo.ImageUrls[0]
+                            url = fortInfo.ImageUrls[0]                            
                         });
 
                         break; //Continue with program as loot was succesfull.
                     }
                 } while (fortTry < retryNumber - zeroCheck);
-                //Stop trying if softban is cleaned earlier or if 40 times fort looting failed.
+                    //Stop trying if softban is cleaned earlier or if 40 times fort looting failed.
 
 
-                if (session.LogicSettings.Teleport)
+                if(session.LogicSettings.Teleport)
                     await Task.Delay(session.LogicSettings.DelayPokestop);
                 else
                     await Task.Delay(1000, cancellationToken);
@@ -386,17 +406,18 @@ namespace PoGo.PokeMobBot.Logic.Tasks
 
                 //Catch Lure Pokemon
 
-
-                if (pokeStop.LureInfo != null)
+                if (session.LogicSettings.CatchWildPokemon)
                 {
-                    await CatchLurePokemonsTask.Execute(session, pokeStop, cancellationToken);
+                    if (pokeStop.LureInfo != null)
+                    {
+                        await CatchLurePokemonsTask.Execute(session, pokeStop, cancellationToken);
+                    }
+                    if (session.LogicSettings.Teleport)
+                        await CatchNearbyPokemonsTask.Execute(session, cancellationToken);
                 }
-                if (session.LogicSettings.Teleport)
-                    await CatchNearbyPokemonsTask.Execute(session, cancellationToken);
-
                 await eggWalker.ApplyDistance(distance, cancellationToken);
 
-                if (++stopsHit % 5 == 0) //TODO: OR item/pokemon bag is full
+                if (++stopsHit%5 == 0) //TODO: OR item/pokemon bag is full
                 {
                     stopsHit = 0;
                     // need updated stardust information for upgrading, so refresh your profile now
@@ -442,24 +463,14 @@ namespace PoGo.PokeMobBot.Logic.Tasks
         {
             var mapObjects = await session.Client.Map.GetMapObjects();
 
+            var pokeStops = mapObjects.MapCells.SelectMany(i => i.Forts);
+
+            session.EventDispatcher.Send(new PokeStopListEvent { Forts = pokeStops.ToList() });
+
+            // Wasn't sure how to make this pretty. Edit as needed.
             if (session.LogicSettings.Teleport)
             {
-                var pokeStops = mapObjects.MapCells.SelectMany(i => i.Forts)
-                    .Where(
-                        i =>
-                            i.Type == FortType.Checkpoint &&
-                            i.CooldownCompleteTimestampMs < DateTime.UtcNow.ToUnixTime() &&
-                            ( // Make sure PokeStop is within max travel distance, unless it's set to 0.
-                                LocationUtils.CalculateDistanceInMeters(
-                                    session.Settings.DefaultLatitude, session.Settings.DefaultLongitude,
-                                    i.Latitude, i.Longitude) < session.LogicSettings.MaxTravelDistanceInMeters) ||
-                            session.LogicSettings.MaxTravelDistanceInMeters == 0
-                    );
-                return pokeStops.ToList();
-            }
-            else
-            {
-                var pokeStops = mapObjects.MapCells.SelectMany(i => i.Forts)
+                pokeStops = mapObjects.MapCells.SelectMany(i => i.Forts)
                     .Where(
                         i =>
                             i.Type == FortType.Checkpoint &&
@@ -470,8 +481,23 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                                     i.Latitude, i.Longitude) < session.LogicSettings.MaxTravelDistanceInMeters) ||
                             session.LogicSettings.MaxTravelDistanceInMeters == 0
                     );
-                return pokeStops.ToList();
             }
+            else
+            {
+                pokeStops = mapObjects.MapCells.SelectMany(i => i.Forts)
+                    .Where(
+                        i =>
+                            i.Type == FortType.Checkpoint &&
+                            i.CooldownCompleteTimestampMs < DateTime.UtcNow.ToUnixTime() &&
+                            ( // Make sure PokeStop is within max travel distance, unless it's set to 0.
+                                LocationUtils.CalculateDistanceInMeters(
+                                    session.Settings.DefaultLatitude, session.Settings.DefaultLongitude,
+                                    i.Latitude, i.Longitude) < session.LogicSettings.MaxTravelDistanceInMeters) ||
+                            session.LogicSettings.MaxTravelDistanceInMeters == 0
+                    );
+            }
+
+            return pokeStops.ToList();
         }
 
         // static copy of download profile, to update stardust more accurately

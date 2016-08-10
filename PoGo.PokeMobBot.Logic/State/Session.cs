@@ -34,6 +34,7 @@ namespace PoGo.PokeMobBot.Logic.State
         {
             Settings = settings;
             LogicSettings = logicSettings;
+            ApiFailureStrategy = new ApiFailureStrategy(this);
             EventDispatcher = new EventDispatcher();
             Translation = Common.Translation.Load(logicSettings);
             Reset(settings, LogicSettings);
@@ -54,6 +55,8 @@ namespace PoGo.PokeMobBot.Logic.State
 
         public IEventDispatcher EventDispatcher { get; }
 
+		public ApiFailureStrategy ApiFailureStrategy { get; set; }
+
         public GeoCoordinate ForceMoveTo { get; set; }
 
         public void StartForceMove(double lat, double lng)
@@ -65,28 +68,24 @@ namespace PoGo.PokeMobBot.Logic.State
         {
             get
             {
-                if (Settings.UseProxy)
-                {
-                    NetworkCredential proxyCreds = new NetworkCredential(
-                        Settings.ProxyLogin,
-                        Settings.ProxyPass
+                if (!Settings.UseProxy) return null;
+                var proxyCreds = new NetworkCredential(
+                    Settings.ProxyLogin,
+                    Settings.ProxyPass
                     );
-                    WebProxy prox = new WebProxy(Settings.ProxyUri)
-                    {
-                        UseDefaultCredentials = false,
-                        Credentials = proxyCreds,
-                    };
-                    return prox;
-                }
-                return null;
+                var prox = new WebProxy(Settings.ProxyUri)
+                {
+                    UseDefaultCredentials = false,
+                    Credentials = proxyCreds,
+                };
+                return prox;
             }
 
         }
 
         public void Reset(ISettings settings, ILogicSettings logicSettings)
         {
-            ApiFailureStrategy _apiStrategy = new ApiFailureStrategy(this);
-            Client = new Client(Settings, _apiStrategy);
+            Client = new Client(Settings, ApiFailureStrategy);
             // ferox wants us to set this manually
             Inventory = new Inventory(Client, logicSettings);
             Navigation = new Navigation(Client);

@@ -1,7 +1,9 @@
 ﻿#region using directives
 
+using System;
 using System.Threading;
 using System.Threading.Tasks;
+using PoGo.PokeMobBot.Logic.Event;
 using PoGo.PokeMobBot.Logic.Tasks;
 
 #endregion
@@ -17,7 +19,8 @@ namespace PoGo.PokeMobBot.Logic.State
             if (session.LogicSettings.AmountOfPokemonToDisplayOnStart > 0)
                 await DisplayPokemonStatsTask.Execute(session);
 
-            await PokemonListTask.Execute(session);
+            Action<IEvent> action = (evt) => session.EventDispatcher.Send(evt);
+            await PokemonListTask.Execute(session, action);
 
             return new FarmState();
         }

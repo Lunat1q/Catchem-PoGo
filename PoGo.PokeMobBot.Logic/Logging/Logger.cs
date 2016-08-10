@@ -99,11 +99,13 @@ namespace PoGo.PokeMobBot.Logic.Logging
         Recycling = 5,
         Berry = 6,
         Caught = 7,
-        Transfer = 8,
-        Evolve = 9,
-        Egg = 10,
-        Update = 11,
-        Info = 12,
-        Debug = 13
+        Escape = 8,
+        Flee = 9,
+        Transfer = 10,
+        Evolve = 11,
+        Egg = 12,
+        Update = 13,
+        Info = 14,
+        Debug = 15
     }
 }

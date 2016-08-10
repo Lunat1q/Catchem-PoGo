@@ -31,7 +31,7 @@ namespace PoGo.PokeMobBot.Logic.State
             {
                 await session.Client.Login.DoLogin();
             }
-            catch (Exception ex) when (ex is PtcOfflineException || ex is AccessTokenExpiredException)
+            catch (PtcOfflineException)
             {
                 session.EventDispatcher.Send(new ErrorEvent
                 {
@@ -42,6 +42,27 @@ namespace PoGo.PokeMobBot.Logic.State
                     Message = session.Translation.GetTranslation(TranslationString.TryingAgainIn, 20)
                 });
                 await Task.Delay(20000, cancellationToken);
+                return this;
+            }
+            catch (AccessTokenExpiredException)
+            {
+                session.EventDispatcher.Send(new ErrorEvent
+                {
+                    Message = session.Translation.GetTranslation(TranslationString.AccessTokenExpired)
+                });
+                session.EventDispatcher.Send(new NoticeEvent
+                {
+                    Message = session.Translation.GetTranslation(TranslationString.TryingAgainIn, 2)
+                });
+                await Task.Delay(2000, cancellationToken);
+                return this;
+            }
+            catch (InvalidResponseException)
+            {
+                session.EventDispatcher.Send(new ErrorEvent
+                {
+                    Message = session.Translation.GetTranslation(TranslationString.NianticServerUnstable)
+                });
                 return this;
             }
             catch (AccountNotVerifiedException)

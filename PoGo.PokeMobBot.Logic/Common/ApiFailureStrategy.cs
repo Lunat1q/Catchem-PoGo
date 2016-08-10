@@ -4,7 +4,6 @@ using System;
 using System.Threading.Tasks;
 using PoGo.PokeMobBot.Logic.Event;
 using PoGo.PokeMobBot.Logic.State;
-using PokemonGo.RocketAPI.Enums;
 using PokemonGo.RocketAPI.Exceptions;
 using PokemonGo.RocketAPI.Extensions;
 using POGOProtos.Networking.Envelopes;
@@ -23,6 +22,22 @@ namespace PoGo.PokeMobBot.Logic.Common
             _session = session;
         }
 
+        private async void DoLogin()
+        {
+            try
+            {
+                await _session.Client.Login.DoLogin();
+            }
+            catch (AggregateException ae)
+            {
+                throw ae.Flatten().InnerException;
+            }
+            catch (Exception ex)
+            {
+                throw ex.InnerException;
+            }
+        }
+
         public async Task<ApiOperation> HandleApiFailure(RequestEnvelope request, ResponseEnvelope response)
         {
             if (_retryCount == 11)
@@ -37,7 +52,7 @@ namespace PoGo.PokeMobBot.Logic.Common
                 {
                     DoLogin();
                 }
-                catch (Exception ex) when (ex is PtcOfflineException || ex is AccessTokenExpiredException)
+                catch (PtcOfflineException)
                 {
                     _session.EventDispatcher.Send(new ErrorEvent
                     {
@@ -49,6 +64,26 @@ namespace PoGo.PokeMobBot.Logic.Common
                     });
                     await Task.Delay(20000);
                 }
+                catch (AccessTokenExpiredException)
+                {
+                    _session.EventDispatcher.Send(new ErrorEvent
+                    {
+                        Message = _session.Translation.GetTranslation(TranslationString.AccessTokenExpired)
+                    });
+                    _session.EventDispatcher.Send(new NoticeEvent
+                    {
+                        Message = _session.Translation.GetTranslation(TranslationString.TryingAgainIn, 2)
+                    });
+                    await Task.Delay(2000);
+                }
+                catch (Exception ex) when (ex is InvalidResponseException || ex is TaskCanceledException)
+                {
+                    _session.EventDispatcher.Send(new ErrorEvent
+                    {
+                        Message = _session.Translation.GetTranslation(TranslationString.NianticServerUnstable)
+                    });
+                    await Task.Delay(1000);
+                }
             }
 
             return ApiOperation.Retry;
@@ -58,7 +93,5 @@ namespace PoGo.PokeMobBot.Logic.Common
         {
             _retryCount = 0;
         }
-
-        private async void DoLogin() => await _session.Client.Login.DoLogin();
     }
 }

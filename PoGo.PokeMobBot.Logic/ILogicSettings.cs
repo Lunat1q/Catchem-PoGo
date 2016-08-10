@@ -67,14 +67,14 @@ namespace PoGo.PokeMobBot.Logic
         int AmountOfPokemonToDisplayOnStart { get; }
         bool StartupWelcomeDelay { get; }
         string TranslationLanguageCode { get; }
-        
+
         //coords and movement
         bool Teleport { get; }
         double WalkingSpeedInKilometerPerHour { get; }
         int MaxTravelDistanceInMeters { get; }
         bool UseGpxPathing { get; }
         string GpxFile { get; }
-        
+
         //delays
         int DelayBetweenPlayerActions { get; }
         int DelayBetweenPokemonCatch { get; }
@@ -91,16 +91,20 @@ namespace PoGo.PokeMobBot.Logic
         int DelaySnipePokemon { get; }
         int DelaySoftbanRetry { get; }
         int DelayTransferPokemon { get; }
-        int DelayUseLuckyEgg { get; }        
-        
+        int DelayUseLuckyEgg { get; }
+
         //incubator
         bool UseEggIncubators { get; } 
         bool AlwaysPrefferLongDistanceEgg { get; }
         
+		//display
+        bool DisplayPokemonMaxPoweredCp { get; }
+        bool DisplayPokemonMovesetRank { get; }
+
         //rename
         bool RenameOnlyAboveIv { get; }
-        bool RenamePokemon { get; }        
-        string RenameTemplate { get; }	
+        bool RenamePokemon { get; }
+        string RenameTemplate { get; }
 
         //transfer
         bool TransferDuplicatePokemon { get; }
@@ -109,27 +113,27 @@ namespace PoGo.PokeMobBot.Logic
         float KeepMinIvPercentage { get; }
         int KeepMinDuplicatePokemon { get; }
         bool KeepPokemonsThatCanEvolve { get; }
-        
+
         //evolve
         bool EvolveAllPokemonAboveIv { get; }
-        bool EvolveAllPokemonWithEnoughCandy { get; }        
-        float EvolveAboveIvValue { get; } 
+        bool EvolveAllPokemonWithEnoughCandy { get; }
+        float EvolveAboveIvValue { get; }
         bool UseLuckyEggsWhileEvolving { get; }
         int UseLuckyEggsMinPokemonAmount { get; }
-        
+
         //levelup
         bool AutomaticallyLevelUpPokemon { get; }
         string LevelUpByCPorIv { get; }
         float UpgradePokemonCpMinimum { get; }
-        float UpgradePokemonIvMinimum { get; }        
-        
+        float UpgradePokemonIvMinimum { get; }
+
         //catch
         bool HumanizeThrows { get; }
         double ThrowAccuracyMax { get; }
         double ThrowAccuracyMin { get; }
-        double ThrowSpinFrequency { get; }        
-        int MaxPokeballsPerPokemon { get; }        
-        
+        double ThrowSpinFrequency { get; }
+        int MaxPokeballsPerPokemon { get; }
+
         //pokeballs
         int UseGreatBallAboveIv { get; }
         int UseUltraBallAboveIv { get; }
@@ -137,19 +141,24 @@ namespace PoGo.PokeMobBot.Logic
         double UseUltraBallBelowCatchProbability { get; }
         double UseMasterBallBelowCatchProbability { get; }
         bool UsePokemonToNotCatchFilter { get; }
-        
+
         //berries
-        int UseBerryMinCp { get;  }
-        float UseBerryMinIv { get;  }
+        int UseBerryMinCp { get; }
+        float UseBerryMinIv { get; }
         double UseBerryBelowCatchProbability { get; }
          
         //favorite 
          
         //recycle
+        bool AutomaticInventoryManagement { get; }
+        int AutomaticMaxAllPokeballs { get; }
+        int AutomaticMaxAllPotions { get; }
+        int AutomaticMaxAllRevives { get; }
+        int AutomaticMaxAllBerries { get; }
         int TotalAmountOfPokeballsToKeep { get; }
         int TotalAmountOfPotionsToKeep { get; }
         int TotalAmountOfRevivesToKeep { get; }
-        int TotalAmountOfBerriesToKeep { get; }
+        int TotalAmountOfRazzToKeep { get; }
         double RecycleInventoryAtUsagePercentage { get; }
         
         //snipe
@@ -166,7 +175,8 @@ namespace PoGo.PokeMobBot.Logic
         string SnipeLocationServer { get; }
         bool UseDiscoveryPathing { get; }
         int SnipeRequestTimeoutSeconds { get; }
-        
+        bool CatchWildPokemon { get; }
+
         //paths
         string GeneralConfigPath { get; }
         string ProfileConfigPath { get; }

@@ -195,7 +195,7 @@
                                 <Label x:Name="label9_Copy5" Content="Recycle At Usage Percentage" Margin="10,144,0,0" VerticalAlignment="Top" Height="26"/>
                                 <TextBox Template="{StaticResource pogo}" x:Name="c_RecycleInventoryAtUsagePercentage" Height="29" Margin="5,143,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Column="1" Text="0" TextChanged="BotPropertyChanged"/>
                                 <Label x:Name="label9_Copy6" Content="Amount Of BerriesTo Keep" Margin="10,110,0,0" VerticalAlignment="Top" Height="26"/>
-                                <TextBox Template="{StaticResource pogo}" x:Name="c_TotalAmountOfBerriesToKeep" Height="29" Margin="5,109,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Column="1" Text="0" TextChanged="BotPropertyChanged" />
+                                <TextBox Template="{StaticResource pogo}" x:Name="c_TotalAmountOfRazzToKeep" Height="29" Margin="5,109,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Column="1" Text="0" TextChanged="BotPropertyChanged" />
 
                             </Grid>
                         </GroupBox>

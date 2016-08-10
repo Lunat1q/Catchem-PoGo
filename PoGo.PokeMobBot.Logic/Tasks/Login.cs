@@ -25,29 +25,15 @@ namespace PoGo.PokeMobBot.Logic.Tasks
             _session = session;
         }
 
-        public async void DoLogin()
+        public void DoLogin()
         {
             try
             {
-                await _session.Client.Login.DoLogin();
+                _session.Client.Login.DoLogin().Wait();
             }
-            catch (PtcOfflineException)
+            catch (AggregateException ae)
             {
-                _session.EventDispatcher.Send(new ErrorEvent
-                {
-                    Message = _session.Translation.GetTranslation(TranslationString.PtcOffline)
-                });
-                _session.EventDispatcher.Send(new NoticeEvent
-                {
-                    Message = _session.Translation.GetTranslation(TranslationString.TryingAgainIn, 20)
-                });
-            }
-            catch (AccountNotVerifiedException)
-            {
-                _session.EventDispatcher.Send(new ErrorEvent
-                {
-                    Message = _session.Translation.GetTranslation(TranslationString.AccountNotVerified)
-                });
+                throw ae.Flatten().InnerException;
             }
         }
     }

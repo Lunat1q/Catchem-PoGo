@@ -48,10 +48,14 @@ namespace PoGo.PokeMobBot.Logic.Tasks
         }
 
         public long Id { get; set; }
+        [JsonProperty("expires")]
         public double ExpirationTime { get; set; }
+        [JsonProperty("latitude")]
         public double latitude { get; set; }
-        public double longitude { get; set; }
+        [JsonProperty("longitude")]
+        public double longitude { get; set; }        
         public int PokemonId { get; set; }
+        [JsonProperty("pokemon_id")]
         public PokemonId PokemonName { get; set; }
 
         public bool Equals(PokemonLocation obj)
@@ -84,6 +88,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
     public class ScanResult
     {
         public string Error { get; set; }
+        [JsonProperty("pokemons")]
         public List<PokemonLocation> Pokemon { get; set; }
     }
 
@@ -159,9 +164,10 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                                                new List<SniperInfo>();
                         }
 
+                        _lastSnipe = DateTime.Now;
+
                         if (locationsToSnipe.Any())
-                        {
-                            _lastSnipe = DateTime.Now;
+                        {   
                             foreach (var location in locationsToSnipe)
                             {
                                 session.EventDispatcher.Send(new SnipeScanEvent
@@ -177,8 +183,11 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                                             cancellationToken))
                                     return;
 
-                                await
-                                    Snipe(session, pokemonIds, location.Latitude, location.Longitude, cancellationToken);
+                                if (!await
+                                    Snipe(session, pokemonIds, location.Latitude, location.Longitude, cancellationToken))
+                                {
+                                    return;
+                                }
                                 LocsVisited.Add(new PokemonLocation(location.Latitude, location.Longitude));
                             }
                         }
@@ -221,6 +230,8 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                                 locationsToSnipe.AddRange(notExpiredPokemon);
                             }
 
+                            _lastSnipe = DateTime.Now;
+
                             if (locationsToSnipe.Any())
                             {
                                 foreach (var pokemonLocation in locationsToSnipe)
@@ -231,11 +242,14 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                                                 session, cancellationToken))
                                         return;
 
-                                    LocsVisited.Add(pokemonLocation);
-
-                                    await
+                                    if (!await
                                         Snipe(session, pokemonIds, pokemonLocation.latitude, pokemonLocation.longitude,
-                                            cancellationToken);
+                                            cancellationToken))
+                                    {
+                                        return;
+                                    }
+
+                                    LocsVisited.Add(pokemonLocation);
                                 }
                             }
                             else
@@ -245,15 +259,13 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                                     Message = session.Translation.GetTranslation(TranslationString.NoPokemonToSnipe)
                                 });
                             }
-
-                            _lastSnipe = DateTime.Now;
                         }
                     }
                 }
             }
         }
 
-        private static async Task Snipe(ISession session, IEnumerable<PokemonId> pokemonIds, double Latitude,
+        private static async Task<bool> Snipe(ISession session, IEnumerable<PokemonId> pokemonIds, double Latitude,
             double Longitude, CancellationToken cancellationToken)
         {
             var CurrentLatitude = session.Client.CurrentLatitude;
@@ -307,7 +319,12 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                         Longitude = CurrentLongitude
                     });
 
-                    await CatchPokemonTask.Execute(session, encounter, pokemon);
+                    if (!await CatchPokemonTask.Execute(session, encounter, pokemon))
+                    {
+                        // Don't snipe any more pokemon if we ran out of one kind of pokeballs.
+                        session.EventDispatcher.Send(new SnipeModeEvent { Active = false });
+                        return false;
+                    }
                 }
                 else if (encounter.Status == EncounterResponse.Types.Status.PokemonInventoryFull)
                 {
@@ -317,6 +334,10 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                             session.Translation.GetTranslation(
                                 TranslationString.InvFullTransferManually)
                     });
+
+                    // Don't snipe any more pokemon if inventory is full.
+                    session.EventDispatcher.Send(new SnipeModeEvent { Active = false });
+                    return false;
                 }
                 else
                 {
@@ -338,6 +359,8 @@ namespace PoGo.PokeMobBot.Logic.Tasks
 
             session.EventDispatcher.Send(new SnipeModeEvent { Active = false });
             await Task.Delay(session.LogicSettings.DelayBetweenPlayerActions, cancellationToken);
+
+            return true;
         }
 
         private static ScanResult SnipeScanForPokemon(ISession session, Location location)
@@ -373,7 +396,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
 
                 scanResult = JsonConvert.DeserializeObject<ScanResult>(fullresp);
 
-                if (scanResult.Error != string.Empty)
+                if (scanResult.Error != string.Empty && scanResult.Error != null)
                 {
                     if (scanResult.Error.Contains("down for maintenance") || scanResult.Error.Contains("illegal request"))
                         session.EventDispatcher.Send(new WarnEvent { Message = session.Translation.GetTranslation(TranslationString.SkipLaggedMaintenance) });
@@ -452,10 +475,12 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                 {
                     PokemonId id;
                     Enum.TryParse(result.Value<string>("name"), out id);
+                    double iv;
+                    Double.TryParse(result.Value<string>("iv"), out iv);
                     var a = new SniperInfo
                     {
                         Id = id,
-                        IV = 100,
+                        IV = iv,
                         Latitude = Convert.ToDouble(result.Value<string>("coords").Split(',')[0]),
                         Longitude = Convert.ToDouble(result.Value<string>("coords").Split(',')[1]),
                         ExpirationTimestamp = DateTime.Now
@@ -511,10 +536,12 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                         {
                             PokemonId id;
                             Enum.TryParse(result.Value<string>("name"), out id);
+                            double iv;
+                            Double.TryParse(result.Value<string>("iv"), out iv);
                             var a = new SniperInfo
                             {
                                 Id = id,
-                                IV = 100,
+                                IV = iv,
                                 Latitude = Convert.ToDouble(result.Value<string>("coords").Split(',')[0]),
                                 Longitude = Convert.ToDouble(result.Value<string>("coords").Split(',')[1]),
                                 ExpirationTimestamp = DateTime.Now

@@ -41,6 +41,147 @@ namespace Catchem
                 }
             }
         }
+
+        public static bool GetValueByName<T>(string propertyName, object obj, out T val)
+        {
+            return GetPropertyRecursive(propertyName, obj, out val) || GetFieldRecursive(propertyName, obj, out val);
+        }
+
+        private static bool GetPropertyRecursive<T>(string propertyName, object obj, out T value)
+        {
+            var objType = obj.GetType();
+            foreach (var property in objType.GetProperties())
+            {
+                if (property.PropertyType == objType) continue;
+                if (property.PropertyType.IsMyInterface() && property.PropertyType.IsClass)
+                {
+                    var nextObj = property.GetValue(obj);
+                    if (GetPropertyRecursive(propertyName, nextObj, out value))
+                        return true;
+                    if (GetFieldRecursive(propertyName, nextObj, out value))
+                        return true;
+                }
+                if (property.Name != propertyName) continue;
+                value = (T)Convert.ChangeType(property.GetValue(obj), typeof(T));
+                return true;
+            }
+            value = default(T);
+            return false;
+        }
+
+        private static bool IsMyInterface(this Type propertyType)
+        {
+            return propertyType.Assembly.GetName().Name != "mscorlib";
+        }
+
+        private static bool GetFieldRecursive<T>(string propertyName, object obj, out T value)
+        {
+            var objType = obj.GetType();
+            foreach (var property in objType.GetFields())
+            {
+                if (property.FieldType == objType) continue;
+                if (property.FieldType.IsMyInterface() && property.FieldType.IsClass)
+                {
+                    var nextObj = property.GetValue(obj);
+                    if (GetFieldRecursive(propertyName, nextObj, out value))
+                        return true;
+                    if (GetPropertyRecursive(propertyName, nextObj, out value))
+                        return true;
+                }
+                if (property.Name != propertyName) continue;
+                value = (T)Convert.ChangeType(property.GetValue(obj), typeof(T));
+                return true;
+            }
+            value = default(T);
+            return false;
+        }
+
+        public static void SetValueByName(string propertyName, object value, object obj)
+        {
+            if (!SetPropertyRecursive(propertyName, value, obj))
+                SetFieldRecursive(propertyName, value, obj);
+        }
+
+        private static bool SetPropertyRecursive(string propertyName, object value, object obj)
+        {
+            var objType = obj.GetType();
+            foreach (var property in objType.GetProperties())
+            {
+                if (property.PropertyType == objType) continue;
+                if (property.PropertyType.IsClass && property.PropertyType.IsMyInterface())
+                {
+                    var nextObj = property.GetValue(obj);
+                    if (SetPropertyRecursive(propertyName, value, nextObj))
+                        return true;
+                    if (SetFieldRecursive(propertyName, value, nextObj))
+                        return true;
+                }
+                if (property.Name != propertyName) continue;
+                if (property.PropertyType == typeof(int))
+                {
+                    int val;
+                    if (((string)value).GetVal(out val))
+                        property.SetValue(obj, val);
+                }
+                else if (property.PropertyType == typeof(double))
+                {
+                    double val;
+                    if (((string)value).GetVal(out val))
+                        property.SetValue(obj, val);
+                }
+                else if (property.PropertyType == typeof(float))
+                {
+                    float val;
+                    if (((string)value).GetVal(out val))
+                        property.SetValue(obj, val);
+                }
+                else
+                    property.SetValue(obj, value);
+                return true;
+            }
+            return false;
+        }
+
+        private static bool SetFieldRecursive(string propertyName, object value, object obj)
+        {
+            var objType = obj.GetType();
+            foreach (var property in objType.GetFields())
+            {
+                if (property.FieldType == objType) continue;
+                if (property.FieldType.IsClass && property.FieldType.IsMyInterface())
+                {
+                    var nextObj = property.GetValue(obj);
+                    if (SetFieldRecursive(propertyName, value, nextObj))
+                        return true;
+                    if (SetPropertyRecursive(propertyName, value, nextObj))
+                        return true;
+                }
+                if (property.Name != propertyName) continue;
+                if (property.FieldType == typeof(int))
+                {
+                    int val;
+                    if (((string)value).GetVal(out val))
+                        property.SetValue(obj, val);
+                }
+                else if (property.FieldType == typeof(double))
+                {
+                    double val;
+                    if (((string)value).GetVal(out val))
+                        property.SetValue(obj, val);
+                }
+                else if (property.FieldType == typeof(float))
+                {
+                    float val;
+                    if (((string)value).GetVal(out val))
+                        property.SetValue(obj, val);
+                }
+                else
+                    property.SetValue(obj, value);
+                return true;
+            }
+            return false;
+        }
+
         public static bool GetVal<T>(this string value, out T resultVal) where T : IConvertible
         {
             resultVal = default(T);

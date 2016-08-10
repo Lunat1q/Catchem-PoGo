@@ -593,8 +593,8 @@ namespace Catchem
 
             newBot.Stats.DirtyEvent += () => { StatsOnDirtyEvent(newBot); };
 
-            newBot._lat = settings.DefaultLatitude;
-            newBot._lng = settings.DefaultLongitude;
+            newBot._lat = settings.LocationSettings.DefaultLatitude;
+            newBot._lng = settings.LocationSettings.DefaultLongitude;
 
             newBot.Machine.SetFailureState(new LoginState());
 
@@ -685,7 +685,9 @@ namespace Catchem
             {
                 if (!newBot.Started)
                 {
-                    session.Client.Player.SetCoordinates(newBot.GlobalSettings.DefaultLatitude, newBot.GlobalSettings.DefaultLongitude, newBot.GlobalSettings.DefaultAltitude);
+                    session.Client.Player.SetCoordinates(newBot.GlobalSettings.LocationSettings.DefaultLatitude,
+                        newBot.GlobalSettings.LocationSettings.DefaultLongitude,
+                        newBot.GlobalSettings.LocationSettings.DefaultAltitude);
                     session.Client.Login = new PokemonGo.RocketAPI.Rpc.Login(session.Client);
                     newBot.Start();
                     newBot.Machine.AsyncStart(new VersionCheckState(), session, newBot.CancellationToken);
@@ -705,17 +707,17 @@ namespace Catchem
 
             rec.MouseLeftButtonDown += delegate (object o, MouseButtonEventArgs args)
             {
-                selectBot(o, newBot, session);
+                SelectBot(o, newBot, session);
             };
 
             if (_openedSessions.Count == 1)
             {
-                selectBot(rec, newBot, session);
+                SelectBot(rec, newBot, session);
             }
             #endregion
         }
 
-        private void selectBot(object o, BotWindowData newBot, Session session)
+        private void SelectBot(object o, BotWindowData newBot, Session session)
         {
             if (Bot != null)
             {
@@ -759,13 +761,13 @@ namespace Catchem
                 {
                     l_StarDust.Content = Bot.Stats?.TotalStardust;
                     l_Stardust_farmed.Content = Bot.Stats?.TotalStardust == 0 ? 0 : Bot.Stats?.TotalStardust - _curSession?.Profile?.PlayerData?.Currencies[1].Amount;
-                    l_xp.Content = Bot.Stats?.ExportStats?.CurrentXp;
+                    l_xp.Content = Bot.Stats?._exportStats?.CurrentXp;
                     l_xp_farmed.Content = Bot.Stats?.TotalExperience;
                     l_Pokemons_farmed.Content = Bot.Stats?.TotalPokemons;
                     l_Pokemons_transfered.Content = Bot.Stats?.TotalPokemonsTransfered;
                     l_Pokestops_farmed.Content = Bot.Stats?.TotalPokestops;
-                    l_level.Content = Bot.Stats?.ExportStats?.Level;
-                    l_level_nextime.Content = $"{Bot.Stats?.ExportStats?.HoursUntilLvl.ToString("00")}:{Bot.Stats?.ExportStats?.MinutesUntilLevel.ToString("00")}";
+                    l_level.Content = Bot.Stats?._exportStats?.Level;
+                    l_level_nextime.Content = $"{Bot.Stats?._exportStats?.HoursUntilLvl.ToString("00")}:{Bot.Stats?._exportStats?.MinutesUntilLevel.ToString("00")}";
                 }));
             }
         }
@@ -810,56 +812,23 @@ namespace Catchem
             #region Mapping settings to UIElements
             foreach (var uiElem in settings_grid.GetLogicalChildCollection<TextBox>())
             {
-                var found = false;
-                foreach (var property in Bot.GlobalSettings.GetType().GetProperties())
-                    if (uiElem.Name == "c_" + property.Name)
-                    {
-                        uiElem.Text = property.GetValue(Bot.GlobalSettings).ToString();
-                        found = true;
-                        break;
-                    }
-                if (found) continue;
-                foreach (var property in Bot.GlobalSettings.GetType().GetFields())
-                    if (uiElem.Name == "c_" + property.Name)
-                    {
-                        uiElem.Text = property.GetValue(Bot.GlobalSettings).ToString();
-                        found = true;
-                        break;
-                    }
-                if (found) continue;
-                foreach (var property in Bot.GlobalSettings.Auth.GetType().GetFields())
-                    if (uiElem.Name == "c_" + property.Name)
-                    {
-                        uiElem.Text = property.GetValue(Bot.GlobalSettings.Auth).ToString();
-                        break;
-                    }
+                string val;
+                if (Extensions.GetValueByName(uiElem.Name.Substring(2), Bot.GlobalSettings, out val))
+                    uiElem.Text = val;
+            }
+
+            foreach (var uiElem in settings_grid.GetLogicalChildCollection<PasswordBox>())
+            {
+                string val;
+                if (Extensions.GetValueByName(uiElem.Name.Substring(2), Bot.GlobalSettings, out val))
+                    uiElem.Password = val;
             }
 
             foreach (var uiElem in settings_grid.GetLogicalChildCollection<CheckBox>())
             {
-                var found = false;
-                foreach (var property in Bot.GlobalSettings.GetType().GetProperties())
-                    if (uiElem.Name == "c_" + property.Name)
-                    {
-                        uiElem.IsChecked = (bool) property.GetValue(Bot.GlobalSettings);
-                        found = true;
-                        break;
-                    }
-                if (found) continue;
-                foreach (var property in Bot.GlobalSettings.GetType().GetFields())
-                    if (uiElem.Name == "c_" + property.Name)
-                    {
-                        uiElem.IsChecked = (bool)property.GetValue(Bot.GlobalSettings);
-                        found = true;
-                        break;
-                    }
-                if (found) continue;
-                foreach (var property in Bot.GlobalSettings.Auth.GetType().GetFields())
-                    if (uiElem.Name == "c_" + property.Name)
-                    {
-                        uiElem.IsChecked = (bool)property.GetValue(Bot.GlobalSettings.Auth);
-                        break;
-                    }
+                bool val;
+                if (Extensions.GetValueByName(uiElem.Name.Substring(2), Bot.GlobalSettings, out val))
+                    uiElem.IsChecked = val;
             }
             #endregion
 
@@ -872,8 +841,8 @@ namespace Catchem
         #region Windows UI Methods
         private void UpdateCoordBoxes()
         {
-            c_DefaultLatitude.Text = Bot.GlobalSettings.DefaultLatitude.ToString(CultureInfo.InvariantCulture);
-            c_DefaultLongitude.Text = Bot.GlobalSettings.DefaultLongitude.ToString(CultureInfo.InvariantCulture);
+            c_DefaultLatitude.Text = Bot.GlobalSettings.LocationSettings.DefaultLatitude.ToString(CultureInfo.InvariantCulture);
+            c_DefaultLongitude.Text = Bot.GlobalSettings.LocationSettings.DefaultLongitude.ToString(CultureInfo.InvariantCulture);
         }
 
 
@@ -918,8 +887,8 @@ namespace Catchem
                 {
                     Bot.Lat = Bot._lat = lat;
                     Bot.Lng = Bot._lng = lng;
-                    Bot.GlobalSettings.DefaultLatitude = lat;
-                    Bot.GlobalSettings.DefaultLongitude = lng;
+                    Bot.GlobalSettings.LocationSettings.DefaultLatitude = lat;
+                    Bot.GlobalSettings.LocationSettings.DefaultLongitude = lng;
                     DrawPlayerMarker();
                     UpdateCoordBoxes();
                 }
@@ -958,110 +927,6 @@ namespace Catchem
         #endregion
 
         #region Property <-> Settings
-        private void BotGlobalSettingsChange(string propertyName, object value)
-        {
-            if (Bot?.GlobalSettings == null) return;
-            foreach (var property in Bot.GlobalSettings.GetType().GetProperties())
-            {
-                if (property.Name != propertyName) continue;
-                if (property.PropertyType == typeof(int))
-                {
-                    int val;
-                    if (((string)value).GetVal(out val))
-                        property.SetValue(Bot.GlobalSettings, val);
-                }
-                else if (property.PropertyType == typeof(double))
-                {
-                    double val;
-                    if (((string)value).GetVal(out val))
-                        property.SetValue(Bot.GlobalSettings, val);
-                }
-                else if (property.PropertyType == typeof(float))
-                {
-                    float val;
-                    if (((string)value).GetVal(out val))
-                        property.SetValue(Bot.GlobalSettings, val);
-                }
-                else
-                    property.SetValue(Bot.GlobalSettings, value);
-                return;
-            }
-            foreach (var property in Bot.GlobalSettings.Auth.GetType().GetProperties())
-            {
-                if (property.Name != propertyName) continue;
-                if (property.PropertyType == typeof(int))
-                {
-                    int val;
-                    if (((string)value).GetVal(out val))
-                        property.SetValue(Bot.GlobalSettings.Auth, val);
-                }
-                else if (property.PropertyType == typeof(double))
-                {
-                    double val;
-                    if (((string)value).GetVal(out val))
-                        property.SetValue(Bot.GlobalSettings.Auth, val);
-                }
-                else if (property.PropertyType == typeof(float))
-                {
-                    float val;
-                    if (((string)value).GetVal(out val))
-                        property.SetValue(Bot.GlobalSettings.Auth, val);
-                }
-                else
-                    property.SetValue(Bot.GlobalSettings.Auth, value);
-                return;
-            }
-            foreach (var property in Bot.GlobalSettings.Auth.GetType().GetFields())
-            {
-                if (property.Name != propertyName) continue;
-                if (property.FieldType == typeof(int))
-                {
-                    int val;
-                    if (((string)value).GetVal(out val))
-                        property.SetValue(Bot.GlobalSettings.Auth, val);
-                }
-                else if (property.FieldType == typeof(double))
-                {
-                    double val;
-                    if (((string)value).GetVal(out val))
-                        property.SetValue(Bot.GlobalSettings.Auth, val);
-                }
-                else if (property.FieldType == typeof(float))
-                {
-                    float val;
-                    if (((string)value).GetVal(out val))
-                        property.SetValue(Bot.GlobalSettings.Auth, val);
-                }
-                else
-                    property.SetValue(Bot.GlobalSettings.Auth, value);
-                return;
-            }
-            foreach (var property in Bot.GlobalSettings.GetType().GetFields())
-            {
-                if (property.Name != propertyName) continue;
-                if (property.FieldType == typeof(int))
-                {
-                    int val;
-                    if (((string)value).GetVal(out val))
-                        property.SetValue(Bot.GlobalSettings, val);
-                }
-                else if (property.FieldType == typeof(double))
-                {
-                    double val;
-                    if (((string)value).GetVal(out val))
-                        property.SetValue(Bot.GlobalSettings, val);
-                }
-                else if (property.FieldType == typeof(float))
-                {
-                    float val;
-                    if (((string)value).GetVal(out val))
-                        property.SetValue(Bot.GlobalSettings, val);
-                }
-                else
-                    property.SetValue(Bot.GlobalSettings, value);
-                return;
-            }
-        }
 
         private void HandleUiElementChangedEvent(object uiElement)
         {
@@ -1069,20 +934,20 @@ namespace Catchem
             if (box != null)
             {
                 var propName = box.Name.Replace("c_", "");
-                BotGlobalSettingsChange(propName, box.Text);
+                Extensions.SetValueByName(propName, box.Text, Bot.GlobalSettings);
                 return;
             }
             var checkBox = uiElement as CheckBox;
             if (checkBox != null)
             {
                 var propName = checkBox.Name.Replace("c_", "");
-                BotGlobalSettingsChange(propName, checkBox.IsChecked);
+                Extensions.SetValueByName(propName, checkBox.IsChecked, Bot.GlobalSettings);
             }
             var passBox = uiElement as PasswordBox;
             if (passBox != null)
             {
                 var propName = passBox.Name.Replace("c_", "");
-                BotGlobalSettingsChange(propName, passBox.Password);
+                Extensions.SetValueByName(propName, passBox.Password, Bot.GlobalSettings);
             }
         }
 
@@ -1106,23 +971,23 @@ namespace Catchem
         private async void StartFillFromRealDevice()
         {
             var dd = await Adb.GetDeviceData();
-            c_DeviceId.Text = Bot.GlobalSettings.Auth.DeviceId = dd.DeviceId;
-            c_AndroidBoardName.Text = Bot.GlobalSettings.Auth.AndroidBoardName = dd.AndroidBoardName;
-            c_AndroidBootloader.Text = Bot.GlobalSettings.Auth.AndroidBootloader = dd.AndroidBootloader;
-            c_DeviceBrand.Text = Bot.GlobalSettings.Auth.DeviceBrand = dd.DeviceBrand;
-            c_DeviceModel.Text = Bot.GlobalSettings.Auth.DeviceModel = dd.DeviceModel;
-            c_DeviceModelIdentifier.Text = Bot.GlobalSettings.Auth.DeviceModelIdentifier = dd.DeviceModelIdentifier;
-            c_HardwareManufacturer.Text = Bot.GlobalSettings.Auth.HardwareManufacturer = dd.HardwareManufacturer;
-            c_HardwareModel.Text = Bot.GlobalSettings.Auth.HardwareModel = dd.HardwareModel;
-            c_FirmwareBrand.Text = Bot.GlobalSettings.Auth.FirmwareBrand = dd.FirmwareBrand;
-            c_FirmwareTags.Text = Bot.GlobalSettings.Auth.FirmwareTags = dd.FirmwareTags;
-            c_FirmwareType.Text = Bot.GlobalSettings.Auth.FirmwareType = dd.FirmwareType;
-            c_FirmwareFingerprint.Text = Bot.GlobalSettings.Auth.FirmwareFingerprint = dd.FirmwareFingerprint;
+            c_DeviceId.Text = Bot.GlobalSettings.Device.DeviceId = dd.DeviceId;
+            c_AndroidBoardName.Text = Bot.GlobalSettings.Device.AndroidBoardName = dd.AndroidBoardName;
+            c_AndroidBootloader.Text = Bot.GlobalSettings.Device.AndroidBootLoader = dd.AndroidBootloader;
+            c_DeviceBrand.Text = Bot.GlobalSettings.Device.DeviceBrand = dd.DeviceBrand;
+            c_DeviceModel.Text = Bot.GlobalSettings.Device.DeviceModel = dd.DeviceModel;
+            c_DeviceModelIdentifier.Text = Bot.GlobalSettings.Device.DeviceModelIdentifier = dd.DeviceModelIdentifier;
+            c_HardwareManufacturer.Text = Bot.GlobalSettings.Device.HardwareManufacturer = dd.HardwareManufacturer;
+            c_HardwareModel.Text = Bot.GlobalSettings.Device.HardWareModel = dd.HardwareModel;
+            c_FirmwareBrand.Text = Bot.GlobalSettings.Device.FirmwareBrand = dd.FirmwareBrand;
+            c_FirmwareTags.Text = Bot.GlobalSettings.Device.FirmwareTags = dd.FirmwareTags;
+            c_FirmwareType.Text = Bot.GlobalSettings.Device.FirmwareType = dd.FirmwareType;
+            c_FirmwareFingerprint.Text = Bot.GlobalSettings.Device.FirmwareFingerprint = dd.FirmwareFingerprint;
         }
 
         private void b_generateRandomDeviceId_Click(object sender, RoutedEventArgs e)
         {
-            c_DeviceId.Text = AuthSettings.RandomString(16, "0123456789abcdef");
+            c_DeviceId.Text = DeviceSettings.RandomString(16, "0123456789abcdef");
         }
         #endregion
 
@@ -1185,7 +1050,7 @@ namespace Catchem
                 get { return _la; }
                 set
                 {
-                    GlobalSettings.DefaultLatitude = value;
+                    GlobalSettings.LocationSettings.DefaultLatitude = value;
                     _la = value;
                 }
             }
@@ -1196,7 +1061,7 @@ namespace Catchem
                 get { return _ln; }
                 set
                 {
-                    GlobalSettings.DefaultLongitude = value;
+                    GlobalSettings.LocationSettings.DefaultLongitude = value;
                     _ln = value;
                 }
             }

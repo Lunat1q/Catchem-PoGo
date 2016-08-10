@@ -24,6 +24,29 @@ namespace PoGo.PokeMobBot.Logic.PoGoUtils
             return $"({BaseAttack} atk,{BaseDefense} def,{BaseStamina} sta)";
         }
     }
+    public class PokemonAnalysis
+    {
+        public PokemonAnalysis(PokemonData pokemon, int trainerLevel)
+        {
+            PokeData = pokemon;
+            PerfectCp = PokemonInfo.CalculateMaxCp(pokemon);
+            MaximumPoweredCp = (int)PokemonInfo.GetMaxCpAtTrainerLevel(pokemon, trainerLevel);
+            Perfection = PokemonInfo.CalculatePokemonPerfection(pokemon);
+            Level = PokemonInfo.GetLevel(pokemon);
+            Move1 = PokemonInfo.GetPokemonMove1(pokemon);
+            Move2 = PokemonInfo.GetPokemonMove2(pokemon);
+            AverageRankVsTypes = PokemonMoveInfo.GetPokemonMoveSet(PokemonMoveInfo.GetMoveSetCombinationIndex(pokemon.PokemonId, PokemonInfo.GetPokemonMove1(pokemon), PokemonInfo.GetPokemonMove2(pokemon))) != null ? PokemonMoveInfo.GetPokemonMoveSet(PokemonMoveInfo.GetMoveSetCombinationIndex(pokemon.PokemonId, PokemonInfo.GetPokemonMove1(pokemon), PokemonInfo.GetPokemonMove2(pokemon))).GetRankVsType("Average") : 0;
+
+        }
+        public PokemonData PokeData { get; set; }
+        public int PerfectCp { get; set; }
+        public int MaximumPoweredCp { get; set; }
+        public double Perfection { get; set; }
+        public double Level { get; set; }
+        public PokemonMove Move1 { get; set; }
+        public PokemonMove Move2 { get; set; }
+        public int AverageRankVsTypes { get; set; }
+    }
 
     public static class PokemonInfo
     {

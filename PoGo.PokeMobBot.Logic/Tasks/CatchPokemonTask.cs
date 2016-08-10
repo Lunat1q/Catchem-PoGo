@@ -22,11 +22,17 @@ namespace PoGo.PokeMobBot.Logic.Tasks
     {
         private static readonly Random Rng = new Random();
 
-        public static async Task Execute(ISession session, dynamic encounter, MapPokemon pokemon,
+        public static async Task<bool> Execute(ISession session, dynamic encounter, MapPokemon pokemon,
             FortData currentFortData = null, ulong encounterId = 0)
         {
             if (encounter is EncounterResponse && pokemon == null)
-                throw new ArgumentException("Parameter pokemon must be set, if encounter is of type EncounterResponse", "pokemon");
+                throw new ArgumentException("Parameter pokemon must be set, if encounter is of type EncounterResponse",
+                    nameof(pokemon));
+            RuntimeSettings.CheckScan();
+            if (RuntimeSettings.DelayingScan)
+            {
+                return false;
+            }
 
             CatchPokemonResponse caughtPokemonResponse;
             var attemptCounter = 1;
@@ -49,10 +55,13 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                                 ? encounter.WildPokemon?.PokemonData?.Cp
                                 : encounter?.PokemonData?.Cp) ?? 0
                     });
-                    return;
+                    return false;
                 }
 
-                var isLowProbability = probability < session.LogicSettings.UseBerryBelowCatchProbability;
+                var useBerryBelowCatchProbability = session.LogicSettings.UseBerryBelowCatchProbability > 1
+                    ? session.LogicSettings.UseBerryBelowCatchProbability/100
+                    : session.LogicSettings.UseBerryBelowCatchProbability;
+                var isLowProbability = probability < useBerryBelowCatchProbability;
                 var isHighCp = encounter != null &&
                                (encounter is EncounterResponse
                                    ? encounter.WildPokemon?.PokemonData?.Cp
@@ -62,7 +71,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                         ? encounter.WildPokemon?.PokemonData
                         : encounter?.PokemonData) >= session.LogicSettings.UseBerryMinIv;
 
-                if (isLowProbability && (( session.LogicSettings.PrioritizeIvOverCp && isHighPerfection) || isHighCp))
+                if (isLowProbability && ((session.LogicSettings.PrioritizeIvOverCp && isHighPerfection) || isHighCp))
                 {
                     await
                         UseBerry(session,
@@ -108,9 +117,11 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                         spinModifier);
 
                 var lat = encounter is EncounterResponse || encounter is IncenseEncounterResponse
-                            ? pokemon.Latitude : currentFortData.Latitude;
+                    ? pokemon.Latitude
+                    : currentFortData.Latitude;
                 var lng = encounter is EncounterResponse || encounter is IncenseEncounterResponse
-                            ? pokemon.Longitude : currentFortData.Longitude;
+                    ? pokemon.Longitude
+                    : currentFortData.Longitude;
                 var evt = new PokemonCaptureEvent
                 {
                     Status = caughtPokemonResponse.Status,
@@ -185,19 +196,21 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                 session.EventDispatcher.Send(evt);
 
                 attemptCounter++;
-                if(session.LogicSettings.Teleport)
+                if (session.LogicSettings.Teleport)
                     await Task.Delay(session.LogicSettings.DelayCatchPokemon);
                 else
-                 await DelayingUtils.Delay(session.LogicSettings.DelayBetweenPokemonCatch, 2000);
+                    await DelayingUtils.Delay(session.LogicSettings.DelayBetweenPokemonCatch, 2000);
             } while (caughtPokemonResponse.Status == CatchPokemonResponse.Types.CatchStatus.CatchMissed ||
                      caughtPokemonResponse.Status == CatchPokemonResponse.Types.CatchStatus.CatchEscape);
+
+            return true;
         }
 
         private static async Task<ItemId> GetBestBall(ISession session, dynamic encounter, float probability)
         {
-            var pokemonCp = encounter is EncounterResponse
+            /*var pokemonCp = encounter is EncounterResponse //commented for possible future uses
                 ? encounter.WildPokemon?.PokemonData?.Cp
-                : encounter?.PokemonData?.Cp;
+                : encounter?.PokemonData?.Cp;*/
             var pokemonId = encounter is EncounterResponse
                 ? encounter.WildPokemon?.PokemonData?.PokemonId
                 : encounter?.PokemonData?.PokemonId;
@@ -207,36 +220,38 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                         ? encounter.WildPokemon?.PokemonData
                         : encounter?.PokemonData));
 
+            var useUltraBallBelowCatchProbability = session.LogicSettings.UseUltraBallBelowCatchProbability > 1
+                ? session.LogicSettings.UseUltraBallBelowCatchProbability/100
+                : session.LogicSettings.UseUltraBallBelowCatchProbability;
+            var useGreatBallBelowCatchProbability = session.LogicSettings.UseGreatBallBelowCatchProbability > 1
+                ? session.LogicSettings.UseGreatBallBelowCatchProbability/100
+                : session.LogicSettings.UseGreatBallBelowCatchProbability;
+
+            await session.Inventory.RefreshCachedInventory();
             var pokeBallsCount = await session.Inventory.GetItemAmountByType(ItemId.ItemPokeBall);
             var greatBallsCount = await session.Inventory.GetItemAmountByType(ItemId.ItemGreatBall);
             var ultraBallsCount = await session.Inventory.GetItemAmountByType(ItemId.ItemUltraBall);
             var masterBallsCount = await session.Inventory.GetItemAmountByType(ItemId.ItemMasterBall);
 
-            if (ultraBallsCount > 0 && iV >= session.LogicSettings.UseUltraBallAboveIv)
-                return ItemId.ItemUltraBall;
-            if (greatBallsCount > 0 && iV >= session.LogicSettings.UseGreatBallAboveIv)
-                return ItemId.ItemGreatBall;
-
-            if (masterBallsCount > 0 &&
-                ((probability <= session.LogicSettings.UseMasterBallBelowCatchProbability &&
-                  !session.LogicSettings.PokemonToUseMasterball.Any()) ||
-                 session.LogicSettings.PokemonToUseMasterball.Contains(pokemonId)))
+            if (masterBallsCount > 0 && !session.LogicSettings.PokemonToUseMasterball.Any() ||
+                session.LogicSettings.PokemonToUseMasterball.Contains(pokemonId))
                 return ItemId.ItemMasterBall;
-            if (ultraBallsCount > 0 && probability <= session.LogicSettings.UseUltraBallBelowCatchProbability)
+            if (ultraBallsCount > 0 && iV >= session.LogicSettings.UseUltraBallAboveIv ||
+                ultraBallsCount > 0 && probability <= useUltraBallBelowCatchProbability)
                 return ItemId.ItemUltraBall;
-            if (greatBallsCount > 0 && probability <= session.LogicSettings.UseGreatBallBelowCatchProbability)
+            if (greatBallsCount > 0 && iV >= session.LogicSettings.UseGreatBallAboveIv ||
+                greatBallsCount > 0 && probability <= useGreatBallBelowCatchProbability)
                 return ItemId.ItemGreatBall;
-
+            //so we counted down, now if we don't have pokeballs we need to just use the best one available
             if (pokeBallsCount > 0)
                 return ItemId.ItemPokeBall;
-            if (greatBallsCount > 0)
+            else if (greatBallsCount > 0)
                 return ItemId.ItemGreatBall;
-            if (ultraBallsCount > 0)
+            else if (ultraBallsCount > 0)
                 return ItemId.ItemUltraBall;
-            if (masterBallsCount > 0 && !session.LogicSettings.PokemonToUseMasterball.Any())
-                return ItemId.ItemMasterBall;
-
-            return ItemId.ItemUnknown;
+            else
+                return ItemId.ItemUnknown;
+            //return pokeBallsCount > 0 ? ItemId.ItemPokeBall : ItemId.ItemUnknown;
         }
 
         private static async Task UseBerry(ISession session, ulong encounterId, string spawnPointId)

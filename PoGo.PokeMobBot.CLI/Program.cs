@@ -94,7 +94,7 @@ namespace PoGo.PokeMobBot.CLI
 
             var aggregator = new StatisticsAggregator(stats);
             var listener = new ConsoleEventListener();
-            var websocket = new WebSocketInterface(settings.WebSocketPort, session);
+            var websocket = new WebSocketInterface(settings.StartUpSettings.WebSocketPort, session);
 
             session.EventDispatcher.EventReceived += evt => listener.Listen(evt, session);
             session.EventDispatcher.EventReceived += evt => aggregator.Listen(evt, session);
@@ -103,7 +103,7 @@ namespace PoGo.PokeMobBot.CLI
             machine.SetFailureState(new LoginState());
 
             Logger.SetLoggerContext(session);
-
+            
             session.Navigation.UpdatePositionEvent +=
                 (lat, lng) => session.EventDispatcher.Send(new UpdatePositionEvent {Latitude = lat, Longitude = lng});
 

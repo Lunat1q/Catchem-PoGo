@@ -60,7 +60,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                     Level = PokemonInfo.GetLevel(hatched),
                     Cp = hatched.Cp,
                     MaxCp = PokemonInfo.CalculateMaxCp(hatched),
-                    Perfection = Math.Round(PokemonInfo.CalculatePokemonPerfection(hatched), 2),
+                    Perfection = Math.Round(PokemonInfo.CalculatePokemonPerfection(hatched), 2)
                 });
             }
 

@@ -120,6 +120,6 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                             i.Latitude, i.Longitude));
 
             return pokemons;
-        }        
+        }
     }
 }

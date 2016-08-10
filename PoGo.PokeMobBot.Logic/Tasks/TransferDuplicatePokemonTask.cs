@@ -7,6 +7,7 @@ using PoGo.PokeMobBot.Logic.Event;
 using PoGo.PokeMobBot.Logic.PoGoUtils;
 using PoGo.PokeMobBot.Logic.State;
 using PoGo.PokeMobBot.Logic.Utils;
+using PoGo.PokeMobBot.Logic.Common;
 
 #endregion
 
@@ -29,6 +30,15 @@ namespace PoGo.PokeMobBot.Logic.Tasks
 
             var pokemonSettings = await session.Inventory.GetPokemonSettings();
             var pokemonFamilies = await session.Inventory.GetPokemonFamilies();
+
+            var currentPokemonCount = await session.Inventory.GetPokemonsCount();
+            var maxPokemonCount = session.Profile.PlayerData.MaxPokemonStorage;
+
+            session.EventDispatcher.Send(new NoticeEvent()
+            {
+                Message = session.Translation.GetTranslation(TranslationString.CurrentPokemonUsage,
+                    currentPokemonCount, maxPokemonCount)
+            });
 
             foreach (var duplicatePokemon in duplicatePokemons)
             {
