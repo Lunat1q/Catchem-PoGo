@@ -4,15 +4,13 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using POGOProtos.Inventory.Item;
 
 namespace Catchem
 {
@@ -20,8 +18,8 @@ namespace Catchem
     {
         public static List<T> GetLogicalChildCollection<T>(this UIElement parent) where T : DependencyObject
         {
-            List<T> logicalCollection = new List<T>();
-            GetLogicalChildCollection(parent as DependencyObject, logicalCollection);
+            var logicalCollection = new List<T>();
+            GetLogicalChildCollection(parent, logicalCollection);
             return logicalCollection;
         }
 
@@ -270,6 +268,11 @@ namespace Catchem
         public static BitmapSource ToInventorySource(this PokemonId pid)
         {
             return pid.ToInventoryBitmap().LoadBitmap();
+        }
+
+        public static BitmapSource ToInventorySource(this ItemId pid)
+        {
+            return pid.ToInventoryItem().LoadBitmap();
         }
 
         public static System.Windows.Controls.Image ToImage(this Bitmap source, string toolTipText = "no_text")
@@ -1068,6 +1071,141 @@ namespace Catchem
                     return Properties.Resources._151_inv;
             }
             return Properties.Resources.no_name;
+        }
+
+        private static Bitmap ToInventoryItem(this ItemId pid)
+        {
+            switch (pid)
+            {
+                case ItemId.ItemUnknown:
+                    return Properties.Resources.no_name;
+                case ItemId.ItemPokeBall:
+                    return Properties.Resources.pokeball_1;
+                case ItemId.ItemGreatBall:
+                    return Properties.Resources.pokeball_2;
+                case ItemId.ItemUltraBall:
+                    return Properties.Resources.pokeball_3;
+                case ItemId.ItemMasterBall:
+                    return Properties.Resources.pokeball_4;
+                case ItemId.ItemPotion:
+                    return Properties.Resources.potion_1;
+                case ItemId.ItemSuperPotion:
+                    return Properties.Resources.potion_2;
+                case ItemId.ItemHyperPotion:
+                    return Properties.Resources.potion_3;
+                case ItemId.ItemMaxPotion:
+                    return Properties.Resources.potion_4;
+                case ItemId.ItemRevive:
+                    return Properties.Resources.revive_1;
+                case ItemId.ItemMaxRevive:
+                    return Properties.Resources.revive_2;
+                case ItemId.ItemLuckyEgg:
+                    return Properties.Resources.lucky_egg;
+                case ItemId.ItemIncenseOrdinary:
+                    return Properties.Resources.ince;
+                case ItemId.ItemIncenseSpicy:
+                    return Properties.Resources.ince;
+                case ItemId.ItemIncenseCool:
+                    return Properties.Resources.ince;
+                case ItemId.ItemIncenseFloral:
+                    return Properties.Resources.ince;
+                case ItemId.ItemTroyDisk:
+                    return Properties.Resources.no_name; //NO
+                case ItemId.ItemXAttack:
+                    return Properties.Resources.no_name; //NO
+                case ItemId.ItemXDefense:
+                    return Properties.Resources.no_name; //NO
+                case ItemId.ItemXMiracle:
+                    return Properties.Resources.no_name; //NO
+                case ItemId.ItemRazzBerry:
+                    return Properties.Resources.berry_1;
+                case ItemId.ItemBlukBerry:
+                    return Properties.Resources.berry_2;
+                case ItemId.ItemNanabBerry:
+                    return Properties.Resources.berry_3;
+                case ItemId.ItemWeparBerry:
+                    return Properties.Resources.berry_4;
+                case ItemId.ItemPinapBerry:
+                    return Properties.Resources.berry_5;
+                case ItemId.ItemSpecialCamera:
+                    return Properties.Resources.camera;
+                case ItemId.ItemIncubatorBasicUnlimited:
+                    return Properties.Resources.incubator_unlimited;
+                case ItemId.ItemIncubatorBasic:
+                    return Properties.Resources.incubator;
+                case ItemId.ItemPokemonStorageUpgrade:
+                    return Properties.Resources.bag_upgrade;
+                case ItemId.ItemItemStorageUpgrade:
+                    return Properties.Resources.bag_upgrade;
+            }
+            return Properties.Resources.no_name;
+        }
+        public static string ToInventoryName(this ItemId pid)
+        {
+            switch (pid)
+            {
+                case ItemId.ItemUnknown:
+                    return "Unknown";
+                case ItemId.ItemPokeBall:
+                    return "PokeBall";
+                case ItemId.ItemGreatBall:
+                    return "GreatBall";
+                case ItemId.ItemUltraBall:
+                    return "UltraBall";
+                case ItemId.ItemMasterBall:
+                    return "MasterBall";
+                case ItemId.ItemPotion:
+                    return "Potion";
+                case ItemId.ItemSuperPotion:
+                    return "Super Potion";
+                case ItemId.ItemHyperPotion:
+                    return "Hyper Potion";
+                case ItemId.ItemMaxPotion:
+                    return "Max Potion";
+                case ItemId.ItemRevive:
+                    return "Revive";
+                case ItemId.ItemMaxRevive:
+                    return "Max Revive";
+                case ItemId.ItemLuckyEgg:
+                    return "Lucky Egg";
+                case ItemId.ItemIncenseOrdinary:
+                    return "Incense";
+                case ItemId.ItemIncenseSpicy:
+                    return "Incense Spicy";
+                case ItemId.ItemIncenseCool:
+                    return "Incense Cool";
+                case ItemId.ItemIncenseFloral:
+                    return "Incense Floral";
+                case ItemId.ItemTroyDisk:
+                    return "Troy Disk";
+                case ItemId.ItemXAttack:
+                    return "X Attack";
+                case ItemId.ItemXDefense:
+                    return "X Defense";
+                case ItemId.ItemXMiracle:
+                    return "X Miracle";
+                case ItemId.ItemRazzBerry:
+                    return "Razz Berry";
+                case ItemId.ItemBlukBerry:
+                    return "Bluk Berry";
+                case ItemId.ItemNanabBerry:
+                    return "Nana Berry";
+                case ItemId.ItemWeparBerry:
+                    return "Wepar Berry";
+                case ItemId.ItemPinapBerry:
+                    return "Pinap Berry";
+                case ItemId.ItemSpecialCamera:
+                    return "Camera";
+                case ItemId.ItemIncubatorBasicUnlimited:
+                    return "Incubator Unlim";
+                case ItemId.ItemIncubatorBasic:
+                    return "Incubator";
+                case ItemId.ItemPokemonStorageUpgrade:
+                    return "PokeStorage Upgrade";
+                case ItemId.ItemItemStorageUpgrade:
+                    return "Storage Upgrade";
+            }
+            return "No Name";
         }
     }
 }

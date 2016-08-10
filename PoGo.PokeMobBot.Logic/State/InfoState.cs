@@ -21,6 +21,7 @@ namespace PoGo.PokeMobBot.Logic.State
 
             Action<IEvent> action = (evt) => session.EventDispatcher.Send(evt);
             await PokemonListTask.Execute(session, action);
+            await InventoryListTask.Execute(session, action);
 
             return new FarmState();
         }

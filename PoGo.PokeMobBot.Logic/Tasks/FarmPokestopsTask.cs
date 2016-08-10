@@ -162,7 +162,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                                     ShownSoftBanMessage = true;
                                 }
                                 if (session.LogicSettings.Teleport)
-                                    await Task.Delay(session.LogicSettings.DelaySoftbanRetry);
+                                    await Task.Delay(session.LogicSettings.DelaySoftbanRetry, cancellationToken);
                                 else
                                     await DelayingUtils.Delay(session.LogicSettings.DelayBetweenPlayerActions, 400);
                             }
@@ -182,7 +182,10 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                                 Description = fortInfo.Description,
                                 url = fortInfo.ImageUrls[0]
                             });
-
+                            session.EventDispatcher.Send(new InventoryNewItemsEvent()
+                            {
+                                Items = fortSearch.ItemsAwarded.ToItemList()
+                            });
                             break; //Continue with program as loot was succesfull.
                         }
                     } while (fortTry < retryNumber - zeroCheck);
@@ -190,7 +193,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
 
                     ShownSoftBanMessage = false;
                     if (session.LogicSettings.Teleport)
-                        await Task.Delay(session.LogicSettings.DelayPokestop);
+                        await Task.Delay(session.LogicSettings.DelayPokestop, cancellationToken);
                     else
                         await Task.Delay(1000, cancellationToken);
 
@@ -391,7 +394,10 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                             Description = fortInfo.Description,
                             url = fortInfo.ImageUrls[0]                            
                         });
-
+                        session.EventDispatcher.Send(new InventoryNewItemsEvent()
+                        {
+                            Items = fortSearch.ItemsAwarded.ToItemList()
+                        });
                         break; //Continue with program as loot was succesfull.
                     }
                 } while (fortTry < retryNumber - zeroCheck);

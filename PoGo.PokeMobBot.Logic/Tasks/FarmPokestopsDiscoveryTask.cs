@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 using GeoCoordinatePortable;
 using PoGo.PokeMobBot.Logic.Common;
 using PoGo.PokeMobBot.Logic.Event;
-using PoGo.PokeMobBot.Logic.Logging;
 using PoGo.PokeMobBot.Logic.State;
 using PoGo.PokeMobBot.Logic.Utils;
 using PokemonGo.RocketAPI.Extensions;
@@ -77,7 +76,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                     await session.Client.Player.UpdatePlayerLocation(fortInfo.Latitude, fortInfo.Longitude,
                         session.Client.Settings.DefaultAltitude);
                 else
-                    await moveToPokestop(session, cancellationToken, pokeStop);
+                    await MoveToPokestop(session, cancellationToken, pokeStop);
 
                 await CatchWildPokemonsTask.Execute(session, cancellationToken);
 
@@ -86,6 +85,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                 var fortTry = 0; //Current check
                 const int retryNumber = 50; //How many times it needs to check to clear softban
                 const int zeroCheck = 5; //How many times it checks fort before it thinks it's softban
+                var shownSoftBanMessage = false;
                 do
                 {
                     cancellationToken.ThrowIfCancellationRequested();
@@ -95,7 +95,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                     if (fortSearch.ExperienceAwarded > 0 && timesZeroXPawarded > 0) timesZeroXPawarded = 0;
                     if (fortSearch.ExperienceAwarded == 0)
                     {
-                        if (TimesZeroXPawarded == 0) await moveToPokestop(session, cancellationToken, pokeStop);
+                        if (TimesZeroXPawarded == 0) await MoveToPokestop(session, cancellationToken, pokeStop);
                         timesZeroXPawarded++;
 
                         if (timesZeroXPawarded > zeroCheck)
@@ -108,14 +108,18 @@ namespace PoGo.PokeMobBot.Logic.Tasks
 
                             fortTry += 1;
 
-                            session.EventDispatcher.Send(new FortFailedEvent
+                            if (!shownSoftBanMessage)
                             {
-                                Name = fortInfo.Name,
-                                Try = fortTry,
-                                Max = retryNumber - zeroCheck
-                            });
-                            if(session.LogicSettings.Teleport)
-                                await Task.Delay(session.LogicSettings.DelaySoftbanRetry);
+                                session.EventDispatcher.Send(new FortFailedEvent
+                                {
+                                    Name = fortInfo.Name,
+                                    Try = fortTry,
+                                    Max = retryNumber - zeroCheck
+                                });
+                                shownSoftBanMessage = true;
+                            }
+                            if (session.LogicSettings.Teleport)
+                                await Task.Delay(session.LogicSettings.DelaySoftbanRetry, cancellationToken);
                             else
                                 await DelayingUtils.Delay(session.LogicSettings.DelayBetweenPlayerActions, 400);
                         }
@@ -133,15 +137,17 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                             Longitude = pokeStop.Longitude,
                             InventoryFull = fortSearch.Result == FortSearchResponse.Types.Result.InventoryFull
                         });
+                        session.EventDispatcher.Send(new InventoryNewItemsEvent()
+                        {
+                            Items = fortSearch.ItemsAwarded.ToItemList()
+                        });
 
                         break; //Continue with program as loot was succesfull.
                     }
                 } while (fortTry < retryNumber - zeroCheck);
-                    //Stop trying if softban is cleaned earlier or if 40 times fort looting failed.
-
-
-                if(session.LogicSettings.Teleport)
-                    await Task.Delay(session.LogicSettings.DelayPokestop);
+                //Stop trying if softban is cleaned earlier or if 40 times fort looting failed.
+                if (session.LogicSettings.Teleport)
+                    await Task.Delay(session.LogicSettings.DelayPokestop, cancellationToken);
                 else
                     await Task.Delay(1000, cancellationToken);
 
@@ -192,7 +198,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
             }
         }
 
-        private static async Task moveToPokestop(ISession session, CancellationToken cancellationToken, FortData pokeStop)
+        private static async Task MoveToPokestop(ISession session, CancellationToken cancellationToken, FortData pokeStop)
         {
             await session.Navigation.HumanLikeWalking(new GeoCoordinate(pokeStop.Latitude, pokeStop.Longitude),
                 session.LogicSettings.WalkingSpeedInKilometerPerHour,

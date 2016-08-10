@@ -83,8 +83,9 @@
     <Compile Include="DataDumper\Dumper.cs" />
     <Compile Include="Common\Translations.cs" />
     <Compile Include="Event\DebugEvent.cs" />
+    <Compile Include="Event\InventoryNewItemsEvent.cs" />
     <Compile Include="Event\PokemonEvolveDoneEvent.cs" />
- 	<Compile Include="Event\PlayerLevelUpEvent.cs" />
+    <Compile Include="Event\PlayerLevelUpEvent.cs" />
     <Compile Include="Event\PokemonSettingsEvent.cs" />
     <Compile Include="Event\UseLuckyEggMinPokemonEvent.cs" />
     <Compile Include="Event\DisplayHighestsPokemonEvent.cs" />
@@ -132,7 +133,7 @@
     <Compile Include="Tasks\ForceMoveTask.cs" />
     <Compile Include="Tasks\FarmPokestopsDiscoveryTask.cs" />
     <Compile Include="Tasks\LevelUpPokemonTask.cs" />
-	<Compile Include="Tasks\PokemonSettingsTask.cs" />
+    <Compile Include="Tasks\PokemonSettingsTask.cs" />
     <Compile Include="Tasks\PokemonListTask.cs" />
     <Compile Include="Tasks\Farm.cs" />
     <Compile Include="Settings.cs" />
@@ -164,7 +165,7 @@
     <Compile Include="Event\UseLuckyEggEvent.cs" />
     <Compile Include="State\VersionCheckState.cs" />
     <Compile Include="Event\WarnEvent.cs" />
-	<Compile Include="Tasks\TransferPokemonTask.cs" />
+    <Compile Include="Tasks\TransferPokemonTask.cs" />
     <Compile Include="Tasks\UseIncubatorsTask.cs" />
     <Compile Include="Tasks\UseNearbyPokestopsTask.cs" />
     <Compile Include="Utils\DelayingEvolveUtils.cs" />
@@ -175,6 +176,7 @@
     <Compile Include="Utils\ErrorHandler.cs" />
     <Compile Include="Utils\GPXReader.cs" />
     <Compile Include="Logging\ILogger.cs" />
+    <Compile Include="Utils\InventoryUtils.cs" />
     <Compile Include="Utils\JitterUtils.cs" />
     <Compile Include="Utils\LocationUtils.cs" />
     <Compile Include="Utils\Statistics.cs" />

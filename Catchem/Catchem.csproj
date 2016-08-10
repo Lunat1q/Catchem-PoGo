@@ -643,6 +643,30 @@
     <Content Include="adb\AdbWinUsbApi.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\revive_2.png" />
+    <None Include="Resources\revive_1.png" />
+    <None Include="Resources\potion_4.png" />
+    <None Include="Resources\potion_3.png" />
+    <None Include="Resources\potion_2.png" />
+    <None Include="Resources\potion_1.png" />
+    <None Include="Resources\pokeball_4.png" />
+    <None Include="Resources\pokeball_3.png" />
+    <None Include="Resources\pokeball_2.png" />
+    <None Include="Resources\pokeball_1.png" />
+    <None Include="Resources\lure_mod.png" />
+    <None Include="Resources\lucky_egg.png" />
+    <None Include="Resources\jar_1.png" />
+    <None Include="Resources\incubator-unlimited.png" />
+    <None Include="Resources\incubator.png" />
+    <None Include="Resources\ince.png" />
+    <None Include="Resources\egg.png" />
+    <None Include="Resources\camera.png" />
+    <None Include="Resources\berry_5.png" />
+    <None Include="Resources\berry_4.png" />
+    <None Include="Resources\berry_3.png" />
+    <None Include="Resources\berry_2.png" />
+    <None Include="Resources\berry_1.png" />
+    <None Include="Resources\bag_upgrade.png" />
     <None Include="Resources\113_inv.png" />
     <None Include="Resources\112_inv.png" />
     <None Include="Resources\111_inv.png" />

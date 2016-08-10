@@ -99,6 +99,10 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                                     Latitude = pokeStop.Latitude,
                                     Longitude = pokeStop.Longitude
                                 });
+                                session.EventDispatcher.Send(new InventoryNewItemsEvent()
+                                {
+                                    Items = fortSearch.ItemsAwarded.ToItemList()
+                                });
                             }
                             if (fortSearch.ItemsAwarded.Count > 0)
                             {

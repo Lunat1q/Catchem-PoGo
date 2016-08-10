@@ -15,9 +15,11 @@ using PokemonGo.RocketAPI.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -28,6 +30,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 using POGOProtos.Data;
+using POGOProtos.Inventory.Item;
 using static System.String;
 using LogLevel = PoGo.PokeMobBot.Logic.Logging.LogLevel;
 
@@ -166,6 +169,24 @@ namespace Catchem
                         BuildPokemonList(session, objData);
                     }));
                     break;
+                case "item_list":
+                    Dispatcher.BeginInvoke(new ThreadStart(delegate
+                    {
+                        BuildItemList(session, objData);
+                    }));
+                    break;
+                case "item_new":
+                    Dispatcher.BeginInvoke(new ThreadStart(delegate
+                    {
+                        GotNewItems(session, objData);
+                    }));
+                    break;
+                case "item_rem":
+                    Dispatcher.BeginInvoke(new ThreadStart(delegate
+                    {
+                        LostItem(session, objData);
+                    }));
+                    break;
                 case "pm_new":
                     Dispatcher.BeginInvoke(new ThreadStart(delegate
                     {
@@ -190,6 +211,46 @@ namespace Catchem
             }
         }
 
+        private void LostItem(ISession session, object[] objData)
+        {
+            var receiverBot = _openedSessions[session];
+            var lostAmount = (int) objData[1];
+            var targetItem = receiverBot.ItemList.FirstOrDefault(x => x.Id == (ItemId)objData[0]);
+            if (targetItem == null) return;
+            if (targetItem.Amount <= lostAmount)
+                receiverBot.ItemList.Remove(targetItem);
+            else
+                targetItem.Amount -= lostAmount;
+            UpdateItemCollection(session);
+        }
+
+        private void GotNewItems(ISession session, object[] objData)
+        {
+            try
+            {
+                var newItems = (List<Tuple<ItemId, int>>)objData[0];
+                var receiverBot = _openedSessions[session];
+
+                foreach (var item in newItems)
+                {
+                    var targetItem = receiverBot.ItemList.FirstOrDefault(x => x.Id == item.Item1);
+                    if (targetItem != null)
+                        targetItem.Amount += item.Item2;
+                    else
+                        receiverBot.ItemList.Add(new ItemUiData(
+                            item.Item1, 
+                            item.Item1.ToInventorySource(), 
+                            item.Item1.ToInventoryName(), 
+                            item.Item2));
+                }
+                UpdateItemCollection(session);
+            }
+            catch (Exception)
+            {
+                // ignored
+            }
+        }
+
         private void UpdateProfileInfo(ISession session, object[] objData)
         {
             Playername.Content = (string)objData[0];
@@ -206,10 +267,9 @@ namespace Catchem
                 var receiverBot = _openedSessions[session];
                 var targetPokemon = receiverBot.PokemonList.FirstOrDefault(x => x.Id == (ulong) objData[0]);
                 if (targetPokemon == null) return;
-
                 receiverBot.PokemonList.Remove(targetPokemon);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 // ignored
             }
@@ -225,7 +285,7 @@ namespace Catchem
                 receiverBot.PokemonList.Add(new PokemonUiData((ulong) objData[0], pokemonId.ToInventorySource(),
                     pokemonId.ToString(), (int) objData[2], (double) objData[3]));
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 // ignored
             }
@@ -239,21 +299,54 @@ namespace Catchem
                 receiverBot.PokemonList = new ObservableCollection<PokemonUiData>();
                 receiverBot.PokemonList.CollectionChanged += delegate
                 {
-                    UpdateCollection(session);
+                    UpdatePokemonCollection(session);
                 };
                 ((List<Tuple<PokemonData, double, int>>) objData[0]).ForEach(x => receiverBot.PokemonList.Add(
-                    new PokemonUiData(x.Item1.Id, x.Item1.PokemonId.ToInventorySource(),
+                    new PokemonUiData(x.Item1.Id,
+                        x.Item1.PokemonId.ToInventorySource(),
                         (x.Item1.Nickname == "" ? x.Item1.PokemonId.ToString() : x.Item1.Nickname),
-                        x.Item1.Cp, x.Item2)));
+                        x.Item1.Cp, 
+                        x.Item2)));
                 if (session != _curSession) return;
 
                 PokeListBox.ItemsSource = Bot.PokemonList;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 // ignored
             }
         }
+        private void BuildItemList(ISession session, object[] objData)
+        {
+            try
+            {
+                var receiverBot = _openedSessions[session];
+                receiverBot.ItemList = new ObservableCollection<ItemUiData>();
+                receiverBot.ItemList.CollectionChanged += delegate
+                {
+                    UpdateItemCollection(session);
+                };
+                ((List<ItemData>) objData[0]).ForEach(x => receiverBot.ItemList.Add(
+                    new ItemUiData(x.ItemId,
+                        x.ItemId.ToInventorySource(),
+                        x.ItemId.ToInventoryName(),
+                        x.Count)));
+                if (session != _curSession) return;
+
+                ItemListBox.ItemsSource = Bot.ItemList;
+            }
+            catch (Exception)
+            {
+                // ignored
+            }
+        }
+
+        private void UpdateItemCollection(ISession session)
+        {
+            if (Bot == null || session != _curSession) return;
+            l_inventory.Content = $"({Bot.ItemList.Sum(x=>x.Amount)}/{Bot.MaxItemStorageSize})";
+        }
+
         private void UpdateCoords(ISession session, object[] objData)
         {
             try
@@ -743,7 +836,7 @@ namespace Catchem
             RebuildUi();
         }
 
-        private void UpdateCollection(ISession session)
+        private void UpdatePokemonCollection(ISession session)
         {
             if (Bot == null || session != _curSession) return;
             //PokeListBox.Items.Refresh();
@@ -896,7 +989,7 @@ namespace Catchem
             }
         }
 
-        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        private void Window_Closing(object sender, CancelEventArgs e)
         {
             _windowClosing = true;
             if (Bot == null || _loadingUi) return;
@@ -911,19 +1004,19 @@ namespace Catchem
         {
             if (Bot == null || _loadingUi) return;
             PokeListBox.Items.SortDescriptions.Clear();
-            PokeListBox.Items.SortDescriptions.Add(new System.ComponentModel.SortDescription("Cp", System.ComponentModel.ListSortDirection.Descending));
+            PokeListBox.Items.SortDescriptions.Add(new SortDescription("Cp", ListSortDirection.Descending));
         }
         private void SortByIvClick(object sender, RoutedEventArgs e)
         {
             if (Bot == null || _loadingUi) return;
             PokeListBox.Items.SortDescriptions.Clear();
-            PokeListBox.Items.SortDescriptions.Add(new System.ComponentModel.SortDescription("Iv", System.ComponentModel.ListSortDirection.Descending));
+            PokeListBox.Items.SortDescriptions.Add(new SortDescription("Iv", ListSortDirection.Descending));
         }
         private void sortByAz_Click(object sender, RoutedEventArgs e)
         {
             if (Bot == null || _loadingUi) return;
             PokeListBox.Items.SortDescriptions.Clear();
-            PokeListBox.Items.SortDescriptions.Add(new System.ComponentModel.SortDescription("Name", System.ComponentModel.ListSortDirection.Ascending));
+            PokeListBox.Items.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
         }
         #endregion
 
@@ -1029,8 +1122,8 @@ namespace Catchem
             public readonly GlobalSettings GlobalSettings;
             public int MaxItemStorageSize;
             public int MaxPokemonStorageSize;
-            //public Dictionary<ulong, PokemonUiData> PokemonList = new Dictionary<ulong, PokemonUiData>();
             public ObservableCollection<PokemonUiData> PokemonList = new ObservableCollection<PokemonUiData>();
+            public ObservableCollection<ItemUiData> ItemList = new ObservableCollection<ItemUiData>();
 
             public Label RunTime;
             public Label Xpph;
@@ -1140,7 +1233,6 @@ namespace Catchem
 
         public class PokemonUiData
         {
-            //public Grid PokemonGrid;
             public ulong Id { get; set; }
             public BitmapSource Image { get; set; }
             public string Name { get; set; }
@@ -1156,7 +1248,36 @@ namespace Catchem
                 Iv = iv;
             }
         }
+        public class ItemUiData : INotifyPropertyChanged
+        {
+            public event PropertyChangedEventHandler PropertyChanged;
+            protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
+            {
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            }
+            public ItemId Id { get; set; }
+            public BitmapSource Image { get; set; }
+            public string Name { get; set; }
+            private int _amount;
+            public int Amount
+            {
+                get { return _amount; }
+                set
+                {
+                    _amount = value;
+                    OnPropertyChanged();
+                }
+            }
 
-       
+            public ItemUiData(ItemId id, BitmapSource img, string name, int amount)
+            {
+                Id = id;
+                Image = img;
+                Name = name;
+                Amount = amount;
+            }
+        }
+
+
     }
 }

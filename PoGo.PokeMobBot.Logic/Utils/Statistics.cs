@@ -3,6 +3,7 @@
 #region using directives
 
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using POGOProtos.Networking.Responses;
@@ -56,6 +57,11 @@ namespace PoGo.PokeMobBot.Logic.Utils
                         session.EventDispatcher.Send(new PlayerLevelUpEvent
                         {
                             Items = StringUtils.GetSummedFriendlyNameOfItemAwardList(response.Result.ItemsAwarded)
+                        });
+                        var newItemsList = new List<Tuple<ItemId, int>>();
+                        session.EventDispatcher.Send(new InventoryNewItemsEvent()
+                        {
+                            Items = response.Result.ItemsAwarded.ToItemList()
                         });
                     }
                 }

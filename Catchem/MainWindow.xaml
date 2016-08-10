@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Catchem"
         xmlns:WindowsPresentation="clr-namespace:GMap.NET.WindowsPresentation;assembly=GMap.NET.WindowsPresentation" x:Class="Catchem.MainWindow"
         mc:Ignorable="d"
-        Title="Catchem" Height="775" Width="1192" MinWidth="1075" MinHeight="775" Closing="Window_Closing" Icon="unnamed.ico">
+        Title="Catchem" Height="775" Width="1225" MinWidth="1075" MinHeight="775" Closing="Window_Closing" Icon="unnamed.ico">
     <Window.Background>
         <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
             <GradientStop Color="#FFB2EF9C" Offset="0"/>
@@ -62,6 +62,20 @@
                 <TextBlock Text="{Binding Name, FallbackValue=NoName}" HorizontalAlignment="Left" Margin="0,95,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2" Width="150" Padding="0" Foreground="#FF59C3B0" FontSize="16" TextAlignment="Center"/>
                 <TextBlock Text="{Binding Cp, FallbackValue=0, StringFormat='Cp: {0}'}" HorizontalAlignment="Left" Margin="0,121,0,0" VerticalAlignment="Top" Grid.ColumnSpan="1" Width="75" Padding="0" Foreground="#FF59C3B0" FontSize="14" TextAlignment="Center" />
                 <TextBlock Text="{Binding Iv, FallbackValue=0, StringFormat='Iv: {0:N1}%'}" HorizontalAlignment="Left" Margin="0,121,0,0" VerticalAlignment="Top" Width="75" Padding="0" Foreground="#FF59C3B0" Grid.Column="1" FontSize="14" TextAlignment="Center" />
+            </Grid>
+        </DataTemplate>
+        <DataTemplate x:Key="InventoryItemTemplate">
+            <Grid Height="75" Margin="3" Width="Auto">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="75"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Rectangle Fill="White" HorizontalAlignment="Stretch" Height="Auto" VerticalAlignment="Stretch" Width="Auto" Grid.ColumnSpan="2"/>
+                <Grid HorizontalAlignment="Left" Height="75" VerticalAlignment="Top" Width="75">
+                    <Image Source="{Binding Path=Image}" x:Name="image" HorizontalAlignment="Center" Height="Auto" Margin="0" VerticalAlignment="Center" Width="Auto"/>
+                </Grid>
+                <TextBlock Text="{Binding Name, FallbackValue=NoName}" HorizontalAlignment="Stretch" Margin="1,10,0,0" VerticalAlignment="Top" Grid.ColumnSpan="1" Width="Auto" Padding="0" Foreground="#FF59C3B0" FontSize="16" TextAlignment="Center" Height="21" Grid.Column="1"/>
+                <TextBlock Text="{Binding Amount, FallbackValue='Amount: 0', StringFormat='Amount: {0}'}" HorizontalAlignment="Stretch" Margin="1,46,0,0" VerticalAlignment="Top" Grid.ColumnSpan="1" Width="Auto" Padding="0" Foreground="#FF59C3B0" FontSize="14" TextAlignment="Center" Height="19" Grid.Column="1" />
             </Grid>
         </DataTemplate>
     </Window.Resources>
@@ -340,8 +354,9 @@
             <TabItem Header="Information">
                 <Grid RenderTransformOrigin="0.475,0.403">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="219*"/>
-                        <ColumnDefinition Width="178*"/>
+                        <ColumnDefinition Width="521*"/>
+                        <ColumnDefinition Width="121"/>
+                        <ColumnDefinition Width="302*"/>
                     </Grid.ColumnDefinitions>
                     <Label x:Name="Playername" Content="%%PLAYERNAME%%" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontSize="25" FontFamily="Calibri" Height="41" Width="220">
                         <Label.Foreground>
@@ -359,7 +374,7 @@
                             </LinearGradientBrush>
                         </Label.Foreground>
                     </Label>
-                    <Label x:Name="label5" Content="TEAM&#xA;LOGO&#xA;HERE" HorizontalAlignment="Right" VerticalAlignment="Top" FontFamily="Source Sans Pro Black" FontWeight="Bold" FontSize="24" Foreground="#7F6AABAE" Height="102" Width="97" Grid.Column="1"/>
+                    <Label x:Name="label5" Content="TEAM&#xA;LOGO&#xA;HERE" HorizontalAlignment="Right" VerticalAlignment="Top" FontFamily="Source Sans Pro Black" FontWeight="Bold" FontSize="24" Foreground="#7F6AABAE" Height="102" Width="97" Grid.Column="2"/>
                     <Label x:Name="label6" Content="STARDUST" HorizontalAlignment="Left" Margin="10,48,0,0" VerticalAlignment="Top" Foreground="#FF363636" FontSize="15" TextOptions.TextFormattingMode="Display" FontFamily="Source Sans Pro Semibold" Height="28" Width="82"/>
                     <Label x:Name="l_StarDust" Content="AMOUNT" HorizontalAlignment="Left" Margin="11,69,0,0" VerticalAlignment="Top" Foreground="#FF324AB4" FontSize="15" TextOptions.TextFormattingMode="Display" FontFamily="Source Sans Pro Semibold" Height="28" Width="73"/>
                     <Label x:Name="l_Stardust_farmed" Content="+FARMED" HorizontalAlignment="Left" Margin="83,69,0,0" VerticalAlignment="Top" Foreground="#FFBF4F2E" FontSize="15" TextOptions.TextFormattingMode="Display" FontFamily="Source Sans Pro Semibold" Height="28" Width="78"/>
@@ -369,10 +384,10 @@
                     <Label x:Name="label6_Copy5" Content="COINS" HorizontalAlignment="Left" Margin="10,48,0,0" VerticalAlignment="Top" Foreground="#FF363636" FontSize="15" TextOptions.TextFormattingMode="Display" FontFamily="Source Sans Pro Semibold" Grid.Column="1" Height="28" Width="53"/>
                     <Label x:Name="l_coins" Content="AMOUNT" HorizontalAlignment="Left" Margin="10,69,0,0" VerticalAlignment="Top" Foreground="#FF324AB4" FontSize="15" TextOptions.TextFormattingMode="Display" FontFamily="Source Sans Pro Semibold" Grid.Column="1" Height="28" Width="73"/>
                     <Label x:Name="l_Pokemons_farmed" Content="+FARMED" HorizontalAlignment="Left" Margin="105,102,0,0" VerticalAlignment="Top" Foreground="#FFBF4F2E" FontSize="15" TextOptions.TextFormattingMode="Display" FontFamily="Source Sans Pro Semibold" Height="28" Width="78"/>
-                    <Label x:Name="label6_Copy1" Content="POKESTOPS" HorizontalAlignment="Left" Margin="116,48,0,0" VerticalAlignment="Top" Foreground="#FF363636" FontSize="15" TextOptions.TextFormattingMode="Display" FontFamily="Source Sans Pro Semibold" Grid.Column="1" Height="28" Width="89"/>
-                    <Label x:Name="l_Pokestops_farmed" Content="+FARMED" HorizontalAlignment="Left" Margin="116,69,0,0" VerticalAlignment="Top" Foreground="#FFBF4F2E" FontSize="15" TextOptions.TextFormattingMode="Display" FontFamily="Source Sans Pro Semibold" Grid.Column="1" Height="28" Width="78"/>
+                    <Label x:Name="label6_Copy1" Content="POKESTOPS" HorizontalAlignment="Left" Margin="3,48,0,0" VerticalAlignment="Top" Foreground="#FF363636" FontSize="15" TextOptions.TextFormattingMode="Display" FontFamily="Source Sans Pro Semibold" Grid.Column="2" Height="28" Width="89"/>
+                    <Label x:Name="l_Pokestops_farmed" Content="+FARMED" HorizontalAlignment="Left" Margin="3,69,0,0" VerticalAlignment="Top" Foreground="#FFBF4F2E" FontSize="15" TextOptions.TextFormattingMode="Display" FontFamily="Source Sans Pro Semibold" Grid.Column="2" Height="28" Width="78"/>
                     <Label x:Name="l_Pokemons_transfered" Content="-TRANSFERED" HorizontalAlignment="Left" Margin="193,102,0,0" VerticalAlignment="Top" Foreground="#FF00AE92" FontSize="15" TextOptions.TextFormattingMode="Display" FontFamily="Source Sans Pro Semibold" Height="28" Width="105"/>
-                    <Label x:Name="l_level_nextime" Content="%next_level_time%" HorizontalAlignment="Left" Margin="116,17,0,0" VerticalAlignment="Top" FontSize="18" FontFamily="Calibri" Width="152" Height="29" Grid.Column="1">
+                    <Label x:Name="l_level_nextime" Content="%next_level_time%" HorizontalAlignment="Left" Margin="3,17,0,0" VerticalAlignment="Top" FontSize="18" FontFamily="Calibri" Width="152" Height="29" Grid.Column="2">
                         <Label.Foreground>
                             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                                 <LinearGradientBrush.RelativeTransform>
@@ -455,17 +470,17 @@
                             </LinearGradientBrush>
                         </Button.Background>
                     </Button>
-                    <ListBox ItemsSource="{Binding}" x:Name="PokeListBox" Margin="11,130,10,46" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemTemplate="{DynamicResource PokemonDataTemplate}" BorderBrush="#FF04C17C" Background="#FFEFFFF8">
+                    <ListBox ItemsSource="{Binding}" x:Name="PokeListBox" Margin="11,130,10,46" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemTemplate="{DynamicResource PokemonDataTemplate}" BorderBrush="#FF04C17C" Background="#FFEFFFF8" Grid.ColumnSpan="2">
                         <ListBox.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <WrapPanel />
                             </ItemsPanelTemplate>
                         </ListBox.ItemsPanel>
                     </ListBox>
-                    <Label x:Name="l_poke_inventory" Content="(HAVE/MAX)" HorizontalAlignment="Right" Margin="0,102,10,0" VerticalAlignment="Top" Foreground="#FF324AB4" FontSize="15" TextOptions.TextFormattingMode="Display" FontFamily="Source Sans Pro Semibold" Height="28" Width="100" HorizontalContentAlignment="Right"/>
-                    <ListBox x:Name="listBox" Grid.Column="1" Margin="10,130,10,46"/>
-                    <Label x:Name="label6_Copy6" Content="INVENTORY" HorizontalAlignment="Left" Margin="10,102,0,0" VerticalAlignment="Top" Foreground="#FF363636" FontSize="15" TextOptions.TextFormattingMode="Display" FontFamily="Source Sans Pro Semibold" Height="28" Width="89" Grid.Column="1"/>
-                    <Label x:Name="l_inventory" Content="(HAVE/MAX)" HorizontalAlignment="Right" Margin="0,102,10,0" VerticalAlignment="Top" Foreground="#FF324AB4" FontSize="15" TextOptions.TextFormattingMode="Display" FontFamily="Source Sans Pro Semibold" Height="28" Width="100" HorizontalContentAlignment="Right" Grid.Column="1"/>
+                    <Label x:Name="l_poke_inventory" Content="(HAVE/MAX)" HorizontalAlignment="Right" Margin="0,102,10,0" VerticalAlignment="Top" Foreground="#FF324AB4" FontSize="15" TextOptions.TextFormattingMode="Display" FontFamily="Source Sans Pro Semibold" Height="28" Width="100" HorizontalContentAlignment="Right" Grid.Column="1"/>
+                    <ListBox x:Name="ItemListBox" Grid.Column="2" Margin="10,130,10,46" BorderBrush="#FF04C17C" Background="#FFEFFFF8" ItemTemplate="{DynamicResource InventoryItemTemplate}" HorizontalContentAlignment="Stretch"/>
+                    <Label x:Name="label6_Copy6" Content="INVENTORY" HorizontalAlignment="Left" Margin="10,102,0,0" VerticalAlignment="Top" Foreground="#FF363636" FontSize="15" TextOptions.TextFormattingMode="Display" FontFamily="Source Sans Pro Semibold" Height="28" Width="89" Grid.Column="2"/>
+                    <Label x:Name="l_inventory" Content="(HAVE/MAX)" HorizontalAlignment="Right" Margin="0,102,10,0" VerticalAlignment="Top" Foreground="#FF324AB4" FontSize="15" TextOptions.TextFormattingMode="Display" FontFamily="Source Sans Pro Semibold" Height="28" Width="100" HorizontalContentAlignment="Right" Grid.Column="2"/>
                 </Grid>
             </TabItem>
 

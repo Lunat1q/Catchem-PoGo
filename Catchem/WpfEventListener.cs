@@ -113,6 +113,7 @@ namespace Catchem
         {
             Logger.Write(session.Translation.GetTranslation(TranslationString.EventItemRecycled, evt.Count, evt.Id),
                 LogLevel.Recycling, session: session);
+            Logger.PushToUi("item_rem", session, evt.Id, evt.Count);
         }
 
         public void HandleEvent(EggIncubatorStatusEvent evt, ISession session)
@@ -234,12 +235,21 @@ namespace Catchem
                     evt.Iv > 0 ? evt.Iv.ToString(CultureInfo.InvariantCulture) : "unknown",
                     $"{evt.Bounds.Latitude},{evt.Bounds.Longitude}"), session: session);
         }
-
+        
         public void HandleEvent(PokemonListEvent evt, ISession session)
         {
             Logger.PushToUi("pm_list", session, evt.PokemonList);
         }
-
+        
+        public void HandleEvent(InventoryListEvent evt, ISession session)
+        {
+            Logger.PushToUi("item_list", session, evt.Items);
+        }
+        public void HandleEvent(InventoryNewItemsEvent evt, ISession session)
+        {
+            Logger.PushToUi("item_new", session, evt.Items);
+        }
+        
         public void HandleEvent(DisplayHighestsPokemonEvent evt, ISession session)
         {
             string strHeader;

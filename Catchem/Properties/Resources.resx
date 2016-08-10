@@ -1087,4 +1087,76 @@
   <data name="_151_inv" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\151_inv.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="bag_upgrade" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\bag_upgrade.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="berry_1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\berry_1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="berry_2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\berry_2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="berry_3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\berry_3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="berry_4" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\berry_4.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="berry_5" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\berry_5.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="camera" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\camera.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="egg" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\egg.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ince" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ince.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="incubator" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\incubator.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="incubator_unlimited" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\incubator-unlimited.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="jar_1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\jar_1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="lucky_egg" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\lucky_egg.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="lure_mod" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\lure_mod.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="pokeball_1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\pokeball_1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="pokeball_2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\pokeball_2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="pokeball_3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\pokeball_3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="pokeball_4" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\pokeball_4.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="potion_1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\potion_1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="potion_2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\potion_2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="potion_3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\potion_3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="potion_4" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\potion_4.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="revive_1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\revive_1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="revive_2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\revive_2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>
