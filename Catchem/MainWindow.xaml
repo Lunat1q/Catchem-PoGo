@@ -485,6 +485,12 @@
                         </Button.Background>
                     </Button>
                     <ListBox ItemsSource="{Binding}" x:Name="PokeListBox" Margin="11,130,10,46" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemTemplate="{DynamicResource PokemonDataTemplate}" BorderBrush="#FF04C17C" Background="#FFEFFFF8" Grid.ColumnSpan="2">
+                        <ListBox.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem x:Name="mi_evolvePokemon" Header="Evolve Pokemon" Click="mi_evolvePokemon_Click"/>
+                                <MenuItem x:Name="mi_transferPokemon" Header="Transfer Pokemon" Click="mi_transferPokemon_Click" />
+                            </ContextMenu>
+                        </ListBox.ContextMenu>
                         <ListBox.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <WrapPanel />

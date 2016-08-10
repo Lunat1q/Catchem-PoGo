@@ -610,6 +610,21 @@ namespace Catchem
             }
         }
 
+        private static async void EvolvePokemon(ISession session, PokemonUiData pokemon)
+        {
+            await EvolveSpecificPokemonTask.Execute(session, pokemon.Id);
+        }
+
+        private static async void TransferPokemon(ISession session, PokemonUiData pokemon)
+        {
+            await TransferPokemonTask.Execute(session, pokemon.Id);
+        }
+
+        private static async void RecycleItem(ISession session, ItemUiData item, int amount)
+        {
+            await session.Client.Inventory.RecycleItem(item.Id, amount);
+        }
+
         #endregion
 
         #region Controll's events
@@ -896,6 +911,28 @@ namespace Catchem
             c_DefaultLongitude.Text = Bot.GlobalSettings.LocationSettings.DefaultLongitude.ToString(CultureInfo.InvariantCulture);
         }
 
+        private void mi_evolvePokemon_Click(object sender, RoutedEventArgs e)
+        {
+            if (PokeListBox.SelectedIndex == -1) return;
+
+            // Hypothetical function GetElement retrieves some element
+            var pokemon = GetSelectedPokemon();
+            EvolvePokemon(_curSession, pokemon);
+        }
+
+        private void mi_transferPokemon_Click(object sender, RoutedEventArgs e)
+        {
+            if (PokeListBox.SelectedIndex == -1) return;
+
+            // Hypothetical function GetElement retrieves some element
+            var pokemon = GetSelectedPokemon();
+            TransferPokemon(_curSession, pokemon);
+        }
+
+        private PokemonUiData GetSelectedPokemon()
+        {
+            return (PokemonUiData)PokeListBox.SelectedItems[0];
+        }
 
         private void NoButton_Click(object sender, RoutedEventArgs e)
         {
@@ -977,7 +1014,7 @@ namespace Catchem
         private void sl_moveSpeedFactor_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             var sl = (sender as Slider);
-            if (sl == null) return;
+            if (sl == null || l_moveSpeedFactor == null) return;
             l_moveSpeedFactor.Content = sl.Value;
             if (Bot == null || _loadingUi) return;
             Bot.GlobalSettings.LocationSettings.MoveSpeedFactor = sl.Value;
@@ -1254,6 +1291,6 @@ namespace Catchem
             }
         }
 
-        
+       
     }
 }

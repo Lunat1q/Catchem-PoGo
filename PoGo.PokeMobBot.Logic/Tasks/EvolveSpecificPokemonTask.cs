@@ -41,7 +41,6 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                 Cp = evolveResponse.EvolvedPokemonData.Cp,
                 Perfection = PokemonInfo.CalculatePokemonPerfection(evolveResponse.EvolvedPokemonData)
             });
-
             await DelayingUtils.Delay(session.LogicSettings.DelayBetweenPlayerActions, 2000);
         }
     }

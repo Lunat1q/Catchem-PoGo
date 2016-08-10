@@ -9,9 +9,9 @@ namespace PoGo.PokeMobBot.Logic.Tasks
 {
     public class TransferPokemonTask
     {
-        public static async Task Execute(ISession session, string pokemonId)
+        public static async Task Execute(ISession session, ulong pokemonId)
         {
-            var id = ulong.Parse(pokemonId);
+            var id = pokemonId;
 
             var all = await session.Inventory.GetPokemons();
             var pokemons = all.OrderByDescending(x => x.Cp).ThenBy(n => n.StaminaMax);
@@ -37,6 +37,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
             // Broadcast event as everyone would benefit
             session.EventDispatcher.Send(new Logic.Event.TransferPokemonEvent
             {
+                Uid = pokemon.Id,
                 Id = pokemon.PokemonId,
                 Perfection = Logic.PoGoUtils.PokemonInfo.CalculatePokemonPerfection(pokemon),
                 Cp = pokemon.Cp,

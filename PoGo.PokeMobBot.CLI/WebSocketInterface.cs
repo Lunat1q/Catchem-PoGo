@@ -111,7 +111,8 @@ namespace PoGo.PokeMobBot.CLI
                     await PokemonSettingsTask.Execute(_session, action);
                     break;
                 case "TransferPokemon":
-                    await TransferPokemonTask.Execute(_session, msgObj?.Data);
+                    if (msgObj?.Data != null)
+                        await TransferPokemonTask.Execute(_session, ulong.Parse(msgObj?.Data));
                     break;
                 case "EvolvePokemon":
                     if (msgObj?.Data != null)
