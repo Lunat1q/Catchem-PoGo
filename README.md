@@ -3,7 +3,7 @@
 <h5>also some code was taken from NecroBot project</h5>
 
 
-[<h3>Discord invite</h3>](https://discord.gg/pPwxX8Q)
+[<h3>Discord for any help</h3>](https://discord.gg/pPwxX8Q)
  
 <h2>Donating</h2>
 I you really liked this project, feel free to buy us all a beer, by using PayPal:<br/><br/>
