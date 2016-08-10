@@ -9,8 +9,8 @@
 </form>
 
 <h2>Donating</h2>
-I you really liked this project, feel free to buy us all a beer, by using PayPal:<br/>
-[![Donate](https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=RFAU4PYCAAGML)<br/>
+I you really liked this project, feel free to buy us all a beer, by using PayPal:<br/><br/>
+[![Donate](https://www.paypalobjects.com/en_US/GB/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=RFAU4PYCAAGML)<br/>
 
 <h2>See it in action:</h2>
  [<h3>Basic map</h3>](http://i.imgur.com/UXGkHS4.gifv)
