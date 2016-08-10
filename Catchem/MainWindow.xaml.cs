@@ -63,6 +63,7 @@ namespace Catchem
             }
         }
         GMapMarker _playerMarker;
+        GMapRoute _playerRoute;
 
         bool _loadingUi;
         private bool _followThePlayerMarker;
@@ -120,6 +121,7 @@ namespace Catchem
 
             GMap.NET.MapProviders.GMapProvider.WebProxy = System.Net.WebRequest.GetSystemWebProxy();
             GMap.NET.MapProviders.GMapProvider.WebProxy.Credentials = System.Net.CredentialCache.DefaultCredentials;
+            
 
             if (Bot != null)
                 pokeMap.Position = new PointLatLng(Bot.Lat, Bot.Lng);
@@ -433,6 +435,8 @@ namespace Catchem
                 Shape = Properties.Resources.trainer.ToImage("Player"), Offset = new Point(-14, -40), ZIndex = 15
             };
             pokeMap.Markers.Add(_playerMarker);
+            _playerRoute = Bot.PlayerRoute;
+            pokeMap.Markers.Add(_playerRoute);
 
             if (Bot.ForceMoveMarker != null)
                 pokeMap.Markers.Add(Bot.ForceMoveMarker);
@@ -539,6 +543,10 @@ namespace Catchem
                             Bot.LngStep = (Bot.Lng - Bot._lng)/(2000/delay);
                             Bot.GotNewCoord = false;
                             UpdateCoordBoxes();
+                            Bot.PushNewRoutePoint(new PointLatLng(Bot.Lat, Bot.Lng));
+                            pokeMap.UpdateLayout();
+                            _playerRoute.RegenerateShape(pokeMap);
+                            // pokeMap.Markers.Add(Bot.PlayerRoute);
                         }
 
                         Bot._lat += Bot.LatStep;
@@ -878,6 +886,8 @@ namespace Catchem
             pokeMap.Markers.Clear();
             _playerMarker = null;
             Bot.LatStep = Bot.LngStep = 0;
+            PokeListBox.ItemsSource = null;
+            ItemListBox.ItemsSource = null;
         }
 
         private static BotWindowData CreateBowWindowData(GlobalSettings s, string name)
@@ -934,6 +944,7 @@ namespace Catchem
             #endregion
 
             PokeListBox.ItemsSource = Bot.PokemonList;
+            ItemListBox.ItemsSource = Bot.ItemList;            
 
             _loadingUi = false;
         }
@@ -1167,6 +1178,8 @@ namespace Catchem
             public int MaxPokemonStorageSize;
             public ObservableCollection<PokemonUiData> PokemonList = new ObservableCollection<PokemonUiData>();
             public ObservableCollection<ItemUiData> ItemList = new ObservableCollection<ItemUiData>();
+            private Queue<PointLatLng> routePoints = new Queue<PointLatLng>();
+            public GMapRoute PlayerRoute;
 
             public Label RunTime;
             public Label Xpph;
@@ -1226,6 +1239,7 @@ namespace Catchem
                     RunTime.Content = _ts.ToString();
                 };
                 _cts = new CancellationTokenSource();
+                PlayerRoute = new GMapRoute(routePoints);
             }
 
             public void UpdateXppH()
@@ -1234,6 +1248,17 @@ namespace Catchem
                     Xpph.Content = 0;
                 else
                     Xpph.Content = "Xp/h: " + (Stats.TotalExperience/_ts.TotalHours).ToString("0.0");
+            }
+
+            public void PushNewRoutePoint(PointLatLng nextPoint)
+            {
+                routePoints.Enqueue(nextPoint);
+                if (routePoints.Count > 50)
+                {
+                    var point = routePoints.Dequeue();
+                    PlayerRoute.Points.Remove(point);
+                }
+                PlayerRoute.Points.Add(nextPoint);
             }
 
             private void WipeData()
@@ -1272,6 +1297,7 @@ namespace Catchem
                 foreach (var item in Log)
                     LogQueue.Enqueue(item);
                 Log = new List<Tuple<string, Color>>();
+                routePoints.Clear();       
             }
         }
 
