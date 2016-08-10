@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Catchem"
         xmlns:WindowsPresentation="clr-namespace:GMap.NET.WindowsPresentation;assembly=GMap.NET.WindowsPresentation" x:Class="Catchem.MainWindow"
         mc:Ignorable="d"
-        Title="Catchem" Height="775" Width="1075" MinWidth="1075" MinHeight="775" Closing="Window_Closing" Icon="unnamed.ico">
+        Title="Catchem" Height="775" Width="1192" MinWidth="1075" MinHeight="775" Closing="Window_Closing" Icon="unnamed.ico">
     <Window.Background>
         <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
             <GradientStop Color="#FFB2EF9C" Offset="0"/>
@@ -160,7 +160,7 @@
 
                             </Grid>
                         </GroupBox>
-                        <GroupBox x:Name="groupBox4" Grid.Column="1" Header="Snipe" Margin="0,943,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.479,0.565" Height="224">
+                        <GroupBox x:Name="groupBox4" Header="Snipe" Margin="-1,1353,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.479,0.565" Height="224">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="181*"/>
@@ -272,7 +272,7 @@
 
                             </Grid>
                         </GroupBox>
-                        <GroupBox x:Name="groupBox4_Copy2" Header="Delays" Margin="0,1167,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.479,0.565" Height="573" Grid.Column="1">
+                        <GroupBox x:Name="groupBox4_Copy2" Header="Delays" Margin="0,943,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.479,0.565" Height="573" Grid.Column="1">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="181*"/>

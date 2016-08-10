@@ -777,6 +777,7 @@ namespace Catchem
             consoleBox.Document.Blocks.Clear();
             pokeMap.Markers.Clear();
             _playerMarker = null;
+            Bot.LatStep = Bot.LngStep = 0;
         }
 
         private static BotWindowData CreateBowWindowData(GlobalSettings s, string name)
