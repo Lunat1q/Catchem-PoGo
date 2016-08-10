@@ -1,6 +1,16 @@
 <h1>Catchem PokemonGO bot <i>with modern UI</i></h1>
 <h4>Based on PokeMobBot project</h4>
 <h5>also some code was taken from NecroBot project</h5>
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+<input type="hidden" name="cmd" value="_s-xclick">
+<input type="hidden" name="hosted_button_id" value="RFAU4PYCAAGML">
+<input type="image" src="https://www.paypalobjects.com/en_US/GB/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal – The safer, easier way to pay online!">
+<img alt="" border="0" src="https://www.paypalobjects.com/ru_RU/i/scr/pixel.gif" width="1" height="1">
+</form>
+
+<h2>Donating</h2>
+I you really liked this project, feel free to buy us all a beer, by using PayPal:<br/>
+[![Donate](https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=RFAU4PYCAAGML)<br/>
 
 <h2>See it in action:</h2>
  [<h3>Basic map</h3>](http://i.imgur.com/UXGkHS4.gifv)
