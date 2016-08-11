@@ -544,6 +544,7 @@
                         </ListBox.Background>
                         <ListBox.ContextMenu>
                             <ContextMenu>
+                                <MenuItem x:Name="mi_levelupPokemon" Header="Level Up Pokemon" Click="mi_levelupPokemon_Click"/>
                                 <MenuItem x:Name="mi_evolvePokemon" Header="Evolve Pokemon" Click="mi_evolvePokemon_Click"/>
                                 <MenuItem x:Name="mi_transferPokemon" Header="Transfer Pokemon" Click="mi_transferPokemon_Click" />
                             </ContextMenu>

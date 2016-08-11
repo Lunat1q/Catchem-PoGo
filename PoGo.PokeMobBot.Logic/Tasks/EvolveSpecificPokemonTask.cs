@@ -36,8 +36,8 @@ namespace PoGo.PokeMobBot.Logic.Tasks
 
             if (evolveResponse.EvolvedPokemonData != null)
             {
-                var pokemonFamilies = session.Inventory.GetPokemonFamilies().Result;
-                var pokemonSettings = session.Inventory.GetPokemonSettings().Result.ToList();
+                var pokemonFamilies = await session.Inventory.GetPokemonFamilies();
+                var pokemonSettings = (await session.Inventory.GetPokemonSettings()).ToList();
                 var setting = pokemonSettings.Single(q => q.PokemonId == evolveResponse.EvolvedPokemonData.PokemonId);
                 var family = pokemonFamilies.First(q => q.FamilyId == setting.FamilyId);
                 session.EventDispatcher.Send(new PokemonEvolveDoneEvent

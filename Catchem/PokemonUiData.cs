@@ -22,8 +22,26 @@ namespace Catchem
         public ulong Id { get; set; }
         public BitmapSource Image { get; set; }
         public string Name { get; set; }
-        public int Cp { get; set; }
-        public double Iv { get; set; }
+        public int _cp;
+        public int Cp
+        {
+            get { return _cp; }
+            set
+            {
+                _cp = value;
+                OnPropertyChanged();
+            }
+        }
+        public double _iv;
+        public double Iv
+        {
+            get { return _iv; }
+            set
+            {
+                _iv = value;
+                OnPropertyChanged();
+            }
+        }
         public PokemonId PokemonId { get; set; }
         public PokemonFamilyId Family { get; set; }
         private int _candy;

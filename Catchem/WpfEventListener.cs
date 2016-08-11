@@ -72,6 +72,11 @@ namespace Catchem
 
             Logger.PushToUi("pm_new", session, evt.Uid, evt.Id, evt.Cp, evt.Perfection, evt.Family, evt.Candy);
         }
+        
+        public void HandleEvent(PokemonStatsChangedEvent evt, ISession session)
+        {
+            Logger.PushToUi("pm_upd", session, evt.Uid, evt.Id, evt.Cp, evt.Iv, evt.Family, evt.Candy);
+        }
 
         public void HandleEvent(UpdatePositionEvent evt, ISession session)
         {

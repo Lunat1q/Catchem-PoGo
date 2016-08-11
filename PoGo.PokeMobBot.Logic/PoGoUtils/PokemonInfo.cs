@@ -98,7 +98,7 @@ namespace PoGo.PokeMobBot.Logic.PoGoUtils
             return baseStats.BaseAttack*Math.Sqrt(baseStats.BaseDefense)*Math.Sqrt(baseStats.BaseStamina);
         }
 
-        public static double CalculatePokemonPerfection(PokemonData poke)
+        public static double CalculatePokemonPerfection(this PokemonData poke)
         {
             if (Math.Abs(poke.CpMultiplier + poke.AdditionalCpMultiplier) <= 0)
                 return (poke.IndividualAttack + poke.IndividualDefense + poke.IndividualStamina)/45.0*100.0;

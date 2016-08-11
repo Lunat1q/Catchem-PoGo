@@ -132,7 +132,7 @@ namespace Catchem
                     break;
                 case "pm_rm":
                     PushRemovePokemon(session, (MapPokemon)objData[0]);
-                    break;
+                    break;                
                 case "p_loc":
                     UpdateCoords(session, objData);
                     break;
@@ -172,6 +172,12 @@ namespace Catchem
                         LostPokemon(session, objData);
                     }));
                     break;
+                case "pm_upd":
+                    Dispatcher.BeginInvoke(new ThreadStart(delegate
+                    {
+                        PokemonChanged(session, objData);
+                    }));
+                    break;
                 case "profile_data":
                     Dispatcher.BeginInvoke(new ThreadStart(delegate
                     {
@@ -181,6 +187,32 @@ namespace Catchem
                 case "forcemove_done":
                     PushRemoveForceMoveMarker(session);
                     break;
+            }
+        }
+
+        private void PokemonChanged(ISession session, object[] objData)
+        {
+            try
+            {
+                if ((ulong)objData[0] == 0) return;
+                var receiverBot = BotsCollection.FirstOrDefault(x => x.Session == session);
+                if (receiverBot == null) return;
+                var pokemonId = (PokemonId)objData[1];
+                var family = (PokemonFamilyId)objData[4];
+                var candy = (int)objData[5];
+                var pokemonToUpdate = receiverBot.PokemonList.FirstOrDefault(x => x.Id == (ulong)objData[0]);
+                if (pokemonToUpdate == null) return;
+                pokemonToUpdate.Cp = (int)objData[2];
+                pokemonToUpdate.Iv = (double)objData[3];               
+                foreach (var pokemon in receiverBot.PokemonList.Where(x => x.Family == family))
+                {
+                    pokemon.Candy = candy;
+                }
+
+            }
+            catch (Exception)
+            {
+                // ignored
             }
         }
 
@@ -424,15 +456,23 @@ namespace Catchem
 
         private void DrawPlayerMarker()
         {
-            _playerMarker = new GMapMarker(new PointLatLng(Bot.Lat, Bot.Lng))
+            if (_playerMarker == null)
             {
-                Shape = Properties.Resources.trainer.ToImage("Player"), Offset = new Point(-14, -40), ZIndex = 15
-            };
-            pokeMap.Markers.Add(_playerMarker);
-            _playerRoute = Bot.PlayerRoute;
-            pokeMap.Markers.Add(_playerRoute);
-
-            if (Bot.ForceMoveMarker != null)
+                _playerMarker = new GMapMarker(new PointLatLng(Bot.Lat, Bot.Lng))
+                {
+                    Shape = Properties.Resources.trainer.ToImage("Player"),
+                    Offset = new Point(-14, -40),
+                    ZIndex = 15
+                };
+                pokeMap.Markers.Add(_playerMarker);
+                _playerRoute = Bot.PlayerRoute;
+                pokeMap.Markers.Add(_playerRoute);
+            }
+            else
+            {
+                _playerMarker.Position = new PointLatLng(Bot.Lat, Bot.Lng);
+            }
+            if (Bot.ForceMoveMarker != null && !pokeMap.Markers.Contains(Bot.ForceMoveMarker))
                 pokeMap.Markers.Add(Bot.ForceMoveMarker);
         }
 
@@ -650,6 +690,11 @@ namespace Catchem
         private static async void EvolvePokemon(ISession session, PokemonUiData pokemon)
         {
             await EvolveSpecificPokemonTask.Execute(session, pokemon.Id);
+        }
+
+        private static async void LevelUpPokemon(ISession session, PokemonUiData pokemon)
+        {
+            await LevelUpSpecificPokemonTask.Execute(session, pokemon.Id);
         }
 
         private static async void TransferPokemon(ISession session, PokemonUiData pokemon)
@@ -879,8 +924,6 @@ namespace Catchem
         private void mi_evolvePokemon_Click(object sender, RoutedEventArgs e)
         {
             if (PokeListBox.SelectedIndex == -1) return;
-
-            // Hypothetical function GetElement retrieves some element
             var pokemon = GetSelectedPokemon();
             if (pokemon == null) return;
             EvolvePokemon(CurSession, pokemon);
@@ -889,11 +932,17 @@ namespace Catchem
         private void mi_transferPokemon_Click(object sender, RoutedEventArgs e)
         {
             if (PokeListBox.SelectedIndex == -1) return;
-
-            // Hypothetical function GetElement retrieves some element
             var pokemon = GetSelectedPokemon();
             if (pokemon == null) return;
             TransferPokemon(CurSession, pokemon);
+        }
+
+        private void mi_levelupPokemon_Click(object sender, RoutedEventArgs e)
+        {
+            if (PokeListBox.SelectedIndex == -1) return;
+            var pokemon = GetSelectedPokemon();
+            if (pokemon == null) return;
+            LevelUpPokemon(CurSession, pokemon);
         }
 
         private PokemonUiData GetSelectedPokemon()
@@ -1194,7 +1243,9 @@ namespace Catchem
         {
             c_DeviceId.Text = DeviceSettings.RandomString(16, "0123456789abcdef");
         }
-       
+
         #endregion
+
+        
     }
 }

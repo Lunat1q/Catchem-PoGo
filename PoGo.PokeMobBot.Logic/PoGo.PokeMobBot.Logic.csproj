@@ -86,6 +86,7 @@
     <Compile Include="Event\InventoryNewItemsEvent.cs" />
     <Compile Include="Event\PokemonEvolveDoneEvent.cs" />
     <Compile Include="Event\PlayerLevelUpEvent.cs" />
+    <Compile Include="Event\PokemonStatsChangedEvent.cs" />
     <Compile Include="Event\PokemonSettingsEvent.cs" />
     <Compile Include="Event\UseLuckyEggMinPokemonEvent.cs" />
     <Compile Include="Event\DisplayHighestsPokemonEvent.cs" />
@@ -124,6 +125,7 @@
     <Compile Include="PoGoUtils\PokemonInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\BotService.cs" />
+    <Compile Include="Tasks\LevelUpSpecificPokemonTask.cs" />
     <Compile Include="Tasks\PlayerStatsTask.cs" />
     <Compile Include="Tasks\CatchWildPokemonsTask.cs" />
     <Compile Include="Tasks\EggsListTask.cs" />
