@@ -229,14 +229,22 @@ namespace Catchem
 
         private void UpdateProfileInfo(ISession session, object[] objData)
         {
-            Playername.Content = (string)objData[0];
             var targetBot = BotsCollection.FirstOrDefault(x => x.Session == session);
             if (targetBot == null) return;
-            targetBot.MaxItemStorageSize = (int) objData[1];
+            targetBot.PlayerName = (string)objData[0];
+            targetBot.MaxItemStorageSize = (int)objData[1];
             targetBot.MaxPokemonStorageSize = (int)objData[2];
-            l_coins.Content = (int)objData[3];
-            var teamColor = (TeamColor) objData[4];
-            switch (teamColor)
+            targetBot.Team = (TeamColor)objData[4];
+            targetBot.Coins = (int)objData[3];
+            if (targetBot == Bot)
+                UpdatePlayerTab(targetBot);
+        }
+
+        private void UpdatePlayerTab(BotWindowData targetBot)
+        {            
+            l_coins.Content = targetBot.Coins;
+            Playername.Content = targetBot.PlayerName;
+            switch (targetBot.Team)
             {
                 case TeamColor.Neutral:
                     team_image.Source = Properties.Resources.team_neutral.LoadBitmap();
@@ -251,6 +259,8 @@ namespace Catchem
                     team_image.Source = Properties.Resources.team_instinct.LoadBitmap();
                     break;
             }
+            l_poke_inventory.Content = $"({targetBot.PokemonList.Count}/{targetBot.MaxPokemonStorageSize})";
+            l_inventory.Content = $"({Bot.ItemList.Sum(x => x.Amount)}/{Bot.MaxItemStorageSize})";
         }
 
         private void LostPokemon(ISession session, object[] objData)
@@ -754,6 +764,7 @@ namespace Catchem
                 DrawPlayerMarker();
                 StatsOnDirtyEvent(Bot);
             }
+            UpdatePlayerTab(Bot);
             RebuildUi();
         }
 

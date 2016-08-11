@@ -4,6 +4,7 @@ using PoGo.PokeMobBot.Logic;
 using PoGo.PokeMobBot.Logic.State;
 using PoGo.PokeMobBot.Logic.Tasks;
 using PoGo.PokeMobBot.Logic.Utils;
+using POGOProtos.Enums;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -54,6 +55,9 @@ namespace Catchem
         public readonly ClientSettings Settings;
         public readonly LogicSettings Logic;
         public readonly GlobalSettings GlobalSettings;
+        public int Coins;
+        public TeamColor Team;
+        public string PlayerName;
         public int MaxItemStorageSize;
         public int MaxPokemonStorageSize;
         public ObservableCollection<PokemonUiData> PokemonList = new ObservableCollection<PokemonUiData>();

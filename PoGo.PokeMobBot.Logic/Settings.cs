@@ -267,7 +267,7 @@ namespace PoGo.PokeMobBot.Logic
         public double DefaultLatitude = -33.8688;
         public double DefaultLongitude = 151.2093;
         public double DefaultAltitude = 10;
-        public double WalkingSpeedInKilometerPerHour = 50.0;
+        public double WalkingSpeedInKilometerPerHour = 15.0;
         public int MaxSpawnLocationOffset = 10;
         public int MaxTravelDistanceInMeters = 1000;
         public bool UseGpxPathing = false;
@@ -682,7 +682,7 @@ namespace PoGo.PokeMobBot.Logic
                 {
                     // Random is set, so pick a random device package and set it up - it will get saved to disk below and re-used in subsequent sessions
                     var rnd = new Random();
-                    var rndIdx = rnd.Next(0, DeviceInfoHelper.DeviceInfoSets.Keys.Count + 1);
+                    var rndIdx = rnd.Next(0, DeviceInfoHelper.DeviceInfoSets.Keys.Count - 1);
                     settings.Device.SetDevInfoByKey(DeviceInfoHelper.DeviceInfoSets.Keys.ToArray()[rndIdx]);
                 }
                 if (string.IsNullOrEmpty(settings.Device.DeviceId) || settings.Device.DeviceId == "8525f5d8201f78b5")
