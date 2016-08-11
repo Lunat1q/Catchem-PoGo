@@ -10,12 +10,56 @@ using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using PoGo.PokeMobBot.Logic;
 using POGOProtos.Inventory.Item;
 
 namespace Catchem
 {
     public static class Extensions
     {
+        public static GlobalSettings Clone(this GlobalSettings gs)
+        {
+            var newSettings = new GlobalSettings();
+            gs.CloneProperties(newSettings);
+            gs.CloneFields(newSettings);
+            return newSettings;
+        }
+
+        public static void CloneProperties<T>(this T from, T to)
+        {
+            var objType = typeof(T);
+            foreach (var property in objType.GetProperties())
+            {
+                if (property.PropertyType == objType) continue;
+                if (property.PropertyType.IsMyInterface() && property.PropertyType.IsClass)
+                {
+                    var nextObjFrom = property.GetValue(from);
+                    var nextObjTo = property.GetValue(to);
+                    CloneProperties(nextObjFrom, nextObjTo);
+                    CloneFields(nextObjFrom, nextObjTo);
+                }
+                var value = property.GetValue(from);
+                property.SetValue(to, value);
+            }
+        }
+        public static void CloneFields<T>(this T from, T to)
+        {
+            var objType = typeof(T);
+            foreach (var property in objType.GetFields())
+            {
+                if (property.FieldType == objType) continue;
+                if (property.FieldType.IsMyInterface() && property.FieldType.IsClass)
+                {
+                    var nextObjFrom = property.GetValue(from);
+                    var nextObjTo = property.GetValue(to);
+                    CloneProperties(nextObjFrom, nextObjTo);
+                    CloneFields(nextObjFrom, nextObjTo);
+                }
+                var value = property.GetValue(from);
+                property.SetValue(to, value);
+            }
+        }
+
         public static List<T> GetLogicalChildCollection<T>(this UIElement parent) where T : DependencyObject
         {
             var logicalCollection = new List<T>();

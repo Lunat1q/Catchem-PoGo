@@ -3,10 +3,10 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Catchem"
         xmlns:WindowsPresentation="clr-namespace:GMap.NET.WindowsPresentation;assembly=GMap.NET.WindowsPresentation" x:Class="Catchem.MainWindow"
         mc:Ignorable="d"
-        Title="Catchem" Height="775" Width="1225" MinWidth="1075" MinHeight="775" Closing="Window_Closing" Icon="unnamed.ico">
+        DataContext="{Binding RelativeSource={RelativeSource Self}}"
+        Title="Catchem" Height="775" Width="1348" MinWidth="1075" MinHeight="775" Closing="Window_Closing" Icon="unnamed.ico">
     <Window.Background>
         <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
             <GradientStop Color="#FFB2EF9C" Offset="0"/>
@@ -77,6 +77,57 @@
                 </Grid>
                 <TextBlock Text="{Binding Name, FallbackValue=NoName}" HorizontalAlignment="Stretch" Margin="1,10,0,0" VerticalAlignment="Top" Grid.ColumnSpan="1" Width="Auto" Padding="0" Foreground="#FF59C3B0" FontSize="16" TextAlignment="Center" Height="21" Grid.Column="1"/>
                 <TextBlock Text="{Binding Amount, FallbackValue='Amount: 0', StringFormat='Amount: {0}'}" HorizontalAlignment="Stretch" Margin="1,46,0,0" VerticalAlignment="Top" Grid.ColumnSpan="1" Width="Auto" Padding="0" Foreground="#FF59C3B0" FontSize="14" TextAlignment="Center" Height="19" Grid.Column="1" />
+            </Grid>
+        </DataTemplate>
+        <DataTemplate x:Key="BotTemplate">
+            <Grid Width="Auto" Height="120" Margin="3">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Rectangle Fill="White" HorizontalAlignment="Stretch" Height="Auto" VerticalAlignment="Stretch" Width="Auto" Grid.ColumnSpan="2" Grid.RowSpan="4" RadiusX="3" RadiusY="3" Stroke="#FF00E89E"/>
+                <Button Style="{StaticResource ResourceKey=flatbutton}" x:Name="btn_botStop" Content="STOP" HorizontalAlignment="Left" Margin="10,0,0,0" FontFamily="BOLD" TextOptions.TextFormattingMode="Display" FontWeight="Bold" VerticalAlignment="Top" Width="80" Height="28" Grid.Row="3" Click="btn_botStop_Click">
+                    <Button.Background>
+                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                            <LinearGradientBrush.RelativeTransform>
+                                <TransformGroup>
+                                    <ScaleTransform CenterY="0.5" CenterX="0.5"/>
+                                    <SkewTransform CenterY="0.5" CenterX="0.5"/>
+                                    <RotateTransform Angle="90" CenterY="0.5" CenterX="0.5"/>
+                                    <TranslateTransform/>
+                                </TransformGroup>
+                            </LinearGradientBrush.RelativeTransform>
+                            <GradientStop Color="#FFEEB29C" Offset="0"/>
+                            <GradientStop Color="#FFC04F53" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Button.Background>
+                </Button>
+                <Button Style="{StaticResource ResourceKey=flatbutton}" x:Name="btn_botStart" Content="START" HorizontalAlignment="Right" Margin="0,0,10,0" FontFamily="BOLD" TextOptions.TextFormattingMode="Display" FontWeight="Bold" VerticalAlignment="Top" Width="80" Height="28" Grid.Column="1" Grid.Row="3" Click="btn_botStart_Click">
+                    <Button.Background>
+                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                            <LinearGradientBrush.RelativeTransform>
+                                <TransformGroup>
+                                    <ScaleTransform CenterY="0.5" CenterX="0.5"/>
+                                    <SkewTransform CenterY="0.5" CenterX="0.5"/>
+                                    <RotateTransform Angle="90" CenterY="0.5" CenterX="0.5"/>
+                                    <TranslateTransform/>
+                                </TransformGroup>
+                            </LinearGradientBrush.RelativeTransform>
+                            <GradientStop Color="#FFB0EE9C" Offset="0"/>
+                            <GradientStop Color="#FF53C0B1" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Button.Background>
+                </Button>
+                <TextBlock Text="{Binding ProfileName, FallbackValue='%PROFILENAME%'}" x:Name="block_botName" HorizontalAlignment="Stretch" Margin="0,0,63,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" Width="Auto" Grid.RowSpan="1" Grid.ColumnSpan="2" Foreground="#FF59C3B0" FontSize="22" TextAlignment="Center"/>
+                <TextBlock Text="{Binding Errors, FallbackValue='%ERR%'}" x:Name="block_botErrors" Grid.Column="1" HorizontalAlignment="Right" Margin="0" Grid.RowSpan="1" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" Width="63" TextAlignment="Right" Foreground="#FFB61515"/>
+                <TextBlock Text="{Binding Xpph, FallbackValue='Xp/h: 0', StringFormat='Xp/h: {0:N0}'}" x:Name="block_botName_Copy" HorizontalAlignment="Stretch" TextWrapping="Wrap" VerticalAlignment="Top" Height="Auto" Width="Auto" Grid.RowSpan="1" Grid.ColumnSpan="1" Foreground="#FF59C3B0" FontSize="18" TextAlignment="Center" Grid.Row="1" Margin="0,3,0,0"/>
+                <TextBlock Text="{Binding Ts, FallbackValue='00:00:00'}" x:Name="block_botName_Copy1" HorizontalAlignment="Stretch" TextWrapping="Wrap" VerticalAlignment="Top" Height="Auto" Width="Auto" Grid.RowSpan="1" Grid.ColumnSpan="1" Foreground="#FF59C3B0" FontSize="18" TextAlignment="Center" Grid.Row="1" Margin="0,3,0,0" Grid.Column="1"/>
             </Grid>
         </DataTemplate>
     </Window.Resources>
@@ -485,7 +536,13 @@
                             </LinearGradientBrush>
                         </Button.Background>
                     </Button>
-                    <ListBox ItemsSource="{Binding}" x:Name="PokeListBox" Margin="11,130,10,46" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemTemplate="{DynamicResource PokemonDataTemplate}" BorderBrush="#FF04C17C" Background="#FFEFFFF8" Grid.ColumnSpan="2">
+                    <ListBox ItemsSource="{Binding}" x:Name="PokeListBox" Margin="11,130,10,46" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemTemplate="{DynamicResource PokemonDataTemplate}" BorderBrush="#FF04C17C" Grid.ColumnSpan="2">
+                        <ListBox.Background>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="White" Offset="0"/>
+                                <GradientStop Color="#FFE6FFF4" Offset="1"/>
+                            </LinearGradientBrush>
+                        </ListBox.Background>
                         <ListBox.ContextMenu>
                             <ContextMenu>
                                 <MenuItem x:Name="mi_evolvePokemon" Header="Evolve Pokemon" Click="mi_evolvePokemon_Click"/>
@@ -499,17 +556,49 @@
                         </ListBox.ItemsPanel>
                     </ListBox>
                     <Label x:Name="l_poke_inventory" Content="(HAVE/MAX)" HorizontalAlignment="Right" Margin="0,102,10,0" VerticalAlignment="Top" Foreground="#FF324AB4" FontSize="15" TextOptions.TextFormattingMode="Display" FontFamily="Source Sans Pro Semibold" Height="28" Width="100" HorizontalContentAlignment="Right" Grid.Column="1"/>
-                    <ListBox x:Name="ItemListBox" Grid.Column="2" Margin="10,130,10,46" BorderBrush="#FF04C17C" Background="#FFEFFFF8" ItemTemplate="{DynamicResource InventoryItemTemplate}" HorizontalContentAlignment="Stretch"/>
+                    <ListBox x:Name="ItemListBox" Grid.Column="2" Margin="10,130,10,46" BorderBrush="#FF04C17C" ItemTemplate="{DynamicResource InventoryItemTemplate}" HorizontalContentAlignment="Stretch">
+                        <ListBox.Background>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="White" Offset="0"/>
+                                <GradientStop Color="#FFE6FFF4" Offset="1"/>
+                            </LinearGradientBrush>
+                        </ListBox.Background>
+                    </ListBox>
                     <Label x:Name="label6_Copy6" Content="INVENTORY" HorizontalAlignment="Left" Margin="10,102,0,0" VerticalAlignment="Top" Foreground="#FF363636" FontSize="15" TextOptions.TextFormattingMode="Display" FontFamily="Source Sans Pro Semibold" Height="28" Width="89" Grid.Column="2"/>
                     <Label x:Name="l_inventory" Content="(HAVE/MAX)" HorizontalAlignment="Right" Margin="0,102,10,0" VerticalAlignment="Top" Foreground="#FF324AB4" FontSize="15" TextOptions.TextFormattingMode="Display" FontFamily="Source Sans Pro Semibold" Height="28" Width="100" HorizontalContentAlignment="Right" Grid.Column="2"/>
-                    <Image x:Name="team_image" Grid.Column="2" HorizontalAlignment="Right" Height="100" Margin="202,0,0,0" VerticalAlignment="Top" Width="100" Source="pack://siteoforigin:,,,/Resources/team_instinct.png"/>
+                    <Image x:Name="team_image" Grid.Column="2" HorizontalAlignment="Right" Height="100" Margin="0" VerticalAlignment="Top" Width="100" Source="pack://siteoforigin:,,,/Resources/team_instinct.png"/>
                 </Grid>
             </TabItem>
 
         </TabControl>
         <Grid HorizontalAlignment="Left" Width="246">
-            <Rectangle Fill="#FFEEEEEE" HorizontalAlignment="Left" Width="246"/>
-            <Button Style="{StaticResource ResourceKey=flatbutton}" x:Name="button" Content="ADD NEW BOT" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" Height="30" Click="button_Click" Margin="65,45,0,-45" FontFamily="BOLD" TextOptions.TextFormattingMode="Display" FontWeight="Bold">
+            <Rectangle HorizontalAlignment="Left" Width="246">
+                <Rectangle.Fill>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="White" Offset="0"/>
+                        <GradientStop Color="#FFCDFFE6" Offset="1"/>
+                    </LinearGradientBrush>
+                </Rectangle.Fill>
+            </Rectangle>
+            <Button Style="{StaticResource ResourceKey=flatbutton}" x:Name="button" Content="ADD NEW BOT" HorizontalAlignment="Left" VerticalAlignment="Top" Width="111" Height="30" Click="button_Click" Margin="10,40,0,0" FontFamily="BOLD" TextOptions.TextFormattingMode="Display" FontWeight="Bold">
+                <Button.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <LinearGradientBrush.RelativeTransform>
+                            <TransformGroup>
+                                <ScaleTransform CenterY="0.5" CenterX="0.5"/>
+                                <SkewTransform CenterY="0.5" CenterX="0.5"/>
+                                <RotateTransform Angle="90" CenterY="0.5" CenterX="0.5"/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </LinearGradientBrush.RelativeTransform>
+                        <GradientStop Color="#FFB0EE9C" Offset="0"/>
+                        <GradientStop Color="#FF53C05D" Offset="1"/>
+                    </LinearGradientBrush>
+                </Button.Background>
+            </Button>
+            <Label x:Name="label4" Content="MENU" HorizontalAlignment="Left" Margin="0,2,0,0" VerticalAlignment="Top" Foreground="#FF59C3B0" FontSize="20" Height="38" Width="246" HorizontalContentAlignment="Center"/>
+            <StackPanel x:Name="botPanel" HorizontalAlignment="Left" Margin="0,90,0,0" Width="246"/>
+            <Button Style="{StaticResource ResourceKey=flatbutton}" x:Name="btn_StartAll" Content="START ALL" HorizontalAlignment="Left" VerticalAlignment="Top" Width="111" Height="30" Margin="125,75,0,0" FontFamily="BOLD" TextOptions.TextFormattingMode="Display" FontWeight="Bold" Click="btn_StartAll_Click">
                 <Button.Background>
                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                         <LinearGradientBrush.RelativeTransform>
@@ -525,8 +614,44 @@
                     </LinearGradientBrush>
                 </Button.Background>
             </Button>
-            <Label x:Name="label4" Content="MENU" HorizontalAlignment="Left" Margin="9,2,0,-10" VerticalAlignment="Top" Foreground="#FF59C3B0" FontSize="20" Height="38"/>
-            <StackPanel x:Name="botPanel" HorizontalAlignment="Left" Margin="0,90,0,0" Width="246"/>
+            <Button Style="{StaticResource ResourceKey=flatbutton}" x:Name="btn_StopAll" Content="STOP ALL" HorizontalAlignment="Left" VerticalAlignment="Top" Width="111" Height="30" Margin="10,75,0,0" FontFamily="BOLD" TextOptions.TextFormattingMode="Display" FontWeight="Bold" Click="btn_StopAll_Click">
+                <Button.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <LinearGradientBrush.RelativeTransform>
+                            <TransformGroup>
+                                <ScaleTransform CenterY="0.5" CenterX="0.5"/>
+                                <SkewTransform CenterY="0.5" CenterX="0.5"/>
+                                <RotateTransform Angle="90" CenterY="0.5" CenterX="0.5"/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </LinearGradientBrush.RelativeTransform>
+                        <GradientStop Color="#FFEEB29C" Offset="0"/>
+                        <GradientStop Color="#FFC04F53" Offset="1"/>
+                    </LinearGradientBrush>
+                </Button.Background>
+            </Button>
+            <ListBox x:Name="botsBox" ItemsSource="{Binding}" SelectedItem="{Binding Bot, Mode=TwoWay}" HorizontalAlignment="Left" Height="635" Margin="0,110,0,0" VerticalAlignment="Top" Width="246" BorderBrush="{x:Null}" ItemTemplate="{DynamicResource BotTemplate}" HorizontalContentAlignment="Stretch" Background="{x:Null}"/>
+            <Button Style="{StaticResource ResourceKey=flatbutton}" x:Name="btn_BatchCreation" Content="BATCH CREATION" HorizontalAlignment="Left" VerticalAlignment="Top" Width="110" Height="30" Click="btn_BatchCreation_Click" Margin="126,40,0,0" FontFamily="BOLD" TextOptions.TextFormattingMode="Display" FontWeight="Bold">
+                <Button.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <LinearGradientBrush.RelativeTransform>
+                            <TransformGroup>
+                                <ScaleTransform CenterY="0.5" CenterX="0.5"/>
+                                <SkewTransform CenterY="0.5" CenterX="0.5"/>
+                                <RotateTransform Angle="90" CenterY="0.5" CenterX="0.5"/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </LinearGradientBrush.RelativeTransform>
+                        <GradientStop Color="#FF9CEAEE" Offset="0"/>
+                        <GradientStop Color="#FF5398C0" Offset="1"/>
+                    </LinearGradientBrush>
+                </Button.Background>
+            </Button>
+        </Grid>
+        <Grid x:Name="grid_pickBot" Margin="263,0,0,0" Visibility="Collapsed">
+            <Rectangle Margin="0" Fill="#59000000"/>
+            <Label x:Name="label13" Content="Select Bot at left menu" HorizontalAlignment="Center" Margin="0" VerticalAlignment="Center" FontSize="48" FontWeight="Bold" Foreground="White"/>
+            <Label x:Name="label13_Copy" Content="or create a new one" HorizontalAlignment="Center" Margin="214,410,214,261" VerticalAlignment="Center" FontSize="36" FontWeight="Bold" Foreground="White" FontStyle="Italic"/>
         </Grid>
         <Grid x:Name="InputBox" Visibility="Collapsed" >
             <Grid Background="Black" Opacity="0.45"/>
@@ -567,6 +692,50 @@
                         </Button.Background>
                     </Button>
                     <Button Style="{StaticResource flatbutton}" x:Name="NoButton" Margin="21,0,19,10" Content="CANCEL" Click="NoButton_Click" Width="Auto" Height="33" Background="#FFF7F7F7" Foreground="#FF66CAAD" VerticalAlignment="Bottom" />
+                </Grid>
+            </Border>
+        </Grid>
+        <Grid x:Name="batchInput" Visibility="Collapsed" >
+            <Grid Background="Black" Opacity="0.45"/>
+            <Border
+            MinWidth="250"
+            CornerRadius="7,7,7,7" HorizontalAlignment="Center" VerticalAlignment="Center" Height="629" Margin="322,58,200,58" Width="818">
+                <Border.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <LinearGradientBrush.RelativeTransform>
+                            <TransformGroup>
+                                <ScaleTransform CenterY="0.5" CenterX="0.5"/>
+                                <SkewTransform CenterY="0.5" CenterX="0.5"/>
+                                <RotateTransform Angle="-90" CenterY="0.5" CenterX="0.5"/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </LinearGradientBrush.RelativeTransform>
+                        <GradientStop Color="#FFF8FFF7"/>
+                        <GradientStop Color="#FFC5F3BF" Offset="1"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+                <Grid>
+                    <TextBlock Margin="21,13,19,581" Text="Paste profiles data here" FontFamily="Calibri" Foreground="#FF7E7E7E" FontSize="24" TextAlignment="Center" FontWeight="Bold" />
+                    <Button Style="{StaticResource flatbutton}" x:Name="batch_Yes" Content="YES" Width="Auto" Height="31" Margin="21,0,19,48" VerticalAlignment="Bottom" Click="batch_Yes_Click">
+                        <Button.Background>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <LinearGradientBrush.RelativeTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform CenterY="0.5" CenterX="0.5"/>
+                                        <SkewTransform CenterY="0.5" CenterX="0.5"/>
+                                        <RotateTransform Angle="90" CenterY="0.5" CenterX="0.5"/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </LinearGradientBrush.RelativeTransform>
+                                <GradientStop Color="#FF54C1B1" Offset="0"/>
+                                <GradientStop Color="#FFADED9D" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Button.Background>
+                    </Button>
+                    <Button Style="{StaticResource flatbutton}" x:Name="batch_No" Margin="21,0,19,10" Content="CANCEL" Width="Auto" Height="33" Background="#FFF7F7F7" Foreground="#FF66CAAD" VerticalAlignment="Bottom" Click="batch_No_Click" />
+                    <TextBox x:Name="batch_botText" HorizontalAlignment="Left" Height="428" Margin="21,117,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="778" AcceptsReturn="True"/>
+                    <TextBlock Margin="21,48,19,546" Text="Format: type;login;pass;proxyuri:port;proxy_login;proxy_pass" FontFamily="Calibri" Foreground="#FF7E7E7E" FontSize="20" FontStyle="Italic" TextAlignment="Center" />
+                    <TextBlock Margin="21,82,19,512" Text="If you have bot selected, all bots will inherit his settings" FontFamily="Calibri" Foreground="#FF7E7E7E" FontSize="20" FontStyle="Italic" TextAlignment="Center" />
                 </Grid>
             </Border>
         </Grid>
