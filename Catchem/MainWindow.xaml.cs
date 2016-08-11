@@ -19,14 +19,12 @@ using System.ComponentModel;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using POGOProtos.Data;
 using POGOProtos.Inventory.Item;
@@ -35,16 +33,11 @@ using LogLevel = PoGo.PokeMobBot.Logic.Logging.LogLevel;
 
 namespace Catchem
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow
     {
         public static MainWindow BotWindow;
         private bool _windowClosing;
         private const string SubPath = "Profiles";
-
-        //private readonly Dictionary<ISession, BotWindowData> _openedSessions = new Dictionary<ISession, BotWindowData>(); //may be not session... but some uniq obj for every running bot
 
         public ObservableCollection<BotWindowData> BotsCollection = new ObservableCollection<BotWindowData>();
 
@@ -74,7 +67,6 @@ namespace Catchem
             InitWindowsComtrolls();
             InitializeMap();
             BotWindow = this;
-
             LogWorker();
             MarkersWorker();
             MovePlayer();
@@ -89,43 +81,20 @@ namespace Catchem
         private async void InitializeMap()
         {
             pokeMap.Bearing = 0;
-
             pokeMap.CanDragMap = true;
-
             pokeMap.DragButton = MouseButton.Left;
-
-            //pokeMap.GrayScleMode = true;
-
-            //pokeMap.MarkersEnabled = true;
-
             pokeMap.MaxZoom = 18;
-
             pokeMap.MinZoom = 2;
-
             pokeMap.MouseWheelZoomType = MouseWheelZoomType.MousePositionWithoutCenter;
-
-            //pokeMap.NegativeMode = false;
-
-            //pokeMap.PolygonsEnabled = true;
-
             pokeMap.ShowCenter = false;
-
-            //pokeMap.RoutesEnabled = true;
-
             pokeMap.ShowTileGridLines = false;
-
-            pokeMap.Zoom = 18;
-            
+            pokeMap.Zoom = 18;            
             GMap.NET.MapProviders.GMapProvider.WebProxy = System.Net.WebRequest.GetSystemWebProxy();
             GMap.NET.MapProviders.GMapProvider.WebProxy.Credentials = System.Net.CredentialCache.DefaultCredentials;
-
             pokeMap.MapProvider = GMap.NET.MapProviders.GMapProviders.GoogleMap;
             GMaps.Instance.Mode = AccessMode.ServerOnly;
-
-
             if (Bot != null)
                 pokeMap.Position = new PointLatLng(Bot.Lat, Bot.Lng);
-
             await Task.Delay(10);
         }
 
@@ -557,7 +526,6 @@ namespace Catchem
                             Bot.PushNewRoutePoint(new PointLatLng(Bot.Lat, Bot.Lng));
                             pokeMap.UpdateLayout();
                             _playerRoute.RegenerateShape(pokeMap);
-                            // pokeMap.Markers.Add(Bot.PlayerRoute);
                         }
 
                         Bot._lat += Bot.LatStep;
@@ -1076,9 +1044,9 @@ namespace Catchem
                     var auth = rowData[0];
                     var login = rowData[1];
                     var pass = rowData[2];
-                    var proxy = rowData[3];
-                    var proxyLogin = rowData[4];
-                    var proxyPass = rowData[5];
+                    var proxy = rowData.Length > 3 ? rowData[3] : "";
+                    var proxyLogin = rowData.Length > 4 ? rowData[4] : "";
+                    var proxyPass = rowData.Length > 5 ? rowData[5] : "";
                     var path = login;
                     var created = false;
                     do
@@ -1217,293 +1185,5 @@ namespace Catchem
         }
        
         #endregion
-
-        public class NewMapObject
-        {
-            public string OType;
-            public string OName;
-            public double Lat;
-            public double Lng;
-            internal string Uid;
-
-            public NewMapObject(string oType, string oName, double lat, double lng, string uid)
-            {
-                OType = oType;
-                OName = oName;
-                Lat = lat;
-                Lng = lng;
-                Uid = uid;
-            }
-        }
-
-        public class BotWindowData : INotifyPropertyChanged
-        {
-            public event PropertyChangedEventHandler PropertyChanged;
-
-            private void OnPropertyChanged([CallerMemberName] string propertyName = null)
-            {
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-            }
-
-            public string ProfileName { get; set; }
-            private string _errosCount;
-
-            public string Errors
-            {
-                get { return _errosCount; }
-                set
-                {
-                    _errosCount = value;
-                    OnPropertyChanged();
-                }
-            }
-            public Session Session;
-            private CancellationTokenSource _cts;
-            public CancellationToken CancellationToken => _cts.Token;
-            internal GMapMarker ForceMoveMarker;
-            public List<Tuple<string, Color>> Log = new List<Tuple<string, Color>>();
-            public Queue<Tuple<string, Color>> LogQueue = new Queue<Tuple<string, Color>>();
-            public Dictionary<string, GMapMarker> MapMarkers = new Dictionary<string, GMapMarker>();
-            public Queue<NewMapObject> MarkersQueue = new Queue<NewMapObject>();
-            public readonly StateMachine Machine;
-            public readonly Statistics Stats;
-            public readonly StatisticsAggregator Aggregator;
-            public readonly WpfEventListener Listener;
-            public readonly ClientSettings Settings;
-            public readonly LogicSettings Logic;
-            public readonly GlobalSettings GlobalSettings;
-            public int MaxItemStorageSize;
-            public int MaxPokemonStorageSize;
-            public ObservableCollection<PokemonUiData> PokemonList = new ObservableCollection<PokemonUiData>();
-            public ObservableCollection<ItemUiData> ItemList = new ObservableCollection<ItemUiData>();
-            private readonly Queue<PointLatLng> _routePoints = new Queue<PointLatLng>();
-            public readonly GMapRoute PlayerRoute;
-
-            //public Label RunTime;
-            private double _xpph;
-            public bool Started;
-
-            private readonly DispatcherTimer _timer;
-            private TimeSpan _ts;
-
-            public double Lat;
-            public double Lng;
-            public bool GotNewCoord;
-            public bool MoveRequired;
-            private double _la, _ln;
-
-            // ReSharper disable once InconsistentNaming
-            internal double _lat
-            {
-                get { return _la; }
-                set
-                {
-                    GlobalSettings.LocationSettings.DefaultLatitude = value;
-                    _la = value;
-                }
-            }
-
-            // ReSharper disable once InconsistentNaming
-            internal double _lng
-            {
-                get { return _ln; }
-                set
-                {
-                    GlobalSettings.LocationSettings.DefaultLongitude = value;
-                    _ln = value;
-                }
-            }
-
-            public double Xpph
-            {
-                get { return _xpph; }
-                set
-                {
-                    _xpph = value;
-                    OnPropertyChanged();
-                }
-            }
-
-            public TimeSpan Ts
-            {
-                get { return _ts; }
-                set
-                {
-                    _ts = value;
-                    OnPropertyChanged();
-                }
-            }
-
-            public double LatStep, LngStep;
-
-            public BotWindowData(string name, GlobalSettings gs, StateMachine sm, Statistics st, StatisticsAggregator sa, WpfEventListener wel, ClientSettings cs, LogicSettings l)
-            {
-                ProfileName = name;
-                Settings = new ClientSettings(gs);
-                Logic = new LogicSettings(gs);
-                GlobalSettings = gs;
-                Machine = sm;
-                Stats = st;
-                Aggregator = sa;
-                Listener = wel;
-                Settings = cs;
-                Logic = l;
-
-                Ts = new TimeSpan();
-                _timer = new DispatcherTimer {Interval = new TimeSpan(0, 0, 1)};
-                _timer.Tick += delegate
-                {
-                    Ts += new TimeSpan(0, 0, 1);
-                };
-                _cts = new CancellationTokenSource();
-                PlayerRoute = new GMapRoute(_routePoints);
-            }
-
-            public void UpdateXppH()
-            {
-                if (Stats == null || Math.Abs(_ts.TotalHours) < 0.0000001)
-                    Xpph = 0;
-                else
-                    Xpph = (Stats.TotalExperience/_ts.TotalHours);
-            }
-
-            public void PushNewRoutePoint(PointLatLng nextPoint)
-            {
-                _routePoints.Enqueue(nextPoint);
-                if (_routePoints.Count > 100)
-                {
-                    var point = _routePoints.Dequeue();
-                    PlayerRoute.Points.Remove(point);
-                }
-                PlayerRoute.Points.Add(nextPoint);
-            }
-
-            private void WipeData()
-            {
-                Log = new List<Tuple<string, Color>>();
-                MapMarkers = new Dictionary<string, GMapMarker>();
-                MarkersQueue = new Queue<NewMapObject>();
-                LogQueue = new Queue<Tuple<string, Color>>();
-            }
-
-            public void Stop()
-            {
-                TimerStop();
-                _cts.Cancel();
-                WipeData();
-                _ts = new TimeSpan();
-                Started = false;
-            }
-
-            public void Start()
-            {
-                if (Started) return;
-                TimerStart();
-                _cts.Dispose();
-                _cts = new CancellationTokenSource();
-                Started = true;
-                Session.Client.Player.SetCoordinates(GlobalSettings.LocationSettings.DefaultLatitude,
-                    GlobalSettings.LocationSettings.DefaultLongitude,
-                    GlobalSettings.LocationSettings.DefaultAltitude);
-                Session.Client.Login = new PokemonGo.RocketAPI.Rpc.Login(Session.Client);
-                Machine.AsyncStart(new VersionCheckState(), Session, CancellationToken);
-                if (Session.LogicSettings.UseSnipeLocationServer)
-                    SnipePokemonTask.AsyncStart(Session, CancellationToken);
-            }
-
-            private void TimerStart() => _timer?.Start();
-
-            private void TimerStop() => _timer?.Stop();
-
-            internal void EnqueData()
-            {
-                while (LogQueue.Count > 0)
-                    Log.Add(LogQueue.Dequeue());
-                foreach (var item in Log)
-                {
-                    LogQueue.Enqueue(item);
-                    if (LogQueue.Count > 100)
-                        LogQueue.Dequeue();
-                }
-                Log = new List<Tuple<string, Color>>();
-                _routePoints.Clear();       
-            }
-        }
-
-        public class PokemonUiData : INotifyPropertyChanged
-        {
-            public event PropertyChangedEventHandler PropertyChanged;
-
-            protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
-            {
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-            }
-
-            public ulong Id { get; set; }
-            public BitmapSource Image { get; set; }
-            public string Name { get; set; }
-            public int Cp { get; set; }
-            public double Iv { get; set; }
-            public PokemonId PokemonId { get; set; }
-            public PokemonFamilyId Family { get; set; }
-            private int _candy;
-            public ulong Timestamp { get; set; }
-            public int Candy {
-                get { return _candy; }
-                set
-                {
-                    _candy = value;
-                    OnPropertyChanged();
-                }
-            }
-
-            public PokemonUiData(ulong id, PokemonId pokemonid, BitmapSource img, string name, int cp, double iv, PokemonFamilyId family, int candy, ulong stamp)
-            {
-                Id = id;
-                PokemonId = pokemonid;
-                Image = img;
-                Name = name;
-                Cp = cp;
-                Iv = iv;
-                Candy = candy;
-                Family = family;
-                Timestamp = stamp;
-            }
-        }
-
-        public class ItemUiData : INotifyPropertyChanged
-        {
-            public event PropertyChangedEventHandler PropertyChanged;
-
-            protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
-            {
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-            }
-
-            public ItemId Id { get; set; }
-            public BitmapSource Image { get; set; }
-            public string Name { get; set; }
-            private int _amount;
-
-            public int Amount
-            {
-                get { return _amount; }
-                set
-                {
-                    _amount = value;
-                    OnPropertyChanged();
-                }
-            }
-
-            public ItemUiData(ItemId id, BitmapSource img, string name, int amount)
-            {
-                Id = id;
-                Image = img;
-                Name = name;
-                Amount = amount;
-            }
-        }
-
-        
     }
 }

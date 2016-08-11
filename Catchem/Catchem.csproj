@@ -92,7 +92,11 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Adb.cs" />
+    <Compile Include="BotWindowData.cs" />
     <Compile Include="Extensions.cs" />
+    <Compile Include="ItemUiData.cs" />
+    <Compile Include="NewMapObject.cs" />
+    <Compile Include="PokemonUiData.cs" />
     <Compile Include="WpfEventListener.cs" />
     <Compile Include="WpfLogger.cs" />
     <Page Include="MainWindow.xaml">
