@@ -319,13 +319,15 @@ namespace Catchem
                 var family = (PokemonFamilyId) objData[4];
                 var candy = (int)objData[5];
                 receiverBot.PokemonList.Add(new PokemonUiData(
-                    (ulong) objData[0], 
+                    (ulong) objData[0],
+                    pokemonId,
                     pokemonId.ToInventorySource(), 
                     pokemonId.ToString(), 
                     (int) objData[2], 
                     (double) objData[3],
                     family,
-                    candy));
+                    candy,
+                    (ulong)DateTime.UtcNow.ToUnixTime()));
                 foreach (var pokemon in receiverBot.PokemonList.Where(x => x.Family == family))
                 {
                     pokemon.Candy = candy;
@@ -355,12 +357,14 @@ namespace Catchem
                         var family = pokemonFamilies.First(q => q.FamilyId == setting.FamilyId);
                         receiverBot.PokemonList.Add(new PokemonUiData(
                             pokemon.Item1.Id,
+                            pokemon.Item1.PokemonId,
                             pokemon.Item1.PokemonId.ToInventorySource(),
                             (pokemon.Item1.Nickname == "" ? pokemon.Item1.PokemonId.ToString() : pokemon.Item1.Nickname),
                             pokemon.Item1.Cp,
                             pokemon.Item2,
                             family.FamilyId, 
-                            family.Candy_));
+                            family.Candy_,
+                            pokemon.Item1.CreationTimeMs));
                     }
                 }
 
@@ -981,6 +985,20 @@ namespace Catchem
             PokeListBox.Items.SortDescriptions.Add(new SortDescription("Cp", ListSortDirection.Descending));
         }
 
+        private void sortById_Click(object sender, RoutedEventArgs e)
+        {
+            if (Bot == null || _loadingUi) return;
+            PokeListBox.Items.SortDescriptions.Clear();
+            PokeListBox.Items.SortDescriptions.Add(new SortDescription("PokemonId", ListSortDirection.Ascending));
+        }
+
+        private void sortByCatch_Click(object sender, RoutedEventArgs e)
+        {
+            if (Bot == null || _loadingUi) return;
+            PokeListBox.Items.SortDescriptions.Clear();
+            PokeListBox.Items.SortDescriptions.Add(new SortDescription("Timestamp", ListSortDirection.Ascending));
+        }
+
         private void SortByIvClick(object sender, RoutedEventArgs e)
         {
             if (Bot == null || _loadingUi) return;
@@ -1002,6 +1020,129 @@ namespace Catchem
             l_moveSpeedFactor.Content = sl.Value;
             if (Bot == null || _loadingUi) return;
             Bot.GlobalSettings.LocationSettings.MoveSpeedFactor = sl.Value;
+        }
+
+        private void btn_StartAll_Click(object sender, RoutedEventArgs e)
+        {
+            foreach (var bot in BotsCollection)
+                bot.Start();
+        }
+
+        private void btn_StopAll_Click(object sender, RoutedEventArgs e)
+        {
+            foreach (var bot in BotsCollection)
+            {
+                bot.Stop();
+                if (Bot == bot)
+                {
+                    ClearPokemonData();
+                }
+            }
+        }
+
+        private void btn_botStop_Click(object sender, RoutedEventArgs e)
+        {
+            var btn = sender as Button;
+            var bot = btn?.DataContext as BotWindowData;
+            if (bot == null) return;
+            bot.Stop();
+            if (Bot == bot)
+            {
+                ClearPokemonData();
+            }
+        }
+
+        private void btn_botStart_Click(object sender, RoutedEventArgs e)
+        {
+            var btn = sender as Button;
+            var bot = btn?.DataContext as BotWindowData;
+            bot?.Start();
+        }
+
+        private void batch_Yes_Click(object sender, RoutedEventArgs e)
+        {
+            // YesButton Clicked! Let's hide our InputBox and handle the input text.
+            batchInput.Visibility = Visibility.Collapsed;
+
+            // Do something with the Input
+            var input = batch_botText.Text;
+
+            var inputRows = input.Split(new string[] { "\r\n", "\r", "\n" }, StringSplitOptions.RemoveEmptyEntries);
+            foreach (var row in inputRows)
+            {
+                try
+                {
+                    var rowData = row.Split(';');
+                    var auth = rowData[0];
+                    var login = rowData[1];
+                    var pass = rowData[2];
+                    var proxy = rowData[3];
+                    var proxyLogin = rowData[4];
+                    var proxyPass = rowData[5];
+                    var path = login;
+                    var created = false;
+                    do
+                    {
+                        if (!Directory.Exists(SubPath + "\\" + path))
+                        {
+                            CreateBotFromClone(path, login, auth, pass, proxy, proxyLogin, proxyPass);
+                            created = true;
+                        }
+                        else
+                        {
+                            path += DeviceSettings.RandomString(4);
+                        }
+                    } while (!created);
+                }
+                catch
+                {
+                    //ignore
+                }
+            }
+            // Clear InputBox.
+            batch_botText.Text = Empty;
+        }
+
+        private void CreateBotFromClone(string path, string login, string auth, string pass, string proxy, string proxyLogin, string proxyPass)
+        {
+            var dir = Directory.CreateDirectory(SubPath + "\\" + path);
+            var settings = GlobalSettings.Load(dir.FullName) ?? GlobalSettings.Load(dir.FullName);
+            if (Bot != null)
+                settings = Bot.GlobalSettings.Clone();
+
+            //set new settings
+            Enum.TryParse(auth, out settings.Auth.AuthType);
+            if (settings.Auth.AuthType == AuthType.Google)
+            {
+                settings.Auth.GoogleUsername = login;
+                settings.Auth.GooglePassword = pass;
+            }
+            else
+            {
+                settings.Auth.PtcUsername = login;
+                settings.Auth.PtcPassword = pass;
+            }
+            if (proxy != "")
+            {
+                settings.Auth.UseProxy = true;
+                settings.Auth.ProxyUri = proxy;
+                settings.Auth.ProxyLogin = proxyLogin;
+                settings.Auth.ProxyPass = proxyPass;
+            }
+            settings.Device.DeviceId = DeviceSettings.RandomString(16, "0123456789abcdef");
+            settings.StoreData(dir.FullName);
+            InitBot(settings, path);
+        }
+
+        private void batch_No_Click(object sender, RoutedEventArgs e)
+        {
+            batchInput.Visibility = Visibility.Collapsed;
+            batch_botText.Text = Empty;
+        }
+
+        private void btn_BatchCreation_Click(object sender, RoutedEventArgs e)
+        {
+            batchInput.Visibility = Visibility.Visible;
         }
 
         #endregion
@@ -1074,7 +1215,7 @@ namespace Catchem
         {
             c_DeviceId.Text = DeviceSettings.RandomString(16, "0123456789abcdef");
         }
-
+       
         #endregion
 
         public class NewMapObject
@@ -1303,8 +1444,10 @@ namespace Catchem
             public string Name { get; set; }
             public int Cp { get; set; }
             public double Iv { get; set; }
+            public PokemonId PokemonId { get; set; }
             public PokemonFamilyId Family { get; set; }
             private int _candy;
+            public ulong Timestamp { get; set; }
             public int Candy {
                 get { return _candy; }
                 set
@@ -1314,15 +1457,17 @@ namespace Catchem
                 }
             }
 
-            public PokemonUiData(ulong id, BitmapSource img, string name, int cp, double iv, PokemonFamilyId family, int candy)
+            public PokemonUiData(ulong id, PokemonId pokemonid, BitmapSource img, string name, int cp, double iv, PokemonFamilyId family, int candy, ulong stamp)
             {
                 Id = id;
+                PokemonId = pokemonid;
                 Image = img;
                 Name = name;
                 Cp = cp;
                 Iv = iv;
                 Candy = candy;
                 Family = family;
+                Timestamp = stamp;
             }
         }
 
@@ -1359,127 +1504,6 @@ namespace Catchem
             }
         }
 
-        private void btn_StartAll_Click(object sender, RoutedEventArgs e)
-        {
-            foreach (var bot in BotsCollection)
-                bot.Start();
-        }
-
-        private void btn_StopAll_Click(object sender, RoutedEventArgs e)
-        {
-            foreach (var bot in BotsCollection)
-            {
-                bot.Stop();
-                if (Bot == bot)
-                {
-                    ClearPokemonData();
-                }
-            }
-        }
-
-        private void btn_botStop_Click(object sender, RoutedEventArgs e)
-        {
-            var btn = sender as Button;
-            var bot = btn?.DataContext as BotWindowData;
-            if (bot == null) return;
-            bot.Stop();
-            if (Bot == bot)
-            {
-                ClearPokemonData();
-            }
-        }
-
-        private void btn_botStart_Click(object sender, RoutedEventArgs e)
-        {
-            var btn = sender as Button;
-            var bot = btn?.DataContext as BotWindowData;
-            bot?.Start();
-        }
-
-        private void batch_Yes_Click(object sender, RoutedEventArgs e)
-        {
-            // YesButton Clicked! Let's hide our InputBox and handle the input text.
-            batchInput.Visibility = Visibility.Collapsed;
-
-            // Do something with the Input
-            var input = batch_botText.Text;
-
-            var inputRows = input.Split(new string[] {"\r\n", "\r", "\n" }, StringSplitOptions.RemoveEmptyEntries);
-            foreach (var row in inputRows)
-            {
-                try
-                {
-                    var rowData = row.Split(';');
-                    var auth = rowData[0];
-                    var login = rowData[1];
-                    var pass = rowData[2];
-                    var proxy = rowData[3];
-                    var proxyLogin = rowData[4];
-                    var proxyPass = rowData[5];
-                    var path = login;
-                    var created = false;
-                    do
-                    {
-                        if (!Directory.Exists(SubPath + "\\" + path))
-                        {
-                            CreateBotFromClone(path, login, auth, pass, proxy, proxyLogin, proxyPass);
-                            created = true;
-                        }
-                        else
-                        {
-                            path += DeviceSettings.RandomString(4);
-                        }
-                    } while (!created);
-                }
-                catch
-                {
-                    //ignore
-                }
-            }
-            // Clear InputBox.
-            batch_botText.Text = Empty;
-        }
-
-        private void CreateBotFromClone(string path, string login, string auth, string pass, string proxy, string proxyLogin, string proxyPass)
-        {
-            var dir = Directory.CreateDirectory(SubPath + "\\" + path);
-            var settings = GlobalSettings.Load(dir.FullName) ?? GlobalSettings.Load(dir.FullName);
-            if (Bot != null)
-                settings = Bot.GlobalSettings.Clone();
-
-            //set new settings
-            Enum.TryParse(auth, out settings.Auth.AuthType);
-            if (settings.Auth.AuthType == AuthType.Google)
-            {
-                settings.Auth.GoogleUsername = login;
-                settings.Auth.GooglePassword = pass;
-            }
-            else
-            {
-                settings.Auth.PtcUsername = login;
-                settings.Auth.PtcPassword = pass;
-            }
-            if (proxy != "")
-            {
-                settings.Auth.UseProxy = true;
-                settings.Auth.ProxyUri = proxy;
-                settings.Auth.ProxyLogin = proxyLogin;
-                settings.Auth.ProxyPass = proxyPass;
-            }
-            settings.Device.DeviceId = DeviceSettings.RandomString(16, "0123456789abcdef");
-            settings.StoreData(dir.FullName);
-            InitBot(settings, path);
-        }
-
-        private void batch_No_Click(object sender, RoutedEventArgs e)
-        {
-            batchInput.Visibility = Visibility.Collapsed;
-            batch_botText.Text = Empty;
-        }
-
-        private void btn_BatchCreation_Click(object sender, RoutedEventArgs e)
-        {
-            batchInput.Visibility = Visibility.Visible;
-        }
+        
     }
 }

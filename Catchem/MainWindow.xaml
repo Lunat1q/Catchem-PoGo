@@ -567,6 +567,38 @@
                     <Label x:Name="label6_Copy6" Content="INVENTORY" HorizontalAlignment="Left" Margin="10,102,0,0" VerticalAlignment="Top" Foreground="#FF363636" FontSize="15" TextOptions.TextFormattingMode="Display" FontFamily="Source Sans Pro Semibold" Height="28" Width="89" Grid.Column="2"/>
                     <Label x:Name="l_inventory" Content="(HAVE/MAX)" HorizontalAlignment="Right" Margin="0,102,10,0" VerticalAlignment="Top" Foreground="#FF324AB4" FontSize="15" TextOptions.TextFormattingMode="Display" FontFamily="Source Sans Pro Semibold" Height="28" Width="100" HorizontalContentAlignment="Right" Grid.Column="2"/>
                     <Image x:Name="team_image" Grid.Column="2" HorizontalAlignment="Right" Height="100" Margin="0" VerticalAlignment="Top" Width="100" Source="pack://siteoforigin:,,,/Resources/team_instinct.png"/>
+                    <Button Style="{StaticResource ResourceKey=flatbutton}" x:Name="sortById" Content="#" HorizontalAlignment="Left" VerticalAlignment="Top" Width="50" Height="30" Margin="248,673,0,0" FontFamily="BOLD" TextOptions.TextFormattingMode="Display" FontWeight="Bold" FontSize="18" Click="sortById_Click">
+                        <Button.Background>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <LinearGradientBrush.RelativeTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform CenterY="0.5" CenterX="0.5"/>
+                                        <SkewTransform CenterY="0.5" CenterX="0.5"/>
+                                        <RotateTransform Angle="90" CenterY="0.5" CenterX="0.5"/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </LinearGradientBrush.RelativeTransform>
+                                <GradientStop Color="#FFB0EE9C" Offset="0"/>
+                                <GradientStop Color="#FF53C0B1" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Button.Background>
+                    </Button>
+                    <Button Style="{StaticResource ResourceKey=flatbutton}" x:Name="sortByCatch" Content="Time" HorizontalAlignment="Left" VerticalAlignment="Top" Width="50" Height="30" Margin="303,672,0,0" FontFamily="BOLD" TextOptions.TextFormattingMode="Display" FontWeight="Bold" FontSize="14" Click="sortByCatch_Click">
+                        <Button.Background>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <LinearGradientBrush.RelativeTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform CenterY="0.5" CenterX="0.5"/>
+                                        <SkewTransform CenterY="0.5" CenterX="0.5"/>
+                                        <RotateTransform Angle="90" CenterY="0.5" CenterX="0.5"/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </LinearGradientBrush.RelativeTransform>
+                                <GradientStop Color="#FFB0EE9C" Offset="0"/>
+                                <GradientStop Color="#FF53C0B1" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Button.Background>
+                    </Button>
                 </Grid>
             </TabItem>
 
