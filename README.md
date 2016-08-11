@@ -30,7 +30,7 @@ I you really liked this project, feel free to buy us all a beer, by using PayPal
 <br/>
 <h2>Screenshots</h2>
 ![Player info tab](http://i.imgur.com/6gBSiHO.png)<br/>
-![Map/Console tab](http://i.imgur.com/NGjPmGW.png)<br/>
+![Map/Console tab](http://i.imgur.com/eabzRxX.png)<br/>
 ![Settings tab](http://i.imgur.com/2ubVVqi.png)<br/>
 
  
