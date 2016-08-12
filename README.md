@@ -34,6 +34,8 @@ Get Device data from real android device:
  1. [Enable USB debugging at your phone settings]
  2. [Ensure what your PC have proper ADB drivers installed]
  3. [Click "Get Data from Your Android Phone" button at the Settings tab - you are awesome]
+ <br/><br/>
+If u have any problems with getting device info, consider to watch this post: [AdbDrivers](http://forum.xda-developers.com/showthread.php?p=48915118#post48915118)
 
 <h2>Credits</h2>
 Thanks to Feroxs' hard work on the API & Console we are able to manage something like this.
