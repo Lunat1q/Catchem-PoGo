@@ -25,7 +25,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Threading;
 using POGOProtos.Data;
 using POGOProtos.Inventory.Item;
 using static System.String;
@@ -107,7 +106,7 @@ namespace Catchem
             {
                 if (item != SubPath + "\\Logs")
                 {
-                    InitBot(GlobalSettings.Load(item), System.IO.Path.GetFileName(item));
+                    InitBot(GlobalSettings.Load(item), Path.GetFileName(item));
                 }
             }
         }
@@ -120,6 +119,9 @@ namespace Catchem
             {
                 case "log":
                     PushNewConsoleRow(session, (string)objData[0], (Color)objData[1]);
+                    break;
+                case "err":
+                    PushNewError(session);
                     break;
                 case "ps":
                     PushNewPokestop(session, (IEnumerable<FortData>)objData[0]);
@@ -190,6 +192,13 @@ namespace Catchem
             }
         }
 
+        private void PushNewError(ISession session)
+        {
+            var receiverBot = BotsCollection.FirstOrDefault(x => x.Session == session);
+            if (receiverBot == null) return;
+            receiverBot.ErrorsCount++;
+        }
+
         private void PokemonChanged(ISession session, object[] objData)
         {
             try
@@ -197,7 +206,6 @@ namespace Catchem
                 if ((ulong)objData[0] == 0) return;
                 var receiverBot = BotsCollection.FirstOrDefault(x => x.Session == session);
                 if (receiverBot == null) return;
-                var pokemonId = (PokemonId)objData[1];
                 var family = (PokemonFamilyId)objData[4];
                 var candy = (int)objData[5];
                 var pokemonToUpdate = receiverBot.PokemonList.FirstOrDefault(x => x.Id == (ulong)objData[0]);
@@ -702,9 +710,9 @@ namespace Catchem
             await TransferPokemonTask.Execute(session, pokemon.Id);
         }
 
-        private static async void RecycleItem(ISession session, ItemUiData item, int amount)
+        private static async void RecycleItem(ISession session, ItemUiData item, int amount, CancellationToken cts)
         {
-            await session.Client.Inventory.RecycleItem(item.Id, amount);
+            await RecycleSpecificItemTask.Execute(session, item.Id, amount, cts);
         }
 
         #endregion
@@ -808,6 +816,7 @@ namespace Catchem
                 pokeMap.Position = new PointLatLng(Bot._lat, Bot._lng);
                 DrawPlayerMarker();
                 StatsOnDirtyEvent(Bot);
+                Bot.ErrorsCount = 0;
             }
             UpdatePlayerTab(Bot);
             RebuildUi();
@@ -821,11 +830,11 @@ namespace Catchem
         }
 
         // ReSharper disable once InconsistentNaming
-        private void StatsOnDirtyEvent(BotWindowData _bot)
+        private void StatsOnDirtyEvent(BotWindowData bot)
         {
-            if (_bot == null) throw new ArgumentNullException(nameof(_bot));
-            Dispatcher.BeginInvoke(new ThreadStart(_bot.UpdateXppH));
-            if (Bot == _bot)
+            if (bot == null) throw new ArgumentNullException(nameof(bot));
+            Dispatcher.BeginInvoke(new ThreadStart(bot.UpdateXppH));
+            if (Bot == bot)
             {
                 Dispatcher.BeginInvoke(new ThreadStart(delegate
                 {
@@ -943,6 +952,23 @@ namespace Catchem
             var pokemon = GetSelectedPokemon();
             if (pokemon == null) return;
             LevelUpPokemon(CurSession, pokemon);
+        }
+
+        private void mi_recycleItem_Click(object sender, RoutedEventArgs e)
+        {
+            if (ItemListBox.SelectedIndex == -1) return;
+            var item = GetSekectedItem();
+            if (item == null) return;
+            var amount = 0;
+            var inputDialog = new InputDialogSample("Please, enter amout to recycle:", "1", true);
+            if (inputDialog.ShowDialog() != true) return;
+            if (int.TryParse(inputDialog.Answer, out amount))
+                RecycleItem(CurSession, item, amount, Bot.CancellationToken);
+        }
+
+        private ItemUiData GetSekectedItem()
+        {
+            return (ItemUiData)ItemListBox.SelectedItem;
         }
 
         private PokemonUiData GetSelectedPokemon()
@@ -1095,7 +1121,7 @@ namespace Catchem
             // Do something with the Input
             var input = batch_botText.Text;
 
-            var inputRows = input.Split(new string[] { "\r\n", "\r", "\n" }, StringSplitOptions.RemoveEmptyEntries);
+            var inputRows = input.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.RemoveEmptyEntries);
             foreach (var row in inputRows)
             {
                 try
@@ -1244,8 +1270,7 @@ namespace Catchem
             c_DeviceId.Text = DeviceSettings.RandomString(16, "0123456789abcdef");
         }
 
-        #endregion
 
-        
+        #endregion
     }
 }

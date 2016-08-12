@@ -9,11 +9,8 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Media;
 using System.Windows.Threading;
 
@@ -29,17 +26,21 @@ namespace Catchem
         }
 
         public string ProfileName { get; set; }
-        private string _errosCount;
+        private int _errosCount;
 
-        public string Errors
+        public int ErrorsCount
         {
             get { return _errosCount; }
             set
             {
                 _errosCount = value;
-                OnPropertyChanged();
+                // ReSharper disable once ExplicitCallerInfoArgument
+                OnPropertyChanged("Errors");
             }
         }
+
+        public string Errors => _errosCount == 0 ? "" : _errosCount.ToString();
+
         public Session Session;
         private CancellationTokenSource _cts;
         public CancellationToken CancellationToken => _cts.Token;
@@ -179,11 +180,13 @@ namespace Catchem
             WipeData();
             _ts = new TimeSpan();
             Started = false;
+            ErrorsCount = 0;
         }
 
         public void Start()
         {
             if (Started) return;
+            ErrorsCount = 0;
             TimerStart();
             _cts.Dispose();
             _cts = new CancellationTokenSource();

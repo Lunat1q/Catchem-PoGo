@@ -26,6 +26,7 @@ namespace Catchem
         public void HandleEvent(ErrorEvent evt, ISession session)
         {
             Logger.Write(evt.ToString(), LogLevel.Error, session: session);
+            Logger.PushToUi("err", session);
         }
 
         public void HandleEvent(NoticeEvent evt, ISession session)

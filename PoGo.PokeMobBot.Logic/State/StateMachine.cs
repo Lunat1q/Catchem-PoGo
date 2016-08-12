@@ -5,6 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using PoGo.PokeMobBot.Logic.Common;
 using PoGo.PokeMobBot.Logic.Event;
+using PoGo.PokeMobBot.Logic.Utils;
 using PokemonGo.RocketAPI.Exceptions;
 
 #endregion
@@ -43,6 +44,7 @@ namespace PoGo.PokeMobBot.Logic.State
                         Message = session.Translation.GetTranslation(TranslationString.NianticServerUnstable)
                     });
                     state = _initialState;
+                    await DelayingUtils.Delay(15000, 10000);
                 }
                 catch (OperationCanceledException)
                 {
@@ -54,6 +56,7 @@ namespace PoGo.PokeMobBot.Logic.State
                 {
                     session.EventDispatcher.Send(new ErrorEvent {Message = ex.ToString()});
                     state = _initialState;
+                    await DelayingUtils.Delay(15000, 10000);
                 }
                 
             } while (state != null);
