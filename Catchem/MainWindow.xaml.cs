@@ -350,6 +350,7 @@ namespace Catchem
                 foreach (var pokemon in receiverBot.PokemonList.Where(x => x.Family == family))
                 {
                     pokemon.Candy = candy;
+                    pokemon.UpdateTags(receiverBot.Logic);
                 }
                 
             }
@@ -370,28 +371,32 @@ namespace Catchem
                     receiverBot.PokemonList.CollectionChanged += delegate { UpdatePokemonCollection(session); };
                     var pokemonFamilies = await session.Inventory.GetPokemonFamilies();
                     var pokemonSettings = (await session.Inventory.GetPokemonSettings()).ToList();
-                    foreach (var pokemon in (List<Tuple<PokemonData, double, int>>)objData[0])
+                    foreach (var pokemon in (List<Tuple<PokemonData, double, int>>) objData[0])
                     {
                         var setting = pokemonSettings.Single(q => q.PokemonId == pokemon.Item1.PokemonId);
                         var family = pokemonFamilies.First(q => q.FamilyId == setting.FamilyId);
-                        receiverBot.PokemonList.Add(new PokemonUiData(
+                        var mon = new PokemonUiData(
                             pokemon.Item1.Id,
                             pokemon.Item1.PokemonId,
                             pokemon.Item1.PokemonId.ToInventorySource(),
                             (pokemon.Item1.Nickname == "" ? pokemon.Item1.PokemonId.ToString() : pokemon.Item1.Nickname),
                             pokemon.Item1.Cp,
                             pokemon.Item2,
-                            family.FamilyId, 
+                            family.FamilyId,
                             family.Candy_,
-                            pokemon.Item1.CreationTimeMs));
+                            pokemon.Item1.CreationTimeMs);
+                        receiverBot.PokemonList.Add(mon);
+                        mon.UpdateTags(receiverBot.Logic);
                     }
                 }
-
-                PokeListBox.ItemsSource = Bot.PokemonList;
             }
             catch (Exception)
             {
                 // ignored
+            }
+            finally
+            {
+                PokeListBox.ItemsSource = Bot.PokemonList;
             }
         }
 
@@ -700,9 +705,9 @@ namespace Catchem
             await EvolveSpecificPokemonTask.Execute(session, pokemon.Id);
         }
 
-        private static async void LevelUpPokemon(ISession session, PokemonUiData pokemon)
+        private static async void LevelUpPokemon(ISession session, PokemonUiData pokemon, bool toMax = false)
         {
-            await LevelUpSpecificPokemonTask.Execute(session, pokemon.Id);
+            await LevelUpSpecificPokemonTask.Execute(session, pokemon.Id, toMax);
         }
 
         private static async void TransferPokemon(ISession session, PokemonUiData pokemon)
@@ -953,13 +958,20 @@ namespace Catchem
             if (pokemon == null) return;
             LevelUpPokemon(CurSession, pokemon);
         }
+        private void mi_maxlevelupPokemon_Click(object sender, RoutedEventArgs e)
+        {
+            if (PokeListBox.SelectedIndex == -1) return;
+            var pokemon = GetSelectedPokemon();
+            if (pokemon == null) return;
+            LevelUpPokemon(CurSession, pokemon, true);
+        }
 
         private void mi_recycleItem_Click(object sender, RoutedEventArgs e)
         {
             if (ItemListBox.SelectedIndex == -1) return;
             var item = GetSekectedItem();
             if (item == null) return;
-            var amount = 0;
+            int amount;
             var inputDialog = new InputDialogSample("Please, enter amout to recycle:", "1", true);
             if (inputDialog.ShowDialog() != true) return;
             if (int.TryParse(inputDialog.Answer, out amount))
@@ -1272,5 +1284,7 @@ namespace Catchem
 
 
         #endregion
+
+
     }
 }

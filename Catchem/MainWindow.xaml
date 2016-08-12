@@ -63,6 +63,7 @@
                 <TextBlock Text="{Binding Cp, FallbackValue='Cp: 0', StringFormat='Cp: {0}'}" HorizontalAlignment="Left" Margin="0,121,0,0" VerticalAlignment="Top" Grid.ColumnSpan="1" Width="75" Padding="0" Foreground="#FF59C3B0" FontSize="14" TextAlignment="Center" />
                 <TextBlock Text="{Binding Iv, FallbackValue='Iv: 0%', StringFormat='Iv: {0:N1}%'}" HorizontalAlignment="Left" Margin="0,121,0,0" VerticalAlignment="Top" Width="75" Padding="0" Foreground="#FF59C3B0" Grid.Column="1" FontSize="14" TextAlignment="Center" />
                 <TextBlock Text="{Binding Candy, FallbackValue='Candy: 0', StringFormat='Candy: {0}'}" HorizontalAlignment="Left" Margin="0,140,0,0" VerticalAlignment="Top" Width="75" Padding="0" Foreground="#FF59C3B0" Grid.Column="1" FontSize="12" TextAlignment="Center" />
+                <TextBlock Text="{Binding Tags, FallbackValue='', StringFormat=''}" HorizontalAlignment="Left" Margin="0,140,0,0" VerticalAlignment="Top" Width="75" Padding="0" Foreground="#FF59C3B0" Grid.Column="0" FontSize="12" TextAlignment="Center" />
             </Grid>
         </DataTemplate>
         <DataTemplate x:Key="InventoryItemTemplate">
@@ -151,9 +152,9 @@
                             <Grid Margin="0,0,0,0" IsEnabled="True">
                                 <CheckBox x:Name="c_UseProxy" Content="UseProxy" HorizontalAlignment="Left" Margin="16,1,0,0" VerticalAlignment="Top" Height="15" Width="101" Checked="BotPropertyChanged" Unchecked="BotPropertyChanged"/>
                                 <TextBox Template="{StaticResource pogo}" x:Name="c_ProxyUri" Height="29" Margin="94,86,10,0" TextWrapping="Wrap" VerticalAlignment="Top" TextChanged="BotPropertyChanged" Foreground="#FF56C2B0"/>
-                                <Label x:Name="label" Content="Proxy Uri" HorizontalAlignment="Left" Margin="10,89,0,0" VerticalAlignment="Top" Width="79" RenderTransformOrigin="0.494,0.5"/>
-                                <Label x:Name="label1" Content="Proxy Pass" HorizontalAlignment="Left" Margin="10,53,0,0" VerticalAlignment="Top" Width="79"/>
-                                <Label x:Name="label2" Content="Proxy Login" HorizontalAlignment="Left" Margin="10,19,0,0" VerticalAlignment="Top" Width="79"/>
+                                <Label x:Name="label" Content="Host:port" HorizontalAlignment="Left" Margin="10,89,0,0" VerticalAlignment="Top" Width="79" RenderTransformOrigin="0.494,0.5"/>
+                                <Label x:Name="label1" Content="Password" HorizontalAlignment="Left" Margin="10,53,0,0" VerticalAlignment="Top" Width="79"/>
+                                <Label x:Name="label2" Content="Login" HorizontalAlignment="Left" Margin="10,19,0,0" VerticalAlignment="Top" Width="79"/>
                                 <TextBox Template="{StaticResource pogo}" x:Name="c_ProxyLogin" Height="34" Margin="94,14,10,0" TextWrapping="Wrap" VerticalAlignment="Top" TextChanged="BotPropertyChanged" Foreground="#FF56C2B0" Text="Username"/>
                                 <PasswordBox Template="{StaticResource pogo_password}" x:Name="c_ProxyPass" Margin="94,53,10,0" VerticalAlignment="Top" Height="28" PasswordChanged="BotPropertyChanged" Password="password" Foreground="#FF56C2B0"/>
                             </Grid>
@@ -316,7 +317,7 @@
                                 <TextBox Template="{StaticResource pogo}" x:Name="c_DeviceBrand" Grid.Column="1" Height="29" Margin="10,115,10,0" TextWrapping="Wrap" VerticalAlignment="Top" TextChanged="BotPropertyChanged" />
                                 <Label x:Name="label7_Copy8" Content="Device Model" Margin="10,149,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.423" Height="26"/>
                                 <TextBox Template="{StaticResource pogo}" x:Name="c_DeviceModel" Grid.Column="1" Height="29" Margin="10,149,10,0" TextWrapping="Wrap" VerticalAlignment="Top" TextChanged="BotPropertyChanged" />
-                                <Label x:Name="label7_Copy9" Content="Device Mode lIdentifier" Margin="10,183,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.423" Height="26"/>
+                                <Label x:Name="label7_Copy9" Content="Device Model Identifier" Margin="10,183,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.423" Height="26"/>
                                 <TextBox Template="{StaticResource pogo}" x:Name="c_DeviceModelIdentifier" Grid.Column="1" Height="29" Margin="10,183,10,0" TextWrapping="Wrap" VerticalAlignment="Top" TextChanged="BotPropertyChanged" />
                                 <Label x:Name="label7_Copy10" Content="Device Model Boot" Margin="10,217,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.423" Height="26"/>
                                 <TextBox Template="{StaticResource pogo}" x:Name="c_DeviceModelBoot" Grid.Column="1" Height="29" Margin="10,217,10,0" TextWrapping="Wrap" VerticalAlignment="Top" TextChanged="BotPropertyChanged" />
@@ -545,6 +546,7 @@
                         <ListBox.ContextMenu>
                             <ContextMenu>
                                 <MenuItem x:Name="mi_levelupPokemon" Header="Level Up Pokemon" Click="mi_levelupPokemon_Click"/>
+                                <MenuItem x:Name="mi_maxlevelupPokemon" Header="Level Up Pokemon to Max" Click="mi_maxlevelupPokemon_Click"/>
                                 <MenuItem x:Name="mi_evolvePokemon" Header="Evolve Pokemon" Click="mi_evolvePokemon_Click"/>
                                 <MenuItem x:Name="mi_transferPokemon" Header="Transfer Pokemon" Click="mi_transferPokemon_Click" />
                             </ContextMenu>
