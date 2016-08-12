@@ -66,6 +66,12 @@ namespace Catchem
         private readonly Queue<PointLatLng> _routePoints = new Queue<PointLatLng>();
         public readonly GMapRoute PlayerRoute;
 
+        public ObservableCollection<PokemonId> PokemonsToEvolve => GlobalSettings.PokemonsToEvolve;
+        public ObservableCollection<PokemonId> PokemonsNotToTransfer => GlobalSettings.PokemonsNotToTransfer;
+        public ObservableCollection<PokemonId> PokemonsNotToCatch => GlobalSettings.PokemonsToIgnore;
+        public ObservableCollection<PokemonId> PokemonToUseMasterball => GlobalSettings.PokemonToUseMasterball;
+        public Dictionary<PokemonId, TransferFilter> PokemonsTransferFilter => GlobalSettings.PokemonsTransferFilter;
+
         //public Label RunTime;
         private double _xpph;
         public bool Started;

@@ -23,6 +23,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
 using POGOProtos.Data;
@@ -922,7 +923,8 @@ namespace Catchem
             #endregion
 
             PokeListBox.ItemsSource = Bot.PokemonList;
-            ItemListBox.ItemsSource = Bot.ItemList;            
+            ItemListBox.ItemsSource = Bot.ItemList;
+            ToEvolveList.ItemsSource = Bot.PokemonsToEvolve;
 
             _loadingUi = false;
         }
@@ -1139,7 +1141,7 @@ namespace Catchem
                 try
                 {
                     var rowData = row.Split(';');
-                    var auth = rowData[0];
+                    var auth = char.ToUpper(rowData[0][0]) + rowData[0].Substring(1);
                     var login = rowData[1];
                     var pass = rowData[2];
                     var proxy = rowData.Length > 3 ? rowData[3] : "";
@@ -1285,6 +1287,36 @@ namespace Catchem
 
         #endregion
 
+        public class EnumDescriptionConverter : IValueConverter
+        {
+            private static string GetEnumDescription(Enum enumObj)
+            {
+                var fieldInfo = enumObj.GetType().GetField(enumObj.ToString());
 
+                var attribArray = fieldInfo.GetCustomAttributes(false);
+
+                if (attribArray.Length == 0)
+                {
+                    return enumObj.ToString();
+                }
+                else
+                {
+                    var attrib = attribArray[0] as DescriptionAttribute;
+                    return attrib != null ? attrib.Description : "";
+                }
+            }
+
+            object IValueConverter.Convert(object value, Type targetType, object parameter, CultureInfo culture)
+            {
+                var myEnum = (Enum)value;
+                var description = GetEnumDescription(myEnum);
+                return description;
+            }
+
+            object IValueConverter.ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+            {
+                return string.Empty;
+            }
+        }
     }
 }

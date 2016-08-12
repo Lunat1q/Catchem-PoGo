@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
@@ -386,7 +387,7 @@ namespace PoGo.PokeMobBot.Logic
             new KeyValuePair<ItemId, int>(ItemId.ItemItemStorageUpgrade, 100)
         };
 
-        public List<PokemonId> PokemonsNotToTransfer = new List<PokemonId>
+        public ObservableCollection<PokemonId> PokemonsNotToTransfer = new ObservableCollection<PokemonId>
         {
             //criteria: from SS Tier to A Tier + Regional Exclusive
             //PokemonId.Venusaur,
@@ -427,7 +428,7 @@ namespace PoGo.PokeMobBot.Logic
             PokemonId.Mew
         };
 
-        public List<PokemonId> PokemonsToEvolve = new List<PokemonId>
+        public ObservableCollection<PokemonId> PokemonsToEvolve = new ObservableCollection<PokemonId>
         {
             /*NOTE: keep all the end-of-line commas exept for the last one or an exception will be thrown!
             criteria: 12 candies*/
@@ -466,7 +467,7 @@ namespace PoGo.PokeMobBot.Logic
             //PokemonId.Staryu
         };
 
-        public List<PokemonId> PokemonsToIgnore = new List<PokemonId>
+        public ObservableCollection<PokemonId> PokemonsToIgnore = new ObservableCollection<PokemonId>
         {
             //criteria: most common
             PokemonId.Caterpie,
@@ -640,7 +641,7 @@ namespace PoGo.PokeMobBot.Logic
             }
         };
 
-        public List<PokemonId> PokemonToUseMasterball = new List<PokemonId>
+        public ObservableCollection<PokemonId> PokemonToUseMasterball = new ObservableCollection<PokemonId>
         {
             PokemonId.Articuno,
             PokemonId.Zapdos,

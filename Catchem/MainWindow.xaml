@@ -3,7 +3,11 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:WindowsPresentation="clr-namespace:GMap.NET.WindowsPresentation;assembly=GMap.NET.WindowsPresentation" x:Class="Catchem.MainWindow"
+        xmlns:WindowsPresentation="clr-namespace:GMap.NET.WindowsPresentation;assembly=GMap.NET.WindowsPresentation"
+        xmlns:pokemon="clr-namespace:POGOProtos.Enums;assembly=POGOProtos"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        x:Class="Catchem.MainWindow"
+        xmlns:catchem="clr-namespace:Catchem"
         mc:Ignorable="d"
         DataContext="{Binding RelativeSource={RelativeSource Self}}"
         Title="Catchem" Height="775" Width="1348" MinWidth="1075" MinHeight="775" Closing="Window_Closing" Icon="unnamed.ico">
@@ -14,6 +18,8 @@
         </LinearGradientBrush>
     </Window.Background>
     <Window.Resources>
+        <catchem:CamelCaseConverter x:Key="CamelCaseConverter" />
+        <catchem:MethodToValueConverter x:Key="MethodToValueConverter" />
         <ControlTemplate TargetType="TextBoxBase" x:Key="pogo">
             <Border CornerRadius="10" BorderThickness="1" BorderBrush="#FF5AC4B0"  Padding="5,3.5,10,0" Height="27" x:Name="Bd" Background="{TemplateBinding Panel.Background}">
                 <ScrollViewer Name="PART_ContentHost" SnapsToDevicePixels="{TemplateBinding UIElement.SnapsToDevicePixels}" />
@@ -128,6 +134,26 @@
                 <TextBlock Text="{Binding Errors, FallbackValue='%ERR%'}" x:Name="block_botErrors" Grid.Column="1" HorizontalAlignment="Right" Margin="0" Grid.RowSpan="1" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" Width="44" TextAlignment="Right" Foreground="#FFB61515"/>
                 <TextBlock Text="{Binding Xpph, FallbackValue='Xp/h: 0', StringFormat='Xp/h: {0:N0}'}" x:Name="block_botName_Copy" HorizontalAlignment="Stretch" TextWrapping="Wrap" VerticalAlignment="Top" Height="Auto" Width="Auto" Grid.RowSpan="1" Grid.ColumnSpan="1" Foreground="#FF59C3B0" FontSize="13.333" TextAlignment="Center" Grid.Row="1" Margin="0,3,0,0"/>
                 <TextBlock Text="{Binding Ts, FallbackValue='00:00:00'}" x:Name="block_botName_Copy1" HorizontalAlignment="Stretch" TextWrapping="Wrap" VerticalAlignment="Top" Height="Auto" Width="Auto" Grid.RowSpan="1" Grid.ColumnSpan="1" Foreground="#FF59C3B0" FontSize="13.333" TextAlignment="Center" Grid.Row="1" Margin="0,3,0,0" Grid.Column="1"/>
+            </Grid>
+        </DataTemplate>
+        <ObjectDataProvider MethodName="GetValues"
+                    ObjectType="{x:Type sys:Enum}"
+                    x:Key="PokemonIdDataProvider">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="pokemon:PokemonId" />
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+        <DataTemplate x:Key="PokemonListTemplate">
+            <Grid Width="Auto" Height="Auto">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="35"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Rectangle Fill="#FFF4F4F5" HorizontalAlignment="Stretch" Height="Auto" Stroke="Black" VerticalAlignment="Stretch" Width="Auto" Grid.ColumnSpan="2"/>
+                <Grid HorizontalAlignment="Left" Height="35" Margin="0,0,0,0" VerticalAlignment="Top" Width="35">
+                    <Image Source="{Binding Converter={StaticResource MethodToValueConverter}, ConverterParameter='ToBitmap'}" x:Name="image" HorizontalAlignment="Center" Height="0" VerticalAlignment="Center" Width="0" Margin="0"/>
+                </Grid>
+                <TextBlock Text="{Binding Converter={StaticResource CamelCaseConverter}, FallbackValue='Unknown Pokemon'}" Margin="0,7,0,0" Grid.Column="1"/>
             </Grid>
         </DataTemplate>
     </Window.Resources>
@@ -603,6 +629,55 @@
                                 </LinearGradientBrush.RelativeTransform>
                                 <GradientStop Color="#FFB0EE9C" Offset="0"/>
                                 <GradientStop Color="#FF53C0B1" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Button.Background>
+                    </Button>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Pokemon Lists">
+                <Grid Background="#FFE5E5E5">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <ListBox x:Name="ToEvolveList" Margin="10,42,10,10" ItemTemplate="{DynamicResource PokemonListTemplate}" HorizontalContentAlignment="Stretch"/>
+                    <Label x:Name="PokemonsToEvolve" Content="Pokemons To Evolve" HorizontalAlignment="Left" Margin="10,7,0,0" VerticalAlignment="Top" FontSize="16" FontFamily="Calibri" Width="144">
+                        <Label.Foreground>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <LinearGradientBrush.RelativeTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform CenterY="0.5" CenterX="0.5"/>
+                                        <SkewTransform CenterY="0.5" CenterX="0.5"/>
+                                        <RotateTransform Angle="90" CenterY="0.5" CenterX="0.5"/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </LinearGradientBrush.RelativeTransform>
+                                <GradientStop Color="#FF57C2B0" Offset="0"/>
+                                <GradientStop Color="#FF29A662" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Label.Foreground>
+                    </Label>
+                    <ComboBox x:Name="AddToEvolveCb" Margin="159,10,74,0" VerticalAlignment="Top"
+                              ItemsSource="{Binding Source={StaticResource PokemonIdDataProvider}}"/>
+                    <Button Style="{StaticResource ResourceKey=flatbutton}" x:Name="AddPokemonToEvolve" 
+                            Content="Add" HorizontalAlignment="Right" VerticalAlignment="Top" Width="59" Height="22" Click="button_Click" Margin="0,10,10,0" FontFamily="BOLD" TextOptions.TextFormattingMode="Display" FontWeight="Bold">
+                        <Button.Background>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <LinearGradientBrush.RelativeTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform CenterY="0.5" CenterX="0.5"/>
+                                        <SkewTransform CenterY="0.5" CenterX="0.5"/>
+                                        <RotateTransform Angle="90" CenterY="0.5" CenterX="0.5"/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </LinearGradientBrush.RelativeTransform>
+                                <GradientStop Color="#FFB0EE9C" Offset="0"/>
+                                <GradientStop Color="#FF53C05D" Offset="1"/>
                             </LinearGradientBrush>
                         </Button.Background>
                     </Button>

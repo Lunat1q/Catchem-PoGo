@@ -309,6 +309,11 @@ namespace Catchem
             return img;
         }
 
+        public static BitmapSource ToSource(this PokemonId pid)
+        {
+            return pid.ToBitmap().LoadBitmap();
+        }
+
         public static BitmapSource ToInventorySource(this PokemonId pid)
         {
             return pid.ToInventoryBitmap().LoadBitmap();
