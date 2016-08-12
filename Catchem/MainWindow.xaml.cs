@@ -925,6 +925,9 @@ namespace Catchem
             PokeListBox.ItemsSource = Bot.PokemonList;
             ItemListBox.ItemsSource = Bot.ItemList;
             ToEvolveList.ItemsSource = Bot.PokemonsToEvolve;
+            NotToTransferList.ItemsSource = Bot.PokemonsNotToTransfer;
+            PokemonsNotToCatchList.ItemsSource = Bot.PokemonsNotToCatch;
+            PokemonToUseMasterballList.ItemsSource = Bot.PokemonToUseMasterball;
 
             _loadingUi = false;
         }
@@ -1316,6 +1319,60 @@ namespace Catchem
             object IValueConverter.ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
             {
                 return string.Empty;
+            }
+        }
+
+        private void btn_removeFromList_Click(object sender, RoutedEventArgs e)
+        {
+            var btn = sender as Button;
+            var pokemonId = (PokemonId)btn?.DataContext;          
+            var parentList = btn.Tag as ListBox;
+            var source = parentList?.ItemsSource as ObservableCollection<PokemonId>;
+            if (source != null && source.Contains(pokemonId))
+                source.Remove(pokemonId);
+        }
+
+        private void AddPokemonToEvolve_Click(object sender, RoutedEventArgs e)
+        {
+            if (AddToEvolveCb.SelectedIndex > -1)
+            {
+                var pokemonId = (PokemonId)AddToEvolveCb.SelectedItem;
+                if (!Bot.PokemonsToEvolve.Contains(pokemonId))
+                    Bot.PokemonsToEvolve.Add(pokemonId);
+                AddToEvolveCb.SelectedIndex = -1;
+            }
+        }
+
+        private void NotToTransferBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (NotToTransferCb.SelectedIndex > -1)
+            {
+                var pokemonId = (PokemonId)NotToTransferCb.SelectedItem;
+                if (!Bot.PokemonsNotToTransfer.Contains(pokemonId))
+                    Bot.PokemonsNotToTransfer.Add(pokemonId);
+                NotToTransferCb.SelectedIndex = -1;
+            }
+        }
+
+        private void PokemonsNotToCatchBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (PokemonsNotToCatchCb.SelectedIndex > -1)
+            {
+                var pokemonId = (PokemonId)PokemonsNotToCatchCb.SelectedItem;
+                if (!Bot.PokemonsNotToCatch.Contains(pokemonId))
+                    Bot.PokemonsNotToCatch.Add(pokemonId);
+                PokemonsNotToCatchCb.SelectedIndex = -1;
+            }
+        }
+
+        private void PokemonToUseMasterballBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (PokemonToUseMasterballCb.SelectedIndex > -1)
+            {
+                var pokemonId = (PokemonId)PokemonToUseMasterballCb.SelectedItem;
+                if (!Bot.PokemonToUseMasterball.Contains(pokemonId))
+                    Bot.PokemonToUseMasterball.Add(pokemonId);
+                PokemonToUseMasterballCb.SelectedIndex = -1;
             }
         }
     }

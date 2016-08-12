@@ -302,8 +302,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                     await
                         session.Client.Player.UpdatePlayerLocation(Latitude, Longitude, session.Client.CurrentAltitude);
 
-                    encounter =
-                        session.Client.Encounter.EncounterPokemon(pokemon.EncounterId, pokemon.SpawnPointId).Result;
+                    encounter = await session.Client.Encounter.EncounterPokemon(pokemon.EncounterId, pokemon.SpawnPointId);
                 }
                 finally
                 {
