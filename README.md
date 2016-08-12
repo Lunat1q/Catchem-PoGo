@@ -1,4 +1,5 @@
 <h1>Catchem PokemonGO bot <i>with modern UI</i></h1>
+<h2>This project is for education purposes only</h2>
 <h4>Based on PokeMobBot project</h4>
 <h5>also some code was taken from NecroBot project</h5>
 
