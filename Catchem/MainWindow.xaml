@@ -10,7 +10,7 @@
         xmlns:catchem="clr-namespace:Catchem"
         mc:Ignorable="d"
         DataContext="{Binding RelativeSource={RelativeSource Self}}"
-        Title="Catchem" Height="775" Width="1348" MinWidth="1075" MinHeight="775" Closing="Window_Closing" Icon="unnamed.ico">
+        Title="Catchem" Height="1771" Width="1348" MinWidth="1075" MinHeight="775" Closing="Window_Closing" Icon="unnamed.ico">
     <Window.Background>
         <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
             <GradientStop Color="#FFB2EF9C" Offset="0"/>
@@ -269,7 +269,7 @@
 
                             </Grid>
                         </GroupBox>
-                        <GroupBox x:Name="groupBox4" Header="Snipe" Margin="-1,1353,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.479,0.565" Height="224">
+                        <GroupBox x:Name="groupBox4" Header="Snipe" Margin="-1,1431,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.479,0.565" Height="224">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="181*"/>
@@ -289,7 +289,7 @@
 
                             </Grid>
                         </GroupBox>
-                        <GroupBox x:Name="groupBox4_Copy" Header="Items" Margin="0,1121,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.479,0.565" Height="232">
+                        <GroupBox x:Name="groupBox4_Copy" Header="Items" Margin="0,1199,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.479,0.565" Height="232">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="181*"/>
@@ -310,7 +310,7 @@
 
                             </Grid>
                         </GroupBox>
-                        <GroupBox x:Name="groupBox4_Copy1" Header="Catch" Margin="0,688,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.479,0.565" Height="433">
+                        <GroupBox x:Name="groupBox4_Copy1" Header="Catch" Margin="0,688,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.479,0.565" Height="458">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="181*"/>
@@ -341,6 +341,7 @@
                                 <TextBox Template="{StaticResource pogo}" x:Name="c_UseBerryMinIv" Height="29" Margin="5,342,10,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Grid.Column="1" TextChanged="BotPropertyChanged" />
                                 <Label x:Name="label8_Copy18" Content="Use Berry Below Catch Probability" HorizontalAlignment="Left" Margin="10,377,0,0" VerticalAlignment="Top" Width="210"/>
                                 <TextBox Template="{StaticResource pogo}" x:Name="c_UseBerryBelowCatchProbability" Height="29" Margin="5,376,10,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Grid.Column="1" TextChanged="BotPropertyChanged" />
+                                <CheckBox x:Name="c_UsePokemonToNotCatchFilter_Copy" Content="Use Pokemon To Not Catch Filter" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="13,408,0,0" Checked="BotPropertyChanged" Unchecked="BotPropertyChanged" Width="207" />
 
                             </Grid>
                         </GroupBox>
