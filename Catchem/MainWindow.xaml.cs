@@ -416,7 +416,8 @@ namespace Catchem
             }
             finally
             {
-                PokeListBox.ItemsSource = Bot.PokemonList;
+                if (Bot != null && PokeListBox != null)
+                    PokeListBox.ItemsSource = Bot?.PokemonList;
             }
         }
 

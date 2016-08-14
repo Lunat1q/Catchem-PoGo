@@ -61,7 +61,7 @@ namespace PoGo.PokeMobBot.Logic.State
             });
             var remoteReleaseUrl =
                 $"https://github.com/Lunat1q/Catchem-PoGo/releases/download/v{RemoteVersion}/";
-            string zipName = $"Catchem_{RemoteVersion}.7zip";
+            string zipName = $"Catchem_{RemoteVersion}.7z";
             var downloadLink = remoteReleaseUrl + zipName;
             var baseDir = Directory.GetCurrentDirectory();
             var downloadFilePath = Path.Combine(baseDir, zipName);
@@ -177,7 +177,7 @@ namespace PoGo.PokeMobBot.Logic.State
         {
             try
             {
-                var regex = new Regex(@"\[assembly\: AssemblyVersion\(""(\d{1,})\.(\d{1,})\.(\d{1,})""\)\]");
+                var regex = new Regex(@"\[assembly\: AssemblyVersion\(""(\d{1,})\.(\d{1,})\.(\d{1,})\.(\d{1,})""\)\]");
                 var match = regex.Match(DownloadServerVersion(session));
 
                 if (!match.Success)
