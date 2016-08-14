@@ -116,7 +116,7 @@ namespace PoGo.PokeMobBot.Logic
                     if (distanceToTarget <= 5)
                         continue;
 
-                    var nextSpeed = session.Client.rnd.NextInRange(walkingSpeedMin, walkingSpeedMax);
+                    var nextSpeed = session.Client.rnd.NextInRange(walkingSpeedMin, walkingSpeedMax) * session.Settings.MoveSpeedFactor;
 
                     result = await
                         navi.HumanPathWalking(waypointsArr[x], nextSpeed,
@@ -129,7 +129,7 @@ namespace PoGo.PokeMobBot.Logic
                 var curcoord = new GeoCoordinate(session.Client.CurrentLatitude, session.Client.CurrentLongitude);
                 if (LocationUtils.CalculateDistanceInMeters(curcoord, destination) > 40)
                 {
-                    var nextSpeed = session.Client.rnd.NextInRange(walkingSpeedMin, walkingSpeedMax);
+                    var nextSpeed = session.Client.rnd.NextInRange(walkingSpeedMin, walkingSpeedMax) * session.Settings.MoveSpeedFactor;
 
                     result = await navi.HumanPathWalking(destination, nextSpeed,
                         functionExecutedWhileWalking, functionExecutedWhileWalking2, cancellationToken);
@@ -147,7 +147,7 @@ namespace PoGo.PokeMobBot.Logic
                 var curcoord = new GeoCoordinate(session.Client.CurrentLatitude, session.Client.CurrentLongitude);
                 if (LocationUtils.CalculateDistanceInMeters(curcoord, destination) > 40)
                 {
-                    var nextSpeed = session.Client.rnd.NextInRange(walkingSpeedMin, walkingSpeedMax);
+                    var nextSpeed = session.Client.rnd.NextInRange(walkingSpeedMin, walkingSpeedMax) * session.Settings.MoveSpeedFactor;
 
                     result = await navi.HumanPathWalking(destination, nextSpeed,
                         functionExecutedWhileWalking, functionExecutedWhileWalking2, cancellationToken);

@@ -131,7 +131,7 @@
                     </Button.Background>
                 </Button>
                 <TextBlock Text="{Binding ProfileName, FallbackValue='%PROFILENAME%'}" x:Name="block_botName" HorizontalAlignment="Stretch" Margin="10,0,44,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" Width="Auto" Grid.RowSpan="1" Grid.ColumnSpan="2" Foreground="#FF59C3B0" FontSize="18.667" TextAlignment="Left"/>
-                <TextBlock Text="{Binding Errors, FallbackValue='%ERR%'}" x:Name="block_botErrors" Grid.Column="1" HorizontalAlignment="Right" Margin="0" Grid.RowSpan="1" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" Width="44" TextAlignment="Right" Foreground="#FFB61515"/>
+                <TextBlock Text="{Binding Errors, FallbackValue='%ERR%'}" x:Name="block_botErrors" Grid.Column="1" HorizontalAlignment="Right" Margin="0,0,3,0" Grid.RowSpan="1" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" Width="41" TextAlignment="Right" Foreground="#FFB61515"/>
                 <TextBlock Text="{Binding Xpph, FallbackValue='Xp/h: 0', StringFormat='Xp/h: {0:N0}'}" x:Name="block_botName_Copy" HorizontalAlignment="Stretch" TextWrapping="Wrap" VerticalAlignment="Top" Height="Auto" Width="Auto" Grid.RowSpan="1" Grid.ColumnSpan="1" Foreground="#FF59C3B0" FontSize="13.333" TextAlignment="Center" Grid.Row="1" Margin="0,3,0,0"/>
                 <TextBlock Text="{Binding Ts, FallbackValue='00:00:00'}" x:Name="block_botName_Copy1" HorizontalAlignment="Stretch" TextWrapping="Wrap" VerticalAlignment="Top" Height="Auto" Width="Auto" Grid.RowSpan="1" Grid.ColumnSpan="1" Foreground="#FF59C3B0" FontSize="13.333" TextAlignment="Center" Grid.Row="1" Margin="0,3,0,0" Grid.Column="1"/>
             </Grid>
@@ -186,7 +186,7 @@
             </TabControl.RenderTransform>
             <TabItem Header="Settings">
                 <ScrollViewer Grid.ColumnSpan="2">
-                    <Grid x:Name="settings_grid" IsEnabled="False">
+                    <Grid x:Name="settings_grid">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="300*"/>
                             <ColumnDefinition Width="300*"/>
@@ -481,7 +481,7 @@
                         <Slider x:Name="sl_moveSpeedFactor" HorizontalAlignment="Left" Margin="295,8,0,0" VerticalAlignment="Top" RenderTransformOrigin="3.583,0.25" Width="168" Height="25" Minimum="0.3" Maximum="3" TickPlacement="BottomRight" Value="1" ValueChanged="sl_moveSpeedFactor_ValueChanged" TickFrequency="0.1" SmallChange="0" />
                         <Label x:Name="label5" Content="Move Speed Factor:" HorizontalAlignment="Left" Margin="183,4,0,0" VerticalAlignment="Top" Width="126"/>
                         <Label x:Name="l_moveSpeedFactor" Content="1" HorizontalAlignment="Left" Margin="463,4,0,0" VerticalAlignment="Top" Width="32"/>
-                        <CheckBox x:Name="cb_keepPokemonMarkers" Content="Follow the Player marker" HorizontalAlignment="Left" Margin="500,10,0,0" VerticalAlignment="Top" Width="155" Checked="cb_keepPokemonMarkers_Checked" Unchecked="cb_keepPokemonMarkers_Checked"/>
+                        <CheckBox x:Name="cb_keepPokemonMarkers" Content="Keep pokemon markers on the map" HorizontalAlignment="Left" Margin="500,10,0,0" VerticalAlignment="Top" Width="215" Checked="cb_keepPokemonMarkers_Checked" Unchecked="cb_keepPokemonMarkers_Checked"/>
                     </Grid>
                 </Grid>
             </TabItem>
@@ -510,7 +510,7 @@
                     </Label>
                     <Label x:Name="label6" Content="STARDUST" HorizontalAlignment="Left" Margin="10,48,0,0" VerticalAlignment="Top" Foreground="#FF363636" FontSize="15" TextOptions.TextFormattingMode="Display" FontFamily="Source Sans Pro Semibold" Height="28" Width="82"/>
                     <Label x:Name="l_StarDust" Content="AMOUNT" HorizontalAlignment="Left" Margin="11,69,0,0" VerticalAlignment="Top" Foreground="#FF324AB4" FontSize="15" TextOptions.TextFormattingMode="Display" FontFamily="Source Sans Pro Semibold" Height="28" Width="73"/>
-                    <Label x:Name="l_Stardust_farmed" Content="+FARMED" HorizontalAlignment="Left" Margin="83,69,0,0" VerticalAlignment="Top" Foreground="#FFBF4F2E" FontSize="15" TextOptions.TextFormattingMode="Display" FontFamily="Source Sans Pro Semibold" Height="28" Width="78"/>
+                    <Label x:Name="l_Stardust_farmed" Content="+FARMED" HorizontalAlignment="Left" Margin="83,69,0,0" VerticalAlignment="Top" Foreground="#FFBF4F2E" FontSize="15" TextOptions.TextFormattingMode="Display" FontFamily="Source Sans Pro Semibold" Height="28" Width="136"/>
                     <Label x:Name="label6_Copy2" Content="XP" HorizontalAlignment="Left" Margin="224,48,0,0" VerticalAlignment="Top" Foreground="#FF363636" FontSize="15" TextOptions.TextFormattingMode="Display" FontFamily="Source Sans Pro Semibold" Height="28" Width="27"/>
                     <Label x:Name="l_xp" Content="AMOUNT" HorizontalAlignment="Left" Margin="225,69,0,0" VerticalAlignment="Top" Foreground="#FF324AB4" FontSize="15" TextOptions.TextFormattingMode="Display" FontFamily="Source Sans Pro Semibold" Height="28" Width="73"/>
                     <Label x:Name="l_xp_farmed" Content="+FARMED" HorizontalAlignment="Left" Margin="297,69,0,0" VerticalAlignment="Top" Foreground="#FFBF4F2E" FontSize="15" TextOptions.TextFormattingMode="Display" FontFamily="Source Sans Pro Semibold" Height="28" Width="78"/>

@@ -881,7 +881,7 @@ namespace Catchem
                 {
                     l_StarDust.Content = Bot.Stats?.TotalStardust;
                     var farmedDust = Bot.Stats?.TotalStardust == 0 ? 0 : Bot.Stats?.TotalStardust - Bot.StartStarDust;
-                    var farmedDustH = Bot?.Ts.TotalHours > 0.001 ? "~" : ((double)(farmedDust / Bot.Ts.TotalHours)).ToString("0.00");
+                    var farmedDustH = Bot?.Ts.TotalHours < 0.001 ? "~" : ((double)(farmedDust / Bot.Ts.TotalHours)).ToString("0");
                     l_Stardust_farmed.Content = $"{farmedDust} ({farmedDustH}/h)";
                     l_xp.Content = Bot.Stats?._exportStats?.CurrentXp;
                     l_xp_farmed.Content = Bot.Stats?.TotalExperience;
@@ -1054,7 +1054,7 @@ namespace Catchem
                 {
                     Bot.ForceMoveMarker = new GMapMarker(mapPos)
                     {
-                        Shape = Properties.Resources.force_move.ToImage(), Offset = new Point(-24, -48), ZIndex = int.MaxValue
+                        Shape = Properties.Resources.force_move.ToImage("Force Move To"), Offset = new Point(-24, -48), ZIndex = int.MaxValue
                     };
                     pokeMap.Markers.Add(Bot.ForceMoveMarker);
                 }

@@ -142,6 +142,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                             Items = fortSearch.ItemsAwarded.ToItemList()
                         });
                         session.MapCache.UsedPokestop(pokeStop);
+                        pokeStop.CooldownCompleteTimestampMS = DateTime.UtcNow.AddMinutes(5).ToUnixTime();
                         break; //Continue with program as loot was succesfull.
                     }
                 } while (fortTry < retryNumber - zeroCheck);

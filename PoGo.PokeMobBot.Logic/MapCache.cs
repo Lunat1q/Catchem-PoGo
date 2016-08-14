@@ -127,7 +127,7 @@ namespace PoGo.PokeMobBot.Logic
                 if (result.Id == stop.Id)
                 {
                     result.Used = true;
-                    result.CooldownCompleteTimestampMS = DateTime.Now.AddMinutes(5).ToUnixTime();
+                    result.CooldownCompleteTimestampMS = DateTime.UtcNow.AddMinutes(5).ToUnixTime();
                     RuntimeSettings.lastPokeStopId = stop.Id;
                     RuntimeSettings.lastPokeStopCoordinate = new GeoCoordinate(stop.Latitude, stop.Longitude);
                     if (RuntimeSettings.TargetStopID == stop.Id)

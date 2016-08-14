@@ -294,7 +294,7 @@ namespace Catchem
         public static System.Windows.Controls.Image ToImage(this PokemonId pid)
         {
             var img = new System.Windows.Controls.Image {Source = pid.ToBitmap().LoadBitmap()};
-            var tt = new ToolTip {Content = pid.ToString()};
+            var tt = new ToolTip { Content = $"{pid.ToString()} ({DateTime.Now.ToString("HH:mm:ss")})" };
             img.ToolTip = tt;
             return img;
         }
