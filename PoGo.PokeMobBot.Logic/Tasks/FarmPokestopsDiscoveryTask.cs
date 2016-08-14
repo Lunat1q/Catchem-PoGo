@@ -165,7 +165,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
 
                 await eggWalker.ApplyDistance(distance, cancellationToken);
 
-                if (stopsHit++ == 5 + session.Client.rnd.Next(5)) //TODO: OR item/pokemon bag is full
+                if (stopsHit++ >= 5 + session.Client.rnd.Next(5)) //TODO: OR item/pokemon bag is full
                 {
                     stopsHit = 0;
                     if (fortSearch.ItemsAwarded.Count > 0)
