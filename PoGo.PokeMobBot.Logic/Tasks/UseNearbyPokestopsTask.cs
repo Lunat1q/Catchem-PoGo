@@ -72,24 +72,26 @@ namespace PoGo.PokeMobBot.Logic.Tasks
         }
 
 
-        private static async Task<List<FortData>> GetPokeStops(ISession session)
+        private static async Task<List<FortCacheItem>> GetPokeStops(ISession session)
         {
-            var mapObjects = await session.Client.Map.GetMapObjects();
+            List<FortCacheItem> pokeStops = await session.MapCache.FortDatas(session);
+
+            session.EventDispatcher.Send(new PokeStopListEvent { Forts = session.MapCache.baseFortDatas.ToList() });
 
             // Wasn't sure how to make this pretty. Edit as needed.
-            var pokeStops = mapObjects.MapCells.SelectMany(i => i.Forts)
-                .Where(
-                    i =>
-                        i.Type == FortType.Checkpoint &&
-                        i.CooldownCompleteTimestampMs < DateTime.UtcNow.ToUnixTime() &&
+            pokeStops = pokeStops.Where(
+                i =>
+                    i.Type == FortType.Checkpoint &&
+                        i.CooldownCompleteTimestampMS < DateTime.UtcNow.ToUnixTime() &&
                         ( // Make sure PokeStop is within 40 meters or else it is pointless to hit it
                             LocationUtils.CalculateDistanceInMeters(
                                 session.Client.CurrentLatitude, session.Client.CurrentLongitude,
                                 i.Latitude, i.Longitude) < 40) ||
                         session.LogicSettings.MaxTravelDistanceInMeters == 0
-                );
+                ).ToList();
 
-            return pokeStops.ToList();
+            return pokeStops;
+
         }
     }
 }

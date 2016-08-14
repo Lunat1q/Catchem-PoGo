@@ -234,10 +234,9 @@ namespace Catchem
                 case TypeCode.Double:
                 {
                     double result;
-                    var res = double.TryParse(value, NumberStyles.Any, CultureInfo.CurrentCulture, out result)
-                              ||
-                              double.TryParse(value, NumberStyles.Any, CultureInfo.GetCultureInfo("en-US"), out result)
-                              || double.TryParse(value, NumberStyles.Any, CultureInfo.InvariantCulture, out result);
+                        var res = double.TryParse(value, NumberStyles.Any, CultureInfo.CurrentCulture, out result)
+                                  || double.TryParse(value, NumberStyles.Any, CultureInfo.InvariantCulture, out result)
+                                  || double.TryParse(value, NumberStyles.Any, CultureInfo.GetCultureInfo("en-US"), out result);                              
                     if (!res) return false;
                     var changeType = Convert.ChangeType(result, typeCode);
                     if (changeType != null)
@@ -248,8 +247,7 @@ namespace Catchem
                 {
                     float result;
                     var res = float.TryParse(value, NumberStyles.Any, CultureInfo.CurrentCulture, out result)
-                              ||
-                              float.TryParse(value, NumberStyles.Any, CultureInfo.GetCultureInfo("en-US"), out result)
+                              || float.TryParse(value, NumberStyles.Any, CultureInfo.GetCultureInfo("en-US"), out result)
                               || float.TryParse(value, NumberStyles.Any, CultureInfo.InvariantCulture, out result);
                     if (!res) return false;
                     var changeType = Convert.ChangeType(result, typeCode);
@@ -1159,7 +1157,7 @@ namespace Catchem
                 case ItemId.ItemIncenseFloral:
                     return Properties.Resources.ince;
                 case ItemId.ItemTroyDisk:
-                    return Properties.Resources.no_name; //NO
+                    return Properties.Resources.lure_mod; //NO
                 case ItemId.ItemXAttack:
                     return Properties.Resources.no_name; //NO
                 case ItemId.ItemXDefense:
@@ -1226,7 +1224,7 @@ namespace Catchem
                 case ItemId.ItemIncenseFloral:
                     return "Incense Floral";
                 case ItemId.ItemTroyDisk:
-                    return "Troy Disk";
+                    return "Lure Module";
                 case ItemId.ItemXAttack:
                     return "X Attack";
                 case ItemId.ItemXDefense:

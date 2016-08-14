@@ -35,16 +35,16 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                     await session.Client.Player.UpdatePlayerLocation(pokemon.Latitude, pokemon.Longitude,
                         session.Client.Settings.DefaultAltitude);
                 else
-                    await session.Navigation.HumanLikeWalking(new GeoCoordinate(pokemon.Latitude, pokemon.Longitude),
-                    session.LogicSettings.WalkingSpeedInKilometerPerHour,
-                    async () =>
-                    {
+                    await session.Navigation.Move(new GeoCoordinate(pokemon.Latitude, pokemon.Longitude),
+                        session.LogicSettings.WalkingSpeedMin, session.LogicSettings.WalkingSpeedMax,
+                async () =>
+                {
                     // Catch normal map Pokemon
                     await CatchNearbyPokemonsTask.Execute(session, cancellationToken);
                     //Catch Incense Pokemon
                     await CatchIncensePokemonsTask.Execute(session, cancellationToken);
-                        return true;
-                    }, cancellationToken);
+                    return true;
+                }, null, cancellationToken, session);
             }
         }
 

@@ -62,7 +62,8 @@ namespace PoGo.PokeMobBot.Logic.State
             session.EventDispatcher.Send(new UpdatePositionEvent
             {
                 Latitude = session.Client.CurrentLatitude,
-                Longitude = session.Client.CurrentLongitude
+                Longitude = session.Client.CurrentLongitude,
+                Altitude = session.Client.CurrentAltitude
             });
 
             session.EventDispatcher.Send(new WarnEvent

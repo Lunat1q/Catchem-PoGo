@@ -49,6 +49,7 @@ namespace Catchem
         public Queue<Tuple<string, Color>> LogQueue = new Queue<Tuple<string, Color>>();
         public Dictionary<string, GMapMarker> MapMarkers = new Dictionary<string, GMapMarker>();
         public Queue<NewMapObject> MarkersQueue = new Queue<NewMapObject>();
+        public Queue<NewMapObject> MarkersDelayRemove = new Queue<NewMapObject>();
         public readonly StateMachine Machine;
         public readonly Statistics Stats;
         public readonly StatisticsAggregator Aggregator;
@@ -127,7 +128,10 @@ namespace Catchem
             }
         }
 
+        public GMapRoute PathRoute { get; internal set; }
+
         public double LatStep, LngStep;
+        internal int StartStarDust;
 
         public BotWindowData(string name, GlobalSettings gs, StateMachine sm, Statistics st, StatisticsAggregator sa, WpfEventListener wel, ClientSettings cs, LogicSettings l)
         {
@@ -150,6 +154,7 @@ namespace Catchem
             };
             _cts = new CancellationTokenSource();
             PlayerRoute = new GMapRoute(_routePoints);
+            PathRoute = new GMapRoute(new List<PointLatLng>());
         }
 
         public void UpdateXppH()
@@ -207,6 +212,15 @@ namespace Catchem
         }
 
         private void TimerStart() => _timer?.Start();
+
+        internal void PushNewPathRoute(List<Tuple<double, double>> list)
+        {
+            PathRoute.Points.Clear();
+            foreach (var item in list)
+            {
+                PathRoute.Points.Add(new PointLatLng(item.Item1, item.Item2));
+            }         
+        }
 
         private void TimerStop() => _timer?.Stop();
 

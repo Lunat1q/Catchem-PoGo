@@ -11,6 +11,7 @@ using PoGo.PokeMobBot.Logic.Utils;
 using POGOProtos.Inventory.Item;
 using POGOProtos.Map.Pokemon;
 using POGOProtos.Networking.Responses;
+using System.Collections.Generic;
 
 #endregion
 
@@ -31,7 +32,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
             });
 
             var pokemons = await GetNearbyPokemons(session);
-            session.EventDispatcher.Send(new PokemonsFoundEvent { Pokemons = pokemons });
+            session.EventDispatcher.Send(new PokemonsFoundEvent { Pokemons = pokemons.Select(x=>x.BaseMapPokemon) });
             foreach (var pokemon in pokemons)
             {
                 cancellationToken.ThrowIfCancellationRequested();
@@ -95,29 +96,21 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                             session.Translation.GetTranslation(TranslationString.EncounterProblem, encounter.Status)
                     });
                 }
-                session.EventDispatcher.Send(new PokemonDisappearEvent { Pokemon = pokemon });
+                session.EventDispatcher.Send(new PokemonDisappearEvent { Pokemon = pokemon.BaseMapPokemon });
 
                 // If pokemon is not last pokemon in list, create delay between catches, else keep moving.
                 if (!Equals(pokemons.ElementAtOrDefault(pokemons.Count() - 1), pokemon))
                 {
-                    if(session.LogicSettings.Teleport)
                         await Task.Delay(session.LogicSettings.DelayBetweenPokemonCatch);
-                    else
-                        await Task.Delay(session.LogicSettings.DelayBetweenPokemonCatch, cancellationToken);
                 }
             }
         }
 
-        private static async Task<IOrderedEnumerable<MapPokemon>> GetNearbyPokemons(ISession session)
+        private static async Task<List<PokemonCacheItem>> GetNearbyPokemons(ISession session)
         {
-            var mapObjects = await session.Client.Map.GetMapObjects();
+            //var mapObjects = await session.Client.Map.GetMapObjects();
 
-            var pokemons = mapObjects.MapCells.SelectMany(i => i.CatchablePokemons)
-                .OrderBy(
-                    i =>
-                        LocationUtils.CalculateDistanceInMeters(session.Client.CurrentLatitude,
-                            session.Client.CurrentLongitude,
-                            i.Latitude, i.Longitude));
+            var pokemons = await session.MapCache.MapPokemons(session);
 
             return pokemons;
         }

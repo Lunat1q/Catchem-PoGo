@@ -79,7 +79,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                 if(session.LogicSettings.Teleport)
                     await Task.Delay(session.LogicSettings.DelayTransferPokemon, cancellationToken);
                 else
-                    await DelayingUtils.Delay(session.LogicSettings.DelayTransferPokemon, 0);
+                    await DelayingUtils.Delay(session.LogicSettings.DelayBetweenPlayerActions, 0);
             }
         }
     }

@@ -57,9 +57,11 @@ namespace Catchem
 
         private GMapMarker _playerMarker;
         private GMapRoute _playerRoute;
+        private GMapRoute _pathRoute;
 
         private bool _loadingUi;
         private bool _followThePlayerMarker;
+        private bool _keepPokemonsOnMap;
 
         public MainWindow()
         {
@@ -157,6 +159,12 @@ namespace Catchem
                         GotNewItems(session, objData);
                     }));
                     break;
+                case "route_next":
+                    Dispatcher.BeginInvoke(new ThreadStart(delegate
+                    {
+                        DrawNextRoute(session, (List<Tuple<double, double>>)objData[0]);
+                    }));
+                    break;
                 case "item_rem":
                     Dispatcher.BeginInvoke(new ThreadStart(delegate
                     {
@@ -191,6 +199,16 @@ namespace Catchem
                     PushRemoveForceMoveMarker(session);
                     break;
             }
+        }
+
+        private void DrawNextRoute(ISession session, List<Tuple<double, double>> list)
+        {
+            var receiverBot = BotsCollection.FirstOrDefault(x => x.Session == session);
+            if (receiverBot == null || !receiverBot.Started) return;
+            receiverBot.PushNewPathRoute(list);
+            _pathRoute.RegenerateShape(pokeMap);
+            if (_pathRoute.Shape != null)
+                (_pathRoute.Shape as System.Windows.Shapes.Path).Stroke = new SolidColorBrush(Color.FromRgb(255, 0, 0));
         }
 
         private void PushNewError(ISession session)
@@ -276,6 +294,7 @@ namespace Catchem
             targetBot.MaxItemStorageSize = (int)objData[1];
             targetBot.MaxPokemonStorageSize = (int)objData[2];
             targetBot.Team = (TeamColor)objData[4];
+            targetBot.StartStarDust = (int)objData[5];
             targetBot.Coins = (int)objData[3];
             if (targetBot == Bot)
                 UpdatePlayerTab(targetBot);
@@ -458,7 +477,7 @@ namespace Catchem
                     }
                     else
                     {
-                        Bot.GotNewCoord = true;
+                        Bot.GotNewCoord = true;                        
                     }
                 }
             }
@@ -479,8 +498,10 @@ namespace Catchem
                     ZIndex = 15
                 };
                 pokeMap.Markers.Add(_playerMarker);
-                _playerRoute = Bot.PlayerRoute;
+                _playerRoute = Bot.PlayerRoute;               
                 pokeMap.Markers.Add(_playerRoute);
+                _pathRoute = Bot.PathRoute;
+                pokeMap.Markers.Add(_pathRoute);
             }
             else
             {
@@ -577,19 +598,19 @@ namespace Catchem
             {
                 if (Bot != null && _playerMarker != null && Bot.Started)
                 {
-                    if (Bot.MoveRequired)
+                    if (Bot.MoveRequired && Bot.Started)
                     {
-                        if (Bot.GotNewCoord)
+                        if (Bot.GotNewCoord && Bot.Started)
                         {
                             // ReSharper disable once PossibleLossOfFraction
                             Bot.LatStep = (Bot.Lat - Bot._lat)/(2000/delay);
                             // ReSharper disable once PossibleLossOfFraction
                             Bot.LngStep = (Bot.Lng - Bot._lng)/(2000/delay);
-                            Bot.GotNewCoord = false;
-                            UpdateCoordBoxes();
+                            Bot.GotNewCoord = false;                           
                             Bot.PushNewRoutePoint(new PointLatLng(Bot.Lat, Bot.Lng));
                             pokeMap.UpdateLayout();
-                            _playerRoute.RegenerateShape(pokeMap);
+                            UpdateCoordBoxes();
+                            _playerRoute.RegenerateShape(pokeMap);                           
                         }
 
                         Bot._lat += Bot.LatStep;
@@ -640,11 +661,11 @@ namespace Catchem
                                 }
                                 break;
                             case "pm_rm":
-                                if (Bot.MapMarkers.ContainsKey(newMapObj.Uid))
-                                {
-                                    pokeMap.Markers.Remove(Bot.MapMarkers[newMapObj.Uid]);
-                                    Bot.MapMarkers.Remove(newMapObj.Uid);
-                                }
+                                if (Bot.MapMarkers.ContainsKey(newMapObj.Uid) && !_keepPokemonsOnMap)                                
+                                    RemoveMarker(newMapObj.Uid, Bot.MapMarkers[newMapObj.Uid]);                                
+                                else                                
+                                    Bot.MarkersDelayRemove.Enqueue(newMapObj);
+                                
                                 break;
                             case "forcemove_done":
                                 if (Bot.ForceMoveMarker != null)
@@ -668,6 +689,12 @@ namespace Catchem
                 }
                 await Task.Delay(10);
             }
+        }
+
+        private void RemoveMarker(string uid, GMapMarker marker)
+        {
+            pokeMap.Markers.Remove(marker);
+            Bot.MapMarkers.Remove(uid);
         }
 
         private void CreatePokemonMarker(NewMapObject newMapObj)
@@ -793,7 +820,7 @@ namespace Catchem
 
             session.EventDispatcher.EventReceived += evt => newBot.Listener.Listen(evt, session);
             session.EventDispatcher.EventReceived += evt => newBot.Aggregator.Listen(evt, session);
-            session.Navigation.UpdatePositionEvent += (lat, lng) => session.EventDispatcher.Send(new UpdatePositionEvent {Latitude = lat, Longitude = lng});
+            session.Navigation.UpdatePositionEvent += (lat, lng, alt) => session.EventDispatcher.Send(new UpdatePositionEvent {Latitude = lat, Longitude = lng, Altitude = alt});
 
             newBot.Stats.DirtyEvent += () => { StatsOnDirtyEvent(newBot); };
 
@@ -807,6 +834,14 @@ namespace Catchem
 
         private void SelectBot(BotWindowData newBot)
         {
+            if (newBot == null)
+            {
+                if (tabControl.IsEnabled)
+                    tabControl.IsEnabled = false;
+                if (grid_pickBot.Visibility == Visibility.Collapsed)
+                    grid_pickBot.Visibility = Visibility.Visible;
+                return;
+            }
             if (Bot != null)
             {
                 Bot.GlobalSettings.StoreData(SubPath + "\\" + Bot.ProfileName);
@@ -845,7 +880,9 @@ namespace Catchem
                 Dispatcher.BeginInvoke(new ThreadStart(delegate
                 {
                     l_StarDust.Content = Bot.Stats?.TotalStardust;
-                    l_Stardust_farmed.Content = Bot.Stats?.TotalStardust == 0 ? 0 : Bot.Stats?.TotalStardust - CurSession?.Profile?.PlayerData?.Currencies[1].Amount;
+                    var farmedDust = Bot.Stats?.TotalStardust == 0 ? 0 : Bot.Stats?.TotalStardust - Bot.StartStarDust;
+                    var farmedDustH = Bot?.Ts.TotalHours > 0.001 ? "~" : ((double)(farmedDust / Bot.Ts.TotalHours)).ToString("0.00");
+                    l_Stardust_farmed.Content = $"{farmedDust} ({farmedDustH}/h)";
                     l_xp.Content = Bot.Stats?._exportStats?.CurrentXp;
                     l_xp_farmed.Content = Bot.Stats?.TotalExperience;
                     l_Pokemons_farmed.Content = Bot.Stats?.TotalPokemons;
@@ -878,8 +915,7 @@ namespace Catchem
         {
             if (Bot == null || _loadingUi) return;
 
-            _loadingUi = true;
-            settings_grid.IsEnabled = true;
+            _loadingUi = true;            
             if (!tabControl.IsEnabled)
                 tabControl.IsEnabled = true;
             if (grid_pickBot.Visibility == Visibility.Visible)
@@ -938,6 +974,7 @@ namespace Catchem
         {
             c_DefaultLatitude.Text = Bot.GlobalSettings.LocationSettings.DefaultLatitude.ToString(CultureInfo.InvariantCulture);
             c_DefaultLongitude.Text = Bot.GlobalSettings.LocationSettings.DefaultLongitude.ToString(CultureInfo.InvariantCulture);
+            c_DefaultAltitude.Text = Bot.GlobalSettings.LocationSettings.DefaultAltitude.ToString(CultureInfo.InvariantCulture);
         }
 
         private void mi_evolvePokemon_Click(object sender, RoutedEventArgs e)
@@ -1205,6 +1242,82 @@ namespace Catchem
             InitBot(settings, path);
         }
 
+        private void btn_removeFromList_Click(object sender, RoutedEventArgs e)
+        {
+            var btn = sender as Button;
+            var pokemonId = (PokemonId)btn?.DataContext;
+            var parentList = btn.Tag as ListBox;
+            var source = parentList?.ItemsSource as ObservableCollection<PokemonId>;
+            if (source != null && source.Contains(pokemonId))
+                source.Remove(pokemonId);
+        }
+
+        private void AddPokemonToEvolve_Click(object sender, RoutedEventArgs e)
+        {
+            if (AddToEvolveCb.SelectedIndex > -1)
+            {
+                var pokemonId = (PokemonId)AddToEvolveCb.SelectedItem;
+                if (!Bot.PokemonsToEvolve.Contains(pokemonId))
+                    Bot.PokemonsToEvolve.Add(pokemonId);
+                AddToEvolveCb.SelectedIndex = -1;
+            }
+        }
+
+        private void NotToTransferBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (NotToTransferCb.SelectedIndex > -1)
+            {
+                var pokemonId = (PokemonId)NotToTransferCb.SelectedItem;
+                if (!Bot.PokemonsNotToTransfer.Contains(pokemonId))
+                    Bot.PokemonsNotToTransfer.Add(pokemonId);
+                NotToTransferCb.SelectedIndex = -1;
+            }
+        }
+        private void cb_keepPokemonMarkers_Checked(object sender, RoutedEventArgs e)
+        {
+            var box = sender as CheckBox;
+            if (box?.IsChecked != null)
+            {
+                if ((bool)box.IsChecked)
+                {
+                    _keepPokemonsOnMap = true;
+                }
+                else
+                {
+                    _keepPokemonsOnMap = false;
+                    foreach (var bot in BotsCollection)
+                        foreach (var item in bot.MarkersDelayRemove)
+                            bot.MarkersQueue.Enqueue(item);
+                }
+            }
+        }
+        private void btn_SaveBot_Click(object sender, RoutedEventArgs e)
+        {
+            Bot.GlobalSettings.StoreData(SubPath + "\\" + Bot.ProfileName);
+        }
+
+        private void PokemonsNotToCatchBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (PokemonsNotToCatchCb.SelectedIndex > -1)
+            {
+                var pokemonId = (PokemonId)PokemonsNotToCatchCb.SelectedItem;
+                if (!Bot.PokemonsNotToCatch.Contains(pokemonId))
+                    Bot.PokemonsNotToCatch.Add(pokemonId);
+                PokemonsNotToCatchCb.SelectedIndex = -1;
+            }
+        }
+
+        private void PokemonToUseMasterballBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (PokemonToUseMasterballCb.SelectedIndex > -1)
+            {
+                var pokemonId = (PokemonId)PokemonToUseMasterballCb.SelectedItem;
+                if (!Bot.PokemonToUseMasterball.Contains(pokemonId))
+                    Bot.PokemonToUseMasterball.Add(pokemonId);
+                PokemonToUseMasterballCb.SelectedIndex = -1;
+            }
+        }
+
         private void batch_No_Click(object sender, RoutedEventArgs e)
         {
             batchInput.Visibility = Visibility.Collapsed;
@@ -1290,89 +1403,13 @@ namespace Catchem
 
         #endregion
 
-        public class EnumDescriptionConverter : IValueConverter
+        private void mi_RemoveBot_Click(object sender, RoutedEventArgs e)
         {
-            private static string GetEnumDescription(Enum enumObj)
+            var bot = botsBox.SelectedItem as BotWindowData;
+            if (bot != null)
             {
-                var fieldInfo = enumObj.GetType().GetField(enumObj.ToString());
-
-                var attribArray = fieldInfo.GetCustomAttributes(false);
-
-                if (attribArray.Length == 0)
-                {
-                    return enumObj.ToString();
-                }
-                else
-                {
-                    var attrib = attribArray[0] as DescriptionAttribute;
-                    return attrib != null ? attrib.Description : "";
-                }
-            }
-
-            object IValueConverter.Convert(object value, Type targetType, object parameter, CultureInfo culture)
-            {
-                var myEnum = (Enum)value;
-                var description = GetEnumDescription(myEnum);
-                return description;
-            }
-
-            object IValueConverter.ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-            {
-                return string.Empty;
-            }
-        }
-
-        private void btn_removeFromList_Click(object sender, RoutedEventArgs e)
-        {
-            var btn = sender as Button;
-            var pokemonId = (PokemonId)btn?.DataContext;          
-            var parentList = btn.Tag as ListBox;
-            var source = parentList?.ItemsSource as ObservableCollection<PokemonId>;
-            if (source != null && source.Contains(pokemonId))
-                source.Remove(pokemonId);
-        }
-
-        private void AddPokemonToEvolve_Click(object sender, RoutedEventArgs e)
-        {
-            if (AddToEvolveCb.SelectedIndex > -1)
-            {
-                var pokemonId = (PokemonId)AddToEvolveCb.SelectedItem;
-                if (!Bot.PokemonsToEvolve.Contains(pokemonId))
-                    Bot.PokemonsToEvolve.Add(pokemonId);
-                AddToEvolveCb.SelectedIndex = -1;
-            }
-        }
-
-        private void NotToTransferBtn_Click(object sender, RoutedEventArgs e)
-        {
-            if (NotToTransferCb.SelectedIndex > -1)
-            {
-                var pokemonId = (PokemonId)NotToTransferCb.SelectedItem;
-                if (!Bot.PokemonsNotToTransfer.Contains(pokemonId))
-                    Bot.PokemonsNotToTransfer.Add(pokemonId);
-                NotToTransferCb.SelectedIndex = -1;
-            }
-        }
-
-        private void PokemonsNotToCatchBtn_Click(object sender, RoutedEventArgs e)
-        {
-            if (PokemonsNotToCatchCb.SelectedIndex > -1)
-            {
-                var pokemonId = (PokemonId)PokemonsNotToCatchCb.SelectedItem;
-                if (!Bot.PokemonsNotToCatch.Contains(pokemonId))
-                    Bot.PokemonsNotToCatch.Add(pokemonId);
-                PokemonsNotToCatchCb.SelectedIndex = -1;
-            }
-        }
-
-        private void PokemonToUseMasterballBtn_Click(object sender, RoutedEventArgs e)
-        {
-            if (PokemonToUseMasterballCb.SelectedIndex > -1)
-            {
-                var pokemonId = (PokemonId)PokemonToUseMasterballCb.SelectedItem;
-                if (!Bot.PokemonToUseMasterball.Contains(pokemonId))
-                    Bot.PokemonToUseMasterball.Add(pokemonId);
-                PokemonToUseMasterballCb.SelectedIndex = -1;
+                BotsCollection.Remove(bot);
+                Directory.Delete(SubPath + "\\" + bot.ProfileName, true);                
             }
         }
     }

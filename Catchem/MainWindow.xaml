@@ -10,7 +10,7 @@
         xmlns:catchem="clr-namespace:Catchem"
         mc:Ignorable="d"
         DataContext="{Binding RelativeSource={RelativeSource Self}}"
-        Title="Catchem" Height="1771" Width="1348" MinWidth="1075" MinHeight="775" Closing="Window_Closing" Icon="unnamed.ico">
+        Title="Catchem" Height="755" Width="1348" MinWidth="1075" MinHeight="775" Closing="Window_Closing" Icon="unnamed.ico">
     <Window.Background>
         <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
             <GradientStop Color="#FFB2EF9C" Offset="0"/>
@@ -245,31 +245,37 @@
                                 <CheckBox x:Name="c_AlwaysPrefferLongDistanceEgg" Content="Always Preffer Long Distance Egg" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="148,480,0,0" Checked="BotPropertyChanged" Unchecked="BotPropertyChanged" />
                             </Grid>
                         </GroupBox>
-                        <GroupBox x:Name="groupBox3" Header="Navigation" Margin="0,147,-1,0" VerticalAlignment="Top" Height="294" Grid.Column="1">
+                        <GroupBox x:Name="groupBox3" Header="Navigation" Margin="0,147,-1,0" VerticalAlignment="Top" Height="409" Grid.Column="1">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="189*"/>
                                     <ColumnDefinition Width="251*"/>
                                 </Grid.ColumnDefinitions>
-                                <Label x:Name="label7" Content="Altitude" Margin="10,13,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.423" Height="26"/>
+                                <Label x:Name="label7" Content="Altitude Current" Margin="10,13,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.423" Height="26"/>
                                 <TextBox Template="{StaticResource pogo}" x:Name="c_DefaultAltitude" Grid.Column="1" Height="29" Margin="10,13,10,0" TextWrapping="Wrap" VerticalAlignment="Top" TextChanged="BotPropertyChanged"/>
-                                <Label x:Name="label7_Copy" Content="Latitude" Margin="10,47,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.423" Height="26"/>
-                                <TextBox Template="{StaticResource pogo}" x:Name="c_DefaultLatitude" Grid.Column="1" Height="29" Margin="10,47,10,0" TextWrapping="Wrap" VerticalAlignment="Top" TextChanged="BotPropertyChanged"/>
-                                <Label x:Name="label7_Copy1" Content="Longtitude" Margin="10,81,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.423" Height="26"/>
-                                <TextBox Template="{StaticResource pogo}" x:Name="c_DefaultLongitude" Grid.Column="1" Height="29" Margin="10,81,10,0" TextWrapping="Wrap" VerticalAlignment="Top" TextChanged="BotPropertyChanged"/>
-                                <CheckBox x:Name="c_Teleport" Content="Teleport" Grid.Column="1" HorizontalAlignment="Left" Margin="10,115,0,0" VerticalAlignment="Top" Width="196" Checked="BotPropertyChanged" Unchecked="BotPropertyChanged" Height="16"/>
-                                <Label x:Name="label7_Copy2" Content="Max Spawn Location Offset" Margin="10,136,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.423" Height="26" HorizontalAlignment="Left" Width="179"/>
-                                <TextBox Template="{StaticResource pogo}" x:Name="c_MaxSpawnLocationOffset" Grid.Column="1" Height="29" Margin="10,136,10,0" TextWrapping="Wrap" VerticalAlignment="Top" TextChanged="BotPropertyChanged"/>
-                                <Label x:Name="label7_Copy3" Content="Max Travel Distance In Meters" Margin="10,170,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.423" Height="26" HorizontalAlignment="Left" Width="179"/>
-                                <TextBox Template="{StaticResource pogo}" x:Name="c_MaxTravelDistanceInMeters" Grid.Column="1" Height="29" Margin="10,170,10,0" TextWrapping="Wrap" VerticalAlignment="Top" TextChanged="BotPropertyChanged"/>
-                                <CheckBox x:Name="c_UseDiscoveryPathing" Content="Use Discovery Pathing" Grid.Column="1" HorizontalAlignment="Left" Margin="10,201,0,0" VerticalAlignment="Top" Width="196" Checked="BotPropertyChanged" Unchecked="BotPropertyChanged" Height="16"/>
-                                <Label x:Name="label7_Copy4" Content="Walking Speed In Kmph" Margin="10,222,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.423" Height="26" HorizontalAlignment="Left" Width="179"/>
-                                <TextBox Template="{StaticResource pogo}" x:Name="c_WalkingSpeedInKilometerPerHour" Grid.Column="1" Height="29" Margin="10,222,10,0" TextWrapping="Wrap" VerticalAlignment="Top" TextChanged="BotPropertyChanged"/>
-                                <CheckBox x:Name="c_StartupWelcomeDelay" Content="Startup Welcome Delay" Grid.Column="1" HorizontalAlignment="Left" Margin="10,253,0,0" VerticalAlignment="Top" Width="196" Checked="BotPropertyChanged" Unchecked="BotPropertyChanged" Height="16" />
+                                <Label x:Name="label7_Copy" Content="Latitude" Margin="10,115,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.423" Height="26"/>
+                                <TextBox Template="{StaticResource pogo}" x:Name="c_DefaultLatitude" Grid.Column="1" Height="29" Margin="10,115,10,0" TextWrapping="Wrap" VerticalAlignment="Top" TextChanged="BotPropertyChanged"/>
+                                <Label x:Name="label7_Copy1" Content="Longtitude" Margin="10,149,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.423" Height="26"/>
+                                <TextBox Template="{StaticResource pogo}" x:Name="c_DefaultLongitude" Grid.Column="1" Height="29" Margin="10,149,10,0" TextWrapping="Wrap" VerticalAlignment="Top" TextChanged="BotPropertyChanged"/>
+                                <CheckBox x:Name="c_Teleport" Content="Teleport" Grid.Column="1" HorizontalAlignment="Left" Margin="10,183,0,0" VerticalAlignment="Top" Width="196" Checked="BotPropertyChanged" Unchecked="BotPropertyChanged" Height="16"/>
+                                <Label x:Name="label7_Copy2" Content="Max Spawn Location Offset" Margin="10,204,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.423" Height="26" HorizontalAlignment="Left" Width="179"/>
+                                <TextBox Template="{StaticResource pogo}" x:Name="c_MaxSpawnLocationOffset" Grid.Column="1" Height="29" Margin="10,204,10,0" TextWrapping="Wrap" VerticalAlignment="Top" TextChanged="BotPropertyChanged"/>
+                                <Label x:Name="label7_Copy3" Content="Max Travel Distance In Meters" Margin="10,238,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.423" Height="26" HorizontalAlignment="Left" Width="179"/>
+                                <TextBox Template="{StaticResource pogo}" x:Name="c_MaxTravelDistanceInMeters" Grid.Column="1" Height="29" Margin="10,238,10,0" TextWrapping="Wrap" VerticalAlignment="Top" TextChanged="BotPropertyChanged"/>
+                                <CheckBox x:Name="c_UseDiscoveryPathing" Content="Use Discovery Pathing" Grid.Column="1" HorizontalAlignment="Left" Margin="10,269,0,0" VerticalAlignment="Top" Width="196" Checked="BotPropertyChanged" Unchecked="BotPropertyChanged" Height="16"/>
+                                <Label x:Name="label7_Copy4" Content="Walking Speed Min (km/h)" Margin="10,290,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.423" Height="26" HorizontalAlignment="Left" Width="179"/>
+                                <TextBox Template="{StaticResource pogo}" x:Name="c_WalkingSpeedMin" Grid.Column="1" Height="29" Margin="10,290,10,0" TextWrapping="Wrap" VerticalAlignment="Top" TextChanged="BotPropertyChanged"/>
+                                <Label x:Name="label7_Copy17" Content="Walking Speed Max (km/h)" Margin="10,324,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.423" Height="26" HorizontalAlignment="Left" Width="179"/>
+                                <TextBox Template="{StaticResource pogo}" x:Name="c_WalkingSpeedMax" Grid.Column="1" Height="29" Margin="10,324,10,0" TextWrapping="Wrap" VerticalAlignment="Top" TextChanged="BotPropertyChanged"/>
+                                <Label x:Name="label7_Copy18" Content="Altitude Min" Margin="10,47,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.423" Height="26"/>
+                                <TextBox Template="{StaticResource pogo}" x:Name="c_DefaultAltitudeMin" Grid.Column="1" Height="29" Margin="10,47,10,0" TextWrapping="Wrap" VerticalAlignment="Top" TextChanged="BotPropertyChanged"/>
+                                <Label x:Name="label7_Copy19" Content="Altitude Max" Margin="10,81,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.423" Height="26"/>
+                                <TextBox Template="{StaticResource pogo}" x:Name="c_DefaultAltitudeMax" Grid.Column="1" Height="29" Margin="10,81,10,0" TextWrapping="Wrap" VerticalAlignment="Top" TextChanged="BotPropertyChanged"/>
+                                <CheckBox x:Name="c_UseHumanPathing" Content="Use Human Pathing" Grid.Column="1" HorizontalAlignment="Left" Margin="10,358,0,0" VerticalAlignment="Top" Width="196" Checked="BotPropertyChanged" Unchecked="BotPropertyChanged" Height="16"/>
 
                             </Grid>
                         </GroupBox>
-                        <GroupBox x:Name="groupBox4" Header="Snipe" Margin="-1,1431,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.479,0.565" Height="224">
+                        <GroupBox x:Name="groupBox4" Header="Snipe" Margin="-1,1378,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.479,0.565" Height="224" IsEnabled="False">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="181*"/>
@@ -289,7 +295,7 @@
 
                             </Grid>
                         </GroupBox>
-                        <GroupBox x:Name="groupBox4_Copy" Header="Items" Margin="0,1199,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.479,0.565" Height="232">
+                        <GroupBox x:Name="groupBox4_Copy" Header="Items" Margin="0,1146,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.479,0.565" Height="232">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="181*"/>
@@ -341,11 +347,11 @@
                                 <TextBox Template="{StaticResource pogo}" x:Name="c_UseBerryMinIv" Height="29" Margin="5,342,10,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Grid.Column="1" TextChanged="BotPropertyChanged" />
                                 <Label x:Name="label8_Copy18" Content="Use Berry Below Catch Probability" HorizontalAlignment="Left" Margin="10,377,0,0" VerticalAlignment="Top" Width="210"/>
                                 <TextBox Template="{StaticResource pogo}" x:Name="c_UseBerryBelowCatchProbability" Height="29" Margin="5,376,10,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Grid.Column="1" TextChanged="BotPropertyChanged" />
-                                <CheckBox x:Name="c_UsePokemonToNotCatchFilter_Copy" Content="Use Pokemon To Not Catch Filter" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="13,408,0,0" Checked="BotPropertyChanged" Unchecked="BotPropertyChanged" Width="207" />
+                                <CheckBox x:Name="c_CatchWildPokemon" Content="Catch Wild Pokemon" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="13,408,0,0" Checked="BotPropertyChanged" Unchecked="BotPropertyChanged" Width="207" />
 
                             </Grid>
                         </GroupBox>
-                        <GroupBox x:Name="groupBox3_Copy" Grid.Column="1" Header="Device Info" Margin="0,441,0,0" VerticalAlignment="Top" Height="502">
+                        <GroupBox x:Name="groupBox3_Copy" Grid.Column="1" Header="Device Info" Margin="0,556,0,0" VerticalAlignment="Top" Height="502">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="189*"/>
@@ -382,7 +388,7 @@
 
                             </Grid>
                         </GroupBox>
-                        <GroupBox x:Name="groupBox4_Copy2" Header="Delays" Margin="0,943,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.479,0.565" Height="573" Grid.Column="1">
+                        <GroupBox x:Name="groupBox4_Copy2" Header="Delays" Margin="0,1058,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.479,0.565" Height="573" Grid.Column="1">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="181*"/>
@@ -423,6 +429,22 @@
 
                             </Grid>
                         </GroupBox>
+                        <Button Style="{StaticResource ResourceKey=flatbutton}" x:Name="btn_SaveBot" Content="SAVE SETTINGS" HorizontalAlignment="Left" VerticalAlignment="Top" Width="110" Height="30" Click="btn_SaveBot_Click" Margin="407,1636,0,0" FontFamily="BOLD" TextOptions.TextFormattingMode="Display" FontWeight="Bold" Grid.Column="1">
+                            <Button.Background>
+                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                    <LinearGradientBrush.RelativeTransform>
+                                        <TransformGroup>
+                                            <ScaleTransform CenterY="0.5" CenterX="0.5"/>
+                                            <SkewTransform CenterY="0.5" CenterX="0.5"/>
+                                            <RotateTransform Angle="90" CenterY="0.5" CenterX="0.5"/>
+                                            <TranslateTransform/>
+                                        </TransformGroup>
+                                    </LinearGradientBrush.RelativeTransform>
+                                    <GradientStop Color="#FF9CEAEE" Offset="0"/>
+                                    <GradientStop Color="#FF5398C0" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Button.Background>
+                        </Button>
                     </Grid>
                 </ScrollViewer>
             </TabItem>
@@ -456,9 +478,10 @@
                             </Rectangle.Fill>
                         </Rectangle>
                         <CheckBox x:Name="cb_mapFollowThePlayer" Content="Follow the Player marker" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="155" Checked="mapFollowThePlayer_Checked" Unchecked="mapFollowThePlayer_Checked"/>
-                        <Slider x:Name="sl_moveSpeedFactor" HorizontalAlignment="Left" Margin="295,8,0,0" VerticalAlignment="Top" RenderTransformOrigin="3.583,0.25" Width="349" Height="25" Minimum="0.3" Maximum="3" TickPlacement="BottomRight" Value="1" ValueChanged="sl_moveSpeedFactor_ValueChanged" TickFrequency="0.1" SmallChange="0" />
-                        <Label x:Name="label5" Content="Move Speed Factor:" HorizontalAlignment="Left" Margin="184,5,0,0" VerticalAlignment="Top" Width="126"/>
-                        <Label x:Name="l_moveSpeedFactor" Content="1" HorizontalAlignment="Left" Margin="644,5,0,0" VerticalAlignment="Top" Width="32"/>
+                        <Slider x:Name="sl_moveSpeedFactor" HorizontalAlignment="Left" Margin="295,8,0,0" VerticalAlignment="Top" RenderTransformOrigin="3.583,0.25" Width="168" Height="25" Minimum="0.3" Maximum="3" TickPlacement="BottomRight" Value="1" ValueChanged="sl_moveSpeedFactor_ValueChanged" TickFrequency="0.1" SmallChange="0" />
+                        <Label x:Name="label5" Content="Move Speed Factor:" HorizontalAlignment="Left" Margin="183,4,0,0" VerticalAlignment="Top" Width="126"/>
+                        <Label x:Name="l_moveSpeedFactor" Content="1" HorizontalAlignment="Left" Margin="463,4,0,0" VerticalAlignment="Top" Width="32"/>
+                        <CheckBox x:Name="cb_keepPokemonMarkers" Content="Follow the Player marker" HorizontalAlignment="Left" Margin="500,10,0,0" VerticalAlignment="Top" Width="155" Checked="cb_keepPokemonMarkers_Checked" Unchecked="cb_keepPokemonMarkers_Checked"/>
                     </Grid>
                 </Grid>
             </TabItem>
@@ -865,7 +888,6 @@
                 </Button.Background>
             </Button>
             <Label x:Name="label4" Content="MENU" HorizontalAlignment="Left" Margin="0,2,0,0" VerticalAlignment="Top" Foreground="#FF59C3B0" FontSize="20" Height="38" Width="246" HorizontalContentAlignment="Center"/>
-            <StackPanel x:Name="botPanel" HorizontalAlignment="Left" Margin="0,90,0,0" Width="246"/>
             <Button Style="{StaticResource ResourceKey=flatbutton}" x:Name="btn_StartAll" Content="START ALL" HorizontalAlignment="Left" VerticalAlignment="Top" Width="111" Height="30" Margin="125,75,0,0" FontFamily="BOLD" TextOptions.TextFormattingMode="Display" FontWeight="Bold" Click="btn_StartAll_Click">
                 <Button.Background>
                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -898,7 +920,13 @@
                     </LinearGradientBrush>
                 </Button.Background>
             </Button>
-            <ListBox x:Name="botsBox" ItemsSource="{Binding}" SelectedItem="{Binding Bot, Mode=TwoWay}" HorizontalAlignment="Left" Height="635" Margin="0,110,0,0" VerticalAlignment="Top" Width="246" BorderBrush="{x:Null}" ItemTemplate="{DynamicResource BotTemplate}" HorizontalContentAlignment="Stretch" Background="{x:Null}"/>
+            <ListBox x:Name="botsBox" ItemsSource="{Binding}" SelectedItem="{Binding Bot, Mode=TwoWay}" HorizontalAlignment="Left" Height="635" Margin="0,110,0,0" VerticalAlignment="Top" Width="246" BorderBrush="{x:Null}" ItemTemplate="{DynamicResource BotTemplate}" HorizontalContentAlignment="Stretch" Background="{x:Null}">
+                <ListBox.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem x:Name="mi_RemoveBot" Header="Remove bot" Click="mi_RemoveBot_Click"/>
+                    </ContextMenu>
+                </ListBox.ContextMenu>
+            </ListBox>
             <Button Style="{StaticResource ResourceKey=flatbutton}" x:Name="btn_BatchCreation" Content="BATCH CREATION" HorizontalAlignment="Left" VerticalAlignment="Top" Width="110" Height="30" Click="btn_BatchCreation_Click" Margin="126,40,0,0" FontFamily="BOLD" TextOptions.TextFormattingMode="Display" FontWeight="Bold">
                 <Button.Background>
                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">

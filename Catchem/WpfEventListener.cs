@@ -20,7 +20,7 @@ namespace Catchem
             if (playerData == null) return;
             Logger.PushToUi("profile_data", session, playerData.Username,
                 playerData.MaxItemStorage, playerData.MaxPokemonStorage,
-                playerData.Currencies[0].Amount, playerData.Team);
+                playerData.Currencies[0].Amount, playerData.Team, playerData.Currencies[1].Amount);
         }
 
         public void HandleEvent(ErrorEvent evt, ISession session)
@@ -78,10 +78,14 @@ namespace Catchem
         {
             Logger.PushToUi("pm_upd", session, evt.Uid, evt.Id, evt.Cp, evt.Iv, evt.Family, evt.Candy);
         }
+        public void HandleEvent(NextRouteEvent evt, ISession session)
+        {
+            Logger.PushToUi("route_next", session, evt.Coords);
+        }
 
         public void HandleEvent(UpdatePositionEvent evt, ISession session)
         {
-            Logger.PushToUi("p_loc", session, evt.Latitude, evt.Longitude);
+            Logger.PushToUi("p_loc", session, evt.Latitude, evt.Longitude, evt.Altitude);
         }
 
         public void HandleEvent(TransferPokemonEvent evt, ISession session)

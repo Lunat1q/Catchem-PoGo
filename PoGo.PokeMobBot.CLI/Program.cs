@@ -105,7 +105,7 @@ namespace PoGo.PokeMobBot.CLI
             Logger.SetLoggerContext(session);
             
             session.Navigation.UpdatePositionEvent +=
-                (lat, lng) => session.EventDispatcher.Send(new UpdatePositionEvent {Latitude = lat, Longitude = lng});
+                (lat, lng, alt) => session.EventDispatcher.Send(new UpdatePositionEvent {Latitude = lat, Longitude = lng, Altitude = alt});
 
 #if DEBUG
             machine.AsyncStart(new LoginState(), session);

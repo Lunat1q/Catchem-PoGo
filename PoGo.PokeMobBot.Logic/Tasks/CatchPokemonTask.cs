@@ -22,17 +22,13 @@ namespace PoGo.PokeMobBot.Logic.Tasks
     {
         private static readonly Random Rng = new Random();
 
-        public static async Task<bool> Execute(ISession session, dynamic encounter, MapPokemon pokemon,
+        public static async Task<bool> Execute(ISession session, dynamic encounter, PokemonCacheItem pokemon,
             FortData currentFortData = null, ulong encounterId = 0)
         {
             if (encounter is EncounterResponse && pokemon == null)
                 throw new ArgumentException("Parameter pokemon must be set, if encounter is of type EncounterResponse",
                     nameof(pokemon));
-            RuntimeSettings.CheckScan();
-            if (RuntimeSettings.DelayingScan)
-            {
-                return false;
-            }
+            
 
             CatchPokemonResponse caughtPokemonResponse;
             var attemptCounter = 1;
@@ -132,6 +128,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                 if (caughtPokemonResponse.Status == CatchPokemonResponse.Types.CatchStatus.CatchSuccess)
                 {
                     var totalExp = 0;
+					pokemon.Caught = true;
                     evt.Uid = caughtPokemonResponse.CapturedPokemonId;
 
                     foreach (var xp in caughtPokemonResponse.CaptureAward.Xp)
@@ -160,6 +157,10 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                     {
                         evt.FamilyCandies = caughtPokemonResponse.CaptureAward.Candy.Sum();
                     }
+                }
+                if (caughtPokemonResponse.Status == CatchPokemonResponse.Types.CatchStatus.CatchFlee)
+                {
+                    pokemon.Caught = true;
                 }
 
 
@@ -196,10 +197,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                 session.EventDispatcher.Send(evt);
 
                 attemptCounter++;
-                if (session.LogicSettings.Teleport)
                     await Task.Delay(session.LogicSettings.DelayCatchPokemon);
-                else
-                    await DelayingUtils.Delay(session.LogicSettings.DelayBetweenPokemonCatch, 2000);
             } while (caughtPokemonResponse.Status == CatchPokemonResponse.Types.CatchStatus.CatchMissed ||
                      caughtPokemonResponse.Status == CatchPokemonResponse.Types.CatchStatus.CatchEscape);
 

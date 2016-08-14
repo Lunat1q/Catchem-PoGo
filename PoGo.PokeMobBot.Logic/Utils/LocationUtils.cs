@@ -25,16 +25,6 @@ namespace PoGo.PokeMobBot.Logic.Utils
                 destinationLocation.Latitude, destinationLocation.Longitude);
         }
 
-        public static double getElevation(double lat, double lon)
-        {
-            Random random = new Random();
-            double maximum = 11.0f;
-            double minimum = 8.6f;
-            double return1 = random.NextDouble() * (maximum - minimum) + minimum;
-
-            return return1;
-        }
-
         public static GeoCoordinate CreateWaypoint(GeoCoordinate sourceLocation, double distanceInMeters,
             double bearingDegrees)
             //from http://stackoverflow.com/a/17545955

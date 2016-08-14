@@ -4,5 +4,6 @@
     {
         public double Latitude;
         public double Longitude;
+        public double Altitude;
     }
 }

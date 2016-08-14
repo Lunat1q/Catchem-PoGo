@@ -3,13 +3,16 @@
 #region using directives
 
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using GeoCoordinatePortable;
 using PoGo.PokeMobBot.Logic.Utils;
+using PoGo.PokeMobBot.Logic.Logging;
 using PokemonGo.RocketAPI;
 using POGOProtos.Networking.Responses;
+using PoGo.PokeMobBot.Logic.Extensions;
 
 #endregion
 
@@ -19,109 +22,132 @@ using POGOProtos.Networking.Responses;
 
 namespace PoGo.PokeMobBot.Logic
 {
-    public delegate void UpdatePositionDelegate(double lat, double lng);
+    public delegate void UpdatePositionDelegate(double lat, double lng, double alt);
 
     public class Navigation
     {
         private const double SpeedDownTo = 10/3.6;
         private readonly Client _client;
 
+        public Navigation(Client client, UpdatePositionDelegate updatePos)
+        {
+            _client = client;
+            UpdatePositionEvent = updatePos;
+        }
+
         public Navigation(Client client)
         {
             _client = client;
         }
 
-        public async Task<PlayerUpdateResponse> HumanLikeWalking(GeoCoordinate targetLocation,
+   //     public async Task<PlayerUpdateResponse> HumanLikeWalking(GeoCoordinate targetLocation,
+   //         double walkingSpeedInKilometersPerHour, Func<Task<bool>> functionExecutedWhileWalking,
+   //         CancellationToken cancellationToken)
+   //     {
+   //         cancellationToken.ThrowIfCancellationRequested();
+
+   //         var speedInMetersPerSecond = walkingSpeedInKilometersPerHour/3.6;
+
+   //         var sourceLocation = new GeoCoordinate(_client.CurrentLatitude, _client.CurrentLongitude);
+   //         var distanceTo = LocationUtils.CalculateDistanceInMeters(sourceLocation, targetLocation);
+   //         // Logger.Write($"Distance to target location: {distanceToTarget:0.##} meters. Will take {distanceToTarget/speedInMetersPerSecond:0.##} seconds!", LogLevel.Info);
+
+   //         //Randomizing next step, we don't like straight lines!
+   //         var nextWaypointBearing = LocationUtils.DegreeBearing(sourceLocation, targetLocation) *(1 + _client.rnd.NextDouble() * 0.06 - 0.03);
+   //         var nextWaypointDistance = speedInMetersPerSecond * (1 + _client.rnd.NextDouble() * 0.2 - 0.1);
+   //         var waypoint = LocationUtils.CreateWaypoint(sourceLocation, nextWaypointDistance, nextWaypointBearing);
+
+   //         var Waypoints = new List<GeoCoordinate>();
+
+   //         //Initial walking
+   //         var requestSendDateTime = DateTime.Now;
+   //         var result =
+   //             await
+   //                 _client.Player.UpdatePlayerLocation(waypoint.Latitude, waypoint.Longitude,
+   //                     _client.Settings.DefaultAltitude);
+
+   //         UpdatePositionEvent?.Invoke(waypoint.Latitude, waypoint.Longitude, _client.Settings.DefaultAltitude);
+
+			////TODO: min-max altitude variations
+   //         var altitudeStep = (_client.rnd.NextDouble() * 10 - 5) * (nextWaypointDistance / distanceTo);
+   //         var altitude = _client.Settings.DefaultAltitude + altitudeStep;
+   //         do
+   //         {
+   //             cancellationToken.ThrowIfCancellationRequested();
+
+   //             var millisecondsUntilGetUpdatePlayerLocationResponse =
+   //                 (DateTime.Now - requestSendDateTime).TotalMilliseconds;
+
+   //             sourceLocation = new GeoCoordinate(_client.CurrentLatitude, _client.CurrentLongitude);
+   //             var currentDistanceToTarget = LocationUtils.CalculateDistanceInMeters(sourceLocation, targetLocation);
+
+   //             if (currentDistanceToTarget < 40)
+   //             {
+   //                 if (speedInMetersPerSecond > SpeedDownTo)
+   //                 {
+   //                     //Logger.Write("We are within 40 meters of the target. Speeding down to 10 km/h to not pass the target.", LogLevel.Info);
+   //                     speedInMetersPerSecond = SpeedDownTo;
+   //                 }
+   //             }
+
+   //             nextWaypointDistance = Math.Min(currentDistanceToTarget,
+   //                 (millisecondsUntilGetUpdatePlayerLocationResponse/1000*speedInMetersPerSecond) * (1 + _client.rnd.NextDouble() * 0.2 - 0.1) * _client.Settings.MoveSpeedFactor);
+   //             nextWaypointBearing = LocationUtils.DegreeBearing(sourceLocation, targetLocation) * (1 + _client.rnd.NextDouble() * 0.06 - 0.03);
+   //             waypoint = LocationUtils.CreateWaypoint(sourceLocation, nextWaypointDistance, nextWaypointBearing);
+
+   //             requestSendDateTime = DateTime.Now;
+   //             result =
+   //                 await
+   //                     _client.Player.UpdatePlayerLocation(waypoint.Latitude, waypoint.Longitude,
+   //                         altitude);
+   //             altitude += altitudeStep;
+
+   //             UpdatePositionEvent?.Invoke(waypoint.Latitude, waypoint.Longitude);
+
+
+   //             if (functionExecutedWhileWalking != null)
+   //                 await functionExecutedWhileWalking(); // look for pokemon
+   //             await Task.Delay(500, cancellationToken);
+   //         } while (LocationUtils.CalculateDistanceInMeters(sourceLocation, targetLocation) >= 30);
+
+   //         return result;
+   //     }
+
+        public async Task<PlayerUpdateResponse> HumanPathWalking(GeoCoordinate targetLocation,
             double walkingSpeedInKilometersPerHour, Func<Task<bool>> functionExecutedWhileWalking,
-            CancellationToken cancellationToken)
-        {
-            cancellationToken.ThrowIfCancellationRequested();
-
-            var speedInMetersPerSecond = walkingSpeedInKilometersPerHour/3.6;
-
-            var sourceLocation = new GeoCoordinate(_client.CurrentLatitude, _client.CurrentLongitude);
-            var distanceTo = LocationUtils.CalculateDistanceInMeters(sourceLocation, targetLocation);
-            // Logger.Write($"Distance to target location: {distanceToTarget:0.##} meters. Will take {distanceToTarget/speedInMetersPerSecond:0.##} seconds!", LogLevel.Info);
-
-            //Randomizing next step, we don't like straight lines!
-            var nextWaypointBearing = LocationUtils.DegreeBearing(sourceLocation, targetLocation) *(1 + _client.rnd.NextDouble() * 0.06 - 0.03);
-            var nextWaypointDistance = speedInMetersPerSecond * (1 + _client.rnd.NextDouble() * 0.2 - 0.1);
-            var waypoint = LocationUtils.CreateWaypoint(sourceLocation, nextWaypointDistance, nextWaypointBearing);
-
-            //Initial walking
-            var requestSendDateTime = DateTime.Now;
-            var result =
-                await
-                    _client.Player.UpdatePlayerLocation(waypoint.Latitude, waypoint.Longitude,
-                        _client.Settings.DefaultAltitude);
-
-            UpdatePositionEvent?.Invoke(waypoint.Latitude, waypoint.Longitude);
-
-            var altitudeStep = (_client.rnd.NextDouble() * 10 - 5) * (nextWaypointDistance / distanceTo);
-            var altitude = _client.Settings.DefaultAltitude + altitudeStep;
-            do
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-
-                var millisecondsUntilGetUpdatePlayerLocationResponse =
-                    (DateTime.Now - requestSendDateTime).TotalMilliseconds;
-
-                sourceLocation = new GeoCoordinate(_client.CurrentLatitude, _client.CurrentLongitude);
-                var currentDistanceToTarget = LocationUtils.CalculateDistanceInMeters(sourceLocation, targetLocation);
-
-                if (currentDistanceToTarget < 40)
-                {
-                    if (speedInMetersPerSecond > SpeedDownTo)
-                    {
-                        //Logger.Write("We are within 40 meters of the target. Speeding down to 10 km/h to not pass the target.", LogLevel.Info);
-                        speedInMetersPerSecond = SpeedDownTo;
-                    }
-                }
-
-                nextWaypointDistance = Math.Min(currentDistanceToTarget,
-                    (millisecondsUntilGetUpdatePlayerLocationResponse/1000*speedInMetersPerSecond) * (1 + _client.rnd.NextDouble() * 0.2 - 0.1) * _client.Settings.MoveSpeedFactor);
-                nextWaypointBearing = LocationUtils.DegreeBearing(sourceLocation, targetLocation) * (1 + _client.rnd.NextDouble() * 0.06 - 0.03);
-                waypoint = LocationUtils.CreateWaypoint(sourceLocation, nextWaypointDistance, nextWaypointBearing);
-
-                requestSendDateTime = DateTime.Now;
-                result =
-                    await
-                        _client.Player.UpdatePlayerLocation(waypoint.Latitude, waypoint.Longitude,
-                            altitude);
-                altitude += altitudeStep;
-
-                UpdatePositionEvent?.Invoke(waypoint.Latitude, waypoint.Longitude);
-
-
-                if (functionExecutedWhileWalking != null)
-                    await functionExecutedWhileWalking(); // look for pokemon
-                await Task.Delay(500, cancellationToken);
-            } while (LocationUtils.CalculateDistanceInMeters(sourceLocation, targetLocation) >= 30);
-
-            return result;
-        }
-
-        public async Task<PlayerUpdateResponse> HumanPathWalking(GpxReader.Trkpt trk,
-            double walkingSpeedInKilometersPerHour, Func<Task<bool>> functionExecutedWhileWalking,
+            Func<Task<bool>> functionExecutedWhileWalking2,
             CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
 
             //PlayerUpdateResponse result = null;
 
-            var targetLocation = new GeoCoordinate(Convert.ToDouble(trk.Lat, CultureInfo.InvariantCulture),
-                Convert.ToDouble(trk.Lon, CultureInfo.InvariantCulture));
 
             var speedInMetersPerSecond = walkingSpeedInKilometersPerHour/3.6;
 
             var sourceLocation = new GeoCoordinate(_client.CurrentLatitude, _client.CurrentLongitude);
-            LocationUtils.CalculateDistanceInMeters(sourceLocation, targetLocation);
-            // Logger.Write($"Distance to target location: {distanceToTarget:0.##} meters. Will take {distanceToTarget/speedInMetersPerSecond:0.##} seconds!", LogLevel.Info);
+            double distanceToTarget = LocationUtils.CalculateDistanceInMeters(sourceLocation, targetLocation);
+            Logger.Write($"Distance to target location: {distanceToTarget:0.##} meters. Will take {distanceToTarget/speedInMetersPerSecond:0.##} seconds!", LogLevel.Debug);
 
             var nextWaypointBearing = LocationUtils.DegreeBearing(sourceLocation, targetLocation);
             var nextWaypointDistance = speedInMetersPerSecond;
-            var waypoint = LocationUtils.CreateWaypoint(sourceLocation, nextWaypointDistance, nextWaypointBearing,
-                Convert.ToDouble(trk.Ele, CultureInfo.InvariantCulture));
+            GeoCoordinate waypoint;
+            double altitudeStep;
+            double altitude;
+            bool trueAlt = false;
+            if (targetLocation.Altitude != 0)
+            {
+                trueAlt = true;
+                altitudeStep = (_client.Settings.DefaultAltitude - targetLocation.Altitude) * (distanceToTarget / (nextWaypointDistance > 1 ? nextWaypointDistance : 1));
+                altitude = _client.Settings.DefaultAltitude - altitudeStep;
+                waypoint = LocationUtils.CreateWaypoint(sourceLocation, nextWaypointDistance, nextWaypointBearing, altitude);
+            }
+            else
+            {
+                altitudeStep = (_client.Settings.DefaultAltitude - _client.rnd.NextInRange(_client.Settings.DefaultAltitudeMin, _client.Settings.DefaultAltitudeMax)) * (distanceToTarget / nextWaypointDistance);
+                altitude = _client.Settings.DefaultAltitude + altitudeStep;
+                waypoint = LocationUtils.CreateWaypoint(sourceLocation, nextWaypointDistance, nextWaypointBearing, _client.Settings.DefaultAltitude);
+            }
 
             //Initial walking
 
@@ -130,10 +156,19 @@ namespace PoGo.PokeMobBot.Logic
                 await
                     _client.Player.UpdatePlayerLocation(waypoint.Latitude, waypoint.Longitude, waypoint.Altitude);
 
-            UpdatePositionEvent?.Invoke(waypoint.Latitude, waypoint.Longitude);
+            UpdatePositionEvent?.Invoke(waypoint.Latitude, waypoint.Longitude, waypoint.Altitude);
 
+            
             do
             {
+                if(RuntimeSettings.BreakOutOfPathing == true)
+                if (RuntimeSettings.lastPokeStopCoordinate.Latitude.Equals(targetLocation.Latitude) &&
+                    RuntimeSettings.lastPokeStopCoordinate.Longitude.Equals(targetLocation.Latitude))
+                {
+                    RuntimeSettings.BreakOutOfPathing = true;
+                    break;
+                }
+
                 cancellationToken.ThrowIfCancellationRequested();
 
                 var millisecondsUntilGetUpdatePlayerLocationResponse =
@@ -160,29 +195,102 @@ namespace PoGo.PokeMobBot.Logic
                 result =
                     await
                         _client.Player.UpdatePlayerLocation(waypoint.Latitude, waypoint.Longitude,
-                            waypoint.Altitude);
+                           altitude);               
 
-                UpdatePositionEvent?.Invoke(waypoint.Latitude, waypoint.Longitude);
-
+                UpdatePositionEvent?.Invoke(waypoint.Latitude, waypoint.Longitude, altitude);
+                altitude -= altitudeStep;
                 if (functionExecutedWhileWalking != null)
                     await functionExecutedWhileWalking(); // look for pokemon & hit stops
+                if(functionExecutedWhileWalking2 != null)
+                    await functionExecutedWhileWalking2();
 
-                await Task.Delay(500, cancellationToken);
-            } while (LocationUtils.CalculateDistanceInMeters(sourceLocation, targetLocation) >= 30);
-
+                await Task.Delay(300, cancellationToken);
+            } while (LocationUtils.CalculateDistanceInMeters(sourceLocation, targetLocation) >= 2 && RuntimeSettings.BreakOutOfPathing == false);
+            if (trueAlt) altitude = targetLocation.Altitude;
+            _client.Settings.DefaultAltitude = altitude;
             return result;
         }
 
         public async Task Teleport(GeoCoordinate targetLocation)
         {
             await _client.Player.UpdatePlayerLocation(
-                targetLocation.Latitude, 
+                targetLocation.Latitude,
                 targetLocation.Longitude,
                 _client.Settings.DefaultAltitude);
 
-            UpdatePositionEvent?.Invoke(targetLocation.Latitude, targetLocation.Longitude);
+            UpdatePositionEvent?.Invoke(targetLocation.Latitude, targetLocation.Longitude, targetLocation.Altitude);
         }
 
         public event UpdatePositionDelegate UpdatePositionEvent;
+        /*
+        public async Task<PlayerUpdateResponse> HumanLikeWalking(GeoCoordinate targetLocation,
+            double walkingSpeedInKilometersPerHour, Func<Task<bool>> functionExecutedWhileWalking,
+            CancellationToken cancellationToken)
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+
+            var speedInMetersPerSecond = walkingSpeedInKilometersPerHour / 3.6;
+
+            var sourceLocation = new GeoCoordinate(_client.CurrentLatitude, _client.CurrentLongitude);
+            LocationUtils.CalculateDistanceInMeters(sourceLocation, targetLocation);
+            // Logger.Write($"Distance to target location: {distanceToTarget:0.##} meters. Will take {distanceToTarget/speedInMetersPerSecond:0.##} seconds!", LogLevel.Info);
+
+            var nextWaypointBearing = LocationUtils.DegreeBearing(sourceLocation, targetLocation);
+            var nextWaypointDistance = speedInMetersPerSecond;
+            var waypoint = LocationUtils.CreateWaypoint(sourceLocation, nextWaypointDistance, nextWaypointBearing);
+
+            //Initial walking
+            var requestSendDateTime = DateTime.Now;
+            var result =
+                await
+                    _client.Player.UpdatePlayerLocation(waypoint.Latitude, waypoint.Longitude,
+                        _client.Settings.DefaultAltitude);
+
+            UpdatePositionEvent?.Invoke(waypoint.Latitude, waypoint.Longitude);
+
+            do
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+
+                var millisecondsUntilGetUpdatePlayerLocationResponse =
+                    (DateTime.Now - requestSendDateTime).TotalMilliseconds;
+
+                sourceLocation = new GeoCoordinate(_client.CurrentLatitude, _client.CurrentLongitude);
+                var currentDistanceToTarget = LocationUtils.CalculateDistanceInMeters(sourceLocation, targetLocation);
+
+                if (currentDistanceToTarget < 40)
+                {
+                    if (speedInMetersPerSecond > SpeedDownTo)
+                    {
+                        //Logger.Write("We are within 40 meters of the target. Speeding down to 10 km/h to not pass the target.", LogLevel.Info);
+                        speedInMetersPerSecond = SpeedDownTo;
+                    }
+                }
+
+                nextWaypointDistance = Math.Min(currentDistanceToTarget,
+                    millisecondsUntilGetUpdatePlayerLocationResponse / 1000 * speedInMetersPerSecond);
+                nextWaypointBearing = LocationUtils.DegreeBearing(sourceLocation, targetLocation);
+                waypoint = LocationUtils.CreateWaypoint(sourceLocation, nextWaypointDistance, nextWaypointBearing);
+
+                requestSendDateTime = DateTime.Now;
+                result =
+                    await
+                        _client.Player.UpdatePlayerLocation(waypoint.Latitude, waypoint.Longitude,
+                            _client.Settings.DefaultAltitude);
+
+                UpdatePositionEvent?.Invoke(waypoint.Latitude, waypoint.Longitude);
+
+
+                if (functionExecutedWhileWalking != null)
+                    await functionExecutedWhileWalking(); // look for pokemon
+                await Task.Delay(500, cancellationToken);
+            } while (LocationUtils.CalculateDistanceInMeters(sourceLocation, targetLocation) >= 30);
+
+            return result;        
+        }
+        */
+
+
+        //BACKUP OF HUMAN WALKING
     }
 }

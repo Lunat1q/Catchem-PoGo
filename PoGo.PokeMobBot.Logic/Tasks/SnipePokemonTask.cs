@@ -294,6 +294,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
 
             foreach (var pokemon in catchablePokemon)
             {
+                //var pokemon = new PokemonCacheItem(_pokemon);
                 cancellationToken.ThrowIfCancellationRequested();
 
                 EncounterResponse encounter;
@@ -302,7 +303,8 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                     await
                         session.Client.Player.UpdatePlayerLocation(Latitude, Longitude, session.Client.CurrentAltitude);
 
-                    encounter = await session.Client.Encounter.EncounterPokemon(pokemon.EncounterId, pokemon.SpawnPointId);
+                    encounter =
+                        session.Client.Encounter.EncounterPokemon(pokemon.EncounterId, pokemon.SpawnPointId).Result;
                 }
                 finally
                 {
@@ -318,7 +320,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                         Longitude = CurrentLongitude
                     });
 
-                    if (!await CatchPokemonTask.Execute(session, encounter, pokemon))
+                    if (!await CatchPokemonTask.Execute(session, encounter, new PokemonCacheItem(pokemon)))
                     {
                         // Don't snipe any more pokemon if we ran out of one kind of pokeballs.
                         session.EventDispatcher.Send(new SnipeModeEvent { Active = false });
@@ -586,6 +588,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                         session.EventDispatcher.Send(new ErrorEvent { Message = ex.ToString() });
                         scanResult = new ScanResult { Pokemon = new List<PokemonLocation>() };
                     }
+                    await Task.Delay(5000, cancellationToken);
                 }
                 else
                 {
@@ -625,8 +628,9 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                         // most likely System.IO.IOException
                         session.EventDispatcher.Send(new ErrorEvent { Message = ex.ToString() });
                     }
+                    await Task.Delay(5000, cancellationToken);
                 }
-                await Task.Delay(5000, cancellationToken);
+               
             }
         }
     }

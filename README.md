@@ -7,7 +7,7 @@
 [<h3>Discord for any help</h3>](https://discord.gg/pPwxX8Q)
  
 <h2>Donating</h2>
-I you really liked this project, feel free to buy us all a beer, by using PayPal:<br/><br/>
+I you really liked this project, feel free to buy pizza for devs (or flowers for my gf, she is a bit mad what i'm spending most part of my free time for this project :)), by using PayPal:<br/><br/>
 [![Donate](https://www.paypalobjects.com/en_US/GB/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=RFAU4PYCAAGML)<br/>
 
 <h2>See it in action:</h2>

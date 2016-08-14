@@ -68,12 +68,22 @@ namespace PoGo.PokeMobBot.Logic
         bool StartupWelcomeDelay { get; }
         string TranslationLanguageCode { get; }
 
+       
+
         //coords and movement
         bool Teleport { get; }
-        double WalkingSpeedInKilometerPerHour { get; }
+        double WalkingSpeedMin { get; }
+        double WalkingSpeedMax { get; }
+        bool UseHumanPathing { get; }
+
         int MaxTravelDistanceInMeters { get; }
         bool UseGpxPathing { get; }
         string GpxFile { get; }
+        bool UsePokeStopLuckyNumber { get; }
+        int PokestopSkipLuckyNumberMinUse { get; }
+        int PokestopSkipLuckyNumber { get; }
+        int PokestopSkipLuckyMin { get; }
+        int PokestopSkipLuckyMax { get; }
 
         //delays
         int DelayBetweenPlayerActions { get; }
