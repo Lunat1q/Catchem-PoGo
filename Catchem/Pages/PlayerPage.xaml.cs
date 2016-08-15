@@ -29,6 +29,7 @@ namespace Catchem.Pages
             _loadingUi = true;
             _bot = bot;
             UpdatePlayerTab();
+            UpdateLists();
             _loadingUi = false;
             UpdateRunTimeData();
         }
