@@ -1,0 +1,31 @@
+﻿<UserControl x:Class="Catchem.Pages.MapPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Catchem.Pages"
+             xmlns:windowsPresentation="clr-namespace:GMap.NET.WindowsPresentation;assembly=GMap.NET.WindowsPresentation"
+             mc:Ignorable="d" Width="997" Height="364">
+    <Grid Background="#FFF0F0F0">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="33"/>
+        </Grid.RowDefinitions>
+        <windowsPresentation:GMapControl x:Name="pokeMap" Margin="0,0,0,1" MouseDoubleClick="pokeMap_MouseDoubleClick"/>
+        <Grid Grid.Row="1">
+            <Rectangle Margin="0">
+                <Rectangle.Fill>
+                    <LinearGradientBrush EndPoint="0,0.5" StartPoint="1,0.5">
+                        <GradientStop Color="#FF9AFF7D"/>
+                        <GradientStop Color="#FF97FFC2" Offset="1"/>
+                    </LinearGradientBrush>
+                </Rectangle.Fill>
+            </Rectangle>
+            <CheckBox x:Name="cb_mapFollowThePlayer" Content="Follow the Player marker" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="155" Checked="mapFollowThePlayer_Checked" Unchecked="mapFollowThePlayer_Checked"/>
+            <Slider x:Name="sl_moveSpeedFactor" HorizontalAlignment="Left" Margin="295,8,0,0" VerticalAlignment="Top" RenderTransformOrigin="3.583,0.25" Width="168" Height="25" Minimum="0.3" Maximum="3" TickPlacement="BottomRight" Value="1" ValueChanged="sl_moveSpeedFactor_ValueChanged" TickFrequency="0.1" SmallChange="0" />
+            <Label x:Name="label5" Content="Move Speed Factor:" HorizontalAlignment="Left" Margin="183,4,0,0" VerticalAlignment="Top" Width="126"/>
+            <Label x:Name="l_moveSpeedFactor" Content="1" HorizontalAlignment="Left" Margin="463,4,0,0" VerticalAlignment="Top" Width="32"/>
+            <CheckBox x:Name="cb_keepPokemonMarkers" Content="Keep pokemon markers on the map" HorizontalAlignment="Left" Margin="500,10,0,0" VerticalAlignment="Top" Width="215" Checked="cb_keepPokemonMarkers_Checked" Unchecked="cb_keepPokemonMarkers_Checked"/>
+        </Grid>
+    </Grid>
+</UserControl>

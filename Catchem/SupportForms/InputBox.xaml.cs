@@ -3,7 +3,7 @@ using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Input;
 
-namespace Catchem
+namespace Catchem.SupportForms
 {
     public partial class InputDialogSample : Window
     {

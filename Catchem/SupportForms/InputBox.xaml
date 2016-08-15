@@ -1,4 +1,4 @@
-﻿<Window x:Class="Catchem.InputDialogSample"
+﻿<Window x:Class="Catchem.SupportForms.InputDialogSample"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Input" SizeToContent="WidthAndHeight" WindowStartupLocation="CenterScreen"

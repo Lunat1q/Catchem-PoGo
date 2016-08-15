@@ -94,23 +94,47 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Adb.cs" />
-    <Compile Include="BotWindowData.cs" />
-    <Compile Include="Converters.cs" />
-    <Compile Include="Extensions.cs" />
-    <Compile Include="InputBox.xaml.cs">
+    <Compile Include="Classes\Adb.cs" />
+    <Compile Include="Classes\BotWindowData.cs" />
+    <Compile Include="Extensions\Converters.cs" />
+    <Compile Include="Extensions\Extensions.cs" />
+    <Compile Include="Interfaces\IBotPage.cs" />
+    <Compile Include="Pages\MapPage.xaml.cs">
+      <DependentUpon>MapPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\PokemonListPage.xaml.cs">
+      <DependentUpon>PokemonListPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SupportForms\InputBox.xaml.cs">
       <DependentUpon>InputBox.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ItemUiData.cs" />
-    <Compile Include="NewMapObject.cs" />
-    <Compile Include="PokemonUiData.cs" />
-    <Compile Include="WpfEventListener.cs" />
-    <Compile Include="WpfLogger.cs" />
+    <Compile Include="Classes\ItemUiData.cs" />
+    <Compile Include="Classes\NewMapObject.cs" />
+    <Compile Include="Pages\PlayerPage.xaml.cs">
+      <DependentUpon>PlayerPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Classes\PokemonUiData.cs" />
+    <Compile Include="Pages\SettingsPage.xaml.cs">
+      <DependentUpon>SettingsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Styles.xaml.cs">
+      <DependentUpon>Styles.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Classes\WpfEventListener.cs" />
+    <Compile Include="Classes\WpfLogger.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="InputBox.xaml">
+    <Page Include="Pages\MapPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\PokemonListPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SupportForms\InputBox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -122,6 +146,18 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Pages\PlayerPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\SettingsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">

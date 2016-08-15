@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
@@ -8,7 +7,7 @@ using System.Text.RegularExpressions;
 using System.Windows.Data;
 using POGOProtos.Enums;
 
-namespace Catchem
+namespace Catchem.Extensions
 {
     public sealed class MethodToValueConverter : IValueConverter
     {

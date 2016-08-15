@@ -1,20 +1,25 @@
-﻿using GMap.NET;
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Threading;
+using System.Windows.Media;
+using System.Windows.Threading;
+using Catchem.Extensions;
+using GMap.NET;
 using GMap.NET.WindowsPresentation;
 using PoGo.PokeMobBot.Logic;
 using PoGo.PokeMobBot.Logic.State;
 using PoGo.PokeMobBot.Logic.Tasks;
 using PoGo.PokeMobBot.Logic.Utils;
+using PokemonGo.RocketAPI.Extensions;
+using POGOProtos.Data;
 using POGOProtos.Enums;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using System.Threading;
-using System.Windows.Media;
-using System.Windows.Threading;
+using POGOProtos.Inventory.Item;
 
-namespace Catchem
+namespace Catchem.Classes
 {
     public class BotWindowData : INotifyPropertyChanged
     {
@@ -136,8 +141,6 @@ namespace Catchem
         public BotWindowData(string name, GlobalSettings gs, StateMachine sm, Statistics st, StatisticsAggregator sa, WpfEventListener wel, ClientSettings cs, LogicSettings l)
         {
             ProfileName = name;
-            Settings = new ClientSettings(gs);
-            Logic = new LogicSettings(gs);
             GlobalSettings = gs;
             Machine = sm;
             Stats = st;
@@ -236,6 +239,113 @@ namespace Catchem
             }
             Log = new List<Tuple<string, Color>>();
             _routePoints.Clear();
+        }
+
+        public async void BuildPokemonList(List<Tuple<PokemonData, double, int>> receivedList)
+        {
+            PokemonList.Clear();
+            var pokemonFamilies = await Session.Inventory.GetPokemonFamilies();
+            var pokemonSettings = (await Session.Inventory.GetPokemonSettings()).ToList();
+            foreach (var pokemon in receivedList)
+            {
+                var setting = pokemonSettings.Single(q => q.PokemonId == pokemon.Item1.PokemonId);
+                var family = pokemonFamilies.First(q => q.FamilyId == setting.FamilyId);
+                var mon = new PokemonUiData(
+                    pokemon.Item1.Id,
+                    pokemon.Item1.PokemonId,
+                    pokemon.Item1.PokemonId.ToInventorySource(),
+                    (pokemon.Item1.Nickname == "" ? pokemon.Item1.PokemonId.ToString() : pokemon.Item1.Nickname),
+                    pokemon.Item1.Cp,
+                    pokemon.Item2,
+                    family.FamilyId,
+                    family.Candy_,
+                    pokemon.Item1.CreationTimeMs);
+                PokemonList.Add(mon);
+                mon.UpdateTags(Logic);
+            }
+        }
+
+        public void GotNewPokemon(ulong uid, PokemonId pokemonId, int cp, double iv, PokemonFamilyId family, int candy)
+        {
+            PokemonList.Add(new PokemonUiData(
+                    uid,
+                    pokemonId,
+                    pokemonId.ToInventorySource(),
+                    pokemonId.ToString(),
+                    cp,
+                    iv,
+                    family,
+                    candy,
+                    (ulong)DateTime.UtcNow.ToUnixTime()));
+            foreach (var pokemon in PokemonList.Where(x => x.Family == family))
+            {
+                pokemon.Candy = candy;
+                pokemon.UpdateTags(Logic);
+            }
+        }
+
+        public void LostPokemon(ulong uid, PokemonFamilyId? family, int? candy)
+        {
+            var targetPokemon = PokemonList.FirstOrDefault(x => x.Id == uid);
+            if (targetPokemon == null) return;
+            PokemonList.Remove(targetPokemon);
+            if (family != null && candy != null)
+            {
+                foreach (var pokemon in PokemonList.Where(x => x.Family == family))
+                {
+                    pokemon.Candy = (int)candy;
+                }
+            }
+        }
+
+        public void NewPlayerData(string name, int invSize, int pokeSize, TeamColor team, int stardust, int coins)
+        {
+            PlayerName = name;
+            MaxItemStorageSize = invSize;
+            MaxPokemonStorageSize = pokeSize;
+            Team = team;
+            StartStarDust = stardust;
+            Coins = coins;
+        }
+
+        public void GotNewItems(List<Tuple<ItemId, int>> newItems)
+        {
+            if (newItems == null) return;
+            foreach (var item in newItems)
+            {
+                var targetItem = ItemList.FirstOrDefault(x => x.Id == item.Item1);
+                if (targetItem != null)
+                    targetItem.Amount += item.Item2;
+                else
+                    ItemList.Add(new ItemUiData(
+                        item.Item1,
+                        item.Item1.ToInventorySource(),
+                        item.Item1.ToInventoryName(),
+                        item.Item2));
+            }
+        }
+
+        public void LostItem(ItemId? item, int? amount)
+        {
+            if (item == null || amount == null) return;
+            var targetItem = ItemList.FirstOrDefault(x => x.Id == item);
+            if (targetItem == null) return;
+            if (targetItem.Amount <= amount)
+                ItemList.Remove(targetItem);
+            else
+                targetItem.Amount -= (int)amount;
+        }
+
+        public void PokemonUpdated(ulong uid, int cp, double iv, PokemonFamilyId family, int candy)
+        {
+            var pokemonToUpdate = PokemonList.FirstOrDefault(x => x.Id == uid);
+            if (pokemonToUpdate == null) return;
+            pokemonToUpdate.Cp = cp;
+            pokemonToUpdate.Iv = iv;
+            foreach (var pokemon in PokemonList.Where(x => x.Family == family))
+            {
+                pokemon.Candy = candy;
+            }
         }
     }
 }

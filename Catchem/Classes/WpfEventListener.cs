@@ -1,14 +1,14 @@
-﻿using PoGo.PokeMobBot.Logic.Common;
+﻿using System;
+using System.Globalization;
+using PoGo.PokeMobBot.Logic.Common;
 using PoGo.PokeMobBot.Logic.Event;
 using PoGo.PokeMobBot.Logic.Logging;
 using PoGo.PokeMobBot.Logic.State;
 using POGOProtos.Enums;
 using POGOProtos.Inventory.Item;
 using POGOProtos.Networking.Responses;
-using System;
-using System.Globalization;
 
-namespace Catchem
+namespace Catchem.Classes
 {
     public class WpfEventListener
     {

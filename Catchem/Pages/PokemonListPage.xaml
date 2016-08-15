@@ -1,0 +1,191 @@
+﻿<UserControl x:Class="Catchem.Pages.PokemonListPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Catchem.Pages"
+             mc:Ignorable="d" Height="623.5" Width="937">
+    <Grid Background="#FFF9F9F9" Margin="0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+        <ListBox x:Name="ToEvolveList" Margin="10,42,10,10" ItemTemplate="{DynamicResource PokemonListTemplate}" HorizontalContentAlignment="Stretch">
+            <ListBox.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="White" Offset="0"/>
+                    <GradientStop Color="#FFE6FFF4" Offset="1"/>
+                </LinearGradientBrush>
+            </ListBox.Background>
+        </ListBox>
+        <Label x:Name="PokemonsToEvolve" Content="To Evolve" HorizontalAlignment="Left" Margin="10,7,0,0" VerticalAlignment="Top" FontSize="16" FontFamily="Calibri" Width="144">
+            <Label.Foreground>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <LinearGradientBrush.RelativeTransform>
+                        <TransformGroup>
+                            <ScaleTransform CenterY="0.5" CenterX="0.5"/>
+                            <SkewTransform CenterY="0.5" CenterX="0.5"/>
+                            <RotateTransform Angle="90" CenterY="0.5" CenterX="0.5"/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </LinearGradientBrush.RelativeTransform>
+                    <GradientStop Color="#FF57C2B0" Offset="0"/>
+                    <GradientStop Color="#FF29A662" Offset="1"/>
+                </LinearGradientBrush>
+            </Label.Foreground>
+        </Label>
+        <ComboBox x:Name="AddToEvolveCb" Margin="159,10,74,0" VerticalAlignment="Top"
+                              ItemsSource="{Binding Source={StaticResource PokemonIdDataProvider}}"/>
+        <Button Style="{StaticResource ResourceKey=flatbutton}" x:Name="AddPokemonToEvolve" 
+                            Content="Add" HorizontalAlignment="Right" VerticalAlignment="Top" Width="59" Height="22" Margin="0,10,10,0" FontFamily="BOLD" TextOptions.TextFormattingMode="Display" FontWeight="Bold" Click="AddPokemonToEvolve_Click">
+            <Button.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <LinearGradientBrush.RelativeTransform>
+                        <TransformGroup>
+                            <ScaleTransform CenterY="0.5" CenterX="0.5"/>
+                            <SkewTransform CenterY="0.5" CenterX="0.5"/>
+                            <RotateTransform Angle="90" CenterY="0.5" CenterX="0.5"/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </LinearGradientBrush.RelativeTransform>
+                    <GradientStop Color="#FFB0EE9C" Offset="0"/>
+                    <GradientStop Color="#FF53C05D" Offset="1"/>
+                </LinearGradientBrush>
+            </Button.Background>
+        </Button>
+        <ListBox x:Name="NotToTransferList" Margin="10,42,10,10" ItemTemplate="{DynamicResource PokemonListTemplate}" HorizontalContentAlignment="Stretch" Grid.Column="1">
+            <ListBox.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="White" Offset="0"/>
+                    <GradientStop Color="#FFE6FFF4" Offset="1"/>
+                </LinearGradientBrush>
+            </ListBox.Background>
+        </ListBox>
+        <Label x:Name="PokemonsToEvolve_Copy" Content="Not To Transfer" HorizontalAlignment="Left" Margin="10,7,0,0" VerticalAlignment="Top" FontSize="16" FontFamily="Calibri" Width="144" Grid.Column="1">
+            <Label.Foreground>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <LinearGradientBrush.RelativeTransform>
+                        <TransformGroup>
+                            <ScaleTransform CenterY="0.5" CenterX="0.5"/>
+                            <SkewTransform CenterY="0.5" CenterX="0.5"/>
+                            <RotateTransform Angle="90" CenterY="0.5" CenterX="0.5"/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </LinearGradientBrush.RelativeTransform>
+                    <GradientStop Color="#FF57C2B0" Offset="0"/>
+                    <GradientStop Color="#FF29A662" Offset="1"/>
+                </LinearGradientBrush>
+            </Label.Foreground>
+        </Label>
+        <ComboBox x:Name="NotToTransferCb" Margin="159,10,74,0" VerticalAlignment="Top"
+                    	ItemsSource="{Binding Source={StaticResource PokemonIdDataProvider}}" Grid.Column="1"/>
+        <Button Style="{StaticResource ResourceKey=flatbutton}" x:Name="NotToTransferBtn" 
+                    	Content="Add" HorizontalAlignment="Right" VerticalAlignment="Top" Width="59" Height="22" Margin="0,10,10,0" FontFamily="BOLD" TextOptions.TextFormattingMode="Display" FontWeight="Bold" Click="NotToTransferBtn_Click" Grid.Column="1">
+            <Button.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <LinearGradientBrush.RelativeTransform>
+                        <TransformGroup>
+                            <ScaleTransform CenterY="0.5" CenterX="0.5"/>
+                            <SkewTransform CenterY="0.5" CenterX="0.5"/>
+                            <RotateTransform Angle="90" CenterY="0.5" CenterX="0.5"/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </LinearGradientBrush.RelativeTransform>
+                    <GradientStop Color="#FFB0EE9C" Offset="0"/>
+                    <GradientStop Color="#FF53C05D" Offset="1"/>
+                </LinearGradientBrush>
+            </Button.Background>
+        </Button>
+        <ListBox x:Name="PokemonsNotToCatchList" Margin="10,42,10,10" ItemTemplate="{DynamicResource PokemonListTemplate}" HorizontalContentAlignment="Stretch" Grid.Row="1">
+            <ListBox.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="White" Offset="0"/>
+                    <GradientStop Color="#FFE6FFF4" Offset="1"/>
+                </LinearGradientBrush>
+            </ListBox.Background>
+        </ListBox>
+        <Label x:Name="l_PokemonsNotToCatch" Content="Not To Catch" HorizontalAlignment="Left" Margin="10,7,0,0" VerticalAlignment="Top" FontSize="16" FontFamily="Calibri" Width="144" Grid.Row="1">
+            <Label.Foreground>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <LinearGradientBrush.RelativeTransform>
+                        <TransformGroup>
+                            <ScaleTransform CenterY="0.5" CenterX="0.5"/>
+                            <SkewTransform CenterY="0.5" CenterX="0.5"/>
+                            <RotateTransform Angle="90" CenterY="0.5" CenterX="0.5"/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </LinearGradientBrush.RelativeTransform>
+                    <GradientStop Color="#FF57C2B0" Offset="0"/>
+                    <GradientStop Color="#FF29A662" Offset="1"/>
+                </LinearGradientBrush>
+            </Label.Foreground>
+        </Label>
+        <ComboBox x:Name="PokemonsNotToCatchCb" Margin="159,10,74,0" VerticalAlignment="Top"
+                    	ItemsSource="{Binding Source={StaticResource PokemonIdDataProvider}}" Grid.Row="1"/>
+        <Button Style="{StaticResource ResourceKey=flatbutton}" x:Name="PokemonsNotToCatchBtn" 
+                    	Content="Add" HorizontalAlignment="Right" VerticalAlignment="Top" Width="59" Height="22" Margin="0,10,10,0" FontFamily="BOLD" TextOptions.TextFormattingMode="Display" FontWeight="Bold" Grid.Row="1" Click="PokemonsNotToCatchBtn_Click">
+            <Button.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <LinearGradientBrush.RelativeTransform>
+                        <TransformGroup>
+                            <ScaleTransform CenterY="0.5" CenterX="0.5"/>
+                            <SkewTransform CenterY="0.5" CenterX="0.5"/>
+                            <RotateTransform Angle="90" CenterY="0.5" CenterX="0.5"/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </LinearGradientBrush.RelativeTransform>
+                    <GradientStop Color="#FFB0EE9C" Offset="0"/>
+                    <GradientStop Color="#FF53C05D" Offset="1"/>
+                </LinearGradientBrush>
+            </Button.Background>
+        </Button>
+        <ListBox x:Name="PokemonToUseMasterballList" Margin="10,42,10,10" ItemTemplate="{DynamicResource PokemonListTemplate}" HorizontalContentAlignment="Stretch" Grid.Row="1" Grid.Column="1">
+            <ListBox.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="White" Offset="0"/>
+                    <GradientStop Color="#FFE6FFF4" Offset="1"/>
+                </LinearGradientBrush>
+            </ListBox.Background>
+        </ListBox>
+        <Label x:Name="l_PokemonToUseMasterball" Content="To Use Masterball" HorizontalAlignment="Left" Margin="10,7,0,0" VerticalAlignment="Top" FontSize="16" FontFamily="Calibri" Width="144" Grid.Row="1" Grid.Column="1">
+            <Label.Foreground>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <LinearGradientBrush.RelativeTransform>
+                        <TransformGroup>
+                            <ScaleTransform CenterY="0.5" CenterX="0.5"/>
+                            <SkewTransform CenterY="0.5" CenterX="0.5"/>
+                            <RotateTransform Angle="90" CenterY="0.5" CenterX="0.5"/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </LinearGradientBrush.RelativeTransform>
+                    <GradientStop Color="#FF57C2B0" Offset="0"/>
+                    <GradientStop Color="#FF29A662" Offset="1"/>
+                </LinearGradientBrush>
+            </Label.Foreground>
+        </Label>
+        <ComboBox x:Name="PokemonToUseMasterballCb" Margin="159,10,74,0" VerticalAlignment="Top"
+                    	ItemsSource="{Binding Source={StaticResource PokemonIdDataProvider}}" Grid.Row="1" Grid.Column="1"/>
+        <Button Style="{StaticResource ResourceKey=flatbutton}" x:Name="PokemonToUseMasterballBtn" 
+                    	Content="Add" HorizontalAlignment="Right" VerticalAlignment="Top" Width="59" Height="22" Margin="0,10,10,0" FontFamily="BOLD" TextOptions.TextFormattingMode="Display" FontWeight="Bold" Grid.Row="1" Click="PokemonToUseMasterballBtn_Click" Grid.Column="1">
+            <Button.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <LinearGradientBrush.RelativeTransform>
+                        <TransformGroup>
+                            <ScaleTransform CenterY="0.5" CenterX="0.5"/>
+                            <SkewTransform CenterY="0.5" CenterX="0.5"/>
+                            <RotateTransform Angle="90" CenterY="0.5" CenterX="0.5"/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </LinearGradientBrush.RelativeTransform>
+                    <GradientStop Color="#FFB0EE9C" Offset="0"/>
+                    <GradientStop Color="#FF53C05D" Offset="1"/>
+                </LinearGradientBrush>
+            </Button.Background>
+        </Button>
+    </Grid>
+</UserControl>

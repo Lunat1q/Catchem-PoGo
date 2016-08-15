@@ -1,0 +1,272 @@
+﻿<UserControl x:Class="Catchem.Pages.SettingsPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Catchem"
+             mc:Ignorable="d" Width="1065.487" Height="1681">
+    <Grid Background="#FFF9F9F9">
+        <ScrollViewer Grid.ColumnSpan="2">
+            <Grid x:Name="settings_grid">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="300*"/>
+                    <ColumnDefinition Width="300*"/>
+                </Grid.ColumnDefinitions>
+                <GroupBox x:Name="groupBox" Grid.Column="1" Header="Proxy" VerticalAlignment="Top" Height="147">
+                    <Grid Margin="0,0,0,0" IsEnabled="True">
+                        <CheckBox x:Name="c_UseProxy" Content="UseProxy" HorizontalAlignment="Left" Margin="16,1,0,0" VerticalAlignment="Top" Height="15" Width="101" Checked="BotPropertyChanged" Unchecked="BotPropertyChanged"/>
+                        <TextBox Template="{StaticResource pogo}" x:Name="c_ProxyUri" Height="29" Margin="94,86,10,0" TextWrapping="Wrap" VerticalAlignment="Top" TextChanged="BotPropertyChanged" Foreground="#FF56C2B0"/>
+                        <Label x:Name="label" Content="Host:port" HorizontalAlignment="Left" Margin="10,89,0,0" VerticalAlignment="Top" Width="79" RenderTransformOrigin="0.494,0.5"/>
+                        <Label x:Name="label1" Content="Password" HorizontalAlignment="Left" Margin="10,53,0,0" VerticalAlignment="Top" Width="79"/>
+                        <Label x:Name="label2" Content="Login" HorizontalAlignment="Left" Margin="10,19,0,0" VerticalAlignment="Top" Width="79"/>
+                        <TextBox Template="{StaticResource pogo}" x:Name="c_ProxyLogin" Height="34" Margin="94,14,10,0" TextWrapping="Wrap" VerticalAlignment="Top" TextChanged="BotPropertyChanged" Foreground="#FF56C2B0" Text="Username"/>
+                        <PasswordBox Template="{StaticResource pogo_password}" x:Name="c_ProxyPass" Margin="94,53,10,0" VerticalAlignment="Top" Height="28" PasswordChanged="BotPropertyChanged" Password="password" Foreground="#FF56C2B0"/>
+                    </Grid>
+                </GroupBox>
+                <GroupBox x:Name="groupBox1" Header="Auth" VerticalAlignment="Top" Height="147">
+                    <Grid Margin="0,0,0,0">
+                        <ComboBox x:Name="authBox" Margin="95,17,10,0" VerticalAlignment="Top" Height="24" SelectionChanged="authBox_SelectionChanged"/>
+                        <Label x:Name="label3" Content="Auth type" HorizontalAlignment="Left" Margin="10,17,0,0" VerticalAlignment="Top" Width="80"/>
+                        <PasswordBox Template="{StaticResource pogo_password}" x:Name="passwordBox" Margin="95,87,10,0" VerticalAlignment="Top" Height="28" PasswordChanged="passwordBox_PasswordChanged" Foreground="#FF56C2B0" Password="password"/>
+                        <Label x:Name="label1_Copy" Content="Password" HorizontalAlignment="Left" Margin="10,89,0,0" VerticalAlignment="Top" Width="80"/>
+                        <Label x:Name="label2_Copy" Content="Login" HorizontalAlignment="Left" Margin="10,52,0,0" VerticalAlignment="Top" Width="80"/>
+                        <TextBox Template="{StaticResource pogo}" x:Name="loginBox" Height="32" Margin="95,50,10,0" TextWrapping="Wrap" Text="Username" VerticalAlignment="Top" TextChanged="loginBox_TextChanged" Foreground="#FF56C2B0"/>
+                    </Grid>
+                </GroupBox>
+                <GroupBox x:Name="groupBox2" Header="Pokemons" Margin="0,147,0,0" VerticalAlignment="Top" Height="541">
+                    <Grid>
+                        <CheckBox x:Name="c_AutoLevelPokemons" Content="Auto Level Pokemons" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0" Checked="BotPropertyChanged" Unchecked="BotPropertyChanged"/>
+                        <CheckBox x:Name="c_EvolveAllPokemonAboveIv" Content="Evolve All Pokemon Above Iv" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,31,0,0" Checked="BotPropertyChanged" Unchecked="BotPropertyChanged"/>
+                        <Label x:Name="label8" Content="Evolve Iv Value" HorizontalAlignment="Left" Margin="10,55,0,0" VerticalAlignment="Top" Width="131"/>
+                        <TextBox Template="{StaticResource pogo}" x:Name="c_EvolveAboveIvValue" Height="29" Margin="233,54,10,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" TextChanged="BotPropertyChanged"/>
+                        <CheckBox x:Name="c_EvolveAllPokemonWithEnoughCandy" Content="Evolve All Pokemon With Enough Candy" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,88,0,0" Checked="BotPropertyChanged" Unchecked="BotPropertyChanged"/>
+                        <Label x:Name="label8_Copy" Content="Keep Min Cp" HorizontalAlignment="Left" Margin="10,110,0,0" VerticalAlignment="Top" Width="131"/>
+                        <TextBox Template="{StaticResource pogo}" x:Name="c_KeepMinCp" Height="29" Margin="233,109,10,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" TextChanged="BotPropertyChanged"/>
+                        <Label x:Name="label8_Copy1" Content="Keep Min Duplicate" HorizontalAlignment="Left" Margin="10,144,0,0" VerticalAlignment="Top" Width="131"/>
+                        <TextBox Template="{StaticResource pogo}" x:Name="c_KeepMinDuplicatePokemon" Height="29" Margin="233,143,10,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" TextChanged="BotPropertyChanged"/>
+                        <Label x:Name="label8_Copy2" Content="Keep Min Iv %" HorizontalAlignment="Left" Margin="10,178,0,0" VerticalAlignment="Top" Width="131"/>
+                        <TextBox Template="{StaticResource pogo}" x:Name="c_KeepMinIvPercentage" Height="29" Margin="233,177,10,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" TextChanged="BotPropertyChanged"/>
+                        <Label x:Name="label8_Copy3" Content="Pokeballs/Pokemon" HorizontalAlignment="Left" Margin="10,212,0,0" VerticalAlignment="Top" Width="131"/>
+                        <TextBox Template="{StaticResource pogo}" x:Name="c_MaxPokeballsPerPokemon" Height="29" Margin="233,211,10,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" TextChanged="BotPropertyChanged"/>
+                        <CheckBox x:Name="c_KeepPokemonsThatCanEvolve" Content="Keep Pokemons That Can Evolve" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,243,0,0" Checked="BotPropertyChanged" Unchecked="BotPropertyChanged"/>
+                        <CheckBox x:Name="c_PrioritizeIvOverCp" Content="Prioritize Iv Over Cp" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,264,0,0" Checked="BotPropertyChanged" Unchecked="BotPropertyChanged"/>
+                        <CheckBox x:Name="c_RenameOnlyAboveIv" Content="Rename Only Above Iv" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,285,0,0" Checked="BotPropertyChanged" Unchecked="BotPropertyChanged"/>
+                        <CheckBox x:Name="c_RenamePokemon" Content="Rename Pokemon" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,306,0,0" Checked="BotPropertyChanged" Unchecked="BotPropertyChanged"/>
+                        <Label x:Name="label8_Copy4" Content="Rename Template" HorizontalAlignment="Left" Margin="10,329,0,0" VerticalAlignment="Top" Width="131"/>
+                        <TextBox Template="{StaticResource pogo}" x:Name="c_RenameTemplate" Height="29" Margin="233,328,10,0" TextWrapping="Wrap" VerticalAlignment="Top" TextChanged="BotPropertyChanged"/>
+                        <Label x:Name="label8_Copy5" Content="Upgrade Pokemon Cp Min" HorizontalAlignment="Left" Margin="10,363,0,0" VerticalAlignment="Top" Width="155"/>
+                        <TextBox Template="{StaticResource pogo}" x:Name="c_UpgradePokemonCpMinimum" Height="29" Margin="233,362,10,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" TextChanged="BotPropertyChanged" />
+                        <Label x:Name="label8_Copy6" Content="Upgrade Pokemon Iv Min" HorizontalAlignment="Left" Margin="10,397,0,0" VerticalAlignment="Top" Width="155"/>
+                        <TextBox Template="{StaticResource pogo}" x:Name="c_UpgradePokemonIvMinimum" Height="29" Margin="233,396,10,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" TextChanged="BotPropertyChanged"/>
+                        <CheckBox x:Name="c_UseLuckyEggsWhileEvolving" Content="Use Lucky Eggs While Evolving" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,428,0,0" Checked="BotPropertyChanged" Unchecked="BotPropertyChanged" />
+                        <Label x:Name="label8_Copy10" Content="Lucky Eggs Min Pokemon" HorizontalAlignment="Left" Margin="10,449,0,0" VerticalAlignment="Top" Width="155"/>
+                        <TextBox Template="{StaticResource pogo}" x:Name="c_UseLuckyEggsMinPokemonAmount" Height="29" Margin="233,448,10,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" TextChanged="BotPropertyChanged" />
+                        <CheckBox x:Name="c_UseEggIncubators" Content="Use Egg Incubators" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,480,0,0" Checked="BotPropertyChanged" Unchecked="BotPropertyChanged" />
+                        <CheckBox x:Name="c_TransferDuplicatePokemon" Content="Transfer Duplicate Pokemon" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,501,0,0" Checked="BotPropertyChanged" Unchecked="BotPropertyChanged" />
+                        <CheckBox x:Name="c_AlwaysPrefferLongDistanceEgg" Content="Always Preffer Long Distance Egg" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="148,480,0,0" Checked="BotPropertyChanged" Unchecked="BotPropertyChanged" />
+                    </Grid>
+                </GroupBox>
+                <GroupBox x:Name="groupBox3" Header="Navigation" Margin="0,147,-1,0" VerticalAlignment="Top" Height="409" Grid.Column="1">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="189*"/>
+                            <ColumnDefinition Width="251*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label x:Name="label7" Content="Altitude Current" Margin="10,13,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.423" Height="26"/>
+                        <TextBox Template="{StaticResource pogo}" x:Name="c_DefaultAltitude" Grid.Column="1" Height="29" Margin="10,13,10,0" TextWrapping="Wrap" VerticalAlignment="Top" TextChanged="BotPropertyChanged"/>
+                        <Label x:Name="label7_Copy" Content="Latitude" Margin="10,115,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.423" Height="26"/>
+                        <TextBox Template="{StaticResource pogo}" x:Name="c_DefaultLatitude" Grid.Column="1" Height="29" Margin="10,115,10,0" TextWrapping="Wrap" VerticalAlignment="Top" TextChanged="BotPropertyChanged"/>
+                        <Label x:Name="label7_Copy1" Content="Longtitude" Margin="10,149,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.423" Height="26"/>
+                        <TextBox Template="{StaticResource pogo}" x:Name="c_DefaultLongitude" Grid.Column="1" Height="29" Margin="10,149,10,0" TextWrapping="Wrap" VerticalAlignment="Top" TextChanged="BotPropertyChanged"/>
+                        <CheckBox x:Name="c_Teleport" Content="Teleport" Grid.Column="1" HorizontalAlignment="Left" Margin="10,183,0,0" VerticalAlignment="Top" Width="196" Checked="BotPropertyChanged" Unchecked="BotPropertyChanged" Height="16"/>
+                        <Label x:Name="label7_Copy2" Content="Max Spawn Location Offset" Margin="10,204,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.423" Height="26" HorizontalAlignment="Left" Width="179"/>
+                        <TextBox Template="{StaticResource pogo}" x:Name="c_MaxSpawnLocationOffset" Grid.Column="1" Height="29" Margin="10,204,10,0" TextWrapping="Wrap" VerticalAlignment="Top" TextChanged="BotPropertyChanged"/>
+                        <Label x:Name="label7_Copy3" Content="Max Travel Distance In Meters" Margin="10,238,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.423" Height="26" HorizontalAlignment="Left" Width="179"/>
+                        <TextBox Template="{StaticResource pogo}" x:Name="c_MaxTravelDistanceInMeters" Grid.Column="1" Height="29" Margin="10,238,10,0" TextWrapping="Wrap" VerticalAlignment="Top" TextChanged="BotPropertyChanged"/>
+                        <CheckBox x:Name="c_UseDiscoveryPathing" Content="Use Discovery Pathing" Grid.Column="1" HorizontalAlignment="Left" Margin="10,269,0,0" VerticalAlignment="Top" Width="196" Checked="BotPropertyChanged" Unchecked="BotPropertyChanged" Height="16"/>
+                        <Label x:Name="label7_Copy4" Content="Walking Speed Min (km/h)" Margin="10,290,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.423" Height="26" HorizontalAlignment="Left" Width="179"/>
+                        <TextBox Template="{StaticResource pogo}" x:Name="c_WalkingSpeedMin" Grid.Column="1" Height="29" Margin="10,290,10,0" TextWrapping="Wrap" VerticalAlignment="Top" TextChanged="BotPropertyChanged"/>
+                        <Label x:Name="label7_Copy17" Content="Walking Speed Max (km/h)" Margin="10,324,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.423" Height="26" HorizontalAlignment="Left" Width="179"/>
+                        <TextBox Template="{StaticResource pogo}" x:Name="c_WalkingSpeedMax" Grid.Column="1" Height="29" Margin="10,324,10,0" TextWrapping="Wrap" VerticalAlignment="Top" TextChanged="BotPropertyChanged"/>
+                        <Label x:Name="label7_Copy18" Content="Altitude Min" Margin="10,47,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.423" Height="26"/>
+                        <TextBox Template="{StaticResource pogo}" x:Name="c_DefaultAltitudeMin" Grid.Column="1" Height="29" Margin="10,47,10,0" TextWrapping="Wrap" VerticalAlignment="Top" TextChanged="BotPropertyChanged"/>
+                        <Label x:Name="label7_Copy19" Content="Altitude Max" Margin="10,81,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.423" Height="26"/>
+                        <TextBox Template="{StaticResource pogo}" x:Name="c_DefaultAltitudeMax" Grid.Column="1" Height="29" Margin="10,81,10,0" TextWrapping="Wrap" VerticalAlignment="Top" TextChanged="BotPropertyChanged"/>
+                        <CheckBox x:Name="c_UseHumanPathing" Content="Use Human Pathing" Grid.Column="1" HorizontalAlignment="Left" Margin="10,358,0,0" VerticalAlignment="Top" Width="196" Checked="BotPropertyChanged" Unchecked="BotPropertyChanged" Height="16"/>
+
+                    </Grid>
+                </GroupBox>
+                <GroupBox x:Name="groupBox4" Header="Snipe" Margin="-1,1378,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.479,0.565" Height="224" IsEnabled="False">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="181*"/>
+                            <ColumnDefinition Width="108*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label x:Name="label9" Content="Min Delay Between Snipes" Margin="10,8,0,0" VerticalAlignment="Top" Height="26"/>
+                        <TextBox Template="{StaticResource pogo}" x:Name="c_MinDelayBetweenSnipes" Height="29" Margin="5,7,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Column="1" Text="0" TextChanged="BotPropertyChanged"/>
+                        <Label x:Name="label9_Copy" Content="Min Pokeballs To Snipe" Margin="10,42,0,0" VerticalAlignment="Top" Height="26"/>
+                        <TextBox Template="{StaticResource pogo}" x:Name="c_MinPokeballsToSnipe" Height="29" Margin="5,41,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Column="1" Text="0" TextChanged="BotPropertyChanged"/>
+                        <Label x:Name="label9_Copy1" Content="Min Pokeballs While Snipe" Margin="10,76,0,0" VerticalAlignment="Top" Height="26"/>
+                        <TextBox Template="{StaticResource pogo}" x:Name="c_MinPokeballsWhileSnipe" Height="29" Margin="5,75,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Column="1" Text="0" TextChanged="BotPropertyChanged"/>
+                        <CheckBox x:Name="c_SnipeAtPokestops" Content="Snipe At Pokestops" HorizontalAlignment="Left" Margin="10,107,0,0" VerticalAlignment="Top" Width="171" Checked="BotPropertyChanged" Unchecked="BotPropertyChanged"/>
+                        <CheckBox x:Name="c_SnipeIgnoreUnknownIv" Content="Snipe Ignore Unknown Iv" HorizontalAlignment="Left" Margin="10,128,0,0" VerticalAlignment="Top" Width="171" Checked="BotPropertyChanged" Unchecked="BotPropertyChanged"/>
+                        <CheckBox x:Name="c_UseTransferIvForSnipe" Content="Use Transfer Iv For Snipe" HorizontalAlignment="Left" Margin="10,149,0,0" VerticalAlignment="Top" Width="171" Checked="BotPropertyChanged" Unchecked="BotPropertyChanged"/>
+                        <Label x:Name="label9_Copy23" Content="Sniping Scan Offset" Margin="10,170,0,0" VerticalAlignment="Top" Height="26"/>
+                        <TextBox Template="{StaticResource pogo}" x:Name="c_SnipingScanOffset" Height="29" Margin="5,169,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Column="1" TextChanged="BotPropertyChanged"/>
+
+                    </Grid>
+                </GroupBox>
+                <GroupBox x:Name="groupBox4_Copy" Header="Items" Margin="0,1146,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.479,0.565" Height="232">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="181*"/>
+                            <ColumnDefinition Width="108*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label x:Name="label10" Content="Amount Of Pokebals To Keep" Margin="10,8,0,0" VerticalAlignment="Top" Height="26"/>
+                        <TextBox Template="{StaticResource pogo}" x:Name="c_TotalAmountOfPokeballsToKeep" Height="29" Margin="5,7,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Column="1" Text="0" TextChanged="BotPropertyChanged" />
+                        <Label x:Name="label9_Copy2" Content="Amount Of Potions To Keep" Margin="10,42,0,0" VerticalAlignment="Top" Height="26"/>
+                        <TextBox Template="{StaticResource pogo}" x:Name="c_TotalAmountOfPotionsToKeep" Height="29" Margin="5,41,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Column="1" Text="0" TextChanged="BotPropertyChanged" />
+                        <Label x:Name="label9_Copy3" Content="Amount Of Revives To Keep" Margin="10,76,0,0" VerticalAlignment="Top" Height="26"/>
+                        <TextBox Template="{StaticResource pogo}" x:Name="c_TotalAmountOfRevivesToKeep" Height="29" Margin="5,75,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Column="1" Text="0" TextChanged="BotPropertyChanged" />
+                        <Label x:Name="label9_Copy4" Content="Translation Language Code" Margin="10,178,0,0" VerticalAlignment="Top" Height="26"/>
+                        <TextBox Template="{StaticResource pogo}" x:Name="c_TranslationLanguageCode" Height="29" Margin="5,177,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Column="1" TextChanged="BotPropertyChanged"/>
+                        <Label x:Name="label9_Copy5" Content="Recycle At Usage Percentage" Margin="10,144,0,0" VerticalAlignment="Top" Height="26"/>
+                        <TextBox Template="{StaticResource pogo}" x:Name="c_RecycleInventoryAtUsagePercentage" Height="29" Margin="5,143,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Column="1" Text="0" TextChanged="BotPropertyChanged"/>
+                        <Label x:Name="label9_Copy6" Content="Amount Of BerriesTo Keep" Margin="10,110,0,0" VerticalAlignment="Top" Height="26"/>
+                        <TextBox Template="{StaticResource pogo}" x:Name="c_TotalAmountOfRazzToKeep" Height="29" Margin="5,109,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Column="1" Text="0" TextChanged="BotPropertyChanged" />
+
+                    </Grid>
+                </GroupBox>
+                <GroupBox x:Name="groupBox4_Copy1" Header="Catch" Margin="0,688,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.479,0.565" Height="458">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="181*"/>
+                            <ColumnDefinition Width="108*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label x:Name="label8_Copy7" Content="Master Ball Below Catch Probability" HorizontalAlignment="Left" Margin="10,70,0,0" VerticalAlignment="Top" Width="209"/>
+                        <TextBox Template="{StaticResource pogo}" x:Name="c_UseMasterBallBelowCatchProbability" Height="29" Margin="5,67,10,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" TextChanged="BotPropertyChanged" Grid.Column="1"/>
+                        <Label x:Name="label8_Copy11" Content="Great Ball Below Catch Probability" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Width="209" RenderTransformOrigin="0.5,0.5" />
+
+                        <TextBox Template="{StaticResource pogo}" x:Name="c_UseGreatBallBelowCatchProbability" Height="29" Margin="5,-1,10,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" TextChanged="BotPropertyChanged" Grid.Column="1" />
+                        <Label x:Name="label8_Copy12" Content="Ultra Ball Below Catch Probability" HorizontalAlignment="Left" Margin="10,34,0,0" VerticalAlignment="Top" Width="209"/>
+                        <TextBox Template="{StaticResource pogo}" x:Name="c_UseUltraBallBelowCatchProbability" Height="29" Margin="5,33,10,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" TextChanged="BotPropertyChanged" Grid.Column="1" />
+                        <Label x:Name="label8_Copy13" Content="Throw Accuracy Min" HorizontalAlignment="Left" Margin="10,121,0,0" VerticalAlignment="Top" Width="220" Grid.ColumnSpan="2"/>
+                        <TextBox Template="{StaticResource pogo}" x:Name="c_ThrowAccuracyMin" Height="29" Margin="5,120,10,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" TextChanged="BotPropertyChanged" Grid.Column="1" />
+                        <Label x:Name="label8_Copy14" Content="Throw Accuracy Max" HorizontalAlignment="Left" Margin="10,155,0,0" VerticalAlignment="Top" Width="220" Grid.ColumnSpan="2"/>
+                        <TextBox Template="{StaticResource pogo}" x:Name="c_ThrowAccuracyMax" Height="29" Margin="5,154,10,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" TextChanged="BotPropertyChanged" Grid.Column="1" />
+                        <Label x:Name="label8_Copy15" Content="Throw Spin Frequency" HorizontalAlignment="Left" Margin="10,189,0,0" VerticalAlignment="Top" Width="220" Grid.ColumnSpan="2"/>
+                        <TextBox Template="{StaticResource pogo}" x:Name="c_ThrowSpinFrequency" Height="29" Margin="5,188,10,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" TextChanged="BotPropertyChanged" Grid.Column="1" />
+                        <CheckBox x:Name="c_HumanizeThrows" Content="Humanize Throws" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="13,100,0,0" Checked="BotPropertyChanged" Unchecked="BotPropertyChanged" Width="207" />
+                        <CheckBox x:Name="c_UsePokemonToNotCatchFilter" Content="Use Pokemon Not To Catch Filter" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="13,220,0,0" Checked="BotPropertyChanged" Unchecked="BotPropertyChanged" Width="207" />
+                        <Label x:Name="label8_Copy8" Content="Use Ultra Ball Above Iv" HorizontalAlignment="Left" Margin="10,241,0,0" VerticalAlignment="Top" Width="155"/>
+                        <TextBox Template="{StaticResource pogo}" x:Name="c_UseUltraBallAboveIv" Height="29" Margin="5,240,10,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" TextChanged="BotPropertyChanged" Grid.Column="1" />
+                        <Label x:Name="label8_Copy9" Content="Use Great Ball Above Iv" HorizontalAlignment="Left" Margin="10,275,0,0" VerticalAlignment="Top" Width="155"/>
+                        <TextBox Template="{StaticResource pogo}" x:Name="c_UseGreatBallAboveIv" Height="29" Margin="5,274,10,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" TextChanged="BotPropertyChanged" Grid.Column="1" />
+                        <Label x:Name="label8_Copy16" Content="Use Berry Min Cp" HorizontalAlignment="Left" Margin="10,309,0,0" VerticalAlignment="Top" Width="155"/>
+                        <TextBox Template="{StaticResource pogo}" x:Name="c_UseBerryMinCp" Height="29" Margin="5,308,10,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Grid.Column="1" TextChanged="BotPropertyChanged" />
+                        <Label x:Name="label8_Copy17" Content="Use Berry Min Iv" HorizontalAlignment="Left" Margin="10,343,0,0" VerticalAlignment="Top" Width="155"/>
+                        <TextBox Template="{StaticResource pogo}" x:Name="c_UseBerryMinIv" Height="29" Margin="5,342,10,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Grid.Column="1" TextChanged="BotPropertyChanged" />
+                        <Label x:Name="label8_Copy18" Content="Use Berry Below Catch Probability" HorizontalAlignment="Left" Margin="10,377,0,0" VerticalAlignment="Top" Width="210"/>
+                        <TextBox Template="{StaticResource pogo}" x:Name="c_UseBerryBelowCatchProbability" Height="29" Margin="5,376,10,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Grid.Column="1" TextChanged="BotPropertyChanged" />
+                        <CheckBox x:Name="c_CatchWildPokemon" Content="Catch Wild Pokemon" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="13,408,0,0" Checked="BotPropertyChanged" Unchecked="BotPropertyChanged" Width="207" />
+
+                    </Grid>
+                </GroupBox>
+                <GroupBox x:Name="groupBox3_Copy" Grid.Column="1" Header="Device Info" Margin="0,556,0,0" VerticalAlignment="Top" Height="502">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="189*"/>
+                            <ColumnDefinition Width="251*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label x:Name="label11" Content="DeviceId" Margin="10,13,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.423" Height="26"/>
+                        <TextBox Template="{StaticResource pogo}" x:Name="c_DeviceId" Grid.Column="1" Height="29" Margin="10,13,77,0" TextWrapping="Wrap" VerticalAlignment="Top" TextChanged="BotPropertyChanged" />
+                        <Label x:Name="label7_Copy5" Content="Android Board Name" Margin="10,47,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.423" Height="26"/>
+                        <TextBox Template="{StaticResource pogo}" x:Name="c_AndroidBoardName" Grid.Column="1" Height="29" Margin="10,47,10,0" TextWrapping="Wrap" VerticalAlignment="Top" TextChanged="BotPropertyChanged" />
+                        <Label x:Name="label7_Copy6" Content="Android Bootloader" Margin="10,81,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.423" Height="26"/>
+                        <TextBox Template="{StaticResource pogo}" x:Name="c_AndroidBootloader" Grid.Column="1" Height="29" Margin="10,81,10,0" TextWrapping="Wrap" VerticalAlignment="Top" TextChanged="BotPropertyChanged" />
+                        <Label x:Name="label7_Copy7" Content="Device Brand" Margin="10,115,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.423" Height="26"/>
+                        <TextBox Template="{StaticResource pogo}" x:Name="c_DeviceBrand" Grid.Column="1" Height="29" Margin="10,115,10,0" TextWrapping="Wrap" VerticalAlignment="Top" TextChanged="BotPropertyChanged" />
+                        <Label x:Name="label7_Copy8" Content="Device Model" Margin="10,149,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.423" Height="26"/>
+                        <TextBox Template="{StaticResource pogo}" x:Name="c_DeviceModel" Grid.Column="1" Height="29" Margin="10,149,10,0" TextWrapping="Wrap" VerticalAlignment="Top" TextChanged="BotPropertyChanged" />
+                        <Label x:Name="label7_Copy9" Content="Device Model Identifier" Margin="10,183,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.423" Height="26"/>
+                        <TextBox Template="{StaticResource pogo}" x:Name="c_DeviceModelIdentifier" Grid.Column="1" Height="29" Margin="10,183,10,0" TextWrapping="Wrap" VerticalAlignment="Top" TextChanged="BotPropertyChanged" />
+                        <Label x:Name="label7_Copy10" Content="Device Model Boot" Margin="10,217,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.423" Height="26"/>
+                        <TextBox Template="{StaticResource pogo}" x:Name="c_DeviceModelBoot" Grid.Column="1" Height="29" Margin="10,217,10,0" TextWrapping="Wrap" VerticalAlignment="Top" TextChanged="BotPropertyChanged" />
+                        <Label x:Name="label7_Copy11" Content="Hardware Manufacturer" Margin="10,251,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.423" Height="26"/>
+                        <TextBox Template="{StaticResource pogo}" x:Name="c_HardwareManufacturer" Grid.Column="1" Height="29" Margin="10,251,10,0" TextWrapping="Wrap" VerticalAlignment="Top" TextChanged="BotPropertyChanged" />
+                        <Label x:Name="label7_Copy12" Content="Hardware Model" Margin="10,285,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.423" Height="26"/>
+                        <TextBox Template="{StaticResource pogo}" x:Name="c_HardwareModel" Grid.Column="1" Height="29" Margin="10,285,10,0" TextWrapping="Wrap" VerticalAlignment="Top" TextChanged="BotPropertyChanged" />
+                        <Label x:Name="label7_Copy13" Content="Firmware Brand" Margin="10,319,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.423" Height="26"/>
+                        <TextBox Template="{StaticResource pogo}" x:Name="c_FirmwareBrand" Grid.Column="1" Height="29" Margin="10,319,10,0" TextWrapping="Wrap" VerticalAlignment="Top" TextChanged="BotPropertyChanged" />
+                        <Label x:Name="label7_Copy14" Content="Firmware Tags" Margin="10,353,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.423" Height="26"/>
+                        <TextBox Template="{StaticResource pogo}" x:Name="c_FirmwareTags" Grid.Column="1" Height="29" Margin="10,353,10,0" TextWrapping="Wrap" VerticalAlignment="Top" TextChanged="BotPropertyChanged" />
+                        <Label x:Name="label7_Copy15" Content="Firmware Type" Margin="10,387,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.423" Height="26"/>
+                        <TextBox Template="{StaticResource pogo}" x:Name="c_FirmwareType" Grid.Column="1" Height="29" Margin="10,387,10,0" TextWrapping="Wrap" VerticalAlignment="Top" TextChanged="BotPropertyChanged" />
+                        <Label x:Name="label7_Copy16" Content="Firmware Fingerprint" Margin="10,421,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.423" Height="26"/>
+                        <TextBox Template="{StaticResource pogo}" x:Name="c_FirmwareFingerprint" Grid.Column="1" Height="29" Margin="10,421,10,0" TextWrapping="Wrap" VerticalAlignment="Top" TextChanged="BotPropertyChanged" />
+                        <Button x:Name="b_getDataFromRealPhone" Content="Get Data from Your Android Phone" Margin="10,455,0,0" VerticalAlignment="Top" Width="195" Grid.Column="1" Click="b_getDataFromRealPhone_Click" />
+                        <Button x:Name="b_generateRandomDeviceId" Content="Random" HorizontalAlignment="Right" Margin="0,17,10,0" VerticalAlignment="Top" Width="62" Grid.Column="1" Click="b_generateRandomDeviceId_Click" />
+
+                    </Grid>
+                </GroupBox>
+                <GroupBox x:Name="groupBox4_Copy2" Header="Delays" Margin="0,1058,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.479,0.565" Height="573" Grid.Column="1">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="181*"/>
+                            <ColumnDefinition Width="108*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label x:Name="label12" Content="Delay Between Player Actions" Margin="10,8,0,0" VerticalAlignment="Top" Height="26"/>
+                        <TextBox Template="{StaticResource pogo}" x:Name="c_DelayBetweenPlayerActions" Height="29" Margin="5,7,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Column="1" Text="0" TextChanged="BotPropertyChanged" />
+                        <Label x:Name="label9_Copy7" Content="Delay Position Check State" Margin="10,42,0,0" VerticalAlignment="Top" Height="26"/>
+                        <TextBox Template="{StaticResource pogo}" x:Name="c_DelayPositionCheckState" Height="29" Margin="5,41,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Column="1" Text="0" TextChanged="BotPropertyChanged" />
+                        <Label x:Name="label9_Copy8" Content="Delay Pokestop" Margin="10,76,0,0" VerticalAlignment="Top" Height="26"/>
+                        <TextBox Template="{StaticResource pogo}" x:Name="c_DelayPokestop" Height="29" Margin="5,75,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Column="1" Text="0" TextChanged="BotPropertyChanged" />
+                        <Label x:Name="label9_Copy9" Content="Delay Catch Nearby Pokemon" Margin="10,178,0,0" VerticalAlignment="Top" Height="26"/>
+                        <TextBox Template="{StaticResource pogo}" x:Name="c_DelayCatchNearbyPokemon" Height="29" Margin="5,177,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Column="1" TextChanged="BotPropertyChanged"/>
+                        <Label x:Name="label9_Copy10" Content="Delay Between Pokemon Catch" Margin="10,144,0,0" VerticalAlignment="Top" Height="26"/>
+                        <TextBox Template="{StaticResource pogo}" x:Name="c_DelayBetweenPokemonCatch" Height="29" Margin="5,143,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Column="1" Text="0" TextChanged="BotPropertyChanged"/>
+                        <Label x:Name="label9_Copy11" Content="Delay Catch Pokemon" Margin="10,110,0,0" VerticalAlignment="Top" Height="26"/>
+                        <TextBox Template="{StaticResource pogo}" x:Name="c_DelayCatchPokemon" Height="29" Margin="5,109,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Column="1" Text="0" TextChanged="BotPropertyChanged" />
+                        <Label x:Name="label9_Copy12" Content="Delay Catch Lure Pokemon" Margin="10,212,0,0" VerticalAlignment="Top" Height="26"/>
+                        <TextBox Template="{StaticResource pogo}" x:Name="c_DelayCatchLurePokemon" Height="29" Margin="5,211,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Column="1" TextChanged="BotPropertyChanged"/>
+                        <Label x:Name="label9_Copy13" Content="Delay Catch Incense Pokemon" Margin="10,246,0,0" VerticalAlignment="Top" Height="26"/>
+                        <TextBox Template="{StaticResource pogo}" x:Name="c_DelayCatchIncensePokemon" Height="29" Margin="5,245,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Column="1" TextChanged="BotPropertyChanged"/>
+                        <Label x:Name="label9_Copy14" Content="Delay Evolve Pokemon" Margin="10,280,0,0" VerticalAlignment="Top" Height="26"/>
+                        <TextBox Template="{StaticResource pogo}" x:Name="c_DelayEvolvePokemon" Height="29" Margin="5,279,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Column="1" TextChanged="BotPropertyChanged"/>
+                        <Label x:Name="label9_Copy15" Content="Delay Evolve Variation" Margin="10,314,0,0" VerticalAlignment="Top" Height="26"/>
+                        <TextBox Template="{StaticResource pogo}" x:Name="c_DelayEvolveVariation" Height="29" Margin="5,313,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Column="1" TextChanged="BotPropertyChanged"/>
+                        <Label x:Name="label9_Copy16" Content="Delay Transfer Pokemon" Margin="10,348,0,0" VerticalAlignment="Top" Height="26"/>
+                        <TextBox Template="{StaticResource pogo}" x:Name="c_DelayTransferPokemon" Height="29" Margin="5,347,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Column="1" TextChanged="BotPropertyChanged"/>
+                        <Label x:Name="label9_Copy17" Content="Delay Display Pokemon" Margin="10,382,0,0" VerticalAlignment="Top" Height="26"/>
+                        <TextBox Template="{StaticResource pogo}" x:Name="c_DelayDisplayPokemon" Height="29" Margin="5,381,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Column="1" TextChanged="BotPropertyChanged"/>
+                        <Label x:Name="label9_Copy18" Content="Delay Use Lucky Egg" Margin="10,416,0,0" VerticalAlignment="Top" Height="26"/>
+                        <TextBox Template="{StaticResource pogo}" x:Name="c_DelayUseLuckyEgg" Height="29" Margin="5,415,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Column="1" TextChanged="BotPropertyChanged"/>
+                        <Label x:Name="label9_Copy19" Content="Delay Softban Retry" Margin="10,450,0,0" VerticalAlignment="Top" Height="26"/>
+                        <TextBox Template="{StaticResource pogo}" x:Name="c_DelaySoftbanRetry" Height="29" Margin="5,449,10,-2" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Column="1" TextChanged="BotPropertyChanged"/>
+                        <Label x:Name="label9_Copy20" Content="Delay Recyle Item" Margin="10,484,0,-34" VerticalAlignment="Top" Height="26"/>
+                        <TextBox Template="{StaticResource pogo}" x:Name="c_DelayRecyleItem" Height="29" Margin="5,483,10,-36" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Column="1" TextChanged="BotPropertyChanged"/>
+                        <Label x:Name="label9_Copy21" Content="Delay Snipe Pokemon" Margin="10,518,0,0" VerticalAlignment="Top" Height="26"/>
+                        <TextBox Template="{StaticResource pogo}" x:Name="c_DelaySnipePokemon" Height="29" Margin="5,517,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Column="1" TextChanged="BotPropertyChanged"/>
+
+                    </Grid>
+                </GroupBox>
+                <Button Style="{StaticResource ResourceKey=flatbutton}" x:Name="btn_SaveBot" Content="SAVE SETTINGS" HorizontalAlignment="Left" VerticalAlignment="Top" Width="110" Height="30" Click="btn_SaveBot_Click" Margin="407,1636,0,0" FontFamily="BOLD" TextOptions.TextFormattingMode="Display" FontWeight="Bold" Grid.Column="1">
+                    <Button.Background>
+                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                            <LinearGradientBrush.RelativeTransform>
+                                <TransformGroup>
+                                    <ScaleTransform CenterY="0.5" CenterX="0.5"/>
+                                    <SkewTransform CenterY="0.5" CenterX="0.5"/>
+                                    <RotateTransform Angle="90" CenterY="0.5" CenterX="0.5"/>
+                                    <TranslateTransform/>
+                                </TransformGroup>
+                            </LinearGradientBrush.RelativeTransform>
+                            <GradientStop Color="#FF9CEAEE" Offset="0"/>
+                            <GradientStop Color="#FF5398C0" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Button.Background>
+                </Button>
+            </Grid>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

@@ -1,0 +1,164 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Catchem"
+                    xmlns:extensions="clr-namespace:Catchem.Extensions"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+                    xmlns:pokemon="clr-namespace:POGOProtos.Enums;assembly=POGOProtos"
+                    x:Class="Catchem.Styles">
+    <ObjectDataProvider MethodName="GetValues"
+                    ObjectType="{x:Type sys:Enum}"
+                    x:Key="PokemonIdDataProvider">
+        <ObjectDataProvider.MethodParameters>
+            <x:Type TypeName="pokemon:PokemonId" />
+        </ObjectDataProvider.MethodParameters>
+    </ObjectDataProvider>
+    <extensions:CamelCaseConverter x:Key="CamelCaseConverter" />
+    <extensions:MethodToValueConverter x:Key="MethodToValueConverter" />
+    <ControlTemplate TargetType="TextBoxBase" x:Key="pogo">
+        <Border CornerRadius="10" BorderThickness="1" BorderBrush="#FF5AC4B0"  Padding="5,3.5,10,0" Height="27" x:Name="Bd" Background="{TemplateBinding Panel.Background}">
+            <ScrollViewer Name="PART_ContentHost" SnapsToDevicePixels="{TemplateBinding UIElement.SnapsToDevicePixels}" />
+        </Border>
+    </ControlTemplate>
+    <ControlTemplate TargetType="{x:Type Label}"  x:Key="LevelLabel">
+        <Border Name="Border"  Background="{TemplateBinding Panel.Background}" BorderThickness="1" CornerRadius="12" >
+            <ContentPresenter Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        </Border>
+    </ControlTemplate>
+    <ControlTemplate TargetType="Label" x:Key="PogoRoundedLabel">
+        <Border CornerRadius="15" BorderThickness="1" BorderBrush="#FF5AC4B0"  Padding="5,3.5,10,0" />
+    </ControlTemplate>
+    <ControlTemplate TargetType="PasswordBox" x:Key="pogo_password">
+        <Border CornerRadius="10" BorderThickness="1" BorderBrush="#FF5AC4B0"  Padding="5,3.5,10,0" Height="27" x:Name="Bd" Background="{TemplateBinding Panel.Background}">
+            <ScrollViewer Name="PART_ContentHost" SnapsToDevicePixels="{TemplateBinding UIElement.SnapsToDevicePixels}" />
+        </Border>
+    </ControlTemplate>
+    <Style TargetType="Button" x:Key="flatbutton">
+        <Setter Property="Background" Value="DarkCyan"/>
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="Width" Value="75"/>
+        <Setter Property="Height" Value="35"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border BorderThickness="0"
+                        Background="{TemplateBinding Background}"
+                        CornerRadius="13">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <DataTemplate x:Key="PokemonDataTemplate">
+        <Grid Height="160" Width="150" Margin="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Rectangle Fill="White" HorizontalAlignment="Stretch" Height="Auto" VerticalAlignment="Stretch" Width="Auto" Grid.ColumnSpan="2" RadiusX="7" RadiusY="7"/>
+            <Grid HorizontalAlignment="Left" Height="90" VerticalAlignment="Top" Width="150" Grid.ColumnSpan="2">
+                <Image Source="{Binding Path=Image}" x:Name="image" HorizontalAlignment="Center" Height="Auto" Margin="0" VerticalAlignment="Center" Width="Auto"/>
+            </Grid>
+            <TextBlock Text="{Binding Name, FallbackValue=NoName}" HorizontalAlignment="Left" Margin="0,95,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2" Width="150" Padding="0" Foreground="#FF59C3B0" FontSize="16" TextAlignment="Center"/>
+            <TextBlock Text="{Binding Cp, FallbackValue='Cp: 0', StringFormat='Cp: {0}'}" HorizontalAlignment="Left" Margin="0,121,0,0" VerticalAlignment="Top" Grid.ColumnSpan="1" Width="75" Padding="0" Foreground="#FF59C3B0" FontSize="14" TextAlignment="Center" />
+            <TextBlock Text="{Binding Iv, FallbackValue='Iv: 0%', StringFormat='Iv: {0:N1}%'}" HorizontalAlignment="Left" Margin="0,121,0,0" VerticalAlignment="Top" Width="75" Padding="0" Foreground="#FF59C3B0" Grid.Column="1" FontSize="14" TextAlignment="Center" />
+            <TextBlock Text="{Binding Candy, FallbackValue='Candy: 0', StringFormat='Candy: {0}'}" HorizontalAlignment="Left" Margin="0,140,0,0" VerticalAlignment="Top" Width="75" Padding="0" Foreground="#FF59C3B0" Grid.Column="1" FontSize="12" TextAlignment="Center" />
+            <TextBlock Text="{Binding Tags, FallbackValue='', StringFormat=''}" HorizontalAlignment="Left" Margin="0,140,0,0" VerticalAlignment="Top" Width="75" Padding="0" Foreground="#FF59C3B0" Grid.Column="0" FontSize="12" TextAlignment="Center" />
+        </Grid>
+    </DataTemplate>
+    <DataTemplate x:Key="InventoryItemTemplate">
+        <Grid Height="75" Margin="3" Width="Auto">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="75"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Rectangle Fill="White" HorizontalAlignment="Stretch" Height="Auto" VerticalAlignment="Stretch" Width="Auto" Grid.ColumnSpan="2"/>
+            <Grid HorizontalAlignment="Left" Height="75" VerticalAlignment="Top" Width="75">
+                <Image Source="{Binding Image}" x:Name="image" HorizontalAlignment="Center" Height="Auto" Margin="0" VerticalAlignment="Center" Width="Auto"/>
+            </Grid>
+            <TextBlock Text="{Binding Name, FallbackValue=NoName}" HorizontalAlignment="Stretch" Margin="1,10,0,0" VerticalAlignment="Top" Grid.ColumnSpan="1" Width="Auto" Padding="0" Foreground="#FF59C3B0" FontSize="16" TextAlignment="Center" Height="21" Grid.Column="1"/>
+            <TextBlock Text="{Binding Amount, FallbackValue='Amount: 0', StringFormat='Amount: {0}'}" HorizontalAlignment="Stretch" Margin="1,46,0,0" VerticalAlignment="Top" Grid.ColumnSpan="1" Width="Auto" Padding="0" Foreground="#FF59C3B0" FontSize="14" TextAlignment="Center" Height="19" Grid.Column="1" />
+        </Grid>
+    </DataTemplate>
+    <DataTemplate x:Key="BotTemplate">
+        <Grid Width="Auto" Height="90" Margin="3">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Rectangle Fill="White" HorizontalAlignment="Stretch" Height="Auto" VerticalAlignment="Stretch" Width="Auto" Grid.ColumnSpan="2" Grid.RowSpan="4" RadiusX="3" RadiusY="3" Stroke="#FF00E89E"/>
+            <Button Style="{StaticResource ResourceKey=flatbutton}" x:Name="btn_botStop" Content="STOP" HorizontalAlignment="Left" Margin="10,0,0,0" FontFamily="BOLD" TextOptions.TextFormattingMode="Display" FontWeight="Bold" VerticalAlignment="Top" Width="80" Height="28" Grid.Row="2" Click="btn_botStop_Click" Grid.RowSpan="1">
+                <Button.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <LinearGradientBrush.RelativeTransform>
+                            <TransformGroup>
+                                <ScaleTransform CenterY="0.5" CenterX="0.5"/>
+                                <SkewTransform CenterY="0.5" CenterX="0.5"/>
+                                <RotateTransform Angle="90" CenterY="0.5" CenterX="0.5"/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </LinearGradientBrush.RelativeTransform>
+                        <GradientStop Color="#FFEEB29C" Offset="0"/>
+                        <GradientStop Color="#FFC04F53" Offset="1"/>
+                    </LinearGradientBrush>
+                </Button.Background>
+            </Button>
+            <Button Style="{StaticResource ResourceKey=flatbutton}" x:Name="btn_botStart" Content="START" HorizontalAlignment="Right" Margin="0,0,10,0" FontFamily="BOLD" TextOptions.TextFormattingMode="Display" FontWeight="Bold" VerticalAlignment="Top" Width="80" Height="28" Grid.Column="1" Grid.Row="2" Click="btn_botStart_Click">
+                <Button.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <LinearGradientBrush.RelativeTransform>
+                            <TransformGroup>
+                                <ScaleTransform CenterY="0.5" CenterX="0.5"/>
+                                <SkewTransform CenterY="0.5" CenterX="0.5"/>
+                                <RotateTransform Angle="90" CenterY="0.5" CenterX="0.5"/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </LinearGradientBrush.RelativeTransform>
+                        <GradientStop Color="#FFB0EE9C" Offset="0"/>
+                        <GradientStop Color="#FF53C0B1" Offset="1"/>
+                    </LinearGradientBrush>
+                </Button.Background>
+            </Button>
+            <TextBlock Text="{Binding ProfileName, FallbackValue='%PROFILENAME%'}" x:Name="block_botName" HorizontalAlignment="Stretch" Margin="10,0,44,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" Width="Auto" Grid.RowSpan="1" Grid.ColumnSpan="2" Foreground="#FF59C3B0" FontSize="18.667" TextAlignment="Left"/>
+            <TextBlock Text="{Binding Errors, FallbackValue='%ERR%'}" x:Name="block_botErrors" Grid.Column="1" HorizontalAlignment="Right" Margin="0,0,3,0" Grid.RowSpan="1" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" Width="41" TextAlignment="Right" Foreground="#FFB61515"/>
+            <TextBlock Text="{Binding Xpph, FallbackValue='Xp/h: 0', StringFormat='Xp/h: {0:N0}'}" x:Name="block_botName_Copy" HorizontalAlignment="Stretch" TextWrapping="Wrap" VerticalAlignment="Top" Height="Auto" Width="Auto" Grid.RowSpan="1" Grid.ColumnSpan="1" Foreground="#FF59C3B0" FontSize="13.333" TextAlignment="Center" Grid.Row="1" Margin="0,3,0,0"/>
+            <TextBlock Text="{Binding Ts, FallbackValue='00:00:00'}" x:Name="block_botName_Copy1" HorizontalAlignment="Stretch" TextWrapping="Wrap" VerticalAlignment="Top" Height="Auto" Width="Auto" Grid.RowSpan="1" Grid.ColumnSpan="1" Foreground="#FF59C3B0" FontSize="13.333" TextAlignment="Center" Grid.Row="1" Margin="0,3,0,0" Grid.Column="1"/>
+        </Grid>
+    </DataTemplate>
+    <DataTemplate x:Key="PokemonListTemplate">
+        <Grid Height="Auto">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="35"/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="86"/>
+            </Grid.ColumnDefinitions>
+            <Rectangle Fill="#FFFFFFFF" HorizontalAlignment="Stretch" Height="Auto" VerticalAlignment="Stretch" Width="Auto" Grid.ColumnSpan="3"/>
+            <Grid HorizontalAlignment="Left" Height="35" Margin="0" VerticalAlignment="Top" Width="35">
+                <Image Source="{Binding Converter={StaticResource MethodToValueConverter}, ConverterParameter='ToSource'}" x:Name="image" HorizontalAlignment="Stretch" Height="Auto" VerticalAlignment="Stretch" Width="Auto" Margin="0"/>
+            </Grid>
+            <TextBlock Text="{Binding Converter={StaticResource CamelCaseConverter}, FallbackValue='Unknown Pokemon'}" Margin="0,8,0,9" Grid.Column="1" Foreground="#FF59C3B0" TextAlignment="Center" Grid.ColumnSpan="1" VerticalAlignment="Center" Height="18"/>
+            <Button Tag="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}}}" Style="{StaticResource ResourceKey=flatbutton}" x:Name="btn_removeFromList" Content="Delete" HorizontalAlignment="Left" Margin="0" FontFamily="BOLD" TextOptions.TextFormattingMode="Display" FontWeight="Bold" VerticalAlignment="Center" Width="80" Height="28" Grid.Row="0" Grid.RowSpan="1" Grid.Column="2" Grid.ColumnSpan="1" Click="btn_removeFromList_Click">
+                <Button.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <LinearGradientBrush.RelativeTransform>
+                            <TransformGroup>
+                                <ScaleTransform CenterY="0.5" CenterX="0.5"/>
+                                <SkewTransform CenterY="0.5" CenterX="0.5"/>
+                                <RotateTransform Angle="90" CenterY="0.5" CenterX="0.5"/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </LinearGradientBrush.RelativeTransform>
+                        <GradientStop Color="#FFEEB29C" Offset="0"/>
+                        <GradientStop Color="#FFC04F53" Offset="1"/>
+                    </LinearGradientBrush>
+                </Button.Background>
+            </Button>
+        </Grid>
+    </DataTemplate>
+    
+</ResourceDictionary>

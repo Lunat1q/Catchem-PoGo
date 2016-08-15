@@ -1,12 +1,12 @@
-﻿using POGOProtos.Enums;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows.Media.Imaging;
 using PoGo.PokeMobBot.Logic;
+using POGOProtos.Enums;
 
-namespace Catchem
+namespace Catchem.Classes
 {
     public class PokemonUiData : INotifyPropertyChanged
     {

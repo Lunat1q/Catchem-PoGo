@@ -74,7 +74,15 @@ namespace PoGo.PokeMobBot.Logic.State
                 RequireInput = session.LogicSettings.StartupWelcomeDelay
             });
 
-            return new InfoState();
+            if (!(session.Client.CurrentLatitude > 180) && !(session.Client.CurrentLatitude < -180) &&
+                !(session.Client.CurrentLongitude > 180) && !(session.Client.CurrentLongitude < -180))
+                return new InfoState();
+
+            session.EventDispatcher.Send(new WarnEvent
+            {
+                Message = "Coordinate failure, please check them again!"
+            });
+            return this;
         }
 
         private static Tuple<double, double> LoadPositionFromDisk(ISession session)

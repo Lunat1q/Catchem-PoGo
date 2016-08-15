@@ -1,5 +1,4 @@
-﻿using POGOProtos.Enums;
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
@@ -11,9 +10,10 @@ using System.Windows.Documents;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using PoGo.PokeMobBot.Logic;
+using POGOProtos.Enums;
 using POGOProtos.Inventory.Item;
 
-namespace Catchem
+namespace Catchem.Extensions
 {
     public static class Extensions
     {

@@ -1,11 +1,9 @@
 ﻿using GMap.NET;
-using GMap.NET.WindowsPresentation;
 using PoGo.PokeMobBot.Logic;
 using PoGo.PokeMobBot.Logic.Common;
 using PoGo.PokeMobBot.Logic.Event;
 using PoGo.PokeMobBot.Logic.Logging;
 using PoGo.PokeMobBot.Logic.State;
-using PoGo.PokeMobBot.Logic.Tasks;
 using PoGo.PokeMobBot.Logic.Utils;
 using POGOProtos.Enums;
 using POGOProtos.Map.Fort;
@@ -16,16 +14,14 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Input;
 using System.Windows.Media;
+using Catchem.Classes;
+using Catchem.Extensions;
 using POGOProtos.Data;
 using POGOProtos.Inventory.Item;
 using static System.String;
@@ -50,54 +46,26 @@ namespace Catchem
             set
             {
                 if (value == _bot) return;
+                EnqueOldBot();
                 _bot = value;
-                SelectBot(_bot);
+                NewBotSelected();
             }
         }
-
-        private GMapMarker _playerMarker;
-        private GMapRoute _playerRoute;
-        private GMapRoute _pathRoute;
-
         private bool _loadingUi;
-        private bool _followThePlayerMarker;
-        private bool _keepPokemonsOnMap;
 
         public MainWindow()
         {
             InitializeComponent();
-            InitWindowsComtrolls();
-            InitializeMap();
+            InitWindowsControlls();
             BotWindow = this;
             LogWorker();
-            MarkersWorker();
-            MovePlayer();
             InitBots();
+            BotMapPage.SetSettingsPage(BotSettingsPage);
         }
 
-        private void InitWindowsComtrolls()
+        private void InitWindowsControlls()
         {
-            authBox.ItemsSource = Enum.GetValues(typeof(AuthType));
-        }
-
-        private async void InitializeMap()
-        {
-            pokeMap.Bearing = 0;
-            pokeMap.CanDragMap = true;
-            pokeMap.DragButton = MouseButton.Left;
-            pokeMap.MaxZoom = 18;
-            pokeMap.MinZoom = 2;
-            pokeMap.MouseWheelZoomType = MouseWheelZoomType.MousePositionWithoutCenter;
-            pokeMap.ShowCenter = false;
-            pokeMap.ShowTileGridLines = false;
-            pokeMap.Zoom = 18;            
-            GMap.NET.MapProviders.GMapProvider.WebProxy = System.Net.WebRequest.GetSystemWebProxy();
-            GMap.NET.MapProviders.GMapProvider.WebProxy.Credentials = System.Net.CredentialCache.DefaultCredentials;
-            pokeMap.MapProvider = GMap.NET.MapProviders.GMapProviders.GoogleMap;
-            GMaps.Instance.Mode = AccessMode.ServerOnly;
-            if (Bot != null)
-                pokeMap.Position = new PointLatLng(Bot.Lat, Bot.Lng);
-            await Task.Delay(10);
+            BotSettingsPage.SubPath = SubPath;
         }
 
         internal void InitBots()
@@ -206,9 +174,7 @@ namespace Catchem
             var receiverBot = BotsCollection.FirstOrDefault(x => x.Session == session);
             if (receiverBot == null || !receiverBot.Started) return;
             receiverBot.PushNewPathRoute(list);
-            _pathRoute.RegenerateShape(pokeMap);
-            if (_pathRoute.Shape != null)
-                (_pathRoute.Shape as System.Windows.Shapes.Path).Stroke = new SolidColorBrush(Color.FromRgb(255, 0, 0));
+            BotMapPage.UpdatePathRoute();
         }
 
         private void PushNewError(ISession session)
@@ -225,17 +191,7 @@ namespace Catchem
                 if ((ulong)objData[0] == 0) return;
                 var receiverBot = BotsCollection.FirstOrDefault(x => x.Session == session);
                 if (receiverBot == null) return;
-                var family = (PokemonFamilyId)objData[4];
-                var candy = (int)objData[5];
-                var pokemonToUpdate = receiverBot.PokemonList.FirstOrDefault(x => x.Id == (ulong)objData[0]);
-                if (pokemonToUpdate == null) return;
-                pokemonToUpdate.Cp = (int)objData[2];
-                pokemonToUpdate.Iv = (double)objData[3];               
-                foreach (var pokemon in receiverBot.PokemonList.Where(x => x.Family == family))
-                {
-                    pokemon.Candy = candy;
-                }
-
+                receiverBot.PokemonUpdated((ulong)objData[0], (int)objData[2], (double)objData[3], (PokemonFamilyId)objData[4], (int)objData[5]);
             }
             catch (Exception)
             {
@@ -246,16 +202,8 @@ namespace Catchem
         private void LostItem(ISession session, object[] objData)
         {
             var receiverBot = BotsCollection.FirstOrDefault(x => x.Session == session);
-            var lostAmount = (int) objData[1];
-            if (receiverBot != null)
-            {
-                var targetItem = receiverBot.ItemList.FirstOrDefault(x => x.Id == (ItemId)objData[0]);
-                if (targetItem == null) return;
-                if (targetItem.Amount <= lostAmount)
-                    receiverBot.ItemList.Remove(targetItem);
-                else
-                    targetItem.Amount -= lostAmount;
-            }
+            if (receiverBot == null) return;
+            receiverBot.LostItem((ItemId?)objData[0], (int?)objData[1]);
             UpdateItemCollection(session);
         }
 
@@ -263,21 +211,9 @@ namespace Catchem
         {
             try
             {
-                var newItems = (List<Tuple<ItemId, int>>)objData[0];
                 var receiverBot = BotsCollection.FirstOrDefault(x => x.Session == session);
                 if (receiverBot == null) return;
-                foreach (var item in newItems)
-                {
-                    var targetItem = receiverBot.ItemList.FirstOrDefault(x => x.Id == item.Item1);
-                    if (targetItem != null)
-                        targetItem.Amount += item.Item2;
-                    else
-                        receiverBot.ItemList.Add(new ItemUiData(
-                            item.Item1, 
-                            item.Item1.ToInventorySource(), 
-                            item.Item1.ToInventoryName(), 
-                            item.Item2));
-                }
+                receiverBot.GotNewItems((List<Tuple<ItemId, int>>)objData[0]);
                 UpdateItemCollection(session);
             }
             catch (Exception)
@@ -290,37 +226,9 @@ namespace Catchem
         {
             var targetBot = BotsCollection.FirstOrDefault(x => x.Session == session);
             if (targetBot == null) return;
-            targetBot.PlayerName = (string)objData[0];
-            targetBot.MaxItemStorageSize = (int)objData[1];
-            targetBot.MaxPokemonStorageSize = (int)objData[2];
-            targetBot.Team = (TeamColor)objData[4];
-            targetBot.StartStarDust = (int)objData[5];
-            targetBot.Coins = (int)objData[3];
+            targetBot.NewPlayerData((string)objData[0], (int)objData[1], (int)objData[2], (TeamColor)objData[4], (int)objData[5], (int)objData[3]);
             if (targetBot == Bot)
-                UpdatePlayerTab(targetBot);
-        }
-
-        private void UpdatePlayerTab(BotWindowData targetBot)
-        {            
-            l_coins.Content = targetBot.Coins;
-            Playername.Content = targetBot.PlayerName;
-            switch (targetBot.Team)
-            {
-                case TeamColor.Neutral:
-                    team_image.Source = Properties.Resources.team_neutral.LoadBitmap();
-                    break;
-                case TeamColor.Blue:
-                    team_image.Source = Properties.Resources.team_mystic.LoadBitmap();
-                    break;
-                case TeamColor.Red:
-                    team_image.Source = Properties.Resources.team_valor.LoadBitmap();
-                    break;
-                case TeamColor.Yellow:
-                    team_image.Source = Properties.Resources.team_instinct.LoadBitmap();
-                    break;
-            }
-            l_poke_inventory.Content = $"({targetBot.PokemonList.Count}/{targetBot.MaxPokemonStorageSize})";
-            l_inventory.Content = $"({Bot.ItemList.Sum(x => x.Amount)}/{Bot.MaxItemStorageSize})";
+                BotPlayerPage.UpdatePlayerTab();
         }
 
         private void LostPokemon(ISession session, object[] objData)
@@ -328,18 +236,8 @@ namespace Catchem
             try
             {
                 var receiverBot = BotsCollection.FirstOrDefault(x => x.Session == session);
-                var targetPokemon = receiverBot?.PokemonList.FirstOrDefault(x => x.Id == (ulong) objData[0]);
-                if (targetPokemon == null) return;
-                receiverBot.PokemonList.Remove(targetPokemon);
-                if (objData[1] != null && objData[2] != null)
-                {
-                    var family = (PokemonFamilyId)objData[1];
-                    var candy = (int)objData[2];
-                    foreach (var pokemon in receiverBot.PokemonList.Where(x => x.Family == family))
-                    {
-                        pokemon.Candy = candy;
-                    }
-                }
+                if (receiverBot == null) return;
+                receiverBot.LostPokemon((ulong)objData[0], (PokemonFamilyId?)objData[1], (int?)objData[2]);
             }
             catch (Exception)
             {
@@ -354,25 +252,7 @@ namespace Catchem
                 if ((ulong) objData[0] == 0) return;
                 var receiverBot = BotsCollection.FirstOrDefault(x => x.Session == session);
                 if (receiverBot == null) return;
-                var pokemonId = (PokemonId) objData[1];
-                var family = (PokemonFamilyId) objData[4];
-                var candy = (int)objData[5];
-                receiverBot.PokemonList.Add(new PokemonUiData(
-                    (ulong) objData[0],
-                    pokemonId,
-                    pokemonId.ToInventorySource(), 
-                    pokemonId.ToString(), 
-                    (int) objData[2], 
-                    (double) objData[3],
-                    family,
-                    candy,
-                    (ulong)DateTime.UtcNow.ToUnixTime()));
-                foreach (var pokemon in receiverBot.PokemonList.Where(x => x.Family == family))
-                {
-                    pokemon.Candy = candy;
-                    pokemon.UpdateTags(receiverBot.Logic);
-                }
-                
+                receiverBot.GotNewPokemon((ulong)objData[0], (PokemonId)objData[1], (int)objData[2], (double)objData[3], (PokemonFamilyId)objData[4], (int)objData[5]);
             }
             catch (Exception)
             {
@@ -380,35 +260,14 @@ namespace Catchem
             }
         }
 
-        private async void BuildPokemonList(ISession session, object[] objData)
+        private void BuildPokemonList(ISession session, object[] objData)
         {
             try
             {
                 var receiverBot = BotsCollection.FirstOrDefault(x => x.Session == session);
-                if (receiverBot != null)
-                {
-                    receiverBot.PokemonList = new ObservableCollection<PokemonUiData>();
-                    receiverBot.PokemonList.CollectionChanged += delegate { UpdatePokemonCollection(session); };
-                    var pokemonFamilies = await session.Inventory.GetPokemonFamilies();
-                    var pokemonSettings = (await session.Inventory.GetPokemonSettings()).ToList();
-                    foreach (var pokemon in (List<Tuple<PokemonData, double, int>>) objData[0])
-                    {
-                        var setting = pokemonSettings.Single(q => q.PokemonId == pokemon.Item1.PokemonId);
-                        var family = pokemonFamilies.First(q => q.FamilyId == setting.FamilyId);
-                        var mon = new PokemonUiData(
-                            pokemon.Item1.Id,
-                            pokemon.Item1.PokemonId,
-                            pokemon.Item1.PokemonId.ToInventorySource(),
-                            (pokemon.Item1.Nickname == "" ? pokemon.Item1.PokemonId.ToString() : pokemon.Item1.Nickname),
-                            pokemon.Item1.Cp,
-                            pokemon.Item2,
-                            family.FamilyId,
-                            family.Candy_,
-                            pokemon.Item1.CreationTimeMs);
-                        receiverBot.PokemonList.Add(mon);
-                        mon.UpdateTags(receiverBot.Logic);
-                    }
-                }
+                if (receiverBot == null) return;
+                var receivedList = (List<Tuple<PokemonData, double, int>>) objData[0];
+                receiverBot.BuildPokemonList(receivedList);
             }
             catch (Exception)
             {
@@ -416,8 +275,7 @@ namespace Catchem
             }
             finally
             {
-                if (Bot != null && PokeListBox != null)
-                    PokeListBox.ItemsSource = Bot?.PokemonList;
+                BotPlayerPage.UpdatePokemons();
             }
         }
 
@@ -432,7 +290,7 @@ namespace Catchem
                 ((List<ItemData>) objData[0]).ForEach(x => receiverBot.ItemList.Add(new ItemUiData(x.ItemId, x.ItemId.ToInventorySource(), x.ItemId.ToInventoryName(), x.Count)));
                 if (session != CurSession) return;
 
-                ItemListBox.ItemsSource = Bot.ItemList;
+                BotPlayerPage.UpdateItems(); 
             }
             catch (Exception)
             {
@@ -443,73 +301,33 @@ namespace Catchem
         private void UpdateItemCollection(ISession session)
         {
             if (Bot == null || session != CurSession) return;
-            l_inventory.Content = $"({Bot.ItemList.Sum(x => x.Amount)}/{Bot.MaxItemStorageSize})";
+            BotPlayerPage.UpdateInventoryCount();
         }
 
         private void UpdateCoords(ISession session, object[] objData)
         {
             try
             {
+                var botReceiver = BotsCollection.FirstOrDefault(x => x.Session == session);
+                if (botReceiver == null) return;
+                botReceiver.Lat = (double)objData[0];
+                botReceiver.Lng = (double)objData[1];
+                botReceiver.PushNewRoutePoint(new PointLatLng(botReceiver.Lat, botReceiver.Lng));
                 if (session != CurSession)
                 {
-                    var botReceiver = BotsCollection.FirstOrDefault(x => x.Session == session);
-                    if (botReceiver == null) return;
-                    botReceiver.Lat = botReceiver._lat = (double) objData[0];
-                    botReceiver.Lng = botReceiver._lng = (double) objData[1];
+                    botReceiver._lat = botReceiver.Lat;
+                    botReceiver._lng = botReceiver.Lng;
                 }
                 else
                 {
-                    Bot.MoveRequired = true;
-                    if (Math.Abs(Bot._lat) < 0.001 && Math.Abs(Bot._lng) < 0.001)
-                    {
-                        Bot.Lat = Bot._lat = (double) objData[0];
-                        Bot.Lng = Bot._lng = (double) objData[1];
-                        Dispatcher.BeginInvoke(new ThreadStart(delegate { pokeMap.Position = new PointLatLng(Bot.Lat, Bot.Lng); }));
-                    }
-                    else
-                    {
-                        Bot.Lat = (double) objData[0];
-                        Bot.Lng = (double) objData[1];
-                    }
-
-                    if (_playerMarker == null)
-                    {
-                        Dispatcher.BeginInvoke(new ThreadStart(DrawPlayerMarker));
-                    }
-                    else
-                    {
-                        Bot.GotNewCoord = true;                        
-                    }
+                    BotSettingsPage.UpdateCoordBoxes();
+                    BotMapPage.UpdateCurrentBotCoords(botReceiver);
                 }
             }
             catch (Exception)
             {
                 // ignored
             }
-        }
-
-        private void DrawPlayerMarker()
-        {
-            if (_playerMarker == null)
-            {
-                _playerMarker = new GMapMarker(new PointLatLng(Bot.Lat, Bot.Lng))
-                {
-                    Shape = Properties.Resources.trainer.ToImage("Player"),
-                    Offset = new Point(-14, -40),
-                    ZIndex = 15
-                };
-                pokeMap.Markers.Add(_playerMarker);
-                _playerRoute = Bot.PlayerRoute;               
-                pokeMap.Markers.Add(_playerRoute);
-                _pathRoute = Bot.PathRoute;
-                pokeMap.Markers.Add(_pathRoute);
-            }
-            else
-            {
-                _playerMarker.Position = new PointLatLng(Bot.Lat, Bot.Lng);
-            }
-            if (Bot.ForceMoveMarker != null && !pokeMap.Markers.Contains(Bot.ForceMoveMarker))
-                pokeMap.Markers.Add(Bot.ForceMoveMarker);
         }
 
         #region DataFlow - Push
@@ -591,125 +409,7 @@ namespace Catchem
         #endregion
 
         #region Async Workers
-
-        private async void MovePlayer()
-        {
-            const int delay = 25;
-            while (!_windowClosing)
-            {
-                if (Bot != null && _playerMarker != null && Bot.Started)
-                {
-                    if (Bot.MoveRequired && Bot.Started)
-                    {
-                        if (Bot.GotNewCoord && Bot.Started)
-                        {
-                            // ReSharper disable once PossibleLossOfFraction
-                            Bot.LatStep = (Bot.Lat - Bot._lat)/(2000/delay);
-                            // ReSharper disable once PossibleLossOfFraction
-                            Bot.LngStep = (Bot.Lng - Bot._lng)/(2000/delay);
-                            Bot.GotNewCoord = false;                           
-                            Bot.PushNewRoutePoint(new PointLatLng(Bot.Lat, Bot.Lng));
-                            pokeMap.UpdateLayout();
-                            UpdateCoordBoxes();
-                            _playerRoute.RegenerateShape(pokeMap);                           
-                        }
-
-                        Bot._lat += Bot.LatStep;
-                        Bot._lng += Bot.LngStep;
-                        _playerMarker.Position = new PointLatLng(Bot._lat, Bot._lng);
-                        if (Math.Abs(Bot._lat - Bot.Lat) < 0.000000001 && Math.Abs(Bot._lng - Bot.Lng) < 0.000000001)
-                            Bot.MoveRequired = false;
-                        if (_followThePlayerMarker)
-                            pokeMap.Position = new PointLatLng(Bot._lat, Bot._lng);
-                    }
-                }
-                await Task.Delay(delay);
-            }
-        }
-
-
-        private async void MarkersWorker()
-        {
-            while (!_windowClosing)
-            {
-                if (Bot?.MarkersQueue.Count > 0)
-                {
-                    try
-                    {
-                        var newMapObj = Bot.MarkersQueue.Dequeue();
-                        switch (newMapObj.OType)
-                        {
-                            case "ps":
-                                if (!Bot.MapMarkers.ContainsKey(newMapObj.Uid))
-                                {
-                                    var marker = new GMapMarker(new PointLatLng(newMapObj.Lat, newMapObj.Lng))
-                                    {
-                                        Shape = Properties.Resources.pstop.ToImage("PokeStop"), Offset = new Point(-16, -32), ZIndex = 5
-                                    };
-                                    pokeMap.Markers.Add(marker);
-                                    Bot.MapMarkers.Add(newMapObj.Uid, marker);
-                                }
-                                break;
-                            case "ps_lured":
-                                if (!Bot.MapMarkers.ContainsKey(newMapObj.Uid))
-                                {
-                                    var marker = new GMapMarker(new PointLatLng(newMapObj.Lat, newMapObj.Lng))
-                                    {
-                                        Shape = Properties.Resources.pstop_lured.ToImage("Lured PokeStop"), Offset = new Point(-16, -32), ZIndex = 5
-                                    };
-                                    pokeMap.Markers.Add(marker);
-                                    Bot.MapMarkers.Add(newMapObj.Uid, marker);
-                                }
-                                break;
-                            case "pm_rm":
-                                if (Bot.MapMarkers.ContainsKey(newMapObj.Uid) && !_keepPokemonsOnMap)                                
-                                    RemoveMarker(newMapObj.Uid, Bot.MapMarkers[newMapObj.Uid]);                                
-                                else                                
-                                    Bot.MarkersDelayRemove.Enqueue(newMapObj);
-                                
-                                break;
-                            case "forcemove_done":
-                                if (Bot.ForceMoveMarker != null)
-                                {
-                                    pokeMap.Markers.Remove(Bot.ForceMoveMarker);
-                                    Bot.ForceMoveMarker = null;
-                                }
-                                break;
-                            case "pm":
-                                if (!Bot.MapMarkers.ContainsKey(newMapObj.Uid))
-                                {
-                                    CreatePokemonMarker(newMapObj);
-                                }
-                                break;
-                        }
-                    }
-                    catch
-                    {
-                        // ignored
-                    }
-                }
-                await Task.Delay(10);
-            }
-        }
-
-        private void RemoveMarker(string uid, GMapMarker marker)
-        {
-            pokeMap.Markers.Remove(marker);
-            Bot.MapMarkers.Remove(uid);
-        }
-
-        private void CreatePokemonMarker(NewMapObject newMapObj)
-        {
-            var pokemon = (PokemonId) Enum.Parse(typeof(PokemonId), newMapObj.OName);
-
-            var marker = new GMapMarker(new PointLatLng(newMapObj.Lat, newMapObj.Lng))
-            {
-                Shape = pokemon.ToImage(), Offset = new Point(-15, -30), ZIndex = 10
-            };
-            pokeMap.Markers.Add(marker);
-            Bot.MapMarkers.Add(newMapObj.Uid, marker);
-        }
-
+        
         private async void LogWorker()
         {
             while (!_windowClosing)
@@ -728,61 +428,9 @@ namespace Catchem
                 await Task.Delay(10);
             }
         }
-
-        private static async void EvolvePokemon(ISession session, PokemonUiData pokemon)
-        {
-            await EvolveSpecificPokemonTask.Execute(session, pokemon.Id);
-        }
-
-        private static async void LevelUpPokemon(ISession session, PokemonUiData pokemon, bool toMax = false)
-        {
-            await LevelUpSpecificPokemonTask.Execute(session, pokemon.Id, toMax);
-        }
-
-        private static async void TransferPokemon(ISession session, PokemonUiData pokemon)
-        {
-            await TransferPokemonTask.Execute(session, pokemon.Id);
-        }
-
-        private static async void RecycleItem(ISession session, ItemUiData item, int amount, CancellationToken cts)
-        {
-            await RecycleSpecificItemTask.Execute(session, item.Id, amount, cts);
-        }
-
         #endregion
 
         #region Controll's events
-
-        private void authBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (Bot == null || _loadingUi) return;
-            var comboBox = sender as ComboBox;
-            if (comboBox != null)
-                Bot.GlobalSettings.Auth.AuthType = (AuthType) comboBox.SelectedItem;
-        }
-
-        private void loginBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            if (Bot == null || _loadingUi) return;
-            var box = sender as TextBox;
-            if (box == null) return;
-            if (Bot.GlobalSettings.Auth.AuthType == AuthType.Google)
-                Bot.GlobalSettings.Auth.GoogleUsername = box.Text;
-            else
-                Bot.GlobalSettings.Auth.PtcUsername = box.Text;
-        }
-
-        private void passwordBox_PasswordChanged(object sender, RoutedEventArgs e)
-        {
-            if (Bot == null || _loadingUi) return;
-            var box = sender as PasswordBox;
-            if (box == null) return;
-            if (Bot.GlobalSettings.Auth.AuthType == AuthType.Google)
-                Bot.GlobalSettings.Auth.GooglePassword = box.Password;
-            else
-                Bot.GlobalSettings.Auth.PtcPassword = box.Password;
-        }
-
         private void button_Click(object sender, RoutedEventArgs e)
         {
             InputBox.Visibility = Visibility.Visible;
@@ -790,13 +438,8 @@ namespace Catchem
 
         private void YesButton_Click(object sender, RoutedEventArgs e)
         {
-            // YesButton Clicked! Let's hide our InputBox and handle the input text.
             InputBox.Visibility = Visibility.Collapsed;
-
-            // Do something with the Input
             var input = InputTextBox.Text;
-
-            
             if (!Directory.Exists(SubPath + "\\" + input))
             {
                 var dir = Directory.CreateDirectory(SubPath + "\\" + input);
@@ -804,38 +447,44 @@ namespace Catchem
                 InitBot(settings, input);
             }
             else
-            {
                 MessageBox.Show("Profile with that name already exists");
-            }
-            // Clear InputBox.
+            
             InputTextBox.Text = Empty;
         }
 
         private void InitBot(GlobalSettings settings, string profileName = "Unknown")
         {
             var newBot = CreateBowWindowData(settings, profileName);
-
             var session = new Session(newBot.Settings, newBot.Logic);
             session.Client.ApiFailure = new ApiFailureStrategy(session);
-            newBot.Session = session;
 
+            newBot.Session = session;
             session.EventDispatcher.EventReceived += evt => newBot.Listener.Listen(evt, session);
             session.EventDispatcher.EventReceived += evt => newBot.Aggregator.Listen(evt, session);
             session.Navigation.UpdatePositionEvent += (lat, lng, alt) => session.EventDispatcher.Send(new UpdatePositionEvent {Latitude = lat, Longitude = lng, Altitude = alt});
+
+            newBot.PokemonList.CollectionChanged += delegate { UpdatePokemonCollection(session); };
 
             newBot.Stats.DirtyEvent += () => { StatsOnDirtyEvent(newBot); };
 
             newBot._lat = settings.LocationSettings.DefaultLatitude;
             newBot._lng = settings.LocationSettings.DefaultLongitude;
-
             newBot.Machine.SetFailureState(new LoginState());
 
             BotsCollection.Add(newBot);
         }
 
-        private void SelectBot(BotWindowData newBot)
+        private void EnqueOldBot()
         {
-            if (newBot == null)
+            if (Bot == null) return;
+            Bot.GlobalSettings.StoreData(SubPath + "\\" + Bot.ProfileName);
+            Bot.EnqueData();
+            ClearPokemonData(Bot);
+        }
+
+        private void NewBotSelected()
+        {
+            if (Bot == null)
             {
                 if (tabControl.IsEnabled)
                     tabControl.IsEnabled = false;
@@ -843,66 +492,41 @@ namespace Catchem
                     grid_pickBot.Visibility = Visibility.Visible;
                 return;
             }
+            
             if (Bot != null)
             {
-                Bot.GlobalSettings.StoreData(SubPath + "\\" + Bot.ProfileName);
-                Bot.EnqueData();
-                ClearPokemonData();
-            }
-            foreach (var marker in newBot.MapMarkers.Values)
-            {
-                pokeMap.Markers.Add(marker);
-            }
-            if (Bot != null)
-            {
-                pokeMap.Position = new PointLatLng(Bot._lat, Bot._lng);
-                DrawPlayerMarker();
                 StatsOnDirtyEvent(Bot);
                 Bot.ErrorsCount = 0;
             }
-            UpdatePlayerTab(Bot);
             RebuildUi();
         }
 
-        private void UpdatePokemonCollection(ISession session)
+        public void UpdatePokemonCollection(ISession session)
         {
             if (Bot == null || session != CurSession) return;
-            //PokeListBox.Items.Refresh();
-            l_poke_inventory.Content = $"({Bot.PokemonList.Count}/{Bot.MaxPokemonStorageSize})";
+            BotPlayerPage.UpdatePokemonsCount();
         }
 
-        // ReSharper disable once InconsistentNaming
         private void StatsOnDirtyEvent(BotWindowData bot)
         {
-            if (bot == null) throw new ArgumentNullException(nameof(bot));
+            if (bot == null) return;
             Dispatcher.BeginInvoke(new ThreadStart(bot.UpdateXppH));
             if (Bot == bot)
             {
                 Dispatcher.BeginInvoke(new ThreadStart(delegate
                 {
-                    l_StarDust.Content = Bot.Stats?.TotalStardust;
-                    var farmedDust = Bot.Stats?.TotalStardust == 0 ? 0 : Bot.Stats?.TotalStardust - Bot.StartStarDust;
-                    var farmedDustH = Bot?.Ts.TotalHours < 0.001 ? "~" : ((double)(farmedDust / Bot.Ts.TotalHours)).ToString("0");
-                    l_Stardust_farmed.Content = $"{farmedDust} ({farmedDustH}/h)";
-                    l_xp.Content = Bot.Stats?._exportStats?.CurrentXp;
-                    l_xp_farmed.Content = Bot.Stats?.TotalExperience;
-                    l_Pokemons_farmed.Content = Bot.Stats?.TotalPokemons;
-                    l_Pokemons_transfered.Content = Bot.Stats?.TotalPokemonsTransfered;
-                    l_Pokestops_farmed.Content = Bot.Stats?.TotalPokestops;
-                    l_level.Content = Bot.Stats?._exportStats?.Level;
-                    l_level_nextime.Content = $"{Bot.Stats?._exportStats?.HoursUntilLvl.ToString("00")}:{Bot.Stats?._exportStats?.MinutesUntilLevel.ToString("00")}";
+                    BotPlayerPage.UpdateRunTimeData();
                 }));
             }
         }
 
-        private void ClearPokemonData()
+        public void ClearPokemonData(BotWindowData calledBot)
         {
+            if (Bot != calledBot) return;
             consoleBox.Document.Blocks.Clear();
-            pokeMap.Markers.Clear();
-            _playerMarker = null;
             Bot.LatStep = Bot.LngStep = 0;
-            PokeListBox.ItemsSource = null;
-            ItemListBox.ItemsSource = null;
+            BotMapPage.ClearData();
+            BotPlayerPage.ClearData();
         }
 
         private static BotWindowData CreateBowWindowData(GlobalSettings s,string name)
@@ -922,213 +546,31 @@ namespace Catchem
             if (grid_pickBot.Visibility == Visibility.Visible)
                 grid_pickBot.Visibility = Visibility.Collapsed;
 
-            authBox.SelectedItem = Bot.GlobalSettings.Auth.AuthType;
-            if (Bot.GlobalSettings.Auth.AuthType == AuthType.Google)
-            {
-                loginBox.Text = Bot.GlobalSettings.Auth.GoogleUsername;
-                passwordBox.Password = Bot.GlobalSettings.Auth.GooglePassword;
-            }
-            else
-            {
-                loginBox.Text = Bot.GlobalSettings.Auth.PtcUsername;
-                passwordBox.Password = Bot.GlobalSettings.Auth.PtcPassword;
-            }
-            sl_moveSpeedFactor.Value = Bot.GlobalSettings.LocationSettings.MoveSpeedFactor;
-            #region Mapping settings to UIElements
-
-            foreach (var uiElem in settings_grid.GetLogicalChildCollection<TextBox>())
-            {
-                string val;
-                if (Extensions.GetValueByName(uiElem.Name.Substring(2), Bot.GlobalSettings, out val))
-                    uiElem.Text = val;
-            }
-
-            foreach (var uiElem in settings_grid.GetLogicalChildCollection<PasswordBox>())
-            {
-                string val;
-                if (Extensions.GetValueByName(uiElem.Name.Substring(2), Bot.GlobalSettings, out val))
-                    uiElem.Password = val;
-            }
-
-            foreach (var uiElem in settings_grid.GetLogicalChildCollection<CheckBox>())
-            {
-                bool val;
-                if (Extensions.GetValueByName(uiElem.Name.Substring(2), Bot.GlobalSettings, out val))
-                    uiElem.IsChecked = val;
-            }
-
-            #endregion
-
-            PokeListBox.ItemsSource = Bot.PokemonList;
-            ItemListBox.ItemsSource = Bot.ItemList;
-            ToEvolveList.ItemsSource = Bot.PokemonsToEvolve;
-            NotToTransferList.ItemsSource = Bot.PokemonsNotToTransfer;
-            PokemonsNotToCatchList.ItemsSource = Bot.PokemonsNotToCatch;
-            PokemonToUseMasterballList.ItemsSource = Bot.PokemonToUseMasterball;
+            BotSettingsPage.SetBot(Bot);
+            BotPlayerPage.SetBot(Bot);
+            BotPokemonListPage.SetBot(Bot);
+            BotMapPage.SetBot(Bot);
 
             _loadingUi = false;
         }
 
         #region Windows UI Methods
-
-        private void UpdateCoordBoxes()
-        {
-            c_DefaultLatitude.Text = Bot.GlobalSettings.LocationSettings.DefaultLatitude.ToString(CultureInfo.InvariantCulture);
-            c_DefaultLongitude.Text = Bot.GlobalSettings.LocationSettings.DefaultLongitude.ToString(CultureInfo.InvariantCulture);
-            c_DefaultAltitude.Text = Bot.GlobalSettings.LocationSettings.DefaultAltitude.ToString(CultureInfo.InvariantCulture);
-        }
-
-        private void mi_evolvePokemon_Click(object sender, RoutedEventArgs e)
-        {
-            if (PokeListBox.SelectedIndex == -1) return;
-            var pokemon = GetSelectedPokemon();
-            if (pokemon == null) return;
-            EvolvePokemon(CurSession, pokemon);
-        }
-
-        private void mi_transferPokemon_Click(object sender, RoutedEventArgs e)
-        {
-            if (PokeListBox.SelectedIndex == -1) return;
-            var pokemon = GetSelectedPokemon();
-            if (pokemon == null) return;
-            TransferPokemon(CurSession, pokemon);
-        }
-
-        private void mi_levelupPokemon_Click(object sender, RoutedEventArgs e)
-        {
-            if (PokeListBox.SelectedIndex == -1) return;
-            var pokemon = GetSelectedPokemon();
-            if (pokemon == null) return;
-            LevelUpPokemon(CurSession, pokemon);
-        }
-        private void mi_maxlevelupPokemon_Click(object sender, RoutedEventArgs e)
-        {
-            if (PokeListBox.SelectedIndex == -1) return;
-            var pokemon = GetSelectedPokemon();
-            if (pokemon == null) return;
-            LevelUpPokemon(CurSession, pokemon, true);
-        }
-
-        private void mi_recycleItem_Click(object sender, RoutedEventArgs e)
-        {
-            if (ItemListBox.SelectedIndex == -1) return;
-            var item = GetSekectedItem();
-            if (item == null) return;
-            int amount;
-            var inputDialog = new InputDialogSample("Please, enter amout to recycle:", "1", true);
-            if (inputDialog.ShowDialog() != true) return;
-            if (int.TryParse(inputDialog.Answer, out amount))
-                RecycleItem(CurSession, item, amount, Bot.CancellationToken);
-        }
-
-        private ItemUiData GetSekectedItem()
-        {
-            return (ItemUiData)ItemListBox.SelectedItem;
-        }
-
-        private PokemonUiData GetSelectedPokemon()
-        {
-            return (PokemonUiData)PokeListBox.SelectedItem;
-        }
-
         private void NoButton_Click(object sender, RoutedEventArgs e)
         {
-            // NoButton Clicked! Let's hide our InputBox.
             InputBox.Visibility = Visibility.Collapsed;
-
-            // Clear InputBox.
             InputTextBox.Text = Empty;
-        }
-
-        private void pokeMap_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            var mousePos = e.GetPosition(pokeMap);
-            //Getting real coordinates from mouse click
-            var mapPos = pokeMap.FromLocalToLatLng((int) mousePos.X, (int) mousePos.Y);
-            var lat = mapPos.Lat;
-            var lng = mapPos.Lng;
-
-            if (Bot == null) return;
-            if (Bot.Started)
-            {
-                if (Bot.ForceMoveMarker == null)
-                {
-                    Bot.ForceMoveMarker = new GMapMarker(mapPos)
-                    {
-                        Shape = Properties.Resources.force_move.ToImage("Force Move To"), Offset = new Point(-24, -48), ZIndex = int.MaxValue
-                    };
-                    pokeMap.Markers.Add(Bot.ForceMoveMarker);
-                }
-                else
-                {
-                    Bot.ForceMoveMarker.Position = mapPos;
-                }
-                CurSession.StartForceMove(lat, lng);
-            }
-            else
-            {
-                Bot.Lat = Bot._lat = lat;
-                Bot.Lng = Bot._lng = lng;
-                Bot.GlobalSettings.LocationSettings.DefaultLatitude = lat;
-                Bot.GlobalSettings.LocationSettings.DefaultLongitude = lng;
-                DrawPlayerMarker();
-                UpdateCoordBoxes();
-            }
         }
 
         private void Window_Closing(object sender, CancelEventArgs e)
         {
             _windowClosing = true;
+            BotMapPage.WindowClosing = true;
             if (Bot == null || _loadingUi) return;
             Bot.GlobalSettings.StoreData(SubPath + "\\" + Bot.ProfileName);
             foreach (var b in BotsCollection)
             {
                 b.Stop();
             }
-        }
-
-        private void SortByCpClick(object sender, RoutedEventArgs e)
-        {
-            if (Bot == null || _loadingUi) return;
-            PokeListBox.Items.SortDescriptions.Clear();
-            PokeListBox.Items.SortDescriptions.Add(new SortDescription("Cp", ListSortDirection.Descending));
-        }
-
-        private void sortById_Click(object sender, RoutedEventArgs e)
-        {
-            if (Bot == null || _loadingUi) return;
-            PokeListBox.Items.SortDescriptions.Clear();
-            PokeListBox.Items.SortDescriptions.Add(new SortDescription("PokemonId", ListSortDirection.Ascending));
-        }
-
-        private void sortByCatch_Click(object sender, RoutedEventArgs e)
-        {
-            if (Bot == null || _loadingUi) return;
-            PokeListBox.Items.SortDescriptions.Clear();
-            PokeListBox.Items.SortDescriptions.Add(new SortDescription("Timestamp", ListSortDirection.Ascending));
-        }
-
-        private void SortByIvClick(object sender, RoutedEventArgs e)
-        {
-            if (Bot == null || _loadingUi) return;
-            PokeListBox.Items.SortDescriptions.Clear();
-            PokeListBox.Items.SortDescriptions.Add(new SortDescription("Iv", ListSortDirection.Descending));
-        }
-
-        private void sortByAz_Click(object sender, RoutedEventArgs e)
-        {
-            if (Bot == null || _loadingUi) return;
-            PokeListBox.Items.SortDescriptions.Clear();
-            PokeListBox.Items.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
-        }
-
-        private void sl_moveSpeedFactor_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            var sl = (sender as Slider);
-            if (sl == null || l_moveSpeedFactor == null) return;
-            l_moveSpeedFactor.Content = sl.Value;
-            if (Bot == null || _loadingUi) return;
-            Bot.GlobalSettings.LocationSettings.MoveSpeedFactor = sl.Value;
         }
 
         private void btn_StartAll_Click(object sender, RoutedEventArgs e)
@@ -1142,38 +584,13 @@ namespace Catchem
             foreach (var bot in BotsCollection)
             {
                 bot.Stop();
-                if (Bot == bot)
-                {
-                    ClearPokemonData();
-                }
+                ClearPokemonData(bot);
             }
-        }
-
-        private void btn_botStop_Click(object sender, RoutedEventArgs e)
-        {
-            var btn = sender as Button;
-            var bot = btn?.DataContext as BotWindowData;
-            if (bot == null) return;
-            bot.Stop();
-            if (Bot == bot)
-            {
-                ClearPokemonData();
-            }
-        }
-
-        private void btn_botStart_Click(object sender, RoutedEventArgs e)
-        {
-            var btn = sender as Button;
-            var bot = btn?.DataContext as BotWindowData;
-            bot?.Start();
         }
 
         private void batch_Yes_Click(object sender, RoutedEventArgs e)
         {
-            // YesButton Clicked! Let's hide our InputBox and handle the input text.
             batchInput.Visibility = Visibility.Collapsed;
-
-            // Do something with the Input
             var input = batch_botText.Text;
 
             var inputRows = input.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.RemoveEmptyEntries);
@@ -1208,7 +625,6 @@ namespace Catchem
                     //ignore
                 }
             }
-            // Clear InputBox.
             batch_botText.Text = Empty;
         }
 
@@ -1242,83 +658,6 @@ namespace Catchem
             settings.StoreData(dir.FullName);
             InitBot(settings, path);
         }
-
-        private void btn_removeFromList_Click(object sender, RoutedEventArgs e)
-        {
-            var btn = sender as Button;
-            var pokemonId = (PokemonId)btn?.DataContext;
-            var parentList = btn.Tag as ListBox;
-            var source = parentList?.ItemsSource as ObservableCollection<PokemonId>;
-            if (source != null && source.Contains(pokemonId))
-                source.Remove(pokemonId);
-        }
-
-        private void AddPokemonToEvolve_Click(object sender, RoutedEventArgs e)
-        {
-            if (AddToEvolveCb.SelectedIndex > -1)
-            {
-                var pokemonId = (PokemonId)AddToEvolveCb.SelectedItem;
-                if (!Bot.PokemonsToEvolve.Contains(pokemonId))
-                    Bot.PokemonsToEvolve.Add(pokemonId);
-                AddToEvolveCb.SelectedIndex = -1;
-            }
-        }
-
-        private void NotToTransferBtn_Click(object sender, RoutedEventArgs e)
-        {
-            if (NotToTransferCb.SelectedIndex > -1)
-            {
-                var pokemonId = (PokemonId)NotToTransferCb.SelectedItem;
-                if (!Bot.PokemonsNotToTransfer.Contains(pokemonId))
-                    Bot.PokemonsNotToTransfer.Add(pokemonId);
-                NotToTransferCb.SelectedIndex = -1;
-            }
-        }
-        private void cb_keepPokemonMarkers_Checked(object sender, RoutedEventArgs e)
-        {
-            var box = sender as CheckBox;
-            if (box?.IsChecked != null)
-            {
-                if ((bool)box.IsChecked)
-                {
-                    _keepPokemonsOnMap = true;
-                }
-                else
-                {
-                    _keepPokemonsOnMap = false;
-                    foreach (var bot in BotsCollection)
-                        foreach (var item in bot.MarkersDelayRemove)
-                            bot.MarkersQueue.Enqueue(item);
-                }
-            }
-        }
-        private void btn_SaveBot_Click(object sender, RoutedEventArgs e)
-        {
-            Bot.GlobalSettings.StoreData(SubPath + "\\" + Bot.ProfileName);
-        }
-
-        private void PokemonsNotToCatchBtn_Click(object sender, RoutedEventArgs e)
-        {
-            if (PokemonsNotToCatchCb.SelectedIndex > -1)
-            {
-                var pokemonId = (PokemonId)PokemonsNotToCatchCb.SelectedItem;
-                if (!Bot.PokemonsNotToCatch.Contains(pokemonId))
-                    Bot.PokemonsNotToCatch.Add(pokemonId);
-                PokemonsNotToCatchCb.SelectedIndex = -1;
-            }
-        }
-
-        private void PokemonToUseMasterballBtn_Click(object sender, RoutedEventArgs e)
-        {
-            if (PokemonToUseMasterballCb.SelectedIndex > -1)
-            {
-                var pokemonId = (PokemonId)PokemonToUseMasterballCb.SelectedItem;
-                if (!Bot.PokemonToUseMasterball.Contains(pokemonId))
-                    Bot.PokemonToUseMasterball.Add(pokemonId);
-                PokemonToUseMasterballCb.SelectedIndex = -1;
-            }
-        }
-
         private void batch_No_Click(object sender, RoutedEventArgs e)
         {
             batchInput.Visibility = Visibility.Collapsed;
@@ -1329,89 +668,16 @@ namespace Catchem
         {
             batchInput.Visibility = Visibility.Visible;
         }
-
         #endregion
-
-        #region Property <-> Settings
-
-        private void HandleUiElementChangedEvent(object uiElement)
-        {
-            var box = uiElement as TextBox;
-            if (box != null)
-            {
-                var propName = box.Name.Replace("c_", "");
-                Extensions.SetValueByName(propName, box.Text, Bot.GlobalSettings);
-                return;
-            }
-            var chB = uiElement as CheckBox;
-            if (chB != null)
-            {
-                var propName = chB.Name.Replace("c_", "");
-                Extensions.SetValueByName(propName, chB.IsChecked, Bot.GlobalSettings);
-            }
-            var passBox = uiElement as PasswordBox;
-            if (passBox != null)
-            {
-                var propName = passBox.Name.Replace("c_", "");
-                Extensions.SetValueByName(propName, passBox.Password, Bot.GlobalSettings);
-            }
-        }
-
-        private void BotPropertyChanged(object sender, EventArgs e)
-        {
-            if (Bot == null || _loadingUi) return;
-            HandleUiElementChangedEvent(sender);
-        }
-
-        #endregion
-
-        #endregion
-
-        #region Android Device Tests
-
-        private void b_getDataFromRealPhone_Click(object sender, RoutedEventArgs e)
-        {
-            StartFillFromRealDevice();
-        }
-
-        private void mapFollowThePlayer_Checked(object sender, RoutedEventArgs e)
-        {
-            var box = sender as CheckBox;
-            if (box?.IsChecked != null) _followThePlayerMarker = (bool)box.IsChecked;
-        }
-
-        private async void StartFillFromRealDevice()
-        {
-            var dd = await Adb.GetDeviceData();
-            c_DeviceId.Text = Bot.GlobalSettings.Device.DeviceId = dd.DeviceId;
-            c_AndroidBoardName.Text = Bot.GlobalSettings.Device.AndroidBoardName = dd.AndroidBoardName;
-            c_AndroidBootloader.Text = Bot.GlobalSettings.Device.AndroidBootLoader = dd.AndroidBootloader;
-            c_DeviceBrand.Text = Bot.GlobalSettings.Device.DeviceBrand = dd.DeviceBrand;
-            c_DeviceModel.Text = Bot.GlobalSettings.Device.DeviceModel = dd.DeviceModel;
-            c_DeviceModelIdentifier.Text = Bot.GlobalSettings.Device.DeviceModelIdentifier = dd.DeviceModelIdentifier;
-            c_HardwareManufacturer.Text = Bot.GlobalSettings.Device.HardwareManufacturer = dd.HardwareManufacturer;
-            c_HardwareModel.Text = Bot.GlobalSettings.Device.HardWareModel = dd.HardwareModel;
-            c_FirmwareBrand.Text = Bot.GlobalSettings.Device.FirmwareBrand = dd.FirmwareBrand;
-            c_FirmwareTags.Text = Bot.GlobalSettings.Device.FirmwareTags = dd.FirmwareTags;
-            c_FirmwareType.Text = Bot.GlobalSettings.Device.FirmwareType = dd.FirmwareType;
-            c_FirmwareFingerprint.Text = Bot.GlobalSettings.Device.FirmwareFingerprint = dd.FirmwareFingerprint;
-        }
-        private void b_generateRandomDeviceId_Click(object sender, RoutedEventArgs e)
-        {
-            c_DeviceId.Text = DeviceSettings.RandomString(16, "0123456789abcdef");
-        }
-
 
         #endregion
 
         private void mi_RemoveBot_Click(object sender, RoutedEventArgs e)
         {
             var bot = botsBox.SelectedItem as BotWindowData;
-            if (bot != null)
-            {
-                BotsCollection.Remove(bot);
-                Directory.Delete(SubPath + "\\" + bot.ProfileName, true);                
-            }
+            if (bot == null) return;
+            BotsCollection.Remove(bot);
+            Directory.Delete(SubPath + "\\" + bot.ProfileName, true);
         }
     }
 }

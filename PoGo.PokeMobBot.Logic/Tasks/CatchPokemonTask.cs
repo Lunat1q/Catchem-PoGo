@@ -11,7 +11,6 @@ using PoGo.PokeMobBot.Logic.State;
 using PoGo.PokeMobBot.Logic.Utils;
 using POGOProtos.Inventory.Item;
 using POGOProtos.Map.Fort;
-using POGOProtos.Map.Pokemon;
 using POGOProtos.Networking.Responses;
 
 #endregion
@@ -127,14 +126,11 @@ namespace PoGo.PokeMobBot.Logic.Tasks
 
                 if (caughtPokemonResponse.Status == CatchPokemonResponse.Types.CatchStatus.CatchSuccess)
                 {
-                    var totalExp = 0;
-					pokemon.Caught = true;
+                    if (pokemon != null)
+					    pokemon.Caught = true;
                     evt.Uid = caughtPokemonResponse.CapturedPokemonId;
 
-                    foreach (var xp in caughtPokemonResponse.CaptureAward.Xp)
-                    {
-                        totalExp += xp;
-                    }
+                    var totalExp = caughtPokemonResponse.CaptureAward.Xp.Sum();
                     var profile = await session.Client.Player.GetPlayer();
 
                     evt.Exp = totalExp;
