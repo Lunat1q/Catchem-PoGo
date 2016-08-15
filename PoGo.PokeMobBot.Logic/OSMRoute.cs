@@ -1,27 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.IO;
 using System.Text;
 using GeoCoordinatePortable;
-using Newtonsoft.Json.Converters;
-using Newtonsoft.Json;
 using PoGo.PokeMobBot.Logic.Logging;
 using PoGo.PokeMobBot.Logic.State;
 using System.Xml;
 using System.Globalization;
+using System.Linq;
 using PoGo.PokeMobBot.Logic.Extensions;
 
 namespace PoGo.PokeMobBot.Logic
 {
-    public static class OSMRouting
+    public static class OsmRouting
     {
         private static string GetProperCoordString(GeoCoordinate coord)
         {
-            return $"{coord.Longitude.ToString().Replace(',','.')} {coord.Latitude.ToString().Replace(',', '.')}";
+            return $"{coord.Longitude.ToString(CultureInfo.InvariantCulture).Replace(',','.')} {coord.Latitude.ToString(CultureInfo.InvariantCulture).Replace(',', '.')}";
         }
-        public static OSMResponse GetRoute(GeoCoordinate start, GeoCoordinate dest, ISession session)
+        public static OsmResponse GetRoute(GeoCoordinate start, GeoCoordinate dest, ISession session)
         {
             try
             {
@@ -33,17 +31,17 @@ namespace PoGo.PokeMobBot.Logic
                 //request.Credentials = CredentialCache.DefaultCredentials;
                 //request.Proxy = session.Proxy;
                 //WebResponse response = request.GetResponse();
-                var responseFromServer = postXMLData("http://openls.geog.uni-heidelberg.de/testing2015/routing", PrepareRequest(start, dest), session.Proxy);
-                if (responseFromServer != null)
-                    Logger.Write("Got response from http://openls.geog.uni-heidelberg.de", LogLevel.Debug);
-                else
-                    Logger.Write("Wrong response from http://openls.geog.uni-heidelberg.de, we doomed", LogLevel.Debug);
+                var responseFromServer = PostXmlData("http://openls.geog.uni-heidelberg.de/testing2015/routing", PrepareRequest(start, dest), session.Proxy);
+                Logger.Write(
+                    responseFromServer != null
+                        ? "Got response from http://openls.geog.uni-heidelberg.de"
+                        : "Wrong response from http://openls.geog.uni-heidelberg.de, we doomed", LogLevel.Debug);
                 //Console.WriteLine(((HttpWebResponse)response).StatusDescription);
                 //Stream dataStream = response.GetResponseStream();
                 //StreamReader reader = new StreamReader(dataStream);
                 //string responseFromServer = reader.ReadToEnd();
                 //Console.WriteLine(responseFromServer);
-                OSMResponse responseParsed = HandleResponse(responseFromServer);
+                OsmResponse responseParsed = HandleResponse(responseFromServer);
                 //reader.Close();
                 //response.Close();
 
@@ -53,7 +51,7 @@ namespace PoGo.PokeMobBot.Logic
             {
                 Logger.Write("Routing error: " + ex.Message, LogLevel.Debug);
             }
-            OSMResponse emptyResponse = new OSMResponse();
+            OsmResponse emptyResponse = new OsmResponse();
             return emptyResponse;  
         }
         private static string PrepareRequest(GeoCoordinate start, GeoCoordinate end)
@@ -105,35 +103,31 @@ namespace PoGo.PokeMobBot.Logic
             return xmlString.ToString();
         }
 
-        private static string postXMLData(string destinationUrl, string requestXml, IWebProxy proxy)
+        private static string PostXmlData(string destinationUrl, string requestXml, IWebProxy proxy)
         {
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(destinationUrl);
+            var request = (HttpWebRequest)WebRequest.Create(destinationUrl);
             request.Proxy = proxy;
-            byte[] bytes;
-            bytes = System.Text.Encoding.ASCII.GetBytes(requestXml);
+            var bytes = Encoding.ASCII.GetBytes(requestXml);
             request.ContentType = "text/xml; encoding='utf-8'";
             request.ContentLength = bytes.Length;
             request.Method = "POST";
-            Stream requestStream = request.GetRequestStream();
+            var requestStream = request.GetRequestStream();
             requestStream.Write(bytes, 0, bytes.Length);
             requestStream.Close();
-            HttpWebResponse response;
-            response = (HttpWebResponse)request.GetResponse();
-            if (response.StatusCode == HttpStatusCode.OK)
-            {
-                Stream responseStream = response.GetResponseStream();
-                string responseStr = new StreamReader(responseStream).ReadToEnd();
-                response.Close();
-                return responseStr;
-            }
-            return null;
+            var response = (HttpWebResponse)request.GetResponse();
+            if (response.StatusCode != HttpStatusCode.OK) return null;
+            var responseStream = response.GetResponseStream();
+            if (responseStream == null) return null;
+            var responseStr = new StreamReader(responseStream).ReadToEnd();
+            response.Close();
+            return responseStr;
         }
-        private static OSMResponse HandleResponse(string responseFromServer)
+        private static OsmResponse HandleResponse(string responseFromServer)
         {
-            OSMResponse resp = new OSMResponse();
-            XmlDocument xmldoc = new XmlDocument();
+            var resp = new OsmResponse();
+            var xmldoc = new XmlDocument();
             xmldoc.LoadXml(responseFromServer);
-            XmlNamespaceManager xmlnsManager = new XmlNamespaceManager(xmldoc.NameTable);
+            var xmlnsManager = new XmlNamespaceManager(xmldoc.NameTable);
             xmlnsManager.AddNamespace("xls", "http://www.opengis.net/xls");
             xmlnsManager.AddNamespace("xsi", "http://www.w3.org/2001/XMLSchema-instance");
             xmlnsManager.AddNamespace("gml", "http://www.opengis.net/gml");
@@ -144,22 +138,8 @@ namespace PoGo.PokeMobBot.Logic
                 var points = new List<GeoCoordinate>();
                 if (coordNodes != null && coordNodes.Count > 0)
                 {
-                    Random rnd = new Random();
-                    foreach (XmlNode node in coordNodes)
-                    {
-                        var coordinate = node.InnerText;
-                        if (coordinate != string.Empty)
-                        {
-                            string[] XY = coordinate.Split(' ');
-                            if (XY.Length == 3)
-                            {
-                                double lat = double.Parse(XY[1], CultureInfo.InvariantCulture);
-                                double lng = double.Parse(XY[0], CultureInfo.InvariantCulture);
-                                double alt = double.Parse(XY[2], CultureInfo.InvariantCulture) + 0.7 + rnd.NextInRange(0.1, 0.3);
-                                points.Add(new GeoCoordinate(lat, lng, alt));
-                            }
-                        }
-                    }
+                    var rnd = new Random();
+                    points.AddRange(from XmlNode node in coordNodes select node.InnerText into coordinate where coordinate != string.Empty select coordinate.Split(' ') into xy where xy.Length == 3 let lat = double.Parse(xy[1], CultureInfo.InvariantCulture) let lng = double.Parse(xy[0], CultureInfo.InvariantCulture) let alt = double.Parse(xy[2], CultureInfo.InvariantCulture) + 0.7 + rnd.NextInRange(0.1, 0.3) select new GeoCoordinate(lat, lng, alt));
                     resp.Success = true;
                     resp.Coordinates = points;
                 }
@@ -172,9 +152,9 @@ namespace PoGo.PokeMobBot.Logic
             return resp;
         }
     }    
-    public class OSMResponse
+    public class OsmResponse
     {
         public List<GeoCoordinate> Coordinates = new List<GeoCoordinate>();
-        public bool Success = false;
+        public bool Success;
     }
 }

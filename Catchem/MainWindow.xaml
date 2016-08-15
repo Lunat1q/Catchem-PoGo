@@ -50,7 +50,7 @@
                             </LinearGradientBrush>
                         </GridSplitter.Background>
                     </GridSplitter>
-                    <pages:MapPage x:Name="BotMapPage" Margin="0,3,0,0" Grid.Row="1"></pages:MapPage>
+                    <pages:MapPage x:Name="BotMapPage" Margin="0,3,0,0" Grid.Row="1" Width="Auto" Height="Auto"></pages:MapPage>
                 </Grid>
             </TabItem>
             <TabItem Header="Information">

@@ -35,35 +35,35 @@
                 </GroupBox>
                 <GroupBox x:Name="groupBox2" Header="Pokemons" Margin="0,147,0,0" VerticalAlignment="Top" Height="541">
                     <Grid>
-                        <CheckBox x:Name="c_AutoLevelPokemons" Content="Auto Level Pokemons" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0" Checked="BotPropertyChanged" Unchecked="BotPropertyChanged"/>
-                        <CheckBox x:Name="c_EvolveAllPokemonAboveIv" Content="Evolve All Pokemon Above Iv" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,31,0,0" Checked="BotPropertyChanged" Unchecked="BotPropertyChanged"/>
-                        <Label x:Name="label8" Content="Evolve Iv Value" HorizontalAlignment="Left" Margin="10,55,0,0" VerticalAlignment="Top" Width="131"/>
-                        <TextBox Template="{StaticResource pogo}" x:Name="c_EvolveAboveIvValue" Height="29" Margin="233,54,10,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" TextChanged="BotPropertyChanged"/>
-                        <CheckBox x:Name="c_EvolveAllPokemonWithEnoughCandy" Content="Evolve All Pokemon With Enough Candy" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,88,0,0" Checked="BotPropertyChanged" Unchecked="BotPropertyChanged"/>
-                        <Label x:Name="label8_Copy" Content="Keep Min Cp" HorizontalAlignment="Left" Margin="10,110,0,0" VerticalAlignment="Top" Width="131"/>
-                        <TextBox Template="{StaticResource pogo}" x:Name="c_KeepMinCp" Height="29" Margin="233,109,10,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" TextChanged="BotPropertyChanged"/>
-                        <Label x:Name="label8_Copy1" Content="Keep Min Duplicate" HorizontalAlignment="Left" Margin="10,144,0,0" VerticalAlignment="Top" Width="131"/>
-                        <TextBox Template="{StaticResource pogo}" x:Name="c_KeepMinDuplicatePokemon" Height="29" Margin="233,143,10,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" TextChanged="BotPropertyChanged"/>
-                        <Label x:Name="label8_Copy2" Content="Keep Min Iv %" HorizontalAlignment="Left" Margin="10,178,0,0" VerticalAlignment="Top" Width="131"/>
-                        <TextBox Template="{StaticResource pogo}" x:Name="c_KeepMinIvPercentage" Height="29" Margin="233,177,10,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" TextChanged="BotPropertyChanged"/>
-                        <Label x:Name="label8_Copy3" Content="Pokeballs/Pokemon" HorizontalAlignment="Left" Margin="10,212,0,0" VerticalAlignment="Top" Width="131"/>
-                        <TextBox Template="{StaticResource pogo}" x:Name="c_MaxPokeballsPerPokemon" Height="29" Margin="233,211,10,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" TextChanged="BotPropertyChanged"/>
-                        <CheckBox x:Name="c_KeepPokemonsThatCanEvolve" Content="Keep Pokemons That Can Evolve" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,243,0,0" Checked="BotPropertyChanged" Unchecked="BotPropertyChanged"/>
-                        <CheckBox x:Name="c_PrioritizeIvOverCp" Content="Prioritize Iv Over Cp" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,264,0,0" Checked="BotPropertyChanged" Unchecked="BotPropertyChanged"/>
-                        <CheckBox x:Name="c_RenameOnlyAboveIv" Content="Rename Only Above Iv" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,285,0,0" Checked="BotPropertyChanged" Unchecked="BotPropertyChanged"/>
-                        <CheckBox x:Name="c_RenamePokemon" Content="Rename Pokemon" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,306,0,0" Checked="BotPropertyChanged" Unchecked="BotPropertyChanged"/>
-                        <Label x:Name="label8_Copy4" Content="Rename Template" HorizontalAlignment="Left" Margin="10,329,0,0" VerticalAlignment="Top" Width="131"/>
-                        <TextBox Template="{StaticResource pogo}" x:Name="c_RenameTemplate" Height="29" Margin="233,328,10,0" TextWrapping="Wrap" VerticalAlignment="Top" TextChanged="BotPropertyChanged"/>
-                        <Label x:Name="label8_Copy5" Content="Upgrade Pokemon Cp Min" HorizontalAlignment="Left" Margin="10,363,0,0" VerticalAlignment="Top" Width="155"/>
-                        <TextBox Template="{StaticResource pogo}" x:Name="c_UpgradePokemonCpMinimum" Height="29" Margin="233,362,10,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" TextChanged="BotPropertyChanged" />
-                        <Label x:Name="label8_Copy6" Content="Upgrade Pokemon Iv Min" HorizontalAlignment="Left" Margin="10,397,0,0" VerticalAlignment="Top" Width="155"/>
-                        <TextBox Template="{StaticResource pogo}" x:Name="c_UpgradePokemonIvMinimum" Height="29" Margin="233,396,10,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" TextChanged="BotPropertyChanged"/>
-                        <CheckBox x:Name="c_UseLuckyEggsWhileEvolving" Content="Use Lucky Eggs While Evolving" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,428,0,0" Checked="BotPropertyChanged" Unchecked="BotPropertyChanged" />
-                        <Label x:Name="label8_Copy10" Content="Lucky Eggs Min Pokemon" HorizontalAlignment="Left" Margin="10,449,0,0" VerticalAlignment="Top" Width="155"/>
-                        <TextBox Template="{StaticResource pogo}" x:Name="c_UseLuckyEggsMinPokemonAmount" Height="29" Margin="233,448,10,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" TextChanged="BotPropertyChanged" />
-                        <CheckBox x:Name="c_UseEggIncubators" Content="Use Egg Incubators" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,480,0,0" Checked="BotPropertyChanged" Unchecked="BotPropertyChanged" />
-                        <CheckBox x:Name="c_TransferDuplicatePokemon" Content="Transfer Duplicate Pokemon" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,501,0,0" Checked="BotPropertyChanged" Unchecked="BotPropertyChanged" />
-                        <CheckBox x:Name="c_AlwaysPrefferLongDistanceEgg" Content="Always Preffer Long Distance Egg" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="148,480,0,0" Checked="BotPropertyChanged" Unchecked="BotPropertyChanged" />
+                        <CheckBox x:Name="c_AutoLevelPokemons" Content="Auto Level Pokemons" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,321,0,0" Checked="BotPropertyChanged" Unchecked="BotPropertyChanged"/>
+                        <CheckBox x:Name="c_EvolveAllPokemonAboveIv" Content="Evolve All Pokemon Above Iv" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0" Checked="BotPropertyChanged" Unchecked="BotPropertyChanged"/>
+                        <Label x:Name="label8" Content="Evolve Iv Value" HorizontalAlignment="Left" Margin="10,34,0,0" VerticalAlignment="Top" Width="131"/>
+                        <TextBox Template="{StaticResource pogo}" x:Name="c_EvolveAboveIvValue" Height="29" Margin="233,33,10,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" TextChanged="BotPropertyChanged"/>
+                        <CheckBox x:Name="c_EvolveAllPokemonWithEnoughCandy" Content="Evolve All Pokemon With Enough Candy" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,67,0,0" Checked="BotPropertyChanged" Unchecked="BotPropertyChanged"/>
+                        <Label x:Name="label8_Copy" Content="Keep Min Cp" HorizontalAlignment="Left" Margin="10,104,0,0" VerticalAlignment="Top" Width="131"/>
+                        <TextBox Template="{StaticResource pogo}" x:Name="c_KeepMinCp" Height="29" Margin="233,103,10,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" TextChanged="BotPropertyChanged"/>
+                        <Label x:Name="label8_Copy1" Content="Keep Min Duplicate" HorizontalAlignment="Left" Margin="10,138,0,0" VerticalAlignment="Top" Width="131"/>
+                        <TextBox Template="{StaticResource pogo}" x:Name="c_KeepMinDuplicatePokemon" Height="29" Margin="233,137,10,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" TextChanged="BotPropertyChanged"/>
+                        <Label x:Name="label8_Copy2" Content="Keep Min Iv %" HorizontalAlignment="Left" Margin="10,172,0,0" VerticalAlignment="Top" Width="131"/>
+                        <TextBox Template="{StaticResource pogo}" x:Name="c_KeepMinIvPercentage" Height="29" Margin="233,171,10,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" TextChanged="BotPropertyChanged"/>
+                        <Label x:Name="label8_Copy3" Content="Pokeballs/Pokemon" HorizontalAlignment="Left" Margin="10,206,0,0" VerticalAlignment="Top" Width="131"/>
+                        <TextBox Template="{StaticResource pogo}" x:Name="c_MaxPokeballsPerPokemon" Height="29" Margin="233,205,10,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" TextChanged="BotPropertyChanged"/>
+                        <CheckBox x:Name="c_KeepPokemonsThatCanEvolve" Content="Keep Pokemons That Can Evolve" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,237,0,0" Checked="BotPropertyChanged" Unchecked="BotPropertyChanged"/>
+                        <CheckBox x:Name="c_PrioritizeIvOverCp" Content="Prioritize Iv Over Cp" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,258,0,0" Checked="BotPropertyChanged" Unchecked="BotPropertyChanged"/>
+                        <CheckBox x:Name="c_RenameOnlyAboveIv" Content="Rename Only Above Iv" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,279,0,0" Checked="BotPropertyChanged" Unchecked="BotPropertyChanged"/>
+                        <CheckBox x:Name="c_RenamePokemon" Content="Rename Pokemon" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,300,0,0" Checked="BotPropertyChanged" Unchecked="BotPropertyChanged"/>
+                        <Label x:Name="label8_Copy4" Content="Rename Template" HorizontalAlignment="Left" Margin="10,342,0,0" VerticalAlignment="Top" Width="131"/>
+                        <TextBox Template="{StaticResource pogo}" x:Name="c_RenameTemplate" Height="29" Margin="233,341,10,0" TextWrapping="Wrap" VerticalAlignment="Top" TextChanged="BotPropertyChanged"/>
+                        <Label x:Name="label8_Copy5" Content="Upgrade Pokemon Cp Min" HorizontalAlignment="Left" Margin="10,376,0,0" VerticalAlignment="Top" Width="155"/>
+                        <TextBox Template="{StaticResource pogo}" x:Name="c_UpgradePokemonCpMinimum" Height="29" Margin="233,375,10,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" TextChanged="BotPropertyChanged" />
+                        <Label x:Name="label8_Copy6" Content="Upgrade Pokemon Iv Min" HorizontalAlignment="Left" Margin="10,410,0,0" VerticalAlignment="Top" Width="155"/>
+                        <TextBox Template="{StaticResource pogo}" x:Name="c_UpgradePokemonIvMinimum" Height="29" Margin="233,409,10,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" TextChanged="BotPropertyChanged"/>
+                        <CheckBox x:Name="c_UseLuckyEggsWhileEvolving" Content="Use Lucky Eggs While Evolving" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,441,0,0" Checked="BotPropertyChanged" Unchecked="BotPropertyChanged" />
+                        <Label x:Name="label8_Copy10" Content="Lucky Eggs Min Pokemon" HorizontalAlignment="Left" Margin="10,462,0,0" VerticalAlignment="Top" Width="155"/>
+                        <TextBox Template="{StaticResource pogo}" x:Name="c_UseLuckyEggsMinPokemonAmount" Height="29" Margin="233,461,10,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" TextChanged="BotPropertyChanged" />
+                        <CheckBox x:Name="c_UseEggIncubators" Content="Use Egg Incubators" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,493,0,0" Checked="BotPropertyChanged" Unchecked="BotPropertyChanged" />
+                        <CheckBox x:Name="c_TransferDuplicatePokemon" Content="Transfer Duplicate Pokemon" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,88,0,0" Checked="BotPropertyChanged" Unchecked="BotPropertyChanged" />
+                        <CheckBox x:Name="c_AlwaysPrefferLongDistanceEgg" Content="Always Preffer Long Distance Egg" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="148,493,0,0" Checked="BotPropertyChanged" Unchecked="BotPropertyChanged" />
                     </Grid>
                 </GroupBox>
                 <GroupBox x:Name="groupBox3" Header="Navigation" Margin="0,147,-1,0" VerticalAlignment="Top" Height="409" Grid.Column="1">
@@ -122,7 +122,7 @@
                             <ColumnDefinition Width="181*"/>
                             <ColumnDefinition Width="108*"/>
                         </Grid.ColumnDefinitions>
-                        <Label x:Name="label10" Content="Amount Of Pokebals To Keep" Margin="10,8,0,0" VerticalAlignment="Top" Height="26"/>
+                        <Label x:Name="label10" Content="Amount Of Pokeballs To Keep" Margin="10,8,0,0" VerticalAlignment="Top" Height="26"/>
                         <TextBox Template="{StaticResource pogo}" x:Name="c_TotalAmountOfPokeballsToKeep" Height="29" Margin="5,7,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Column="1" Text="0" TextChanged="BotPropertyChanged" />
                         <Label x:Name="label9_Copy2" Content="Amount Of Potions To Keep" Margin="10,42,0,0" VerticalAlignment="Top" Height="26"/>
                         <TextBox Template="{StaticResource pogo}" x:Name="c_TotalAmountOfPotionsToKeep" Height="29" Margin="5,41,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Column="1" Text="0" TextChanged="BotPropertyChanged" />

@@ -324,7 +324,7 @@ namespace Catchem
                     BotMapPage.UpdateCurrentBotCoords(botReceiver);
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 // ignored
             }

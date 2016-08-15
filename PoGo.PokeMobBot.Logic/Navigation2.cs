@@ -3,7 +3,6 @@
 #region using directives
 
 using System;
-using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using GeoCoordinatePortable;
@@ -12,7 +11,7 @@ using PokemonGo.RocketAPI;
 using POGOProtos.Networking.Responses;
 using System.Collections.Generic;
 using PoGo.PokeMobBot.Logic.State;
-using System.Diagnostics;
+using System.Linq;
 using PoGo.PokeMobBot.Logic.Extensions;
 using PoGo.PokeMobBot.Logic.Event;
 
@@ -37,8 +36,8 @@ namespace PoGo.PokeMobBot.Logic
         public async Task<PlayerUpdateResponse> Move(GeoCoordinate destination, double walkingSpeedMin, double walkingSpeedMax, Func<Task<bool>> functionExecutedWhileWalking, Func<Task<bool>> functionExecutedWhileWalking2,
             CancellationToken cancellationToken, ISession session)
         {
-            GeoCoordinate currentLocation = new GeoCoordinate(_client.CurrentLatitude, _client.CurrentLongitude, _client.CurrentAltitude);
-            PlayerUpdateResponse result = new PlayerUpdateResponse();
+            var currentLocation = new GeoCoordinate(_client.CurrentLatitude, _client.CurrentLongitude, _client.CurrentAltitude);
+            var result = new PlayerUpdateResponse();
             if (session.LogicSettings.UseHumanPathing)
             {
                 ////initial coordinate generaton
@@ -72,13 +71,9 @@ namespace PoGo.PokeMobBot.Logic
 
                 //TODO: refactor the generation of waypoint code to break the waypoints given to us by the routing information down into segements like above.
                 //generate waypoints new code
-                var RoutingResponse = OSMRouting.GetRoute(currentLocation, destination, session);
-                var nextPath = new List<Tuple<double, double>>();
-                waypoints = RoutingResponse.Coordinates;
-                foreach (var item in RoutingResponse.Coordinates)
-                {
-                    nextPath.Add(Tuple.Create(item.Latitude, item.Longitude));
-                }
+                var routingResponse = OsmRouting.GetRoute(currentLocation, destination, session);
+                waypoints = routingResponse.Coordinates;
+                var nextPath = routingResponse.Coordinates.Select(item => Tuple.Create(item.Latitude, item.Longitude)).ToList();
                 session.EventDispatcher.Send(new NextRouteEvent
                 {
                     Coords = nextPath
@@ -105,25 +100,23 @@ namespace PoGo.PokeMobBot.Logic
                 Navigation navi = new Navigation(_client, UpdatePositionEvent);
                 var waypointsArr = waypoints.ToArray();
                 //MILD REWRITE TO USE HUMANPATHWALKING;
-                for (int x = 0; x < waypointsArr.Length; x++)
+                foreach (GeoCoordinate t in waypointsArr)
                 {
-
-
                     // skip waypoints under 5 meters
                     var sourceLocation = new GeoCoordinate(_client.CurrentLatitude, _client.CurrentLongitude);
                     double distanceToTarget = LocationUtils.CalculateDistanceInMeters(sourceLocation,
-                        waypointsArr[x]);
+                        t);
                     if (distanceToTarget <= 5)
                         continue;
 
                     var nextSpeed = session.Client.rnd.NextInRange(walkingSpeedMin, walkingSpeedMax) * session.Settings.MoveSpeedFactor;
 
                     result = await
-                        navi.HumanPathWalking(waypointsArr[x], nextSpeed,
+                        navi.HumanPathWalking(t, nextSpeed,
                             functionExecutedWhileWalking, functionExecutedWhileWalking2, cancellationToken);
                     if (RuntimeSettings.BreakOutOfPathing)
                         return result;
-                    UpdatePositionEvent?.Invoke(waypointsArr[x].Latitude, waypointsArr[x].Longitude, waypointsArr[x].Altitude);
+                    UpdatePositionEvent?.Invoke(t.Latitude, t.Longitude, t.Altitude);
                     //Console.WriteLine("Hit waypoint " + x);
                 }
                 var curcoord = new GeoCoordinate(session.Client.CurrentLatitude, session.Client.CurrentLongitude);
@@ -160,13 +153,13 @@ namespace PoGo.PokeMobBot.Logic
 
         public static double GetAccelerationTime(double curV, double maxV, double acc)
         {
-            if (acc == 0)
+            if (Math.Abs(acc) < 0.001)
                 return 9001;
             else
                 return (maxV - curV) / acc;
         }
 
-        public static double getDistanceTraveledAccelerating(double time, double acc, double curV)
+        public static double GetDistanceTraveledAccelerating(double time, double acc, double curV)
         {
             return ((curV * time) + ((acc * Math.Pow(time, 2)) / 2));
         }

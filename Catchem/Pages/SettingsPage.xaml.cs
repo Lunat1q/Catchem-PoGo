@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using Catchem.Classes;
@@ -32,9 +33,15 @@ namespace Catchem.Pages
 
         public void UpdateCoordBoxes()
         {
-            c_DefaultLatitude.Text = Bot.GlobalSettings.LocationSettings.DefaultLatitude.ToString(CultureInfo.InvariantCulture);
-            c_DefaultLongitude.Text = Bot.GlobalSettings.LocationSettings.DefaultLongitude.ToString(CultureInfo.InvariantCulture);
-            c_DefaultAltitude.Text = Bot.GlobalSettings.LocationSettings.DefaultAltitude.ToString(CultureInfo.InvariantCulture);
+            Dispatcher.BeginInvoke(new ThreadStart(delegate
+            {
+                c_DefaultLatitude.Text =
+                    Bot.GlobalSettings.LocationSettings.DefaultLatitude.ToString(CultureInfo.InvariantCulture);
+                c_DefaultLongitude.Text =
+                    Bot.GlobalSettings.LocationSettings.DefaultLongitude.ToString(CultureInfo.InvariantCulture);
+                c_DefaultAltitude.Text =
+                    Bot.GlobalSettings.LocationSettings.DefaultAltitude.ToString(CultureInfo.InvariantCulture);
+            }));
         }
 
         public void SetBot(BotWindowData bot)

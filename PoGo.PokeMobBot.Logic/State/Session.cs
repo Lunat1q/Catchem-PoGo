@@ -71,10 +71,9 @@ namespace PoGo.PokeMobBot.Logic.State
             get
             {
                 if (!Settings.UseProxy) return null;
-                var proxyCreds = new NetworkCredential(
-                    Settings.ProxyLogin,
-                    Settings.ProxyPass
-                    );
+                NetworkCredential proxyCreds = null;
+                if (Settings.ProxyLogin != "")
+                    proxyCreds = new NetworkCredential(Settings.ProxyLogin, Settings.ProxyPass);
                 var prox = new WebProxy(Settings.ProxyUri)
                 {
                     UseDefaultCredentials = false,

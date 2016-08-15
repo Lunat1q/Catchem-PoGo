@@ -61,7 +61,7 @@ namespace Catchem.Pages
             pokeMap.Zoom = 18;
             GMap.NET.MapProviders.GMapProvider.WebProxy = System.Net.WebRequest.GetSystemWebProxy();
             GMap.NET.MapProviders.GMapProvider.WebProxy.Credentials = System.Net.CredentialCache.DefaultCredentials;
-            pokeMap.MapProvider = GMap.NET.MapProviders.GMapProviders.GoogleMap;
+            pokeMap.MapProvider = GMap.NET.MapProviders.GMapProviders.OpenStreetMap;
             GMaps.Instance.Mode = AccessMode.ServerOnly;
             if (_bot != null)
                 pokeMap.Position = new PointLatLng(_bot.Lat, _bot.Lng);
@@ -280,7 +280,7 @@ namespace Catchem.Pages
         {
             if (_playerMarker == null)
             {
-                _playerMarker = new GMapMarker(new PointLatLng(_bot.Lat, _bot.Lng))
+                _playerMarker = new GMapMarker(new PointLatLng(_bot._lat, _bot._lng))
                 {
                     Shape = Properties.Resources.trainer.ToImage("Player"),
                     Offset = new Point(-14, -40),
