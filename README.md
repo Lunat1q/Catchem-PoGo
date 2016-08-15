@@ -7,7 +7,7 @@
 [<h3>Discord for any help</h3>](https://discord.gg/pPwxX8Q)
  
 <h2>Donating</h2>
-I you really liked this project, feel free to buy <b>pizza</b> :pizza: for devs (or <b>flowers</b> :rose: for my gf, she is a bit mad what i'm spending most part of my free time for this project :)), by using PayPal:<br/><br/>
+I you really liked this project, feel free to buy <b>pizza</b> :pizza: for devs (or <b>flowers</b> :rose: for my gf, she is a bit mad what i'm spending most part of my free time for this project :coffee:):<br/><br/>
 [![Donate](https://www.paypalobjects.com/en_US/GB/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=RFAU4PYCAAGML)<br/>
 <h3>We really appreciate all the donations made, so everyone who donated to our project will get access to priveledged support channel!</h3>
 If u don't have PayPal account and still wanna to donate for my work, please contact me in Discord :)
