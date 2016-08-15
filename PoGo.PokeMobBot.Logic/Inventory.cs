@@ -78,7 +78,7 @@ namespace PoGo.PokeMobBot.Logic
         {
             var now = DateTime.UtcNow;
 
-            if (_lastRefresh.AddSeconds(30).Ticks > now.Ticks)
+            if (_lastRefresh.AddSeconds(30).Ticks > now.Ticks && _cachedInventory != null)
             {
                 return _cachedInventory;
             }
@@ -425,7 +425,7 @@ namespace PoGo.PokeMobBot.Logic
         {
             var inventory = await GetCachedInventory();
             return
-                inventory.InventoryDelta.InventoryItems.Select(i => i.InventoryItemData?.PokemonData)
+                inventory?.InventoryDelta?.InventoryItems?.Select(i => i.InventoryItemData?.PokemonData)
                     .Where(p => p != null && p.PokemonId > 0);
         }
 

@@ -8,6 +8,7 @@ using Catchem.Extensions;
 using Catchem.Interfaces;
 using PoGo.PokeMobBot.Logic;
 using PokemonGo.RocketAPI.Enums;
+using System.Net;
 
 namespace Catchem.Pages
 {
@@ -168,17 +169,33 @@ namespace Catchem.Pages
             var dd = await Adb.GetDeviceData();
             c_DeviceId.Text = Bot.GlobalSettings.Device.DeviceId = dd.DeviceId;
             c_AndroidBoardName.Text = Bot.GlobalSettings.Device.AndroidBoardName = dd.AndroidBoardName;
-            c_AndroidBootloader.Text = Bot.GlobalSettings.Device.AndroidBootLoader = dd.AndroidBootloader;
+            c_AndroidBootLoader.Text = Bot.GlobalSettings.Device.AndroidBootLoader = dd.AndroidBootloader;
             c_DeviceBrand.Text = Bot.GlobalSettings.Device.DeviceBrand = dd.DeviceBrand;
             c_DeviceModel.Text = Bot.GlobalSettings.Device.DeviceModel = dd.DeviceModel;
             c_DeviceModelIdentifier.Text = Bot.GlobalSettings.Device.DeviceModelIdentifier = dd.DeviceModelIdentifier;
             c_HardwareManufacturer.Text = Bot.GlobalSettings.Device.HardwareManufacturer = dd.HardwareManufacturer;
-            c_HardwareModel.Text = Bot.GlobalSettings.Device.HardWareModel = dd.HardwareModel;
+            c_HardWareModel.Text = Bot.GlobalSettings.Device.HardWareModel = dd.HardwareModel;
             c_FirmwareBrand.Text = Bot.GlobalSettings.Device.FirmwareBrand = dd.FirmwareBrand;
             c_FirmwareTags.Text = Bot.GlobalSettings.Device.FirmwareTags = dd.FirmwareTags;
             c_FirmwareType.Text = Bot.GlobalSettings.Device.FirmwareType = dd.FirmwareType;
             c_FirmwareFingerprint.Text = Bot.GlobalSettings.Device.FirmwareFingerprint = dd.FirmwareFingerprint;
         }
 
+        private void btn_textProxy_Click(object sender, RoutedEventArgs e)
+        {
+            if (!Bot.GlobalSettings.Auth.UseProxy)
+            {
+                MessageBox.Show("Proxy disabled!", "Proxy test", MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
+            try
+            {
+                WebClient wc = new WebClient();
+                wc.Proxy = Bot.Session.Proxy;
+                wc.DownloadString("http://google.com/ncr");
+                MessageBox.Show("Proxy works fine!", "Proxy test", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            catch { MessageBox.Show("Proxy failed!", "Proxy test", MessageBoxButton.OK, MessageBoxImage.Warning); }
+        }
     }
 }

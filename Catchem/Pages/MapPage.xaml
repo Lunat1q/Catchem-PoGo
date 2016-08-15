@@ -11,7 +11,7 @@
             <RowDefinition/>
             <RowDefinition Height="33"/>
         </Grid.RowDefinitions>
-        <windowsPresentation:GMapControl x:Name="pokeMap" Margin="0,0,0,1" MouseDoubleClick="pokeMap_MouseDoubleClick"/>
+        <windowsPresentation:GMapControl x:Name="pokeMap" Margin="0,0,0,1" MouseDoubleClick="pokeMap_MouseDoubleClick" MouseWheel="pokeMap_MouseWheel"/>
         <Grid Grid.Row="1">
             <Rectangle Margin="0">
                 <Rectangle.Fill>
@@ -26,6 +26,8 @@
             <Label x:Name="label5" Content="Move Speed Factor:" HorizontalAlignment="Left" Margin="183,4,0,0" VerticalAlignment="Top" Width="126"/>
             <Label x:Name="l_moveSpeedFactor" Content="1" HorizontalAlignment="Left" Margin="463,4,0,0" VerticalAlignment="Top" Width="32"/>
             <CheckBox x:Name="cb_keepPokemonMarkers" Content="Keep pokemon markers on the map" HorizontalAlignment="Left" Margin="500,10,0,0" VerticalAlignment="Top" Width="215" Checked="cb_keepPokemonMarkers_Checked" Unchecked="cb_keepPokemonMarkers_Checked"/>
+            <Slider x:Name="sl_mapZoom" HorizontalAlignment="Right" Margin="0,8,10,0" VerticalAlignment="Top" RenderTransformOrigin="3.583,0.25" Width="168" Height="25" Minimum="2" Maximum="18" TickPlacement="BottomRight" Value="18" SmallChange="0" LargeChange="3" ValueChanged="sl_mapZoom_ValueChanged" />
+            <Label x:Name="label5_Copy" Content="Zoom:" HorizontalAlignment="Right" Margin="0,4,183,0" VerticalAlignment="Top" Width="45"/>
         </Grid>
     </Grid>
 </UserControl>

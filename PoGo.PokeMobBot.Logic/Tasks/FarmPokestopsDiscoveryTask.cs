@@ -77,9 +77,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                     await session.Client.Player.UpdatePlayerLocation(fortInfo.Latitude, fortInfo.Longitude,
                         session.Client.Settings.DefaultAltitude);
                 else
-                    await MoveToPokestop(session, cancellationToken, pokeStop);
-
-                await CatchWildPokemonsTask.Execute(session, cancellationToken);
+                    await MoveToPokestop(session, cancellationToken, pokeStop);                
 
                 if (!session.ForceMoveJustDone)
                 {
@@ -111,7 +109,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
 
                                 fortTry += 1;
 
-                                if (!shownSoftBanMessage)
+                                if (!shownSoftBanMessage || fortTry % 5 == 0)
                                 {
                                     session.EventDispatcher.Send(new FortFailedEvent
                                     {
@@ -146,6 +144,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                             });
                             session.MapCache.UsedPokestop(pokeStop);
                             pokeStop.CooldownCompleteTimestampMS = DateTime.UtcNow.AddMinutes(5).ToUnixTime();
+                            await CatchWildPokemonsTask.Execute(session, cancellationToken);
                             break; //Continue with program as loot was succesfull.
                         }
                     } while (fortTry < retryNumber - zeroCheck);

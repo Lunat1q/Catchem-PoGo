@@ -152,7 +152,11 @@ namespace PoGo.PokeMobBot.Logic.State
                     Message = session.Translation.GetTranslation(TranslationString.MissingCredentialsGoogle)
                 });
                 await Task.Delay(2000, cancellationToken);
-                Environment.Exit(0);
+                session.EventDispatcher.Send(new BotCompleteFailureEvent
+                {
+                    Shutdown = false,
+                    Stop = true
+                });
             }
             else if (session.Settings.AuthType == AuthType.Ptc &&
                      (session.Settings.PtcUsername == null || session.Settings.PtcPassword == null))
@@ -162,7 +166,11 @@ namespace PoGo.PokeMobBot.Logic.State
                     Message = session.Translation.GetTranslation(TranslationString.MissingCredentialsPtc)
                 });
                 await Task.Delay(2000, cancellationToken);
-                Environment.Exit(0);
+                session.EventDispatcher.Send(new BotCompleteFailureEvent
+                {
+                    Shutdown = false,
+                    Stop = true
+                });
             }
         }
 

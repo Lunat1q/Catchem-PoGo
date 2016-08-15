@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Catchem"
-             mc:Ignorable="d" Width="1065.487" Height="1681">
+             mc:Ignorable="d" Width="1049.487" Height="1704.5">
     <Grid Background="#FFF9F9F9">
         <ScrollViewer Grid.ColumnSpan="2">
             <Grid x:Name="settings_grid">
@@ -15,12 +15,28 @@
                 <GroupBox x:Name="groupBox" Grid.Column="1" Header="Proxy" VerticalAlignment="Top" Height="147">
                     <Grid Margin="0,0,0,0" IsEnabled="True">
                         <CheckBox x:Name="c_UseProxy" Content="UseProxy" HorizontalAlignment="Left" Margin="16,1,0,0" VerticalAlignment="Top" Height="15" Width="101" Checked="BotPropertyChanged" Unchecked="BotPropertyChanged"/>
-                        <TextBox Template="{StaticResource pogo}" x:Name="c_ProxyUri" Height="29" Margin="94,86,10,0" TextWrapping="Wrap" VerticalAlignment="Top" TextChanged="BotPropertyChanged" Foreground="#FF56C2B0"/>
+                        <TextBox Template="{StaticResource pogo}" x:Name="c_ProxyUri" Height="29" Margin="94,86,125,0" TextWrapping="Wrap" VerticalAlignment="Top" TextChanged="BotPropertyChanged" Foreground="#FF56C2B0"/>
                         <Label x:Name="label" Content="Host:port" HorizontalAlignment="Left" Margin="10,89,0,0" VerticalAlignment="Top" Width="79" RenderTransformOrigin="0.494,0.5"/>
                         <Label x:Name="label1" Content="Password" HorizontalAlignment="Left" Margin="10,53,0,0" VerticalAlignment="Top" Width="79"/>
                         <Label x:Name="label2" Content="Login" HorizontalAlignment="Left" Margin="10,19,0,0" VerticalAlignment="Top" Width="79"/>
                         <TextBox Template="{StaticResource pogo}" x:Name="c_ProxyLogin" Height="34" Margin="94,14,10,0" TextWrapping="Wrap" VerticalAlignment="Top" TextChanged="BotPropertyChanged" Foreground="#FF56C2B0" Text="Username"/>
                         <PasswordBox Template="{StaticResource pogo_password}" x:Name="c_ProxyPass" Margin="94,53,10,0" VerticalAlignment="Top" Height="28" PasswordChanged="BotPropertyChanged" Password="password" Foreground="#FF56C2B0"/>
+                        <Button Style="{StaticResource ResourceKey=flatbutton}" x:Name="btn_textProxy" Content="TEST PROXY" HorizontalAlignment="Right" VerticalAlignment="Top" Width="110" Height="29" Click="btn_textProxy_Click" Margin="0,86,10,0" FontFamily="BOLD" TextOptions.TextFormattingMode="Display" FontWeight="Bold">
+                            <Button.Background>
+                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                    <LinearGradientBrush.RelativeTransform>
+                                        <TransformGroup>
+                                            <ScaleTransform CenterY="0.5" CenterX="0.5"/>
+                                            <SkewTransform CenterY="0.5" CenterX="0.5"/>
+                                            <RotateTransform Angle="90" CenterY="0.5" CenterX="0.5"/>
+                                            <TranslateTransform/>
+                                        </TransformGroup>
+                                    </LinearGradientBrush.RelativeTransform>
+                                    <GradientStop Color="#FF009CF5" Offset="0"/>
+                                    <GradientStop Color="#FF007D89" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Button.Background>
+                        </Button>
                     </Grid>
                 </GroupBox>
                 <GroupBox x:Name="groupBox1" Header="Auth" VerticalAlignment="Top" Height="147">
@@ -186,7 +202,7 @@
                         <Label x:Name="label7_Copy5" Content="Android Board Name" Margin="10,47,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.423" Height="26"/>
                         <TextBox Template="{StaticResource pogo}" x:Name="c_AndroidBoardName" Grid.Column="1" Height="29" Margin="10,47,10,0" TextWrapping="Wrap" VerticalAlignment="Top" TextChanged="BotPropertyChanged" />
                         <Label x:Name="label7_Copy6" Content="Android Bootloader" Margin="10,81,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.423" Height="26"/>
-                        <TextBox Template="{StaticResource pogo}" x:Name="c_AndroidBootloader" Grid.Column="1" Height="29" Margin="10,81,10,0" TextWrapping="Wrap" VerticalAlignment="Top" TextChanged="BotPropertyChanged" />
+                        <TextBox Template="{StaticResource pogo}" x:Name="c_AndroidBootLoader" Grid.Column="1" Height="29" Margin="10,81,10,0" TextWrapping="Wrap" VerticalAlignment="Top" TextChanged="BotPropertyChanged" />
                         <Label x:Name="label7_Copy7" Content="Device Brand" Margin="10,115,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.423" Height="26"/>
                         <TextBox Template="{StaticResource pogo}" x:Name="c_DeviceBrand" Grid.Column="1" Height="29" Margin="10,115,10,0" TextWrapping="Wrap" VerticalAlignment="Top" TextChanged="BotPropertyChanged" />
                         <Label x:Name="label7_Copy8" Content="Device Model" Margin="10,149,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.423" Height="26"/>
@@ -198,7 +214,7 @@
                         <Label x:Name="label7_Copy11" Content="Hardware Manufacturer" Margin="10,251,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.423" Height="26"/>
                         <TextBox Template="{StaticResource pogo}" x:Name="c_HardwareManufacturer" Grid.Column="1" Height="29" Margin="10,251,10,0" TextWrapping="Wrap" VerticalAlignment="Top" TextChanged="BotPropertyChanged" />
                         <Label x:Name="label7_Copy12" Content="Hardware Model" Margin="10,285,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.423" Height="26"/>
-                        <TextBox Template="{StaticResource pogo}" x:Name="c_HardwareModel" Grid.Column="1" Height="29" Margin="10,285,10,0" TextWrapping="Wrap" VerticalAlignment="Top" TextChanged="BotPropertyChanged" />
+                        <TextBox Template="{StaticResource pogo}" x:Name="c_HardWareModel" Grid.Column="1" Height="29" Margin="10,285,10,0" TextWrapping="Wrap" VerticalAlignment="Top" TextChanged="BotPropertyChanged" />
                         <Label x:Name="label7_Copy13" Content="Firmware Brand" Margin="10,319,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.423" Height="26"/>
                         <TextBox Template="{StaticResource pogo}" x:Name="c_FirmwareBrand" Grid.Column="1" Height="29" Margin="10,319,10,0" TextWrapping="Wrap" VerticalAlignment="Top" TextChanged="BotPropertyChanged" />
                         <Label x:Name="label7_Copy14" Content="Firmware Tags" Margin="10,353,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.423" Height="26"/>
@@ -253,7 +269,7 @@
 
                     </Grid>
                 </GroupBox>
-                <Button Style="{StaticResource ResourceKey=flatbutton}" x:Name="btn_SaveBot" Content="SAVE SETTINGS" HorizontalAlignment="Left" VerticalAlignment="Top" Width="110" Height="30" Click="btn_SaveBot_Click" Margin="407,1636,0,0" FontFamily="BOLD" TextOptions.TextFormattingMode="Display" FontWeight="Bold" Grid.Column="1">
+                <Button Style="{StaticResource ResourceKey=flatbutton}" x:Name="btn_SaveBot" Content="SAVE SETTINGS" HorizontalAlignment="Right" VerticalAlignment="Top" Width="110" Height="30" Click="btn_SaveBot_Click" Margin="0,1636,10,0" FontFamily="BOLD" TextOptions.TextFormattingMode="Display" FontWeight="Bold" Grid.Column="1">
                     <Button.Background>
                         <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                             <LinearGradientBrush.RelativeTransform>

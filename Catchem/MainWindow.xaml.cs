@@ -26,6 +26,7 @@ using POGOProtos.Data;
 using POGOProtos.Inventory.Item;
 using static System.String;
 using LogLevel = PoGo.PokeMobBot.Logic.Logging.LogLevel;
+using System.Reflection;
 
 namespace Catchem
 {
@@ -61,6 +62,12 @@ namespace Catchem
             LogWorker();
             InitBots();
             BotMapPage.SetSettingsPage(BotSettingsPage);
+            SetVersionTag();
+        }
+
+        public void SetVersionTag(Version remoteVersion = null)
+        {
+            this.Title = $"Catchem - v{Assembly.GetExecutingAssembly().GetName().Version} {(remoteVersion != null ? $"New release - {remoteVersion}" : "")}";
         }
 
         private void InitWindowsControlls()
@@ -124,6 +131,12 @@ namespace Catchem
                         BuildItemList(session, objData);
                     }));
                     break;
+                case "new_version":
+                    Dispatcher.BeginInvoke(new ThreadStart(delegate
+                    {
+                        SetVersionTag((Version)objData[0]);
+                    }));
+                    break;
                 case "item_new":
                     Dispatcher.BeginInvoke(new ThreadStart(delegate
                     {
@@ -176,8 +189,8 @@ namespace Catchem
         {
             var receiverBot = BotsCollection.FirstOrDefault(x => x.Session == session);
             if (receiverBot == null || !receiverBot.Started) return;
-            if (shutdown)
-                Environment.Exit(0);
+            //if (shutdown)
+            //    Environment.Exit(0);
             if (!stop) return;
             receiverBot.Stop();
             ClearPokemonData(receiverBot);

@@ -97,7 +97,11 @@ namespace PoGo.PokeMobBot.Logic.State
                     Message = session.Translation.GetTranslation(TranslationString.AccountNotVerified)
                 });
                 await Task.Delay(2000, cancellationToken);
-                Environment.Exit(0);
+                session.EventDispatcher.Send(new BotCompleteFailureEvent
+                {
+                    Shutdown = false,
+                    Stop = true
+                });
             }
             catch (GoogleException e)
             {
@@ -130,7 +134,11 @@ namespace PoGo.PokeMobBot.Logic.State
                     Message = session.Translation.GetTranslation(TranslationString.GoogleError)
                 });
                 await Task.Delay(2000, cancellationToken);
-                Environment.Exit(0);
+                session.EventDispatcher.Send(new BotCompleteFailureEvent
+                {
+                    Shutdown = false,
+                    Stop = true
+                });
             }
 
             return this;

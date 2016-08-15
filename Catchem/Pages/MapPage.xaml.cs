@@ -56,6 +56,7 @@ namespace Catchem.Pages
             pokeMap.MaxZoom = 18;
             pokeMap.MinZoom = 2;
             pokeMap.MouseWheelZoomType = MouseWheelZoomType.MousePositionWithoutCenter;
+            pokeMap.IgnoreMarkerOnMouseWheel = true;
             pokeMap.ShowCenter = false;
             pokeMap.ShowTileGridLines = false;
             pokeMap.Zoom = 18;
@@ -340,6 +341,18 @@ namespace Catchem.Pages
         {
             var box = sender as CheckBox;
             if (box?.IsChecked != null) _followThePlayerMarker = (bool)box.IsChecked;
+        }
+
+        private void pokeMap_MouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            sl_mapZoom.Value = pokeMap.Zoom;
+        }
+
+        private void sl_mapZoom_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            var sl = (sender as Slider);
+            if (sl == null) return;
+            pokeMap.Zoom = (int)sl.Value;
         }
     }
 }

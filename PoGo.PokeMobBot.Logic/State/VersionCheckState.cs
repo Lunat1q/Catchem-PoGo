@@ -189,6 +189,10 @@ namespace PoGo.PokeMobBot.Logic.State
                 {
                     return true;
                 }
+                session.EventDispatcher.Send(new NewVersionEvent
+                {
+                    v = gitVersion
+                });
             }
             catch (Exception)
             {

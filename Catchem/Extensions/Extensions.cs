@@ -232,41 +232,44 @@ namespace Catchem.Extensions
             switch (typeCode)
             {
                 case TypeCode.Double:
-                {
-                    double result;
-                        var res = double.TryParse(value, NumberStyles.Any, CultureInfo.CurrentCulture, out result)
-                                  || double.TryParse(value, NumberStyles.Any, CultureInfo.InvariantCulture, out result)
-                                  || double.TryParse(value, NumberStyles.Any, CultureInfo.GetCultureInfo("en-US"), out result);                              
-                    if (!res) return false;
-                    var changeType = Convert.ChangeType(result, typeCode);
-                    if (changeType != null)
-                        resultVal = (T) changeType;
-                    return true;
-                }
+                    {
+                        double result;
+                        double result2;
+                        var res = double.TryParse(value, NumberStyles.Any, CultureInfo.CurrentCulture, out result);
+                        res = double.TryParse(value, NumberStyles.Any, CultureInfo.InvariantCulture, out result2)
+                                      || double.TryParse(value, NumberStyles.Any, CultureInfo.GetCultureInfo("en-US"), out result2);
+                        if (!res) return false;
+                        if ((result2 < result && result2 != 0) || (result2 != 0 && result == 0))
+                            result = result2;
+                        var changeType = Convert.ChangeType(result, typeCode);
+                        if (changeType != null)
+                            resultVal = (T)changeType;
+                        return true;
+                    }
                 case TypeCode.Single:
-                {
-                    float result;
-                    var res = float.TryParse(value, NumberStyles.Any, CultureInfo.CurrentCulture, out result)
-                              || float.TryParse(value, NumberStyles.Any, CultureInfo.GetCultureInfo("en-US"), out result)
-                              || float.TryParse(value, NumberStyles.Any, CultureInfo.InvariantCulture, out result);
-                    if (!res) return false;
-                    var changeType = Convert.ChangeType(result, typeCode);
-                    if (changeType != null)
-                        resultVal = (T) changeType;
-                    return true;
-                }
+                    {
+                        float result;
+                        var res = float.TryParse(value, NumberStyles.Any, CultureInfo.CurrentCulture, out result)
+                                  || float.TryParse(value, NumberStyles.Any, CultureInfo.GetCultureInfo("en-US"), out result)
+                                  || float.TryParse(value, NumberStyles.Any, CultureInfo.InvariantCulture, out result);
+                        if (!res) return false;
+                        var changeType = Convert.ChangeType(result, typeCode);
+                        if (changeType != null)
+                            resultVal = (T)changeType;
+                        return true;
+                    }
                 case TypeCode.Int32:
-                {
-                    int result;
-                    var res = int.TryParse(value, NumberStyles.Any, CultureInfo.CurrentCulture, out result)
-                              || int.TryParse(value, NumberStyles.Any, CultureInfo.GetCultureInfo("en-US"), out result)
-                              || int.TryParse(value, NumberStyles.Any, CultureInfo.InvariantCulture, out result);
-                    if (!res) return false;
-                    var changeType = Convert.ChangeType(result, typeCode);
-                    if (changeType != null)
-                        resultVal = (T) changeType;
-                    return true;
-                }
+                    {
+                        int result;
+                        var res = int.TryParse(value, NumberStyles.Any, CultureInfo.CurrentCulture, out result)
+                                  || int.TryParse(value, NumberStyles.Any, CultureInfo.GetCultureInfo("en-US"), out result)
+                                  || int.TryParse(value, NumberStyles.Any, CultureInfo.InvariantCulture, out result);
+                        if (!res) return false;
+                        var changeType = Convert.ChangeType(result, typeCode);
+                        if (changeType != null)
+                            resultVal = (T)changeType;
+                        return true;
+                    }
             }
             return false;
         }

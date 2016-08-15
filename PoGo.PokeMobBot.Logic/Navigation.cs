@@ -130,13 +130,13 @@ namespace PoGo.PokeMobBot.Logic
             if (Math.Abs(targetLocation.Altitude) > 0.001)
             {
                 trueAlt = true;
-                altitudeStep = (_client.Settings.DefaultAltitude - targetLocation.Altitude) * (distanceToTarget / (nextWaypointDistance > 1 ? nextWaypointDistance : 1));
+                altitudeStep = (_client.Settings.DefaultAltitude - targetLocation.Altitude) / (distanceToTarget / (nextWaypointDistance > 1 ? nextWaypointDistance : 1));
                 altitude = _client.Settings.DefaultAltitude - altitudeStep;
                 waypoint = LocationUtils.CreateWaypoint(sourceLocation, nextWaypointDistance, nextWaypointBearing, altitude);
             }
             else
             {
-                altitudeStep = (_client.Settings.DefaultAltitude - _client.rnd.NextInRange(_client.Settings.DefaultAltitudeMin, _client.Settings.DefaultAltitudeMax)) * (distanceToTarget / nextWaypointDistance);
+                altitudeStep = (_client.Settings.DefaultAltitude - _client.rnd.NextInRange(_client.Settings.DefaultAltitudeMin, _client.Settings.DefaultAltitudeMax)) / (distanceToTarget / nextWaypointDistance);
                 altitude = _client.Settings.DefaultAltitude + altitudeStep;
                 waypoint = LocationUtils.CreateWaypoint(sourceLocation, nextWaypointDistance, nextWaypointBearing, _client.Settings.DefaultAltitude);
             }
@@ -191,6 +191,13 @@ namespace PoGo.PokeMobBot.Logic
 
                 UpdatePositionEvent?.Invoke(waypoint.Latitude, waypoint.Longitude, altitude);
                 altitude -= altitudeStep;
+                if (!trueAlt && (altitude < _client.Settings.DefaultAltitudeMin && altitude > _client.Settings.DefaultAltitudeMax))
+                {
+                    if (altitude < _client.Settings.DefaultAltitudeMin)
+                        altitude = _client.Settings.DefaultAltitudeMin + _client.rnd.NextInRange(0.3, 0.5);
+                    else
+                        altitude = _client.Settings.DefaultAltitudeMin - _client.rnd.NextInRange(0.3, 0.5);
+                }
                 if (functionExecutedWhileWalking != null)
                     await functionExecutedWhileWalking(); // look for pokemon & hit stops
                 if(functionExecutedWhileWalking2 != null)

@@ -266,6 +266,11 @@ namespace Catchem.Classes
         {
             Logger.PushToUi("item_new", session, evt.Items);
         }
+
+        public void HandleEvent(NewVersionEvent evt, ISession session)
+        {
+            Logger.PushToUi("new_version", session, evt.v);
+        }
         
         public void HandleEvent(DisplayHighestsPokemonEvent evt, ISession session)
         {

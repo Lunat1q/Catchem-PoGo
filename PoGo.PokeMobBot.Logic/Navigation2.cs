@@ -35,7 +35,7 @@ namespace PoGo.PokeMobBot.Logic
         }
 
         public async Task<PlayerUpdateResponse> Move(GeoCoordinate destination, double walkingSpeedMin, double walkingSpeedMax, Func<Task<bool>> functionExecutedWhileWalking, Func<Task<bool>> functionExecutedWhileWalking2,
-            CancellationToken cancellationToken, ISession session)
+            CancellationToken cancellationToken, ISession session, bool direct = false)
         {
             var currentLocation = new GeoCoordinate(_client.CurrentLatitude, _client.CurrentLongitude, _client.CurrentAltitude);
             var result = new PlayerUpdateResponse();
@@ -72,13 +72,16 @@ namespace PoGo.PokeMobBot.Logic
 
                 //TODO: refactor the generation of waypoint code to break the waypoints given to us by the routing information down into segements like above.
                 //generate waypoints new code
-                var routingResponse = OsmRouting.GetRoute(currentLocation, destination, session);
-                waypoints = routingResponse.Coordinates;
-                var nextPath = routingResponse.Coordinates.Select(item => Tuple.Create(item.Latitude, item.Longitude)).ToList();
-                session.EventDispatcher.Send(new NextRouteEvent
+                if (!direct)
                 {
-                    Coords = nextPath
-                });
+                    var routingResponse = OsmRouting.GetRoute(currentLocation, destination, session);
+                    waypoints = routingResponse.Coordinates;
+                    var nextPath = routingResponse.Coordinates.Select(item => Tuple.Create(item.Latitude, item.Longitude)).ToList();
+                    session.EventDispatcher.Send(new NextRouteEvent
+                    {
+                        Coords = nextPath
+                    });
+                }
 
                 if (waypoints.Count == 0)
                     waypoints.Add(destination);
