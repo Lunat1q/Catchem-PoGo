@@ -88,6 +88,9 @@ namespace Catchem
             if (session == null) return;
             switch (msgType)
             {
+                case "bot_failure":
+                    HandleFailure(session, (bool) objData[0], (bool) objData[1]);
+                    break;
                 case "log":
                     PushNewConsoleRow(session, (string)objData[0], (Color)objData[1]);
                     break;
@@ -167,6 +170,17 @@ namespace Catchem
                     PushRemoveForceMoveMarker(session);
                     break;
             }
+        }
+
+        private void HandleFailure(ISession session, bool shutdown, bool stop)
+        {
+            var receiverBot = BotsCollection.FirstOrDefault(x => x.Session == session);
+            if (receiverBot == null || !receiverBot.Started) return;
+            if (shutdown)
+                Environment.Exit(0);
+            if (!stop) return;
+            receiverBot.Stop();
+            ClearPokemonData(receiverBot);
         }
 
         private void DrawNextRoute(ISession session, List<Tuple<double, double>> list)
@@ -324,7 +338,7 @@ namespace Catchem
                     BotMapPage.UpdateCurrentBotCoords(botReceiver);
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 // ignored
             }
@@ -518,6 +532,7 @@ namespace Catchem
                     BotPlayerPage.UpdateRunTimeData();
                 }));
             }
+            bot.CheckForMaxCatch();
         }
 
         public void ClearPokemonData(BotWindowData calledBot)

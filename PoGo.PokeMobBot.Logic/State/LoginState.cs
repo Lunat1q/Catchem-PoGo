@@ -72,7 +72,11 @@ namespace PoGo.PokeMobBot.Logic.State
                     Message = session.Translation.GetTranslation(TranslationString.AccountNotVerified)
                 });
                 await Task.Delay(2000, cancellationToken);
-                Environment.Exit(0);
+                session.EventDispatcher.Send(new BotCompleteFailureEvent
+                {
+                    Shutdown = false,
+                    Stop = true
+                });
             }
             catch (GoogleException e)
             {
@@ -105,7 +109,11 @@ namespace PoGo.PokeMobBot.Logic.State
                     Message = session.Translation.GetTranslation(TranslationString.GoogleError)
                 });
                 await Task.Delay(2000, cancellationToken);
-                Environment.Exit(0);
+                session.EventDispatcher.Send(new BotCompleteFailureEvent
+                {
+                    Shutdown = false,
+                    Stop = true
+                });
             }
             catch (InvalidProtocolBufferException ex) when (ex.Message.Contains("SkipLastField"))
             {
@@ -114,7 +122,11 @@ namespace PoGo.PokeMobBot.Logic.State
                     Message = "IP Banned..."
                 });
                 await Task.Delay(2000, cancellationToken);
-                Environment.Exit(0);
+                session.EventDispatcher.Send(new BotCompleteFailureEvent
+                {
+                    Shutdown = false,
+                    Stop = true
+                });
             }
             catch (Exception)
             {
@@ -161,7 +173,7 @@ namespace PoGo.PokeMobBot.Logic.State
                 session.Profile = await session.Client.Player.GetPlayer();
                 session.EventDispatcher.Send(new ProfileEvent { Profile = session.Profile });
             }
-            catch (System.UriFormatException e)
+            catch (UriFormatException e)
             {
                 session.EventDispatcher.Send(new ErrorEvent { Message = e.ToString() });
             }

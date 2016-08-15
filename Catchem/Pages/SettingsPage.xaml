@@ -96,7 +96,7 @@
 
                     </Grid>
                 </GroupBox>
-                <GroupBox x:Name="groupBox4" Header="Snipe" Margin="-1,1378,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.479,0.565" Height="224" IsEnabled="False">
+                <GroupBox x:Name="groupBox4" Header="Snipe" Margin="-2,1425,1,0" VerticalAlignment="Top" RenderTransformOrigin="0.479,0.565" Height="224" IsEnabled="False">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="181*"/>
@@ -116,7 +116,7 @@
 
                     </Grid>
                 </GroupBox>
-                <GroupBox x:Name="groupBox4_Copy" Header="Items" Margin="0,1146,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.479,0.565" Height="232">
+                <GroupBox x:Name="groupBox4_Copy" Header="Items" Margin="-1,1193,1,0" VerticalAlignment="Top" RenderTransformOrigin="0.479,0.565" Height="232">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="181*"/>
@@ -137,7 +137,7 @@
 
                     </Grid>
                 </GroupBox>
-                <GroupBox x:Name="groupBox4_Copy1" Header="Catch" Margin="0,688,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.479,0.565" Height="458">
+                <GroupBox x:Name="groupBox4_Copy1" Header="Catch" Margin="0,688,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.479,0.565" Height="505">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="181*"/>
@@ -169,6 +169,9 @@
                         <Label x:Name="label8_Copy18" Content="Use Berry Below Catch Probability" HorizontalAlignment="Left" Margin="10,377,0,0" VerticalAlignment="Top" Width="210"/>
                         <TextBox Template="{StaticResource pogo}" x:Name="c_UseBerryBelowCatchProbability" Height="29" Margin="5,376,10,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Grid.Column="1" TextChanged="BotPropertyChanged" />
                         <CheckBox x:Name="c_CatchWildPokemon" Content="Catch Wild Pokemon" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="13,408,0,0" Checked="BotPropertyChanged" Unchecked="BotPropertyChanged" Width="207" />
+                        <Label x:Name="label8_Copy19" Content="Max Catch Per Hour" HorizontalAlignment="Left" Margin="10,450,0,0" VerticalAlignment="Top" Width="210"/>
+                        <TextBox Template="{StaticResource pogo}" x:Name="c_MaxCatchPerHour" Height="29" Margin="5,449,10,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Grid.Column="1" TextChanged="BotPropertyChanged" />
+                        <CheckBox x:Name="c_PauseBotOnMaxHourlyCatch" Content="Pause Bot On Max Hourly Catch" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="13,429,0,0" Checked="BotPropertyChanged" Unchecked="BotPropertyChanged" Width="207" />
 
                     </Grid>
                 </GroupBox>

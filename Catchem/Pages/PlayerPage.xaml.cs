@@ -30,6 +30,7 @@ namespace Catchem.Pages
             _bot = bot;
             UpdatePlayerTab();
             _loadingUi = false;
+            UpdateRunTimeData();
         }
 
         private void SortByCpClick(object sender, RoutedEventArgs e)

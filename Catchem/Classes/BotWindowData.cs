@@ -5,12 +5,15 @@ using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Media;
 using System.Windows.Threading;
 using Catchem.Extensions;
 using GMap.NET;
 using GMap.NET.WindowsPresentation;
 using PoGo.PokeMobBot.Logic;
+using PoGo.PokeMobBot.Logic.Common;
+using PoGo.PokeMobBot.Logic.Event;
 using PoGo.PokeMobBot.Logic.State;
 using PoGo.PokeMobBot.Logic.Tasks;
 using PoGo.PokeMobBot.Logic.Utils;
@@ -45,7 +48,7 @@ namespace Catchem.Classes
         }
 
         public string Errors => _errosCount == 0 ? "" : _errosCount.ToString();
-
+        private Random _rnd = new Random();
         public Session Session;
         private CancellationTokenSource _cts;
         public CancellationToken CancellationToken => _cts.Token;
@@ -123,6 +126,10 @@ namespace Catchem.Classes
             }
         }
 
+        private float _realWorkSec;
+
+        private float _realWorkH => _realWorkSec/(60*60);
+
         public TimeSpan Ts
         {
             get { return _ts; }
@@ -154,6 +161,7 @@ namespace Catchem.Classes
             _timer.Tick += delegate
             {
                 Ts += new TimeSpan(0, 0, 1);
+                _realWorkSec++;
             };
             _cts = new CancellationTokenSource();
             PlayerRoute = new GMapRoute(_routePoints);
@@ -187,7 +195,7 @@ namespace Catchem.Classes
             LogQueue = new Queue<Tuple<string, Color>>();
         }
 
-        public void Stop()
+        public void Stop(bool soft = false)
         {
             TimerStop();
             _cts.Cancel();
@@ -195,6 +203,8 @@ namespace Catchem.Classes
             _ts = new TimeSpan();
             Started = false;
             ErrorsCount = 0;
+            if (!soft)
+                _realWorkSec = 0;
         }
 
         public void Start()
@@ -346,6 +356,20 @@ namespace Catchem.Classes
             {
                 pokemon.Candy = candy;
             }
+        }
+
+        public async void CheckForMaxCatch()
+        {
+            if (!GlobalSettings.CatchSettings.PauseBotOnMaxHourlyCatch || !(_realWorkH >= 1)) return;
+            if (!(Stats?.TotalPokemons/_realWorkH > GlobalSettings.CatchSettings.MaxCatchPerHour)) return;
+            var stopMs = 10*60*1000 + _rnd.Next(1000*60*5);
+            Session.EventDispatcher.Send(new WarnEvent
+            {
+                Message = $"Max amount of pokemos/h reached, but will be stoped for {(stopMs/(60000)).ToString("N1")} minutes"
+            });
+            Stop(true);
+            await Task.Delay(stopMs, CancellationToken);
+            Start();
         }
     }
 }

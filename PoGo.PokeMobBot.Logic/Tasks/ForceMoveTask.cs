@@ -1,18 +1,11 @@
 ﻿#region using directives
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using GeoCoordinatePortable;
-using PoGo.PokeMobBot.Logic.Common;
 using PoGo.PokeMobBot.Logic.Event;
-using PoGo.PokeMobBot.Logic.Logging;
 using PoGo.PokeMobBot.Logic.State;
 using PoGo.PokeMobBot.Logic.Utils;
-using PokemonGo.RocketAPI.Extensions;
-using POGOProtos.Map.Fort;
 using POGOProtos.Networking.Responses;
 
 #endregion
@@ -23,7 +16,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
     {
         public static int TimesZeroXPawarded;
 
-        public static async Task Execute(ISession session, CancellationToken cancellationToken)
+        public static async Task<PlayerUpdateResponse> Execute(ISession session, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
 
@@ -33,16 +26,19 @@ namespace PoGo.PokeMobBot.Logic.Tasks
             {
                 Message = $"ForceMove to {session.ForceMoveTo.Latitude} - {session.ForceMoveTo.Longitude} Started!"
             });
-
+            var moveToCoords = session.ForceMoveTo;
+            session.ForceMoveTo = null;
+           
 
             var distance = LocationUtils.CalculateDistanceInMeters(session.Client.CurrentLatitude,
-                session.Client.CurrentLongitude, session.ForceMoveTo.Latitude, session.ForceMoveTo.Longitude);
+                session.Client.CurrentLongitude, moveToCoords.Latitude, moveToCoords.Longitude);
+            PlayerUpdateResponse result;
 
             if (session.LogicSettings.Teleport)
-                await session.Client.Player.UpdatePlayerLocation(session.ForceMoveTo.Latitude, session.ForceMoveTo.Longitude,
+                result = await session.Client.Player.UpdatePlayerLocation(moveToCoords.Latitude, moveToCoords.Longitude,
                     session.Client.Settings.DefaultAltitude);
             else
-                await session.Navigation.Move(new GeoCoordinate(session.ForceMoveTo.Latitude, session.ForceMoveTo.Longitude),
+                result = await session.Navigation.Move(new GeoCoordinate(moveToCoords.Latitude, moveToCoords.Longitude),
                 session.LogicSettings.WalkingSpeedMin, session.LogicSettings.WalkingSpeedMax,
                 async () =>
                 {
@@ -55,13 +51,14 @@ namespace PoGo.PokeMobBot.Logic.Tasks
 
             session.EventDispatcher.Send(new WarnEvent
             {
-                Message = $"ForceMove Done!"
+                Message = "ForceMove Done!"
             });
+            session.ForceMoveJustDone = true;
             session.ForceMoveTo = null;
             session.EventDispatcher.Send(new ForceMoveDoneEvent() );
 
             if (session.LogicSettings.Teleport)
-                await Task.Delay(session.LogicSettings.DelayPokestop);
+                await Task.Delay(session.LogicSettings.DelayPokestop, cancellationToken);
             else
                 await Task.Delay(1000, cancellationToken);
 
@@ -72,6 +69,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
             {
                 await SnipePokemonTask.Execute(session, cancellationToken);
             }
+            return result;
         }
     }
 }

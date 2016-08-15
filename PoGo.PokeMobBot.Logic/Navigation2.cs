@@ -14,6 +14,7 @@ using PoGo.PokeMobBot.Logic.State;
 using System.Linq;
 using PoGo.PokeMobBot.Logic.Extensions;
 using PoGo.PokeMobBot.Logic.Event;
+using PoGo.PokeMobBot.Logic.Tasks;
 
 #endregion
 
@@ -79,6 +80,9 @@ namespace PoGo.PokeMobBot.Logic
                     Coords = nextPath
                 });
 
+                if (waypoints.Count == 0)
+                    waypoints.Add(destination);
+
                 //var timeSinceMoveStart = DateTime.Now.Ticks;
                 //double curAcceleration = 1.66; //Lets assume we accelerate at 1.66 m/s ish. TODO: Fuzz this a bit
                 //double curWalkingSpeed = 0;
@@ -102,6 +106,10 @@ namespace PoGo.PokeMobBot.Logic
                 //MILD REWRITE TO USE HUMANPATHWALKING;
                 foreach (GeoCoordinate t in waypointsArr)
                 {
+                    if (session.ForceMoveTo != null)
+                    {
+                        return await ForceMoveTask.Execute(session, cancellationToken);
+                    }
                     // skip waypoints under 5 meters
                     var sourceLocation = new GeoCoordinate(_client.CurrentLatitude, _client.CurrentLongitude);
                     double distanceToTarget = LocationUtils.CalculateDistanceInMeters(sourceLocation,
@@ -147,8 +155,6 @@ namespace PoGo.PokeMobBot.Logic
                 }
             }
             return result;
-
-
         }
 
         public static double GetAccelerationTime(double curV, double maxV, double acc)

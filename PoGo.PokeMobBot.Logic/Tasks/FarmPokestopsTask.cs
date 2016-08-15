@@ -70,7 +70,8 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                             new GeoCoordinate(session.Settings.DefaultLatitude, session.Settings.DefaultLongitude),
                             session.LogicSettings.WalkingSpeedMin, session.LogicSettings.WalkingSpeedMax, null, null, cancellationToken, session);
                     }
-
+                    if (session.ForceMoveJustDone)
+                        session.ForceMoveJustDone = false;
                     if (session.ForceMoveTo != null)
                     {
                         await ForceMoveTask.Execute(session, cancellationToken);
@@ -154,129 +155,130 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                         
                         cancellationToken, session);
                     }
-
-                    FortSearchResponse fortSearch;
-                    var timesZeroXPawarded = 0;
-                    var fortTry = 0; //Current check
-                    const int retryNumber = 50; //How many times it needs to check to clear softban
-                    const int zeroCheck = 5; //How many times it checks fort before it thinks it's softban
-                    if (RuntimeSettings.BreakOutOfPathing)
-                        continue;
-                    do
+                    if (!session.ForceMoveJustDone)
                     {
-                        cancellationToken.ThrowIfCancellationRequested();
-
-                        fortSearch =
-                            await session.Client.Fort.SearchFort(pokeStop.Id, pokeStop.Latitude, pokeStop.Longitude);
-                        if (fortSearch.ExperienceAwarded > 0 && timesZeroXPawarded > 0) timesZeroXPawarded = 0;
-                        if (fortSearch.ExperienceAwarded == 0)
+                        FortSearchResponse fortSearch;
+                        var timesZeroXPawarded = 0;
+                        var fortTry = 0; //Current check
+                        const int retryNumber = 50; //How many times it needs to check to clear softban
+                        const int zeroCheck = 5; //How many times it checks fort before it thinks it's softban
+                        if (RuntimeSettings.BreakOutOfPathing)
+                            continue;
+                        do
                         {
-                            timesZeroXPawarded++;
+                            cancellationToken.ThrowIfCancellationRequested();
 
-                            if (timesZeroXPawarded > zeroCheck)
+                            fortSearch =
+                                await session.Client.Fort.SearchFort(pokeStop.Id, pokeStop.Latitude, pokeStop.Longitude);
+                            if (fortSearch.ExperienceAwarded > 0 && timesZeroXPawarded > 0) timesZeroXPawarded = 0;
+                            if (fortSearch.ExperienceAwarded == 0)
                             {
-                                if ((int)fortSearch.CooldownCompleteTimestampMs != 0)
-                                {
-                                    break;
-                                    // Check if successfully looted, if so program can continue as this was "false alarm".
-                                }
+                                timesZeroXPawarded++;
 
-                                fortTry += 1;
-
-                                if (!ShownSoftBanMessage)
+                                if (timesZeroXPawarded > zeroCheck)
                                 {
-                                    session.EventDispatcher.Send(new FortFailedEvent
+                                    if ((int) fortSearch.CooldownCompleteTimestampMs != 0)
                                     {
-                                        Name = fortInfo.Name,
-                                        Try = fortTry,
-                                        Max = retryNumber - zeroCheck
-                                    });
-                                    ShownSoftBanMessage = true;
-                                }
-                                    await Task.Delay(session.LogicSettings.DelaySoftbanRetry);
-                            }
-                        }
-                        else
-                        {
-                            session.EventDispatcher.Send(new FortUsedEvent
-                            {
-                                Id = pokeStop.Id,
-                                Name = fortInfo.Name,
-                                Exp = fortSearch.ExperienceAwarded,
-                                Gems = fortSearch.GemsAwarded,
-                                Items = StringUtils.GetSummedFriendlyNameOfItemAwardList(fortSearch.ItemsAwarded),
-                                Latitude = pokeStop.Latitude,
-                                Longitude = pokeStop.Longitude,
-                                InventoryFull = fortSearch.Result == FortSearchResponse.Types.Result.InventoryFull,
-                                Description = fortInfo.Description,
-                                url = fortInfo.ImageUrls[0]
-                            });
-							session.MapCache.UsedPokestop(pokeStop);
-                            session.EventDispatcher.Send(new InventoryNewItemsEvent()
-                            {
-                                Items = fortSearch.ItemsAwarded.ToItemList()
-                            });
-                            break; //Continue with program as loot was succesfull.
-                        }
-                    } while (fortTry < retryNumber - zeroCheck);
-                    //Stop trying if softban is cleaned earlier or if 40 times fort looting failed.
+                                        break;
+                                        // Check if successfully looted, if so program can continue as this was "false alarm".
+                                    }
 
-                    ShownSoftBanMessage = false;
+                                    fortTry += 1;
+
+                                    if (!ShownSoftBanMessage)
+                                    {
+                                        session.EventDispatcher.Send(new FortFailedEvent
+                                        {
+                                            Name = fortInfo.Name,
+                                            Try = fortTry,
+                                            Max = retryNumber - zeroCheck
+                                        });
+                                        ShownSoftBanMessage = true;
+                                    }
+                                    await Task.Delay(session.LogicSettings.DelaySoftbanRetry);
+                                }
+                            }
+                            else
+                            {
+                                session.EventDispatcher.Send(new FortUsedEvent
+                                {
+                                    Id = pokeStop.Id,
+                                    Name = fortInfo.Name,
+                                    Exp = fortSearch.ExperienceAwarded,
+                                    Gems = fortSearch.GemsAwarded,
+                                    Items = StringUtils.GetSummedFriendlyNameOfItemAwardList(fortSearch.ItemsAwarded),
+                                    Latitude = pokeStop.Latitude,
+                                    Longitude = pokeStop.Longitude,
+                                    InventoryFull = fortSearch.Result == FortSearchResponse.Types.Result.InventoryFull,
+                                    Description = fortInfo.Description,
+                                    url = fortInfo.ImageUrls[0]
+                                });
+                                session.MapCache.UsedPokestop(pokeStop);
+                                session.EventDispatcher.Send(new InventoryNewItemsEvent()
+                                {
+                                    Items = fortSearch.ItemsAwarded.ToItemList()
+                                });
+                                break; //Continue with program as loot was succesfull.
+                            }
+                        } while (fortTry < retryNumber - zeroCheck);
+                        //Stop trying if softban is cleaned earlier or if 40 times fort looting failed.
+
+                        ShownSoftBanMessage = false;
                         await Task.Delay(session.LogicSettings.DelayPokestop);
 
 
-                    //Catch Lure Pokemon
+                        //Catch Lure Pokemon
 
-                    if (session.LogicSettings.CatchWildPokemon)
-                    {
-                        if (pokeStop.LureInfo != null)
+                        if (session.LogicSettings.CatchWildPokemon)
                         {
-                            await CatchLurePokemonsTask.Execute(session, pokeStop.BaseFortData, cancellationToken);
+                            if (pokeStop.LureInfo != null)
+                            {
+                                await CatchLurePokemonsTask.Execute(session, pokeStop.BaseFortData, cancellationToken);
+                            }
+                            // Catch normal map Pokemon
+                            if (session.LogicSettings.Teleport)
+                                await CatchNearbyPokemonsTask.Execute(session, cancellationToken);
+                            //Catch Incense Pokemon
+                            await CatchIncensePokemonsTask.Execute(session, cancellationToken);
                         }
-                        // Catch normal map Pokemon
-                        if (session.LogicSettings.Teleport)
-                            await CatchNearbyPokemonsTask.Execute(session, cancellationToken);
-                        //Catch Incense Pokemon
-                        await CatchIncensePokemonsTask.Execute(session, cancellationToken);
+
+
+                        await eggWalker.ApplyDistance(distance, cancellationToken);
+
+                        if (++stopsHit%5 == 0) //TODO: OR item/pokemon bag is full
+                        {
+                            // need updated stardust information for upgrading, so refresh your profile now
+                            await DownloadProfile(session);
+
+                            if (fortSearch.ItemsAwarded.Count > 0)
+                            {
+                                await session.Inventory.RefreshCachedInventory();
+                            }
+                            await RecycleItemsTask.Execute(session, cancellationToken);
+                            if (session.LogicSettings.EvolveAllPokemonWithEnoughCandy ||
+                                session.LogicSettings.EvolveAllPokemonAboveIv)
+                            {
+                                await EvolvePokemonTask.Execute(session, cancellationToken);
+                            }
+                            if (session.LogicSettings.AutomaticallyLevelUpPokemon)
+                            {
+                                await LevelUpPokemonTask.Execute(session, cancellationToken);
+                            }
+                            if (session.LogicSettings.TransferDuplicatePokemon)
+                            {
+                                await TransferDuplicatePokemonTask.Execute(session, cancellationToken);
+                            }
+                            if (session.LogicSettings.RenamePokemon)
+                            {
+                                await RenamePokemonTask.Execute(session, cancellationToken);
+                            }
+                            if (++displayStatsHit >= 4)
+                            {
+                                await DisplayPokemonStatsTask.Execute(session);
+                                displayStatsHit = 0;
+                            }
+                        }
                     }
-                    
-
-                    await eggWalker.ApplyDistance(distance, cancellationToken);
-
-                    if (++stopsHit % 5 == 0) //TODO: OR item/pokemon bag is full
-                    {
-                        // need updated stardust information for upgrading, so refresh your profile now
-                        await DownloadProfile(session);
-
-                        if (fortSearch.ItemsAwarded.Count > 0)
-                        {
-                            await session.Inventory.RefreshCachedInventory();
-                        }
-                        await RecycleItemsTask.Execute(session, cancellationToken);
-                        if (session.LogicSettings.EvolveAllPokemonWithEnoughCandy ||
-                            session.LogicSettings.EvolveAllPokemonAboveIv)
-                        {
-                            await EvolvePokemonTask.Execute(session, cancellationToken);
-                        }
-                        if (session.LogicSettings.AutomaticallyLevelUpPokemon)
-                        {
-                            await LevelUpPokemonTask.Execute(session, cancellationToken);
-                        }
-                        if (session.LogicSettings.TransferDuplicatePokemon)
-                        {
-                            await TransferDuplicatePokemonTask.Execute(session, cancellationToken);
-                        }
-                        if (session.LogicSettings.RenamePokemon)
-                        {
-                            await RenamePokemonTask.Execute(session, cancellationToken);
-                        }
-                        if (++displayStatsHit >= 4)
-                        {
-                            await DisplayPokemonStatsTask.Execute(session);
-                            displayStatsHit = 0;
-                        }
-                    }
-
                     if (session.LogicSettings.SnipeAtPokestops || session.LogicSettings.UseSnipeLocationServer)
                     {
                         await SnipePokemonTask.Execute(session, cancellationToken);
@@ -324,7 +326,8 @@ namespace PoGo.PokeMobBot.Logic.Tasks
             {
                 RuntimeSettings.BreakOutOfPathing = false;
                 cancellationToken.ThrowIfCancellationRequested();
-
+                if (session.ForceMoveJustDone)
+                    session.ForceMoveJustDone = false;
                 if (session.ForceMoveTo != null)
                 {
                     await ForceMoveTask.Execute(session, cancellationToken);
@@ -386,132 +389,134 @@ namespace PoGo.PokeMobBot.Logic.Tasks
 
                     } ,
                     cancellationToken, session);
-                
-                FortSearchResponse fortSearch;
-                var timesZeroXPawarded = 0;
-                
-                var fortTry = 0; //Current check
-                const int retryNumber = 50; //How many times it needs to check to clear softban
-                const int zeroCheck = 5; //How many times it checks fort before it thinks it's softban
-                if (RuntimeSettings.BreakOutOfPathing)
-                    continue;
-                do
+                if (!session.ForceMoveJustDone)
                 {
-                    cancellationToken.ThrowIfCancellationRequested();
+                    FortSearchResponse fortSearch;
+                    var timesZeroXPawarded = 0;
 
-                    fortSearch =
-                        await session.Client.Fort.SearchFort(pokeStop.Id, pokeStop.Latitude, pokeStop.Longitude);
-                    if (fortSearch.Result == FortSearchResponse.Types.Result.InventoryFull)
+                    var fortTry = 0; //Current check
+                    const int retryNumber = 50; //How many times it needs to check to clear softban
+                    const int zeroCheck = 5; //How many times it checks fort before it thinks it's softban
+                    if (RuntimeSettings.BreakOutOfPathing)
+                        continue;
+                    do
                     {
-                        await RecycleItemsTask.Execute(session, cancellationToken);
-                    }
-                    if (fortSearch.ExperienceAwarded > 0 && timesZeroXPawarded > 0) timesZeroXPawarded = 0;
-                    if (fortSearch.ExperienceAwarded == 0)
-                    {
-                        timesZeroXPawarded++;
+                        cancellationToken.ThrowIfCancellationRequested();
 
-                        if (timesZeroXPawarded > zeroCheck)
+                        fortSearch =
+                            await session.Client.Fort.SearchFort(pokeStop.Id, pokeStop.Latitude, pokeStop.Longitude);
+                        if (fortSearch.Result == FortSearchResponse.Types.Result.InventoryFull)
                         {
-                            if ((int)fortSearch.CooldownCompleteTimestampMs != 0)
-                            {
-                                break;
-                                // Check if successfully looted, if so program can continue as this was "false alarm".
-                            }
-
-                            fortTry += 1;
-
-
-                            if (session.LogicSettings.Teleport)
-                            {
-                                session.EventDispatcher.Send(new FortFailedEvent
-                                {
-                                    Name = fortInfo.Name,
-                                    Try = fortTry,
-                                    Max = retryNumber - zeroCheck
-                                });
-                                await Task.Delay(session.LogicSettings.DelaySoftbanRetry);
-                            }
-                            else
-                                await DelayingUtils.Delay(session.LogicSettings.DelayBetweenPlayerActions, 400);
+                            await RecycleItemsTask.Execute(session, cancellationToken);
                         }
-                    }
-                    else
-                    {
-                        session.EventDispatcher.Send(new FortUsedEvent
+                        if (fortSearch.ExperienceAwarded > 0 && timesZeroXPawarded > 0) timesZeroXPawarded = 0;
+                        if (fortSearch.ExperienceAwarded == 0)
                         {
-                            Id = pokeStop.Id,
-                            Name = fortInfo.Name,
-                            Exp = fortSearch.ExperienceAwarded,
-                            Gems = fortSearch.GemsAwarded,
-                            Items = StringUtils.GetSummedFriendlyNameOfItemAwardList(fortSearch.ItemsAwarded),
-                            Latitude = pokeStop.Latitude,
-                            Longitude = pokeStop.Longitude,
-                            InventoryFull = fortSearch.Result == FortSearchResponse.Types.Result.InventoryFull,
-                            Description = fortInfo.Description,
-                            url = fortInfo.ImageUrls[0]                            
-                        });
-                        session.EventDispatcher.Send(new InventoryNewItemsEvent()
+                            timesZeroXPawarded++;
+
+                            if (timesZeroXPawarded > zeroCheck)
+                            {
+                                if ((int) fortSearch.CooldownCompleteTimestampMs != 0)
+                                {
+                                    break;
+                                    // Check if successfully looted, if so program can continue as this was "false alarm".
+                                }
+
+                                fortTry += 1;
+
+
+                                if (session.LogicSettings.Teleport)
+                                {
+                                    session.EventDispatcher.Send(new FortFailedEvent
+                                    {
+                                        Name = fortInfo.Name,
+                                        Try = fortTry,
+                                        Max = retryNumber - zeroCheck
+                                    });
+                                    await Task.Delay(session.LogicSettings.DelaySoftbanRetry);
+                                }
+                                else
+                                    await DelayingUtils.Delay(session.LogicSettings.DelayBetweenPlayerActions, 400);
+                            }
+                        }
+                        else
                         {
-                            Items = fortSearch.ItemsAwarded.ToItemList()
-                        });
-                        session.MapCache.UsedPokestop(pokeStop);
-                        break; //Continue with program as loot was succesfull.
-                    }
-                } while (fortTry < 1);//retryNumber - zeroCheck && fortSearch.CooldownCompleteTimestampMs < DateTime.UtcNow.ToUnixTime());
+                            session.EventDispatcher.Send(new FortUsedEvent
+                            {
+                                Id = pokeStop.Id,
+                                Name = fortInfo.Name,
+                                Exp = fortSearch.ExperienceAwarded,
+                                Gems = fortSearch.GemsAwarded,
+                                Items = StringUtils.GetSummedFriendlyNameOfItemAwardList(fortSearch.ItemsAwarded),
+                                Latitude = pokeStop.Latitude,
+                                Longitude = pokeStop.Longitude,
+                                InventoryFull = fortSearch.Result == FortSearchResponse.Types.Result.InventoryFull,
+                                Description = fortInfo.Description,
+                                url = fortInfo.ImageUrls[0]
+                            });
+                            session.EventDispatcher.Send(new InventoryNewItemsEvent()
+                            {
+                                Items = fortSearch.ItemsAwarded.ToItemList()
+                            });
+                            session.MapCache.UsedPokestop(pokeStop);
+                            break; //Continue with program as loot was succesfull.
+                        }
+                    } while (fortTry < 1);
+                        //retryNumber - zeroCheck && fortSearch.CooldownCompleteTimestampMs < DateTime.UtcNow.ToUnixTime());
                     //Stop trying if softban is cleaned earlier or if 40 times fort looting failed.
 
 
-                await Task.Delay(session.LogicSettings.DelayPokestop);
+                    await Task.Delay(session.LogicSettings.DelayPokestop);
 
 
-                //Catch Lure Pokemon
+                    //Catch Lure Pokemon
 
-                if (session.LogicSettings.CatchWildPokemon)
-                {
-                    if (pokeStop.LureInfo != null)
+                    if (session.LogicSettings.CatchWildPokemon)
                     {
-                        await CatchLurePokemonsTask.Execute(session, pokeStop.BaseFortData, cancellationToken);
+                        if (pokeStop.LureInfo != null)
+                        {
+                            await CatchLurePokemonsTask.Execute(session, pokeStop.BaseFortData, cancellationToken);
+                        }
+                        if (session.LogicSettings.Teleport)
+                            await CatchNearbyPokemonsTask.Execute(session, cancellationToken);
                     }
-                    if (session.LogicSettings.Teleport)
-                        await CatchNearbyPokemonsTask.Execute(session, cancellationToken);
+                    await eggWalker.ApplyDistance(distance, cancellationToken);
+
+                    if (++stopsHit%5 == 0) //TODO: OR item/pokemon bag is full
+                    {
+                        stopsHit = 0;
+                        // need updated stardust information for upgrading, so refresh your profile now
+                        await DownloadProfile(session);
+
+                        if (fortSearch.ItemsAwarded.Count > 0)
+                        {
+                            await session.Inventory.RefreshCachedInventory();
+                        }
+                        await RecycleItemsTask.Execute(session, cancellationToken);
+                        if (session.LogicSettings.EvolveAllPokemonWithEnoughCandy ||
+                            session.LogicSettings.EvolveAllPokemonAboveIv)
+                        {
+                            await EvolvePokemonTask.Execute(session, cancellationToken);
+                        }
+                        if (session.LogicSettings.AutomaticallyLevelUpPokemon)
+                        {
+                            await LevelUpPokemonTask.Execute(session, cancellationToken);
+                        }
+                        if (session.LogicSettings.TransferDuplicatePokemon)
+                        {
+                            await TransferDuplicatePokemonTask.Execute(session, cancellationToken);
+                        }
+                        if (session.LogicSettings.RenamePokemon)
+                        {
+                            await RenamePokemonTask.Execute(session, cancellationToken);
+                        }
+                        if (++displayStatsHit >= 4)
+                        {
+                            await DisplayPokemonStatsTask.Execute(session);
+                            displayStatsHit = 0;
+                        }
+                    }
                 }
-                await eggWalker.ApplyDistance(distance, cancellationToken);
-
-                if (++stopsHit%5 == 0) //TODO: OR item/pokemon bag is full
-                {
-                    stopsHit = 0;
-                    // need updated stardust information for upgrading, so refresh your profile now
-                    await DownloadProfile(session);
-
-                    if (fortSearch.ItemsAwarded.Count > 0)
-                    {
-                        await session.Inventory.RefreshCachedInventory();
-                    }
-                    await RecycleItemsTask.Execute(session, cancellationToken);
-                    if (session.LogicSettings.EvolveAllPokemonWithEnoughCandy ||
-                        session.LogicSettings.EvolveAllPokemonAboveIv)
-                    {
-                        await EvolvePokemonTask.Execute(session, cancellationToken);
-                    }
-                    if (session.LogicSettings.AutomaticallyLevelUpPokemon)
-                    {
-                        await LevelUpPokemonTask.Execute(session, cancellationToken);
-                    }
-                    if (session.LogicSettings.TransferDuplicatePokemon)
-                    {
-                        await TransferDuplicatePokemonTask.Execute(session, cancellationToken);
-                    }
-                    if (session.LogicSettings.RenamePokemon)
-                    {
-                        await RenamePokemonTask.Execute(session, cancellationToken);
-                    }
-                    if (++displayStatsHit >= 4)
-                    {
-                        await DisplayPokemonStatsTask.Execute(session);
-                        displayStatsHit = 0;
-                    }
-                }
-
                 if (session.LogicSettings.SnipeAtPokestops || session.LogicSettings.UseSnipeLocationServer)
                 {
                     await SnipePokemonTask.Execute(session, cancellationToken);

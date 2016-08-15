@@ -177,8 +177,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="Config\log4net.config" />
-    <None Include="Config\log4net.unix.config" />
     <None Include="Config\Translations\translation.da.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

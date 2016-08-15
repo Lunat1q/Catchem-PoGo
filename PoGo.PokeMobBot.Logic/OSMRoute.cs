@@ -67,7 +67,7 @@ namespace PoGo.PokeMobBot.Logic
             xmlString.AppendLine("       <xls:RoutePlan>");
             xmlString.AppendLine("           <xls:RoutePreference>Pedestrian</xls:RoutePreference>");
             xmlString.AppendLine("           <xls:ExtendedRoutePreference>");
-            xmlString.AppendLine("               <xls:WeightingMethod>Fastest</xls:WeightingMethod>");
+            xmlString.AppendLine("               <xls:WeightingMethod>Shortest</xls:WeightingMethod>");
             xmlString.AppendLine("               <xls:SurfaceInformation>true</xls:SurfaceInformation>");
             xmlString.AppendLine("               <xls:ElevationInformation>true</xls:ElevationInformation>");
             xmlString.AppendLine("          </xls:ExtendedRoutePreference>");

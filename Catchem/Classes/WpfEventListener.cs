@@ -78,6 +78,12 @@ namespace Catchem.Classes
         {
             Logger.PushToUi("pm_upd", session, evt.Uid, evt.Id, evt.Cp, evt.Iv, evt.Family, evt.Candy);
         }
+
+        public void HandleEvent(BotCompleteFailureEvent evt, ISession session)
+        {
+            Logger.PushToUi("bot_failure", session, evt.Shutdown, evt.Stop);
+        }
+
         public void HandleEvent(NextRouteEvent evt, ISession session)
         {
             Logger.PushToUi("route_next", session, evt.Coords);

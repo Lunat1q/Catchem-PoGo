@@ -5,11 +5,9 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
-using System.Security.Cryptography;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using PoGo.PokeMobBot.Logic.Logging;
-using PoGo.PokeMobBot.Logic.Utils;
 using PokemonGo.RocketAPI;
 using PokemonGo.RocketAPI.Enums;
 using POGOProtos.Enums;
@@ -112,7 +110,7 @@ namespace PoGo.PokeMobBot.Logic
         public static bool BreakOutOfPathing = false;
         public static string lastPokeStopId = "69694201337";
         public static string TargetStopID = "420Ayylmao";
-        public static GeoCoordinatePortable.GeoCoordinate lastPokeStopCoordinate = new GeoCoordinate(0,0);
+        public static GeoCoordinate lastPokeStopCoordinate = new GeoCoordinate(0,0);
         public static bool CheckScan()
         {
             if (DelayingScan)
@@ -941,6 +939,8 @@ namespace PoGo.PokeMobBot.Logic
         public double UseUltraBallBelowCatchProbability = 0.2;
         public double UseMasterBallBelowCatchProbability = 0.05;
         public bool UsePokemonToNotCatchFilter = false;
+        public bool PauseBotOnMaxHourlyCatch = true;
+        public int MaxCatchPerHour = 42;
 
         //berries
         public int UseBerryMinCp = 1000;

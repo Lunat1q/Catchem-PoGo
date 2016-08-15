@@ -25,6 +25,7 @@ namespace PoGo.PokeMobBot.Logic.State
         IWebProxy Proxy { get; }
         GeoCoordinate ForceMoveTo { get; set; }
 
+        bool ForceMoveJustDone { get; set; }
         void StartForceMove(double lat, double lng);
     }
 
@@ -65,6 +66,7 @@ namespace PoGo.PokeMobBot.Logic.State
         {
             ForceMoveTo = new GeoCoordinate(lat, lng);
         }
+        public bool ForceMoveJustDone { get; set; }
 
         public IWebProxy Proxy
         {

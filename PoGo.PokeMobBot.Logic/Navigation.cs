@@ -1,10 +1,6 @@
 ﻿#region using directives
 
-#region using directives
-
 using System;
-using System.Collections.Generic;
-using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using GeoCoordinatePortable;
@@ -13,10 +9,7 @@ using PoGo.PokeMobBot.Logic.Logging;
 using PokemonGo.RocketAPI;
 using POGOProtos.Networking.Responses;
 using PoGo.PokeMobBot.Logic.Extensions;
-
-#endregion
-
-// ReSharper disable RedundantAssignment
+using RandomExtensions = PokemonGo.RocketAPI.Extensions.RandomExtensions;
 
 #endregion
 
@@ -26,7 +19,6 @@ namespace PoGo.PokeMobBot.Logic
 
     public class Navigation
     {
-        private const double SpeedDownTo = 10/3.6;
         private readonly Client _client;
 
         public Navigation(Client client, UpdatePositionDelegate updatePos)
@@ -134,8 +126,8 @@ namespace PoGo.PokeMobBot.Logic
             GeoCoordinate waypoint;
             double altitudeStep;
             double altitude;
-            bool trueAlt = false;
-            if (targetLocation.Altitude != 0)
+            var trueAlt = false;
+            if (Math.Abs(targetLocation.Altitude) > 0.001)
             {
                 trueAlt = true;
                 altitudeStep = (_client.Settings.DefaultAltitude - targetLocation.Altitude) * (distanceToTarget / (nextWaypointDistance > 1 ? nextWaypointDistance : 1));
@@ -161,7 +153,7 @@ namespace PoGo.PokeMobBot.Logic
             
             do
             {
-                if(RuntimeSettings.BreakOutOfPathing == true)
+                if(RuntimeSettings.BreakOutOfPathing)
                 if (RuntimeSettings.lastPokeStopCoordinate.Latitude.Equals(targetLocation.Latitude) &&
                     RuntimeSettings.lastPokeStopCoordinate.Longitude.Equals(targetLocation.Latitude))
                 {
@@ -188,7 +180,7 @@ namespace PoGo.PokeMobBot.Logic
 
                 nextWaypointDistance = Math.Min(currentDistanceToTarget,
                     millisecondsUntilGetUpdatePlayerLocationResponse/1000*speedInMetersPerSecond);
-                nextWaypointBearing = LocationUtils.DegreeBearing(sourceLocation, targetLocation);
+                nextWaypointBearing = LocationUtils.DegreeBearing(sourceLocation, targetLocation) + _client.rnd.NextInRange(-11.25, 11.25);
                 waypoint = LocationUtils.CreateWaypoint(sourceLocation, nextWaypointDistance, nextWaypointBearing);
 
                 requestSendDateTime = DateTime.Now;

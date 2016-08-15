@@ -83,6 +83,7 @@
     <Compile Include="DataDumper\IDumper.cs" />
     <Compile Include="DataDumper\Dumper.cs" />
     <Compile Include="Common\Translations.cs" />
+    <Compile Include="Event\BotCompleteFailureEvent.cs" />
     <Compile Include="Event\DebugEvent.cs" />
     <Compile Include="Event\InventoryNewItemsEvent.cs" />
     <Compile Include="Event\PokemonEvolveDoneEvent.cs" />
