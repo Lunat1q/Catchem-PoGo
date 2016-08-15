@@ -1,19 +1,19 @@
-<h1>Catchem PokemonGO bot <i>with modern UI</i></h1>
-<h2>This project is for education purposes only</h2>
-<h4>Based on PokeMobBot project</h4>
-<h5>also some code was taken from NecroBot project</h5>
+#Catchem PokemonGO Bot
+<p align="center">:information_source:This project is for education purposes only:information_source:</p>
+<p align="center">Based on PokeMobBot project</p>
+</p>
 
 
 [<h3>Discord for any help</h3>](https://discord.gg/pPwxX8Q)
  
 <h2>Donating</h2>
 I you really liked this project, feel free to buy <b>pizza</b> :pizza: for devs (or <b>flowers</b> :rose: for my gf, she is a bit mad what i'm spending most part of my free time for this project :coffee:):<br/><br/>
-[![Donate](https://www.paypalobjects.com/en_US/GB/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=RFAU4PYCAAGML)<br/>
-![Btc Donate](https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Bitcoin.svg/64px-Bitcoin.svg.png)BitCoin: 1LTQdD6cnxhqSAYyNAa7PpcfSu6uCmxrdn
-<h3>We really appreciate all the donations made, so everyone who donated to our project will get access to priveledged support channel!</h3>
-If u don't have PayPal account and still wanna to donate for my work, please contact me in Discord :)
+<p align="center"><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=RFAU4PYCAAGML"><img src="https://www.paypalobjects.com/en_US/GB/i/btn/btn_donateCC_LG.gif"/></a></p>
+<p align="center"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Bitcoin.svg/64px-Bitcoin.svg.png"/>BitCoin: 1LTQdD6cnxhqSAYyNAa7PpcfSu6uCmxrdn</p>
+###We really appreciate all the donations made, so everyone who donated to our project will get access to priveledged support channel!
+#####If u don't have PayPal account and still wanna to donate for my work, please contact me in Discord :)
 
-<h2>See it in action:</h2>
+##See it in action:
 [![YoutTube clip](http://i.imgur.com/A3vzydu.png)](https://youtu.be/Wmn0zFeIRRM)
 
 <h2>Extra features (from PokeMobBot) project)</h2>
