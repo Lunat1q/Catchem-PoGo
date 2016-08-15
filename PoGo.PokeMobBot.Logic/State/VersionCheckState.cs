@@ -36,7 +36,7 @@ namespace PoGo.PokeMobBot.Logic.State
 
             await CleanupOldFiles(session);
             var autoUpdate = session.LogicSettings.AutoUpdate;
-            var needupdate = IsLatest(session);
+            var needupdate = !IsLatest(session);
             if (!needupdate || !autoUpdate)
             {
                 if (!needupdate)
@@ -185,14 +185,15 @@ namespace PoGo.PokeMobBot.Logic.State
 
                 var gitVersion = new Version($"{match.Groups[1]}.{match.Groups[2]}.{match.Groups[3]}.{match.Groups[4]}");
                 RemoteVersion = gitVersion;
-                if (gitVersion >= Assembly.GetExecutingAssembly().GetName().Version)
+                if (gitVersion < Assembly.GetExecutingAssembly().GetName().Version)
                 {
-                    return true;
+                    session.EventDispatcher.Send(new NewVersionEvent
+                    {
+                        v = gitVersion
+                    });
+                    return false;
                 }
-                session.EventDispatcher.Send(new NewVersionEvent
-                {
-                    v = gitVersion
-                });
+                return true;              
             }
             catch (Exception)
             {
