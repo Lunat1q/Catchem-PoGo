@@ -3,8 +3,7 @@
 <p align="center">Based on PokeMobBot project</p>
 </p>
 
-
-[<h3>Discord for any help</h3>](https://discord.gg/pPwxX8Q)
+<p align="center"><a href="https://discord.gg/pPwxX8Q"><img src="https://discordapp.com/api/guilds/212977806819196938/widget.png?style=banner2"/></a></p>
  
 <h2>Donating</h2>
 I you really liked this project, feel free to buy <b>pizza</b> :pizza: for devs (or <b>flowers</b> :rose: for my gf, she is a bit mad what i'm spending most part of my free time for this project :coffee:):<br/><br/>
