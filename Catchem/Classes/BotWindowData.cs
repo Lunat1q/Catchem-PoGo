@@ -362,7 +362,9 @@ namespace Catchem.Classes
         {
             if (!GlobalSettings.CatchSettings.PauseBotOnMaxHourlyCatch || !(_realWorkH >= 1)) return;
             if (!(Stats?.TotalPokemons/_realWorkH > GlobalSettings.CatchSettings.MaxCatchPerHour)) return;
-            var stopMs = 10*60*1000 + _rnd.Next(1000*60*5);
+            var stopSec = 10*60 + _rnd.Next(60*5);
+            _realWorkSec += stopSec;
+            var stopMs = stopSec*1000;
             Session.EventDispatcher.Send(new WarnEvent
             {
                 Message = $"Max amount of pokemos/h reached, but will be stoped for {(stopMs/(60000)).ToString("N1")} minutes"
