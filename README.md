@@ -9,6 +9,7 @@
 <h2>Donating</h2>
 I you really liked this project, feel free to buy <b>pizza</b> :pizza: for devs (or <b>flowers</b> :rose: for my gf, she is a bit mad what i'm spending most part of my free time for this project :coffee:):<br/><br/>
 [![Donate](https://www.paypalobjects.com/en_US/GB/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=RFAU4PYCAAGML)<br/>
+![Btc Donate](https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Bitcoin.svg/64px-Bitcoin.svg.png)BitCoin: 1LTQdD6cnxhqSAYyNAa7PpcfSu6uCmxrdn
 <h3>We really appreciate all the donations made, so everyone who donated to our project will get access to priveledged support channel!</h3>
 If u don't have PayPal account and still wanna to donate for my work, please contact me in Discord :)
 
