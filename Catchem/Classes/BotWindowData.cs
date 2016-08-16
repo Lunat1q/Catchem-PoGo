@@ -200,7 +200,8 @@ namespace Catchem.Classes
             if (_routePoints.Count > 100)
             {
                 var point = _routePoints.Dequeue();
-                PlayerRoute.Points.Remove(point);
+                var latestPoint = PlayerRoute.Points.First();//Temp fix
+                PlayerRoute.Points.Remove(latestPoint);
             }
             PlayerRoute.Points.Add(nextPoint);
         }
