@@ -939,8 +939,9 @@ namespace PoGo.PokeMobBot.Logic
         public double UseUltraBallBelowCatchProbability = 0.2;
         public double UseMasterBallBelowCatchProbability = 0.05;
         public bool UsePokemonToNotCatchFilter = false;
-        public bool PauseBotOnMaxHourlyCatch = true;
+        public bool PauseBotOnMaxHourlyRates = true;
         public int MaxCatchPerHour = 42;
+        public int MaxPokestopsPerHour = 69;
 
         //berries
         public int UseBerryMinCp = 1000;
