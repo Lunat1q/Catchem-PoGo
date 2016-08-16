@@ -7,6 +7,7 @@ using PoGo.PokeMobBot.Logic.PoGoUtils;
 using PoGo.PokeMobBot.Logic.State;
 using PoGo.PokeMobBot.Logic.Utils;
 using PoGo.PokeMobBot.Logic.Common;
+using POGOProtos.Networking.Responses;
 
 #endregion
 
@@ -21,20 +22,17 @@ namespace PoGo.PokeMobBot.Logic.Tasks
             var pokemon = pokemons.FirstOrDefault(p => p.Id == pokemonId);
             if (pokemon == null) return;
             bool success;
+            UpgradePokemonResponse latestSuccessResponse = null;
             do
             {
                 success = false;
                 var upgradeResult = await session.Inventory.UpgradePokemon(pokemon.Id);
 
-                var pokemonFamilies = await session.Inventory.GetPokemonFamilies();
-                var pokemonSettings = (await session.Inventory.GetPokemonSettings()).ToList();
-                var setting = pokemonSettings.Single(q => q.PokemonId == pokemon.PokemonId);
-                var family = pokemonFamilies.First(q => q.FamilyId == setting.FamilyId);
-
                 switch (upgradeResult.Result)
                 {
-                    case POGOProtos.Networking.Responses.UpgradePokemonResponse.Types.Result.Success:
+                    case UpgradePokemonResponse.Types.Result.Success:
                         success = true;
+                        latestSuccessResponse = upgradeResult;
                         session.EventDispatcher.Send(new NoticeEvent()
                         {
                             Message =
@@ -42,23 +40,14 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                                     session.Translation.GetPokemonName(upgradeResult.UpgradedPokemon.PokemonId),
                                     upgradeResult.UpgradedPokemon.Cp)
                         });
-                        session.EventDispatcher.Send(new PokemonStatsChangedEvent()
-                        {
-                            Uid = pokemonId,
-                            Id = pokemon.PokemonId,
-                            Family = family.FamilyId,
-                            Candy = family.Candy_,
-                            Cp = upgradeResult.UpgradedPokemon.Cp,
-                            Iv = upgradeResult.UpgradedPokemon.CalculatePokemonPerfection()
-                        });
                         break;
-                    case POGOProtos.Networking.Responses.UpgradePokemonResponse.Types.Result.ErrorInsufficientResources:
+                    case UpgradePokemonResponse.Types.Result.ErrorInsufficientResources:
                         session.EventDispatcher.Send(new NoticeEvent()
                         {
                             Message = session.Translation.GetTranslation(TranslationString.PokemonUpgradeFailed)
                         });
                         break;
-                    case POGOProtos.Networking.Responses.UpgradePokemonResponse.Types.Result.ErrorUpgradeNotAvailable:
+                    case UpgradePokemonResponse.Types.Result.ErrorUpgradeNotAvailable:
                         session.EventDispatcher.Send(new NoticeEvent()
                         {
                             Message =
@@ -74,11 +63,27 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                                 session.Translation.GetTranslation(TranslationString.PokemonUpgradeFailedError,
                                     session.Translation.GetPokemonName(pokemon.PokemonId))
                         });
-                        break
-                            ;
+                        break;
                 }
                 await DelayingUtils.Delay(session.LogicSettings.DelayBetweenPlayerActions, 2000);
             } while (success && toMax);
+
+            if (latestSuccessResponse != null)
+            {
+                var pokemonFamilies = await session.Inventory.GetPokemonFamilies();
+                var pokemonSettings = (await session.Inventory.GetPokemonSettings()).ToList();
+                var setting = pokemonSettings.Single(q => q.PokemonId == pokemon.PokemonId);
+                var family = pokemonFamilies.First(q => q.FamilyId == setting.FamilyId);
+                session.EventDispatcher.Send(new PokemonStatsChangedEvent()
+                {
+                    Uid = pokemonId,
+                    Id = pokemon.PokemonId,
+                    Family = family.FamilyId,
+                    Candy = family.Candy_,
+                    Cp = latestSuccessResponse.UpgradedPokemon.Cp,
+                    Iv = latestSuccessResponse.UpgradedPokemon.CalculatePokemonPerfection()
+                });
+            }
         }
     }
 }

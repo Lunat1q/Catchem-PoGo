@@ -6,11 +6,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using PoGo.PokeMobBot.Logic.Common;
 using PoGo.PokeMobBot.Logic.Event;
-using PoGo.PokeMobBot.Logic.Logging;
 using PoGo.PokeMobBot.Logic.State;
 using PoGo.PokeMobBot.Logic.Utils;
 using POGOProtos.Inventory.Item;
-using POGOProtos.Map.Pokemon;
 using POGOProtos.Networking.Responses;
 using System.Collections.Generic;
 
@@ -20,11 +18,11 @@ namespace PoGo.PokeMobBot.Logic.Tasks
 {
     public static class CatchNearbyPokemonsTask
     {
-        public static async Task Execute(ISession session, CancellationToken cancellationToken)
+        public static async Task<List<PokemonCacheItem>>  Execute(ISession session, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
-
-            // Refresh inventory so that the player stats are fresh
+            var caughtPokemons = new List<PokemonCacheItem>();
+                // Refresh inventory so that the player stats are fresh
             await session.Inventory.RefreshCachedInventory();
 
             session.EventDispatcher.Send(new DebugEvent()
@@ -49,7 +47,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                     {
                         Message = session.Translation.GetTranslation(TranslationString.ZeroPokeballInv)
                     });
-                    return;
+                    return caughtPokemons;
                 }
 
                 if (session.LogicSettings.UsePokemonToNotCatchFilter &&
@@ -77,6 +75,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                     {
                         case EncounterResponse.Types.Status.EncounterSuccess:
                             await CatchPokemonTask.Execute(session, encounter, pokemon);
+                            caughtPokemons.Add(pokemon);
                             break;
                         case EncounterResponse.Types.Status.PokemonInventoryFull:
                             if (session.LogicSettings.TransferDuplicatePokemon)
@@ -121,6 +120,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                     await Task.Delay(session.LogicSettings.DelayBetweenPokemonCatch, cancellationToken);
                 }
             }
+            return caughtPokemons;
         }
 
         private static async Task<List<PokemonCacheItem>> GetNearbyPokemons(ISession session)

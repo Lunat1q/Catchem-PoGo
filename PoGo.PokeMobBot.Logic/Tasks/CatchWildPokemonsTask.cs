@@ -1,5 +1,7 @@
 ﻿#region using directives
 
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -8,9 +10,7 @@ using PoGo.PokeMobBot.Logic.Event;
 using PoGo.PokeMobBot.Logic.Logging;
 using PoGo.PokeMobBot.Logic.State;
 using PoGo.PokeMobBot.Logic.Utils;
-using POGOProtos.Inventory.Item;
 using POGOProtos.Map.Pokemon;
-using POGOProtos.Networking.Responses;
 using GeoCoordinatePortable;
 
 #endregion
@@ -35,17 +35,36 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                     await session.Client.Player.UpdatePlayerLocation(pokemon.Latitude, pokemon.Longitude,
                         session.Client.Settings.DefaultAltitude);
                 else
-                    await session.Navigation.Move(new GeoCoordinate(pokemon.Latitude, pokemon.Longitude),
+                    await MoveToPokemon(pokemon, session, cancellationToken);
+            }
+        }
+
+        private static async Task MoveToPokemon(WildPokemon pokemon, ISession session, CancellationToken cancellationToken)
+        {
+            //split the way in 5 steps
+            var sourceLocation = new GeoCoordinate(session.Client.CurrentLatitude, session.Client.CurrentLongitude);
+            var targetLocation = new GeoCoordinate(pokemon.Latitude, pokemon.Longitude);
+            var distanceToTarget = LocationUtils.CalculateDistanceInMeters(sourceLocation, new GeoCoordinate(pokemon.Latitude, pokemon.Longitude));
+            var nextWaypointDistance = distanceToTarget/5;
+            var nextWaypointBearing = LocationUtils.DegreeBearing(sourceLocation, targetLocation);
+            var waypoint = LocationUtils.CreateWaypoint(sourceLocation, nextWaypointDistance, nextWaypointBearing);
+            for (var i = 0; i < 5; i++)
+            {
+                List<PokemonCacheItem> pokemonsCaught = null;
+                await session.Navigation.Move(new GeoCoordinate(waypoint.Latitude, waypoint.Longitude),
                         session.LogicSettings.WalkingSpeedMin, session.LogicSettings.WalkingSpeedMax,
                 async () =>
                 {
                     // Catch normal map Pokemon
-                    await CatchNearbyPokemonsTask.Execute(session, cancellationToken);
+                    pokemonsCaught = await CatchNearbyPokemonsTask.Execute(session, cancellationToken);
                     //Catch Incense Pokemon
                     await CatchIncensePokemonsTask.Execute(session, cancellationToken);
                     return true;
                 }, null, cancellationToken, session, true);
+                if (pokemonsCaught.Any(x => pokemon.SpawnPointId == x.SpawnPointId)) return;
+                waypoint = LocationUtils.CreateWaypoint(waypoint, nextWaypointDistance, nextWaypointBearing);
             }
+            
         }
 
         private static async Task<IOrderedEnumerable<WildPokemon>> GetWildPokemons(ISession session)

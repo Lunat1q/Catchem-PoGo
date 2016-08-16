@@ -3,13 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:WindowsPresentation="clr-namespace:GMap.NET.WindowsPresentation;assembly=GMap.NET.WindowsPresentation"
-        xmlns:pokemon="clr-namespace:POGOProtos.Enums;assembly=POGOProtos"
-        xmlns:sys="clr-namespace:System;assembly=mscorlib"
         x:Class="Catchem.MainWindow"
-        xmlns:catchem="clr-namespace:Catchem"
         xmlns:pages="clr-namespace:Catchem.Pages"
-        xmlns:extensions="clr-namespace:Catchem.Extensions"
         mc:Ignorable="d"
         DataContext="{Binding RelativeSource={RelativeSource Self}}"
         Title="Catchem" Height="562" Width="1029" MinWidth="1000" MinHeight="600" Closing="Window_Closing" Icon="unnamed.ico">

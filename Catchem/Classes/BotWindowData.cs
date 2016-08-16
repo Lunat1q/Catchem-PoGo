@@ -51,6 +51,8 @@ namespace Catchem.Classes
         public Session Session;
         private CancellationTokenSource _cts;
         public CancellationToken CancellationToken => _cts.Token;
+        private CancellationTokenSource _pauseCts;
+        public CancellationToken CancellationTokenPause => _cts.Token;
         internal GMapMarker ForceMoveMarker;
         public List<Tuple<string, Color>> Log = new List<Tuple<string, Color>>();
         public Queue<Tuple<string, Color>> LogQueue = new Queue<Tuple<string, Color>>();
@@ -209,6 +211,7 @@ namespace Catchem.Classes
         public void Start()
         {
             if (Started) return;
+            _pauseCts.Cancel();
             ErrorsCount = 0;
             TimerStart();
             _cts.Dispose();
@@ -359,18 +362,37 @@ namespace Catchem.Classes
 
         public async void CheckForMaxCatch()
         {
-            if (!GlobalSettings.CatchSettings.PauseBotOnMaxHourlyCatch || !(RealWorkH >= 1)) return;
-            if (!(Stats?.TotalPokemons/RealWorkH > GlobalSettings.CatchSettings.MaxCatchPerHour)) return;
-            var stopSec = 10*60 + _rnd.Next(60*5);
-            _realWorkSec += stopSec;
-            var stopMs = stopSec*1000;
-            Session.EventDispatcher.Send(new WarnEvent
+            try
             {
-                Message = $"Max amount of pokemos/h reached, but will be stoped for {(stopMs/(60000)).ToString("N1")} minutes"
-            });
-            Stop(true);
-            await Task.Delay(stopMs, CancellationToken);
-            Start();
+                if (!GlobalSettings.CatchSettings.PauseBotOnMaxHourlyCatch || !(RealWorkH >= 1)) return;
+                if (!(Stats?.TotalPokemons/RealWorkH > GlobalSettings.CatchSettings.MaxCatchPerHour)) return;
+                var stopSec = 10*60 + _rnd.Next(60*5);
+                _realWorkSec += stopSec;
+                var stopMs = stopSec*1000;
+                Session.EventDispatcher.Send(new WarnEvent
+                {
+                    Message = $"Max amount of pokemos/h reached, but will be stoped for {(stopMs/(60000)).ToString("N1")} minutes"
+                });
+                Stop(true);
+                _pauseCts.Dispose();
+                _pauseCts = new CancellationTokenSource();
+                await Task.Delay(stopMs, CancellationTokenPause);
+                Start();
+            }
+            catch (OperationCanceledException)
+            {
+                Session.EventDispatcher.Send(new WarnEvent
+                {
+                    Message = "Bot pause routine canceled"
+                });
+            }
+            catch (Exception)
+            {
+                Session.EventDispatcher.Send(new WarnEvent
+                {
+                    Message = "Bot pause routine failed badly"
+                });
+            }
         }
     }
 }

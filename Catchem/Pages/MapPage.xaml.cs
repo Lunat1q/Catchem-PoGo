@@ -116,6 +116,7 @@ namespace Catchem.Pages
             pokeMap.Position = new PointLatLng(_bot._lat, _bot._lng);
             DrawPlayerMarker();
             sl_moveSpeedFactor.Value = _bot.GlobalSettings.LocationSettings.MoveSpeedFactor;
+            UpdatePathRoute();
             _loadingUi = false;
         }
 
