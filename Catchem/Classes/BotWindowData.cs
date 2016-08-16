@@ -20,6 +20,11 @@ using PokemonGo.RocketAPI.Extensions;
 using POGOProtos.Data;
 using POGOProtos.Enums;
 using POGOProtos.Inventory.Item;
+using PokeWebApi;
+using System.Net.Http;
+using System.Threading.Tasks;
+using PoGo.PokeMobBot.Logic.Logging;
+using System.Net;
 
 namespace Catchem.Classes
 {
@@ -51,8 +56,6 @@ namespace Catchem.Classes
         public Session Session;
         private CancellationTokenSource _cts;
         public CancellationToken CancellationToken => _cts.Token;
-        private CancellationTokenSource _pauseCts;
-        public CancellationToken CancellationTokenPause => _cts.Token;
         internal GMapMarker ForceMoveMarker;
         public List<Tuple<string, Color>> Log = new List<Tuple<string, Color>>();
         public Queue<Tuple<string, Color>> LogQueue = new Queue<Tuple<string, Color>>();
@@ -208,15 +211,20 @@ namespace Catchem.Classes
                 _realWorkSec = 0;
         }
 
-        public void Start()
+        public async void Start()
         {
             if (Started) return;
-            _pauseCts.Cancel();
+            Started = true;
+            if(!await checkProxy())
+            {
+                Stop();
+                return;
+            }
             ErrorsCount = 0;
             TimerStart();
             _cts.Dispose();
             _cts = new CancellationTokenSource();
-            Started = true;
+            
             Session.Client.Player.SetCoordinates(GlobalSettings.LocationSettings.DefaultLatitude,
                 GlobalSettings.LocationSettings.DefaultLongitude,
                 GlobalSettings.LocationSettings.DefaultAltitude);
@@ -225,6 +233,75 @@ namespace Catchem.Classes
             if (Session.LogicSettings.UseSnipeLocationServer)
                 SnipePokemonTask.AsyncStart(Session, CancellationToken);
         }
+
+
+
+        private WebProxy InitProxy()
+        {
+            if (!GlobalSettings.Auth.UseProxy) return null;
+            string[] split = GlobalSettings.Auth.ProxyUri.Split(':');
+            WebProxy prox = new WebProxy(split[0], int.Parse(split[1]));
+            prox.Credentials = new NetworkCredential(GlobalSettings.Auth.ProxyLogin, GlobalSettings.Auth.ProxyPass);
+            prox.BypassProxyOnLocal = true;
+            return prox;
+        }
+
+        private async Task<bool> checkProxy()
+        {
+            try
+            {
+                BotWindowData otherBot;
+
+                HttpClient client = new HttpClient();
+                HttpResponseMessage response = await client.GetAsync("http://ipv4bot.whatismyipaddress.com/");
+                string unproxiedIP = await response.Content.ReadAsStringAsync();
+                if (GlobalSettings.Auth.UseProxy)
+                {
+                    if ((otherBot = MainWindow.BotsCollection.FirstOrDefault(x => x.GlobalSettings.Auth.ProxyUri != null && x.GlobalSettings.Auth.ProxyUri.Equals(GlobalSettings.Auth.ProxyUri) && !x.ProfileName.Equals(ProfileName) && x.Started)) != null)
+                    {
+                        Logger.Write(
+       $"{otherBot.ProfileName} is already running with this proxy!",
+       PoGo.PokeMobBot.Logic.Logging.LogLevel.Info, ConsoleColor.Red, Session);
+                        return false;
+                    }
+                    client = new HttpClient(new HttpClientHandler { Proxy = InitProxy() });
+                    response = await client.GetAsync("http://ipv4bot.whatismyipaddress.com/");
+                    string proxiedIPres = await response.Content.ReadAsStringAsync();
+                    string proxiedIP = proxiedIPres == null || proxiedIPres.Equals("<nil>") ? "INVALID PROXY" : proxiedIPres;
+                    Logger.Write(
+                       $"Your IP is: {unproxiedIP} / Proxy IP is: {proxiedIP}",
+                       PoGo.PokeMobBot.Logic.Logging.LogLevel.Info, (unproxiedIP == proxiedIP) ? ConsoleColor.Red : ConsoleColor.Green, Session);
+                    if (unproxiedIP == proxiedIP || proxiedIPres == null || proxiedIPres.Equals("<nil>"))
+                    {
+                        Logger.Write("Please change ...",
+                            PoGo.PokeMobBot.Logic.Logging.LogLevel.Info, ConsoleColor.Red, Session);
+                        return false;
+                    }
+                }
+                else
+                {
+                    if ((otherBot = MainWindow.BotsCollection.FirstOrDefault(x => !x.GlobalSettings.Auth.UseProxy && !x.ProfileName.Equals(ProfileName) && x.Started)) != null)
+                    {
+                        Logger.Write(
+       $"{otherBot.ProfileName} is already running with this proxy!",
+       PoGo.PokeMobBot.Logic.Logging.LogLevel.Info, ConsoleColor.Red, Session);
+                        return false;
+                    }
+                    Logger.Write(
+                       $"Your IP is: {unproxiedIP}",
+                       PoGo.PokeMobBot.Logic.Logging.LogLevel.Info, ConsoleColor.Red, Session);
+                }
+            }
+            catch (Exception e)
+            {
+                Logger.Write(
+   $"Proxy Down?",
+   PoGo.PokeMobBot.Logic.Logging.LogLevel.Info, ConsoleColor.Red, Session);
+                return false;
+            }
+            return true;
+        }
+
 
         private void TimerStart() => _timer?.Start();
 
@@ -362,37 +439,18 @@ namespace Catchem.Classes
 
         public async void CheckForMaxCatch()
         {
-            try
+            if (!GlobalSettings.CatchSettings.PauseBotOnMaxHourlyCatch || !(RealWorkH >= 1)) return;
+            if (!(Stats?.TotalPokemons/RealWorkH > GlobalSettings.CatchSettings.MaxCatchPerHour)) return;
+            var stopSec = 10*60 + _rnd.Next(60*5);
+            _realWorkSec += stopSec;
+            var stopMs = stopSec*1000;
+            Session.EventDispatcher.Send(new WarnEvent
             {
-                if (!GlobalSettings.CatchSettings.PauseBotOnMaxHourlyCatch || !(RealWorkH >= 1)) return;
-                if (!(Stats?.TotalPokemons/RealWorkH > GlobalSettings.CatchSettings.MaxCatchPerHour)) return;
-                var stopSec = 10*60 + _rnd.Next(60*5);
-                _realWorkSec += stopSec;
-                var stopMs = stopSec*1000;
-                Session.EventDispatcher.Send(new WarnEvent
-                {
-                    Message = $"Max amount of pokemos/h reached, but will be stoped for {(stopMs/(60000)).ToString("N1")} minutes"
-                });
-                Stop(true);
-                _pauseCts.Dispose();
-                _pauseCts = new CancellationTokenSource();
-                await Task.Delay(stopMs, CancellationTokenPause);
-                Start();
-            }
-            catch (OperationCanceledException)
-            {
-                Session.EventDispatcher.Send(new WarnEvent
-                {
-                    Message = "Bot pause routine canceled"
-                });
-            }
-            catch (Exception)
-            {
-                Session.EventDispatcher.Send(new WarnEvent
-                {
-                    Message = "Bot pause routine failed badly"
-                });
-            }
+                Message = $"Max amount of pokemos/h reached, but will be stoped for {(stopMs/(60000)).ToString("N1")} minutes"
+            });
+            Stop(true);
+            await Task.Delay(stopMs, CancellationToken);
+            Start();
         }
     }
 }
