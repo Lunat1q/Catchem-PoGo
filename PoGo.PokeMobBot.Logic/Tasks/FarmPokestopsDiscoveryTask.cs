@@ -180,7 +180,11 @@ namespace PoGo.PokeMobBot.Logic.Tasks
 
                     await eggWalker.ApplyDistance(distance, cancellationToken);
 
-                    if (stopsHit++ >= 5 + session.Client.rnd.Next(5)) //TODO: OR item/pokemon bag is full
+                    var currentTotalItems = await session.Inventory.GetTotalItemCount();
+                    var recycleInventoryAtUsagePercentage = session.LogicSettings.RecycleInventoryAtUsagePercentage > 1
+                        ? session.LogicSettings.RecycleInventoryAtUsagePercentage / 100 : session.LogicSettings.RecycleInventoryAtUsagePercentage;
+
+                    if (stopsHit++ >= 5 + session.Client.rnd.Next(5) || session.Profile.PlayerData.MaxItemStorage * recycleInventoryAtUsagePercentage > currentTotalItems) //TODO: OR item/pokemon bag is full
                     {
                         stopsHit = 0;
                         if (fortSearch.ItemsAwarded.Count > 0)
