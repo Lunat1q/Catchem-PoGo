@@ -5,8 +5,6 @@
              xmlns:local="clr-namespace:Catchem.Pages"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:pages="clr-namespace:Catchem.Pages"
-             d:DesignHeight="300"
-             d:DesignWidth="300"
              mc:Ignorable="d">
     <UserControl.Resources>
         <ResourceDictionary Source="../Styles.xaml" />

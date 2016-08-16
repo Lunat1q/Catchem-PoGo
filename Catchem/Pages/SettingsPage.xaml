@@ -5,11 +5,8 @@
              xmlns:local="clr-namespace:Catchem"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              Width="938.487"
-             Height="1709.5"
+             Height="1845.5"
              mc:Ignorable="d">
-    <UserControl.Resources>
-        <ResourceDictionary Source="../Styles.xaml" />
-    </UserControl.Resources>
     <Grid Background="#FFF9F9F9">
         <ScrollViewer Grid.ColumnSpan="2">
             <Grid x:Name="settings_grid">
@@ -727,14 +724,14 @@
                 </GroupBox>
                 <GroupBox x:Name="groupBox"
                           Grid.Column="1"
-                          Height="147"
+                          Height="166"
                           VerticalAlignment="Top"
-                          Header="Proxy">
+                          Header="Proxy" Margin="5,5,5,0">
                     <Grid Margin="0,0,0,0" IsEnabled="True">
                         <CheckBox x:Name="c_UseProxy"
                                   Width="101"
-                                  Height="15"
-                                  Margin="16,1,0,0"
+                                  Height="21"
+                                  Margin="10,6,0,0"
                                   HorizontalAlignment="Left"
                                   VerticalAlignment="Top"
                                   Checked="BotPropertyChanged"
@@ -742,7 +739,7 @@
                                   Unchecked="BotPropertyChanged" />
                         <TextBox x:Name="c_ProxyUri"
                                  Height="29"
-                                 Margin="94,86,125,0"
+                                 Margin="94,94,125,0"
                                  VerticalAlignment="Top"
                                  Foreground="#FF56C2B0"
                                  Template="{StaticResource pogo}"
@@ -750,26 +747,26 @@
                                  TextWrapping="Wrap" />
                         <Label x:Name="label"
                                Width="79"
-                               Margin="10,89,0,0"
+                               Margin="10,97,0,0"
                                HorizontalAlignment="Left"
                                VerticalAlignment="Top"
                                Content="Host:port"
                                RenderTransformOrigin="0.494,0.5" />
                         <Label x:Name="label1"
                                Width="79"
-                               Margin="10,53,0,0"
+                               Margin="10,61,0,0"
                                HorizontalAlignment="Left"
                                VerticalAlignment="Top"
                                Content="Password" />
                         <Label x:Name="label2"
                                Width="79"
-                               Margin="10,19,0,0"
+                               Margin="10,27,0,0"
                                HorizontalAlignment="Left"
                                VerticalAlignment="Top"
                                Content="Login" />
                         <TextBox x:Name="c_ProxyLogin"
                                  Height="34"
-                                 Margin="94,14,10,0"
+                                 Margin="94,22,10,0"
                                  VerticalAlignment="Top"
                                  Foreground="#FF56C2B0"
                                  Template="{StaticResource pogo}"
@@ -778,7 +775,7 @@
                                  TextWrapping="Wrap" />
                         <PasswordBox x:Name="c_ProxyPass"
                                      Height="28"
-                                     Margin="94,53,10,0"
+                                     Margin="94,61,10,0"
                                      VerticalAlignment="Top"
                                      Foreground="#FF56C2B0"
                                      Password="password"
@@ -787,7 +784,7 @@
                         <Button x:Name="btn_textProxy"
                                 Width="110"
                                 Height="29"
-                                Margin="0,86,10,0"
+                                Margin="0,94,10,0"
                                 HorizontalAlignment="Right"
                                 VerticalAlignment="Top"
                                 Click="btn_textProxy_Click"
@@ -816,7 +813,7 @@
                 <GroupBox x:Name="groupBox3"
                           Grid.Column="1"
                           Height="409"
-                          Margin="0,147,-1,0"
+                          Margin="5,176,-6,0"
                           VerticalAlignment="Top"
                           Header="Navigation">
                     <Grid>

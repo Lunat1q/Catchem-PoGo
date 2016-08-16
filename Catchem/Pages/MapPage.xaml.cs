@@ -33,6 +33,7 @@ namespace Catchem.Pages
         public bool WindowClosing;
         private SettingsPage _botSettingsPage;
         private bool _loadingUi;
+        public static int delay = 25;
 
         public MapPage()
         {
@@ -110,7 +111,7 @@ namespace Catchem.Pages
         public void addMarker(GMapMarker marker)
         {
             pokeMap.Markers.Add(marker);
-            MainWindow.BotWindow.GlobalMapView.addMarker(marker);
+            //MainWindow.BotWindow.GlobalMapView.addMarker(marker);
         }
 
         public void SetBot(BotWindowData bot)
@@ -119,8 +120,9 @@ namespace Catchem.Pages
             _bot = bot;
             LoadMarkersFromBot();
             if (_bot == null) return;
-            pokeMap.Position = new PointLatLng(_bot._lat, _bot._lng);
+            pokeMap.Position = new PointLatLng(_bot.Lat, _bot.Lng);
             DrawPlayerMarker();
+            UpdatePathRoute();
             sl_moveSpeedFactor.Value = _bot.GlobalSettings.LocationSettings.MoveSpeedFactor;
             _loadingUi = false;
         }
@@ -162,7 +164,6 @@ namespace Catchem.Pages
         #region Async Workers
         private async void MovePlayer()
         {
-            const int delay = 25;
             while (!WindowClosing)
             {
                 if (_bot != null && _playerMarker != null && _bot.Started)
@@ -170,11 +171,7 @@ namespace Catchem.Pages
                     if (_bot.MoveRequired && _bot.Started)
                     {
                         if (_bot.GotNewCoord && _bot.Started)
-                        {
-                            // ReSharper disable once PossibleLossOfFraction
-                            _bot.LatStep = (_bot.Lat - _bot._lat) / (2000 / delay);
-                            // ReSharper disable once PossibleLossOfFraction
-                            _bot.LngStep = (_bot.Lng - _bot._lng) / (2000 / delay);
+                        {                            
                             _bot.GotNewCoord = false;
                             pokeMap.UpdateLayout();
                             //BotSettingsPage.UpdateCoordBoxes();
@@ -301,6 +298,9 @@ namespace Catchem.Pages
                 addMarker(_playerRoute);
                 _pathRoute = _bot.PathRoute;
                 addMarker(_pathRoute);
+                pokeMap.UpdateLayout();
+                pokeMap.Zoom--;
+                pokeMap.Zoom++;
             }
             else
             {

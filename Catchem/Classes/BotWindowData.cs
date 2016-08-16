@@ -21,9 +21,9 @@ using POGOProtos.Data;
 using POGOProtos.Enums;
 using POGOProtos.Inventory.Item;
 using System.Net.Http;
-using System.Threading.Tasks;
 using PoGo.PokeMobBot.Logic.Logging;
 using System.Net;
+using System.Windows;
 
 namespace Catchem.Classes
 {
@@ -61,6 +61,7 @@ namespace Catchem.Classes
         public List<Tuple<string, Color>> Log = new List<Tuple<string, Color>>();
         public Queue<Tuple<string, Color>> LogQueue = new Queue<Tuple<string, Color>>();
         public Dictionary<string, GMapMarker> MapMarkers = new Dictionary<string, GMapMarker>();
+        public GMapMarker GlobalPlayerMarker;
         public Queue<NewMapObject> MarkersQueue = new Queue<NewMapObject>();
         public Queue<NewMapObject> MarkersDelayRemove = new Queue<NewMapObject>();
         public readonly StateMachine Machine;
@@ -106,7 +107,7 @@ namespace Catchem.Classes
             set
             {
                 GlobalSettings.LocationSettings.DefaultLatitude = value;
-                _la = value;
+                _la = value;                
             }
         }
 
@@ -118,6 +119,8 @@ namespace Catchem.Classes
             {
                 GlobalSettings.LocationSettings.DefaultLongitude = value;
                 _ln = value;
+                if (GlobalPlayerMarker != null)
+                    GlobalPlayerMarker.Position = new PointLatLng(_lat, _lng);
             }
         }
 
@@ -160,6 +163,8 @@ namespace Catchem.Classes
             Listener = wel;
             Settings = cs;
             Logic = l;
+            Lat = gs.LocationSettings.DefaultLatitude;
+            Lng = gs.LocationSettings.DefaultLongitude;
 
             Ts = new TimeSpan();
             _timer = new DispatcherTimer { Interval = new TimeSpan(0, 0, 1) };
@@ -172,6 +177,13 @@ namespace Catchem.Classes
             _pauseCts = new CancellationTokenSource();
             PlayerRoute = new GMapRoute(_routePoints);
             PathRoute = new GMapRoute(new List<PointLatLng>());
+
+            GlobalPlayerMarker = new GMapMarker(new PointLatLng(Lat, Lng))
+            {
+                Shape = Properties.Resources.trainer.ToImage("Player - " + ProfileName),
+                Offset = new Point(-14, -40),
+                ZIndex = 15
+            };
         }
 
         public void UpdateXppH()
@@ -217,7 +229,8 @@ namespace Catchem.Classes
         {
             if (Started) return;
             Started = true;
-            if(!await checkProxy())
+            _pauseCts.Cancel();
+            if (!await checkProxy())
             {
                 Stop();
                 return;
@@ -231,6 +244,11 @@ namespace Catchem.Classes
                 GlobalSettings.LocationSettings.DefaultLongitude,
                 GlobalSettings.LocationSettings.DefaultAltitude);
             Session.Client.Login = new PokemonGo.RocketAPI.Rpc.Login(Session.Client);
+            LaunchBot();
+        }
+
+        private void LaunchBot()
+        {
             Machine.AsyncStart(new VersionCheckState(), Session, CancellationToken);
             if (Session.LogicSettings.UseSnipeLocationServer)
                 SnipePokemonTask.AsyncStart(Session, CancellationToken);
@@ -252,53 +270,34 @@ namespace Catchem.Classes
         {
             try
             {
-                BotWindowData otherBot;
-
                 HttpClient client = new HttpClient();
                 HttpResponseMessage response = await client.GetAsync("http://ipv4bot.whatismyipaddress.com/");
                 string unproxiedIP = await response.Content.ReadAsStringAsync();
                 if (GlobalSettings.Auth.UseProxy)
                 {
-                    if ((otherBot = MainWindow.BotsCollection.FirstOrDefault(x => x.GlobalSettings.Auth.ProxyUri != null && x.GlobalSettings.Auth.ProxyUri.Equals(GlobalSettings.Auth.ProxyUri) && !x.ProfileName.Equals(ProfileName) && x.Started)) != null)
+                    var otherBot = MainWindow.BotsCollection.FirstOrDefault(x => x.GlobalSettings.Auth.ProxyUri.Equals(GlobalSettings.Auth.ProxyUri) && x.GlobalSettings.Auth.UseProxy && x.Started && x != this);
+                    if (otherBot != null)
                     {
-                        Logger.Write(
-       $"{otherBot.ProfileName} is already running with this proxy!",
-       PoGo.PokeMobBot.Logic.Logging.LogLevel.Info, ConsoleColor.Red, Session);
-                        return false;
+                        Logger.Write($"{otherBot.ProfileName} is already running with this proxy!", LogLevel.Info, ConsoleColor.Red, Session);
                     }
                     client = new HttpClient(new HttpClientHandler { Proxy = InitProxy() });
                     response = await client.GetAsync("http://ipv4bot.whatismyipaddress.com/");
                     string proxiedIPres = await response.Content.ReadAsStringAsync();
                     string proxiedIP = proxiedIPres == null || proxiedIPres.Equals("<nil>") ? "INVALID PROXY" : proxiedIPres;
-                    Logger.Write(
-                       $"Your IP is: {unproxiedIP} / Proxy IP is: {proxiedIP}",
-                       PoGo.PokeMobBot.Logic.Logging.LogLevel.Info, (unproxiedIP == proxiedIP) ? ConsoleColor.Red : ConsoleColor.Green, Session);
+                    Logger.Write($"Your IP is: {unproxiedIP} / Proxy IP is: {proxiedIP}", LogLevel.Info, (unproxiedIP == proxiedIP) ? ConsoleColor.Red : ConsoleColor.Green, Session);
                     if (unproxiedIP == proxiedIP || proxiedIPres == null || proxiedIPres.Equals("<nil>"))
                     {
-                        Logger.Write("Please change ...",
-                            PoGo.PokeMobBot.Logic.Logging.LogLevel.Info, ConsoleColor.Red, Session);
-                        return false;
+                        Logger.Write("Please change ...", LogLevel.Info, ConsoleColor.Red, Session); return false;
                     }
                 }
                 else
                 {
-                    if ((otherBot = MainWindow.BotsCollection.FirstOrDefault(x => !x.GlobalSettings.Auth.UseProxy && !x.ProfileName.Equals(ProfileName) && x.Started)) != null)
-                    {
-                        Logger.Write(
-       $"{otherBot.ProfileName} is already running with this proxy!",
-       PoGo.PokeMobBot.Logic.Logging.LogLevel.Info, ConsoleColor.Red, Session);
-                        return false;
-                    }
-                    Logger.Write(
-                       $"Your IP is: {unproxiedIP}",
-                       PoGo.PokeMobBot.Logic.Logging.LogLevel.Info, ConsoleColor.Red, Session);
+                    Logger.Write($"Your IP is: {unproxiedIP}", LogLevel.Info, ConsoleColor.Red, Session);
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                Logger.Write(
-   $"Proxy Down?",
-   PoGo.PokeMobBot.Logic.Logging.LogLevel.Info, ConsoleColor.Red, Session);
+                Logger.Write($"Proxy Down?", LogLevel.Info, ConsoleColor.Red, Session);
                 return false;
             }
             return true;

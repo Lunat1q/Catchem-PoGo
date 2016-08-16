@@ -265,8 +265,13 @@ namespace Catchem
             {
                 var botReceiver = BotsCollection.FirstOrDefault(x => x.Session == session);
                 if (botReceiver == null) return;
+
                 botReceiver.Lat = (double)objData[0];
                 botReceiver.Lng = (double)objData[1];
+
+                botReceiver.LatStep = (botReceiver.Lat - botReceiver._lat) / (2000 / Pages.MapPage.delay);
+                botReceiver.LngStep = (botReceiver.Lng - botReceiver._lng) / (2000 / Pages.MapPage.delay);
+
                 botReceiver.PushNewRoutePoint(new PointLatLng(botReceiver.Lat, botReceiver.Lng));
                 if (session != CurSession)
                 {
@@ -274,6 +279,7 @@ namespace Catchem
                     botReceiver._lng = botReceiver.Lng;
                 }
                 else
+                //if (session == CurSession)
                 {
                     SettingsView.BotSettingsPage.UpdateCoordBoxes();
                     SettingsView.BotMapPage.UpdateCurrentBotCoords(botReceiver);
@@ -504,6 +510,7 @@ namespace Catchem
             newBot._lat = settings.LocationSettings.DefaultLatitude;
             newBot._lng = settings.LocationSettings.DefaultLongitude;
             newBot.Machine.SetFailureState(new LoginState());
+            GlobalMapView.addMarker(newBot.GlobalPlayerMarker);
 
             BotsCollection.Add(newBot);
         }
@@ -621,6 +628,7 @@ namespace Catchem
 
         private void changeTransistor()
         {
+            if (grid_pickBot.Visibility == Visibility.Visible) return;
             if (transit.SelectedIndex == 0)
             {
                 transit.SelectedIndex = 1;

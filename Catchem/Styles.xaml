@@ -31,7 +31,7 @@
         <Border CornerRadius="10" BorderThickness="1" BorderBrush="#FF5AC4B0"  Padding="5,3.5,10,0" Height="27" x:Name="Bd" Background="{TemplateBinding Panel.Background}">
             <ScrollViewer Name="PART_ContentHost" SnapsToDevicePixels="{TemplateBinding UIElement.SnapsToDevicePixels}" />
         </Border>
-    </ControlTemplate>
+    </ControlTemplate>    
     <Style TargetType="Button" x:Key="flatbutton">
         <Setter Property="Background" Value="DarkCyan"/>
         <Setter Property="Foreground" Value="White"/>
@@ -160,5 +160,5 @@
             </Button>
         </Grid>
     </DataTemplate>
-    
+    <SolidColorBrush x:Key="WindowTitleColorBrush" Color="#FF9F0055" />
 </ResourceDictionary>

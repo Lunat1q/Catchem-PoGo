@@ -24,12 +24,9 @@
         <controls:WindowCommands>
             <Button x:Name="changeViewSettingsMap"
                     Click="btn_changeViewSettingsMap_Click"
-                    Content="WorldMap" />
+                    Content="WorldMap" BorderBrush="{x:Null}" Background="{x:Null}" />
         </controls:WindowCommands>
     </controls:MetroWindow.RightWindowCommands>
-    <controls:MetroWindow.Resources>
-        <ResourceDictionary Source="Styles.xaml" />
-    </controls:MetroWindow.Resources>
     <Window.Background>
         <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
             <GradientStop Offset="0" Color="#FFB2EF9C" />
@@ -37,9 +34,11 @@
         </LinearGradientBrush>
     </Window.Background>
     <Grid>
-        <materialDesign:Transitioner Name="transit"
-                                     Margin="251,10,10,-10"
-                                     >
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="251"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <materialDesign:Transitioner Name="transit" Margin="0.5,0,10,0" SelectedIndex="0" Grid.Column="1">
             <pages:AccountSettingsTab x:Name="SettingsView" />
             <pages:GlobalMapPage x:Name="GlobalMapView" />
         </materialDesign:Transitioner>
@@ -191,9 +190,15 @@
             </Button>
         </Grid>
         <Grid x:Name="grid_pickBot"
-              Margin="263,0,0,0"
-              Visibility="Collapsed">
-            <Rectangle Margin="0" Fill="#59000000" />
+              Margin="-1,0,0,0" Grid.Column="1" Visibility="Collapsed">
+            <Rectangle Margin="0" >
+                <Rectangle.Fill>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#FF93FFBA" Offset="0"/>
+                        <GradientStop Color="#FF024F3A" Offset="1"/>
+                    </LinearGradientBrush>
+                </Rectangle.Fill>
+            </Rectangle>
             <Label x:Name="label13"
                    Margin="0"
                    HorizontalAlignment="Center"
@@ -212,7 +217,7 @@
                    FontWeight="Bold"
                    Foreground="White" />
         </Grid>
-        <Grid x:Name="InputBox" Visibility="Collapsed">
+        <Grid x:Name="InputBox" Visibility="Collapsed" Grid.ColumnSpan="2">
             <Grid Background="Black" Opacity="0.45" />
             <Border MinWidth="250"
                     HorizontalAlignment="Center"
@@ -284,7 +289,7 @@
                 </Grid>
             </Border>
         </Grid>
-        <Grid x:Name="batchInput" Visibility="Collapsed">
+        <Grid x:Name="batchInput" Visibility="Collapsed" Grid.ColumnSpan="2">
             <Grid Background="Black" Opacity="0.45" />
             <Border Width="818"
                     Height="629"
