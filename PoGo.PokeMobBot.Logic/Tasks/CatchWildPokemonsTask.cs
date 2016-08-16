@@ -61,7 +61,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                     await CatchIncensePokemonsTask.Execute(session, cancellationToken);
                     return true;
                 }, null, cancellationToken, session, true);
-                if (pokemonsCaught.Any(x => pokemon.SpawnPointId == x.SpawnPointId)) return;
+                if (pokemonsCaught?.Any(x => pokemon.SpawnPointId == x.SpawnPointId) ?? false) return;
                 waypoint = LocationUtils.CreateWaypoint(waypoint, nextWaypointDistance, nextWaypointBearing);
             }
             
