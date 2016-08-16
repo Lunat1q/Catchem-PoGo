@@ -20,7 +20,6 @@ using PokemonGo.RocketAPI.Extensions;
 using POGOProtos.Data;
 using POGOProtos.Enums;
 using POGOProtos.Inventory.Item;
-using PokeWebApi;
 using System.Net.Http;
 using System.Threading.Tasks;
 using PoGo.PokeMobBot.Logic.Logging;
@@ -56,6 +55,8 @@ namespace Catchem.Classes
         public Session Session;
         private CancellationTokenSource _cts;
         public CancellationToken CancellationToken => _cts.Token;
+        private CancellationTokenSource _pauseCts;
+        public CancellationToken CancellationTokenPause => _cts.Token;
         internal GMapMarker ForceMoveMarker;
         public List<Tuple<string, Color>> Log = new List<Tuple<string, Color>>();
         public Queue<Tuple<string, Color>> LogQueue = new Queue<Tuple<string, Color>>();
@@ -440,28 +441,16 @@ namespace Catchem.Classes
 
         public async void CheckForMaxCatch()
         {
-            if (!GlobalSettings.CatchSettings.PauseBotOnMaxHourlyCatch || !(RealWorkH >= 1)) return;
-            if (!(Stats?.TotalPokemons/RealWorkH > GlobalSettings.CatchSettings.MaxCatchPerHour)) return;
-            var stopSec = 10*60 + _rnd.Next(60*5);
-            _realWorkSec += stopSec;
-            var stopMs = stopSec*1000;
-            Session.EventDispatcher.Send(new WarnEvent
+            try
             {
-<<<<<<< HEAD
-                Message = $"Max amount of pokemos/h reached, but will be stoped for {(stopMs/(60000)).ToString("N1")} minutes"
-            });
-            Stop(true);
-            await Task.Delay(stopMs, CancellationToken);
-            Start();
-=======
                 if (!GlobalSettings.CatchSettings.PauseBotOnMaxHourlyRates || !(RealWorkH >= 1)) return;
-                if (!(Stats?.TotalPokemons/RealWorkH > GlobalSettings.CatchSettings.MaxCatchPerHour) || !(Stats?.TotalPokestops / RealWorkH > GlobalSettings.CatchSettings.MaxPokestopsPerHour)) return;
-                var stopSec = 10*60 + _rnd.Next(60*5);
+                if (!(Stats?.TotalPokemons / RealWorkH > GlobalSettings.CatchSettings.MaxCatchPerHour) || !(Stats?.TotalPokestops / RealWorkH > GlobalSettings.CatchSettings.MaxPokestopsPerHour)) return;
+                var stopSec = 10 * 60 + _rnd.Next(60 * 5);
                 _realWorkSec += stopSec;
-                var stopMs = stopSec*1000;
+                var stopMs = stopSec * 1000;
                 Session.EventDispatcher.Send(new WarnEvent
                 {
-                    Message = $"Max amount of pokemos(or pokestops)/h reached, bot will be stoped for {(stopMs/(60000)).ToString("N1")} minutes"
+                    Message = $"Max amount of pokemos(or pokestops)/h reached, bot will be stoped for {(stopMs / (60000)).ToString("N1")} minutes"
                 });
                 Stop(true);
                 _pauseCts.Dispose();
@@ -483,7 +472,6 @@ namespace Catchem.Classes
                     Message = "Bot pause routine failed badly"
                 });
             }
->>>>>>> refs/remotes/Lunat1q/master
         }
     }
 }
