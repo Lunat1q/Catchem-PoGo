@@ -272,6 +272,11 @@ namespace Catchem.Classes
             Logger.PushToUi("new_version", session, evt.v);
         }
 
+        public void HandleEvent(DebugEvent evt, ISession session)
+        {
+
+        }
+
         public void HandleEvent(DisplayHighestsPokemonEvent evt, ISession session)
         {
             string strHeader;
@@ -321,6 +326,7 @@ namespace Catchem.Classes
         {
             Logger.Write(evt.ToString(), LogLevel.Update, session: session);
         }
+
 
         public void Listen(IEvent evt, ISession session)
         {

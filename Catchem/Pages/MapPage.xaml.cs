@@ -88,7 +88,7 @@ namespace Catchem.Pages
                         Offset = new Point(-24, -48),
                         ZIndex = int.MaxValue
                     };
-                    pokeMap.Markers.Add(_bot.ForceMoveMarker);
+                    addMarker(_bot.ForceMoveMarker);
                 }
                 else
                 {
@@ -107,6 +107,12 @@ namespace Catchem.Pages
             }
         }
 
+        public void addMarker(GMapMarker marker)
+        {
+            pokeMap.Markers.Add(marker);
+            MainWindow.BotWindow.GlobalMapView.addMarker(marker);
+        }
+
         public void SetBot(BotWindowData bot)
         {
             _loadingUi = true;
@@ -116,7 +122,6 @@ namespace Catchem.Pages
             pokeMap.Position = new PointLatLng(_bot._lat, _bot._lng);
             DrawPlayerMarker();
             sl_moveSpeedFactor.Value = _bot.GlobalSettings.LocationSettings.MoveSpeedFactor;
-            UpdatePathRoute();
             _loadingUi = false;
         }
 
@@ -209,7 +214,7 @@ namespace Catchem.Pages
                                         Offset = new Point(-16, -32),
                                         ZIndex = 5
                                     };
-                                    pokeMap.Markers.Add(marker);
+                                    addMarker(marker);
                                     _bot.MapMarkers.Add(newMapObj.Uid, marker);
                                 }
                                 break;
@@ -222,7 +227,7 @@ namespace Catchem.Pages
                                         Offset = new Point(-16, -32),
                                         ZIndex = 5
                                     };
-                                    pokeMap.Markers.Add(marker);
+                                    addMarker(marker);
                                     _bot.MapMarkers.Add(newMapObj.Uid, marker);
                                 }
                                 break;
@@ -237,6 +242,7 @@ namespace Catchem.Pages
                                 if (_bot.ForceMoveMarker != null)
                                 {
                                     pokeMap.Markers.Remove(_bot.ForceMoveMarker);
+                                    MainWindow.BotWindow.GlobalMapView.removeMarker(_bot.ForceMoveMarker);
                                     _bot.ForceMoveMarker = null;
                                 }
                                 break;
@@ -258,9 +264,11 @@ namespace Catchem.Pages
         }
         #endregion
 
+
         private void RemoveMarker(string uid, GMapMarker marker)
         {
             pokeMap.Markers.Remove(marker);
+            MainWindow.BotWindow.GlobalMapView.removeMarker(marker);
             _bot.MapMarkers.Remove(uid);
         }
 
@@ -274,7 +282,7 @@ namespace Catchem.Pages
                 Offset = new Point(-15, -30),
                 ZIndex = 10
             };
-            pokeMap.Markers.Add(marker);
+            addMarker(marker);
             _bot.MapMarkers.Add(newMapObj.Uid, marker);
         }
 
@@ -288,18 +296,18 @@ namespace Catchem.Pages
                     Offset = new Point(-14, -40),
                     ZIndex = 15
                 };
-                pokeMap.Markers.Add(_playerMarker);
+                addMarker(_playerMarker);
                 _playerRoute = _bot.PlayerRoute;
-                pokeMap.Markers.Add(_playerRoute);
+                addMarker(_playerRoute);
                 _pathRoute = _bot.PathRoute;
-                pokeMap.Markers.Add(_pathRoute);
+                addMarker(_pathRoute);
             }
             else
             {
                 _playerMarker.Position = new PointLatLng(_bot.Lat, _bot.Lng);
             }
             if (_bot.ForceMoveMarker != null && !pokeMap.Markers.Contains(_bot.ForceMoveMarker))
-                pokeMap.Markers.Add(_bot.ForceMoveMarker);
+                addMarker(_bot.ForceMoveMarker);
         }
 
         public void LoadMarkersFromBot()
@@ -331,7 +339,7 @@ namespace Catchem.Pages
                 else
                 {
                     _keepPokemonsOnMap = false;
-                    foreach (var bot in MainWindow.BotWindow.BotsCollection)
+                    foreach (var bot in MainWindow.BotsCollection)
                         foreach (var item in bot.MarkersDelayRemove)
                             bot.MarkersQueue.Enqueue(item);
                 }

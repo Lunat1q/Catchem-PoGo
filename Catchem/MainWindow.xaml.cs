@@ -36,7 +36,7 @@ namespace Catchem
         private bool _windowClosing;
         private const string SubPath = "Profiles";
 
-        public ObservableCollection<BotWindowData> BotsCollection = new ObservableCollection<BotWindowData>();
+        public static ObservableCollection<BotWindowData> BotsCollection = new ObservableCollection<BotWindowData>();
 
         private ISession CurSession => Bot.Session;
         private readonly Queue<BotRpcMessage> _messageQueue = new Queue<BotRpcMessage>();
@@ -63,7 +63,7 @@ namespace Catchem
             LogWorker();
             RpcWorker();
             InitBots();
-            BotMapPage.SetSettingsPage(BotSettingsPage);
+            SettingsView.BotMapPage.SetSettingsPage(SettingsView.BotSettingsPage);
             SetVersionTag();
         }
 
@@ -76,7 +76,7 @@ namespace Catchem
 
         private void InitWindowsControlls()
         {
-            BotSettingsPage.SubPath = SubPath;
+            SettingsView.BotSettingsPage.SubPath = SubPath;
         }
 
         internal void InitBots()
@@ -117,7 +117,7 @@ namespace Catchem
             var receiverBot = BotsCollection.FirstOrDefault(x => x.Session == session);
             if (receiverBot == null || !receiverBot.Started) return;
             receiverBot.PushNewPathRoute(list);
-            BotMapPage.UpdatePathRoute();
+            SettingsView.BotMapPage.UpdatePathRoute();
         }
 
         private void PushNewError(ISession session)
@@ -171,7 +171,7 @@ namespace Catchem
             if (targetBot == null) return;
             targetBot.NewPlayerData((string)objData[0], (int)objData[1], (int)objData[2], (TeamColor)objData[4], (int)objData[5], (int)objData[3]);
             if (targetBot == Bot)
-                BotPlayerPage.UpdatePlayerTab();
+                SettingsView.BotPlayerPage.UpdatePlayerTab();
         }
 
         private void LostPokemon(ISession session, object[] objData)
@@ -224,7 +224,7 @@ namespace Catchem
             }
             finally
             {
-                BotPlayerPage.UpdatePokemons();
+                SettingsView.BotPlayerPage.UpdatePokemons();
             }
         }
 
@@ -245,7 +245,7 @@ namespace Catchem
                 ((List<ItemData>) objData[0]).ForEach(x => receiverBot.ItemList.Add(new ItemUiData(x.ItemId, x.ItemId.ToInventorySource(), x.ItemId.ToInventoryName(), x.Count)));
                 if (session != CurSession) return;
 
-                BotPlayerPage.UpdateItems(); 
+                SettingsView.BotPlayerPage.UpdateItems(); 
             }
             catch (Exception)
             {
@@ -256,7 +256,7 @@ namespace Catchem
         private void UpdateItemCollection(ISession session)
         {
             if (Bot == null || session != CurSession) return;
-            BotPlayerPage.UpdateInventoryCount();
+            SettingsView.BotPlayerPage.UpdateInventoryCount();
         }
 
         private void UpdateCoords(ISession session, object[] objData)
@@ -275,8 +275,8 @@ namespace Catchem
                 }
                 else
                 {
-                    BotSettingsPage.UpdateCoordBoxes();
-                    BotMapPage.UpdateCurrentBotCoords(botReceiver);
+                    SettingsView.BotSettingsPage.UpdateCoordBoxes();
+                    SettingsView.BotMapPage.UpdateCurrentBotCoords(botReceiver);
                 }
             }
             catch (Exception)
@@ -373,11 +373,11 @@ namespace Catchem
                 {
                     var t = Bot.LogQueue.Dequeue();
                     Bot.Log.Add(t);
-                    consoleBox.AppendParagraph(t.Item1, t.Item2);
-                    if (consoleBox.Document.Blocks.Count > 100)
+                    SettingsView.consoleBox.AppendParagraph(t.Item1, t.Item2);
+                    if (SettingsView.consoleBox.Document.Blocks.Count > 100)
                     {
-                        var toRemove = consoleBox.Document.Blocks.ElementAt(0);
-                        consoleBox.Document.Blocks.Remove(toRemove);
+                        var toRemove = SettingsView.consoleBox.Document.Blocks.ElementAt(0);
+                        SettingsView.consoleBox.Document.Blocks.Remove(toRemove);
                     }
                 }
                 await Task.Delay(10);
@@ -391,6 +391,8 @@ namespace Catchem
                 if (_messageQueue.Count > 0)
                 {
                     var message = _messageQueue.Dequeue();
+                    //I dont like busy waiting :/
+                    if (message == null) continue;
                     switch (message.Type)
                     {
                         case "bot_failure":
@@ -518,8 +520,8 @@ namespace Catchem
         {
             if (Bot == null)
             {
-                if (tabControl.IsEnabled)
-                    tabControl.IsEnabled = false;
+                if (SettingsView.tabControl.IsEnabled)
+                    SettingsView.tabControl.IsEnabled = false;
                 if (grid_pickBot.Visibility == Visibility.Collapsed)
                     grid_pickBot.Visibility = Visibility.Visible;
                 return;
@@ -536,7 +538,7 @@ namespace Catchem
         public void UpdatePokemonCollection(ISession session)
         {
             if (Bot == null || session != CurSession) return;
-            BotPlayerPage.UpdatePokemonsCount();
+            SettingsView.BotPlayerPage.UpdatePokemonsCount();
         }
 
         private void StatsOnDirtyEvent(BotWindowData bot)
@@ -547,7 +549,7 @@ namespace Catchem
             {
                 Dispatcher.BeginInvoke(new ThreadStart(delegate
                 {
-                    BotPlayerPage.UpdateRunTimeData();
+                    SettingsView.BotPlayerPage.UpdateRunTimeData();
                 }));
             }
             bot.CheckForMaxCatch();
@@ -556,10 +558,10 @@ namespace Catchem
         public void ClearPokemonData(BotWindowData calledBot)
         {
             if (Bot != calledBot) return;
-            consoleBox.Document.Blocks.Clear();
+            SettingsView.consoleBox.Document.Blocks.Clear();
             Bot.LatStep = Bot.LngStep = 0;
-            BotMapPage.ClearData();
-            BotPlayerPage.ClearData();
+            SettingsView.BotMapPage.ClearData();
+            SettingsView.BotPlayerPage.ClearData();
         }
 
         private static BotWindowData CreateBowWindowData(GlobalSettings s,string name)
@@ -574,15 +576,15 @@ namespace Catchem
             if (Bot == null || _loadingUi) return;
 
             _loadingUi = true;            
-            if (!tabControl.IsEnabled)
-                tabControl.IsEnabled = true;
+            if (!SettingsView.tabControl.IsEnabled)
+                SettingsView.tabControl.IsEnabled = true;
             if (grid_pickBot.Visibility == Visibility.Visible)
                 grid_pickBot.Visibility = Visibility.Collapsed;
-
-            BotSettingsPage.SetBot(Bot);
-            BotPlayerPage.SetBot(Bot);
-            BotPokemonListPage.SetBot(Bot);
-            BotMapPage.SetBot(Bot);
+            if (transit.SelectedIndex != 0) changeTransistor();
+            SettingsView.BotSettingsPage.SetBot(Bot);
+            SettingsView.BotPlayerPage.SetBot(Bot);
+            SettingsView.BotPokemonListPage.SetBot(Bot);
+            SettingsView.BotMapPage.SetBot(Bot);
 
             _loadingUi = false;
         }
@@ -597,7 +599,7 @@ namespace Catchem
         private void Window_Closing(object sender, CancelEventArgs e)
         {
             _windowClosing = true;
-            BotMapPage.WindowClosing = true;
+            SettingsView.BotMapPage.WindowClosing = true;
             if (Bot == null || _loadingUi) return;
             Bot.GlobalSettings.StoreData(SubPath + "\\" + Bot.ProfileName);
             foreach (var b in BotsCollection)
@@ -611,6 +613,26 @@ namespace Catchem
             foreach (var bot in BotsCollection)
                 bot.Start();
         }
+
+        private void btn_changeViewSettingsMap_Click(object sender, RoutedEventArgs e)
+        {
+            changeTransistor();
+        }
+
+        private void changeTransistor()
+        {
+            if (transit.SelectedIndex == 0)
+            {
+                transit.SelectedIndex = 1;
+                changeViewSettingsMap.Content = "Settings";
+            }
+            else
+            {
+                transit.SelectedIndex = 0;
+                changeViewSettingsMap.Content = "World Map";
+            }
+        }
+
 
         private void btn_StopAll_Click(object sender, RoutedEventArgs e)
         {
