@@ -232,6 +232,7 @@
     <None Include="Config\Translations\translation.uk_UA.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Config\Translations\translation.vi.json" />
     <None Include="Config\Translations\translation.zh_CN.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
