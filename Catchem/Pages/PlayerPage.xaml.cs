@@ -91,6 +91,7 @@ namespace Catchem.Pages
             var pokemon = GetSelectedPokemon();
             if (pokemon == null) return;
             LevelUpPokemon(CurSession, pokemon);
+            UpdateRunTimeData();
         }
         private void mi_maxlevelupPokemon_Click(object sender, RoutedEventArgs e)
         {
@@ -98,6 +99,7 @@ namespace Catchem.Pages
             var pokemon = GetSelectedPokemon();
             if (pokemon == null) return;
             LevelUpPokemon(CurSession, pokemon, true);
+            UpdateRunTimeData();
         }
 
         private void mi_recycleItem_Click(object sender, RoutedEventArgs e)
@@ -163,6 +165,7 @@ namespace Catchem.Pages
             }
             l_poke_inventory.Content = $"({_bot.PokemonList.Count}/{_bot.MaxPokemonStorageSize})";
             l_inventory.Content = $"({_bot.ItemList.Sum(x => x.Amount)}/{_bot.MaxItemStorageSize})";
+            l_StarDust.Content = _bot.StartStarDust;
         }
 
         public void UpdatePokemons()
@@ -195,7 +198,6 @@ namespace Catchem.Pages
 
         public void UpdateRunTimeData()
         {
-            l_StarDust.Content = _bot.Stats?.TotalStardust;
             var farmedDust = _bot.Stats?.TotalStardust == 0 ? 0 : _bot.Stats?.TotalStardust - _bot.StartStarDust;
             var dustpH = farmedDust / _bot.Ts.TotalHours;
             if (dustpH != null)

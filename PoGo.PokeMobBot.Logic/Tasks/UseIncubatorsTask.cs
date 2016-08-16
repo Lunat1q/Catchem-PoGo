@@ -26,7 +26,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
             // Refresh inventory so that the player stats are fresh
             await session.Inventory.RefreshCachedInventory();
 
-            var playerStats = (await session.Inventory.GetPlayerStats()).FirstOrDefault();
+            var playerStats = (await session.Inventory.GetPlayerStats())?.FirstOrDefault();
             if (playerStats == null)
                 return;
 

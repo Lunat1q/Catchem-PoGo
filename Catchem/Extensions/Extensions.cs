@@ -234,13 +234,11 @@ namespace Catchem.Extensions
                 case TypeCode.Double:
                     {
                         double result;
-                        double result2;
-                        var res = double.TryParse(value, NumberStyles.Any, CultureInfo.CurrentCulture, out result);
-                        res = double.TryParse(value, NumberStyles.Any, CultureInfo.InvariantCulture, out result2)
-                                      || double.TryParse(value, NumberStyles.Any, CultureInfo.GetCultureInfo("en-US"), out result2);
+                        var nfi = NumberFormatInfo.CurrentInfo;
+                        var currentDecimalSeparator = nfi.CurrencyDecimalSeparator;
+                        value = Conversion(value, currentDecimalSeparator);
+                        var res = double.TryParse(value, out result);
                         if (!res) return false;
-                        if ((result2 < result && result2 != 0) || (result2 != 0 && result == 0))
-                            result = result2;
                         var changeType = Convert.ChangeType(result, typeCode);
                         if (changeType != null)
                             resultVal = (T)changeType;
@@ -249,9 +247,13 @@ namespace Catchem.Extensions
                 case TypeCode.Single:
                     {
                         float result;
-                        var res = float.TryParse(value, NumberStyles.Any, CultureInfo.CurrentCulture, out result)
-                                  || float.TryParse(value, NumberStyles.Any, CultureInfo.GetCultureInfo("en-US"), out result)
-                                  || float.TryParse(value, NumberStyles.Any, CultureInfo.InvariantCulture, out result);
+                        //var res = float.TryParse(value, NumberStyles.Any, CultureInfo.CurrentCulture, out result)
+                        //          || float.TryParse(value, NumberStyles.Any, CultureInfo.GetCultureInfo("en-US"), out result)
+                        //          || float.TryParse(value, NumberStyles.Any, CultureInfo.InvariantCulture, out result);
+                        var nfi = NumberFormatInfo.CurrentInfo;
+                        var currentDecimalSeparator = nfi.CurrencyDecimalSeparator;
+                        value = Conversion(value, currentDecimalSeparator);
+                        var res = float.TryParse(value, out result);
                         if (!res) return false;
                         var changeType = Convert.ChangeType(result, typeCode);
                         if (changeType != null)
@@ -272,6 +274,16 @@ namespace Catchem.Extensions
                     }
             }
             return false;
+        }
+
+        private static string Conversion(string str1, string str2)
+        {
+
+            if (str1.Contains(".") && (str2 != "."))
+                return str1.Replace('.', ',');
+            if (str1.Contains(",") && (str2 != ","))
+                return str1.Replace(',', '.');
+            return str1;
         }
 
         public static void AppendText(this RichTextBox box, string text, System.Windows.Media.Color color)

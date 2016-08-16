@@ -80,7 +80,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                             Uid = evolveResponse.EvolvedPokemonData.Id,
                             Id = evolveResponse.EvolvedPokemonData.PokemonId,
                             Cp = evolveResponse.EvolvedPokemonData.Cp,
-                            Perfection = PokemonInfo.CalculatePokemonPerfection(evolveResponse.EvolvedPokemonData),
+                            Perfection = evolveResponse.EvolvedPokemonData.CalculatePokemonPerfection(),
                             Family = family.FamilyId,
                             Candy = family.Candy_
                         });

@@ -24,26 +24,15 @@ namespace PoGo.PokeMobBot.Logic
             try
             {
                 Logger.Write("Requesting routing info to http://openls.geog.uni-heidelberg.de", LogLevel.Debug);
-                //var coordsFrom = GetProperCoordString(start.Latitude, start.Longitude);
-                //var coordsTo = GetProperCoordString(dest.Latitude, dest.Longitude);                
-                //WebRequest request = WebRequest.Create(
-                //  $"http://openls.geog.uni-heidelberg.de" + $"/route?start={coordsFrom}&end={coordsTo}&via=&lang=en&distunit=KM&routepref=Pedestrian&weighting=Fastest&SurfaceInformation=true&ElevationInformation=true&instructions=false");
-                //request.Credentials = CredentialCache.DefaultCredentials;
-                //request.Proxy = session.Proxy;
-                //WebResponse response = request.GetResponse();
+
+                //var responseFromServer = PostXmlData("http://openls.geog.uni-heidelberg.de/route", PrepareRequest(start, dest), session.Proxy);
                 var responseFromServer = PostXmlData("http://openls.geog.uni-heidelberg.de/testing2015/routing", PrepareRequest(start, dest), session.Proxy);
                 Logger.Write(
                     responseFromServer != null
                         ? "Got response from http://openls.geog.uni-heidelberg.de"
                         : "Wrong response from http://openls.geog.uni-heidelberg.de, we doomed", LogLevel.Debug);
-                //Console.WriteLine(((HttpWebResponse)response).StatusDescription);
-                //Stream dataStream = response.GetResponseStream();
-                //StreamReader reader = new StreamReader(dataStream);
-                //string responseFromServer = reader.ReadToEnd();
-                //Console.WriteLine(responseFromServer);
-                OsmResponse responseParsed = HandleResponse(responseFromServer);
-                //reader.Close();
-                //response.Close();
+               
+                var responseParsed = HandleResponse(responseFromServer);
 
                 return responseParsed;
             }
@@ -111,6 +100,7 @@ namespace PoGo.PokeMobBot.Logic
             request.ContentType = "text/xml; encoding='utf-8'";
             request.ContentLength = bytes.Length;
             request.Method = "POST";
+            request.Timeout = 15000;
             var requestStream = request.GetRequestStream();
             requestStream.Write(bytes, 0, bytes.Length);
             requestStream.Close();

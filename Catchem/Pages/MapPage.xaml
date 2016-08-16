@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Catchem.Pages"
              xmlns:windowsPresentation="clr-namespace:GMap.NET.WindowsPresentation;assembly=GMap.NET.WindowsPresentation"
-             mc:Ignorable="d" Width="997" Height="364">
+             mc:Ignorable="d" Width="819" Height="364">
     <Grid Background="#FFF0F0F0">
         <Grid.RowDefinitions>
             <RowDefinition/>
@@ -13,7 +13,13 @@
         </Grid.RowDefinitions>
         <windowsPresentation:GMapControl x:Name="pokeMap" Margin="0,0,0,1" MouseDoubleClick="pokeMap_MouseDoubleClick" MouseWheel="pokeMap_MouseWheel"/>
         <Grid Grid.Row="1">
-            <Rectangle Margin="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="119"/>
+                <ColumnDefinition Width="53*"/>
+                <ColumnDefinition Width="155"/>
+                <ColumnDefinition Width="39*"/>
+            </Grid.ColumnDefinitions>
+            <Rectangle Margin="0" Grid.ColumnSpan="4">
                 <Rectangle.Fill>
                     <LinearGradientBrush EndPoint="0,0.5" StartPoint="1,0.5">
                         <GradientStop Color="#FF9AFF7D"/>
@@ -21,13 +27,13 @@
                     </LinearGradientBrush>
                 </Rectangle.Fill>
             </Rectangle>
-            <CheckBox x:Name="cb_mapFollowThePlayer" Content="Follow the Player marker" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="155" Checked="mapFollowThePlayer_Checked" Unchecked="mapFollowThePlayer_Checked"/>
-            <Slider x:Name="sl_moveSpeedFactor" HorizontalAlignment="Left" Margin="295,8,0,0" VerticalAlignment="Top" RenderTransformOrigin="3.583,0.25" Width="168" Height="25" Minimum="0.3" Maximum="3" TickPlacement="BottomRight" Value="1" ValueChanged="sl_moveSpeedFactor_ValueChanged" TickFrequency="0.1" SmallChange="0" />
-            <Label x:Name="label5" Content="Move Speed Factor:" HorizontalAlignment="Left" Margin="183,4,0,0" VerticalAlignment="Top" Width="126"/>
-            <Label x:Name="l_moveSpeedFactor" Content="1" HorizontalAlignment="Left" Margin="463,4,0,0" VerticalAlignment="Top" Width="32"/>
-            <CheckBox x:Name="cb_keepPokemonMarkers" Content="Keep pokemon markers on the map" HorizontalAlignment="Left" Margin="500,10,0,0" VerticalAlignment="Top" Width="215" Checked="cb_keepPokemonMarkers_Checked" Unchecked="cb_keepPokemonMarkers_Checked"/>
-            <Slider x:Name="sl_mapZoom" HorizontalAlignment="Right" Margin="0,8,10,0" VerticalAlignment="Top" RenderTransformOrigin="3.583,0.25" Width="168" Height="25" Minimum="2" Maximum="18" TickPlacement="BottomRight" Value="18" SmallChange="0" LargeChange="3" ValueChanged="sl_mapZoom_ValueChanged" />
-            <Label x:Name="label5_Copy" Content="Zoom:" HorizontalAlignment="Right" Margin="0,4,183,0" VerticalAlignment="Top" Width="45"/>
+            <CheckBox x:Name="cb_mapFollowThePlayer" Content="Follow the Player" HorizontalAlignment="Left" Margin="0,10,0,0" VerticalAlignment="Top" Width="119" Checked="mapFollowThePlayer_Checked" Unchecked="mapFollowThePlayer_Checked" Height="16"/>
+            <Slider x:Name="sl_moveSpeedFactor" Margin="111,8,31,0" VerticalAlignment="Top" RenderTransformOrigin="3.583,0.25" Height="25" Minimum="0.3" Maximum="3" TickPlacement="BottomRight" Value="1" ValueChanged="sl_moveSpeedFactor_ValueChanged" TickFrequency="0.1" SmallChange="0" Grid.Column="1" />
+            <Label x:Name="label5" Content="Speed Factor:" HorizontalAlignment="Left" Margin="5,5,0,0" VerticalAlignment="Top" Width="83" Grid.Column="1" Height="26"/>
+            <Label x:Name="l_moveSpeedFactor" Content="1" HorizontalAlignment="Right" Margin="0,4,0,0" VerticalAlignment="Top" Width="26" Grid.Column="1" Height="26"/>
+            <CheckBox x:Name="cb_keepPokemonMarkers" Content="Keep pokemon markers" HorizontalAlignment="Left" Margin="0,8,0,0" VerticalAlignment="Top" Width="155" Checked="cb_keepPokemonMarkers_Checked" Unchecked="cb_keepPokemonMarkers_Checked" Grid.Column="2" Height="16"/>
+            <Slider x:Name="sl_mapZoom" Margin="51,8,10,0" VerticalAlignment="Top" RenderTransformOrigin="3.583,0.25" Height="25" Minimum="2" Maximum="18" TickPlacement="BottomRight" Value="18" SmallChange="0" LargeChange="3" ValueChanged="sl_mapZoom_ValueChanged" Grid.Column="3" />
+            <Label x:Name="label5_Copy" Content="Zoom:" HorizontalAlignment="Left" Margin="0,4,0,0" VerticalAlignment="Top" Width="45" Grid.Column="3" Height="26"/>
         </Grid>
     </Grid>
 </UserControl>

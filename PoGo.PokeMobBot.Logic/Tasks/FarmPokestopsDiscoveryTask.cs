@@ -36,7 +36,19 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                 {
                     Message = session.Translation.GetTranslation(TranslationString.FarmPokestopsNoUsableFound)
                 });
-                await Task.Delay(60000);
+                await Task.Delay(60000, cancellationToken);
+                await session.Navigation.Move(new GeoCoordinate(session.Client.CurrentLatitude + session.Client.rnd.NextInRange(-0.0001, 0.0001),
+                                session.Client.CurrentLongitude + session.Client.rnd.NextInRange(-0.0001, 0.0001)),
+                session.LogicSettings.WalkingSpeedMin, session.LogicSettings.WalkingSpeedMax,
+                async () =>
+                {
+                    // Catch normal map Pokemon
+                    await CatchNearbyPokemonsTask.Execute(session, cancellationToken);
+                    //Catch Incense Pokemon
+                    await CatchIncensePokemonsTask.Execute(session, cancellationToken);
+                    return true;
+                }, null, cancellationToken, session);
+                pokestopList = await GetPokeStops(session);
             }
 
             session.EventDispatcher.Send(new PokeStopListEvent {Forts = pokestopList.Select(x=>x.BaseFortData)});

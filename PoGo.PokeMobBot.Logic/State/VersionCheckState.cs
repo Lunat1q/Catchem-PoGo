@@ -199,8 +199,6 @@ namespace PoGo.PokeMobBot.Logic.State
             {
                 return true; //better than just doing nothing when git server down
             }
-
-            return false;
         }
 
         public bool MoveAllFiles(string sourceFolder, string destFolder)

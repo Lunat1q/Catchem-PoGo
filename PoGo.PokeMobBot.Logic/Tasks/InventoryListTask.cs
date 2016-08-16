@@ -24,7 +24,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
             action(
                 new InventoryListEvent
                 {
-                    Items = inventory.ToList()
+                    Items = inventory?.ToList()
                 });
 
             await Task.Delay(session.LogicSettings.DelayBetweenPlayerActions);

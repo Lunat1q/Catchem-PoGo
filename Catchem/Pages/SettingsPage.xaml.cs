@@ -24,7 +24,7 @@ namespace Catchem.Pages
         public SettingsPage()
         {
             InitializeComponent();
-            InitWindowsComtrolls();
+            InitWindowsControlls();
         }
 
         public void ClearData()
@@ -85,7 +85,7 @@ namespace Catchem.Pages
             LoadingUi = false;
         }
 
-        private void InitWindowsComtrolls()
+        private void InitWindowsControlls()
         {
             authBox.ItemsSource = Enum.GetValues(typeof(AuthType));
         }

@@ -39,6 +39,7 @@ namespace Catchem
         public ObservableCollection<BotWindowData> BotsCollection = new ObservableCollection<BotWindowData>();
 
         private ISession CurSession => Bot.Session;
+        private readonly Queue<BotRpcMessage> _messageQueue = new Queue<BotRpcMessage>();
 
         private BotWindowData _bot;
         public BotWindowData Bot
@@ -60,14 +61,17 @@ namespace Catchem
             InitWindowsControlls();
             BotWindow = this;
             LogWorker();
+            RpcWorker();
             InitBots();
             BotMapPage.SetSettingsPage(BotSettingsPage);
             SetVersionTag();
         }
 
+
+
         public void SetVersionTag(Version remoteVersion = null)
         {
-            this.Title = $"Catchem - v{Assembly.GetExecutingAssembly().GetName().Version} {(remoteVersion != null ? $"New release - {remoteVersion}" : "")}";
+            Title = $"Catchem - v{Assembly.GetExecutingAssembly().GetName().Version} {(remoteVersion != null ? $"New release - {remoteVersion}" : "")}";
         }
 
         private void InitWindowsControlls()
@@ -93,98 +97,10 @@ namespace Catchem
         public void ReceiveMsg(string msgType, ISession session, params object[] objData)
         {
             if (session == null) return;
-            switch (msgType)
-            {
-                case "bot_failure":
-                    HandleFailure(session, (bool) objData[0], (bool) objData[1]);
-                    break;
-                case "log":
-                    PushNewConsoleRow(session, (string)objData[0], (Color)objData[1]);
-                    break;
-                case "err":
-                    PushNewError(session);
-                    break;
-                case "ps":
-                    PushNewPokestop(session, (IEnumerable<FortData>)objData[0]);
-                    break;
-                case "pm":
-                    PushNewPokemons(session, (IEnumerable<MapPokemon>)objData[0]);
-                    break;
-                case "pmw":
-                    PushNewWildPokemons(session, (IEnumerable<WildPokemon>)objData[0]);
-                    break;
-                case "pm_rm":
-                    PushRemovePokemon(session, (MapPokemon)objData[0]);
-                    break;                
-                case "p_loc":
-                    UpdateCoords(session, objData);
-                    break;
-                case "pm_list":
-                    Dispatcher.BeginInvoke(new ThreadStart(delegate
-                    {
-                        BuildPokemonList(session, objData);
-                    }));
-                    break;
-                case "item_list":
-                    Dispatcher.BeginInvoke(new ThreadStart(delegate
-                    {
-                        BuildItemList(session, objData);
-                    }));
-                    break;
-                case "new_version":
-                    Dispatcher.BeginInvoke(new ThreadStart(delegate
-                    {
-                        SetVersionTag((Version)objData[0]);
-                    }));
-                    break;
-                case "item_new":
-                    Dispatcher.BeginInvoke(new ThreadStart(delegate
-                    {
-                        GotNewItems(session, objData);
-                    }));
-                    break;
-                case "route_next":
-                    Dispatcher.BeginInvoke(new ThreadStart(delegate
-                    {
-                        DrawNextRoute(session, (List<Tuple<double, double>>)objData[0]);
-                    }));
-                    break;
-                case "item_rem":
-                    Dispatcher.BeginInvoke(new ThreadStart(delegate
-                    {
-                        LostItem(session, objData);
-                    }));
-                    break;
-                case "pm_new":
-                    Dispatcher.BeginInvoke(new ThreadStart(delegate
-                    {
-                        GotNewPokemon(session, objData);
-                    }));
-                    break;
-                case "pm_rem":
-                    Dispatcher.BeginInvoke(new ThreadStart(delegate
-                    {
-                        LostPokemon(session, objData);
-                    }));
-                    break;
-                case "pm_upd":
-                    Dispatcher.BeginInvoke(new ThreadStart(delegate
-                    {
-                        PokemonChanged(session, objData);
-                    }));
-                    break;
-                case "profile_data":
-                    Dispatcher.BeginInvoke(new ThreadStart(delegate
-                    {
-                        UpdateProfileInfo(session, objData);
-                    }));
-                    break;
-                case "forcemove_done":
-                    PushRemoveForceMoveMarker(session);
-                    break;
-            }
+            _messageQueue.Enqueue(new BotRpcMessage(msgType, session, objData));
         }
 
+        // ReSharper disable once UnusedParameter.Local
         private void HandleFailure(ISession session, bool shutdown, bool stop)
         {
             var receiverBot = BotsCollection.FirstOrDefault(x => x.Session == session);
@@ -293,6 +209,12 @@ namespace Catchem
             {
                 var receiverBot = BotsCollection.FirstOrDefault(x => x.Session == session);
                 if (receiverBot == null) return;
+                if (objData[0] == null)
+                {
+                    receiverBot.LogQueue.Enqueue(
+                        Tuple.Create("Can't retrieve pokemon list, servers are unstable or you can be banned!", Colors.Red));
+                    return;
+                }
                 var receivedList = (List<Tuple<PokemonData, double, int>>) objData[0];
                 receiverBot.BuildPokemonList(receivedList);
             }
@@ -312,6 +234,12 @@ namespace Catchem
             {
                 var receiverBot = BotsCollection.FirstOrDefault(x => x.Session == session);
                 if (receiverBot == null) return;
+                if (objData[0] == null)
+                {
+                    receiverBot.LogQueue.Enqueue(
+                        Tuple.Create("Can't retrieve items list, servers are unstable or you can be banned!", Colors.Red));
+                    return;
+                }
                 receiverBot.ItemList = new ObservableCollection<ItemUiData>();
                 receiverBot.ItemList.CollectionChanged += delegate { UpdateItemCollection(session); };
                 ((List<ItemData>) objData[0]).ForEach(x => receiverBot.ItemList.Add(new ItemUiData(x.ItemId, x.ItemId.ToInventorySource(), x.ItemId.ToInventoryName(), x.Count)));
@@ -453,6 +381,83 @@ namespace Catchem
                     }
                 }
                 await Task.Delay(10);
+            }
+        }
+
+        private async void RpcWorker()
+        {
+            while (!_windowClosing)
+            {
+                if (_messageQueue.Count > 0)
+                {
+                    var message = _messageQueue.Dequeue();
+                    switch (message.Type)
+                    {
+                        case "bot_failure":
+                            HandleFailure(message.Session, (bool) message.ParamObjects[0],
+                                (bool) message.ParamObjects[1]);
+                            break;
+                        case "log":
+                            PushNewConsoleRow(message.Session, (string) message.ParamObjects[0],
+                                (Color) message.ParamObjects[1]);
+                            break;
+                        case "err":
+                            PushNewError(message.Session);
+                            break;
+                        case "ps":
+                            PushNewPokestop(message.Session, (IEnumerable<FortData>) message.ParamObjects[0]);
+                            break;
+                        case "pm":
+                            PushNewPokemons(message.Session, (IEnumerable<MapPokemon>) message.ParamObjects[0]);
+                            break;
+                        case "pmw":
+                            PushNewWildPokemons(message.Session, (IEnumerable<WildPokemon>) message.ParamObjects[0]);
+                            break;
+                        case "pm_rm":
+                            PushRemovePokemon(message.Session, (MapPokemon) message.ParamObjects[0]);
+                            break;
+                        case "p_loc":
+                            UpdateCoords(message.Session, message.ParamObjects);
+                            break;
+                        case "pm_list":
+                            BuildPokemonList(message.Session, message.ParamObjects);
+                            break;
+                        case "item_list":
+                            BuildItemList(message.Session, message.ParamObjects);
+                            break;
+                        case "new_version":
+                            SetVersionTag((Version) message.ParamObjects[0]);
+                            break;
+                        case "item_new":
+                            GotNewItems(message.Session, message.ParamObjects);
+                            break;
+                        case "route_next":
+                            DrawNextRoute(message.Session, (List<Tuple<double, double>>) message.ParamObjects[0]);
+                            break;
+                        case "item_rem":
+                            LostItem(message.Session, message.ParamObjects);
+                            break;
+                        case "pm_new":
+                            GotNewPokemon(message.Session, message.ParamObjects);
+                            break;
+                        case "pm_rem":
+                            LostPokemon(message.Session, message.ParamObjects);
+                            break;
+                        case "pm_upd":
+                            PokemonChanged(message.Session, message.ParamObjects);
+                            break;
+                        case "profile_data":
+                            UpdateProfileInfo(message.Session, message.ParamObjects);
+                            break;
+                        case "forcemove_done":
+                            PushRemoveForceMoveMarker(message.Session);
+                            break;
+                        default:
+                            PushNewConsoleRow(Bot?.Session, "Unknown message detected!", Colors.Red);
+                            break;
+                    }
+                }
+                await Task.Delay(5);
             }
         }
         #endregion

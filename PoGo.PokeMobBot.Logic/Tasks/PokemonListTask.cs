@@ -26,18 +26,18 @@ namespace PoGo.PokeMobBot.Logic.Tasks
 
             var allPokemonInBag = await session.Inventory.GetHighestsCp(1000);
 
-            var pkmWithIv = allPokemonInBag.Select(p => {
+            var pkmWithIv = allPokemonInBag?.Select(p => {
                 var settings = pokemonSettings.Single(x => x.PokemonId == p.PokemonId);
                 return Tuple.Create(
                     p,
-                    PokemonInfo.CalculatePokemonPerfection(p),
+                    p.CalculatePokemonPerfection(),
                     pokemonFamilies.Single(x => settings.FamilyId == x.FamilyId).Candy_
                 );
             });
 
             action(new PokemonListEvent
             {
-                PokemonList = pkmWithIv.ToList()
+                PokemonList = pkmWithIv?.ToList()
             });
 
             await Task.Delay(session.LogicSettings.DelayBetweenPlayerActions);

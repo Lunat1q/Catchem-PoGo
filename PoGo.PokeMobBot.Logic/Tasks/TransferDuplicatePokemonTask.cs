@@ -40,13 +40,14 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                     currentPokemonCount, maxPokemonCount)
             });
 
+            if (duplicatePokemons != null)
             foreach (var duplicatePokemon in duplicatePokemons)
             {
                 cancellationToken.ThrowIfCancellationRequested();
 
                 if (duplicatePokemon.Cp >=
                     session.Inventory.GetPokemonTransferFilter(duplicatePokemon.PokemonId).KeepMinCp ||
-                    PokemonInfo.CalculatePokemonPerfection(duplicatePokemon) >
+                    duplicatePokemon.CalculatePokemonPerfection() >
                     session.Inventory.GetPokemonTransferFilter(duplicatePokemon.PokemonId).KeepMinIvPercentage)
                 {
                     continue;
@@ -59,8 +60,8 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                     ? await session.Inventory.GetHighestPokemonOfTypeByIv(duplicatePokemon)
                     : await session.Inventory.GetHighestPokemonOfTypeByCp(duplicatePokemon)) ?? duplicatePokemon;
 
-                var setting = pokemonSettings.Single(q => q.PokemonId == duplicatePokemon.PokemonId);
-                var family = pokemonFamilies.First(q => q.FamilyId == setting.FamilyId);
+                var setting = pokemonSettings?.Single(q => q.PokemonId == duplicatePokemon.PokemonId);
+                var family = pokemonFamilies.First(q => q.FamilyId == setting?.FamilyId);
 
                 family.Candy_++;
 
@@ -68,10 +69,10 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                 {
                     Uid = duplicatePokemon.Id,
                     Id = duplicatePokemon.PokemonId,
-                    Perfection = PokemonInfo.CalculatePokemonPerfection(duplicatePokemon),
+                    Perfection = duplicatePokemon.CalculatePokemonPerfection(),
                     Cp = duplicatePokemon.Cp,
                     BestCp = bestPokemonOfType.Cp,
-                    BestPerfection = PokemonInfo.CalculatePokemonPerfection(bestPokemonOfType),
+                    BestPerfection = bestPokemonOfType.CalculatePokemonPerfection(),
                     FamilyCandies = family.Candy_,
                     Family = family.FamilyId
                 });

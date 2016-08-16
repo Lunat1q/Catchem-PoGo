@@ -15,13 +15,13 @@ namespace PoGo.PokeMobBot.Logic.Tasks
     {
         public static async Task Execute(ISession session, Action<IEvent> action)
         {
-            var PlayersProfile = (await session.Inventory.GetPlayerStats())
+            var playersProfile = (await session.Inventory.GetPlayerStats())?
                 .ToList();
             
             action(
                 new PlayerStatsEvent
                 {
-                    PlayerStats = PlayersProfile,
+                    PlayerStats = playersProfile,
                 });
 
             await Task.Delay(session.LogicSettings.DelayBetweenPlayerActions);

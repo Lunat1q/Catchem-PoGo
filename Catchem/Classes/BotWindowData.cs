@@ -12,7 +12,6 @@ using Catchem.Extensions;
 using GMap.NET;
 using GMap.NET.WindowsPresentation;
 using PoGo.PokeMobBot.Logic;
-using PoGo.PokeMobBot.Logic.Common;
 using PoGo.PokeMobBot.Logic.Event;
 using PoGo.PokeMobBot.Logic.State;
 using PoGo.PokeMobBot.Logic.Tasks;
@@ -48,7 +47,7 @@ namespace Catchem.Classes
         }
 
         public string Errors => _errosCount == 0 ? "" : _errosCount.ToString();
-        private Random _rnd = new Random();
+        private readonly Random _rnd = new Random();
         public Session Session;
         private CancellationTokenSource _cts;
         public CancellationToken CancellationToken => _cts.Token;
@@ -128,7 +127,7 @@ namespace Catchem.Classes
 
         private float _realWorkSec;
 
-        private float _realWorkH => _realWorkSec/(60*60);
+        private float RealWorkH => _realWorkSec/(60*60);
 
         public TimeSpan Ts
         {
@@ -360,8 +359,8 @@ namespace Catchem.Classes
 
         public async void CheckForMaxCatch()
         {
-            if (!GlobalSettings.CatchSettings.PauseBotOnMaxHourlyCatch || !(_realWorkH >= 1)) return;
-            if (!(Stats?.TotalPokemons/_realWorkH > GlobalSettings.CatchSettings.MaxCatchPerHour)) return;
+            if (!GlobalSettings.CatchSettings.PauseBotOnMaxHourlyCatch || !(RealWorkH >= 1)) return;
+            if (!(Stats?.TotalPokemons/RealWorkH > GlobalSettings.CatchSettings.MaxCatchPerHour)) return;
             var stopSec = 10*60 + _rnd.Next(60*5);
             _realWorkSec += stopSec;
             var stopMs = stopSec*1000;
