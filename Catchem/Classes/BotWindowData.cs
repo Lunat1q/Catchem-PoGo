@@ -168,6 +168,7 @@ namespace Catchem.Classes
                 _realWorkSec++;
             };
             _cts = new CancellationTokenSource();
+            _pauseCts = new CancellationTokenSource();
             PlayerRoute = new GMapRoute(_routePoints);
             PathRoute = new GMapRoute(new List<PointLatLng>());
         }
@@ -446,11 +447,43 @@ namespace Catchem.Classes
             var stopMs = stopSec*1000;
             Session.EventDispatcher.Send(new WarnEvent
             {
+<<<<<<< HEAD
                 Message = $"Max amount of pokemos/h reached, but will be stoped for {(stopMs/(60000)).ToString("N1")} minutes"
             });
             Stop(true);
             await Task.Delay(stopMs, CancellationToken);
             Start();
+=======
+                if (!GlobalSettings.CatchSettings.PauseBotOnMaxHourlyRates || !(RealWorkH >= 1)) return;
+                if (!(Stats?.TotalPokemons/RealWorkH > GlobalSettings.CatchSettings.MaxCatchPerHour) || !(Stats?.TotalPokestops / RealWorkH > GlobalSettings.CatchSettings.MaxPokestopsPerHour)) return;
+                var stopSec = 10*60 + _rnd.Next(60*5);
+                _realWorkSec += stopSec;
+                var stopMs = stopSec*1000;
+                Session.EventDispatcher.Send(new WarnEvent
+                {
+                    Message = $"Max amount of pokemos(or pokestops)/h reached, bot will be stoped for {(stopMs/(60000)).ToString("N1")} minutes"
+                });
+                Stop(true);
+                _pauseCts.Dispose();
+                _pauseCts = new CancellationTokenSource();
+                await Task.Delay(stopMs, CancellationTokenPause);
+                Start();
+            }
+            catch (OperationCanceledException)
+            {
+                Session.EventDispatcher.Send(new WarnEvent
+                {
+                    Message = "Bot pause routine canceled"
+                });
+            }
+            catch (Exception)
+            {
+                Session.EventDispatcher.Send(new WarnEvent
+                {
+                    Message = "Bot pause routine failed badly"
+                });
+            }
+>>>>>>> refs/remotes/Lunat1q/master
         }
     }
 }

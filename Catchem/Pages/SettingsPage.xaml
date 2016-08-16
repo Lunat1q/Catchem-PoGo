@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Catchem"
-             mc:Ignorable="d" Width="949.487" Height="1706.5">
+             mc:Ignorable="d" Width="938.487" Height="1709.5">
     <Grid Background="#FFF9F9F9">
         <ScrollViewer Grid.ColumnSpan="2">
             <Grid x:Name="settings_grid">
@@ -112,7 +112,7 @@
 
                     </Grid>
                 </GroupBox>
-                <GroupBox x:Name="groupBox4" Header="Snipe" Margin="-2,1425,1,0" VerticalAlignment="Top" RenderTransformOrigin="0.479,0.565" Height="224" IsEnabled="False">
+                <GroupBox x:Name="groupBox4" Header="Snipe" Margin="0,1462,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.479,0.565" Height="224" IsEnabled="False">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="181*"/>
@@ -132,7 +132,7 @@
 
                     </Grid>
                 </GroupBox>
-                <GroupBox x:Name="groupBox4_Copy" Header="Items" Margin="-1,1193,1,0" VerticalAlignment="Top" RenderTransformOrigin="0.479,0.565" Height="232">
+                <GroupBox x:Name="groupBox4_Copy" Header="Items" Margin="0,1230,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.479,0.565" Height="232">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="230"/>
@@ -153,7 +153,7 @@
 
                     </Grid>
                 </GroupBox>
-                <GroupBox x:Name="groupBox4_Copy1" Header="Catch" Margin="0,688,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.479,0.565" Height="505">
+                <GroupBox x:Name="groupBox4_Copy1" Header="Catch" Margin="0,688,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.479,0.565" Height="542">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="230"/>
@@ -187,7 +187,9 @@
                         <CheckBox x:Name="c_CatchWildPokemon" Content="Catch Wild Pokemon" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="13,408,0,0" Checked="BotPropertyChanged" Unchecked="BotPropertyChanged" Width="207" Height="16" />
                         <Label x:Name="label8_Copy19" Content="Max Catch Per Hour" HorizontalAlignment="Left" Margin="10,450,0,0" VerticalAlignment="Top" Width="210" Height="26"/>
                         <TextBox Template="{StaticResource pogo}" x:Name="c_MaxCatchPerHour" Height="29" Margin="5,449,10,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Grid.Column="1" TextChanged="BotPropertyChanged" />
-                        <CheckBox x:Name="c_PauseBotOnMaxHourlyCatch" Content="Pause Bot On Max Hourly Catch" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="13,429,0,0" Checked="BotPropertyChanged" Unchecked="BotPropertyChanged" Width="207" Height="16" />
+                        <CheckBox x:Name="c_PauseBotOnMaxHourlyRates" Content="Pause Bot On Max Hourly Rates" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="13,429,0,0" Checked="BotPropertyChanged" Unchecked="BotPropertyChanged" Width="207" Height="16" />
+                        <Label x:Name="label8_Copy20" Content="Max Pokestops Per Hour" HorizontalAlignment="Left" Margin="10,484,0,0" VerticalAlignment="Top" Width="210" Height="26"/>
+                        <TextBox Template="{StaticResource pogo}" x:Name="c_MaxPokestopsPerHour" Height="29" Margin="5,483,10,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Grid.Column="1" TextChanged="BotPropertyChanged" />
 
                     </Grid>
                 </GroupBox>
