@@ -1,4 +1,4 @@
-<p align="center"><img src="http://i.imgur.com/LsW4QJp.png" /></p>
+<p align="center"><img src="http://i.imgur.com/YY2aRLV.png" /></p>
 <p align="center">:information_source:This project is for education purposes only:information_source:</p>
 <p align="center">Based on PokeMobBot project</p>
 </p>
