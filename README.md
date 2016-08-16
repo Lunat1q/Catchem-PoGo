@@ -1,4 +1,4 @@
-<p align="center"><img src="http://i.imgur.com/YY2aRLV.png" /></p>
+<p align="center"><img src="https://i.imgur.com/wittUbf.png" /></p>
 <p align="center">:information_source:This project is for education purposes only:information_source:</p>
 <p align="center">Based on PokeMobBot project</p>
 </p>
@@ -7,7 +7,7 @@
 <p align="center"><img src="https://img.shields.io/github/downloads/Lunat1q/Catchem-PoGo/total.svg"/><a href="https://github.com/Lunat1q/Catchem-PoGo/releases/latest"><img src="https://img.shields.io/github/downloads/Lunat1q/Catchem-PoGo/latest/total.svg"/></a></p>
  
 <h2>Donating</h2>
-I you really liked this project, feel free to buy <b>pizza</b> :pizza: for devs (or <b>flowers</b> :rose: for my gf, she is a bit mad what i'm spending most part of my free time for this project :coffee:):<br/><br/>
+I you really like this project, feel free to buy <b>pizza</b> :pizza: for devs (or <b>flowers</b> :rose: for my gf, she is a bit mad what i'm spending most part of my free time for this project :coffee:):<br/><br/>
 <p align="center"><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=RFAU4PYCAAGML"><img src="https://www.paypalobjects.com/en_US/GB/i/btn/btn_donateCC_LG.gif"/></a></p>
 <p align="center"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Bitcoin.svg/64px-Bitcoin.svg.png"/>BitCoin: 1LTQdD6cnxhqSAYyNAa7PpcfSu6uCmxrdn</p>
 ###We really appreciate all the donations made, so everyone who donated to our project will get access to priveledged support channel!
