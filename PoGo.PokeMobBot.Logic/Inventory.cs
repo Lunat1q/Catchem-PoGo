@@ -70,7 +70,7 @@ namespace PoGo.PokeMobBot.Logic
             if (_logicSettings.PrioritizeBothIvAndCpForTransfer)
             {
                 pokemonList =
-                myPokemon.Where(
+                myPokemon?.Where(
                     p => p.DeployedFortId == string.Empty &&
                          p.Favorite == 0 && (p.Cp < GetPokemonTransferFilter(p.PokemonId).KeepMinCp &&
                                              p.CalculatePokemonPerfection() <
@@ -80,7 +80,7 @@ namespace PoGo.PokeMobBot.Logic
             else if (!_logicSettings.PrioritizeIvOverCp)
             {
                 pokemonList =
-                myPokemon.Where(
+                myPokemon?.Where(
                     p => p.DeployedFortId == string.Empty &&
                          p.Favorite == 0 && (p.Cp < GetPokemonTransferFilter(p.PokemonId).KeepMinCp ||
                                              p.CalculatePokemonPerfection() <
@@ -90,7 +90,7 @@ namespace PoGo.PokeMobBot.Logic
             else
             {
                 pokemonList =
-                myPokemon.Where(
+                myPokemon?.Where(
                     p => p.DeployedFortId == string.Empty &&
                          p.Favorite == 0 && (p.CalculatePokemonPerfection() <
                                              GetPokemonTransferFilter(p.PokemonId).KeepMinIvPercentage) ||

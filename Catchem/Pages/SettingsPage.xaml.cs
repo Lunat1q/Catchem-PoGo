@@ -37,11 +37,11 @@ namespace Catchem.Pages
             Dispatcher.BeginInvoke(new ThreadStart(delegate
             {
                 c_DefaultLatitude.Text =
-                    Bot.GlobalSettings.LocationSettings.DefaultLatitude.ToString(CultureInfo.InvariantCulture);
+                    Bot.GlobalSettings.LocationSettings.DefaultLatitude.ToString(CultureInfo.CurrentCulture);
                 c_DefaultLongitude.Text =
-                    Bot.GlobalSettings.LocationSettings.DefaultLongitude.ToString(CultureInfo.InvariantCulture);
+                    Bot.GlobalSettings.LocationSettings.DefaultLongitude.ToString(CultureInfo.CurrentCulture);
                 c_DefaultAltitude.Text =
-                    Bot.GlobalSettings.LocationSettings.DefaultAltitude.ToString(CultureInfo.InvariantCulture);
+                    Bot.GlobalSettings.LocationSettings.DefaultAltitude.ToString(CultureInfo.CurrentCulture);
             }));
         }
 

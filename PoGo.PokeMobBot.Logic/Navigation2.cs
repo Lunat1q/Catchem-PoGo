@@ -122,12 +122,12 @@ namespace PoGo.PokeMobBot.Logic
 	                    });
 	                    routingResponse = new RoutingResponse();
 	                }
-                    var nextPath = routingResponse?.Coordinates.Select(item => Tuple.Create(item[1], item[0])).ToList();
+                    var nextPath = routingResponse?.Coordinates?.Select(item => Tuple.Create(item[1], item[0])).ToList();
                     session.EventDispatcher.Send(new NextRouteEvent
                     {
                         Coords = nextPath
 	                });
-                    if (routingResponse != null)
+                    if (routingResponse?.Coordinates != null)
 					    foreach (var item in routingResponse.Coordinates)
 	                    {
                             //0 = lat, 1 = long (MAYBE NOT THO?)

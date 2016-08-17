@@ -104,8 +104,9 @@ namespace PoGo.PokeMobBot.Logic.API
         {
             if (data[2].Equals("ERROR"))
             {
-                Logger.Write("There was an error grabbing Altitude from Mapzen API! Check your Elevation API Key!", LogLevel.Warning);
-                return R.NextInRange(_session.Settings.DefaultAltitudeMin, _session.Settings.DefaultAltitudeMax);
+                Logger.Write("There was an error grabbing Altitude from Mapzen API! Check your Elevation API Key!",
+                    LogLevel.Warning);
+                return _session != null ? R.NextInRange(_session.Settings.DefaultAltitudeMin, _session.Settings.DefaultAltitudeMax) : R.Next(10, 120);
             }
             Logger.Write("Successfully grabbed new Mapzen Elevation: " + data[2] + " Meters.");
             var latLonAlt = new GeoLatLonAlt()
@@ -147,7 +148,7 @@ namespace PoGo.PokeMobBot.Logic.API
                         key))
                 });
             }
-            return R.NextInRange(_session.Settings.DefaultAltitudeMin, _session.Settings.DefaultAltitudeMax);
+            return _session != null ? R.NextInRange(_session.Settings.DefaultAltitudeMin, _session.Settings.DefaultAltitudeMax) : R.Next(10, 120);
         }
     }
 

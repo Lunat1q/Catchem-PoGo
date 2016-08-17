@@ -56,7 +56,7 @@ namespace Catchem.Classes
         private CancellationTokenSource _cts;
         public CancellationToken CancellationToken => _cts.Token;
         private CancellationTokenSource _pauseCts;
-        public CancellationToken CancellationTokenPause => _cts.Token;
+        public CancellationToken CancellationTokenPause => _pauseCts.Token;
         internal GMapMarker ForceMoveMarker;
         public List<Tuple<string, Color>> Log = new List<Tuple<string, Color>>();
         public Queue<Tuple<string, Color>> LogQueue = new Queue<Tuple<string, Color>>();
@@ -448,7 +448,7 @@ namespace Catchem.Classes
             try
             {
                 if (!GlobalSettings.CatchSettings.PauseBotOnMaxHourlyRates || !(RealWorkH >= 1)) return;
-                if (!(Stats?.TotalPokemons / RealWorkH > GlobalSettings.CatchSettings.MaxCatchPerHour) || !(Stats?.TotalPokestops / RealWorkH > GlobalSettings.CatchSettings.MaxPokestopsPerHour)) return;
+                if (!(Stats?.TotalPokemons / RealWorkH > GlobalSettings.CatchSettings.MaxCatchPerHour) && !(Stats?.TotalPokestops / RealWorkH > GlobalSettings.CatchSettings.MaxPokestopsPerHour)) return;
                 var stopSec = 10 * 60 + _rnd.Next(60 * 5);
                 _realWorkSec += stopSec;
                 var stopMs = stopSec * 1000;
