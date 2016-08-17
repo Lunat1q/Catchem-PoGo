@@ -45,62 +45,60 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                 var encounterId = currentFortData.LureInfo.EncounterId;
                 var encounter = await session.Client.Encounter.EncounterLurePokemon(encounterId, fortId);
 
-                var pokemon = new MapPokemon
+                if (encounter.Result == DiskEncounterResponse.Types.Result.Success)
                 {
-                    EncounterId = encounterId,
-                    Latitude = currentFortData.Latitude,
-                    Longitude = currentFortData.Longitude,
-                    PokemonId = pokemonId
-                };
-                session.EventDispatcher.Send(new PokemonsFoundEvent { Pokemons = new[] { pokemon } });
-
-                try
-                {
-                    switch (encounter.Result)
+                    //var pokemons = await session.MapCache.MapPokemons(session);
+                    //var pokemon = pokemons.FirstOrDefault(i => i.PokemonId == encounter.PokemonData.PokemonId);
+                    session.EventDispatcher.Send(new DebugEvent()
                     {
-                        case DiskEncounterResponse.Types.Result.Success:
-                            await CatchPokemonTask.Execute(session, encounter, null, currentFortData, encounterId);
-                            break;
-                        case DiskEncounterResponse.Types.Result.PokemonInventoryFull:
-                            if (session.LogicSettings.TransferDuplicatePokemon)
-                            {
-                                session.EventDispatcher.Send(new WarnEvent
-                                {
-                                    Message = session.Translation.GetTranslation(TranslationString.InvFullTransferring)
-                                });
-                                await TransferDuplicatePokemonTask.Execute(session, cancellationToken);
-                            }
-                            else
-                                session.EventDispatcher.Send(new WarnEvent
-                                {
-                                    Message = session.Translation.GetTranslation(TranslationString.InvFullTransferManually)
-                                });
-                            break;
-                        default:
-                            if (encounter.Result.ToString().Contains("NotAvailable"))
-                            {
-                                session.EventDispatcher.Send(new PokemonDisappearEvent { Pokemon = pokemon });
-                                return;
-                            }
-                            session.EventDispatcher.Send(new WarnEvent
-                            {
-                                Message =
-                                    session.Translation.GetTranslation(TranslationString.EncounterProblemLurePokemon,
-                                        encounter.Result)
-                            });
-                            break;
-                    }
+                        Message = "Found a Lure Pokemon."
+                    });
+                    
+                    MapPokemon _pokemon = new MapPokemon
+                    {
+                        EncounterId = currentFortData.LureInfo.EncounterId,
+                        ExpirationTimestampMs = currentFortData.LureInfo.LureExpiresTimestampMs,
+                        Latitude = currentFortData.Latitude,
+                        Longitude = currentFortData.Longitude,
+                        PokemonId = currentFortData.LureInfo.ActivePokemonId,
+                        SpawnPointId = currentFortData.LureInfo.FortId
+                    };
+					session.EventDispatcher.Send(new PokemonsFoundEvent { Pokemons = new[] { _pokemon } });
+                    PokemonCacheItem pokemon = new PokemonCacheItem(_pokemon);
+
+                    await CatchPokemonTask.Execute(session, encounter, pokemon, currentFortData, encounterId);
+                    currentFortData.LureInfo = null;
+                    session.EventDispatcher.Send(new PokemonDisappearEvent { Pokemon = _pokemon });
+                    //await CatchPokemonTask.Execute(session, encounter, pokemon, currentFortData, encounterId);
                 }
-                catch (Exception)
+                else if (encounter.Result == DiskEncounterResponse.Types.Result.PokemonInventoryFull)
                 {
+                    if (session.LogicSettings.TransferDuplicatePokemon)
+                    {
+                        session.EventDispatcher.Send(new WarnEvent
+                        {
+                            Message = session.Translation.GetTranslation(TranslationString.InvFullTransferring)
+                        });
+                        await TransferDuplicatePokemonTask.Execute(session, cancellationToken);
+                    }
+                    else
+                        session.EventDispatcher.Send(new WarnEvent
+                        {
+                            Message = session.Translation.GetTranslation(TranslationString.InvFullTransferManually)
+                        });
+                }
+                else
+                {
+                    if (encounter.Result.ToString().Contains("NotAvailable")) return;
                     session.EventDispatcher.Send(new WarnEvent
                     {
-                        Message = "Error occured while trying to catch lured pokemon"
+                        Message =
+                            session.Translation.GetTranslation(TranslationString.EncounterProblemLurePokemon,
+                                encounter.Result)
                     });
-                    await Task.Delay(5000, cancellationToken);
                 }
-                
-                session.EventDispatcher.Send(new PokemonDisappearEvent { Pokemon = pokemon });
+                // always wait the delay amount between catches, ideally to prevent you from making another call too early after a catch event
+                await Task.Delay(session.LogicSettings.DelayBetweenPokemonCatch);
             }
         }
     }

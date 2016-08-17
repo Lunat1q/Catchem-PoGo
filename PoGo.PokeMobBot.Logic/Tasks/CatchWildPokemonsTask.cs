@@ -53,7 +53,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                 List<PokemonCacheItem> pokemonsCaught = null;
                 await session.Navigation.Move(new GeoCoordinate(waypoint.Latitude, waypoint.Longitude),
                         session.LogicSettings.WalkingSpeedMin, session.LogicSettings.WalkingSpeedMax,
-                async () =>
+                async () => 
                 {
                     // Catch normal map Pokemon
                     pokemonsCaught = await CatchNearbyPokemonsTask.Execute(session, cancellationToken);

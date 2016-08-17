@@ -6,6 +6,7 @@ using PokemonGo.RocketAPI;
 using POGOProtos.Networking.Responses;
 using System.Net;
 using GeoCoordinatePortable;
+using PoGo.PokeMobBot.Logic.API;
 
 #endregion
 
@@ -24,6 +25,7 @@ namespace PoGo.PokeMobBot.Logic.State
         IEventDispatcher EventDispatcher { get; }
         IWebProxy Proxy { get; }
         GeoCoordinate ForceMoveTo { get; set; }
+        MapzenAPI MapzenApi { get; set; }
 
         bool ForceMoveJustDone { get; set; }
         void StartForceMove(double lat, double lng);
@@ -47,6 +49,7 @@ namespace PoGo.PokeMobBot.Logic.State
         public Inventory Inventory { get; private set; }
 
         public Client Client { get; private set; }
+        public MapzenAPI MapzenApi { get; set; }
 
         public GetPlayerResponse Profile { get; set; }
         public HumanNavigation Navigation { get; private set; }

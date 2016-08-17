@@ -4,8 +4,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Catchem"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             Width="938.487"
-             Height="1845.5"
+             Width="890.487"
+             Height="1889.5"
              mc:Ignorable="d">
     <Grid Background="#FFF9F9F9">
         <ScrollViewer Grid.ColumnSpan="2">
@@ -62,13 +62,13 @@
                     </Grid>
                 </GroupBox>
                 <GroupBox x:Name="groupBox2"
-                          Height="541"
+                          Height="639"
                           Margin="0,147,0,0"
                           VerticalAlignment="Top"
                           Header="Pokemons">
                     <Grid>
                         <CheckBox x:Name="c_AutoLevelPokemons"
-                                  Margin="10,321,0,0"
+                                  Margin="10,342,0,0"
                                   HorizontalAlignment="Left"
                                   VerticalAlignment="Top"
                                   Checked="BotPropertyChanged"
@@ -166,21 +166,21 @@
                                   Content="Keep Pokemons That Can Evolve"
                                   Unchecked="BotPropertyChanged" />
                         <CheckBox x:Name="c_PrioritizeIvOverCp"
-                                  Margin="10,258,0,0"
+                                  Margin="10,279,0,0"
                                   HorizontalAlignment="Left"
                                   VerticalAlignment="Top"
                                   Checked="BotPropertyChanged"
                                   Content="Prioritize Iv Over Cp"
                                   Unchecked="BotPropertyChanged" />
                         <CheckBox x:Name="c_RenameOnlyAboveIv"
-                                  Margin="10,279,0,0"
+                                  Margin="10,300,0,0"
                                   HorizontalAlignment="Left"
                                   VerticalAlignment="Top"
                                   Checked="BotPropertyChanged"
                                   Content="Rename Only Above Iv"
                                   Unchecked="BotPropertyChanged" />
                         <CheckBox x:Name="c_RenamePokemon"
-                                  Margin="10,300,0,0"
+                                  Margin="10,321,0,0"
                                   HorizontalAlignment="Left"
                                   VerticalAlignment="Top"
                                   Checked="BotPropertyChanged"
@@ -188,26 +188,26 @@
                                   Unchecked="BotPropertyChanged" />
                         <Label x:Name="label8_Copy4"
                                Width="131"
-                               Margin="10,342,0,0"
+                               Margin="10,363,0,0"
                                HorizontalAlignment="Left"
                                VerticalAlignment="Top"
                                Content="Rename Template" />
                         <TextBox x:Name="c_RenameTemplate"
                                  Height="29"
-                                 Margin="233,341,10,0"
+                                 Margin="233,362,10,0"
                                  VerticalAlignment="Top"
                                  Template="{StaticResource pogo}"
                                  TextChanged="BotPropertyChanged"
                                  TextWrapping="Wrap" />
                         <Label x:Name="label8_Copy5"
                                Width="155"
-                               Margin="10,376,0,0"
+                               Margin="10,397,0,0"
                                HorizontalAlignment="Left"
                                VerticalAlignment="Top"
                                Content="Upgrade Pokemon Cp Min" />
                         <TextBox x:Name="c_UpgradePokemonCpMinimum"
                                  Height="29"
-                                 Margin="233,375,10,0"
+                                 Margin="233,396,10,0"
                                  VerticalAlignment="Top"
                                  Template="{StaticResource pogo}"
                                  Text="0"
@@ -215,20 +215,20 @@
                                  TextWrapping="Wrap" />
                         <Label x:Name="label8_Copy6"
                                Width="155"
-                               Margin="10,410,0,0"
+                               Margin="10,431,0,0"
                                HorizontalAlignment="Left"
                                VerticalAlignment="Top"
                                Content="Upgrade Pokemon Iv Min" />
                         <TextBox x:Name="c_UpgradePokemonIvMinimum"
                                  Height="29"
-                                 Margin="233,409,10,0"
+                                 Margin="233,430,10,0"
                                  VerticalAlignment="Top"
                                  Template="{StaticResource pogo}"
                                  Text="0"
                                  TextChanged="BotPropertyChanged"
                                  TextWrapping="Wrap" />
                         <CheckBox x:Name="c_UseLuckyEggsWhileEvolving"
-                                  Margin="10,441,0,0"
+                                  Margin="10,493,0,0"
                                   HorizontalAlignment="Left"
                                   VerticalAlignment="Top"
                                   Checked="BotPropertyChanged"
@@ -236,20 +236,20 @@
                                   Unchecked="BotPropertyChanged" />
                         <Label x:Name="label8_Copy10"
                                Width="155"
-                               Margin="10,462,0,0"
+                               Margin="10,465,0,0"
                                HorizontalAlignment="Left"
                                VerticalAlignment="Top"
                                Content="Lucky Eggs Min Pokemon" />
                         <TextBox x:Name="c_UseLuckyEggsMinPokemonAmount"
                                  Height="29"
-                                 Margin="233,461,10,0"
+                                 Margin="233,464,10,0"
                                  VerticalAlignment="Top"
                                  Template="{StaticResource pogo}"
                                  Text="0"
                                  TextChanged="BotPropertyChanged"
                                  TextWrapping="Wrap" />
                         <CheckBox x:Name="c_UseEggIncubators"
-                                  Margin="10,493,0,0"
+                                  Margin="10,514,0,0"
                                   HorizontalAlignment="Left"
                                   VerticalAlignment="Top"
                                   Checked="BotPropertyChanged"
@@ -263,17 +263,45 @@
                                   Content="Transfer Duplicate Pokemon"
                                   Unchecked="BotPropertyChanged" />
                         <CheckBox x:Name="c_AlwaysPrefferLongDistanceEgg"
-                                  Margin="148,493,0,0"
+                                  Margin="10,535,0,0"
                                   HorizontalAlignment="Left"
                                   VerticalAlignment="Top"
                                   Checked="BotPropertyChanged"
                                   Content="Always Preffer Long Distance Egg"
                                   Unchecked="BotPropertyChanged" />
+                        <CheckBox x:Name="c_PrioritizeBothIvAndCpForTransfer"
+                        	Margin="10,258,0,0"
+                        	HorizontalAlignment="Left"
+                        	VerticalAlignment="Top"
+                        	Checked="BotPropertyChanged"
+                        	Content="Prioritize Both Iv And Cp For Transfer"
+                        	Unchecked="BotPropertyChanged" />
+                        <CheckBox x:Name="c_AutoFavoritePokemon"
+                        	Margin="10,556,0,0"
+                        	HorizontalAlignment="Left"
+                        	VerticalAlignment="Top"
+                        	Checked="BotPropertyChanged"
+                        	Content="Auto Favorite Pokemon"
+                        	Unchecked="BotPropertyChanged" />
+                        <Label x:Name="label8_Copy21"
+                        	Width="155"
+                        	Margin="10,579,0,0"
+                        	HorizontalAlignment="Left"
+                        	VerticalAlignment="Top"
+                        	Content="Favorite Min Iv Percentage" />
+                        <TextBox x:Name="c_FavoriteMinIvPercentage"
+                        	Height="29"
+                        	Margin="233,578,10,0"
+                        	VerticalAlignment="Top"
+                        	Template="{StaticResource pogo}"
+                        	Text="0"
+                        	TextChanged="BotPropertyChanged"
+                        	TextWrapping="Wrap" />
                     </Grid>
                 </GroupBox>
                 <GroupBox x:Name="groupBox4"
                           Height="224"
-                          Margin="0,1462,0,0"
+                          Margin="0,1560,0,0"
                           VerticalAlignment="Top"
                           Header="Snipe"
                           IsEnabled="False"
@@ -367,7 +395,7 @@
                 </GroupBox>
                 <GroupBox x:Name="groupBox4_Copy"
                           Height="232"
-                          Margin="0,1230,0,0"
+                          Margin="0,1328,0,0"
                           VerticalAlignment="Top"
                           Header="Items"
                           RenderTransformOrigin="0.479,0.565">
@@ -464,7 +492,7 @@
                 </GroupBox>
                 <GroupBox x:Name="groupBox4_Copy1"
                           Height="542"
-                          Margin="0,688,0,0"
+                          Margin="0,786,0,0"
                           VerticalAlignment="Top"
                           Header="Catch"
                           RenderTransformOrigin="0.479,0.565">
@@ -812,8 +840,8 @@
                 </GroupBox>
                 <GroupBox x:Name="groupBox3"
                           Grid.Column="1"
-                          Height="409"
-                          Margin="5,176,-6,0"
+                          Height="497"
+                          Margin="5,171,5,0"
                           VerticalAlignment="Top"
                           Header="Navigation">
                     <Grid>
@@ -908,14 +936,13 @@
                                  TextChanged="BotPropertyChanged"
                                  TextWrapping="Wrap" />
                         <CheckBox x:Name="c_Teleport"
-                                  Grid.Column="1"
-                                  Width="196"
+                                  Width="179"
                                   Height="16"
                                   Margin="10,183,0,0"
                                   HorizontalAlignment="Left"
                                   VerticalAlignment="Top"
                                   Checked="BotPropertyChanged"
-                                  Content="Teleport"
+                                  Content="Teleport (High ban chance)"
                                   Unchecked="BotPropertyChanged" />
                         <TextBox x:Name="c_MaxSpawnLocationOffset"
                                  Grid.Column="1"
@@ -934,8 +961,7 @@
                                  TextChanged="BotPropertyChanged"
                                  TextWrapping="Wrap" />
                         <CheckBox x:Name="c_UseDiscoveryPathing"
-                                  Grid.Column="1"
-                                  Width="196"
+                                  Width="179"
                                   Height="16"
                                   Margin="10,269,0,0"
                                   HorizontalAlignment="Left"
@@ -976,7 +1002,6 @@
                                  TextChanged="BotPropertyChanged"
                                  TextWrapping="Wrap" />
                         <CheckBox x:Name="c_UseHumanPathing"
-                                  Grid.Column="1"
                                   Width="196"
                                   Height="16"
                                   Margin="10,358,0,0"
@@ -984,14 +1009,57 @@
                                   VerticalAlignment="Top"
                                   Checked="BotPropertyChanged"
                                   Content="Use Human Pathing"
-                                  Unchecked="BotPropertyChanged" />
+                                  Unchecked="BotPropertyChanged" Grid.ColumnSpan="2" />
+                        <CheckBox x:Name="c_StopBotToAvoidBanOnUnknownLoginError"
+                        	Width="440"
+                        	Height="16"
+                        	Margin="10,379,0,0"
+                        	HorizontalAlignment="Left"
+                        	VerticalAlignment="Top"
+                        	Checked="BotPropertyChanged"
+                        	Content="Stop Bot To Avoid Ban On Unknown Login Error"
+                        	Unchecked="BotPropertyChanged" Grid.ColumnSpan="2" />
+                        <CheckBox x:Name="c_UseMapzenApiElevation"
+                        	Width="196"
+                        	Height="16"
+                        	Margin="10,400,0,0"
+                        	HorizontalAlignment="Left"
+                        	VerticalAlignment="Top"
+                        	Checked="BotPropertyChanged"
+                        	Content="Use Mapzen Api Elevation"
+                        	Unchecked="BotPropertyChanged" Grid.ColumnSpan="2" />
+                        <Label x:Name="label7_Copy20"
+                        	Width="179"
+                        	Height="26"
+                        	Margin="10,421,0,0"
+                        	HorizontalAlignment="Left"
+                        	VerticalAlignment="Top"
+                        	Content="Mapzen Api Elevation Key"
+                        	RenderTransformOrigin="0.5,0.423" />
+                        <TextBox x:Name="c_MapzenApiElevationKey"
+                        	Grid.Column="1"
+                        	Height="29"
+                        	Margin="10,421,10,0"
+                        	VerticalAlignment="Top"
+                        	Template="{StaticResource pogo}"
+                        	TextChanged="BotPropertyChanged"
+                        	TextWrapping="Wrap" />
+                        <CheckBox x:Name="c_UseOpenLsRouting"
+                        	Width="196"
+                        	Height="16"
+                        	Margin="10,455,0,0"
+                        	HorizontalAlignment="Left"
+                        	VerticalAlignment="Top"
+                        	Checked="BotPropertyChanged"
+                        	Content="Use OpenLS Routing"
+                        	Unchecked="BotPropertyChanged" Grid.ColumnSpan="2" />
 
                     </Grid>
                 </GroupBox>
                 <GroupBox x:Name="groupBox3_Copy"
                           Grid.Column="1"
                           Height="502"
-                          Margin="0,556,0,0"
+                          Margin="5,668,5,0"
                           VerticalAlignment="Top"
                           Header="Device Info">
                     <Grid>
@@ -1201,12 +1269,11 @@
                     </Grid>
                 </GroupBox>
                 <GroupBox x:Name="groupBox4_Copy2"
-                          Grid.Column="1"
-                          Height="573"
-                          Margin="0,1058,0,0"
+                          Height="656"
+                          Margin="5,1170,5,0"
                           VerticalAlignment="Top"
                           Header="Delays"
-                          RenderTransformOrigin="0.479,0.565">
+                          RenderTransformOrigin="0.479,0.565" Grid.Column="1">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="190" />
@@ -1425,6 +1492,40 @@
                                  Template="{StaticResource pogo}"
                                  TextChanged="BotPropertyChanged"
                                  TextWrapping="Wrap" />
+                        <CheckBox x:Name="c_ReRandomizeDelayOnStart"
+                        	Width="180"
+                        	Margin="10,549,0,0"
+                        	HorizontalAlignment="Left"
+                        	VerticalAlignment="Top"
+                        	Checked="BotPropertyChanged"
+                        	Content="Re Randomize Delay On Start"
+                        	Unchecked="BotPropertyChanged" />
+                        <Label x:Name="label9_Copy22"
+                        	Height="26"
+                        	Margin="10,570,0,0"
+                        	VerticalAlignment="Top"
+                        	Content="Min Randomize Delay (ms)" />
+                        <TextBox x:Name="c_MinRandomizeDelayMilliseconds"
+                        	Grid.Column="1"
+                        	Height="29"
+                        	Margin="5,569,10,0"
+                        	VerticalAlignment="Top"
+                        	Template="{StaticResource pogo}"
+                        	TextChanged="BotPropertyChanged"
+                        	TextWrapping="Wrap" />
+                        <Label x:Name="label9_Copy24"
+                        	Height="26"
+                        	Margin="10,604,0,0"
+                        	VerticalAlignment="Top"
+                        	Content="Max Randomize Delay (ms)" />
+                        <TextBox x:Name="c_MaxRandomizeDelayMilliseconds"
+                        	Grid.Column="1"
+                        	Height="29"
+                        	Margin="5,603,10,0"
+                        	VerticalAlignment="Top"
+                        	Template="{StaticResource pogo}"
+                        	TextChanged="BotPropertyChanged"
+                        	TextWrapping="Wrap" />
 
                     </Grid>
                 </GroupBox>
@@ -1432,7 +1533,7 @@
                         Grid.Column="1"
                         Width="110"
                         Height="30"
-                        Margin="0,1636,10,0"
+                        Margin="0,1831,10,0"
                         HorizontalAlignment="Right"
                         VerticalAlignment="Top"
                         Click="btn_SaveBot_Click"

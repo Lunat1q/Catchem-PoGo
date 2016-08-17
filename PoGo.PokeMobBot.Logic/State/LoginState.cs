@@ -41,7 +41,7 @@ namespace PoGo.PokeMobBot.Logic.State
                 {
                     Message = session.Translation.GetTranslation(TranslationString.TryingAgainIn, 20)
                 });
-                await Task.Delay(20000, cancellationToken);
+                await Task.Delay(45000, cancellationToken);
                 return this;
             }
             catch (AccessTokenExpiredException)
@@ -63,6 +63,11 @@ namespace PoGo.PokeMobBot.Logic.State
                 {
                     Message = session.Translation.GetTranslation(TranslationString.NianticServerUnstable)
                 });
+                session.EventDispatcher.Send(new NoticeEvent
+                {
+                    Message = session.Translation.GetTranslation(TranslationString.TryingAgainIn, 45)
+                });
+                await Task.Delay(45000, cancellationToken);
                 return this;
             }
             catch (AccountNotVerifiedException)
@@ -115,6 +120,19 @@ namespace PoGo.PokeMobBot.Logic.State
                     Stop = true
                 });
             }
+            catch (LoginFailedException)
+            {
+                session.EventDispatcher.Send(new ErrorEvent
+                {
+                    Message = session.Translation.GetTranslation(TranslationString.PtcLoginFailed)
+                });
+                session.EventDispatcher.Send(new NoticeEvent
+                {
+                    Message = session.Translation.GetTranslation(TranslationString.TryingAgainIn, 45)
+                });
+                await Task.Delay(45000, cancellationToken);
+                Environment.Exit(0);
+            }
             catch (InvalidProtocolBufferException ex) when (ex.Message.Contains("SkipLastField"))
             {
                 session.EventDispatcher.Send(new ErrorEvent
@@ -128,11 +146,37 @@ namespace PoGo.PokeMobBot.Logic.State
                     Stop = true
                 });
             }
-            catch (Exception)
+            catch (Exception unhandeled)
             {
-                //Logger.Write(e.ToString());
-                await Task.Delay(20000, cancellationToken);
-                return this;
+                session.EventDispatcher.Send(new ErrorEvent
+                {
+                    Message = unhandeled.ToString()
+                });
+                session.EventDispatcher.Send(new NoticeEvent
+                {
+                    Message = session.Translation.GetTranslation(TranslationString.TryingAgainIn, 45)
+                });
+                await Task.Delay(45000, cancellationToken);
+                if (session.LogicSettings.StopBotToAvoidBanOnUnknownLoginError)
+                {
+                    session.EventDispatcher.Send(new NoticeEvent
+                    {
+                        Message = session.Translation.GetTranslation(TranslationString.StopBotToAvoidBan)
+                    });
+	                session.EventDispatcher.Send(new BotCompleteFailureEvent
+	                {
+	                    Shutdown = false,
+	                    Stop = true
+	                });
+                }
+                else
+                {
+                    session.EventDispatcher.Send(new NoticeEvent
+                    {
+                        Message = session.Translation.GetTranslation(TranslationString.BotNotStoppedRiskOfBan)
+                    });
+                    return this;
+                }
             }
 
             await DownloadProfile(session);

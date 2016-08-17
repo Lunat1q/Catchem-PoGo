@@ -34,6 +34,21 @@ namespace Catchem.Classes
             Logger.Write(evt.ToString(), session: session);
         }
 
+
+        public void HandleEvent(DebugEvent evt, ISession session)
+	    {
+	#if DEBUG
+	            Logger.Write(evt.ToString(), LogLevel.Debug, session: session);
+	#endif
+        }
+
+
+        public void HandleEvent(PlayerLevelUpEvent evt, ISession session)
+        {
+            Logger.Write(
+                session.Translation.GetTranslation(TranslationString.EventLevelUpRewards, evt.Items), session: session);
+        }
+
         public void HandleEvent(WarnEvent evt, ISession session)
         {
             Logger.Write(evt.ToString(), LogLevel.Warning, session: session);
@@ -53,7 +68,7 @@ namespace Catchem.Classes
 
         public void HandleEvent(UseLuckyEggMinPokemonEvent evt, ISession session)
         {
-            Logger.Write(session.Translation.GetTranslation(TranslationString.EventUseLuckyEggMinPokemonCheck, evt.Diff, evt.CurrCount, evt.MinPokemon));
+            Logger.Write(session.Translation.GetTranslation(TranslationString.EventUseLuckyEggMinPokemonCheck, evt.Diff, evt.CurrCount, evt.MinPokemon), session: session);
         }
 
         public void HandleEvent(PokemonEvolveEvent evt, ISession session)
@@ -69,7 +84,7 @@ namespace Catchem.Classes
         }
         public void HandleEvent(PokemonEvolveDoneEvent evt, ISession session)
         {
-            Logger.Write($"Evolved into {evt.Id} CP: {evt.Cp} Iv: {evt.Perfection.ToString("0.00")}%");
+            Logger.Write($"Evolved into {evt.Id} CP: {evt.Cp} Iv: {evt.Perfection.ToString("0.00")}%", session: session);
 
             Logger.PushToUi("pm_new", session, evt.Uid, evt.Id, evt.Cp, evt.Perfection, evt.Family, evt.Candy);
         }
@@ -192,28 +207,34 @@ namespace Catchem.Classes
             };
 
             var catchType = evt.CatchType;
+            LogLevel caughtEscapeFlee;
 
             string strStatus;
             switch (evt.Status)
             {
                 case CatchPokemonResponse.Types.CatchStatus.CatchError:
                     strStatus = session.Translation.GetTranslation(TranslationString.CatchStatusError);
+                    caughtEscapeFlee = LogLevel.Error;
                     break;
                 case CatchPokemonResponse.Types.CatchStatus.CatchEscape:
                     strStatus = session.Translation.GetTranslation(TranslationString.CatchStatusEscape);
+                    caughtEscapeFlee = LogLevel.Escape;
                     break;
                 case CatchPokemonResponse.Types.CatchStatus.CatchFlee:
                     strStatus = session.Translation.GetTranslation(TranslationString.CatchStatusFlee);
+                    caughtEscapeFlee = LogLevel.Flee;
                     break;
                 case CatchPokemonResponse.Types.CatchStatus.CatchMissed:
                     strStatus = session.Translation.GetTranslation(TranslationString.CatchStatusMissed);
+                    caughtEscapeFlee = LogLevel.Escape;
                     break;
                 case CatchPokemonResponse.Types.CatchStatus.CatchSuccess:
                     strStatus = session.Translation.GetTranslation(TranslationString.CatchStatusSuccess);
-                    Logger.PushToUi("pm_new", session, evt.Uid, evt.Id, evt.Cp, evt.Perfection, evt.Family, evt.FamilyCandies);
+                    caughtEscapeFlee = LogLevel.Caught;
                     break;
                 default:
                     strStatus = evt.Status.ToString();
+                    caughtEscapeFlee = LogLevel.Error;
                     break;
             }
 
@@ -225,15 +246,19 @@ namespace Catchem.Classes
                 ? session.Translation.GetTranslation(TranslationString.Candies, evt.FamilyCandies)
                 : "";
 
-            Logger.Write(session.Translation.GetTranslation(TranslationString.EventPokemonCapture, catchStatus, catchType, session.Translation.GetPokemonName(evt.Id),
+            Logger.Write(
+                session.Translation.GetTranslation(TranslationString.EventPokemonCapture, catchStatus, catchType,
+                    session.Translation.GetPokemonName(evt.Id),
                     evt.Level, evt.Cp, evt.MaxCp, evt.Perfection.ToString("0.00"), evt.Probability,
                     evt.Distance.ToString("F2"),
-                    returnRealBallName(evt.Pokeball), evt.BallAmount, evt.Exp, familyCandies), LogLevel.Caught, session: session);
+                    returnRealBallName(evt.Pokeball), evt.BallAmount, evt.Exp, familyCandies), caughtEscapeFlee, session: session);
         }
 
         public void HandleEvent(NoPokeballEvent evt, ISession session)
         {
-            Logger.Write(session.Translation.GetTranslation(TranslationString.EventNoPokeballs, session.Translation.GetPokemonName(evt.Id), evt.Cp),
+            Logger.Write(
+                session.Translation.GetTranslation(TranslationString.EventNoPokeballs,
+                    session.Translation.GetPokemonName(evt.Id), evt.Cp),
                 LogLevel.Caught, session: session);
         }
 
@@ -272,11 +297,6 @@ namespace Catchem.Classes
             Logger.PushToUi("new_version", session, evt.v);
         }
 
-        public void HandleEvent(DebugEvent evt, ISession session)
-        {
-
-        }
-
         public void HandleEvent(DisplayHighestsPokemonEvent evt, ISession session)
         {
             string strHeader;
@@ -305,26 +325,40 @@ namespace Catchem.Classes
             var strPerfect = session.Translation.GetTranslation(TranslationString.CommonWordPerfect);
             var strName = session.Translation.GetTranslation(TranslationString.CommonWordName).ToUpper();
 
-            Logger.Write($"====== {strHeader} ======", LogLevel.Info, ConsoleColor.Yellow);
+            Logger.Write($"====== {strHeader} ======", LogLevel.Info, ConsoleColor.Yellow, session);
             Logger.Write(
-                $">  {"CP/BEST".PadLeft(8, ' ')}{(evt.DisplayPokemonMaxPoweredCp ? "/POWERED" : "")} |\t{strPerfect.PadLeft(6, ' ')}\t| LVL | {strName.PadRight(10, ' ')} | {("MOVE1").PadRight(18, ' ')} | {("MOVE2").PadRight(6, ' ')} {(evt.DisplayPokemonMovesetRank ? "| MoveRankVsAveType |" : "")}",
-                LogLevel.Info, ConsoleColor.Yellow);
+                $">  {"CP/BEST".PadLeft(8, ' ')}{(evt.DisplayPokemonMaxPoweredCp ? "/POWERED" : "")} |\t{strPerfect.PadLeft(6, ' ')}\t| LVL | {strName.PadRight(10, ' ')} | {"MOVE1".PadRight(18, ' ')} | {"MOVE2".PadRight(6, ' ')} {(evt.DisplayPokemonMovesetRank ? "| MoveRankVsAveType |" : "")}",
+                LogLevel.Info, ConsoleColor.Yellow, session);
             if (evt.PokemonList != null)
                 foreach (var pokemon in evt.PokemonList)
                     Logger.Write(
                         $"# {pokemon.PokeData.Cp.ToString().PadLeft(4, ' ')}/{pokemon.PerfectCp.ToString().PadLeft(4, ' ')}{(evt.DisplayPokemonMaxPoweredCp ? "/" + pokemon.MaximumPoweredCp.ToString().PadLeft(4, ' ') : "")} | {pokemon.Perfection.ToString("0.00")}%\t | {pokemon.Level.ToString("00")} | {pokemon.PokeData.PokemonId.ToString().PadRight(10, ' ')} | {pokemon.Move1.ToString().PadRight(18, ' ')} | {pokemon.Move2.ToString().PadRight(13, ' ')} {(evt.DisplayPokemonMovesetRank ? "| " + pokemon.AverageRankVsTypes : "")}",
-                        LogLevel.Info, ConsoleColor.Yellow);
+                        LogLevel.Info, ConsoleColor.Yellow, session);
             else
             {
                 Logger.Write(
                         $"Highests Pokemon List is empty",
-                        LogLevel.Info, ConsoleColor.Yellow);
+                        LogLevel.Info, ConsoleColor.Yellow, session);
             }
         }
 
         public void HandleEvent(UpdateEvent evt, ISession session)
         {
             Logger.Write(evt.ToString(), LogLevel.Update, session: session);
+        }
+		public void HandleEvent(PokemonFavoriteEvent evt, ISession session)  //added by Lars
+        {
+            string message = string.Format("{0,-13} CP: {1,-4} IV: {2,-4:#.00}% Candies: {3}", evt.Pokemon, evt.Cp, evt.Iv, evt.Candies);
+            Logger.Write(session.Translation.GetTranslation(TranslationString.PokemonFavorite, message), LogLevel.Favorite, session: session);
+        }
+        public void HandleEvent(PokemonUnFavoriteEvent evt, ISession session) //added by Lars
+        {
+            string message = string.Format("{0,-13} CP: {1,-4} IV: {2,-4:#.00}% Candies: {3}", evt.Pokemon, evt.Cp, evt.Iv, evt.Candies);
+            Logger.Write(session.Translation.GetTranslation(TranslationString.PokemonUnFavorite, message), LogLevel.UnFavorite, session: session);
+        }
+        public void HandleEvent(InvalidKeepAmountEvent evt, ISession session) //added by Lars
+        {
+            Logger.Write(session.Translation.GetTranslation(TranslationString.CheckingForMaximumInventorySize, evt.Count, evt.Max), LogLevel.Warning, session: session);
         }
 
 

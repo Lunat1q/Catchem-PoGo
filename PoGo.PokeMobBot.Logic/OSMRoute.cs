@@ -19,7 +19,7 @@ namespace PoGo.PokeMobBot.Logic
         {
             return $"{coord.Longitude.ToString(CultureInfo.InvariantCulture).Replace(',','.')} {coord.Latitude.ToString(CultureInfo.InvariantCulture).Replace(',', '.')}";
         }
-        public static OsmResponse GetRoute(GeoCoordinate start, GeoCoordinate dest, ISession session)
+        public static RoutingResponse GetRoute(GeoCoordinate start, GeoCoordinate dest, ISession session)
         {
             try
             {
@@ -40,7 +40,7 @@ namespace PoGo.PokeMobBot.Logic
             {
                 Logger.Write("Routing error: " + ex.Message, LogLevel.Debug);
             }
-            OsmResponse emptyResponse = new OsmResponse();
+            RoutingResponse emptyResponse = new RoutingResponse();
             return emptyResponse;  
         }
         private static string PrepareRequest(GeoCoordinate start, GeoCoordinate end)
@@ -112,9 +112,9 @@ namespace PoGo.PokeMobBot.Logic
             response.Close();
             return responseStr;
         }
-        private static OsmResponse HandleResponse(string responseFromServer)
+        private static RoutingResponse HandleResponse(string responseFromServer)
         {
-            var resp = new OsmResponse();
+            var resp = new RoutingResponse();
             var xmldoc = new XmlDocument();
             xmldoc.LoadXml(responseFromServer);
             var xmlnsManager = new XmlNamespaceManager(xmldoc.NameTable);
@@ -125,12 +125,11 @@ namespace PoGo.PokeMobBot.Logic
             try
             {
                 var coordNodes = xmldoc.SelectNodes("/xls:XLS/xls:Response/xls:DetermineRouteResponse/xls:RouteGeometry/gml:LineString/gml:pos", xmlnsManager);
-                var points = new List<GeoCoordinate>();
+                var points = new List<List<double>>();
                 if (coordNodes != null && coordNodes.Count > 0)
                 {
                     var rnd = new Random();
-                    points.AddRange(from XmlNode node in coordNodes select node.InnerText into coordinate where coordinate != string.Empty select coordinate.Split(' ') into xy where xy.Length == 3 let lat = double.Parse(xy[1], CultureInfo.InvariantCulture) let lng = double.Parse(xy[0], CultureInfo.InvariantCulture) let alt = double.Parse(xy[2], CultureInfo.InvariantCulture) + 0.7 + rnd.NextInRange(0.1, 0.3) select new GeoCoordinate(lat, lng, alt));
-                    resp.Success = true;
+                    points.AddRange(from XmlNode node in coordNodes select node.InnerText into coordinate where coordinate != string.Empty select coordinate.Split(' ') into xy where xy.Length == 3 let lat = double.Parse(xy[1], CultureInfo.InvariantCulture) let lng = double.Parse(xy[0], CultureInfo.InvariantCulture) let alt = double.Parse(xy[2], CultureInfo.InvariantCulture) + 0.7 + rnd.NextInRange(0.1, 0.3) select new List<double> {lng, lat, alt});
                     resp.Coordinates = points;
                 }
             }

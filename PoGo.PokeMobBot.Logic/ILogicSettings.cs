@@ -67,7 +67,7 @@ namespace PoGo.PokeMobBot.Logic
         int AmountOfPokemonToDisplayOnStart { get; }
         bool StartupWelcomeDelay { get; }
         string TranslationLanguageCode { get; }
-
+		bool StopBotToAvoidBanOnUnknownLoginError { get; }
        
 
         //coords and movement
@@ -84,7 +84,11 @@ namespace PoGo.PokeMobBot.Logic
         int PokestopSkipLuckyNumber { get; }
         int PokestopSkipLuckyMin { get; }
         int PokestopSkipLuckyMax { get; }
+        bool UseOpenLsRouting { get; }
 
+        //MapzenAPI
+        bool UseMapzenApiElevation { get; }
+        string MapzenApiElevationKey { get; }
         //delays
         int DelayBetweenPlayerActions { get; }
         int DelayBetweenPokemonCatch { get; }
@@ -119,6 +123,7 @@ namespace PoGo.PokeMobBot.Logic
         //transfer
         bool TransferDuplicatePokemon { get; }
         bool PrioritizeIvOverCp { get; }
+		bool PrioritizeBothIvAndCpForTransfer { get; }
         int KeepMinCp { get; }
         float KeepMinIvPercentage { get; }
         int KeepMinDuplicatePokemon { get; }
@@ -156,9 +161,11 @@ namespace PoGo.PokeMobBot.Logic
         int UseBerryMinCp { get; }
         float UseBerryMinIv { get; }
         double UseBerryBelowCatchProbability { get; }
-         
-        //favorite 
-         
+
+        //favorite
+        bool AutoFavoritePokemon { get; }
+        float FavoriteMinIvPercentage { get; }
+
         //recycle
         bool AutomaticInventoryManagement { get; }
         int AutomaticMaxAllPokeballs { get; }

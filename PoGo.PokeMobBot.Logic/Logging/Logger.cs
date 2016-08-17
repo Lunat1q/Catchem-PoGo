@@ -106,6 +106,8 @@ namespace PoGo.PokeMobBot.Logic.Logging
         Egg = 12,
         Update = 13,
         Info = 14,
-        Debug = 15
+        Favorite = 15, //added by lars
+        UnFavorite = 16, //added by lars
+        Debug = 17, //always have debug as last enum.
     }
 }

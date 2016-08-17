@@ -19,6 +19,10 @@ namespace PoGo.PokeMobBot.Logic.State
         {
             try
             {
+                if (session.LogicSettings.AutoFavoritePokemon)
+                {
+                    await FavoritePokemonTask.Execute(session, cancellationToken);
+                }
                 if (session.LogicSettings.EvolveAllPokemonAboveIv || session.LogicSettings.EvolveAllPokemonWithEnoughCandy)
                 {
                     await EvolvePokemonTask.Execute(session, cancellationToken);

@@ -18,6 +18,8 @@ namespace PoGo.PokeMobBot.Logic.Tasks
     {
         public static async Task Execute(ISession session, CancellationToken cancellationToken)
         {
+            
+            
             cancellationToken.ThrowIfCancellationRequested();
 
             // Refresh inventory so that the player stats are fresh
@@ -31,6 +33,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
             var incensePokemon = await session.Client.Map.GetIncensePokemons();
             if (incensePokemon.Result == GetIncensePokemonResponse.Types.Result.IncenseEncounterAvailable)
             {
+
                 var _pokemon = new MapPokemon
                 {
                     EncounterId = incensePokemon.EncounterId,
@@ -56,10 +59,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                 {
                     var distance = LocationUtils.CalculateDistanceInMeters(session.Client.CurrentLatitude,
                         session.Client.CurrentLongitude, pokemon.Latitude, pokemon.Longitude);
-                    if(session.LogicSettings.Teleport)
                         await Task.Delay(session.LogicSettings.DelayCatchIncensePokemon);
-                    else
-                        await Task.Delay(distance > 100 ? 3000 : 500, cancellationToken);
 
                     var encounter =
                         await

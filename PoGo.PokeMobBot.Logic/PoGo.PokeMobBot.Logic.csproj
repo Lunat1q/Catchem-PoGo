@@ -79,6 +79,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="API\MapzenAPI.cs" />
     <Compile Include="Common\ApiFailureStrategy.cs" />
     <Compile Include="DataDumper\IDumper.cs" />
     <Compile Include="DataDumper\Dumper.cs" />
@@ -87,8 +88,11 @@
     <Compile Include="Event\BotCompleteFailureEvent.cs" />
     <Compile Include="Event\DebugEvent.cs" />
     <Compile Include="Event\InventoryNewItemsEvent.cs" />
+    <Compile Include="Event\InvalidKeepAmountEvent.cs" />
     <Compile Include="Event\PokemonEvolveDoneEvent.cs" />
+    <Compile Include="Event\PokemonFavoriteEvent.cs" />
     <Compile Include="Event\PlayerLevelUpEvent.cs" />
+    <Compile Include="Event\PokemonUnFavoriteEvent.cs" />
     <Compile Include="Event\PokemonStatsChangedEvent.cs" />
     <Compile Include="Event\PokemonSettingsEvent.cs" />
     <Compile Include="Event\NextRouteEvent.cs" />
@@ -136,6 +140,8 @@
     <Compile Include="Tasks\LevelUpSpecificPokemonTask.cs" />
     <Compile Include="Tasks\PlayerStatsTask.cs" />
     <Compile Include="Tasks\CatchWildPokemonsTask.cs" />
+    <Compile Include="Tasks\FavoritePokemonTask.cs" />
+    <Compile Include="Tasks\MaintenanceTask.cs" />
     <Compile Include="Tasks\EggsListTask.cs" />
     <Compile Include="Tasks\GetPokeDexCount.cs" />
     <Compile Include="Tasks\EvolveSpecificPokemonTask.cs" />
@@ -190,6 +196,7 @@
     <Compile Include="Utils\JitterUtils.cs" />
     <Compile Include="Utils\LocationUtils.cs" />
     <Compile Include="Utils\PhoneGenerator.cs" />
+    <Compile Include="Utils\SerializeUtils.cs" />
     <Compile Include="Utils\Statistics.cs" />
     <Compile Include="Utils\StringUtils.cs" />
   </ItemGroup>

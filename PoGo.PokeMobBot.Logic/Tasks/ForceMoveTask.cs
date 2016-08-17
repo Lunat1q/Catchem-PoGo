@@ -47,7 +47,13 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                     //Catch Incense Pokemon
                     await CatchIncensePokemonsTask.Execute(session, cancellationToken);
                     return true;
-                }, null, cancellationToken, session);
+                }, 
+                async () =>
+                {
+                    await UseNearbyPokestopsTask.Execute(session, cancellationToken);
+                    return true;
+
+                }, cancellationToken, session);
 
             session.EventDispatcher.Send(new WarnEvent
             {

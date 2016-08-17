@@ -199,7 +199,7 @@ namespace Catchem.Classes
             _routePoints.Enqueue(nextPoint);
             if (_routePoints.Count > 100)
             {
-                var point = _routePoints.Dequeue();
+                _routePoints.Dequeue();
                 var latestPoint = PlayerRoute.Points.First();//Temp fix
                 PlayerRoute.Points.Remove(latestPoint);
             }
@@ -231,7 +231,7 @@ namespace Catchem.Classes
             if (Started) return;
             Started = true;
             _pauseCts.Cancel();
-            if (!await checkProxy())
+            if (!await CheckProxy())
             {
                 Stop();
                 return;
@@ -260,20 +260,24 @@ namespace Catchem.Classes
         private WebProxy InitProxy()
         {
             if (!GlobalSettings.Auth.UseProxy) return null;
-            string[] split = GlobalSettings.Auth.ProxyUri.Split(':');
-            WebProxy prox = new WebProxy(split[0], int.Parse(split[1]));
-            prox.Credentials = new NetworkCredential(GlobalSettings.Auth.ProxyLogin, GlobalSettings.Auth.ProxyPass);
-            prox.BypassProxyOnLocal = true;
+            var split = GlobalSettings.Auth.ProxyUri.Split(':');
+            var prox = new WebProxy(split[0], int.Parse(split[1]))
+            {
+                Credentials = new NetworkCredential(GlobalSettings.Auth.ProxyLogin, GlobalSettings.Auth.ProxyPass),
+                BypassProxyOnLocal = true
+            };
             return prox;
         }
 
-        private async Task<bool> checkProxy()
+        private async Task<bool> CheckProxy()
         {
             try
             {
-                HttpClient client = new HttpClient();
-                HttpResponseMessage response = await client.GetAsync("http://ipv4bot.whatismyipaddress.com/");
-                string unproxiedIP = await response.Content.ReadAsStringAsync();
+                var defProxy = WebRequest.GetSystemWebProxy();
+                defProxy.Credentials = System.Net.CredentialCache.DefaultCredentials;
+                var client = new HttpClient(new HttpClientHandler { Proxy = defProxy });
+                var response = await client.GetAsync("http://ipv4bot.whatismyipaddress.com/", CancellationToken);
+                var unproxiedIp = await response.Content.ReadAsStringAsync();
                 if (GlobalSettings.Auth.UseProxy)
                 {
                     var otherBot = MainWindow.BotsCollection.FirstOrDefault(x => x.GlobalSettings.Auth.ProxyUri.Equals(GlobalSettings.Auth.ProxyUri) && x.GlobalSettings.Auth.UseProxy && x.Started && x != this);
@@ -282,23 +286,23 @@ namespace Catchem.Classes
                         Logger.Write($"{otherBot.ProfileName} is already running with this proxy!", LogLevel.Info, ConsoleColor.Red, Session);
                     }
                     client = new HttpClient(new HttpClientHandler { Proxy = InitProxy() });
-                    response = await client.GetAsync("http://ipv4bot.whatismyipaddress.com/");
-                    string proxiedIPres = await response.Content.ReadAsStringAsync();
-                    string proxiedIP = proxiedIPres == null || proxiedIPres.Equals("<nil>") ? "INVALID PROXY" : proxiedIPres;
-                    Logger.Write($"Your IP is: {unproxiedIP} / Proxy IP is: {proxiedIP}", LogLevel.Info, (unproxiedIP == proxiedIP) ? ConsoleColor.Red : ConsoleColor.Green, Session);
-                    if (unproxiedIP == proxiedIP || proxiedIPres == null || proxiedIPres.Equals("<nil>"))
+                    response = await client.GetAsync("http://ipv4bot.whatismyipaddress.com/", CancellationToken);
+                    var proxiedIPres = await response.Content.ReadAsStringAsync();
+                    var proxiedIp = proxiedIPres == null || proxiedIPres.Equals("<nil>") ? "INVALID PROXY" : proxiedIPres;
+                    Logger.Write($"Your IP is: {unproxiedIp} / Proxy IP is: {proxiedIp}", LogLevel.Info, (unproxiedIp == proxiedIp) ? ConsoleColor.Red : ConsoleColor.Green, Session);
+                    if (unproxiedIp == proxiedIp || proxiedIPres == null || proxiedIPres.Equals("<nil>"))
                     {
-                        Logger.Write("Please change ...", LogLevel.Info, ConsoleColor.Red, Session); return false;
+                        Logger.Write("Your ip match! I warned you!", LogLevel.Info, ConsoleColor.Red, Session);
                     }
                 }
                 else
                 {
-                    Logger.Write($"Your IP is: {unproxiedIP}", LogLevel.Info, ConsoleColor.Red, Session);
+                    Logger.Write($"Your IP is: {unproxiedIp}", LogLevel.Info, ConsoleColor.Red, Session);
                 }
             }
             catch (Exception)
             {
-                Logger.Write($"Proxy Down?", LogLevel.Info, ConsoleColor.Red, Session);
+                Logger.Write("Proxy Down?", LogLevel.Info, ConsoleColor.Red, Session);
                 return false;
             }
             return true;

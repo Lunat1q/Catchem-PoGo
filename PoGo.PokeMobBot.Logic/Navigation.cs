@@ -9,7 +9,7 @@ using PoGo.PokeMobBot.Logic.Logging;
 using PokemonGo.RocketAPI;
 using POGOProtos.Networking.Responses;
 using PoGo.PokeMobBot.Logic.Extensions;
-using RandomExtensions = PokemonGo.RocketAPI.Extensions.RandomExtensions;
+using PoGo.PokeMobBot.Logic.State;
 
 #endregion
 
@@ -20,6 +20,13 @@ namespace PoGo.PokeMobBot.Logic
     public class Navigation
     {
         private readonly Client _client;
+		private static Random rand = new Random();
+		public double FuzzyFactorBearing()
+        {
+            double maximum = -8.0f;
+            double minimum = 8.0f;
+            return rand.NextDouble() * (maximum - minimum) + minimum;
+        }
 
         public Navigation(Client client, UpdatePositionDelegate updatePos)
         {
@@ -122,7 +129,8 @@ namespace PoGo.PokeMobBot.Logic
             Logger.Write($"Distance to target location: {distanceToTarget:0.##} meters. Will take {distanceToTarget/speedInMetersPerSecond:0.##} seconds!", LogLevel.Debug);
 
             var nextWaypointBearing = LocationUtils.DegreeBearing(sourceLocation, targetLocation);
-            var nextWaypointDistance = speedInMetersPerSecond;
+			nextWaypointBearing += FuzzyFactorBearing();            
+			var nextWaypointDistance = speedInMetersPerSecond;
             GeoCoordinate waypoint;
             double altitudeStep;
             double altitude;
@@ -149,7 +157,6 @@ namespace PoGo.PokeMobBot.Logic
                     _client.Player.UpdatePlayerLocation(waypoint.Latitude, waypoint.Longitude, waypoint.Altitude);
 
             UpdatePositionEvent?.Invoke(waypoint.Latitude, waypoint.Longitude, waypoint.Altitude);
-
             
             do
             {
@@ -191,12 +198,25 @@ namespace PoGo.PokeMobBot.Logic
 
                 UpdatePositionEvent?.Invoke(waypoint.Latitude, waypoint.Longitude, altitude);
                 altitude -= altitudeStep;
-                if (!trueAlt && (altitude < _client.Settings.DefaultAltitudeMin && altitude > _client.Settings.DefaultAltitudeMax))
+                if (!trueAlt && (altitude < _client.Settings.DefaultAltitudeMin && altitude > _client.Settings.DefaultAltitudeMax)) //Keep altitude in range
                 {
                     if (altitude < _client.Settings.DefaultAltitudeMin)
                         altitude = _client.Settings.DefaultAltitudeMin + _client.rnd.NextInRange(0.3, 0.5);
                     else
                         altitude = _client.Settings.DefaultAltitudeMin - _client.rnd.NextInRange(0.3, 0.5);
+                }
+                else if (trueAlt) //Keep altitude in range
+                {
+                    if (altitudeStep < 0 && altitude <= targetLocation.Altitude)
+                    {
+                        altitudeStep = 0;
+                        altitude = targetLocation.Altitude;
+                    }
+                    else if (altitudeStep > 0 && altitude >= targetLocation.Altitude)
+                    {
+                        altitudeStep = 0;
+                        altitude = targetLocation.Altitude;
+                    }
                 }
                 if (functionExecutedWhileWalking != null)
                     await functionExecutedWhileWalking(); // look for pokemon & hit stops

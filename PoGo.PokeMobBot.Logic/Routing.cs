@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.IO;
@@ -8,31 +9,34 @@ using GeoCoordinatePortable;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json;
 using PoGo.PokeMobBot.Logic.Logging;
-using PoGo.PokeMobBot.Logic.State;
 
 namespace PoGo.PokeMobBot.Logic
 {
     public static class Routing
     {
-        public static RoutingResponse GetRoute(GeoCoordinate start, GeoCoordinate dest, ISession session)
+        public static RoutingResponse GetRoute(GeoCoordinate start, GeoCoordinate dest)
         {
             try
             {
-                Logger.Write("Requesting routing info to www.yournavigation.org", LogLevel.Debug);
+                Logger.Write("Requesting routing info from MobRouting.com", LogLevel.Debug);
                 WebRequest request = WebRequest.Create(
-                  $"http://www.yournavigation.org" + $"/api/1.0/gosmore.php?format=geojson&flat={start.Latitude}&flon={start.Longitude}&tlat={dest.Latitude}&tlon={dest.Longitude}&v=foot&fast=1&layer=mapnik");
+                  $"http://mobrouting.com" + $"/api/dev/gosmore.php?format=geojson&flat={start.Latitude.ToString(CultureInfo.InvariantCulture)}&flon={start.Longitude.ToString(CultureInfo.InvariantCulture)}&tlat={dest.Latitude.ToString(CultureInfo.InvariantCulture)}&tlon={dest.Longitude.ToString(CultureInfo.InvariantCulture)}&v=foot&fast=1&layer=mapnik");
                 request.Credentials = CredentialCache.DefaultCredentials;
-                request.Proxy = session.Proxy;
-                WebResponse response = request.GetResponse();
-                Logger.Write("Got response from www.yournavigation.org", LogLevel.Debug);
-                //Console.WriteLine(((HttpWebResponse)response).StatusDescription);
-                Stream dataStream = response.GetResponseStream();
-                StreamReader reader = new StreamReader(dataStream);
-                string responseFromServer = reader.ReadToEnd();
+
+                string responseFromServer = "";
+
+                using (WebResponse response = request.GetResponse())
+                {
+                    Logger.Write("Got response from www.mobrouting.com", LogLevel.Debug);
+                    //Console.WriteLine(((HttpWebResponse)response).StatusDescription);
+                    using (Stream dataStream = response.GetResponseStream())
+                    using (StreamReader reader = new StreamReader(dataStream))
+                    {
+                        responseFromServer = reader.ReadToEnd();
+                    }
+                }
                 //Console.WriteLine(responseFromServer);
                 RoutingResponse responseParsed = JsonConvert.DeserializeObject<RoutingResponse>(responseFromServer);
-                reader.Close();
-                response.Close();
 
                 return responseParsed;
             }
@@ -40,18 +44,17 @@ namespace PoGo.PokeMobBot.Logic
             {
                 Logger.Write("Routing error: " + ex.Message, LogLevel.Debug);
             }
-            RoutingResponse emptyResponse = new RoutingResponse();
-            emptyResponse.coordinates = new List<List<double>>();
+            var emptyResponse = new RoutingResponse {Coordinates = new List<List<double>>()};
             return emptyResponse;  
         }
     }
 
     public class RoutingResponse
     {
-        public string type { get; set; }
-        public Crs crs { get; set; }
-        public List<List<double>> coordinates { get; set; }
-        public Properties2 properties { get; set; }
+        public string Type { get; set; }
+        public Crs Crs { get; set; }
+        public List<List<double>> Coordinates { get; set; }
+        public Properties2 Properties { get; set; }
     }
     public class Properties
     {

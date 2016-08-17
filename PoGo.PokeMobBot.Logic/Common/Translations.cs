@@ -77,6 +77,7 @@ namespace PoGo.PokeMobBot.Logic.Common
         AccessTokenExpired,
         TryingAgainIn,
         AccountNotVerified,
+        PtcLoginFailed,
         CommonWordUnknown,
         OpeningGoogleDevicePage,
         CouldntCopyToClipboard,
@@ -151,7 +152,16 @@ namespace PoGo.PokeMobBot.Logic.Common
         WebErrorGatewayTimeout,
         WebErrorBadGateway,
         SkipLaggedTimeout,
-        SkipLaggedMaintenance
+        SkipLaggedMaintenance,
+        CheckingForMaximumInventorySize, //added by Lars
+        LogEntryFavorite, //added by Lars
+        LogEntryUnFavorite, //added by Lars
+        PokemonFavorite, //added by Lars
+        PokemonUnFavorite, //added by Lars
+        WalkingSpeedRandomized, //added by Lars
+        StopBotToAvoidBan,
+        BotNotStoppedRiskOfBan,
+        EncounterProblemPokemonFlee
     }
 
     public class Translation : ITranslation
@@ -180,7 +190,7 @@ namespace PoGo.PokeMobBot.Logic.Common
             new KeyValuePair<TranslationString, string>(TranslationString.EventFortFailed,
                 "Name: {0} INFO: Looting failed, possible softban. Unban in: {1}/{2}"),
             new KeyValuePair<TranslationString, string>(TranslationString.EventFortTargeted,
-                "Arriving to Pokestop: {0} in ({1}m)"),
+                "Travelling to Pokestop: {0} ({1}m Away)"),
             new KeyValuePair<TranslationString, string>(TranslationString.EventProfileLogin, "Playing as {0}"),
             new KeyValuePair<TranslationString, string>(TranslationString.EventLevelUpRewards,
                 "Leveled Up: {0} | Items: {1}"),
@@ -193,7 +203,7 @@ namespace PoGo.PokeMobBot.Logic.Common
             new KeyValuePair<TranslationString, string>(TranslationString.EventPokemonEvolvedFailed,
                 "Failed {0}. Result was {1}, stopping evolving {2}"),
             new KeyValuePair<TranslationString, string>(TranslationString.EventPokemonTransferred,
-                "{0}\t- CP: {1}  IV: {2}%   [Best CP: {3}  IV: {4}%] (Candies: {5})"),
+                "{0,-12} - CP: {1,4}  IV: {2,6}%  [Best CP: {3,4}  IV: {4,6}%] (Candies: {5})"),
             new KeyValuePair<TranslationString, string>(TranslationString.EventItemRecycled, "{0}x {1}"),
             new KeyValuePair<TranslationString, string>(TranslationString.EventPokemonCapture,
                 "({0}) | {2}, Lvl: {3} | CP: ({4}/{5}) | IV: {6}% | Type: {1} | Chance: {7}% | Dist: {8}m | Used: {9} ({10} left) | XP: {11} | {12}"),
@@ -214,7 +224,7 @@ namespace PoGo.PokeMobBot.Logic.Common
             new KeyValuePair<TranslationString, string>(TranslationString.DisplayHighestsLevelHeader,
                 "DisplayHighestsLevel"),
             new KeyValuePair<TranslationString, string>(TranslationString.WelcomeWarning,
-                "Make sure Lat & Lng are right. Exit Program if not! Lat: {0} Lng: {1}"),
+                "Make sure Lat & Lng are right. Exit Program if not! Lat: {0} Lng: {1} Alt: {2}"),
             new KeyValuePair<TranslationString, string>(TranslationString.IncubatorPuttingEgg,
                 "Putting egg in incubator: {0:0.00}km left"),
             new KeyValuePair<TranslationString, string>(TranslationString.IncubatorStatusUpdate,
@@ -243,6 +253,8 @@ namespace PoGo.PokeMobBot.Logic.Common
                 "Trying again in {0} seconds..."),
             new KeyValuePair<TranslationString, string>(TranslationString.AccountNotVerified,
                 "Account not verified! Exiting..."),
+            new KeyValuePair<TranslationString, string>(TranslationString.PtcLoginFailed,
+                "PTC login failed. Make sure you have entered the right Email & Password. If you continue to get this, check your phone or Nox for a ban. Exiting..."),
             new KeyValuePair<TranslationString, string>(TranslationString.OpeningGoogleDevicePage,
                 "Opening Google Device page. Please paste the code using CTRL+V"),
             new KeyValuePair<TranslationString, string>(TranslationString.CouldntCopyToClipboard,
@@ -310,6 +322,7 @@ namespace PoGo.PokeMobBot.Logic.Common
             new KeyValuePair<TranslationString, string>(TranslationString.EncounterProblem, "Encounter problem: {0}"),
             new KeyValuePair<TranslationString, string>(TranslationString.EncounterProblemLurePokemon,
                 "Encounter problem: Lure Pokemon {0}"),
+            new KeyValuePair<TranslationString, string>(TranslationString.EncounterProblemPokemonFlee, "Encounter Pokemon Fled {0}!"),
             new KeyValuePair<TranslationString, string>(TranslationString.DesiredDestTooFar,
                 "Your desired destination of {0}, {1} is too far from your current position of {2}, {3}"),
             new KeyValuePair<TranslationString, string>(TranslationString.PokemonRename,
@@ -376,7 +389,16 @@ namespace PoGo.PokeMobBot.Logic.Common
             new KeyValuePair<TranslationString, string>(TranslationString.SkipLaggedTimeout,
                 "SkipLagged is down or SnipeRequestTimeoutSeconds is too small!"),
             new KeyValuePair<TranslationString, string>(TranslationString.SkipLaggedMaintenance,
-                "SkipLagged servers are down for maintenance.")
+                "SkipLagged servers are down for maintenance."),
+            new KeyValuePair<TranslationString, string>(TranslationString.CheckingForMaximumInventorySize, // added by Lars
+                "[Inventory] Items to Keep exceeds maximum inventory size! {0}/{1}"),
+            new KeyValuePair<TranslationString, string>(TranslationString.LogEntryFavorite, "FAVORITE"), // added by Lars
+            new KeyValuePair<TranslationString, string>(TranslationString.LogEntryUnFavorite, "UNFAVORITE"), // added by Lars
+            new KeyValuePair<TranslationString, string>(TranslationString.PokemonFavorite, "{0}"), //pre-formatted - added by Lars
+            new KeyValuePair<TranslationString, string>(TranslationString.PokemonUnFavorite, "{0}"), //pre-formatted - added by Lars
+            new KeyValuePair<TranslationString, string>(TranslationString.WalkingSpeedRandomized, "{0}"), //pre-formatted - added by Lars
+            new KeyValuePair<TranslationString, string>(TranslationString.StopBotToAvoidBan, "The bot was stopped to avoid ban!"), // added by Lars
+            new KeyValuePair<TranslationString, string>(TranslationString.BotNotStoppedRiskOfBan, "Somethng happened that shouldn't have and bot hasn't stopped. Higher possibility of ban. (suggested action: stop the bot \"Control+C\").") // added by Lars
         };
 
         [JsonProperty("Pokemon",

@@ -104,10 +104,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
             await session.Client.Inventory.UseItemXpBoost();
             await session.Inventory.RefreshCachedInventory();
             if (luckyEgg != null) session.EventDispatcher.Send(new UseLuckyEggEvent {Count = luckyEgg.Count});
-            if(session.LogicSettings.Teleport)
                 await Task.Delay(session.LogicSettings.DelayDisplayPokemon);
-            else
-                await DelayingUtils.Delay(session.LogicSettings.DelayBetweenPokemonCatch, 2000);
         }
     }
 }

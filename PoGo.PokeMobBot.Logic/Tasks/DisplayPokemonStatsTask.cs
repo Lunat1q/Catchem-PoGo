@@ -1,5 +1,6 @@
 #region using directives
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -40,10 +41,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                     DisplayPokemonMaxPoweredCp = session.LogicSettings.DisplayPokemonMaxPoweredCp,
                     DisplayPokemonMovesetRank = session.LogicSettings.DisplayPokemonMovesetRank
                 });
-            if (session.LogicSettings.Teleport)
                 await Task.Delay(session.LogicSettings.DelayDisplayPokemon);
-            else
-                await Task.Delay(500);
 
             session.EventDispatcher.Send(
                 new DisplayHighestsPokemonEvent
@@ -75,10 +73,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                 Dumper.Dump(session, toDumpTxt, dumpFileName);
                 Dumper.Dump(session, toDumpCsv, dumpFileName, "csv");
             }
-            if (session.LogicSettings.Teleport)
                 await Task.Delay(session.LogicSettings.DelayDisplayPokemon);
-            else
-                await Task.Delay(500);
         }
     }
 }

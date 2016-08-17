@@ -100,6 +100,37 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                     normalizedRecticleSize = 1.95;
                     spinModifier = 1.00;
                 }
+                                Func<ItemId, string> returnRealBallName = a =>
+                {
+                    switch (a)
+                    {
+                        case ItemId.ItemPokeBall:
+                            return session.Translation.GetTranslation(TranslationString.Pokeball);
+                        case ItemId.ItemGreatBall:
+                            return session.Translation.GetTranslation(TranslationString.GreatPokeball);
+                        case ItemId.ItemUltraBall:
+                            return session.Translation.GetTranslation(TranslationString.UltraPokeball);
+                        case ItemId.ItemMasterBall:
+                            return session.Translation.GetTranslation(TranslationString.MasterPokeball);
+                        default:
+                            return session.Translation.GetTranslation(TranslationString.CommonWordUnknown);
+                    }
+                };
+                Func<double, string> getThrowType = a =>
+                 {
+                     if (a < 1.0)
+                         return "Normal ";
+                     else if (a < 1.3)
+                         return "Nice! ";
+                     else if (a < 1.7)
+                         return "Great! ";
+                     else if (a > 1.6)
+                         return "Excellent! ";
+                     else
+                         return "unknown ";
+                 };
+
+                Logging.Logger.Write($"Throwing {(spinModifier==1?"Spinning " : "" )}{getThrowType(normalizedRecticleSize)}{returnRealBallName(pokeball)}", Logging.LogLevel.Caught);
                 caughtPokemonResponse =
                     await session.Client.Encounter.CatchPokemon(
                         encounter is EncounterResponse || encounter is IncenseEncounterResponse

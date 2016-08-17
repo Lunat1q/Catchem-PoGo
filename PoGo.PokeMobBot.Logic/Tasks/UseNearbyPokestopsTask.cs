@@ -29,6 +29,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
 
             while (pokestopList.Any())
             {
+                
                 cancellationToken.ThrowIfCancellationRequested();
 
                 pokestopList =
@@ -38,7 +39,8 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                                 session.Client.CurrentLongitude, i.Latitude, i.Longitude)).ToList();
                 var pokeStop = pokestopList[0];
                 pokestopList.RemoveAt(0);
-
+                if (pokeStop.Used)
+                    break;
                 var fortInfo = await session.Client.Fort.GetFort(pokeStop.Id, pokeStop.Latitude, pokeStop.Longitude);
 
                 var fortSearch =
@@ -46,6 +48,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
 
                 if (fortSearch.ExperienceAwarded > 0)
                 {
+                    RuntimeSettings.StopsHit++;
                     session.EventDispatcher.Send(new FortUsedEvent
                     {
                         Id = pokeStop.Id,
@@ -56,18 +59,24 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                         Latitude = pokeStop.Latitude,
                         Longitude = pokeStop.Longitude
                     });
+                    session.MapCache.UsedPokestop(pokeStop);
                     session.EventDispatcher.Send(new InventoryNewItemsEvent()
                     {
                         Items = fortSearch.ItemsAwarded.ToItemList()
                     });
                 }
-
-                await RecycleItemsTask.Execute(session, cancellationToken);
-
-                if (session.LogicSettings.TransferDuplicatePokemon)
-                {
-                    await TransferDuplicatePokemonTask.Execute(session, cancellationToken);
+				if (pokeStop.LureInfo != null)
+                {//because we're all fucking idiots for not catching this sooner
+                    await CatchLurePokemonsTask.Execute(session, pokeStop.BaseFortData, cancellationToken);
                 }
+
+
+                //await RecycleItemsTask.Execute(session, cancellationToken);
+
+                //if (session.LogicSettings.TransferDuplicatePokemon)
+                //{
+                //    await TransferDuplicatePokemonTask.Execute(session, cancellationToken);
+                //}
             }
         }
 
@@ -81,7 +90,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
             // Wasn't sure how to make this pretty. Edit as needed.
             pokeStops = pokeStops.Where(
                 i =>
-                    i.Type == FortType.Checkpoint &&
+                    i.Used == false && i.Type == FortType.Checkpoint &&
                         i.CooldownCompleteTimestampMS < DateTime.UtcNow.ToUnixTime() &&
                         ( // Make sure PokeStop is within 40 meters or else it is pointless to hit it
                             LocationUtils.CalculateDistanceInMeters(

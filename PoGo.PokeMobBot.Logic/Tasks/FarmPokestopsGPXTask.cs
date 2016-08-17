@@ -82,6 +82,10 @@ namespace PoGo.PokeMobBot.Logic.Tasks
 
                             if (pokeStop.LureInfo != null)
                             {
+                                session.EventDispatcher.Send(new DebugEvent()
+                                {
+                                    Message = "This pokestop has a lure!"
+                                });
                                 await CatchLurePokemonsTask.Execute(session, pokeStop.BaseFortData, cancellationToken);
                             }
 
@@ -142,6 +146,10 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                 Convert.ToDouble(trackPoints.ElementAt(curTrkPt).Lon, CultureInfo.InvariantCulture));
 
                         Navigation navi = new Navigation(session.Client);
+						navi.UpdatePositionEvent += (lat, lng, alt) =>
+                        {
+                            session.EventDispatcher.Send(new UpdatePositionEvent { Latitude = lat, Longitude = lng, Altitude = alt});
+                        };
                         var nextMoveSpeed = session.Client.rnd.NextInRange(session.LogicSettings.WalkingSpeedMin, session.LogicSettings.WalkingSpeedMax) * session.Settings.MoveSpeedFactor;
 
                         await navi.HumanPathWalking(

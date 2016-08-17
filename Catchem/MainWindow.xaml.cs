@@ -27,6 +27,7 @@ using POGOProtos.Inventory.Item;
 using static System.String;
 using LogLevel = PoGo.PokeMobBot.Logic.Logging.LogLevel;
 using System.Reflection;
+using PoGo.PokeMobBot.Logic.API;
 
 namespace Catchem
 {
@@ -399,70 +400,79 @@ namespace Catchem
                     var message = _messageQueue.Dequeue();
                     //I dont like busy waiting :/
                     if (message == null) continue;
-                    switch (message.Type)
+                    try
                     {
-                        case "bot_failure":
-                            HandleFailure(message.Session, (bool) message.ParamObjects[0],
-                                (bool) message.ParamObjects[1]);
-                            break;
-                        case "log":
-                            PushNewConsoleRow(message.Session, (string) message.ParamObjects[0],
-                                (Color) message.ParamObjects[1]);
-                            break;
-                        case "err":
-                            PushNewError(message.Session);
-                            break;
-                        case "ps":
-                            PushNewPokestop(message.Session, (IEnumerable<FortData>) message.ParamObjects[0]);
-                            break;
-                        case "pm":
-                            PushNewPokemons(message.Session, (IEnumerable<MapPokemon>) message.ParamObjects[0]);
-                            break;
-                        case "pmw":
-                            PushNewWildPokemons(message.Session, (IEnumerable<WildPokemon>) message.ParamObjects[0]);
-                            break;
-                        case "pm_rm":
-                            PushRemovePokemon(message.Session, (MapPokemon) message.ParamObjects[0]);
-                            break;
-                        case "p_loc":
-                            UpdateCoords(message.Session, message.ParamObjects);
-                            break;
-                        case "pm_list":
-                            BuildPokemonList(message.Session, message.ParamObjects);
-                            break;
-                        case "item_list":
-                            BuildItemList(message.Session, message.ParamObjects);
-                            break;
-                        case "new_version":
-                            SetVersionTag((Version) message.ParamObjects[0]);
-                            break;
-                        case "item_new":
-                            GotNewItems(message.Session, message.ParamObjects);
-                            break;
-                        case "route_next":
-                            DrawNextRoute(message.Session, (List<Tuple<double, double>>) message.ParamObjects[0]);
-                            break;
-                        case "item_rem":
-                            LostItem(message.Session, message.ParamObjects);
-                            break;
-                        case "pm_new":
-                            GotNewPokemon(message.Session, message.ParamObjects);
-                            break;
-                        case "pm_rem":
-                            LostPokemon(message.Session, message.ParamObjects);
-                            break;
-                        case "pm_upd":
-                            PokemonChanged(message.Session, message.ParamObjects);
-                            break;
-                        case "profile_data":
-                            UpdateProfileInfo(message.Session, message.ParamObjects);
-                            break;
-                        case "forcemove_done":
-                            PushRemoveForceMoveMarker(message.Session);
-                            break;
-                        default:
-                            PushNewConsoleRow(Bot?.Session, "Unknown message detected!", Colors.Red);
-                            break;
+
+
+                        switch (message.Type)
+                        {
+                            case "bot_failure":
+                                HandleFailure(message.Session, (bool) message.ParamObjects[0],
+                                    (bool) message.ParamObjects[1]);
+                                break;
+                            case "log":
+                                PushNewConsoleRow(message.Session, (string) message.ParamObjects[0],
+                                    (Color) message.ParamObjects[1]);
+                                break;
+                            case "err":
+                                PushNewError(message.Session);
+                                break;
+                            case "ps":
+                                PushNewPokestop(message.Session, (IEnumerable<FortData>) message.ParamObjects[0]);
+                                break;
+                            case "pm":
+                                PushNewPokemons(message.Session, (IEnumerable<MapPokemon>) message.ParamObjects[0]);
+                                break;
+                            case "pmw":
+                                PushNewWildPokemons(message.Session, (IEnumerable<WildPokemon>) message.ParamObjects[0]);
+                                break;
+                            case "pm_rm":
+                                PushRemovePokemon(message.Session, (MapPokemon) message.ParamObjects[0]);
+                                break;
+                            case "p_loc":
+                                UpdateCoords(message.Session, message.ParamObjects);
+                                break;
+                            case "pm_list":
+                                BuildPokemonList(message.Session, message.ParamObjects);
+                                break;
+                            case "item_list":
+                                BuildItemList(message.Session, message.ParamObjects);
+                                break;
+                            case "new_version":
+                                SetVersionTag((Version) message.ParamObjects[0]);
+                                break;
+                            case "item_new":
+                                GotNewItems(message.Session, message.ParamObjects);
+                                break;
+                            case "route_next":
+                                DrawNextRoute(message.Session, (List<Tuple<double, double>>) message.ParamObjects[0]);
+                                break;
+                            case "item_rem":
+                                LostItem(message.Session, message.ParamObjects);
+                                break;
+                            case "pm_new":
+                                GotNewPokemon(message.Session, message.ParamObjects);
+                                break;
+                            case "pm_rem":
+                                LostPokemon(message.Session, message.ParamObjects);
+                                break;
+                            case "pm_upd":
+                                PokemonChanged(message.Session, message.ParamObjects);
+                                break;
+                            case "profile_data":
+                                UpdateProfileInfo(message.Session, message.ParamObjects);
+                                break;
+                            case "forcemove_done":
+                                PushRemoveForceMoveMarker(message.Session);
+                                break;
+                            default:
+                                PushNewConsoleRow(Bot?.Session, "Unknown message detected!", Colors.Red);
+                                break;
+                        }
+                    }
+                    catch(Exception ex)
+                    {
+                        Logger.Write(ex.Message, session: message.Session);
                     }
                 }
                 await Task.Delay(5);
@@ -497,6 +507,7 @@ namespace Catchem
             var newBot = CreateBowWindowData(settings, profileName);
             var session = new Session(newBot.Settings, newBot.Logic);
             session.Client.ApiFailure = new ApiFailureStrategy(session);
+            newBot.GlobalSettings.MapzenAPI.SetSession(session);
 
             newBot.Session = session;
             session.EventDispatcher.EventReceived += evt => newBot.Listener.Listen(evt, session);
@@ -613,6 +624,7 @@ namespace Catchem
             {
                 b.Stop();
             }
+            MapzenAPI.SaveKnownCoords();
         }
 
         private void btn_StartAll_Click(object sender, RoutedEventArgs e)
