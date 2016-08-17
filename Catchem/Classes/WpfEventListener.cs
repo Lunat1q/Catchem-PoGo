@@ -231,6 +231,7 @@ namespace Catchem.Classes
                 case CatchPokemonResponse.Types.CatchStatus.CatchSuccess:
                     strStatus = session.Translation.GetTranslation(TranslationString.CatchStatusSuccess);
                     caughtEscapeFlee = LogLevel.Caught;
+                    Logger.PushToUi("pm_new", session, evt.Uid, evt.Id, evt.Cp, evt.Perfection, evt.Family, evt.FamilyCandies);
                     break;
                 default:
                     strStatus = evt.Status.ToString();

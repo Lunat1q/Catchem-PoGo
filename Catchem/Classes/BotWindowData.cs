@@ -238,6 +238,7 @@ namespace Catchem.Classes
                 Stop();
                 return;
             }
+            GlobalSettings.MapzenAPI.ApiKey = GlobalSettings.LocationSettings.MapzenApiElevationKey;
             ErrorsCount = 0;
             TimerStart();
             Session.Client.Player.SetCoordinates(GlobalSettings.LocationSettings.DefaultLatitude,

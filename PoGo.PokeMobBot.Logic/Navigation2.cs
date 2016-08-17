@@ -122,19 +122,20 @@ namespace PoGo.PokeMobBot.Logic
 	                    });
 	                    routingResponse = new RoutingResponse();
 	                }
-                    var nextPath = routingResponse.Coordinates.Select(item => Tuple.Create(item[1], item[0])).ToList();
+                    var nextPath = routingResponse?.Coordinates.Select(item => Tuple.Create(item[1], item[0])).ToList();
                     session.EventDispatcher.Send(new NextRouteEvent
                     {
                         Coords = nextPath
 	                });
-					foreach (var item in routingResponse.Coordinates)
-	                {
-                        //0 = lat, 1 = long (MAYBE NOT THO?)
-	                    waypoints.Add(!session.LogicSettings.UseOpenLsRouting
-	                        ? new GeoCoordinate(item.ToArray()[1], item.ToArray()[0],
-                                session.LogicSettings.UseMapzenApiElevation ? session.MapzenApi.GetAltitude(item.ToArray()[1], item.ToArray()[0]) : 0)
-	                        : new GeoCoordinate(item.ToArray()[1], item.ToArray()[0], item.ToArray()[2]));
-	                }
+                    if (routingResponse != null)
+					    foreach (var item in routingResponse.Coordinates)
+	                    {
+                            //0 = lat, 1 = long (MAYBE NOT THO?)
+	                        waypoints.Add(!session.LogicSettings.UseOpenLsRouting
+	                            ? new GeoCoordinate(item.ToArray()[1], item.ToArray()[0],
+                                    session.LogicSettings.UseMapzenApiElevation ? session.MapzenApi.GetAltitude(item.ToArray()[1], item.ToArray()[0]) : 0)
+	                            : new GeoCoordinate(item.ToArray()[1], item.ToArray()[0], item.ToArray()[2]));
+	                    }
                 }
 
                 if (waypoints.Count == 0)

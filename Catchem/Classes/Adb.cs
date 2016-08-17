@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Catchem.Classes
 {
-    static class Adb
+    internal static class Adb
     {
         public static async Task<DeviceData> GetDeviceData()
         {
@@ -14,6 +14,7 @@ namespace Catchem.Classes
             foreach (var field in typeof(DeviceData).GetFields())
             {
                 var retry = false;
+                var run = 0;
                 do
                 {
                     var args = field.GetCustomAttribute<AdbArgumentsAttribute>();
@@ -37,7 +38,7 @@ namespace Catchem.Classes
                     cmd2.WaitForExit();
                     cmd2.Close();
                     var value = output.ToString();
-                    if (value.Contains("deamon not running"))
+                    if (value.Contains("deamon not running") && run++ < 3)
                         retry = true;
                     else
                         field.SetValue(dd, output.ToString());

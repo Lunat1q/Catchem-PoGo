@@ -445,7 +445,8 @@ namespace Catchem
                                 GotNewItems(message.Session, message.ParamObjects);
                                 break;
                             case "route_next":
-                                DrawNextRoute(message.Session, (List<Tuple<double, double>>) message.ParamObjects[0]);
+                                if (message.ParamObjects[0] != null)
+                                    DrawNextRoute(message.Session, (List<Tuple<double, double>>) message.ParamObjects[0]);
                                 break;
                             case "item_rem":
                                 LostItem(message.Session, message.ParamObjects);

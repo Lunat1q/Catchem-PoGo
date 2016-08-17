@@ -117,20 +117,17 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                     }
                 };
                 Func<double, string> getThrowType = a =>
-                 {
-                     if (a < 1.0)
+                {
+                    if (a < 1.0)
                          return "Normal ";
-                     else if (a < 1.3)
-                         return "Nice! ";
-                     else if (a < 1.7)
-                         return "Great! ";
-                     else if (a > 1.6)
-                         return "Excellent! ";
-                     else
-                         return "unknown ";
-                 };
+                    if (a < 1.3)
+                        return "Nice! ";
+                    if (a < 1.7)
+                        return "Great! ";
+                    return a > 1.6 ? "Excellent! " : "unknown ";
+                };
 
-                Logging.Logger.Write($"Throwing {(spinModifier==1?"Spinning " : "" )}{getThrowType(normalizedRecticleSize)}{returnRealBallName(pokeball)}", Logging.LogLevel.Caught);
+                Logging.Logger.Write($"Throwing {(Math.Abs(spinModifier - 1) < 0.00001 ?"Spinning " : "" )}{getThrowType(normalizedRecticleSize)}{returnRealBallName(pokeball)}", Logging.LogLevel.Caught);
                 caughtPokemonResponse =
                     await session.Client.Encounter.CatchPokemon(
                         encounter is EncounterResponse || encounter is IncenseEncounterResponse
