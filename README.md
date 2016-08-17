@@ -1,4 +1,4 @@
-<p align="center"><img src="https://i.imgur.com/wittUbf.png" /></p>
+<p align="center"><a href="https://github.com/Lunat1q/Catchem-PoGo/wiki"><img src="https://i.imgur.com/wittUbf.png" /></a></p>
 <p align="center">:information_source:This project is for education purposes only:information_source:</p>
 <p align="center">Based on PokeMobBot project</p>
 </p>
