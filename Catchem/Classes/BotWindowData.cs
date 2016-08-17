@@ -231,6 +231,8 @@ namespace Catchem.Classes
             if (Started) return;
             Started = true;
             _pauseCts.Cancel();
+            _cts.Dispose();
+            _cts = new CancellationTokenSource();
             if (!await CheckProxy())
             {
                 Stop();
@@ -238,9 +240,6 @@ namespace Catchem.Classes
             }
             ErrorsCount = 0;
             TimerStart();
-            _cts.Dispose();
-            _cts = new CancellationTokenSource();
-            
             Session.Client.Player.SetCoordinates(GlobalSettings.LocationSettings.DefaultLatitude,
                 GlobalSettings.LocationSettings.DefaultLongitude,
                 GlobalSettings.LocationSettings.DefaultAltitude);
@@ -274,7 +273,7 @@ namespace Catchem.Classes
             try
             {
                 var defProxy = WebRequest.GetSystemWebProxy();
-                defProxy.Credentials = System.Net.CredentialCache.DefaultCredentials;
+                defProxy.Credentials = CredentialCache.DefaultCredentials;
                 var client = new HttpClient(new HttpClientHandler { Proxy = defProxy });
                 var response = await client.GetAsync("http://ipv4bot.whatismyipaddress.com/", CancellationToken);
                 var unproxiedIp = await response.Content.ReadAsStringAsync();

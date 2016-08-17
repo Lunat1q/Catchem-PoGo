@@ -132,7 +132,7 @@ namespace PoGo.PokeMobBot.Logic
                         //0 = lat, 1 = long (MAYBE NOT THO?)
 	                    waypoints.Add(!session.LogicSettings.UseOpenLsRouting
 	                        ? new GeoCoordinate(item.ToArray()[1], item.ToArray()[0],
-	                            session.MapzenApi.GetAltitude(item.ToArray()[1], item.ToArray()[0]))
+                                session.LogicSettings.UseMapzenApiElevation ? session.MapzenApi.GetAltitude(item.ToArray()[1], item.ToArray()[0]) : 0)
 	                        : new GeoCoordinate(item.ToArray()[1], item.ToArray()[0], item.ToArray()[2]));
 	                }
                 }

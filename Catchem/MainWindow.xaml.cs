@@ -504,26 +504,34 @@ namespace Catchem
 
         private void InitBot(GlobalSettings settings, string profileName = "Unknown")
         {
-            var newBot = CreateBowWindowData(settings, profileName);
-            var session = new Session(newBot.Settings, newBot.Logic);
-            session.Client.ApiFailure = new ApiFailureStrategy(session);
-            newBot.GlobalSettings.MapzenAPI.SetSession(session);
+            try
+            {
+                var newBot = CreateBowWindowData(settings, profileName);
+                var session = new Session(newBot.Settings, newBot.Logic);
+                session.Client.ApiFailure = new ApiFailureStrategy(session);
+                newBot.GlobalSettings.MapzenAPI.SetSession(session);
 
-            newBot.Session = session;
-            session.EventDispatcher.EventReceived += evt => newBot.Listener.Listen(evt, session);
-            session.EventDispatcher.EventReceived += evt => newBot.Aggregator.Listen(evt, session);
-            session.Navigation.UpdatePositionEvent += (lat, lng, alt) => session.EventDispatcher.Send(new UpdatePositionEvent {Latitude = lat, Longitude = lng, Altitude = alt});
+                newBot.Session = session;
+                session.EventDispatcher.EventReceived += evt => newBot.Listener.Listen(evt, session);
+                session.EventDispatcher.EventReceived += evt => newBot.Aggregator.Listen(evt, session);
+                session.Navigation.UpdatePositionEvent += (lat, lng, alt) => session.EventDispatcher.Send(new UpdatePositionEvent {Latitude = lat, Longitude = lng, Altitude = alt});
 
-            newBot.PokemonList.CollectionChanged += delegate { UpdatePokemonCollection(session); };
+                newBot.PokemonList.CollectionChanged += delegate { UpdatePokemonCollection(session); };
 
-            newBot.Stats.DirtyEvent += () => { StatsOnDirtyEvent(newBot); };
+                newBot.Stats.DirtyEvent += () => { StatsOnDirtyEvent(newBot); };
 
-            newBot._lat = settings.LocationSettings.DefaultLatitude;
-            newBot._lng = settings.LocationSettings.DefaultLongitude;
-            newBot.Machine.SetFailureState(new LoginState());
-            GlobalMapView.addMarker(newBot.GlobalPlayerMarker);
+                newBot._lat = settings.LocationSettings.DefaultLatitude;
+                newBot._lng = settings.LocationSettings.DefaultLongitude;
+                newBot.Machine.SetFailureState(new LoginState());
+                GlobalMapView.addMarker(newBot.GlobalPlayerMarker);
 
-            BotsCollection.Add(newBot);
+                BotsCollection.Add(newBot);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Initializing of new bot failed! ex:\r\n" + ex.Message, "FatalError",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void EnqueOldBot()

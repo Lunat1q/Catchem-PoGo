@@ -76,7 +76,7 @@ namespace PoGo.PokeMobBot.Logic.API
                 var request = (HttpWebRequest)WebRequest.Create(httpUrl);
                 request.Proxy = _session == null ? WebRequest.GetSystemWebProxy() : _session.Proxy;
                 if (_session == null)
-                    request.Proxy.Credentials = System.Net.CredentialCache.DefaultCredentials;
+                    request.Proxy.Credentials = CredentialCache.DefaultCredentials;
 
                 request.AutomaticDecompression = DecompressionMethods.GZip;
                 using (var response = (HttpWebResponse)request.GetResponse())
@@ -112,7 +112,7 @@ namespace PoGo.PokeMobBot.Logic.API
             {
                 Lat = double.Parse(data[0], NumberStyles.Any, CultureInfo.InvariantCulture),
                 Lon = double.Parse(data[1], NumberStyles.Any, CultureInfo.InvariantCulture),
-                Alt = double.Parse(data[2], NumberStyles.Any, CultureInfo.InvariantCulture)
+                Alt = double.Parse(data[2], NumberStyles.Any, CultureInfo.InvariantCulture) + 0.8 + Math.Round(R.NextInRange(0, 0.2), 7)
             };
             _knownAltitude.Add(latLonAlt);
             return latLonAlt.Alt;
