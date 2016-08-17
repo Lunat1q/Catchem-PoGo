@@ -49,7 +49,7 @@ namespace PoGo.PokeMobBot.Logic.API
         protected string Api = "https://elevation.mapzen.com/height";
         protected string[] Options = { "?json={\"shape\":[{\"lat\":", ",\"lon\":", "}]}&api_key=" };
         private ISession _session;
-        public string ApiKey;
+        public string ApiKey = "";
 
         public void SetSession(ISession session)
         {
