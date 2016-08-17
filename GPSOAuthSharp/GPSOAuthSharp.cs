@@ -53,7 +53,7 @@ namespace DankMemes.GPSOAuthSharp
                 }
                 catch (WebException e)
                 {
-                    result = new StreamReader(e.Response.GetResponseStream()).ReadToEnd();
+                    result = e.Response != null ? new StreamReader(e.Response.GetResponseStream()).ReadToEnd() : "";
                 }
                 return GoogleKeyUtils.ParseAuthResponse(result);
             }
