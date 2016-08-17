@@ -364,14 +364,13 @@ namespace Catchem.Classes
 
         public void Listen(IEvent evt, ISession session)
         {
-            dynamic eve = evt;
-
             try
             {
+                dynamic eve = evt;
                 HandleEvent(eve, session);
             }
             // ReSharper disable once EmptyGeneralCatchClause
-            catch
+            catch (Exception ex)
             {
             }
         }

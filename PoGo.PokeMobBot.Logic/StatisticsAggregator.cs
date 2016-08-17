@@ -1,7 +1,9 @@
 ﻿#region using directives
 
+using System;
 using PoGo.PokeMobBot.Logic.Event;
 using PoGo.PokeMobBot.Logic.State;
+using PoGo.PokeMobBot.Logic.Tasks;
 using PoGo.PokeMobBot.Logic.Utils;
 using POGOProtos.Networking.Responses;
 
@@ -104,17 +106,126 @@ namespace PoGo.PokeMobBot.Logic
         {
         }
 
+        public void HandleEvent(UpdatePositionEvent evt, ISession session)
+        {
+        }
+
+        public void HandleEvent(NewVersionEvent evt, ISession session)
+        {
+            
+        }
+
+        public void HandleEvent(UpdateEvent evt, ISession session)
+        {
+
+        }
+        public void HandleEvent(BotCompleteFailureEvent evt, ISession session)
+        {
+
+        }
+        public void HandleEvent(DebugEvent evt, ISession session)
+        {
+
+        }
+        public void HandleEvent(EggIncubatorStatusEvent evt, ISession session)
+        {
+
+        }
+        public void HandleEvent(EggsListEvent evt, ISession session)
+        {
+
+        }
+        public void HandleEvent(ForceMoveDoneEvent evt, ISession session)
+        {
+
+        }
+        public void HandleEvent(FortFailedEvent evt, ISession session)
+        {
+
+        }
+        public void HandleEvent(InvalidKeepAmountEvent evt, ISession session)
+        {
+
+        }
+        public void HandleEvent(InventoryListEvent evt, ISession session)
+        {
+
+        }
+        public void HandleEvent(InventoryNewItemsEvent evt, ISession session)
+        {
+
+        }
+        public void HandleEvent(NextRouteEvent evt, ISession session)
+        {
+
+        }
+        public void HandleEvent(PlayerLevelUpEvent evt, ISession session)
+        {
+
+        }
+        public void HandleEvent(PlayerStatsEvent evt, ISession session)
+        {
+
+        }
+        public void HandleEvent(PokemonDisappearEvent evt, ISession session)
+        {
+
+        }
+        public void HandleEvent(PokemonEvolveDoneEvent evt, ISession session)
+        {
+
+        }
+        public void HandleEvent(PokemonFavoriteEvent evt, ISession session)
+        {
+
+        }
+        public void HandleEvent(PokemonSettingsEvent evt, ISession session)
+        {
+
+        }
+        public void HandleEvent(PokemonsFoundEvent evt, ISession session)
+        {
+
+        }
+        public void HandleEvent(PokemonStatsChangedEvent evt, ISession session)
+        {
+
+        }
+        public void HandleEvent(PokemonUnFavoriteEvent evt, ISession session)
+        {
+
+        }
+        public void HandleEvent(PokeStopListEvent evt, ISession session)
+        {
+
+        }
+        public void HandleEvent(SnipeEvent evt, ISession session)
+        {
+
+        }
+        public void HandleEvent(SnipeModeEvent evt, ISession session)
+        {
+
+        }
+        public void HandleEvent(UseLuckyEggMinPokemonEvent evt, ISession session)
+        {
+
+        }
+        public void HandleEvent(PokemonListEvent evt, ISession session)
+        {
+
+        }
+
         public void Listen(IEvent evt, ISession session)
         {
-            dynamic eve = evt;
-
             try
             {
+                dynamic eve = evt;
                 HandleEvent(eve, session);
             }
-            catch
+            // ReSharper disable once EmptyGeneralCatchClause
+            catch (Exception ex)
             {
-                // ignored
             }
         }
     }
