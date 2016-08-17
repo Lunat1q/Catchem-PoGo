@@ -13,29 +13,37 @@ namespace Catchem.Classes
             var dd = new DeviceData();
             foreach (var field in typeof(DeviceData).GetFields())
             {
-                var args = field.GetCustomAttribute<AdbArgumentsAttribute>();
-                if (args == null) continue;
-                var lcmdInfo1 = new ProcessStartInfo(@"adb\adb.exe")
+                var retry = false;
+                do
                 {
-                    Arguments = args.Arguments,
-                    CreateNoWindow = true,
-                    RedirectStandardOutput = true,
-                    RedirectStandardError = true,
-                    UseShellExecute = false
-                };
-                var cmd2 = new Process { StartInfo = lcmdInfo1 };
-                var output = new StringBuilder();
-                var error = new StringBuilder();
-                cmd2.OutputDataReceived += (o, ef) => output.Append(ef.Data);
-                cmd2.ErrorDataReceived += (o, ef) => error.Append(ef.Data);
-                cmd2.Start();
-                cmd2.BeginOutputReadLine();
-                cmd2.BeginErrorReadLine();
-                cmd2.WaitForExit();
-                cmd2.Close();
-                field.SetValue(dd, output.ToString());
-                cmd2.Dispose();
-                await Task.Delay(10);
+                    var args = field.GetCustomAttribute<AdbArgumentsAttribute>();
+                    if (args == null) continue;
+                    var lcmdInfo1 = new ProcessStartInfo(@"adb\adb.exe")
+                    {
+                        Arguments = args.Arguments,
+                        CreateNoWindow = true,
+                        RedirectStandardOutput = true,
+                        RedirectStandardError = true,
+                        UseShellExecute = false
+                    };
+                    var cmd2 = new Process {StartInfo = lcmdInfo1};
+                    var output = new StringBuilder();
+                    var error = new StringBuilder();
+                    cmd2.OutputDataReceived += (o, ef) => output.Append(ef.Data);
+                    cmd2.ErrorDataReceived += (o, ef) => error.Append(ef.Data);
+                    cmd2.Start();
+                    cmd2.BeginOutputReadLine();
+                    cmd2.BeginErrorReadLine();
+                    cmd2.WaitForExit();
+                    cmd2.Close();
+                    var value = output.ToString();
+                    if (value.Contains("deamon not running"))
+                        retry = true;
+                    else
+                        field.SetValue(dd, output.ToString());
+                    cmd2.Dispose();
+                    await Task.Delay(10);
+                } while (retry);
             }
             return dd;
         }

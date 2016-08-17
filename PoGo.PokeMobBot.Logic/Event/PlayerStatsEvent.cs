@@ -11,7 +11,7 @@ using System.Collections.Generic;
 
 #endregion
 
-namespace PoGo.PokeMobBot.Logic.Tasks
+namespace PoGo.PokeMobBot.Logic.Event
 {
     public class PlayerStatsEvent : IEvent
 

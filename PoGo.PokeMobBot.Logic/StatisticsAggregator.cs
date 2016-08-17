@@ -3,7 +3,6 @@
 using System;
 using PoGo.PokeMobBot.Logic.Event;
 using PoGo.PokeMobBot.Logic.State;
-using PoGo.PokeMobBot.Logic.Tasks;
 using PoGo.PokeMobBot.Logic.Utils;
 using POGOProtos.Networking.Responses;
 
@@ -224,7 +223,7 @@ namespace PoGo.PokeMobBot.Logic
                 HandleEvent(eve, session);
             }
             // ReSharper disable once EmptyGeneralCatchClause
-            catch (Exception ex)
+            catch (Exception)
             {
             }
         }

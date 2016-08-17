@@ -83,7 +83,7 @@
     },
 	{
       "Key": "eventUseLuckyEggMinPokemonCheck",
-      "Value": "Not enough Pokemon to trigger a lucky egg. Waiting for {0} more. ({1}/{2})"
+      "Value": "Nicht genügend Pokemon vorhanden, um ein Glücks-Ei auszulösen. Auf {0} weitere warten. ({1}/{2})"
     },
     {
       "Key": "eventPokemonEvolvedSuccess",
@@ -231,6 +231,10 @@
       "Value": "PTC Server sind wahrscheinlich down ODER die angegebenen Zugangsdaten sind falsch. Versuch Google."
     },
     {
+      "Key": "accessTokenExpired",
+      "Value": "Access Token ausgelaufen. Logge mich neu ein für ein neues Token."
+    },
+    {
       "Key": "tryingAgainIn",
       "Value": "Erneuter Versuch in {0} Sekunden..."
     },
@@ -325,616 +329,616 @@
     },
     {
       "Key": "UseBerry",
-      "Value": "Benutze Himbeere. Verbleibend: {0}"
+      "Value": "Benutze Himmihbeere. Verbleibend: {0}"
     }
   ],
   "pokemon": [
     {
-      "Key": "0",
+      "Key": "Missingno",
       "Value": "Missingno"
     },
     {
-      "Key": "1",
+      "Key": "Bulbasaur",
       "Value": "Bisasam"
     },
     {
-      "Key": "2",
+      "Key": "Ivysaur",
       "Value": "Bisaknosp"
     },
     {
-      "Key": "3",
+      "Key": "Venusaur",
       "Value": "Bisaflor"
     },
     {
-      "Key": "4",
+      "Key": "Charmander",
       "Value": "Glumanda"
     },
     {
-      "Key": "5",
+      "Key": "Charmeleon",
       "Value": "Glutexo"
     },
     {
-      "Key": "6",
+      "Key": "Charizard",
       "Value": "Glurak"
     },
     {
-      "Key": "7",
+      "Key": "Squirtle",
       "Value": "Schiggy"
     },
     {
-      "Key": "8",
+      "Key": "Wartortle",
       "Value": "Schillok"
     },
     {
-      "Key": "9",
+      "Key": "Blastoise",
       "Value": "Turtok"
     },
     {
-      "Key": "10",
+      "Key": "Caterpie",
       "Value": "Raupy"
     },
     {
-      "Key": "11",
+      "Key": "Metapod",
       "Value": "Safcon"
     },
     {
-      "Key": "12",
+      "Key": "Butterfree",
       "Value": "Smettbo"
     },
     {
-      "Key": "13",
+      "Key": "Weedle",
       "Value": "Hornliu"
     },
     {
-      "Key": "14",
+      "Key": "Kakuna",
       "Value": "Kokuna"
     },
     {
-      "Key": "15",
+      "Key": "Beedrill",
       "Value": "Bibor"
     },
     {
-      "Key": "16",
+      "Key": "Pidgey",
       "Value": "Taubsi"
     },
     {
-      "Key": "17",
+      "Key": "Pidgeotto",
       "Value": "Tauboga"
     },
     {
-      "Key": "18",
+      "Key": "Pidgeot",
       "Value": "Tauboss"
     },
     {
-      "Key": "19",
+      "Key": "Rattata",
       "Value": "Rattfratz"
     },
     {
-      "Key": "20",
+      "Key": "Raticate",
       "Value": "Rattikarl"
     },
     {
-      "Key": "21",
+      "Key": "Spearow",
       "Value": "Habitak"
     },
     {
-      "Key": "22",
+      "Key": "Fearow",
       "Value": "Ibitak"
     },
     {
-      "Key": "23",
+      "Key": "Ekans",
       "Value": "Rettan"
     },
     {
-      "Key": "24",
+      "Key": "Arbok",
       "Value": "Arbok"
     },
     {
-      "Key": "25",
+      "Key": "Pikachu",
       "Value": "Pikachu"
     },
     {
-      "Key": "26",
+      "Key": "Raichu",
       "Value": "Raichu"
     },
     {
-      "Key": "27",
+      "Key": "Sandshrew",
       "Value": "Sandan"
     },
     {
-      "Key": "28",
+      "Key": "Sandslash",
       "Value": "Sandamer"
     },
     {
-      "Key": "29",
-      "Value": "Nidoran♀"
+      "Key": "NidoranFemale",
+      "Value": "NidoranF"
     },
     {
-      "Key": "30",
+      "Key": "Nidorina",
       "Value": "Nidorina"
     },
     {
-      "Key": "31",
+      "Key": "Nidoqueen",
       "Value": "Nidoqueen"
     },
     {
-      "Key": "32",
-      "Value": "Nidoran♂"
+      "Key": "NidoranMale",
+      "Value": "NidoranM"
     },
     {
-      "Key": "33",
+      "Key": "Nidorino",
       "Value": "Nidorino"
     },
     {
-      "Key": "34",
+      "Key": "Nidoking",
       "Value": "Nidoking"
     },
     {
-      "Key": "35",
+      "Key": "Clefairy",
       "Value": "Piepi"
     },
     {
-      "Key": "36",
+      "Key": "Clefable",
       "Value": "Pixi"
     },
     {
-      "Key": "37",
+      "Key": "Vulpix",
       "Value": "Vulpix"
     },
     {
-      "Key": "38",
+      "Key": "Ninetales",
       "Value": "Vulnona"
     },
     {
-      "Key": "39",
+      "Key": "Jigglypuff",
       "Value": "Pummeluff"
     },
     {
-      "Key": "40",
+      "Key": "Wigglytuff",
       "Value": "Knuddeluff"
     },
     {
-      "Key": "41",
+      "Key": "Zubat",
       "Value": "Zubat"
     },
     {
-      "Key": "42",
+      "Key": "Golbat",
       "Value": "Golbat"
     },
     {
-      "Key": "43",
+      "Key": "Oddish",
       "Value": "Myrapla"
     },
     {
-      "Key": "44",
+      "Key": "Gloom",
       "Value": "Duflor"
     },
     {
-      "Key": "45",
+      "Key": "Vileplume",
       "Value": "Giflor"
     },
     {
-      "Key": "46",
+      "Key": "Paras",
       "Value": "Paras"
     },
     {
-      "Key": "47",
+      "Key": "Parasect",
       "Value": "Parasek"
     },
     {
-      "Key": "48",
+      "Key": "Venonat",
       "Value": "Bluzuk"
     },
     {
-      "Key": "49",
+      "Key": "Venomoth",
       "Value": "Omot"
     },
     {
-      "Key": "50",
+      "Key": "Diglett",
       "Value": "Digda"
     },
     {
-      "Key": "51",
+      "Key": "Dugtrio",
       "Value": "Digdri"
     },
     {
-      "Key": "52",
+      "Key": "Meowth",
       "Value": "Mauzi"
     },
     {
-      "Key": "53",
+      "Key": "Persian",
       "Value": "Snobilikat"
     },
     {
-      "Key": "54",
+      "Key": "Psyduck",
       "Value": "Enton"
     },
     {
-      "Key": "55",
+      "Key": "Golduck",
       "Value": "Entoron"
     },
     {
-      "Key": "56",
+      "Key": "Mankey",
       "Value": "Menki"
     },
     {
-      "Key": "57",
+      "Key": "Primeape",
       "Value": "Rasaff"
     },
     {
-      "Key": "58",
+      "Key": "Growlithe",
       "Value": "Fukano"
     },
     {
-      "Key": "59",
+      "Key": "Arcanine",
       "Value": "Arkani"
     },
     {
-      "Key": "60",
+      "Key": "Poliwag",
       "Value": "Quapsel"
     },
     {
-      "Key": "61",
+      "Key": "Poliwhirl",
       "Value": "Quaputzi"
     },
     {
-      "Key": "62",
+      "Key": "Poliwrath",
       "Value": "Quappo"
     },
     {
-      "Key": "63",
+      "Key": "Abra",
       "Value": "Abra"
     },
     {
-      "Key": "64",
+      "Key": "Kadabra",
       "Value": "Kadabra"
     },
     {
-      "Key": "65",
+      "Key": "Alakazam",
       "Value": "Simsala"
     },
     {
-      "Key": "66",
+      "Key": "Machop",
       "Value": "Machollo"
     },
     {
-      "Key": "67",
+      "Key": "Machoke",
       "Value": "Maschock"
     },
     {
-      "Key": "68",
+      "Key": "Machamp",
       "Value": "Machomei"
     },
     {
-      "Key": "69",
+      "Key": "Bellsprout",
       "Value": "Knofensa"
     },
     {
-      "Key": "70",
+      "Key": "Weepinbell",
       "Value": "Ultrigaria"
     },
     {
-      "Key": "71",
+      "Key": "Victreebel",
       "Value": "Sarzenia"
     },
     {
-      "Key": "72",
+      "Key": "Tentacool",
       "Value": "Tentacha"
     },
     {
-      "Key": "73",
+      "Key": "Tentacruel",
       "Value": "Tentoxa"
     },
     {
-      "Key": "74",
+      "Key": "Geodude",
       "Value": "Kleinstein"
     },
     {
-      "Key": "75",
+      "Key": "Graveler",
       "Value": "Georok"
     },
     {
-      "Key": "76",
+      "Key": "Golem",
       "Value": "Geowaz"
     },
     {
-      "Key": "77",
+      "Key": "Ponyta",
       "Value": "Ponita"
     },
     {
-      "Key": "78",
+      "Key": "Rapidash",
       "Value": "Gallopa"
     },
     {
-      "Key": "79",
+      "Key": "Slowpoke",
       "Value": "Flegmon"
     },
     {
-      "Key": "80",
+      "Key": "Slowbro",
       "Value": "Lahmus"
     },
     {
-      "Key": "81",
+      "Key": "Magnemite",
       "Value": "Magnetilo"
     },
     {
-      "Key": "82",
+      "Key": "Magneton",
       "Value": "Magneton"
     },
     {
-      "Key": "83",
+      "Key": "Farfetchd",
       "Value": "Porenta"
     },
     {
-      "Key": "84",
+      "Key": "Doduo",
       "Value": "Dodu"
     },
     {
-      "Key": "85",
+      "Key": "Dodrio",
       "Value": "Dodri"
     },
     {
-      "Key": "86",
+      "Key": "Seel",
       "Value": "Jurob"
     },
     {
-      "Key": "87",
+      "Key": "Dewgong",
       "Value": "Jugong"
     },
     {
-      "Key": "88",
+      "Key": "Grimer",
       "Value": "Sleima"
     },
     {
-      "Key": "89",
+      "Key": "Muk",
       "Value": "Sleimok"
     },
     {
-      "Key": "90",
+      "Key": "Shellder",
       "Value": "Muschas"
     },
     {
-      "Key": "91",
+      "Key": "Cloyster",
       "Value": "Austos"
     },
     {
-      "Key": "92",
+      "Key": "Gastly",
       "Value": "Nebulak"
     },
     {
-      "Key": "93",
+      "Key": "Haunter",
       "Value": "Alpollo"
     },
     {
-      "Key": "94",
+      "Key": "Gengar",
       "Value": "Gengar"
     },
     {
-      "Key": "95",
+      "Key": "Onix",
       "Value": "Onix"
     },
     {
-      "Key": "96",
+      "Key": "Drowzee",
       "Value": "Traumato"
     },
     {
-      "Key": "97",
+      "Key": "Hypno",
       "Value": "Hypno"
     },
     {
-      "Key": "98",
+      "Key": "Krabby",
       "Value": "Krabby"
     },
     {
-      "Key": "99",
+      "Key": "Kingler",
       "Value": "Kingler"
     },
     {
-      "Key": "100",
+      "Key": "Voltorb",
       "Value": "Voltobal"
     },
     {
-      "Key": "101",
+      "Key": "Electrode",
       "Value": "Lektrobal"
     },
     {
-      "Key": "102",
+      "Key": "Exeggcute",
       "Value": "Owei"
     },
     {
-      "Key": "103",
+      "Key": "Exeggutor",
       "Value": "Kokowei"
     },
     {
-      "Key": "104",
+      "Key": "Cubone",
       "Value": "Tragosso"
     },
     {
-      "Key": "105",
+      "Key": "Marowak",
       "Value": "Knogga"
     },
     {
-      "Key": "106",
+      "Key": "Hitmonlee",
       "Value": "Kicklee"
     },
     {
-      "Key": "107",
+      "Key": "Hitmonchan",
       "Value": "Nockchan"
     },
     {
-      "Key": "108",
+      "Key": "Lickitung",
       "Value": "Schlurp"
     },
     {
-      "Key": "109",
+      "Key": "Koffing",
       "Value": "Smogon"
     },
     {
-      "Key": "110",
+      "Key": "Weezing",
       "Value": "Smogmog"
     },
     {
-      "Key": "111",
+      "Key": "Rhyhorn",
       "Value": "Rihorn"
     },
     {
-      "Key": "112",
+      "Key": "Rhydon",
       "Value": "Rizeros"
     },
     {
-      "Key": "113",
+      "Key": "Chansey",
       "Value": "Chaneira"
     },
     {
-      "Key": "114",
+      "Key": "Tangela",
       "Value": "Tangela"
     },
     {
-      "Key": "115",
+      "Key": "Kangaskhan",
       "Value": "Kangama"
     },
     {
-      "Key": "116",
+      "Key": "Horsea",
       "Value": "Seeper"
     },
     {
-      "Key": "117",
+      "Key": "Seadra",
       "Value": "Seemon"
     },
     {
-      "Key": "118",
+      "Key": "Goldeen",
       "Value": "Goldini"
     },
     {
-      "Key": "119",
+      "Key": "Seaking",
       "Value": "Golking"
     },
     {
-      "Key": "120",
+      "Key": "Staryu",
       "Value": "Sterndu"
     },
     {
-      "Key": "121",
+      "Key": "Starmie",
       "Value": "Starmie"
     },
     {
-      "Key": "122",
+      "Key": "MrMime",
       "Value": "Pantimos"
     },
     {
-      "Key": "123",
+      "Key": "Scyther",
       "Value": "Sichlor"
     },
     {
-      "Key": "124",
+      "Key": "Jynx",
       "Value": "Rossana"
     },
     {
-      "Key": "125",
+      "Key": "Electabuzz",
       "Value": "Elektek"
     },
     {
-      "Key": "126",
+      "Key": "Magmar",
       "Value": "Magmar"
     },
     {
-      "Key": "127",
+      "Key": "Pinsir",
       "Value": "Pinsir"
     },
     {
-      "Key": "128",
+      "Key": "Tauros",
       "Value": "Tauros"
     },
     {
-      "Key": "129",
+      "Key": "Magikarp",
       "Value": "Karpador"
     },
     {
-      "Key": "130",
+      "Key": "Gyarados",
       "Value": "Garados"
     },
     {
-      "Key": "131",
+      "Key": "Lapras",
       "Value": "Lapras"
     },
     {
-      "Key": "132",
+      "Key": "Ditto",
       "Value": "Ditto"
     },
     {
-      "Key": "133",
+      "Key": "Eevee",
       "Value": "Evoli"
     },
     {
-      "Key": "134",
+      "Key": "Vaporeon",
       "Value": "Aquana"
     },
     {
-      "Key": "135",
+      "Key": "Jolteon",
       "Value": "Blitza"
     },
     {
-      "Key": "136",
+      "Key": "Flareon",
       "Value": "Flamara"
     },
     {
-      "Key": "137",
+      "Key": "Porygon",
       "Value": "Porygon"
     },
     {
-      "Key": "138",
+      "Key": "Omanyte",
       "Value": "Amonitas"
     },
     {
-      "Key": "139",
+      "Key": "Omastar",
       "Value": "Amoroso"
     },
     {
-      "Key": "140",
+      "Key": "Kabuto",
       "Value": "Kabuto"
     },
     {
-      "Key": "141",
+      "Key": "Kabutops",
       "Value": "Kabutops"
     },
     {
-      "Key": "142",
+      "Key": "Aerodactyl",
       "Value": "Aerodactyl"
     },
     {
-      "Key": "143",
+      "Key": "Snorlax",
       "Value": "Relaxo"
     },
     {
-      "Key": "144",
+      "Key": "Articuno",
       "Value": "Arktos"
     },
     {
-      "Key": "145",
+      "Key": "Zapdos",
       "Value": "Zapdos"
     },
     {
-      "Key": "146",
+      "Key": "Moltres",
       "Value": "Lavados"
     },
     {
-      "Key": "147",
+      "Key": "Dratini",
       "Value": "Dratini"
     },
     {
-      "Key": "148",
+      "Key": "Dragonair",
       "Value": "Dragonir"
     },
     {
-      "Key": "149",
+      "Key": "Dragonite",
       "Value": "Dragoran"
     },
     {
-      "Key": "150",
+      "Key": "Mewtwo",
       "Value": "Mewtu"
     },
     {
-      "Key": "151",
+      "Key": "Mew",
       "Value": "Mew"
     }
   ]

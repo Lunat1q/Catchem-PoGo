@@ -565,10 +565,17 @@ namespace PoGo.PokeMobBot.Logic.Common
 
         public string GetTranslation(TranslationString translationString, params object[] data)
         {
-            var translation = _translationStrings.FirstOrDefault(t => t.Key.Equals(translationString)).Value;
-            return translation != default(string)
-                ? string.Format(translation, data)
-                : $"Translation for {translationString} is missing";
+            try
+            {
+                var translation = _translationStrings.FirstOrDefault(t => t.Key.Equals(translationString)).Value;
+                return translation != default(string)
+                    ? string.Format(translation, data)
+                    : $"Translation for {translationString} is missing";
+            }
+            catch
+            {
+                return $"Translation for {translationString} failed";
+            }
         }
 
         public string GetTranslation(TranslationString translationString)

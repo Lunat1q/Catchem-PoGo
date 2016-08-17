@@ -606,7 +606,7 @@ namespace Catchem
                 SettingsView.tabControl.IsEnabled = true;
             if (grid_pickBot.Visibility == Visibility.Visible)
                 grid_pickBot.Visibility = Visibility.Collapsed;
-            if (transit.SelectedIndex != 0) changeTransistor();
+            if (transit.SelectedIndex != 0) ChangeTransistor();
             SettingsView.BotSettingsPage.SetBot(Bot);
             SettingsView.BotPlayerPage.SetBot(Bot);
             SettingsView.BotPokemonListPage.SetBot(Bot);
@@ -643,10 +643,10 @@ namespace Catchem
 
         private void btn_changeViewSettingsMap_Click(object sender, RoutedEventArgs e)
         {
-            changeTransistor();
+            ChangeTransistor();
         }
 
-        private void changeTransistor()
+        private void ChangeTransistor()
         {
             if (grid_pickBot.Visibility == Visibility.Visible) return;
             if (transit.SelectedIndex == 0)

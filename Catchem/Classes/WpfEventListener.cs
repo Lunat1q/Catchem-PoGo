@@ -348,19 +348,39 @@ namespace Catchem.Classes
         }
 		public void HandleEvent(PokemonFavoriteEvent evt, ISession session)  //added by Lars
         {
-            string message = string.Format("{0,-13} CP: {1,-4} IV: {2,-4:#.00}% Candies: {3}", evt.Pokemon, evt.Cp, evt.Iv, evt.Candies);
+            var message = $"{evt.Pokemon,-13} CP: {evt.Cp,-4} IV: {evt.Iv,-4:#.00}% Candies: {evt.Candies}";
             Logger.Write(session.Translation.GetTranslation(TranslationString.PokemonFavorite, message), LogLevel.Favorite, session: session);
         }
         public void HandleEvent(PokemonUnFavoriteEvent evt, ISession session) //added by Lars
         {
-            string message = string.Format("{0,-13} CP: {1,-4} IV: {2,-4:#.00}% Candies: {3}", evt.Pokemon, evt.Cp, evt.Iv, evt.Candies);
+            var message = $"{evt.Pokemon,-13} CP: {evt.Cp,-4} IV: {evt.Iv,-4:#.00}% Candies: {evt.Candies}";
             Logger.Write(session.Translation.GetTranslation(TranslationString.PokemonUnFavorite, message), LogLevel.UnFavorite, session: session);
         }
         public void HandleEvent(InvalidKeepAmountEvent evt, ISession session) //added by Lars
         {
             Logger.Write(session.Translation.GetTranslation(TranslationString.CheckingForMaximumInventorySize, evt.Count, evt.Max), LogLevel.Warning, session: session);
         }
+        public void HandleEvent(EggsListEvent evt, ISession session)
+        {
 
+        }
+        public void HandleEvent(PlayerStatsEvent evt, ISession session)
+        {
+
+        }
+
+        public void HandleEvent(PokemonSettingsEvent evt, ISession session)
+        {
+
+        }
+        public void HandleEvent(SnipeEvent evt, ISession session)
+        {
+
+        }
+        public void HandleEvent(SnipeModeEvent evt, ISession session)
+        {
+
+        }
 
         public void Listen(IEvent evt, ISession session)
         {
@@ -369,9 +389,9 @@ namespace Catchem.Classes
                 dynamic eve = evt;
                 HandleEvent(eve, session);
             }
-            // ReSharper disable once EmptyGeneralCatchClause
-            catch (Exception ex)
+            catch (Exception)
             {
+                // ignored
             }
         }
     }

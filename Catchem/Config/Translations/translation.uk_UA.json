@@ -52,7 +52,7 @@
     },
 	{
       "Key": "eventUseLuckyEggMinPokemonCheck",
-      "Value": "Not enough Pokemon to trigger a lucky egg. Waiting for {0} more. ({1}/{2})"
+      "Value": "Не достатньо Покемонів для викоритсстання Lucky Egg. Необхідно {0} ще. ({1}/{2})"
     },
     {
       "Key": "eventPokemonEvolvedSuccess",
@@ -73,11 +73,11 @@
     {
       "Key": "eventPokemonCapture",
       "Value":
-        "=> ({0}) ({1}) {2} {3} -рівень (CР: {4} / {5} | VI: {6}%) з {7}% шансом на {8} м ісп. {9} ({10} залишилося) {11} "
+        "=> ({0}) ({1}) {2} {3} - рівень (CР: {4} / {5} | IV: {6}%) з {7}% шансом на {8} м викор. {9} ({10} залишилося) {11} "
     },
     {
       "Key": "eventNoPokeballs",
-      "Value": "Немає Pokeball'ів - Ми упустили {0} (CP: {1})"
+      "Value": "Немає Pokeball'ів - Ми втратили {0} (CP: {1})"
     },
     {
       "Key": "catchStatusAttempt",
@@ -161,7 +161,7 @@
     },
     {
       "Key": "logEntryRecycling",
-      "Value": "видаляємо"
+      "Value": "Видаляємо"
     },
     {
       "Key": "logEntryPKMN",
@@ -198,7 +198,11 @@
     {
       "Key": "ptcOffline",
       "Value":
-        "PTC сервера можливо не працюють АБО невірно вказані дані облікового запису. Спробуйте використовувати логін від Google аккаунта"
+        "PTC сервера можливо не працюють АБО невірно вказані дані облікового запису. Спробуйте увійти через Google аккаунт"
+    },
+    {
+      "Key": "accessTokenExpired",
+      "Value": "Access token expired. Relogin to get a new token."
     },
     {
       "Key": "tryingAgainIn",
@@ -230,7 +234,7 @@
     },
     {
       "Key": "coordinatesAreInvalid",
-      "Value": "Координати у файлі \" Coords.ini \"невірні, використовуємо координати за умовчанням"
+      "Value": "Координати у файлі \" Coords.ini \" невірні, використовуємо координати за умовчанням"
     },
     {
       "Key": "gotUpToDateVersion",
@@ -299,7 +303,7 @@
     },
     {
       "Key": "desiredDestTooFar",
-      "Value": "Зазначене местоназначеніе {0}, {1} занадто далеко від поточної позиції {2}, {3}"
+      "Value": "Зазначене місце призначення {0}, {1} занадто далеко від поточної позиції {2}, {3}"
     },
     {
       "Key": "pokemonRename",
@@ -365,7 +369,7 @@
     {
       "Key": "googleTwoFactorAuth",
       "Value":
-        "Оскільки у Вас включена двухфакторная аутентифікація Google, Вам потрібно помістити пароль Програми Google в файл auth.json"
+        "Оскільки у Вас включена двофакторна аутентифікація Google, Вам потрібно помістити пароль Програми Google в файл auth.json"
     },
     {
       "Key": "googleTwoFactorAuthExplanation",
@@ -392,7 +396,615 @@
       "Key": "noPokemonToSnipe",
       "Value": "[Снайпер] Покемона для вилову не виявлено!"
     }
+  ],
+  "pokemon": [
+    {
+      "Key": "Missingno",
+      "Value": "Missingno"
+    },
+    {
+      "Key": "Bulbasaur",
+      "Value": "Bulbasaur"
+    },
+    {
+      "Key": "Ivysaur",
+      "Value": "Ivysaur"
+    },
+    {
+      "Key": "Venusaur",
+      "Value": "Venusaur"
+    },
+    {
+      "Key": "Charmander",
+      "Value": "Charmander"
+    },
+    {
+      "Key": "Charmeleon",
+      "Value": "Charmeleon"
+    },
+    {
+      "Key": "Charizard",
+      "Value": "Charizard"
+    },
+    {
+      "Key": "Squirtle",
+      "Value": "Squirtle"
+    },
+    {
+      "Key": "Wartortle",
+      "Value": "Wartortle"
+    },
+    {
+      "Key": "Blastoise",
+      "Value": "Blastoise"
+    },
+    {
+      "Key": "Caterpie",
+      "Value": "Caterpie"
+    },
+    {
+      "Key": "Metapod",
+      "Value": "Metapod"
+    },
+    {
+      "Key": "Butterfree",
+      "Value": "Butterfree"
+    },
+    {
+      "Key": "Weedle",
+      "Value": "Weedle"
+    },
+    {
+      "Key": "Kakuna",
+      "Value": "Kakuna"
+    },
+    {
+      "Key": "Beedrill",
+      "Value": "Beedrill"
+    },
+    {
+      "Key": "Pidgey",
+      "Value": "Pidgey"
+    },
+    {
+      "Key": "Pidgeotto",
+      "Value": "Pidgeotto"
+    },
+    {
+      "Key": "Pidgeot",
+      "Value": "Pidgeot"
+    },
+    {
+      "Key": "Rattata",
+      "Value": "Rattata"
+    },
+    {
+      "Key": "Raticate",
+      "Value": "Raticate"
+    },
+    {
+      "Key": "Spearow",
+      "Value": "Spearow"
+    },
+    {
+      "Key": "Fearow",
+      "Value": "Fearow"
+    },
+    {
+      "Key": "Ekans",
+      "Value": "Ekans"
+    },
+    {
+      "Key": "Arbok",
+      "Value": "Arbok"
+    },
+    {
+      "Key": "Pikachu",
+      "Value": "Pikachu"
+    },
+    {
+      "Key": "Raichu",
+      "Value": "Raichu"
+    },
+    {
+      "Key": "Sandshrew",
+      "Value": "Sandshrew"
+    },
+    {
+      "Key": "Sandslash",
+      "Value": "Sandslash"
+    },
+    {
+      "Key": "NidoranFemale",
+      "Value": "NidoranF"
+    },
+    {
+      "Key": "Nidorina",
+      "Value": "Nidorina"
+    },
+    {
+      "Key": "Nidoqueen",
+      "Value": "Nidoqueen"
+    },
+    {
+      "Key": "NidoranMale",
+      "Value": "NidoranM"
+    },
+    {
+      "Key": "Nidorino",
+      "Value": "Nidorino"
+    },
+    {
+      "Key": "Nidoking",
+      "Value": "Nidoking"
+    },
+    {
+      "Key": "Clefairy",
+      "Value": "Clefairy"
+    },
+    {
+      "Key": "Clefable",
+      "Value": "Clefable"
+    },
+    {
+      "Key": "Vulpix",
+      "Value": "Vulpix"
+    },
+    {
+      "Key": "Ninetales",
+      "Value": "Ninetales"
+    },
+    {
+      "Key": "Jigglypuff",
+      "Value": "Jigglypuff"
+    },
+    {
+      "Key": "Wigglytuff",
+      "Value": "Wigglytuff"
+    },
+    {
+      "Key": "Zubat",
+      "Value": "Zubat"
+    },
+    {
+      "Key": "Golbat",
+      "Value": "Golbat"
+    },
+    {
+      "Key": "Oddish",
+      "Value": "Oddish"
+    },
+    {
+      "Key": "Gloom",
+      "Value": "Gloom"
+    },
+    {
+      "Key": "Vileplume",
+      "Value": "Vileplume"
+    },
+    {
+      "Key": "Paras",
+      "Value": "Paras"
+    },
+    {
+      "Key": "Parasect",
+      "Value": "Parasect"
+    },
+    {
+      "Key": "Venonat",
+      "Value": "Venonat"
+    },
+    {
+      "Key": "Venomoth",
+      "Value": "Venomoth"
+    },
+    {
+      "Key": "Diglett",
+      "Value": "Diglett"
+    },
+    {
+      "Key": "Dugtrio",
+      "Value": "Dugtrio"
+    },
+    {
+      "Key": "Meowth",
+      "Value": "Meowth"
+    },
+    {
+      "Key": "Persian",
+      "Value": "Persian"
+    },
+    {
+      "Key": "Psyduck",
+      "Value": "Psyduck"
+    },
+    {
+      "Key": "Golduck",
+      "Value": "Golduck"
+    },
+    {
+      "Key": "Mankey",
+      "Value": "Mankey"
+    },
+    {
+      "Key": "Primeape",
+      "Value": "Primeape"
+    },
+    {
+      "Key": "Growlithe",
+      "Value": "Growlithe"
+    },
+    {
+      "Key": "Arcanine",
+      "Value": "Arcanine"
+    },
+    {
+      "Key": "Poliwag",
+      "Value": "Poliwag"
+    },
+    {
+      "Key": "Poliwhirl",
+      "Value": "Poliwhirl"
+    },
+    {
+      "Key": "Poliwrath",
+      "Value": "Poliwrath"
+    },
+    {
+      "Key": "Abra",
+      "Value": "Abra"
+    },
+    {
+      "Key": "Kadabra",
+      "Value": "Kadabra"
+    },
+    {
+      "Key": "Alakazam",
+      "Value": "Alakazam"
+    },
+    {
+      "Key": "Machop",
+      "Value": "Machop"
+    },
+    {
+      "Key": "Machoke",
+      "Value": "Machoke"
+    },
+    {
+      "Key": "Machamp",
+      "Value": "Machamp"
+    },
+    {
+      "Key": "Bellsprout",
+      "Value": "Bellsprout"
+    },
+    {
+      "Key": "Weepinbell",
+      "Value": "Weepinbell"
+    },
+    {
+      "Key": "Victreebel",
+      "Value": "Victreebel"
+    },
+    {
+      "Key": "Tentacool",
+      "Value": "Tentacool"
+    },
+    {
+      "Key": "Tentacruel",
+      "Value": "Tentacruel"
+    },
+    {
+      "Key": "Geodude",
+      "Value": "Geodude"
+    },
+    {
+      "Key": "Graveler",
+      "Value": "Graveler"
+    },
+    {
+      "Key": "Golem",
+      "Value": "Golem"
+    },
+    {
+      "Key": "Ponyta",
+      "Value": "Ponyta"
+    },
+    {
+      "Key": "Rapidash",
+      "Value": "Rapidash"
+    },
+    {
+      "Key": "Slowpoke",
+      "Value": "Slowpoke"
+    },
+    {
+      "Key": "Slowbro",
+      "Value": "Slowbro"
+    },
+    {
+      "Key": "Magnemite",
+      "Value": "Magnemite"
+    },
+    {
+      "Key": "Magneton",
+      "Value": "Magneton"
+    },
+    {
+      "Key": "Farfetchd",
+      "Value": "Farfetch'd"
+    },
+    {
+      "Key": "Doduo",
+      "Value": "Doduo"
+    },
+    {
+      "Key": "Dodrio",
+      "Value": "Dodrio"
+    },
+    {
+      "Key": "Seel",
+      "Value": "Seel"
+    },
+    {
+      "Key": "Dewgong",
+      "Value": "Dewgong"
+    },
+    {
+      "Key": "Grimer",
+      "Value": "Grimer"
+    },
+    {
+      "Key": "Muk",
+      "Value": "Muk"
+    },
+    {
+      "Key": "Shellder",
+      "Value": "Shellder"
+    },
+    {
+      "Key": "Cloyster",
+      "Value": "Cloyster"
+    },
+    {
+      "Key": "Gastly",
+      "Value": "Gastly"
+    },
+    {
+      "Key": "Haunter",
+      "Value": "Haunter"
+    },
+    {
+      "Key": "Gengar",
+      "Value": "Gengar"
+    },
+    {
+      "Key": "Onix",
+      "Value": "Onix"
+    },
+    {
+      "Key": "Drowzee",
+      "Value": "Drowzee"
+    },
+    {
+      "Key": "Hypno",
+      "Value": "Hypno"
+    },
+    {
+      "Key": "Krabby",
+      "Value": "Krabby"
+    },
+    {
+      "Key": "Kingler",
+      "Value": "Kingler"
+    },
+    {
+      "Key": "Voltorb",
+      "Value": "Voltorb"
+    },
+    {
+      "Key": "Electrode",
+      "Value": "Electrode"
+    },
+    {
+      "Key": "Exeggcute",
+      "Value": "Exeggcute"
+    },
+    {
+      "Key": "Exeggutor",
+      "Value": "Exeggutor"
+    },
+    {
+      "Key": "Cubone",
+      "Value": "Cubone"
+    },
+    {
+      "Key": "Marowak",
+      "Value": "Marowak"
+    },
+    {
+      "Key": "Hitmonlee",
+      "Value": "Hitmonlee"
+    },
+    {
+      "Key": "Hitmonchan",
+      "Value": "Hitmonchan"
+    },
+    {
+      "Key": "Lickitung",
+      "Value": "Lickitung"
+    },
+    {
+      "Key": "Koffing",
+      "Value": "Koffing"
+    },
+    {
+      "Key": "Weezing",
+      "Value": "Weezing"
+    },
+    {
+      "Key": "Rhyhorn",
+      "Value": "Rhyhorn"
+    },
+    {
+      "Key": "Rhydon",
+      "Value": "Rhydon"
+    },
+    {
+      "Key": "Chansey",
+      "Value": "Chansey"
+    },
+    {
+      "Key": "Tangela",
+      "Value": "Tangela"
+    },
+    {
+      "Key": "Kangaskhan",
+      "Value": "Kangaskhan"
+    },
+    {
+      "Key": "Horsea",
+      "Value": "Horsea"
+    },
+    {
+      "Key": "Seadra",
+      "Value": "Seadra"
+    },
+    {
+      "Key": "Goldeen",
+      "Value": "Goldeen"
+    },
+    {
+      "Key": "Seaking",
+      "Value": "Seaking"
+    },
+    {
+      "Key": "Staryu",
+      "Value": "Staryu"
+    },
+    {
+      "Key": "Starmie",
+      "Value": "Starmie"
+    },
+    {
+      "Key": "MrMime",
+      "Value": "Mr. Mime"
+    },
+    {
+      "Key": "Scyther",
+      "Value": "Scyther"
+    },
+    {
+      "Key": "Jynx",
+      "Value": "Jynx"
+    },
+    {
+      "Key": "Electabuzz",
+      "Value": "Electabuzz"
+    },
+    {
+      "Key": "Magmar",
+      "Value": "Magmar"
+    },
+    {
+      "Key": "Pinsir",
+      "Value": "Pinsir"
+    },
+    {
+      "Key": "Tauros",
+      "Value": "Tauros"
+    },
+    {
+      "Key": "Magikarp",
+      "Value": "Magikarp"
+    },
+    {
+      "Key": "Gyarados",
+      "Value": "Gyarados"
+    },
+    {
+      "Key": "Lapras",
+      "Value": "Lapras"
+    },
+    {
+      "Key": "Ditto",
+      "Value": "Ditto"
+    },
+    {
+      "Key": "Eevee",
+      "Value": "Eevee"
+    },
+    {
+      "Key": "Vaporeon",
+      "Value": "Vaporeon"
+    },
+    {
+      "Key": "Jolteon",
+      "Value": "Jolteon"
+    },
+    {
+      "Key": "Flareon",
+      "Value": "Flareon"
+    },
+    {
+      "Key": "Porygon",
+      "Value": "Porygon"
+    },
+    {
+      "Key": "Omanyte",
+      "Value": "Omanyte"
+    },
+    {
+      "Key": "Omastar",
+      "Value": "Omastar"
+    },
+    {
+      "Key": "Kabuto",
+      "Value": "Kabuto"
+    },
+    {
+      "Key": "Kabutops",
+      "Value": "Kabutops"
+    },
+    {
+      "Key": "Aerodactyl",
+      "Value": "Aerodactyl"
+    },
+    {
+      "Key": "Snorlax",
+      "Value": "Snorlax"
+    },
+    {
+      "Key": "Articuno",
+      "Value": "Articuno"
+    },
+    {
+      "Key": "Zapdos",
+      "Value": "Zapdos"
+    },
+    {
+      "Key": "Moltres",
+      "Value": "Moltres"
+    },
+    {
+      "Key": "Dratini",
+      "Value": "Dratini"
+    },
+    {
+      "Key": "Dragonair",
+      "Value": "Dragonair"
+    },
+    {
+      "Key": "Dragonite",
+      "Value": "Dragonite"
+    },
+    {
+      "Key": "Mewtwo",
+      "Value": "Mewtwo"
+    },
+    {
+      "Key": "Mew",
+      "Value": "Mew"
+    }
   ]
-,
-  "Pokemon": [
-  ]}
+}
