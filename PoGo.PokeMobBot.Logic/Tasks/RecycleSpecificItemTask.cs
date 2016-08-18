@@ -29,8 +29,8 @@ namespace PoGo.PokeMobBot.Logic.Tasks
             if (itemsToRecycle != 0)
             {
                 cancellationToken.ThrowIfCancellationRequested();
-                await session.Client.Inventory.RecycleItem(item, itemsToRecycle);
                 session.EventDispatcher.Send(new ItemRecycledEvent { Id = item, Count = itemsToRecycle });
+                await session.Client.Inventory.RecycleItem(item, itemsToRecycle);
                 if (session.LogicSettings.Teleport)
                     await Task.Delay(session.LogicSettings.DelayRecyleItem, cancellationToken);
                 else

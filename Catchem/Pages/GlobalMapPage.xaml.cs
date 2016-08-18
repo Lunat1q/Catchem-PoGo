@@ -52,9 +52,9 @@ namespace Catchem.Pages
             pokeMap.Markers.Remove(marker);
         }
 
-        private void pokeMap_MouseWheel(object sender, MouseWheelEventArgs e)
+        public void FitTheStuff()
         {
-
+            pokeMap.ZoomAndCenterMarkers(null);
         }
     }
 }

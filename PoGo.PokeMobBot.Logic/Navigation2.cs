@@ -122,14 +122,11 @@ namespace PoGo.PokeMobBot.Logic
 	                    });
 	                    routingResponse = new RoutingResponse();
 	                }
-                    var nextPath = routingResponse?.Coordinates?.Select(item => Tuple.Create(item[1], item[0])).ToList();
-                    session.EventDispatcher.Send(new NextRouteEvent
-                    {
-                        Coords = nextPath
-	                });
+                   
                     if (routingResponse?.Coordinates != null)
 					    foreach (var item in routingResponse.Coordinates)
-	                    {
+					    {
+					        if (item == null) continue;
                             //0 = lat, 1 = long (MAYBE NOT THO?)
 	                        waypoints.Add(!session.LogicSettings.UseOpenLsRouting
 	                            ? new GeoCoordinate(item.ToArray()[1], item.ToArray()[0],
@@ -140,6 +137,15 @@ namespace PoGo.PokeMobBot.Logic
 
                 if (waypoints.Count == 0)
                     waypoints.Add(destination);
+                else if (waypoints.Count > 1)
+                {
+                    var nextPath = waypoints.Select(item => Tuple.Create(item.Latitude, item.Longitude)).ToList();
+                    session.EventDispatcher.Send(new NextRouteEvent
+                    {
+                        Coords = nextPath
+                    });
+                }
+
 
                 //var timeSinceMoveStart = DateTime.Now.Ticks;
                 //double curAcceleration = 1.66; //Lets assume we accelerate at 1.66 m/s ish. TODO: Fuzz this a bit

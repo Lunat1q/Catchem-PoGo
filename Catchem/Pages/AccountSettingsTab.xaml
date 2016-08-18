@@ -31,16 +31,14 @@
         <TabItem Header="Map &amp; Console">
             <Grid Margin="0" Background="#FFE5E5E5">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="220" />
                     <RowDefinition />
+                    <RowDefinition Height="220"/>
                 </Grid.RowDefinitions>
-                <RichTextBox x:Name="consoleBox"
-                             Background="#FF252525"
-                             Block.LineHeight="1"
-                             Foreground="#FFCDCDCD"
-                             VerticalScrollBarVisibility="Visible">
-                    <FlowDocument />
-                </RichTextBox>
+                <pages:MapPage x:Name="BotMapPage"
+                               Grid.Row="0"
+                               Width="Auto"
+                               Height="Auto"
+                               Margin="0" />
                 <GridSplitter x:Name="gridSplitter"
                               Grid.Row="1"
                               Height="3"
@@ -54,11 +52,13 @@
                         </LinearGradientBrush>
                     </GridSplitter.Background>
                 </GridSplitter>
-                <pages:MapPage x:Name="BotMapPage"
-                               Grid.Row="1"
-                               Width="Auto"
-                               Height="Auto"
-                               Margin="0,3,0,0" />
+                <RichTextBox x:Name="consoleBox"
+                             Background="#FF252525"
+                             Block.LineHeight="1"
+                             Grid.Row="1"
+                             Foreground="#FFCDCDCD"
+                             VerticalScrollBarVisibility="Visible" Margin="0,3,0,0">
+                </RichTextBox>
             </Grid>
         </TabItem>
         <TabItem Header="Information">

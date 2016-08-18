@@ -24,7 +24,7 @@ namespace PoGo.PokeMobBot.Logic
                 request.Credentials = CredentialCache.DefaultCredentials;
 
                 string responseFromServer = "";
-
+                request.Timeout = 10000;
                 using (WebResponse response = request.GetResponse())
                 {
                     Logger.Write("Got response from www.mobrouting.com", LogLevel.Debug);

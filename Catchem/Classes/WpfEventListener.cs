@@ -45,8 +45,7 @@ namespace Catchem.Classes
 
         public void HandleEvent(PlayerLevelUpEvent evt, ISession session)
         {
-            Logger.Write(
-                session.Translation.GetTranslation(TranslationString.EventLevelUpRewards, evt.Items), session: session);
+            Logger.Write("Level up! Rewards: " + evt.Items, session: session);
         }
 
         public void HandleEvent(WarnEvent evt, ISession session)

@@ -115,6 +115,8 @@
     <Compile Include="Classes\BotWindowData.cs" />
     <Compile Include="Extensions\Converters.cs" />
     <Compile Include="Extensions\Extensions.cs" />
+    <Compile Include="Extensions\GifImage.cs" />
+    <Compile Include="Extensions\PlayerMovement.cs" />
     <Compile Include="Interfaces\IBotPage.cs" />
     <Compile Include="Pages\AccountSettingsTab.xaml.cs">
       <DependentUpon>AccountSettingsTab.xaml</DependentUpon>
@@ -790,6 +792,11 @@
     <Content Include="adb\AdbWinUsbApi.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\trainer_right.gif" />
+    <None Include="Resources\trainer_left.gif" />
+    <None Include="Resources\trainer_down.gif" />
+    <None Include="Resources\trainer_top.gif" />
+    <None Include="Resources\trainer_stay.gif" />
     <Resource Include="FodyWeavers.xml" />
     <None Include="Resources\team_neutral.png" />
     <None Include="Resources\team_valor.png" />

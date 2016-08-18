@@ -28,6 +28,7 @@ using static System.String;
 using LogLevel = PoGo.PokeMobBot.Logic.Logging.LogLevel;
 using System.Reflection;
 using PoGo.PokeMobBot.Logic.API;
+// ReSharper disable PossibleLossOfFraction
 
 namespace Catchem
 {
@@ -241,8 +242,7 @@ namespace Catchem
                         Tuple.Create("Can't retrieve items list, servers are unstable or you can be banned!", Colors.Red));
                     return;
                 }
-                receiverBot.ItemList = new ObservableCollection<ItemUiData>();
-                receiverBot.ItemList.CollectionChanged += delegate { UpdateItemCollection(session); };
+                receiverBot.ItemList.Clear();
                 ((List<ItemData>) objData[0]).ForEach(x => receiverBot.ItemList.Add(new ItemUiData(x.ItemId, x.ItemId.ToInventorySource(), x.ItemId.ToInventoryName(), x.Count)));
                 if (session != CurSession) return;
 
@@ -270,8 +270,8 @@ namespace Catchem
                 botReceiver.Lat = (double)objData[0];
                 botReceiver.Lng = (double)objData[1];
 
-                botReceiver.LatStep = (botReceiver.Lat - botReceiver._lat) / (2000 / Pages.MapPage.delay);
-                botReceiver.LngStep = (botReceiver.Lng - botReceiver._lng) / (2000 / Pages.MapPage.delay);
+                botReceiver.LatStep = (botReceiver.Lat - botReceiver._lat) / (2000 / Pages.MapPage.Delay);
+                botReceiver.LngStep = (botReceiver.Lng - botReceiver._lng) / (2000 / Pages.MapPage.Delay);
 
                 botReceiver.PushNewRoutePoint(new PointLatLng(botReceiver.Lat, botReceiver.Lng));
                 if (session != CurSession)
@@ -518,6 +518,7 @@ namespace Catchem
                 session.Navigation.UpdatePositionEvent += (lat, lng, alt) => session.EventDispatcher.Send(new UpdatePositionEvent {Latitude = lat, Longitude = lng, Altitude = alt});
 
                 newBot.PokemonList.CollectionChanged += delegate { UpdatePokemonCollection(session); };
+                newBot.ItemList.CollectionChanged += delegate { UpdateItemCollection(session); };
 
                 newBot.Stats.DirtyEvent += () => { StatsOnDirtyEvent(newBot); };
 
@@ -652,6 +653,7 @@ namespace Catchem
             if (grid_pickBot.Visibility == Visibility.Visible) return;
             if (transit.SelectedIndex == 0)
             {
+                GlobalMapView.FitTheStuff();
                 transit.SelectedIndex = 1;
                 changeViewSettingsMap.Content = "Settings";
             }
@@ -758,10 +760,18 @@ namespace Catchem
 
         private void mi_RemoveBot_Click(object sender, RoutedEventArgs e)
         {
-            var bot = botsBox.SelectedItem as BotWindowData;
-            if (bot == null) return;
-            BotsCollection.Remove(bot);
-            Directory.Delete(SubPath + "\\" + bot.ProfileName, true);
+            try
+            {
+                var bot = botsBox.SelectedItem as BotWindowData;
+                if (bot == null) return;
+                BotsCollection.Remove(bot);
+                Directory.Delete(SubPath + "\\" + bot.ProfileName, true);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("There is an error while trying to delete your bot profile! ex:\r\n" + ex.Message,
+                    "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
     }
 }

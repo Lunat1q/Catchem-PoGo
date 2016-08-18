@@ -188,10 +188,10 @@ namespace Catchem.Classes
 
         public void UpdateXppH()
         {
-            if (Stats == null || Math.Abs(_ts.TotalHours) < 0.0000001)
+            if (Stats == null || Math.Abs(RealWorkH) < 0.0000001)
                 Xpph = 0;
             else
-                Xpph = (Stats.TotalExperience / _ts.TotalHours);
+                Xpph = Stats.TotalExperience / RealWorkH;
         }
 
         public void PushNewRoutePoint(PointLatLng nextPoint)
@@ -255,20 +255,6 @@ namespace Catchem.Classes
                 SnipePokemonTask.AsyncStart(Session, CancellationToken);
         }
 
-
-
-        private WebProxy InitProxy()
-        {
-            if (!GlobalSettings.Auth.UseProxy) return null;
-            var split = GlobalSettings.Auth.ProxyUri.Split(':');
-            var prox = new WebProxy(split[0], int.Parse(split[1]))
-            {
-                Credentials = new NetworkCredential(GlobalSettings.Auth.ProxyLogin, GlobalSettings.Auth.ProxyPass),
-                BypassProxyOnLocal = true
-            };
-            return prox;
-        }
-
         private async Task<bool> CheckProxy()
         {
             try
@@ -285,11 +271,11 @@ namespace Catchem.Classes
                     {
                         Logger.Write($"{otherBot.ProfileName} is already running with this proxy!", LogLevel.Info, ConsoleColor.Red, Session);
                     }
-                    client = new HttpClient(new HttpClientHandler { Proxy = InitProxy() });
+                    client = new HttpClient(new HttpClientHandler { Proxy = Session.Proxy });
                     response = await client.GetAsync("http://ipv4bot.whatismyipaddress.com/", CancellationToken);
                     var proxiedIPres = await response.Content.ReadAsStringAsync();
                     var proxiedIp = proxiedIPres == null || proxiedIPres.Equals("<nil>") ? "INVALID PROXY" : proxiedIPres;
-                    Logger.Write($"Your IP is: {unproxiedIp} / Proxy IP is: {proxiedIp}", LogLevel.Info, (unproxiedIp == proxiedIp) ? ConsoleColor.Red : ConsoleColor.Green, Session);
+                    Logger.Write($"Your IP is: {unproxiedIp} / Proxy IP is: {proxiedIp}", LogLevel.Info, unproxiedIp == proxiedIp ? ConsoleColor.Red : ConsoleColor.Green, Session);
                     if (unproxiedIp == proxiedIp || proxiedIPres == null || proxiedIPres.Equals("<nil>"))
                     {
                         Logger.Write("Your ip match! I warned you!", LogLevel.Info, ConsoleColor.Red, Session);
@@ -300,10 +286,10 @@ namespace Catchem.Classes
                     Logger.Write($"Your IP is: {unproxiedIp}", LogLevel.Info, ConsoleColor.Red, Session);
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                Logger.Write("Proxy Down?", LogLevel.Info, ConsoleColor.Red, Session);
-                return false;
+                Logger.Write("Proxy Down? Will try to interact with server anyway", LogLevel.Info, ConsoleColor.Red, Session);
+                Logger.Write("Proxy Down error: " + ex.Message, LogLevel.Debug);
             }
             return true;
         }
@@ -349,7 +335,7 @@ namespace Catchem.Classes
                     pokemon.Item1.Id,
                     pokemon.Item1.PokemonId,
                     pokemon.Item1.PokemonId.ToInventorySource(),
-                    (pokemon.Item1.Nickname == "" ? pokemon.Item1.PokemonId.ToString() : pokemon.Item1.Nickname),
+                    pokemon.Item1.Nickname == "" ? pokemon.Item1.PokemonId.ToString() : pokemon.Item1.Nickname,
                     pokemon.Item1.Cp,
                     pokemon.Item2,
                     family.FamilyId,
@@ -447,14 +433,22 @@ namespace Catchem.Classes
         {
             try
             {
-                if (!GlobalSettings.CatchSettings.PauseBotOnMaxHourlyRates || !(RealWorkH >= 1)) return;
-                if (!(Stats?.TotalPokemons / RealWorkH > GlobalSettings.CatchSettings.MaxCatchPerHour) && !(Stats?.TotalPokestops / RealWorkH > GlobalSettings.CatchSettings.MaxPokestopsPerHour)) return;
-                var stopSec = 10 * 60 + _rnd.Next(60 * 5);
+                if (!GlobalSettings.CatchSettings.PauseBotOnMaxHourlyRates || !(RealWorkH >= 1) || Stats == null ||
+                    GlobalSettings.CatchSettings.MaxCatchPerHour == 0 ||
+                    GlobalSettings.CatchSettings.MaxPokestopsPerHour == 0) return;
+                var tooMuchPokemons = Stats.TotalPokemons/RealWorkH > GlobalSettings.CatchSettings.MaxCatchPerHour;
+                var tooMuchPokestops = Stats.TotalPokestops/RealWorkH > GlobalSettings.CatchSettings.MaxPokestopsPerHour;
+                if (!tooMuchPokemons && !tooMuchPokestops) return;
+                var pokemonSec = tooMuchPokemons
+                    ? (Stats.TotalPokemons/RealWorkH - GlobalSettings.CatchSettings.MaxCatchPerHour) / GlobalSettings.CatchSettings.MaxCatchPerHour * 60 * 60 : 0;
+                var pokestopSec = tooMuchPokestops
+                    ? (Stats.TotalPokestops / RealWorkH - GlobalSettings.CatchSettings.MaxPokestopsPerHour) / GlobalSettings.CatchSettings.MaxPokestopsPerHour * 60 * 60 : 0;
+                var stopSec = 10 * 60 + _rnd.Next(60 * 5) + (int)Math.Max(pokemonSec, pokestopSec);
                 _realWorkSec += stopSec;
                 var stopMs = stopSec * 1000;
                 Session.EventDispatcher.Send(new WarnEvent
                 {
-                    Message = $"Max amount of pokemos(or pokestops)/h reached, bot will be stoped for {(stopMs / (60000)).ToString("N1")} minutes"
+                    Message = $"Max amount of pokemos {(Stats.TotalPokemons / RealWorkH).ToString("N1")} or pokestops {(Stats.TotalPokestops / RealWorkH).ToString("N1")} per hour reached, bot will be stoped for {(stopMs / 60000).ToString("N1")} minutes"
                 });
                 Stop(true);
                 _pauseCts.Dispose();

@@ -1171,4 +1171,19 @@
   <data name="team_neutral" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\team_neutral.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="trainer_down" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\trainer_down.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="trainer_left" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\trainer_left.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="trainer_right" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\trainer_right.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="trainer_stay" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\trainer_stay.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="trainer_top" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\trainer_top.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

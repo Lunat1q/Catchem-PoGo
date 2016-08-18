@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Catchem.Pages"
              xmlns:windowsPresentation="clr-namespace:GMap.NET.WindowsPresentation;assembly=GMap.NET.WindowsPresentation"
-             mc:Ignorable="d" Width="819" Height="364">
+             mc:Ignorable="d" Width="819" Height="364" MinHeight="200">
     <Grid Background="#FFF0F0F0">
         <Grid.RowDefinitions>
             <RowDefinition/>

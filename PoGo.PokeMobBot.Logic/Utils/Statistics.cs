@@ -8,8 +8,6 @@ using PoGo.PokeMobBot.Logic.Event;
 
 #endregion
 
-// ReSharper disable CyclomaticComplexity
-
 namespace PoGo.PokeMobBot.Logic.Utils
 {
     public delegate void StatisticsDirtyDelegate();
@@ -18,7 +16,7 @@ namespace PoGo.PokeMobBot.Logic.Utils
     {
         private readonly DateTime _initSessionDateTime = DateTime.Now;
 
-        public StatsExport _exportStats;
+        public StatsExport ExportStats;
 		private StatsExport _currentStats;
         private string _playerName;
         public int TotalExperience;
@@ -30,10 +28,10 @@ namespace PoGo.PokeMobBot.Logic.Utils
 
         public void Dirty(Inventory inventory)
         {
-            if (_exportStats != null)
-                _currentStats = _exportStats;
+            if (ExportStats != null)
+                _currentStats = ExportStats;
 
-            _exportStats = GetCurrentInfo(inventory);
+            ExportStats = GetCurrentInfo(inventory);
             DirtyEvent?.Invoke();
         }
 
@@ -41,9 +39,9 @@ namespace PoGo.PokeMobBot.Logic.Utils
         {
             if (_currentStats != null)
             {
-                if (_currentStats.Level < _exportStats.Level)
+                if (_currentStats.Level < ExportStats.Level)
                 {
-                    var response = session.Inventory.GetLevelUpRewards(_exportStats);
+                    var response = session.Inventory.GetLevelUpRewards(ExportStats);
                     if (response.Result.ItemsAwarded.Any())
                     {
                         session.EventDispatcher.Send(new PlayerLevelUpEvent
@@ -101,8 +99,8 @@ namespace PoGo.PokeMobBot.Logic.Utils
 
         public string GetTemplatedStats(string template, string xpTemplate)
         {
-            var xpStats = string.Format(xpTemplate, _exportStats.Level, _exportStats.HoursUntilLvl,
-                _exportStats.MinutesUntilLevel, _exportStats.CurrentXp, _exportStats.LevelupXp);
+            var xpStats = string.Format(xpTemplate, ExportStats.Level, ExportStats.HoursUntilLvl,
+                ExportStats.MinutesUntilLevel, ExportStats.CurrentXp, ExportStats.LevelupXp);
             return string.Format(template, _playerName, FormatRuntime(), xpStats, TotalExperience/GetRuntime(),
                 TotalPokemons/GetRuntime(),
                 TotalStardust, TotalPokemonsTransfered, TotalItemsRemoved);

@@ -38,10 +38,13 @@ namespace Catchem.Classes
                     cmd2.WaitForExit();
                     cmd2.Close();
                     var value = output.ToString();
-                    if (value.Contains("deamon not running") && run++ < 3)
+                    if (value.Contains("not running") && run++ < 3)
                         retry = true;
                     else
+                    {
                         field.SetValue(dd, output.ToString());
+                        retry = false;
+                    }
                     cmd2.Dispose();
                     await Task.Delay(10);
                 } while (retry);

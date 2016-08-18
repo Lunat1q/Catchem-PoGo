@@ -64,7 +64,7 @@ namespace PoGo.PokeMobBot.Logic
 
         public void HandleEvent(ItemRecycledEvent evt, ISession session)
         {
-            _stats.TotalItemsRemoved++;
+            _stats.TotalItemsRemoved += evt.Count;
             _stats.Dirty(session.Inventory);
             _stats.CheckLevelUp(session);
         }

@@ -81,6 +81,18 @@ namespace PoGo.PokeMobBot.Logic.Utils
             return new GeoCoordinate(ToDegrees(targetLatitudeRadians), ToDegrees(targetLongitudeRadians), altitude);
         }
 
+        public static double DegreeBearing(double lat1, double lon1, double lat2, double lon2)
+        // from http://stackoverflow.com/questions/2042599/direction-between-2-latitude-longitude-points-in-c-sharp
+        {
+            var dLon = ToRad(lon2 - lon1);
+            var dPhi = Math.Log(
+                Math.Tan(ToRad(lat2) / 2 + Math.PI / 4) /
+                Math.Tan(ToRad(lat1) / 2 + Math.PI / 4));
+            if (Math.Abs(dLon) > Math.PI)
+                dLon = dLon > 0 ? -(2 * Math.PI - dLon) : 2 * Math.PI + dLon;
+            return ToBearing(Math.Atan2(dLon, dPhi));
+        }
+
         public static double DegreeBearing(GeoCoordinate sourceLocation, GeoCoordinate targetLocation)
             // from http://stackoverflow.com/questions/2042599/direction-between-2-latitude-longitude-points-in-c-sharp
         {

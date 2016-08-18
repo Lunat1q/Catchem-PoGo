@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Catchem"
-             mc:Ignorable="d" Height="663.849" Width="760.945">
+             mc:Ignorable="d" Height="663.849" Width="752.945">
     <Grid RenderTransformOrigin="0.475,0.403" Background="#FFF9F9F9">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="521*"/>
@@ -86,6 +86,7 @@
                     <MenuItem x:Name="mi_maxlevelupPokemon" Header="Level Up Pokemon to Max" Click="mi_maxlevelupPokemon_Click"/>
                     <MenuItem x:Name="mi_evolvePokemon" Header="Evolve Pokemon" Click="mi_evolvePokemon_Click"/>
                     <MenuItem x:Name="mi_transferPokemon" Header="Transfer Pokemon" Click="mi_transferPokemon_Click" />
+                    <MenuItem x:Name="mi_refreshPokemonList" Header="Refresh pokemon list" Click="mi_refreshPokemonList_Click" />
                 </ContextMenu>
             </ListBox.ContextMenu>
             <ListBox.ItemsPanel>
@@ -99,6 +100,7 @@
             <ListBox.ContextMenu>
                 <ContextMenu>
                     <MenuItem x:Name="mi_recycleItem" Header="Recycle item" Click="mi_recycleItem_Click"/>
+                    <MenuItem x:Name="mi_refreshItems" Header="Refresh item list" Click="mi_refreshItems_Click" />
                 </ContextMenu>
             </ListBox.ContextMenu>
             <ListBox.Background>

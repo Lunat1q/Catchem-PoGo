@@ -12,6 +12,7 @@ using Catchem.Interfaces;
 using GMap.NET;
 using GMap.NET.WindowsPresentation;
 using PoGo.PokeMobBot.Logic.State;
+using PoGo.PokeMobBot.Logic.Utils;
 using POGOProtos.Enums;
 
 namespace Catchem.Pages
@@ -33,7 +34,8 @@ namespace Catchem.Pages
         public bool WindowClosing;
         private SettingsPage _botSettingsPage;
         private bool _loadingUi;
-        public static int delay = 25;
+        public static int Delay = 25;
+        private PlayerMovement _playerMovement = new PlayerMovement();
 
         public MapPage()
         {
@@ -89,7 +91,7 @@ namespace Catchem.Pages
                         Offset = new Point(-24, -48),
                         ZIndex = int.MaxValue
                     };
-                    addMarker(_bot.ForceMoveMarker);
+                    AddMarker(_bot.ForceMoveMarker);
                 }
                 else
                 {
@@ -108,7 +110,7 @@ namespace Catchem.Pages
             }
         }
 
-        public void addMarker(GMapMarker marker)
+        public void AddMarker(GMapMarker marker)
         {
             pokeMap.Markers.Add(marker);
             //MainWindow.BotWindow.GlobalMapView.addMarker(marker);
@@ -176,21 +178,45 @@ namespace Catchem.Pages
                             pokeMap.UpdateLayout();
                             //BotSettingsPage.UpdateCoordBoxes();
                             _playerRoute.RegenerateShape(pokeMap);
+                            UpdateMarkerDirection();
                         }
 
                         _bot._lat += _bot.LatStep;
                         _bot._lng += _bot.LngStep;
                         _playerMarker.Position = new PointLatLng(_bot._lat, _bot._lng);
                         if (Math.Abs(_bot._lat - _bot.Lat) < 0.000000001 && Math.Abs(_bot._lng - _bot.Lng) < 0.000000001)
+                        {
                             _bot.MoveRequired = false;
+                            UpdateMarkerDirection();
+                        }
                         if (_followThePlayerMarker)
                             pokeMap.Position = new PointLatLng(_bot._lat, _bot._lng);
                     }
                 }
-                await Task.Delay(delay);
+                await Task.Delay(Delay);
             }
         }
 
+        private void UpdateMarkerDirection()
+        {
+            try
+            {
+                var direction = _playerMovement.CalcDirection(_bot.MoveRequired, _bot.LatStep, _bot.LngStep);
+                if (_playerMarker.Tag == null || (MoveDirections) _playerMarker.Tag != direction)
+                {
+                    _playerMarker.Tag = direction;
+                    _playerMarker.Shape = _playerMovement.GetCurrentImage(_bot.MoveRequired, _bot.LatStep, _bot.LngStep);
+                    _playerMarker.Offset = new Point(-13, -53);
+                    _playerMarker.ZIndex = 15;
+                }
+            }
+            catch (Exception)
+            {
+                //ignore
+            }
+        }
+
+        
         private async void MarkersWorker()
         {
             while (!WindowClosing)
@@ -207,11 +233,9 @@ namespace Catchem.Pages
                                 {
                                     var marker = new GMapMarker(new PointLatLng(newMapObj.Lat, newMapObj.Lng))
                                     {
-                                        Shape = Properties.Resources.pstop.ToImage("PokeStop"),
-                                        Offset = new Point(-16, -32),
-                                        ZIndex = 5
+                                        Shape = Properties.Resources.pstop.ToImage("PokeStop"), Offset = new Point(-16, -32), ZIndex = 5
                                     };
-                                    addMarker(marker);
+                                    AddMarker(marker);
                                     _bot.MapMarkers.Add(newMapObj.Uid, marker);
                                 }
                                 break;
@@ -220,11 +244,9 @@ namespace Catchem.Pages
                                 {
                                     var marker = new GMapMarker(new PointLatLng(newMapObj.Lat, newMapObj.Lng))
                                     {
-                                        Shape = Properties.Resources.pstop_lured.ToImage("Lured PokeStop"),
-                                        Offset = new Point(-16, -32),
-                                        ZIndex = 5
+                                        Shape = Properties.Resources.pstop_lured.ToImage("Lured PokeStop"), Offset = new Point(-16, -32), ZIndex = 5
                                     };
-                                    addMarker(marker);
+                                    AddMarker(marker);
                                     _bot.MapMarkers.Add(newMapObj.Uid, marker);
                                 }
                                 break;
@@ -259,8 +281,8 @@ namespace Catchem.Pages
                 await Task.Delay(10);
             }
         }
-        #endregion
 
+        #endregion
 
         private void RemoveMarker(string uid, GMapMarker marker)
         {
@@ -271,15 +293,13 @@ namespace Catchem.Pages
 
         private void CreatePokemonMarker(NewMapObject newMapObj)
         {
-            var pokemon = (PokemonId)Enum.Parse(typeof(PokemonId), newMapObj.OName);
+            var pokemon = (PokemonId) Enum.Parse(typeof(PokemonId), newMapObj.OName);
 
             var marker = new GMapMarker(new PointLatLng(newMapObj.Lat, newMapObj.Lng))
             {
-                Shape = pokemon.ToImage(),
-                Offset = new Point(-15, -30),
-                ZIndex = 10
+                Shape = pokemon.ToImage(), Offset = new Point(-15, -30), ZIndex = 10
             };
-            addMarker(marker);
+            AddMarker(marker);
             _bot.MapMarkers.Add(newMapObj.Uid, marker);
         }
 
@@ -289,15 +309,13 @@ namespace Catchem.Pages
             {
                 _playerMarker = new GMapMarker(new PointLatLng(_bot._lat, _bot._lng))
                 {
-                    Shape = Properties.Resources.trainer.ToImage("Player"),
-                    Offset = new Point(-14, -40),
-                    ZIndex = 15
+                    Shape = Properties.Resources.trainer.ToImage("Player"), Offset = new Point(-14, -40), ZIndex = 15
                 };
-                addMarker(_playerMarker);
+                AddMarker(_playerMarker);
                 _playerRoute = _bot.PlayerRoute;
-                addMarker(_playerRoute);
+                AddMarker(_playerRoute);
                 _pathRoute = _bot.PathRoute;
-                addMarker(_pathRoute);
+                AddMarker(_pathRoute);
                 pokeMap.UpdateLayout();
                 pokeMap.Zoom--;
                 pokeMap.Zoom++;
@@ -307,7 +325,7 @@ namespace Catchem.Pages
                 _playerMarker.Position = new PointLatLng(_bot.Lat, _bot.Lng);
             }
             if (_bot.ForceMoveMarker != null && !pokeMap.Markers.Contains(_bot.ForceMoveMarker))
-                addMarker(_bot.ForceMoveMarker);
+                AddMarker(_bot.ForceMoveMarker);
         }
 
         public void LoadMarkersFromBot()
@@ -332,7 +350,7 @@ namespace Catchem.Pages
             var box = sender as CheckBox;
             if (box?.IsChecked != null)
             {
-                if ((bool)box.IsChecked)
+                if ((bool) box.IsChecked)
                 {
                     _keepPokemonsOnMap = true;
                 }
@@ -349,7 +367,7 @@ namespace Catchem.Pages
         private void mapFollowThePlayer_Checked(object sender, RoutedEventArgs e)
         {
             var box = sender as CheckBox;
-            if (box?.IsChecked != null) _followThePlayerMarker = (bool)box.IsChecked;
+            if (box?.IsChecked != null) _followThePlayerMarker = (bool) box.IsChecked;
         }
 
         private void pokeMap_MouseWheel(object sender, MouseWheelEventArgs e)
@@ -361,7 +379,16 @@ namespace Catchem.Pages
         {
             var sl = (sender as Slider);
             if (sl == null) return;
-            pokeMap.Zoom = (int)sl.Value;
+            pokeMap.Zoom = (int) sl.Value;
         }
+    }
+
+    internal enum MoveDirections
+    {
+        Top,
+        Down,
+        Left,
+        Right,
+        Stay
     }
 }

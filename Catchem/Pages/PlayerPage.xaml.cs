@@ -1,10 +1,12 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading;
 using System.Windows;
 using Catchem.Classes;
 using Catchem.Extensions;
 using Catchem.Interfaces;
+using PoGo.PokeMobBot.Logic.Event;
 using PoGo.PokeMobBot.Logic.State;
 using PoGo.PokeMobBot.Logic.Tasks;
 using POGOProtos.Enums;
@@ -205,19 +207,41 @@ namespace Catchem.Pages
                 var farmedDustH = _bot?.Ts.TotalHours < 0.001 ? "~" : ((double)dustpH).ToString("0");
                 l_Stardust_farmed.Content = $"{farmedDust} ({farmedDustH}/h)";
             }
-            l_xp.Content = _bot.Stats?._exportStats?.CurrentXp;
+            l_xp.Content = _bot.Stats?.ExportStats?.CurrentXp;
             l_xp_farmed.Content = _bot.Stats?.TotalExperience;
             l_Pokemons_farmed.Content = _bot.Stats?.TotalPokemons;
             l_Pokemons_transfered.Content = _bot.Stats?.TotalPokemonsTransfered;
             l_Pokestops_farmed.Content = _bot.Stats?.TotalPokestops;
-            l_level.Content = _bot.Stats?._exportStats?.Level;
-            l_level_nextime.Content = $"{_bot.Stats?._exportStats?.HoursUntilLvl.ToString("00")}:{_bot.Stats?._exportStats?.MinutesUntilLevel.ToString("00")}";
+            l_level.Content = _bot.Stats?.ExportStats?.Level;
+            l_level_nextime.Content = $"{_bot.Stats?.ExportStats?.HoursUntilLvl.ToString("00")}:{_bot.Stats?.ExportStats?.MinutesUntilLevel.ToString("00")}";
         }
 
         public void ClearData()
         {
             PokeListBox.ItemsSource = null;
             ItemListBox.ItemsSource = null;
+        }
+
+        private void mi_refreshPokemonList_Click(object sender, RoutedEventArgs e)
+        {
+            RefreshPokemons();
+        }
+
+        private async void RefreshPokemons()
+        {
+            Action<IEvent> action = (evt) => CurSession.EventDispatcher.Send(evt);
+            await PokemonListTask.Execute(CurSession, action);
+        }
+
+        private void mi_refreshItems_Click(object sender, RoutedEventArgs e)
+        {
+            RefreshItems();
+        }
+
+        private async void RefreshItems()
+        {
+            Action<IEvent> action = (evt) => CurSession.EventDispatcher.Send(evt);
+            await InventoryListTask.Execute(CurSession, action);
         }
     }
 }

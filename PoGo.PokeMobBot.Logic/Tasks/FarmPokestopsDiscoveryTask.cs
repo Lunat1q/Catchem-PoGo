@@ -35,6 +35,12 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                 {
                     Message = session.Translation.GetTranslation(TranslationString.FarmPokestopsNoUsableFound)
                 });
+                if (session.ForceMoveJustDone)
+                    session.ForceMoveJustDone = false;
+                if (session.ForceMoveTo != null)
+                {
+                    await ForceMoveTask.Execute(session, cancellationToken);
+                }
                 await Task.Delay(60000, cancellationToken);
                 await session.Navigation.Move(new GeoCoordinate(session.Client.CurrentLatitude + session.Client.rnd.NextInRange(-0.0001, 0.0001),
                                 session.Client.CurrentLongitude + session.Client.rnd.NextInRange(-0.0001, 0.0001)),

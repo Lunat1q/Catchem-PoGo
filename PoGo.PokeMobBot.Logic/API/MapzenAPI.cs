@@ -2,10 +2,12 @@
 using PoGo.PokeMobBot.Logic.Logging;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using PoGo.PokeMobBot.Logic.State;
 using PoGo.PokeMobBot.Logic.Utils;
 using PokemonGo.RocketAPI.Extensions;
@@ -72,6 +74,8 @@ namespace PoGo.PokeMobBot.Logic.API
         {
             try
             {
+                var stopWatch = new Stopwatch();;
+                stopWatch.Start();
                 var get = "";
                 var request = (HttpWebRequest)WebRequest.Create(httpUrl);
                 request.Proxy = _session == null ? WebRequest.GetSystemWebProxy() : _session.Proxy;
@@ -91,6 +95,9 @@ namespace PoGo.PokeMobBot.Logic.API
                 Logger.Write(json.ToString(), LogLevel.Debug);
                 Logger.Write("Altitude: " + json["height"][0], LogLevel.Debug);
 #endif
+                stopWatch.Stop();
+                if (stopWatch.ElapsedMilliseconds < 180)
+                    Task.Delay(180 - (int)stopWatch.ElapsedMilliseconds).Wait();
                 return (string)json["height"][0];
             }
             catch (Exception ex)
