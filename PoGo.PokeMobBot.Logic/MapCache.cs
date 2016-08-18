@@ -22,6 +22,7 @@ namespace PoGo.PokeMobBot.Logic
         private List<FortCacheItem> _FortDatas = new List<FortCacheItem>();
         private List<PokemonCacheItem> _MapPokemons = new List<PokemonCacheItem>();
         public IEnumerable<FortData> baseFortDatas;
+        public Dictionary<string, long> RecentlyUsedPokestops = new Dictionary<string, long>();
         
         public DateTime lastUpdateTime = DateTime.Now.Subtract(new TimeSpan(9999999));
         public int ScanDelay = 20000;
@@ -112,26 +113,47 @@ namespace PoGo.PokeMobBot.Logic
             return _FortDatas;
         }
 
-        public bool CheckPokestopUsed(FortCacheItem fort)
+        private void UsedPokestopsCleanup()
         {
             var stamp = DateTime.UtcNow.ToUnixTime();
-            return _FortDatas?.Any(x => x != null && x.Id == fort?.Id && (x.Used || x.CooldownCompleteTimestampMS > stamp)) ?? false;
+            var toRemove = RecentlyUsedPokestops?.Where(x => x.Value < stamp);
+            if (toRemove == null) return;
+            foreach (var rem in toRemove)
+            {
+                RecentlyUsedPokestops.Remove(rem.Key);
+            }
+        }
+
+        public bool CheckPokestopUsed(FortCacheItem fort)
+        {
+            UsedPokestopsCleanup();
+            var stamp = DateTime.UtcNow.ToUnixTime();
+            var check1 =
+                _FortDatas?.Any(x => x != null && x.Id == fort?.Id && (x.Used || x.CooldownCompleteTimestampMS > stamp)) ??
+                false;
+            var check2 = RecentlyUsedPokestops.ContainsKey(fort.Id);
+            return check1 || check2;
         }
 
         public void UsedPokestop(FortCacheItem stop)
         {
-            foreach(FortCacheItem result in _FortDatas)
+            var stamp = DateTime.UtcNow.AddMinutes(5).ToUnixTime();;
+            foreach (FortCacheItem result in _FortDatas)
             {
                 if (result.Id == stop.Id)
                 {
                     result.Used = true;
-                    result.CooldownCompleteTimestampMS = DateTime.UtcNow.AddMinutes(5).ToUnixTime();
+                    result.CooldownCompleteTimestampMS = stamp;
                     RuntimeSettings.lastPokeStopId = stop.Id;
                     RuntimeSettings.lastPokeStopCoordinate = new GeoCoordinate(stop.Latitude, stop.Longitude);
                     if (RuntimeSettings.TargetStopID == stop.Id)
                         RuntimeSettings.BreakOutOfPathing = true;
                 }
 
+            }
+            if (!RecentlyUsedPokestops.ContainsKey(stop.Id))
+            {
+                RecentlyUsedPokestops.Add(stop.Id, stamp);
             }
         }
 

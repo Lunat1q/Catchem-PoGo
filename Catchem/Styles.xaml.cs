@@ -9,15 +9,6 @@ namespace Catchem
 {
     public partial class Styles
     {
-        //private void btn_botStop_Click(object sender, RoutedEventArgs e)
-        //{
-        //    var btn = sender as Button;
-        //    var bot = btn?.DataContext as BotWindowData;
-        //    if (bot == null) return;
-        //    bot.Stop();
-        //    MainWindow.BotWindow.ClearPokemonData(bot);
-        //}
-
         private void btn_botStart_Click(object sender, RoutedEventArgs e)
         {
             var btn = sender as Button;
