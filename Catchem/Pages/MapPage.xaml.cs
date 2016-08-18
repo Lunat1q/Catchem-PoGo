@@ -206,7 +206,7 @@ namespace Catchem.Pages
                 {
                     _playerMarker.Tag = direction;
                     _playerMarker.Shape = _playerMovement.GetCurrentImage(_bot.MoveRequired, _bot.LatStep, _bot.LngStep);
-                    _playerMarker.Offset = new Point(-13, -53);
+                    _playerMarker.Offset = new Point(-12, -36);
                     _playerMarker.ZIndex = 15;
                 }
             }
@@ -297,7 +297,7 @@ namespace Catchem.Pages
 
             var marker = new GMapMarker(new PointLatLng(newMapObj.Lat, newMapObj.Lng))
             {
-                Shape = pokemon.ToImage(), Offset = new Point(-15, -30), ZIndex = 10
+                Shape = pokemon.ToImage(), Offset = new Point(-12, -30), ZIndex = 10
             };
             AddMarker(marker);
             _bot.MapMarkers.Add(newMapObj.Uid, marker);

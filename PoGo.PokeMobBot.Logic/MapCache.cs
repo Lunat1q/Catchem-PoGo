@@ -116,7 +116,7 @@ namespace PoGo.PokeMobBot.Logic
         private void UsedPokestopsCleanup()
         {
             var stamp = DateTime.UtcNow.ToUnixTime();
-            var toRemove = RecentlyUsedPokestops?.Where(x => x.Value < stamp);
+            var toRemove = RecentlyUsedPokestops?.Where(x => x.Value < stamp).ToList();
             if (toRemove == null) return;
             foreach (var rem in toRemove)
             {
