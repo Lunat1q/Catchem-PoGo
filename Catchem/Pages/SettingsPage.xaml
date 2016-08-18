@@ -21,7 +21,7 @@
                     <Grid Margin="0,0,0,0">
                         <ComboBox x:Name="authBox"
                                   Height="24"
-                                  Margin="95,17,10,0"
+                                  Margin="95,17,84,0"
                                   VerticalAlignment="Top"
                                   SelectionChanged="authBox_SelectionChanged" />
                         <Label x:Name="label3"
@@ -59,6 +59,13 @@
                                  Text="Username"
                                  TextChanged="loginBox_TextChanged"
                                  TextWrapping="Wrap" />
+                        <CheckBox x:Name="c_AutoStartThisProfile"
+                        	Margin="0,23,10,0"
+                        	HorizontalAlignment="Right"
+                        	VerticalAlignment="Top"
+                        	Checked="BotPropertyChanged"
+                        	Content="Autostart"
+                        	Unchecked="BotPropertyChanged" />
                     </Grid>
                 </GroupBox>
                 <GroupBox x:Name="groupBox2"

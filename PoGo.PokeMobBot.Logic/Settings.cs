@@ -1049,6 +1049,8 @@ namespace PoGo.PokeMobBot.Logic
 
         private static Random random = new Random();
 
+        public bool AutoStartThisProfile = false;
+
 
         #region Lists of pokemon and item settings
         public List<KeyValuePair<ItemId, int>> ItemRecycleFilter = new List<KeyValuePair<ItemId, int>>

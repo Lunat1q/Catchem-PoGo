@@ -528,6 +528,8 @@ namespace Catchem
                 GlobalMapView.addMarker(newBot.GlobalPlayerMarker);
 
                 BotsCollection.Add(newBot);
+                if (newBot.GlobalSettings.AutoStartThisProfile)
+                    newBot.Start();
             }
             catch (Exception ex)
             {

@@ -184,6 +184,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                     {
                         evt.FamilyCandies = caughtPokemonResponse.CaptureAward.Candy.Sum();
                     }
+                    session.MapCache.PokemonCaught(pokemon);
                 }
                 if (caughtPokemonResponse.Status == CatchPokemonResponse.Types.CatchStatus.CatchFlee)
                 {

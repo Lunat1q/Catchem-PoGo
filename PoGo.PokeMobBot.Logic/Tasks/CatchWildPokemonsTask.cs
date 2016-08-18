@@ -50,18 +50,17 @@ namespace PoGo.PokeMobBot.Logic.Tasks
             var waypoint = LocationUtils.CreateWaypoint(sourceLocation, nextWaypointDistance, nextWaypointBearing);
             for (var i = 0; i < 5; i++)
             {
-                List<PokemonCacheItem> pokemonsCaught = null;
                 await session.Navigation.Move(new GeoCoordinate(waypoint.Latitude, waypoint.Longitude),
                         session.LogicSettings.WalkingSpeedMin, session.LogicSettings.WalkingSpeedMax,
                 async () => 
                 {
                     // Catch normal map Pokemon
-                    pokemonsCaught = await CatchNearbyPokemonsTask.Execute(session, cancellationToken);
+                    await CatchNearbyPokemonsTask.Execute(session, cancellationToken);
                     //Catch Incense Pokemon
                     await CatchIncensePokemonsTask.Execute(session, cancellationToken);
                     return true;
                 }, null, cancellationToken, session, true);
-                if (pokemonsCaught?.Any(x => pokemon.SpawnPointId == x.SpawnPointId) ?? false) return;
+                if (session.MapCache.CheckPokemonCaught(pokemon.EncounterId)) return;
                 waypoint = LocationUtils.CreateWaypoint(waypoint, nextWaypointDistance, nextWaypointBearing);
             }
             

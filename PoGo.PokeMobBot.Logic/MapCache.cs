@@ -23,7 +23,8 @@ namespace PoGo.PokeMobBot.Logic
         private List<PokemonCacheItem> _MapPokemons = new List<PokemonCacheItem>();
         public IEnumerable<FortData> baseFortDatas;
         public Dictionary<string, long> RecentlyUsedPokestops = new Dictionary<string, long>();
-        
+        public Dictionary<ulong, long> RecentlyCaughtPokemons = new Dictionary<ulong, long>();
+
         public DateTime lastUpdateTime = DateTime.Now.Subtract(new TimeSpan(9999999));
         public int ScanDelay = 20000;
 
@@ -137,6 +138,30 @@ namespace PoGo.PokeMobBot.Logic
             }
         }
 
+        private void CaughtPokemonsCleanup()
+        {
+            var stamp = DateTime.UtcNow.ToUnixTime();
+            var toRemove = RecentlyCaughtPokemons?.Where(x => x.Value < stamp).ToList();
+            var removeQueue = new Queue<ulong>();
+            if (toRemove == null) return;
+            try
+            {
+                for (var i = 0; i < toRemove.Count(); i++)
+                {
+                    removeQueue.Enqueue(toRemove[i].Key);
+                }
+            }
+            catch (Exception)
+            {
+                //ignore
+            }
+            while (removeQueue.Count > 0)
+            {
+                var r = removeQueue.Dequeue();
+                RecentlyCaughtPokemons.Remove(r);
+            }
+        }
+
         public bool CheckPokestopUsed(FortCacheItem fort)
         {
             UsedPokestopsCleanup();
@@ -148,9 +173,22 @@ namespace PoGo.PokeMobBot.Logic
             return check1 || check2;
         }
 
+        public bool CheckPokemonCaught(ulong id)
+        {
+            CaughtPokemonsCleanup();
+            return RecentlyCaughtPokemons.ContainsKey(id);
+        }
+
+        public void PokemonCaught(PokemonCacheItem pokemon)
+        {
+            CaughtPokemonsCleanup();
+            if (!RecentlyCaughtPokemons.ContainsKey(pokemon.EncounterId))
+                RecentlyCaughtPokemons.Add(pokemon.EncounterId, DateTime.UtcNow.AddMinutes(15).ToUnixTime());
+        }
+
         public void UsedPokestop(FortCacheItem stop)
         {
-            var stamp = DateTime.UtcNow.AddMinutes(5).ToUnixTime();;
+            var stamp = DateTime.UtcNow.AddMinutes(5).ToUnixTime();
             foreach (FortCacheItem result in _FortDatas)
             {
                 if (result.Id == stop.Id)

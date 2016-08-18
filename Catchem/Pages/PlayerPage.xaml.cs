@@ -209,7 +209,8 @@ namespace Catchem.Pages
                 l_Stardust_farmed.Content = $"{farmedDust} ({farmedDustH}/h)";
             }
             if (_bot.Stats?.ExportStats == null) return;
-            _bot.StarDust = _bot.Stats.TotalStardust;
+            if (_bot.Stats.TotalStardust > 0)
+                _bot.StarDust = _bot.Stats.TotalStardust;
             _bot.Level = _bot.Stats.ExportStats.Level;
             l_xp.Content = _bot.Stats.ExportStats.CurrentXp;
             l_xp_farmed.Content = _bot.Stats.TotalExperience;

@@ -18,10 +18,9 @@ namespace PoGo.PokeMobBot.Logic.Tasks
 {
     public static class CatchNearbyPokemonsTask
     {
-        public static async Task<List<PokemonCacheItem>>  Execute(ISession session, CancellationToken cancellationToken)
+        public static async Task  Execute(ISession session, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
-            var caughtPokemons = new List<PokemonCacheItem>();
                 // Refresh inventory so that the player stats are fresh
             await session.Inventory.RefreshCachedInventory();
 
@@ -47,7 +46,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                     {
                         Message = session.Translation.GetTranslation(TranslationString.ZeroPokeballInv)
                     });
-                    return caughtPokemons;
+                    return;
                 }
 
                 if (session.LogicSettings.UsePokemonToNotCatchFilter &&
@@ -75,7 +74,6 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                     {
                         case EncounterResponse.Types.Status.EncounterSuccess:
                             await CatchPokemonTask.Execute(session, encounter, pokemon);
-                            caughtPokemons.Add(pokemon);
                             break;
                         case EncounterResponse.Types.Status.PokemonInventoryFull:
                             if (session.LogicSettings.TransferDuplicatePokemon)
@@ -120,7 +118,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                     await Task.Delay(session.LogicSettings.DelayBetweenPokemonCatch, cancellationToken);
                 }
             }
-            return caughtPokemons;
+            return;
         }
 
         private static async Task<List<PokemonCacheItem>> GetNearbyPokemons(ISession session)
