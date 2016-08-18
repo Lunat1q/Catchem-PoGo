@@ -168,6 +168,7 @@ namespace Catchem.Pages
             l_poke_inventory.Content = $"({_bot.PokemonList.Count}/{_bot.MaxPokemonStorageSize})";
             l_inventory.Content = $"({_bot.ItemList.Sum(x => x.Amount)}/{_bot.MaxItemStorageSize})";
             l_StarDust.Content = _bot.StartStarDust;
+            _bot.StarDust = _bot.StartStarDust;
         }
 
         public void UpdatePokemons()
@@ -207,13 +208,16 @@ namespace Catchem.Pages
                 var farmedDustH = _bot?.Ts.TotalHours < 0.001 ? "~" : ((double)dustpH).ToString("0");
                 l_Stardust_farmed.Content = $"{farmedDust} ({farmedDustH}/h)";
             }
-            l_xp.Content = _bot.Stats?.ExportStats?.CurrentXp;
-            l_xp_farmed.Content = _bot.Stats?.TotalExperience;
-            l_Pokemons_farmed.Content = _bot.Stats?.TotalPokemons;
-            l_Pokemons_transfered.Content = _bot.Stats?.TotalPokemonsTransfered;
-            l_Pokestops_farmed.Content = _bot.Stats?.TotalPokestops;
-            l_level.Content = _bot.Stats?.ExportStats?.Level;
-            l_level_nextime.Content = $"{_bot.Stats?.ExportStats?.HoursUntilLvl.ToString("00")}:{_bot.Stats?.ExportStats?.MinutesUntilLevel.ToString("00")}";
+            if (_bot.Stats?.ExportStats == null) return;
+            _bot.StarDust = _bot.Stats.TotalStardust;
+            _bot.Level = _bot.Stats.ExportStats.Level;
+            l_xp.Content = _bot.Stats.ExportStats.CurrentXp;
+            l_xp_farmed.Content = _bot.Stats.TotalExperience;
+            l_Pokemons_farmed.Content = _bot.Stats.TotalPokemons;
+            l_Pokemons_transfered.Content = _bot.Stats.TotalPokemonsTransfered;
+            l_Pokestops_farmed.Content = _bot.Stats.TotalPokestops;
+            l_level.Content = _bot.Stats.ExportStats.Level;
+            l_level_nextime.Content = $"{_bot.Stats.ExportStats.HoursUntilLvl.ToString("00")}:{_bot.Stats.ExportStats.MinutesUntilLevel.ToString("00")}";
         }
 
         public void ClearData()

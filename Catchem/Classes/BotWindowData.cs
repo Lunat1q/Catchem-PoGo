@@ -71,6 +71,8 @@ namespace Catchem.Classes
         public readonly ClientSettings Settings;
         public readonly LogicSettings Logic;
         public readonly GlobalSettings GlobalSettings;
+        private int _level;
+        private int _starDust;
         public int Coins;
         public TeamColor Team;
         public string PlayerName;
@@ -149,6 +151,26 @@ namespace Catchem.Classes
         }
 
         public GMapRoute PathRoute { get; internal set; }
+
+        public int Level
+        {
+            get { return _level; }
+            set
+            {
+                _level = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public int StarDust
+        {
+            get { return _starDust; }
+            set
+            {
+                _starDust = value;
+                OnPropertyChanged();
+            }
+        }
 
         public double LatStep, LngStep;
         internal int StartStarDust;
@@ -266,7 +288,7 @@ namespace Catchem.Classes
                 var unproxiedIp = await response.Content.ReadAsStringAsync();
                 if (GlobalSettings.Auth.UseProxy)
                 {
-                    var otherBot = MainWindow.BotsCollection.FirstOrDefault(x => x.GlobalSettings.Auth.ProxyUri.Equals(GlobalSettings.Auth.ProxyUri) && x.GlobalSettings.Auth.UseProxy && x.Started && x != this);
+                    var otherBot = MainWindow.BotsCollection.FirstOrDefault(x => x.GlobalSettings.Auth.UseProxy && x.GlobalSettings.Auth.ProxyUri.Equals(GlobalSettings.Auth.ProxyUri)  && x.Started && x != this);
                     if (otherBot != null)
                     {
                         Logger.Write($"{otherBot.ProfileName} is already running with this proxy!", LogLevel.Info, ConsoleColor.Red, Session);

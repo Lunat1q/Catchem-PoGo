@@ -147,6 +147,11 @@ namespace Catchem.Classes
             Logger.PushToUi("item_rem", session, evt.Id, evt.Count);
         }
 
+        public void HandleEvent(ItemLostEvent evt, ISession session)
+        {
+            Logger.PushToUi("item_rem", session, evt.Id, evt.Count);
+        }
+
         public void HandleEvent(EggIncubatorStatusEvent evt, ISession session)
         {
             Logger.Write(evt.WasAddedNow

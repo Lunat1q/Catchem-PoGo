@@ -57,7 +57,7 @@
                              Block.LineHeight="1"
                              Grid.Row="1"
                              Foreground="#FFCDCDCD"
-                             VerticalScrollBarVisibility="Visible" Margin="0,3,0,0">
+                             VerticalScrollBarVisibility="Visible" Margin="0,3,0,0" FontFamily="Gill Sans MT" FontSize="14">
                 </RichTextBox>
             </Grid>
         </TabItem>

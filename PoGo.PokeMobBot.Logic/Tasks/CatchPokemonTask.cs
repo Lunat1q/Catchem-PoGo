@@ -39,7 +39,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
 
                 float probability = encounter?.CaptureProbability?.CaptureProbability_[0];
 
-                var pokeball = await GetBestBall(session, encounter, probability);
+                ItemId pokeball = await GetBestBall(session, encounter, probability);
                 if (pokeball == ItemId.ItemUnknown)
                 {
                     session.EventDispatcher.Send(new NoPokeballEvent
@@ -76,6 +76,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                             encounter is EncounterResponse || encounter is IncenseEncounterResponse
                                 ? pokemon.SpawnPointId
                                 : currentFortData?.Id);
+
                 }
 
                 var distance = LocationUtils.CalculateDistanceInMeters(session.Client.CurrentLatitude,
@@ -138,6 +139,8 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                             : currentFortData.Id, pokeball,
                         normalizedRecticleSize,
                         spinModifier);
+
+                session.EventDispatcher.Send(new ItemLostEvent { Id = pokeball, Count = 1 });
 
                 var lat = encounter is EncounterResponse || encounter is IncenseEncounterResponse
                     ? pokemon.Latitude
@@ -285,6 +288,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
             if (berry == null || berry.Count <= 0)
                 return;
 
+            session.EventDispatcher.Send(new ItemLostEvent { Id = ItemId.ItemRazzBerry, Count = 1 });
             await session.Client.Encounter.UseCaptureItem(encounterId, ItemId.ItemRazzBerry, spawnPointId);
             berry.Count -= 1;
             session.EventDispatcher.Send(new UseBerryEvent {Count = berry.Count});

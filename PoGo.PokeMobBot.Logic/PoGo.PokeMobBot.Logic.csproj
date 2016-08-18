@@ -84,6 +84,7 @@
     <Compile Include="DataDumper\IDumper.cs" />
     <Compile Include="DataDumper\Dumper.cs" />
     <Compile Include="Common\Translations.cs" />
+    <Compile Include="Event\ItemLostEvent.cs" />
     <Compile Include="Event\NewVersionEvent.cs" />
     <Compile Include="Event\BotCompleteFailureEvent.cs" />
     <Compile Include="Event\DebugEvent.cs" />
