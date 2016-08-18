@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
@@ -27,6 +28,22 @@ namespace Catchem.Extensions
             else if (value.GetType() == typeof(PokemonId) && methodName == "ToBitmap")
                 return ((PokemonId)value).ToSource();
             return value;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return value;
+        }
+    }
+
+    public sealed class LoadImagesFromResource : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            var imageName = parameter as string;
+            if (value == null || imageName == null)
+                return value;
+            return (Properties.Resources.ResourceManager.GetObject(imageName, Properties.Resources.Culture) as Bitmap).LoadBitmap();
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

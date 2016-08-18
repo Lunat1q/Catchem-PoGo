@@ -26,6 +26,7 @@ namespace Catchem
             if (bot.Started)
             {
                 bot.Stop();
+                MainWindow.BotWindow.ClearPokemonData(bot);
                 btn.Background = new LinearGradientBrush
                 {
                     GradientStops = new GradientStopCollection

@@ -13,7 +13,9 @@
         </ObjectDataProvider.MethodParameters>
     </ObjectDataProvider>
     <extensions:CamelCaseConverter x:Key="CamelCaseConverter" />
+    <extensions:LoadImagesFromResource x:Key="LoadImagesFromResource" />
     <extensions:MethodToValueConverter x:Key="MethodToValueConverter" />
+    <BitmapImage x:Key="StarDustImage" UriSource="/Catchem;component/Resources/dust.png" />
     <ControlTemplate TargetType="TextBoxBase" x:Key="pogo">
         <Border CornerRadius="10" BorderThickness="1" BorderBrush="#FF5AC4B0"  Padding="5,3.5,10,0" Height="27" x:Name="Bd" Background="{TemplateBinding Panel.Background}">
             <ScrollViewer Name="PART_ContentHost" SnapsToDevicePixels="{TemplateBinding UIElement.SnapsToDevicePixels}" />
@@ -93,7 +95,7 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <Rectangle Fill="White" HorizontalAlignment="Stretch" Height="Auto" VerticalAlignment="Stretch" Width="Auto" Grid.ColumnSpan="2" Grid.RowSpan="4" RadiusX="3" RadiusY="3" Stroke="#FF00E89E"/>
-            <Button Style="{StaticResource ResourceKey=flatbutton}" x:Name="btn_botStart" Content="START" HorizontalAlignment="Right" Margin="0,0,1,1" FontFamily="BOLD" TextOptions.TextFormattingMode="Display" FontWeight="Bold" VerticalAlignment="Bottom" Width="65" Height="22" Grid.Column="1" Grid.Row="3" Click="btn_botStart_Click">
+            <Button Style="{StaticResource ResourceKey=flatbutton}" x:Name="btn_botStart" Content="START" HorizontalAlignment="Right" Margin="0,0,2,2" FontFamily="BOLD" TextOptions.TextFormattingMode="Display" FontWeight="Bold" VerticalAlignment="Bottom" Width="70" Height="24" Grid.Column="1" Grid.Row="2" Click="btn_botStart_Click" BorderThickness="1" Grid.RowSpan="2">
                 <Button.Background>
                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                         <LinearGradientBrush.RelativeTransform>
@@ -114,7 +116,7 @@
             <TextBlock Text="{Binding Xpph, FallbackValue='Xp/h: 0', StringFormat='Xp/h: {0:N0}'}" x:Name="block_botName_Copy" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Center" Height="Auto" Width="Auto" Grid.RowSpan="1" Grid.ColumnSpan="1" Foreground="#FF59C3B0" FontSize="13.333" TextAlignment="Center" Grid.Row="1" Margin="10,0,0,0"/>
             <TextBlock Text="{Binding Ts, FallbackValue='00:00:00'}" x:Name="block_botName_Copy1" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Center" Height="22" Width="Auto" Grid.RowSpan="1" Grid.ColumnSpan="1" Foreground="#FF59C3B0" FontSize="13.333" TextAlignment="Center" Grid.Row="2" Margin="10,0,0,0" Grid.Column="0"/>
             <TextBlock Text="{Binding Level, FallbackValue=Level: 0, StringFormat=Level: \{0:N0\}}" x:Name="block_botName_Copy2" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Center" Height="Auto" Width="Auto" Grid.RowSpan="1" Grid.ColumnSpan="1" Foreground="#FF59C3B0" FontSize="13.333" TextAlignment="Center" Grid.Row="1" Margin="10,0,0,0" Grid.Column="1"/>
-            <Image x:Name="image" HorizontalAlignment="Left" Height="Auto" Margin="5,1,0,2" Grid.Row="3" VerticalAlignment="Center" Width="Auto" Source="pack://siteoforigin:,,,/Resources/dust.png"/>
+            <Image Source="{Binding Converter={StaticResource LoadImagesFromResource}, ConverterParameter='dust'}" HorizontalAlignment="Left" Height="Auto" Margin="5,0,0,0" Grid.Row="3" VerticalAlignment="Center" Width="Auto" />
             <TextBlock Text="{Binding StarDust, FallbackValue=0}" x:Name="block_botName_Copy3" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Center" Height="Auto" Width="Auto" Grid.RowSpan="1" Grid.ColumnSpan="1" Foreground="#FF59C3B0" FontSize="13.333" TextAlignment="Center" Grid.Row="3" Margin="30,1,0,4" Grid.Column="0"/>
         </Grid>
     </DataTemplate>
