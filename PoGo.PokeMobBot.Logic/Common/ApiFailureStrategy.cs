@@ -30,11 +30,17 @@ namespace PoGo.PokeMobBot.Logic.Common
             }
             catch (AggregateException ae)
             {
-                throw ae.Flatten().InnerException;
+                _session.EventDispatcher.Send(new ErrorEvent
+                {
+                    Message = "APIFailureStrategy: " + ae.Flatten().InnerException.Message
+                });
             }
             catch (Exception ex)
             {
-                throw ex.InnerException;
+                _session.EventDispatcher.Send(new ErrorEvent
+                {
+                    Message = "APIFailureStrategy (Exception): " + ex.Message
+                });
             }
         }
 

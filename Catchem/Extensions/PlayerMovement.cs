@@ -20,7 +20,7 @@ namespace Catchem.Extensions
             _moveDown = new GifImage(Properties.Resources.trainer_down) { Image = { ToolTip = tt } };
             _moveLeft = new GifImage(Properties.Resources.trainer_left) { Image = { ToolTip = tt } };
             _moveRight = new GifImage(Properties.Resources.trainer_right) { Image = { ToolTip = tt } };
-            _stay = _moveLeft = new GifImage(Properties.Resources.trainer_stay) { Image = { ToolTip = tt } };
+            _stay = new GifImage(Properties.Resources.trainer_stay) { Image = { ToolTip = tt } };
         }
 
         public MoveDirections CalcDirection(bool moveRequired, double latStep, double lngStep)
@@ -60,7 +60,7 @@ namespace Catchem.Extensions
 
         public Image GetCurrentImage(bool moveRequired, double latStep, double lngStep)
         {
-            var direction = CalcDirection(moveRequired, latStep, latStep);
+            var direction = CalcDirection(moveRequired, latStep, lngStep);
             return GetImageForDirection(direction);
         }
     }

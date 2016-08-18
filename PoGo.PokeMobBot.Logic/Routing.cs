@@ -19,24 +19,24 @@ namespace PoGo.PokeMobBot.Logic
             try
             {
                 Logger.Write("Requesting routing info from MobRouting.com", LogLevel.Debug);
-                WebRequest request = WebRequest.Create(
+                var request = WebRequest.Create(
                   $"http://mobrouting.com" + $"/api/dev/gosmore.php?format=geojson&flat={start.Latitude.ToString(CultureInfo.InvariantCulture)}&flon={start.Longitude.ToString(CultureInfo.InvariantCulture)}&tlat={dest.Latitude.ToString(CultureInfo.InvariantCulture)}&tlon={dest.Longitude.ToString(CultureInfo.InvariantCulture)}&v=foot&fast=1&layer=mapnik");
                 request.Credentials = CredentialCache.DefaultCredentials;
 
-                string responseFromServer = "";
-                request.Timeout = 10000;
-                using (WebResponse response = request.GetResponse())
+                var responseFromServer = "";
+                request.Timeout = 20000;
+                using (var response = request.GetResponse())
                 {
                     Logger.Write("Got response from www.mobrouting.com", LogLevel.Debug);
                     //Console.WriteLine(((HttpWebResponse)response).StatusDescription);
-                    using (Stream dataStream = response.GetResponseStream())
-                    using (StreamReader reader = new StreamReader(dataStream))
+                    using (var dataStream = response.GetResponseStream())
+                    using (var reader = new StreamReader(dataStream))
                     {
                         responseFromServer = reader.ReadToEnd();
                     }
                 }
                 //Console.WriteLine(responseFromServer);
-                RoutingResponse responseParsed = JsonConvert.DeserializeObject<RoutingResponse>(responseFromServer);
+                var responseParsed = JsonConvert.DeserializeObject<RoutingResponse>(responseFromServer);
 
                 return responseParsed;
             }

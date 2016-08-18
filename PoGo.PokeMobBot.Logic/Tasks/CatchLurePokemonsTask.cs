@@ -30,6 +30,8 @@ namespace PoGo.PokeMobBot.Logic.Tasks
 
             var fortId = currentFortData.Id;
 
+            if (currentFortData.LureInfo == null) return;
+
             var pokemonId = currentFortData.LureInfo.ActivePokemonId;
 
             if (session.LogicSettings.UsePokemonToNotCatchFilter &&

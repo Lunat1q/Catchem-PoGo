@@ -117,10 +117,23 @@ namespace PoGo.PokeMobBot.Logic
         {
             var stamp = DateTime.UtcNow.ToUnixTime();
             var toRemove = RecentlyUsedPokestops?.Where(x => x.Value < stamp).ToList();
+            var removeQueue = new Queue<string>();
             if (toRemove == null) return;
-            foreach (var rem in toRemove)
+            try
             {
-                RecentlyUsedPokestops.Remove(rem.Key);
+                for (var i = 0; i < toRemove.Count(); i++)
+                {
+                    removeQueue.Enqueue(toRemove[i].Key);
+                }
+            }
+            catch (Exception)
+            {
+                //ignore
+            }
+            while (removeQueue.Count > 0)
+            {
+                var r = removeQueue.Dequeue();
+                RecentlyUsedPokestops.Remove(r);
             }
         }
 
