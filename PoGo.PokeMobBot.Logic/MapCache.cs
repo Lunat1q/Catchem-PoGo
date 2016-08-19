@@ -106,7 +106,7 @@ namespace PoGo.PokeMobBot.Logic
 
         public async Task<List<FortCacheItem>> FortDatas(ISession session)
         {
-            if (DateTime.Now.Subtract(lastUpdateTime).TotalMilliseconds > ScanDelay)
+            if (DateTime.Now.Subtract(lastUpdateTime).TotalMilliseconds > ScanDelay || _FortDatas.Count == 0)
             {
                 await UpdateMapDatas(session);
             }

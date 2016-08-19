@@ -1065,7 +1065,7 @@
                 </GroupBox>
                 <GroupBox x:Name="groupBox3_Copy"
                           Grid.Column="1"
-                          Height="502"
+                          Height="509"
                           Margin="5,668,5,0"
                           VerticalAlignment="Top"
                           Header="Device Info">
@@ -1258,26 +1258,63 @@
                                  TextWrapping="Wrap" />
                         <Button x:Name="b_getDataFromRealPhone"
                                 Grid.Column="1"
-                                Height="22"
+                                Height="29"
                                 Margin="10,455,10,0"
                                 VerticalAlignment="Top"
                                 Click="b_getDataFromRealPhone_Click"
-                                Content="Get Data from Your Android" />
+                                Content="Get Data from Your Android"
+                                FontFamily="BOLD"
+                                FontWeight="Bold"
+                                Style="{StaticResource ResourceKey=flatbutton}"
+                                TextOptions.TextFormattingMode="Display" Width="205">
+                            <Button.Background>
+                                <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                                    <LinearGradientBrush.RelativeTransform>
+                                        <TransformGroup>
+                                            <ScaleTransform CenterX="0.5" CenterY="0.5" />
+                                            <SkewTransform CenterX="0.5" CenterY="0.5" />
+                                            <RotateTransform Angle="90" CenterX="0.5" CenterY="0.5" />
+                                            <TranslateTransform />
+                                        </TransformGroup>
+                                    </LinearGradientBrush.RelativeTransform>
+                                    <GradientStop Color="#FF03A419" />
+                                    <GradientStop Offset="1" Color="#FF02B8A7" />
+                                </LinearGradientBrush>
+                            </Button.Background>
+                        </Button>
                         <Button x:Name="b_generateRandomDeviceId"
                                 Grid.Column="1"
                                 Width="62"
-                                Height="22"
-                                Margin="0,17,10,0"
+                                Height="29"
+                                Margin="0,12,10,0"
                                 HorizontalAlignment="Right"
                                 VerticalAlignment="Top"
                                 Click="b_generateRandomDeviceId_Click"
-                                Content="Random" />
-
+                                Content="Random"
+                                FontFamily="BOLD"
+                                FontWeight="Bold"
+                                Style="{StaticResource ResourceKey=flatbutton}"
+                                TextOptions.TextFormattingMode="Display">
+                            <Button.Background>
+                                <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                                    <LinearGradientBrush.RelativeTransform>
+                                        <TransformGroup>
+                                            <ScaleTransform CenterX="0.5" CenterY="0.5" />
+                                            <SkewTransform CenterX="0.5" CenterY="0.5" />
+                                            <RotateTransform Angle="90" CenterX="0.5" CenterY="0.5" />
+                                            <TranslateTransform />
+                                        </TransformGroup>
+                                    </LinearGradientBrush.RelativeTransform>
+                                    <GradientStop Offset="0" Color="#FF07D8E2" />
+                                    <GradientStop Offset="1" Color="#FF008E95" />
+                                </LinearGradientBrush>
+                            </Button.Background>
+                        </Button>
                     </Grid>
                 </GroupBox>
                 <GroupBox x:Name="groupBox4_Copy2"
                           Height="656"
-                          Margin="5,1170,5,0"
+                          Margin="5,1177,5,0"
                           VerticalAlignment="Top"
                           Header="Delays"
                           RenderTransformOrigin="0.479,0.565" Grid.Column="1">
@@ -1540,7 +1577,7 @@
                         Grid.Column="1"
                         Width="110"
                         Height="30"
-                        Margin="0,1831,10,0"
+                        Margin="0,1838,10,0"
                         HorizontalAlignment="Right"
                         VerticalAlignment="Top"
                         Click="btn_SaveBot_Click"

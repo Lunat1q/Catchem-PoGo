@@ -197,6 +197,7 @@
     <Compile Include="Utils\JitterUtils.cs" />
     <Compile Include="Utils\LocationUtils.cs" />
     <Compile Include="Utils\PhoneGenerator.cs" />
+    <Compile Include="Utils\RoutingUtils.cs" />
     <Compile Include="Utils\SerializeUtils.cs" />
     <Compile Include="Utils\Statistics.cs" />
     <Compile Include="Utils\StringUtils.cs" />

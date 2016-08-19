@@ -251,7 +251,7 @@ namespace Catchem.Classes
             _cts.Cancel();
             WipeData();
             _ts = new TimeSpan();
-            _started = false;
+            Started = false;
             ErrorsCount = 0;
             if (!soft)
                 _realWorkSec = 0;
@@ -260,7 +260,7 @@ namespace Catchem.Classes
         public async void Start()
         {
             if (_started) return;
-            _started = true;
+            Started = true;
             _pauseCts.Cancel();
             _cts.Dispose();
             _cts = new CancellationTokenSource();
@@ -475,12 +475,12 @@ namespace Catchem.Classes
                 var pokestopSec = tooMuchPokestops
                     ? (Stats.TotalPokestops / RealWorkH - GlobalSettings.CatchSettings.MaxPokestopsPerHour) / GlobalSettings.CatchSettings.MaxPokestopsPerHour * 60 * 60 : 0;
                 var stopSec = 10 * 60 + _rnd.Next(60 * 5) + (int)Math.Max(pokemonSec, pokestopSec);
-                _realWorkSec += stopSec;
                 var stopMs = stopSec * 1000;
                 Session.EventDispatcher.Send(new WarnEvent
                 {
                     Message = $"Max amount of pokemos {(Stats.TotalPokemons / RealWorkH).ToString("N1")} or pokestops {(Stats.TotalPokestops / RealWorkH).ToString("N1")} per hour reached, bot will be stoped for {(stopMs / 60000).ToString("N1")} minutes"
                 });
+                _realWorkSec += stopSec;
                 Stop(true);
                 _pauseCts.Dispose();
                 _pauseCts = new CancellationTokenSource();

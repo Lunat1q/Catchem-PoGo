@@ -1,6 +1,10 @@
 ﻿using System;
+using System.Globalization;
+using System.Linq;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Web;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -74,13 +78,42 @@ namespace Catchem.Pages
 
         private void pokeMap_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
+            if (_bot == null) return;
             var mousePos = e.GetPosition(pokeMap);
             //Getting real coordinates from mouse click
             var mapPos = pokeMap.FromLocalToLatLng((int)mousePos.X, (int)mousePos.Y);
             var lat = mapPos.Lat;
             var lng = mapPos.Lng;
 
-            if (_bot == null) return;
+            //TEST ROUTING
+            //var startLat = Math.Round(_bot.Lat, 2);
+            //var startLng = Math.Round(_bot.Lng, 2);
+
+            //var top = (startLat + 0.1).ToString(CultureInfo.InvariantCulture);
+            //var bot = (startLat - 0.1).ToString(CultureInfo.InvariantCulture);
+            //var left = (startLng - 0.1).ToString(CultureInfo.InvariantCulture);
+            //var right = (startLng + 0.1).ToString(CultureInfo.InvariantCulture);
+
+            //var routerDb = new RouterDb();
+            //Router router = new Router(routerDb);
+            //var apiRequest = (HttpWebRequest)WebRequest.Create($"http://overpass.osm.rambler.ru/cgi/xapi_meta?*[bbox={left},{bot},{right},{top}]");
+            //apiRequest.Proxy = WebRequest.DefaultWebProxy;
+            //apiRequest.Proxy.Credentials = CredentialCache.DefaultCredentials;
+            //var res = (HttpWebResponse)apiRequest.GetResponse();
+            //using (var urlStream = res.GetResponseStream())
+            //{
+            //    // create source stream.
+            //    var source = new XmlOsmStreamSource(urlStream);
+
+            //    routerDb.LoadOsmData(source, Vehicle.Pedestrian);
+            //}
+            //// calculate a route.
+            //var route = router.Calculate(Vehicle.Pedestrian.Fastest(),
+            //    (float)_bot.Lat, (float)_bot.Lng, (float)lat, (float)lng);
+            //var geoJson = route.ToGeoJson();
+
+
+
             if (_bot.Started)
             {
                 if (_bot.ForceMoveMarker == null)
