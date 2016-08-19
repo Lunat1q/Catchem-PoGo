@@ -56,7 +56,7 @@ namespace PoGo.PokeMobBot.Logic.Utils
 
 
             //If all locations are handled, stop the engine and return the result
-            while (handledLocations.Count <= amountToVisit)
+            while (handledLocations.Count <= amountToVisit && handledLocations.Count <= Locations.Count())
             {
                 //Order the locations
                 var shortestLocations = (from s in shortestPaths

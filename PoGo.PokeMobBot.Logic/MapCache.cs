@@ -35,13 +35,13 @@ namespace PoGo.PokeMobBot.Logic
             var mapObjects = await session.Client.Map.GetMapObjects();
 
             // Wasn't sure how to make this pretty. Edit as needed.
-            var pokeStops = mapObjects.MapCells.SelectMany(i => i.Forts);
+            var pokeStops = mapObjects.Item1.MapCells.SelectMany(i => i.Forts);
             session.EventDispatcher.Send(new PokeStopListEvent { Forts = pokeStops.ToList() });
 
             // Wasn't sure how to make this pretty. Edit as needed.
             if (session.LogicSettings.Teleport)
             {
-                pokeStops = mapObjects.MapCells.SelectMany(i => i.Forts)
+                pokeStops = mapObjects.Item1.MapCells.SelectMany(i => i.Forts)
                     .Where(
                         i =>
                             i.Type == FortType.Checkpoint &&
@@ -54,7 +54,7 @@ namespace PoGo.PokeMobBot.Logic
             }
             else
             {
-                pokeStops = mapObjects.MapCells.SelectMany(i => i.Forts)
+                pokeStops = mapObjects.Item1.MapCells.SelectMany(i => i.Forts)
                     .Where(
                         i =>
                             i.Type == FortType.Checkpoint &&
@@ -77,7 +77,7 @@ namespace PoGo.PokeMobBot.Logic
 
             #region "Pokemon"
 
-            var pokemons = mapObjects.MapCells.SelectMany(i => i.CatchablePokemons)
+            var pokemons = mapObjects.Item1.MapCells.SelectMany(i => i.CatchablePokemons)
                 .OrderBy(
                     i =>
                         LocationUtils.CalculateDistanceInMeters(session.Client.CurrentLatitude,

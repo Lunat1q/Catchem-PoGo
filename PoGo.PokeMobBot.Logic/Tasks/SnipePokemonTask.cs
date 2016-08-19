@@ -285,7 +285,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
 
             var mapObjects = session.Client.Map.GetMapObjects().Result;
             var catchablePokemon =
-                mapObjects.MapCells.SelectMany(q => q.CatchablePokemons)
+                mapObjects.Item1.MapCells.SelectMany(q => q.CatchablePokemons)
                     .Where(q => pokemonIds.Contains(q.PokemonId))
                     .ToList();
 

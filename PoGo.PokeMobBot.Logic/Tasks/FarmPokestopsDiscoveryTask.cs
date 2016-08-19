@@ -64,9 +64,14 @@ namespace PoGo.PokeMobBot.Logic.Tasks
 
             session.EventDispatcher.Send(new PokeStopListEvent {Forts = pokestopList.Select(x=>x.BaseFortData)});
 
-            var closestPokestop = pokestopList.OrderBy(i => LocationUtils.CalculateDistanceInMeters(session.Client.CurrentLatitude,
-                              session.Client.CurrentLongitude, i.Latitude, i.Longitude)).First(x => !session.MapCache.CheckPokestopUsed(x));
-            var bestRoute = RoutingUtils.GetBestRoute(closestPokestop, pokestopList, 20);
+            if (pokestopList.Any())
+            {
+                var closestPokestop = pokestopList.OrderBy(
+                    i => LocationUtils.CalculateDistanceInMeters(session.Client.CurrentLatitude,
+                        session.Client.CurrentLongitude, i.Latitude, i.Longitude))
+                    .First(x => !session.MapCache.CheckPokestopUsed(x));
+                var bestRoute = RoutingUtils.GetBestRoute(closestPokestop, pokestopList, 20);
+            }
 
             while (pokestopList.Any())
             {
@@ -225,7 +230,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
 
             List<FortCacheItem> pokeStops = await session.MapCache.FortDatas(session);
 
-            session.EventDispatcher.Send(new PokeStopListEvent { Forts = session.MapCache.baseFortDatas.ToList() });
+            //session.EventDispatcher.Send(new PokeStopListEvent { Forts = session.MapCache.baseFortDatas.ToList() });
 
             // Wasn't sure how to make this pretty. Edit as needed.
             if (session.LogicSettings.Teleport)
