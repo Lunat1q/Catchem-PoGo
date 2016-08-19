@@ -37,38 +37,44 @@ namespace Catchem.Pages
             UpdateRunTimeData();
         }
 
+        private void DoPresorting()
+        {
+            PokeListBox.Items.SortDescriptions.Clear();
+            PokeListBox.SelectedItems.Clear();
+        }
+
         private void SortByCpClick(object sender, RoutedEventArgs e)
         {
             if (_bot == null || _loadingUi) return;
-            PokeListBox.Items.SortDescriptions.Clear();
+            DoPresorting();
             PokeListBox.Items.SortDescriptions.Add(new SortDescription("Cp", ListSortDirection.Descending));
         }
 
         private void sortById_Click(object sender, RoutedEventArgs e)
         {
             if (_bot == null || _loadingUi) return;
-            PokeListBox.Items.SortDescriptions.Clear();
+            DoPresorting();
             PokeListBox.Items.SortDescriptions.Add(new SortDescription("PokemonId", ListSortDirection.Ascending));
         }
 
         private void sortByCatch_Click(object sender, RoutedEventArgs e)
         {
             if (_bot == null || _loadingUi) return;
-            PokeListBox.Items.SortDescriptions.Clear();
+            DoPresorting();
             PokeListBox.Items.SortDescriptions.Add(new SortDescription("Timestamp", ListSortDirection.Ascending));
         }
 
         private void SortByIvClick(object sender, RoutedEventArgs e)
         {
             if (_bot == null || _loadingUi) return;
-            PokeListBox.Items.SortDescriptions.Clear();
+            DoPresorting();
             PokeListBox.Items.SortDescriptions.Add(new SortDescription("Iv", ListSortDirection.Descending));
         }
 
         private void sortByAz_Click(object sender, RoutedEventArgs e)
         {
             if (_bot == null || _loadingUi) return;
-            PokeListBox.Items.SortDescriptions.Clear();
+            DoPresorting();
             PokeListBox.Items.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
         }
 

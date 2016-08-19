@@ -312,7 +312,7 @@
                           VerticalAlignment="Top"
                           Header="Snipe"
                           IsEnabled="False"
-                          RenderTransformOrigin="0.479,0.565">
+                          RenderTransformOrigin="0.479,0.565" Visibility="Collapsed">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="181*" />
