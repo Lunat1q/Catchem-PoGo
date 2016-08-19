@@ -32,7 +32,7 @@ namespace PoGo.PokeMobBot.Logic
         public async Task UpdateMapDatas(ISession session)
         {
             #region "Forts"
-            var mapObjects = await session.Client.Map.GetMapObjects();
+            var mapObjects = await session.Client.Map.GetMapObjectsTuple();
 
             // Wasn't sure how to make this pretty. Edit as needed.
             var pokeStops = mapObjects.Item1.MapCells.SelectMany(i => i.Forts);

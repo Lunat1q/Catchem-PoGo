@@ -1,7 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using C5;
 using GeoCoordinatePortable;
+using static System.Double;
 
 namespace PoGo.PokeMobBot.Logic.Utils
 {
@@ -10,132 +11,207 @@ namespace PoGo.PokeMobBot.Logic.Utils
         public static List<FortCacheItem> GetBestRoute(FortCacheItem startingPokestop,
             IEnumerable<FortCacheItem> pokestopsList, int amountToVisit)
         {
-            var routingEngine = new RouteEngine(pokestopsList);
-            var route = routingEngine.CalculateMinCost(startingPokestop, amountToVisit).Keys.ToList();
+            var map = new MapMatrix(pokestopsList, startingPokestop, amountToVisit);
+            var route = map.Optimize();
             return route;
         }
     }
 
-    public class RouteEngine
+    public class MapMatrix
     {
-        public IEnumerable<FortCacheItem> Locations { get; set; }
+        public FortCacheItem[] Forts;
+        private readonly double[,] _fortsDistance;
+        private readonly double[,] _newFortsDistance;
+        private bool LimitedVisit => _fortsToVisit > 0;
+        private readonly int _fortsToVisit;
+        private int[] _opt;
+        private double[] _rowMin;
+        private double[] _colMin;
+        private int _size;
+        private bool _nearestNeigh;
 
-        public List<Connection> Connections { get; set; }
+        private int[] _currentRoute = new [] {0};
 
-        public RouteEngine(IEnumerable<FortCacheItem> locs)
+        public MapMatrix(IEnumerable<FortCacheItem> forts, FortCacheItem fortToStart, int fortsToVisit = 0, bool nearestNeigh = true)
         {
-            Connections = new List<Connection>();
-            Locations = locs.ToList();
-            foreach (var loc in Locations)
+            Forts = forts.ToArray();
+            _size = Forts.Length;
+            _nearestNeigh = nearestNeigh;
+            _fortsDistance = new double[_size,_size];
+            _newFortsDistance = new double[_size, _size];
+            for (var i = 0; i < Forts.Length; i++)
             {
-                var allOthersLocations = Locations.Where(x => x != loc);
-                foreach (var otherLoc in allOthersLocations)
+                for (var j = 0; j < Forts.Length; j++)
                 {
-                    Connections.Add(new Connection(loc, otherLoc));
+                    if (i != j)
+                    {
+                        _fortsDistance[j, i] = _fortsDistance[i, j] = LocationUtils.CalculateDistanceInMeters(Forts[i].Latitude,
+                            Forts[i].Longitude,
+                            Forts[j].Latitude, Forts[j].Longitude);
+                    }
+                    else
+                    {
+                        _fortsDistance[j, i] = PositiveInfinity;
+                    }
                 }
             }
+            if (_fortsToVisit < _size)
+                _fortsToVisit = fortsToVisit;
+
+            _opt = LimitedVisit ? new int[_fortsToVisit] : new int[_size];
+            _opt[0] = Forts.ToList().IndexOf(fortToStart);
+            _opt = ResetOpt(_opt, 1);
         }
 
-        /// <summary>
-        /// Calculates the shortest route to all the other pokestops
-        /// </summary>
-        /// <param name="startLocation">starting pokestop</param>
-        /// <param name="amountToVisit">now many you want to visit</param>
-        /// <returns>List of all locations and their shortest route</returns>
-        public Dictionary<FortCacheItem, Route> CalculateMinCost(FortCacheItem startLocation, int amountToVisit)
+        public List<FortCacheItem> OptimizeAll()
         {
-            //Initialise a new empty route list
-            //Initialise a new empty handled locations list
-            var handledLocations = new List<FortCacheItem>();
-
-            //Initialise the new routes. the constructor will set the route Distance to in.max
-            var shortestPaths = Locations.ToDictionary(location => location, location => new Route(location.Id));
-
-            //The startPosition has a Distance 0. 
-            shortestPaths[startLocation].Cost = 0;
-
-
-            //If all locations are handled, stop the engine and return the result
-            while (handledLocations.Count <= amountToVisit && handledLocations.Count <= Locations.Count())
+            var result = new List<FortCacheItem>();
+            _rowMin = new double[_size];
+            
+            for (var i = 0; i < _size; i++)
             {
-                //Order the locations
-                var shortestLocations = (from s in shortestPaths
-                                         orderby s.Value.Cost
-                                         select s.Key).ToList();
-
-
-                FortCacheItem locationToProcess = null;
-
-                //Search for the nearest location that isn't handled
-                foreach (var location in shortestLocations)
+                _rowMin[i] = _fortsDistance[i, 0];
+                for (var j = 0; j < _size; j++)
                 {
-                    if (!handledLocations.Contains(location))
+                    if (i != j)
+                        if (_rowMin[i] > _fortsDistance[i, j])
+                            _rowMin[i] = _fortsDistance[i, j];
+                }
+            }
+            for (var i = 0; i < _size; i++)
+            {
+                for (var j = 0; j < _size; j++)
+                {
+                    _newFortsDistance[i, j] = _fortsDistance[i, j] - _rowMin[i];
+                }
+            }
+            _colMin = new double[_size];
+            for (var i = 0; i < _size; i++)
+            {
+                _colMin[i] = _newFortsDistance[0, i];
+                for (var j = 0; j < _size; j++)
+                {
+                    if (i != j)
+                        if (_colMin[i] > _newFortsDistance[j, i])
+                            _colMin[i] = _newFortsDistance[j, i];
+                }
+            }
+            for (var i = 0; i < _size; i++)
+            {
+                for (var j = 0; j < _size; j++)
+                {
+                    _newFortsDistance[j, i] = _newFortsDistance[j, i] - _colMin[i];
+                }
+            }
+
+            //NOT IMPLEMENTED
+
+            return result;
+        }
+
+        public List<FortCacheItem> Optimize()
+        {
+            if (_nearestNeigh)
+                return OptimizeNearest();
+
+            return LimitedVisit ? OptimizePart() : OptimizeAll();
+        }
+
+        private List<FortCacheItem> OptimizeNearest()
+        {
+            for (var i = 1; i < _opt.Length; i++)
+            {
+                var curDist = double.MaxValue;
+                for (var j = 0; j < _size; j++)
+                {
+                    if (_opt.Contains(j)) continue;
+                    if (curDist < _fortsDistance[_opt[i - 1], j]) continue;
+                    curDist = _fortsDistance[_opt[i - 1], j];
+                    _opt[i] = j;
+                }
+            }
+
+            return _opt.Select(t => Forts[t]).ToList();
+        }
+
+        private List<FortCacheItem> OptimizePart()
+        {
+            for (int i = 1; i < _opt.Length; i++)
+            {
+                for (int j = 0; j < _size; j++)
+                {
+                    if (!_opt.Contains(j))
                     {
-                        //If the cost equals int.max, there are no more possible connections to the remaining locations
-                        if (Math.Abs(shortestPaths[location].Cost - float.MaxValue) < 0.1)
-                            return shortestPaths;
-                        locationToProcess = location;
+                        _opt[i] = j;
                         break;
                     }
                 }
-
-                //Select all connections where the startposition is the location to Process
-                var selectedConnections = from c in Connections
-                                          where c.A == locationToProcess
-                                          select c;
-
-                //Iterate through all connections and search for a connection which is shorter
-                foreach (var conn in selectedConnections)
-                {
-                    if (shortestPaths[conn.B].Cost <= conn.Distance + shortestPaths[conn.A].Cost) continue;
-                    shortestPaths[conn.B].Connections = shortestPaths[conn.A].Connections.ToList();
-                    shortestPaths[conn.B].Connections.Add(conn);
-                    shortestPaths[conn.B].Cost = conn.Distance + shortestPaths[conn.A].Cost;
-                }
-                //Add the location to the list of processed locations
-                handledLocations.Add(locationToProcess);
             }
+            if (_opt[0] == _size - 1)
+                _size--;
+            var lastHit = false;
+            var opt = new int[_opt.Length];
+             _opt.CopyTo(opt, 0);
+            var optDist = CalcDist(opt);
+            int curIndx = _opt.Length - 1;
+            while (!lastHit)
+            {
+                if (opt[curIndx] == _size - 1 || opt.Contains(_size - 1))
+                {
+                    curIndx--;
+                    if (curIndx == 0) break;
+                    opt = ResetOpt(opt, curIndx + 1);
+                    continue;
+                }
+                for (int i = opt[curIndx] + 1; i < _size; i++)
+                {
+                    if (!opt.Contains(i))
+                    {
+                        opt[curIndx] = i;
+                        if (curIndx == _opt.Length - 1 || _opt.Contains(_size - 1))
+                        {
+                            var curDist = CalcDist(opt);
+                            if (optDist > curDist)
+                            {
+                                optDist = curDist;
+                                opt.CopyTo(_opt,0);
+                            }
+                        }
+                        else
+                        {
+                            curIndx++;
+                            break;
+                        }
+                    }
+                }
 
+                if (opt[1] == _size - 1)
+                    lastHit = true;
+            }
+            return _opt.Select(t => Forts[t]).ToList();
+        }
 
-            return shortestPaths;
+        private double CalcDist(int[] opt)
+        {
+            double res = 0;
+            for (var i = 0; i < opt.Length - 1; i++)
+            {
+                if (opt[i + 1] == -1) return MaxValue;
+                res += _fortsDistance[opt[i], opt[i + 1]];
+            }
+            return res;
+        }
+
+        public int[] ResetOpt(int[] opt, int indx)
+        {
+            for (var i = indx; i < opt.Length; i++)
+            {
+                opt[i] = -1;
+            }
+            return opt;
         }
     }
+    
 
-    public class Route
-    {
-        private readonly string _identifier;
-
-        public Route(string identifier)
-        {
-            Cost = float.MaxValue;
-            Connections = new List<Connection>();
-            _identifier = identifier;
-        }
-
-        public List<Connection> Connections { get; set; }
-
-        public float Cost { get; set; }
-
-        public override string ToString()
-        {
-            return "Id:" + _identifier + " Cost:" + Cost;
-        }
-    }
-
-    public class Connection
-    {
-        public Connection(FortCacheItem a, FortCacheItem b)
-        {
-            A = a;
-            B = b;
-            Distance = (float)LocationUtils.CalculateDistanceInMeters(new GeoCoordinate(a.Latitude, a.Longitude),
-                new GeoCoordinate(b.Latitude, b.Longitude));
-        }
-
-        public FortCacheItem B { get; set; }
-
-        public FortCacheItem A { get; set; }
-
-        public float Distance { get; internal set; }
-    }
 }
+

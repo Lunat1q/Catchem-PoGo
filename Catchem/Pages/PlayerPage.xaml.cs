@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Threading;
@@ -73,35 +74,33 @@ namespace Catchem.Pages
 
         private void mi_evolvePokemon_Click(object sender, RoutedEventArgs e)
         {
-            if (PokeListBox.SelectedIndex == -1 || !_bot.Started) return;
-            var pokemon = GetSelectedPokemon();
-            if (pokemon == null) return;
-            EvolvePokemon(CurSession, pokemon);
+            if (_bot == null || PokeListBox.SelectedIndex == -1 || !_bot.Started) return;
+            var pokemonToEvolve = GetMultipleSelectedPokemon();
+            if (pokemonToEvolve == null) return;
+            EvolvePokemon(CurSession, pokemonToEvolve);
         }
 
         private void mi_transferPokemon_Click(object sender, RoutedEventArgs e)
         {
-            if (PokeListBox.SelectedIndex == -1 || !_bot.Started) return;
-            var pokemon = GetSelectedPokemon();
-            if (pokemon == null) return;
-            TransferPokemon(CurSession, pokemon);
+            if (_bot == null || PokeListBox.SelectedIndex == -1 || !_bot.Started) return;
+            var pokemonToTransfer = GetMultipleSelectedPokemon();
+            if (pokemonToTransfer == null) return;
+                TransferPokemon(CurSession, pokemonToTransfer);
         }
 
         private void mi_levelupPokemon_Click(object sender, RoutedEventArgs e)
         {
-            if (PokeListBox.SelectedIndex == -1 || !_bot.Started) return;
-            var pokemon = GetSelectedPokemon();
-            if (pokemon == null) return;
-            LevelUpPokemon(CurSession, pokemon);
-            UpdateRunTimeData();
+            if (_bot == null || PokeListBox.SelectedIndex == -1 || !_bot.Started) return;
+            var pokemonToLevel = GetMultipleSelectedPokemon();
+            if (pokemonToLevel == null) return;
+            LevelUpPokemon(CurSession, pokemonToLevel);
         }
         private void mi_maxlevelupPokemon_Click(object sender, RoutedEventArgs e)
         {
-            if (PokeListBox.SelectedIndex == -1 || !_bot.Started) return;
-            var pokemon = GetSelectedPokemon();
-            if (pokemon == null) return;
-            LevelUpPokemon(CurSession, pokemon, true);
-            UpdateRunTimeData();
+            if (_bot == null || PokeListBox.SelectedIndex == -1 || !_bot.Started) return;
+            var pokemonToLevel = GetMultipleSelectedPokemon();
+            if (pokemonToLevel == null) return;
+            LevelUpPokemon(CurSession, pokemonToLevel, true);
         }
 
         private void mi_recycleItem_Click(object sender, RoutedEventArgs e)
@@ -116,22 +115,43 @@ namespace Catchem.Pages
                 RecycleItem(CurSession, item, amount, _bot.CancellationToken);
         }
 
-        private static async void EvolvePokemon(ISession session, PokemonUiData pokemon)
+        private async void EvolvePokemon(ISession session, Queue<PokemonUiData> pokemonQueue)
         {
-            await EvolveSpecificPokemonTask.Execute(session, pokemon.Id);
+            if (pokemonQueue == null) return;
+            PokeListBox.IsEnabled = false;
+            while (pokemonQueue.Count > 0)
+            {
+                var pokemon = pokemonQueue.Dequeue();
+                await EvolveSpecificPokemonTask.Execute(session, pokemon.Id);
+            }
+            PokeListBox.IsEnabled = true;
         }
 
-        private static async void LevelUpPokemon(ISession session, PokemonUiData pokemon, bool toMax = false)
+        private async void LevelUpPokemon(ISession session, Queue<PokemonUiData> pokemonQueue, bool toMax = false)
         {
-            await LevelUpSpecificPokemonTask.Execute(session, pokemon.Id, toMax);
+            if (pokemonQueue == null) return;
+            PokeListBox.IsEnabled = false;
+            while (pokemonQueue.Count > 0)
+            {
+                var pokemon = pokemonQueue.Dequeue();
+                await LevelUpSpecificPokemonTask.Execute(session, pokemon.Id, toMax);
+            }
+            PokeListBox.IsEnabled = true;
         }
 
-        private static async void TransferPokemon(ISession session, PokemonUiData pokemon)
+        private async void TransferPokemon(ISession session, Queue<PokemonUiData> pokemonQueue)
         {
-            await TransferPokemonTask.Execute(session, pokemon.Id);
+            if (pokemonQueue == null) return;
+            PokeListBox.IsEnabled = false;
+            while (pokemonQueue.Count > 0)
+            {
+                var pokemon = pokemonQueue.Dequeue();
+                await TransferPokemonTask.Execute(session, pokemon.Id);
+            }
+            PokeListBox.IsEnabled = true;
         }
 
-        private static async void RecycleItem(ISession session, ItemUiData item, int amount, CancellationToken cts)
+        private async void RecycleItem(ISession session, ItemUiData item, int amount, CancellationToken cts)
         {
             await RecycleSpecificItemTask.Execute(session, item.Id, amount, cts);
         }
@@ -141,9 +161,17 @@ namespace Catchem.Pages
             return (ItemUiData)ItemListBox.SelectedItem;
         }
 
-        private PokemonUiData GetSelectedPokemon()
+        private Queue<PokemonUiData> GetMultipleSelectedPokemon()
         {
-            return (PokemonUiData)PokeListBox.SelectedItem;
+            var pokemonQueue = new Queue<PokemonUiData>();
+            foreach (var selectedItem in PokeListBox.SelectedItems)
+            {
+                var selectedMon = selectedItem as PokemonUiData;
+                if (selectedMon != null)
+                    pokemonQueue.Enqueue(selectedMon);
+
+            }
+            return pokemonQueue;
         }
 
         public void UpdatePlayerTab()

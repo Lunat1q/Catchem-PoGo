@@ -90,6 +90,7 @@
     <Compile Include="Event\DebugEvent.cs" />
     <Compile Include="Event\InventoryNewItemsEvent.cs" />
     <Compile Include="Event\InvalidKeepAmountEvent.cs" />
+    <Compile Include="Event\PokestopsOptimalPathEvent.cs" />
     <Compile Include="Event\PokemonEvolveDoneEvent.cs" />
     <Compile Include="Event\PokemonFavoriteEvent.cs" />
     <Compile Include="Event\PlayerLevelUpEvent.cs" />

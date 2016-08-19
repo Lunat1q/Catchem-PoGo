@@ -64,14 +64,18 @@ namespace PoGo.PokeMobBot.Logic.Tasks
 
             session.EventDispatcher.Send(new PokeStopListEvent {Forts = pokestopList.Select(x=>x.BaseFortData)});
 
-            if (pokestopList.Any())
-            {
-                var closestPokestop = pokestopList.OrderBy(
-                    i => LocationUtils.CalculateDistanceInMeters(session.Client.CurrentLatitude,
-                        session.Client.CurrentLongitude, i.Latitude, i.Longitude))
-                    .First(x => !session.MapCache.CheckPokestopUsed(x));
-                var bestRoute = RoutingUtils.GetBestRoute(closestPokestop, pokestopList, 20);
-            }
+            //if (pokestopList.Any())
+            //{
+            //    var closestPokestop = pokestopList.OrderBy(
+            //        i => LocationUtils.CalculateDistanceInMeters(session.Client.CurrentLatitude,
+            //            session.Client.CurrentLongitude, i.Latitude, i.Longitude))
+            //        .First(x => !session.MapCache.CheckPokestopUsed(x));
+            //    var bestRoute = RoutingUtils.GetBestRoute(closestPokestop, pokestopList, 20);
+            //    session.EventDispatcher.Send(new PokestopsOptimalPathEvent()
+            //    {
+            //        Coords = bestRoute.Select(x=>Tuple.Create(x.Latitude, x.Longitude)).ToList()
+            //    });
+            //}
 
             while (pokestopList.Any())
             {

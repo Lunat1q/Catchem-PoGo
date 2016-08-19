@@ -70,7 +70,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
         {
             var mapObjects = await session.Client.Map.GetMapObjects();
 
-            var pokemons = mapObjects.Item1.MapCells.SelectMany(i => i.WildPokemons)
+            var pokemons = mapObjects.MapCells.SelectMany(i => i.WildPokemons)
                 .OrderBy(
                     i =>
                         LocationUtils.CalculateDistanceInMeters(session.Client.CurrentLatitude,

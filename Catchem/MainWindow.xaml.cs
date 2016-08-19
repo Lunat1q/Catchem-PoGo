@@ -122,6 +122,13 @@ namespace Catchem
             SettingsView.BotMapPage.UpdatePathRoute();
         }
 
+        private void DrawNextOptRoute(ISession session, List<Tuple<double, double>> list)
+        {
+            var receiverBot = BotsCollection.FirstOrDefault(x => x.Session == session);
+            if (receiverBot == null || !receiverBot.Started) return;
+            SettingsView.BotMapPage.UpdateOptPathRoute(list);
+        }
+
         private void PushNewError(ISession session)
         {
             var receiverBot = BotsCollection.FirstOrDefault(x => x.Session == session);
@@ -465,6 +472,10 @@ namespace Catchem
                                 break;
                             case "forcemove_done":
                                 PushRemoveForceMoveMarker(message.Session);
+                                break;
+                            case "ps_opt":
+                                if (message.ParamObjects[0] != null)
+                                    DrawNextOptRoute(message.Session, (List<Tuple<double, double>>)message.ParamObjects[0]);
                                 break;
                             default:
                                 PushNewConsoleRow(Bot?.Session, "Unknown message detected!", Colors.Red);

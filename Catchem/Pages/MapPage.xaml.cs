@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Net;
@@ -30,6 +31,7 @@ namespace Catchem.Pages
         private GMapMarker _playerMarker;
         private GMapRoute _playerRoute;
         private GMapRoute _pathRoute;
+        private GMapRoute _optPathRoute;
 
         private ISession CurSession => _bot.Session;
 
@@ -39,7 +41,7 @@ namespace Catchem.Pages
         private SettingsPage _botSettingsPage;
         private bool _loadingUi;
         public static int Delay = 25;
-        private PlayerMovement _playerMovement = new PlayerMovement();
+        private readonly PlayerMovement _playerMovement = new PlayerMovement();
 
         public MapPage()
         {
@@ -175,6 +177,22 @@ namespace Catchem.Pages
             if (path != null)
                 path.Stroke = new SolidColorBrush(Color.FromRgb(255, 0, 0));
         }
+
+        public void UpdateOptPathRoute(List<Tuple<double, double>> list)
+        {
+            if (_optPathRoute == null)
+                _optPathRoute = new GMapRoute(new List<PointLatLng>());
+            _optPathRoute.Points.Clear();
+            var points = list.Select(x => new PointLatLng(x.Item1, x.Item2));
+            _optPathRoute.Points.AddRange(points);
+            _optPathRoute.RegenerateShape(pokeMap);
+            var path = _optPathRoute.Shape as Path;
+            if (path != null)
+                path.Stroke = new SolidColorBrush(Color.FromRgb(0, 255, 39));
+            if (!pokeMap.Markers.Contains(_optPathRoute))
+                pokeMap.Markers.Add(_optPathRoute);
+        }
+
 
         public void UpdateCurrentBotCoords(BotWindowData botReceiver)
         {
