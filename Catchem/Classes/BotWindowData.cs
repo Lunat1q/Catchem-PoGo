@@ -64,6 +64,7 @@ namespace Catchem.Classes
         public GMapMarker GlobalPlayerMarker;
         public Queue<NewMapObject> MarkersQueue = new Queue<NewMapObject>();
         public Queue<NewMapObject> MarkersDelayRemove = new Queue<NewMapObject>();
+        public GMapRoute PathRoute { get; internal set; }
         public readonly StateMachine Machine;
         public readonly Statistics Stats;
         public readonly StatisticsAggregator Aggregator;
@@ -91,7 +92,7 @@ namespace Catchem.Classes
 
         //public Label RunTime;
         private double _xpph;
-        public bool Started;
+        private bool _started;
 
         private readonly DispatcherTimer _timer;
         private TimeSpan _ts;
@@ -150,8 +151,6 @@ namespace Catchem.Classes
             }
         }
 
-        public GMapRoute PathRoute { get; internal set; }
-
         public int Level
         {
             get { return _level; }
@@ -169,6 +168,16 @@ namespace Catchem.Classes
             {
                 _starDust = value;
                 OnPropertyChanged();
+            }
+        }
+
+        public bool Started
+        {
+            get { return _started; }
+            set
+            {
+                _started = value;
+                OnPropertyChanged(); 
             }
         }
 
@@ -242,7 +251,7 @@ namespace Catchem.Classes
             _cts.Cancel();
             WipeData();
             _ts = new TimeSpan();
-            Started = false;
+            _started = false;
             ErrorsCount = 0;
             if (!soft)
                 _realWorkSec = 0;
@@ -250,8 +259,8 @@ namespace Catchem.Classes
 
         public async void Start()
         {
-            if (Started) return;
-            Started = true;
+            if (_started) return;
+            _started = true;
             _pauseCts.Cancel();
             _cts.Dispose();
             _cts = new CancellationTokenSource();
@@ -288,7 +297,7 @@ namespace Catchem.Classes
                 var unproxiedIp = await response.Content.ReadAsStringAsync();
                 if (GlobalSettings.Auth.UseProxy)
                 {
-                    var otherBot = MainWindow.BotsCollection.FirstOrDefault(x => x.GlobalSettings.Auth.UseProxy && x.GlobalSettings.Auth.ProxyUri.Equals(GlobalSettings.Auth.ProxyUri)  && x.Started && x != this);
+                    var otherBot = MainWindow.BotsCollection.FirstOrDefault(x => x.GlobalSettings.Auth.UseProxy && x.GlobalSettings.Auth.ProxyUri.Equals(GlobalSettings.Auth.ProxyUri)  && x._started && x != this);
                     if (otherBot != null)
                     {
                         Logger.Write($"{otherBot.ProfileName} is already running with this proxy!", LogLevel.Info, ConsoleColor.Red, Session);

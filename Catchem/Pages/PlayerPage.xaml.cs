@@ -73,7 +73,7 @@ namespace Catchem.Pages
 
         private void mi_evolvePokemon_Click(object sender, RoutedEventArgs e)
         {
-            if (PokeListBox.SelectedIndex == -1) return;
+            if (PokeListBox.SelectedIndex == -1 || !_bot.Started) return;
             var pokemon = GetSelectedPokemon();
             if (pokemon == null) return;
             EvolvePokemon(CurSession, pokemon);
@@ -81,7 +81,7 @@ namespace Catchem.Pages
 
         private void mi_transferPokemon_Click(object sender, RoutedEventArgs e)
         {
-            if (PokeListBox.SelectedIndex == -1) return;
+            if (PokeListBox.SelectedIndex == -1 || !_bot.Started) return;
             var pokemon = GetSelectedPokemon();
             if (pokemon == null) return;
             TransferPokemon(CurSession, pokemon);
@@ -89,7 +89,7 @@ namespace Catchem.Pages
 
         private void mi_levelupPokemon_Click(object sender, RoutedEventArgs e)
         {
-            if (PokeListBox.SelectedIndex == -1) return;
+            if (PokeListBox.SelectedIndex == -1 || !_bot.Started) return;
             var pokemon = GetSelectedPokemon();
             if (pokemon == null) return;
             LevelUpPokemon(CurSession, pokemon);
@@ -97,7 +97,7 @@ namespace Catchem.Pages
         }
         private void mi_maxlevelupPokemon_Click(object sender, RoutedEventArgs e)
         {
-            if (PokeListBox.SelectedIndex == -1) return;
+            if (PokeListBox.SelectedIndex == -1 || !_bot.Started) return;
             var pokemon = GetSelectedPokemon();
             if (pokemon == null) return;
             LevelUpPokemon(CurSession, pokemon, true);
@@ -106,7 +106,7 @@ namespace Catchem.Pages
 
         private void mi_recycleItem_Click(object sender, RoutedEventArgs e)
         {
-            if (ItemListBox.SelectedIndex == -1) return;
+            if (ItemListBox.SelectedIndex == -1 || !_bot.Started) return;
             var item = GetSelectedItem();
             if (item == null) return;
             int amount;
@@ -229,6 +229,7 @@ namespace Catchem.Pages
 
         private void mi_refreshPokemonList_Click(object sender, RoutedEventArgs e)
         {
+            if (!_bot.Started) return;
             RefreshPokemons();
         }
 
@@ -240,6 +241,7 @@ namespace Catchem.Pages
 
         private void mi_refreshItems_Click(object sender, RoutedEventArgs e)
         {
+            if (!_bot.Started) return;
             RefreshItems();
         }
 

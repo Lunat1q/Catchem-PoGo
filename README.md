@@ -7,11 +7,11 @@
 <p align="center"><img src="https://img.shields.io/github/downloads/Lunat1q/Catchem-PoGo/total.svg"/><a href="https://github.com/Lunat1q/Catchem-PoGo/releases/latest"><img src="https://img.shields.io/github/downloads/Lunat1q/Catchem-PoGo/latest/total.svg"/></a></p>
  
 <h2>Donating</h2>
-I you really like this project, feel free to buy <b>pizza</b> :pizza: for devs (or <b>flowers</b> :rose: for my gf, she is a bit mad what i'm spending most part of my free time for this project :coffee:):<br/><br/>
+If you really like this project, feel free to buy <b>pizza</b> :pizza: for devs (or <b>flowers</b> :rose: for my gf, she is a bit mad that i'm spending most part of my free time for this project :coffee:):<br/><br/>
 <p align="center"><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=RFAU4PYCAAGML"><img src="https://www.paypalobjects.com/en_US/GB/i/btn/btn_donateCC_LG.gif"/></a></p>
 <p align="center"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Bitcoin.svg/64px-Bitcoin.svg.png"/>BitCoin: 1LTQdD6cnxhqSAYyNAa7PpcfSu6uCmxrdn</p>
-###We really appreciate all the donations made, so everyone who donated to our project will get access to priveledged support channel!
-#####If u don't have PayPal account and still wanna to donate for my work, please contact me in Discord :)
+###We really appreciate all the donations made, so everyone who donated to our project will get access to privileged support channel!
+#####If you don't have PayPal account but still want to donate for my work, Please contact me in Discord :)
 
 ##See it in action:
 [![YoutTube clip](http://i.imgur.com/A3vzydu.png)](https://youtu.be/Wmn0zFeIRRM)
@@ -39,7 +39,7 @@ Get Device data from real android device:
  2. [Ensure what your PC have proper ADB drivers installed]
  3. [Click "Get Data from Your Android Phone" button at the Settings tab - you are awesome]
  <br/><br/>
-If u have any problems with getting device info, consider to watch this post: [AdbDrivers](http://forum.xda-developers.com/showthread.php?p=48915118#post48915118)
+If you have any problems with getting device info, consider watching this post: [AdbDrivers](http://forum.xda-developers.com/showthread.php?p=48915118#post48915118)
 
 <h2>Credits</h2>
 Thanks to Feroxs' hard work on the API & Console we are able to manage something like this.
