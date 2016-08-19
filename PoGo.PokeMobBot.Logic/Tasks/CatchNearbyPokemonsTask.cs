@@ -112,11 +112,8 @@ namespace PoGo.PokeMobBot.Logic.Tasks
 
                 session.EventDispatcher.Send(new PokemonDisappearEvent {Pokemon = pokemon.BaseMapPokemon});
 
-                // If pokemon is not last pokemon in list, create delay between catches, else keep moving.
-                if (!Equals(pokemons.ElementAtOrDefault(pokemons.Count() - 1), pokemon))
-                {
-                    await Task.Delay(session.LogicSettings.DelayBetweenPokemonCatch, cancellationToken);
-                }
+                // always wait the delay amount between catches, ideally to prevent you from making another call too early after a catch event
+                await Task.Delay(session.LogicSettings.DelayBetweenPokemonCatch);
             }
             return;
         }
