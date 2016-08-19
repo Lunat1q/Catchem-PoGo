@@ -6,7 +6,9 @@ using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Windows.Data;
+using System.Windows.Media;
 using POGOProtos.Enums;
+using Color = System.Drawing.Color;
 
 namespace Catchem.Extensions
 {
@@ -44,6 +46,61 @@ namespace Catchem.Extensions
             if (value == null || imageName == null)
                 return value;
             return (Properties.Resources.ResourceManager.GetObject(imageName, Properties.Resources.Culture) as Bitmap).LoadBitmap();
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return value;
+        }
+    }
+
+    public sealed class ButtonStatusConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            try
+            {
+                var prop = parameter as string;
+                var status = (bool?)value;
+                if (value == null || prop == null)
+                    return value;
+
+                if (prop == "Text")
+                {
+                    return (bool)status ? "STOP" : "START";
+                }
+                if (prop == "Background")
+                {
+                    var color1 = (bool)status
+                        ? System.Windows.Media.Color.FromArgb(255, 192, 79, 83)
+                        : System.Windows.Media.Color.FromArgb(255, 83, 192, 177);
+                    var color2 = (bool)status
+                        ? System.Windows.Media.Color.FromArgb(255, 238, 178, 156)
+                        : System.Windows.Media.Color.FromArgb(255, 176, 238, 156);
+                    return new LinearGradientBrush
+                    {
+                        GradientStops = new GradientStopCollection
+                        {
+                            new GradientStop
+                            {
+                                Color = color1,
+                                Offset = 1
+                            },
+                            new GradientStop
+                            {
+                                Color = color2,
+                                Offset = 0
+                            }
+                        }
+                    };
+                }
+                return value;
+            }
+            catch (Exception)
+            {
+
+                return value;
+            }
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

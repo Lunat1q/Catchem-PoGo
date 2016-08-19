@@ -872,7 +872,7 @@
                                Height="26"
                                Margin="10,149,0,0"
                                VerticalAlignment="Top"
-                               Content="Longtitude"
+                               Content="Longitude"
                                RenderTransformOrigin="0.5,0.423" />
                         <Label x:Name="label7_Copy2"
                                Width="179"
