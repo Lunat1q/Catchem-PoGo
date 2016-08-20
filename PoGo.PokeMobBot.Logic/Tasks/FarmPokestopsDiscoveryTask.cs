@@ -208,7 +208,10 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                             session.MapCache.UsedPokestop(pokeStop);
                             RuntimeSettings.StopsHit++;
                             pokeStop.CooldownCompleteTimestampMS = DateTime.UtcNow.AddMinutes(5).ToUnixTime();
-                            await CatchWildPokemonsTask.Execute(session, cancellationToken);
+                            if (session.LogicSettings.CatchWildPokemon)
+                            {
+                                await CatchWildPokemonsTask.Execute(session, cancellationToken);
+                            }
                             break; //Continue with program as loot was succesfull.
                         }
                     } while (fortTry < retryNumber - zeroCheck);
@@ -223,11 +226,11 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                     //Catch Lure Pokemon
 
 
-                    if (pokeStop.LureInfo != null)
+                    if (pokeStop.LureInfo != null && session.LogicSettings.CatchWildPokemon)
                     {
                         await CatchLurePokemonsTask.Execute(session, pokeStop.BaseFortData, cancellationToken);
                     }
-                    if (session.LogicSettings.Teleport)
+                    if (session.LogicSettings.Teleport && session.LogicSettings.CatchWildPokemon)
                         await CatchNearbyPokemonsTask.Execute(session, cancellationToken);
 
                     await eggWalker.ApplyDistance(distance, cancellationToken);
@@ -247,10 +250,13 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                 session.LogicSettings.WalkingSpeedMin, session.LogicSettings.WalkingSpeedMax,
                 async () =>
                 {
-                    // Catch normal map Pokemon
-                    await CatchNearbyPokemonsTask.Execute(session, cancellationToken);
-                    //Catch Incense Pokemon
-                    await CatchIncensePokemonsTask.Execute(session, cancellationToken);
+                    if (session.LogicSettings.CatchWildPokemon)
+                    {
+                        // Catch normal map Pokemon
+                        await CatchNearbyPokemonsTask.Execute(session, cancellationToken);
+                        //Catch Incense Pokemon
+                        await CatchIncensePokemonsTask.Execute(session, cancellationToken);
+                    }
                     return true;
                 }, 
                 async () =>
