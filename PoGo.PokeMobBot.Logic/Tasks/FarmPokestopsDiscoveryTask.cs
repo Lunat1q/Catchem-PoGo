@@ -121,7 +121,13 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                 pokestopList.AddRange(newPokestopList);
                 
                 var pokeStop = pokestopList.OrderBy(i => LocationUtils.CalculateDistanceInMeters(session.Client.CurrentLatitude,
-                               session.Client.CurrentLongitude, i.Latitude, i.Longitude)).First(x => !session.MapCache.CheckPokestopUsed(x));
+                               session.Client.CurrentLongitude, i.Latitude, i.Longitude)).FirstOrDefault(x => !session.MapCache.CheckPokestopUsed(x));
+
+                if (pokeStop == null)
+                {
+                    await Task.Delay(60000, cancellationToken);
+                    continue;
+                }
 
                 var tooFarPokestops = pokestopList.Where(i => LocationUtils.CalculateDistanceInMeters(session.Client.CurrentLatitude,
                                session.Client.CurrentLongitude, i.Latitude, i.Longitude) > session.LogicSettings.MaxTravelDistanceInMeters).ToList();

@@ -964,7 +964,7 @@ namespace PoGo.PokeMobBot.Logic
         public double ThrowAccuracyMin = 0.80;
         public double ThrowAccuracyMax = 1.00;
         public double ThrowSpinFrequency = 0.80;
-        public int MaxPokeballsPerPokemon = 6;
+        public int MaxPokeballsPerPokemon = 8;
         public int UseGreatBallAboveIv = 80;
         public int UseUltraBallAboveIv = 90;
         public double UseGreatBallBelowCatchProbability = 0.35;
@@ -974,6 +974,7 @@ namespace PoGo.PokeMobBot.Logic
         public bool PauseBotOnMaxHourlyRates = true;
         public int MaxCatchPerHour = 42;
         public int MaxPokestopsPerHour = 69;
+        public double MissChance = 0.13;
 
         //berries
         public int UseBerryMinCp = 1000;
@@ -1810,6 +1811,7 @@ namespace PoGo.PokeMobBot.Logic
         public double DelayEvolveVariation => _settings.DelaySettings.DelayEvolveVariation;
         public double RecycleInventoryAtUsagePercentage => _settings.RecycleSettings.RecycleInventoryAtUsagePercentage;
         public bool HumanizeThrows => _settings.CatchSettings.HumanizeThrows;
+        public double MissChance => _settings.CatchSettings.MissChance;
         public double ThrowAccuracyMin => _settings.CatchSettings.ThrowAccuracyMin;
         public double ThrowAccuracyMax => _settings.CatchSettings.ThrowAccuracyMax;
         public double ThrowSpinFrequency => _settings.CatchSettings.ThrowSpinFrequency;

@@ -148,6 +148,7 @@ namespace PoGo.PokeMobBot.Logic
         double ThrowAccuracyMin { get; }
         double ThrowSpinFrequency { get; }
         int MaxPokeballsPerPokemon { get; }
+        double MissChance { get; }
 
         //pokeballs
         int UseGreatBallAboveIv { get; }
