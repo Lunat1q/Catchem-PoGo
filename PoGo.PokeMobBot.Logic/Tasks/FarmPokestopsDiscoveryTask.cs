@@ -77,11 +77,37 @@ namespace PoGo.PokeMobBot.Logic.Tasks
             //    });
             //}
 
+            var stopsToCheckGym = 13 + session.Client.rnd.Next(15); 
+
             while (pokestopList.Any())
             {
                 cancellationToken.ThrowIfCancellationRequested();
+
+                if (stopsToCheckGym <= 0)
+                {
+                    stopsToCheckGym = 0;
+                    var gymsNear = (await GetGyms(session)).OrderBy(i =>
+                        LocationUtils.CalculateDistanceInMeters(session.Client.CurrentLatitude,
+                            session.Client.CurrentLongitude, i.Latitude, i.Longitude))
+                        .ToList();
+                    if (gymsNear.Count > 0)
+                    {
+                        stopsToCheckGym = 13 + session.Client.rnd.Next(15);
+                        var nearestGym = gymsNear.FirstOrDefault();
+                        if (nearestGym != null)
+                        {
+                            var gymInfo = await session.Client.Fort.GetGymDetails(nearestGym.Id, nearestGym.Latitude, nearestGym.Longitude);
+                            var gymDistance = LocationUtils.CalculateDistanceInMeters(session.Client.CurrentLatitude,
+                                 session.Client.CurrentLongitude, nearestGym.Latitude, nearestGym.Longitude);
+                            session.EventDispatcher.Send(new GymPokeEvent { Name = gymInfo.Name, Distance = gymDistance, Description = gymInfo.Description, GymState = gymInfo.GymState});
+                        }
+                    }
+                }
+
+
                 if (session.ForceMoveJustDone)
                     session.ForceMoveJustDone = false;
+
                 if (session.ForceMoveTo != null)
                 {
                     await ForceMoveTask.Execute(session, cancellationToken);
@@ -199,8 +225,9 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                         await CatchNearbyPokemonsTask.Execute(session, cancellationToken);
 
                     await eggWalker.ApplyDistance(distance, cancellationToken);
-                }
 
+                }
+                stopsToCheckGym--;
                 if (session.LogicSettings.SnipeAtPokestops || session.LogicSettings.UseSnipeLocationServer)
                 {
                     await SnipePokemonTask.Execute(session, cancellationToken);
@@ -254,7 +281,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
             {
                 pokeStops = pokeStops.Where(
                         i =>
-                            i.Type == FortType.Checkpoint &&
+                            i.Used == false && i.Type == FortType.Checkpoint &&
                             i.CooldownCompleteTimestampMS < DateTime.UtcNow.ToUnixTime() &&
                             ( // Make sure PokeStop is within max travel distance, unless it's set to 0.
                                 LocationUtils.CalculateDistanceInMeters(
@@ -265,6 +292,42 @@ namespace PoGo.PokeMobBot.Logic.Tasks
             }
 
             return pokeStops;
+        }
+
+        private static async Task<List<FortCacheItem>> GetGyms(ISession session)
+        {
+            //var mapObjects = await session.Client.Map.GetMapObjects();
+
+            List<FortCacheItem> gyms = await session.MapCache.GymDatas(session);
+
+            //session.EventDispatcher.Send(new PokeStopListEvent { Forts = session.MapCache.baseFortDatas.ToList() });
+
+            // Wasn't sure how to make this pretty. Edit as needed.
+            if (session.LogicSettings.Teleport)
+            {
+                gyms = gyms.Where(
+                    i =>
+                        i.Type == FortType.Gym &&
+                        i.CooldownCompleteTimestampMS < DateTime.UtcNow.ToUnixTime() &&
+                        (LocationUtils.CalculateDistanceInMeters(
+                                session.Client.CurrentLatitude, session.Client.CurrentLongitude,
+                                i.Latitude, i.Longitude) < session.LogicSettings.MaxTravelDistanceInMeters) ||
+                        session.LogicSettings.MaxTravelDistanceInMeters == 0
+                    ).ToList();
+            }
+            else
+            {
+                gyms = gyms.Where(
+                        i =>
+                            i.Type == FortType.Gym &&
+                            (LocationUtils.CalculateDistanceInMeters(
+                                    session.Settings.DefaultLatitude, session.Settings.DefaultLongitude,
+                                    i.Latitude, i.Longitude) < session.LogicSettings.MaxTravelDistanceInMeters) ||
+                            session.LogicSettings.MaxTravelDistanceInMeters == 0
+                    ).ToList();
+            }
+
+            return gyms;
         }
     }
 }

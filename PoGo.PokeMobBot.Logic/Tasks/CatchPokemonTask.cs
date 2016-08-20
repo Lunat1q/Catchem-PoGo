@@ -127,8 +127,8 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                         return "Great! ";
                     return a > 1.6 ? "Excellent! " : "unknown ";
                 };
-
-                Logging.Logger.Write($"Throwing {(Math.Abs(spinModifier - 1) < 0.00001 ?"Spinning " : "" )}{getThrowType(normalizedRecticleSize)}{returnRealBallName(pokeball)}", Logging.LogLevel.Caught);
+                var hit = Rng.NextDouble() > 0.10; //hardcoded miss chance TODO:move to settings
+                Logging.Logger.Write($"Throwing {(Math.Abs(spinModifier - 1) < 0.00001 ?"Spinning " : "" )}{getThrowType(normalizedRecticleSize)}{returnRealBallName(pokeball)} - {(hit ? "WILL HIT" : "WILL MISS")}", Logging.LogLevel.Caught, session: session);
                 caughtPokemonResponse =
                     await session.Client.Encounter.CatchPokemon(
                         encounter is EncounterResponse || encounter is IncenseEncounterResponse
@@ -138,7 +138,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                             ? pokemon.SpawnPointId
                             : currentFortData.Id, pokeball,
                         normalizedRecticleSize,
-                        spinModifier);
+                        spinModifier, hitPokemon: hit);
 
                 session.EventDispatcher.Send(new ItemLostEvent { Id = pokeball, Count = 1 });
 

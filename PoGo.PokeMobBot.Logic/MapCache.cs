@@ -21,7 +21,9 @@ namespace PoGo.PokeMobBot.Logic
     {
         private List<FortCacheItem> _FortDatas = new List<FortCacheItem>();
         private List<PokemonCacheItem> _MapPokemons = new List<PokemonCacheItem>();
+        private List<FortCacheItem> _GymDatas = new List<FortCacheItem>();
         public IEnumerable<FortData> baseFortDatas;
+        public IEnumerable<FortData> baseGymDatas;
         public Dictionary<string, long> RecentlyUsedPokestops = new Dictionary<string, long>();
         public Dictionary<ulong, long> RecentlyCaughtPokemons = new Dictionary<ulong, long>();
 
@@ -36,6 +38,7 @@ namespace PoGo.PokeMobBot.Logic
 
             // Wasn't sure how to make this pretty. Edit as needed.
             var pokeStops = mapObjects.Item1.MapCells.SelectMany(i => i.Forts);
+            IEnumerable<FortData> gyms;
             session.EventDispatcher.Send(new PokeStopListEvent { Forts = pokeStops.ToList() });
 
             // Wasn't sure how to make this pretty. Edit as needed.
@@ -46,6 +49,16 @@ namespace PoGo.PokeMobBot.Logic
                         i =>
                             i.Type == FortType.Checkpoint &&
                             ( // Make sure PokeStop is within max travel distance, unless it's set to 0.
+                                LocationUtils.CalculateDistanceInMeters(
+                                    session.Client.CurrentLatitude, session.Client.CurrentLongitude,
+                                    i.Latitude, i.Longitude) < session.LogicSettings.MaxTravelDistanceInMeters) ||
+                            session.LogicSettings.MaxTravelDistanceInMeters == 0
+                    );
+                gyms = mapObjects.Item1.MapCells.SelectMany(i => i.Forts)
+                    .Where(
+                        i =>
+                            i.Type == FortType.Gym &&
+                            ( 
                                 LocationUtils.CalculateDistanceInMeters(
                                     session.Client.CurrentLatitude, session.Client.CurrentLongitude,
                                     i.Latitude, i.Longitude) < session.LogicSettings.MaxTravelDistanceInMeters) ||
@@ -64,13 +77,31 @@ namespace PoGo.PokeMobBot.Logic
                                     i.Latitude, i.Longitude) < session.LogicSettings.MaxTravelDistanceInMeters) ||
                             session.LogicSettings.MaxTravelDistanceInMeters == 0
                     );
+                gyms = mapObjects.Item1.MapCells.SelectMany(i => i.Forts)
+                   .Where(
+                       i =>
+                           i.Type == FortType.Gym &&
+                           ( 
+                               LocationUtils.CalculateDistanceInMeters(
+                                   session.Settings.DefaultLatitude, session.Settings.DefaultLongitude,
+                                   i.Latitude, i.Longitude) < session.LogicSettings.MaxTravelDistanceInMeters) ||
+                           session.LogicSettings.MaxTravelDistanceInMeters == 0
+                   );
             }
             baseFortDatas = pokeStops;
+            baseFortDatas = gyms;
             _FortDatas.Clear();
+            _GymDatas.Clear();
             foreach (var fort in pokeStops)
             {
                 _FortDatas.Add(new FortCacheItem(fort));
             }
+
+            foreach (var gym in gyms)
+            {
+                _GymDatas.Add(new FortCacheItem(gym));
+            }
+
 
             #endregion
 
@@ -112,6 +143,16 @@ namespace PoGo.PokeMobBot.Logic
             }
 
             return _FortDatas;
+        }
+
+        public async Task<List<FortCacheItem>> GymDatas(ISession session)
+        {
+            if (DateTime.Now.Subtract(lastUpdateTime).TotalMilliseconds > ScanDelay || _GymDatas.Count == 0)
+            {
+                await UpdateMapDatas(session);
+            }
+
+            return _GymDatas;
         }
 
         private void UsedPokestopsCleanup()

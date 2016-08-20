@@ -26,6 +26,7 @@ namespace Catchem.Classes
         private static string _strNone = "NONE";
         private static string _strEscape = "ESCAPE";
         private static string _strFlee = "FLEE";
+        private static string _strGym = "GYM";
         private static string _strFavourite = "FAVOURITE";
         private static string _strUnFavourite = "UNFAVOURITE";
 
@@ -124,6 +125,9 @@ namespace Catchem.Classes
                     break;
                 case LogLevel.UnFavorite:
                     SendWindowMsg("log", session, $"[{DateTime.Now.ToString("HH:mm:ss")}] ({_strUnFavourite}) {message}", Color.FromRgb(255, 0, 159));
+                    break;
+                case LogLevel.Gym:
+                    SendWindowMsg("log", session, $"[{DateTime.Now.ToString("HH:mm:ss")}] ({_strGym}) {message}", Color.FromRgb(192, 0, 255));
                     break;
                 default:
                     SendWindowMsg("log", session, $"[{DateTime.Now.ToString("HH:mm:ss")}] ({_strError}) {message}", Color.FromRgb(255, 255, 255));

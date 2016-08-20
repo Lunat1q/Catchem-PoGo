@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using PoGo.PokeMobBot.Logic.Common;
 using PoGo.PokeMobBot.Logic.Event;
 using PoGo.PokeMobBot.Logic.Logging;
@@ -96,6 +98,19 @@ namespace Catchem.Classes
         public void HandleEvent(TeamSetEvent evt, ISession session)
         {
             Logger.PushToUi("team_set", session, evt.Color);
+        }
+        public void HandleEvent(GymPokeEvent evt, ISession session)
+        {
+            var defendersInfo = new List<string>();
+            if (evt.GymState.Memberships != null)
+                foreach (var defender in evt.GymState.Memberships)
+                {
+                    defendersInfo.Add(
+                        $"{defender.TrainerPublicProfile.Name} ({defender.PokemonData.PokemonId} - {defender.PokemonData.Cp})");
+                }
+            var guardList = defendersInfo.Count > 0 ? defendersInfo.Aggregate((x, v) => x + ", " + v) : "";
+            var gymDesc = string.IsNullOrEmpty(evt.Description) ? "" : $" ({evt.Description})";
+            Logger.Write($"Touched a gym: {evt.Name}{gymDesc} - {evt.GymState.FortData.OwnedByTeam}, points: {evt.GymState.FortData.GymPoints}, Guards: {guardList}) ", LogLevel.Gym, session: session);
         }
 
         public void HandleEvent(BotCompleteFailureEvent evt, ISession session)
