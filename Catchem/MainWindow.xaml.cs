@@ -423,6 +423,7 @@ namespace Catchem
                         var toRemove = SettingsView.consoleBox.Document.Blocks.ElementAt(0);
                         SettingsView.consoleBox.Document.Blocks.Remove(toRemove);
                     }
+                    SettingsView.consoleBox.ScrollToEnd();
                 }
                 await Task.Delay(10);
             }
