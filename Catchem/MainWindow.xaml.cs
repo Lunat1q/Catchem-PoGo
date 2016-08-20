@@ -143,7 +143,7 @@ namespace Catchem
                 if ((ulong)objData[0] == 0) return;
                 var receiverBot = BotsCollection.FirstOrDefault(x => x.Session == session);
                 if (receiverBot == null) return;
-                receiverBot.PokemonUpdated((ulong)objData[0], (int)objData[2], (double)objData[3], (PokemonFamilyId)objData[4], (int)objData[5], (bool)objData[6]);
+                receiverBot.PokemonUpdated((ulong)objData[0], (int)objData[2], (double)objData[3], (PokemonFamilyId)objData[4], (int)objData[5], (bool)objData[6], (string)objData[7]);
             }
             catch (Exception)
             {
@@ -265,7 +265,12 @@ namespace Catchem
                     return;
                 }
                 receiverBot.ItemList.Clear();
-                ((List<ItemData>) objData[0]).ForEach(x => receiverBot.ItemList.Add(new ItemUiData(x.ItemId, x.ItemId.ToInventorySource(), x.ItemId.ToInventoryName(), x.Count)));
+                foreach (var x in ((List<ItemData>) objData[0]))
+                {
+                    if (x.Count > 0)
+                        receiverBot.ItemList.Add(new ItemUiData(x.ItemId, x.ItemId.ToInventorySource(),
+                            x.ItemId.ToInventoryName(), x.Count));
+                }
                 if (session != CurSession) return;
 
                 SettingsView.BotPlayerPage.UpdateItems(); 

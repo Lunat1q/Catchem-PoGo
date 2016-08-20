@@ -457,17 +457,19 @@ namespace Catchem.Classes
                 targetItem.Amount -= (int)amount;
         }
 
-        public void PokemonUpdated(ulong uid, int cp, double iv, PokemonFamilyId family, int candy, bool favourite)
+        public void PokemonUpdated(ulong uid, int cp, double iv, PokemonFamilyId family, int candy, bool favourite, string name)
         {
             var pokemonToUpdate = PokemonList.FirstOrDefault(x => x.Id == uid);
             if (pokemonToUpdate == null) return;
             pokemonToUpdate.Cp = cp;
             pokemonToUpdate.Iv = iv;
             pokemonToUpdate.Favoured = favourite;
+            pokemonToUpdate.Name = name;
             foreach (var pokemon in PokemonList.Where(x => x.Family == family))
             {
                 pokemon.Candy = candy;
             }
+            
         }
 
         public void PokemonFavUpdated(ulong uid, bool favourite)
@@ -475,6 +477,12 @@ namespace Catchem.Classes
             var pokemonToUpdate = PokemonList.FirstOrDefault(x => x.Id == uid);
             if (pokemonToUpdate == null) return;
             pokemonToUpdate.Favoured = favourite;
+        }
+
+        private void RandomizePosition()
+        {
+            GlobalSettings.LocationSettings.DefaultLatitude += _rnd.NextInRange(-0.0005, 0.0005);
+            GlobalSettings.LocationSettings.DefaultLongitude += _rnd.NextInRange(-0.0003, 0.0003);
         }
 
         public async void CheckForMaxCatch()
@@ -501,6 +509,9 @@ namespace Catchem.Classes
                 Stop(true);
                 _pauseCts.Dispose();
                 _pauseCts = new CancellationTokenSource();
+
+                RandomizePosition();
+
                 await Task.Delay(stopMs, CancellationTokenPause);
                 Start();
             }

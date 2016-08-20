@@ -90,7 +90,7 @@ namespace Catchem.Classes
         
         public void HandleEvent(PokemonStatsChangedEvent evt, ISession session)
         {
-            Logger.PushToUi("pm_upd", session, evt.Uid, evt.Id, evt.Cp, evt.Iv, evt.Family, evt.Candy, evt.Favourite);
+            Logger.PushToUi("pm_upd", session, evt.Uid, evt.Id, evt.Cp, evt.Iv, evt.Family, evt.Candy, evt.Favourite, evt.Name);
         }
 
         public void HandleEvent(BotCompleteFailureEvent evt, ISession session)

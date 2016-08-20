@@ -6,6 +6,8 @@ using System.IO;
 using System.IO.Compression;
 using System.Net;
 using System.Reflection;
+using System.Runtime.InteropServices;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
@@ -172,7 +174,6 @@ namespace PoGo.PokeMobBot.Logic.State
             return JObject.Parse(File.ReadAllText(filePath));
         }
 
-
         public bool IsLatest(ISession session)
         {
             try
@@ -185,7 +186,7 @@ namespace PoGo.PokeMobBot.Logic.State
 
                 var gitVersion = new Version($"{match.Groups[1]}.{match.Groups[2]}.{match.Groups[3]}.{match.Groups[4]}");
                 RemoteVersion = gitVersion;
-                if (gitVersion < Assembly.GetExecutingAssembly().GetName().Version)
+                if (gitVersion > Assembly.GetEntryAssembly().GetName().Version)
                 {
                     session.EventDispatcher.Send(new NewVersionEvent
                     {

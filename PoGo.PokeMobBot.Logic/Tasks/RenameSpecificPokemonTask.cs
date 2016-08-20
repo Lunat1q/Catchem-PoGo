@@ -31,8 +31,8 @@ namespace PoGo.PokeMobBot.Logic.Tasks
             if (toDefault)
                 customName = pokemonDefaultName;
 
-            if (currentNickname == pokemonDefaultName) return;
-            var resp = await session.Client.Inventory.NicknamePokemon(id, pokemonDefaultName);
+            if (currentNickname == customName) return;
+            var resp = await session.Client.Inventory.NicknamePokemon(id, customName);
 
             await DelayingUtils.Delay(session.LogicSettings.DelayBetweenPlayerActions, 2000);
             session.EventDispatcher.Send(new NoticeEvent
@@ -49,11 +49,9 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                 var setting = pokemonSettings.Single(q => q.PokemonId == pokemon.PokemonId);
                 var family = pokemonFamilies.First(q => q.FamilyId == setting.FamilyId);
 
-                session.EventDispatcher.Send(new PokemonStatsChangedEvent()
+                session.EventDispatcher.Send(new PokemonStatsChangedEvent
                 {
-                    Name = !string.IsNullOrEmpty(pokemon.Nickname)
-                        ? pokemon.Nickname
-                        : pokemon.PokemonId.ToString(),
+                    Name = customName,
                     Uid = pokemonId,
                     Id = pokemon.PokemonId,
                     Family = family.FamilyId,
