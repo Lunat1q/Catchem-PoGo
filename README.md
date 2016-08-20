@@ -29,9 +29,9 @@ If you really like this project, feel free to buy <b>pizza</b> :pizza: for devs 
 
 <br/>
 <h2>Screenshots</h2>
-![Player info tab](http://i.imgur.com/6gBSiHO.png)<br/>
-![Map/Console tab](http://i.imgur.com/eabzRxX.png)<br/>
-![Settings tab](http://i.imgur.com/2ubVVqi.png)<br/>
+![Player info tab](http://i.imgur.com/ZdSuy3z.png)<br/>
+![Map/Console tab](http://i.imgur.com/UD0hc2B.png)<br/>
+![Settings tab](http://i.imgur.com/nCi8rnr.png)<br/>
 
  
 Get Device data from real android device:
