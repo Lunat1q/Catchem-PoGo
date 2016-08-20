@@ -796,6 +796,11 @@
     <Content Include="adb\AdbWinUsbApi.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\favouredSort.png" />
+    <None Include="Resources\gym.png" />
+    <None Include="Resources\refresh.png" />
+    <None Include="Resources\time.png" />
+    <None Include="Resources\favoured.png" />
     <None Include="Resources\dust.png" />
     <None Include="Resources\trainer_right.gif" />
     <None Include="Resources\trainer_left.gif" />

@@ -7,11 +7,12 @@ namespace Catchem.SupportForms
 {
     public partial class InputDialogSample : Window
     {
-        public InputDialogSample(string question, string defaultAnswer = "", bool onlyNum = false)
+        public InputDialogSample(string question, string defaultAnswer = "", bool onlyNum = false, int maxLength = 0)
         {
             InitializeComponent();
             lblQuestion.Content = question;
             txtAnswer.Text = defaultAnswer;
+            if (maxLength != 0) txtAnswer.MaxLength = maxLength;
             if (onlyNum)
             {
                 txtAnswer.PreviewTextInput += TxtAnswerOnPreviewTextInput;

@@ -24,6 +24,15 @@ namespace PoGo.PokeMobBot.Logic.Tasks
 
             if (pokemon == null) return;
 
+            if (!string.IsNullOrEmpty(pokemon.DeployedFortId))
+            {
+                session.EventDispatcher.Send(new WarnEvent()
+                {
+                    Message = $"Pokemon {(string.IsNullOrEmpty(pokemon.Nickname) ? pokemon.PokemonId.ToString() : pokemon.Nickname)} is signed to defend a GYM!"
+                });
+                return;
+            }
+
             var evolveResponse = await session.Client.Inventory.EvolvePokemon(pokemon.Id);
             
             session.EventDispatcher.Send(new PokemonEvolveEvent

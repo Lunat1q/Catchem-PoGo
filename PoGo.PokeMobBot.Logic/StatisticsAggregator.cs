@@ -190,10 +190,7 @@ namespace PoGo.PokeMobBot.Logic
         {
 
         }
-        public void HandleEvent(PokemonUnFavoriteEvent evt, ISession session)
-        {
 
-        }
         public void HandleEvent(PokeStopListEvent evt, ISession session)
         {
 

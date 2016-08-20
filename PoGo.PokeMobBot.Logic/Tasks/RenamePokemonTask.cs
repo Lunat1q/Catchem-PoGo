@@ -8,6 +8,7 @@ using PoGo.PokeMobBot.Logic.Common;
 using PoGo.PokeMobBot.Logic.Event;
 using PoGo.PokeMobBot.Logic.PoGoUtils;
 using PoGo.PokeMobBot.Logic.State;
+using PoGo.PokeMobBot.Logic.Utils;
 
 #endregion
 
@@ -25,7 +26,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
             {
                 cancellationToken.ThrowIfCancellationRequested();
 
-                var perfection = Math.Round(PokemonInfo.CalculatePokemonPerfection(pokemon));
+                var perfection = Math.Round(pokemon.CalculatePokemonPerfection());
                 var pokemonName = session.Translation.GetPokemonName(pokemon.PokemonId);
                 // iv number + templating part + pokemonName <= 12
                 var nameLength = 12 -
@@ -44,7 +45,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                     newNickname != oldNickname && pokemon.Favorite == 0)
                 {
                     await session.Client.Inventory.NicknamePokemon(pokemon.Id, newNickname);
-
+                    await DelayingUtils.Delay(session.LogicSettings.DelayBetweenPlayerActions, 2000);
                     session.EventDispatcher.Send(new NoticeEvent
                     {
                         Message =

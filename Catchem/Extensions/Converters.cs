@@ -5,10 +5,10 @@ using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
+using System.Windows;
 using System.Windows.Data;
 using System.Windows.Media;
 using POGOProtos.Enums;
-using Color = System.Drawing.Color;
 
 namespace Catchem.Extensions
 {
@@ -27,7 +27,7 @@ namespace Catchem.Extensions
             //Shitty hack, need to figure out why extMethod wasn't received
             if (value.GetType() == typeof(PokemonId) && methodName == "ToSource")
                 return ((PokemonId) value).ToSource();
-            else if (value.GetType() == typeof(PokemonId) && methodName == "ToBitmap")
+            if (value.GetType() == typeof(PokemonId) && methodName == "ToBitmap")
                 return ((PokemonId)value).ToSource();
             return value;
         }
@@ -38,14 +38,41 @@ namespace Catchem.Extensions
         }
     }
 
-    public sealed class LoadImagesFromResource : IValueConverter
+    public sealed class LoadImageSourceFromResource : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             var imageName = parameter as string;
             if (value == null || imageName == null)
                 return value;
+            if (value is bool)
+            {
+                var bVal = (bool)value;
+                return bVal ? (Properties.Resources.ResourceManager.GetObject(imageName, Properties.Resources.Culture) as Bitmap).LoadBitmap() : null;
+            }
             return (Properties.Resources.ResourceManager.GetObject(imageName, Properties.Resources.Culture) as Bitmap).LoadBitmap();
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return value;
+        }
+    }
+
+    public sealed class LoadImageFromResource : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            var imageName = parameter as string;
+            if (value == null || imageName == null)
+                return value;
+            var img =
+                (Properties.Resources.ResourceManager.GetObject(imageName, Properties.Resources.Culture) as Bitmap)
+                    .ToImage(imageName.Substring(0,1).ToUpper() + imageName.Substring(1));
+            img.HorizontalAlignment = HorizontalAlignment.Center;
+            img.VerticalAlignment = VerticalAlignment.Center;
+            img.Stretch = Stretch.None;
+            return img;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

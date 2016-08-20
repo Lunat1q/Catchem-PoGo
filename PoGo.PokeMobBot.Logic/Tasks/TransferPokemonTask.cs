@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using PoGo.PokeMobBot.Logic.Event;
 
 namespace PoGo.PokeMobBot.Logic.Tasks
 {
@@ -18,6 +19,15 @@ namespace PoGo.PokeMobBot.Logic.Tasks
             var pokemon = pokemons.FirstOrDefault(p => p.Id == id);
 
             if (pokemon == null) return;
+
+            if (!string.IsNullOrEmpty(pokemon.DeployedFortId))
+            {
+                session.EventDispatcher.Send(new WarnEvent()
+                {
+                    Message = $"Pokemon {(string.IsNullOrEmpty(pokemon.Nickname) ? pokemon.PokemonId.ToString() : pokemon.Nickname)} is signed to defend a GYM!"
+                });
+                return;
+            }
 
             var pokemonSettings = await session.Inventory.GetPokemonSettings();
             var pokemonFamilies = await session.Inventory.GetPokemonFamilies();

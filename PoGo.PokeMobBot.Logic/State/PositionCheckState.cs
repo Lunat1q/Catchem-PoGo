@@ -74,7 +74,7 @@ namespace PoGo.PokeMobBot.Logic.State
                 RequireInput = session.LogicSettings.StartupWelcomeDelay
             });
 
-            if (!(session.Client.CurrentLatitude > 180) && !(session.Client.CurrentLatitude < -180) &&
+            if (!(session.Client.CurrentLatitude > 90) && !(session.Client.CurrentLatitude < -90) &&
                 !(session.Client.CurrentLongitude > 180) && !(session.Client.CurrentLongitude < -180))
                 return new InfoState();
 

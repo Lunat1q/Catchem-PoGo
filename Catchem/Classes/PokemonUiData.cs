@@ -18,6 +18,9 @@ namespace Catchem.Classes
         }
 
         public ulong Id { get; set; }
+
+        public BotWindowData OwnerBot { get; set; }
+
         public BitmapSource Image { get; set; }
         public string Name { get; set; }
         private int _cp;
@@ -27,6 +30,18 @@ namespace Catchem.Classes
             set
             {
                 _cp = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _inGym;
+
+        public bool InGym
+        {
+            get { return _inGym; }
+            set
+            {
+                _inGym = value;
                 OnPropertyChanged();
             }
         }
@@ -67,6 +82,18 @@ namespace Catchem.Classes
             }
         }
 
+        private bool _favoured;
+
+        public bool Favoured
+        {
+            get { return _favoured; }
+            set
+            {
+                _favoured = value;
+                OnPropertyChanged();
+            }
+        }
+
         public void UpdateTags(LogicSettings ls)
         {
             var tags = new List<string>();
@@ -83,8 +110,11 @@ namespace Catchem.Classes
             Tags = tags.Count > 0 ? tags.Aggregate((x, v) => x + ", " + v) : "";
         }
 
-        public PokemonUiData(ulong id, PokemonId pokemonid, BitmapSource img, string name, int cp, double iv, PokemonFamilyId family, int candy, ulong stamp)
+        public PokemonUiData(BotWindowData ownerBot, ulong id, PokemonId pokemonid, BitmapSource img, string name, int cp, double iv, PokemonFamilyId family, int candy, ulong stamp, bool fav, bool inGym)
         {
+            OwnerBot = ownerBot;
+            Favoured = fav;
+            InGym = inGym;
             Id = id;
             PokemonId = pokemonid;
             Image = img;

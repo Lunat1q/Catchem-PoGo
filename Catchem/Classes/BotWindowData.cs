@@ -253,8 +253,11 @@ namespace Catchem.Classes
             _ts = new TimeSpan();
             Started = false;
             ErrorsCount = 0;
-            if (!soft)
-                _realWorkSec = 0;
+            if (soft) return;
+            _realWorkSec = 0;
+            if (Stats == null) return;
+            Stats.TotalPokemons = 0;
+            Stats.TotalPokestops = 0;
         }
 
         public async void Start()
@@ -363,6 +366,7 @@ namespace Catchem.Classes
                 var setting = pokemonSettings.Single(q => q.PokemonId == pokemon.Item1.PokemonId);
                 var family = pokemonFamilies.First(q => q.FamilyId == setting.FamilyId);
                 var mon = new PokemonUiData(
+                    this,
                     pokemon.Item1.Id,
                     pokemon.Item1.PokemonId,
                     pokemon.Item1.PokemonId.ToInventorySource(),
@@ -371,15 +375,18 @@ namespace Catchem.Classes
                     pokemon.Item2,
                     family.FamilyId,
                     family.Candy_,
-                    pokemon.Item1.CreationTimeMs);
+                    pokemon.Item1.CreationTimeMs,
+                    pokemon.Item1.Favorite == 1,
+                    !string.IsNullOrEmpty(pokemon.Item1.DeployedFortId));
                 PokemonList.Add(mon);
                 mon.UpdateTags(Logic);
             }
         }
 
-        public void GotNewPokemon(ulong uid, PokemonId pokemonId, int cp, double iv, PokemonFamilyId family, int candy)
+        public void GotNewPokemon(ulong uid, PokemonId pokemonId, int cp, double iv, PokemonFamilyId family, int candy, bool fav, bool inGym)
         {
             PokemonList.Add(new PokemonUiData(
+                    this,
                     uid,
                     pokemonId,
                     pokemonId.ToInventorySource(),
@@ -388,7 +395,9 @@ namespace Catchem.Classes
                     iv,
                     family,
                     candy,
-                    (ulong)DateTime.UtcNow.ToUnixTime()));
+                    (ulong)DateTime.UtcNow.ToUnixTime(),
+                    fav,
+                    inGym));
             foreach (var pokemon in PokemonList.Where(x => x.Family == family))
             {
                 pokemon.Candy = candy;
@@ -448,16 +457,24 @@ namespace Catchem.Classes
                 targetItem.Amount -= (int)amount;
         }
 
-        public void PokemonUpdated(ulong uid, int cp, double iv, PokemonFamilyId family, int candy)
+        public void PokemonUpdated(ulong uid, int cp, double iv, PokemonFamilyId family, int candy, bool favourite)
         {
             var pokemonToUpdate = PokemonList.FirstOrDefault(x => x.Id == uid);
             if (pokemonToUpdate == null) return;
             pokemonToUpdate.Cp = cp;
             pokemonToUpdate.Iv = iv;
+            pokemonToUpdate.Favoured = favourite;
             foreach (var pokemon in PokemonList.Where(x => x.Family == family))
             {
                 pokemon.Candy = candy;
             }
+        }
+
+        public void PokemonFavUpdated(ulong uid, bool favourite)
+        {
+            var pokemonToUpdate = PokemonList.FirstOrDefault(x => x.Id == uid);
+            if (pokemonToUpdate == null) return;
+            pokemonToUpdate.Favoured = favourite;
         }
 
         public async void CheckForMaxCatch()

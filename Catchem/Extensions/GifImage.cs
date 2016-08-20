@@ -36,7 +36,7 @@ namespace Catchem.Extensions
                 DeleteObject(handle);
                 return res;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 //ignore
             }

@@ -18,9 +18,18 @@ namespace PoGo.PokeMobBot.Logic.Tasks
         public static async Task Execute(ISession session, ulong pokemonId, bool toMax = false)
         {
             var all = await session.Inventory.GetPokemons();
-            var pokemons = all.OrderByDescending(x => x.Cp).ThenBy(n => n.StaminaMax);
-            var pokemon = pokemons.FirstOrDefault(p => p.Id == pokemonId);
+            var pokemon = all.FirstOrDefault(p => p.Id == pokemonId);
             if (pokemon == null) return;
+
+            if (!string.IsNullOrEmpty(pokemon.DeployedFortId))
+            {
+                session.EventDispatcher.Send(new WarnEvent()
+                {
+                    Message = $"Pokemon {(string.IsNullOrEmpty(pokemon.Nickname) ? pokemon.PokemonId.ToString() : pokemon.Nickname)} is signed to defend a GYM!"
+                });
+                return;
+            }
+
             bool success;
             UpgradePokemonResponse latestSuccessResponse = null;
             do
@@ -76,12 +85,16 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                 var family = pokemonFamilies.First(q => q.FamilyId == setting.FamilyId);
                 session.EventDispatcher.Send(new PokemonStatsChangedEvent()
                 {
+                    Name = !string.IsNullOrEmpty(pokemon.Nickname)
+                        ? pokemon.Nickname
+                        : pokemon.PokemonId.ToString(),
                     Uid = pokemonId,
                     Id = pokemon.PokemonId,
                     Family = family.FamilyId,
                     Candy = family.Candy_,
                     Cp = latestSuccessResponse.UpgradedPokemon.Cp,
-                    Iv = latestSuccessResponse.UpgradedPokemon.CalculatePokemonPerfection()
+                    Iv = latestSuccessResponse.UpgradedPokemon.CalculatePokemonPerfection(),
+                    Favourite = pokemon.Favorite == 1
                 });
             }
         }

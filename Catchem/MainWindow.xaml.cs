@@ -83,7 +83,7 @@ namespace Catchem
 
         internal void InitBots()
         {
-            Logger.SetLogger(new WpfLogger(LogLevel.Info), SubPath);
+            Logger.SetLogger(new WpfLogger(LogLevel.Debug), SubPath);
             botsBox.ItemsSource = BotsCollection;
             grid_pickBot.Visibility = Visibility.Visible;
             foreach (var item in Directory.GetDirectories(SubPath))
@@ -143,7 +143,22 @@ namespace Catchem
                 if ((ulong)objData[0] == 0) return;
                 var receiverBot = BotsCollection.FirstOrDefault(x => x.Session == session);
                 if (receiverBot == null) return;
-                receiverBot.PokemonUpdated((ulong)objData[0], (int)objData[2], (double)objData[3], (PokemonFamilyId)objData[4], (int)objData[5]);
+                receiverBot.PokemonUpdated((ulong)objData[0], (int)objData[2], (double)objData[3], (PokemonFamilyId)objData[4], (int)objData[5], (bool)objData[6]);
+            }
+            catch (Exception)
+            {
+                // ignored
+            }
+        }
+
+        private void PokemonFavouriteChanged(ISession session, object[] objData)
+        {
+            try
+            {
+                if (!(objData[0] is ulong)) return;
+                var receiverBot = BotsCollection.FirstOrDefault(x => x.Session == session);
+                if (receiverBot == null) return;
+                receiverBot.PokemonFavUpdated((ulong)objData[0], (bool)objData[1]);
             }
             catch (Exception)
             {
@@ -204,7 +219,7 @@ namespace Catchem
                 if ((ulong) objData[0] == 0) return;
                 var receiverBot = BotsCollection.FirstOrDefault(x => x.Session == session);
                 if (receiverBot == null) return;
-                receiverBot.GotNewPokemon((ulong)objData[0], (PokemonId)objData[1], (int)objData[2], (double)objData[3], (PokemonFamilyId)objData[4], (int)objData[5]);
+                receiverBot.GotNewPokemon((ulong)objData[0], (PokemonId)objData[1], (int)objData[2], (double)objData[3], (PokemonFamilyId)objData[4], (int)objData[5], false, false);
             }
             catch (Exception)
             {
@@ -466,6 +481,9 @@ namespace Catchem
                                 break;
                             case "pm_upd":
                                 PokemonChanged(message.Session, message.ParamObjects);
+                                break;
+                            case "pm_fav":
+                                PokemonFavouriteChanged(message.Session, message.ParamObjects);
                                 break;
                             case "profile_data":
                                 UpdateProfileInfo(message.Session, message.ParamObjects);

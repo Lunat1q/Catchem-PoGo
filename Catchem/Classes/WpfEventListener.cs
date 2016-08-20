@@ -90,7 +90,7 @@ namespace Catchem.Classes
         
         public void HandleEvent(PokemonStatsChangedEvent evt, ISession session)
         {
-            Logger.PushToUi("pm_upd", session, evt.Uid, evt.Id, evt.Cp, evt.Iv, evt.Family, evt.Candy);
+            Logger.PushToUi("pm_upd", session, evt.Uid, evt.Id, evt.Cp, evt.Iv, evt.Family, evt.Candy, evt.Favourite);
         }
 
         public void HandleEvent(BotCompleteFailureEvent evt, ISession session)
@@ -361,13 +361,13 @@ namespace Catchem.Classes
 		public void HandleEvent(PokemonFavoriteEvent evt, ISession session)  //added by Lars
         {
             var message = $"{evt.Pokemon,-13} CP: {evt.Cp,-4} IV: {evt.Iv,-4:#.00}% Candies: {evt.Candies}";
-            Logger.Write(session.Translation.GetTranslation(TranslationString.PokemonFavorite, message), LogLevel.Favorite, session: session);
+		    var msg =
+		        session.Translation.GetTranslation(
+		            evt.Favoured ? TranslationString.PokemonFavorite : TranslationString.PokemonUnFavorite, message);
+            Logger.Write(msg, LogLevel.Favorite, session: session);
+            Logger.PushToUi("pm_fav", session, evt.Uid, evt.Favoured);
         }
-        public void HandleEvent(PokemonUnFavoriteEvent evt, ISession session) //added by Lars
-        {
-            var message = $"{evt.Pokemon,-13} CP: {evt.Cp,-4} IV: {evt.Iv,-4:#.00}% Candies: {evt.Candies}";
-            Logger.Write(session.Translation.GetTranslation(TranslationString.PokemonUnFavorite, message), LogLevel.UnFavorite, session: session);
-        }
+
         public void HandleEvent(InvalidKeepAmountEvent evt, ISession session) //added by Lars
         {
             Logger.Write(session.Translation.GetTranslation(TranslationString.CheckingForMaximumInventorySize, evt.Count, evt.Max), LogLevel.Warning, session: session);

@@ -73,22 +73,13 @@
         </Label>
         <Label x:Name="label6_Copy3" Content="LvlUp in:" HorizontalAlignment="Left" Margin="50,19,0,0" VerticalAlignment="Top" Foreground="#FF363636" FontSize="15" TextOptions.TextFormattingMode="Display" FontFamily="Source Sans Pro Semibold" Grid.Column="1" Height="28" Width="66"/>
         <Label x:Name="label6_Copy4" Content="POKEMON" HorizontalAlignment="Left" Margin="11,102,0,0" VerticalAlignment="Top" Foreground="#FF363636" FontSize="15" TextOptions.TextFormattingMode="Display" FontFamily="Source Sans Pro Semibold" Height="28" Width="89"/>
-        <ListBox ItemsSource="{Binding}" x:Name="PokeListBox" Margin="11,130,10,46" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemTemplate="{DynamicResource PokemonDataTemplate}" BorderBrush="#FF04C17C" Grid.ColumnSpan="2" SelectionMode="Multiple">
+        <ListBox ItemsSource="{Binding}" x:Name="PokeListBox" Margin="11,130,10,46" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemTemplate="{DynamicResource PokemonDataTemplate}" BorderBrush="#FF04C17C" Grid.ColumnSpan="2" SelectionMode="Extended" ContextMenu="{DynamicResource PokemonContextMenu}">
             <ListBox.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="White" Offset="0"/>
                     <GradientStop Color="#FFE6FFF4" Offset="1"/>
                 </LinearGradientBrush>
             </ListBox.Background>
-            <ListBox.ContextMenu>
-                <ContextMenu>
-                    <MenuItem x:Name="mi_levelupPokemon" Header="Level Up Selected Pokemon" Click="mi_levelupPokemon_Click"/>
-                    <MenuItem x:Name="mi_maxlevelupPokemon" Header="Level Up Selected Pokemon to Max" Click="mi_maxlevelupPokemon_Click"/>
-                    <MenuItem x:Name="mi_evolvePokemon" Header="Evolve Selected Pokemon" Click="mi_evolvePokemon_Click"/>
-                    <MenuItem x:Name="mi_transferPokemon" Header="Transfer Selected Pokemon" Click="mi_transferPokemon_Click" />
-                    <MenuItem x:Name="mi_refreshPokemonList" Header="Refresh pokemon list" Click="mi_refreshPokemonList_Click" />
-                </ContextMenu>
-            </ListBox.ContextMenu>
             <ListBox.ItemsPanel>
                 <ItemsPanelTemplate>
                     <WrapPanel />
@@ -179,7 +170,39 @@
                     </LinearGradientBrush>
                 </Button.Background>
             </Button>
-            <Button Style="{StaticResource ResourceKey=flatbutton}" x:Name="sortByCatch" Content="Time" HorizontalAlignment="Left" VerticalAlignment="Top" Width="50" Height="30" Margin="304,0,0,0" FontFamily="BOLD" TextOptions.TextFormattingMode="Display" FontWeight="Bold" FontSize="14" Click="sortByCatch_Click">
+            <Button Style="{StaticResource ResourceKey=flatbutton}" x:Name="sortByCatch" Content="{Binding Converter={StaticResource LoadImageFromResource}, ConverterParameter='time'}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="50" Height="30" Margin="304,0,0,0" FontFamily="BOLD" TextOptions.TextFormattingMode="Display" FontWeight="Bold" FontSize="14" Click="sortByCatch_Click">
+                <Button.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <LinearGradientBrush.RelativeTransform>
+                            <TransformGroup>
+                                <ScaleTransform CenterY="0.5" CenterX="0.5"/>
+                                <SkewTransform CenterY="0.5" CenterX="0.5"/>
+                                <RotateTransform Angle="90" CenterY="0.5" CenterX="0.5"/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </LinearGradientBrush.RelativeTransform>
+                        <GradientStop Color="#FFB0EE9C" Offset="0"/>
+                        <GradientStop Color="#FF53C0B1" Offset="1"/>
+                    </LinearGradientBrush>
+                </Button.Background>
+            </Button>
+            <Button Style="{StaticResource ResourceKey=flatbutton}" x:Name="refreshPokemonList" Content="{Binding ConverterParameter=refresh, Converter={StaticResource LoadImageFromResource}}" HorizontalAlignment="Right" VerticalAlignment="Center" Width="50" Height="30" Margin="0,0,10,1" FontFamily="BOLD" TextOptions.TextFormattingMode="Display" FontWeight="Bold" FontSize="14" Click="refreshPokemonList_Click">
+                <Button.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <LinearGradientBrush.RelativeTransform>
+                            <TransformGroup>
+                                <ScaleTransform CenterY="0.5" CenterX="0.5"/>
+                                <SkewTransform CenterY="0.5" CenterX="0.5"/>
+                                <RotateTransform Angle="90" CenterY="0.5" CenterX="0.5"/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </LinearGradientBrush.RelativeTransform>
+                        <GradientStop Color="#FFB0EE9C" Offset="0"/>
+                        <GradientStop Color="#FF53C0B1" Offset="1"/>
+                    </LinearGradientBrush>
+                </Button.Background>
+            </Button>
+            <Button Style="{StaticResource ResourceKey=flatbutton}" x:Name="sortByFav" Content="{Binding ConverterParameter=favouredSort, Converter={StaticResource LoadImageFromResource}}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="50" Height="30" Margin="359,0,0,0" FontFamily="BOLD" TextOptions.TextFormattingMode="Display" FontWeight="Bold" FontSize="14" Click="sortByFav_Click" >
                 <Button.Background>
                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                         <LinearGradientBrush.RelativeTransform>

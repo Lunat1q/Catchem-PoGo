@@ -23,7 +23,7 @@
                 </LinearGradientBrush>
             </ListBox.Background>
         </ListBox>
-        <Label x:Name="PokemonsToEvolve" Content="To Evolve" HorizontalAlignment="Left" Margin="10,7,0,0" VerticalAlignment="Top" FontSize="16" FontFamily="Calibri" Width="144">
+        <Label x:Name="PokemonsToEvolve" Content="To Evolve" HorizontalAlignment="Left" Margin="10,7,0,0" VerticalAlignment="Top" FontSize="16" FontFamily="Calibri" Width="120">
             <Label.Foreground>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <LinearGradientBrush.RelativeTransform>
@@ -39,7 +39,7 @@
                 </LinearGradientBrush>
             </Label.Foreground>
         </Label>
-        <ComboBox x:Name="AddToEvolveCb" Margin="159,10,74,0" VerticalAlignment="Top"
+        <ComboBox x:Name="AddToEvolveCb" Margin="135,10,74,0" VerticalAlignment="Top"
                               ItemsSource="{Binding Source={StaticResource PokemonIdDataProvider}}"/>
         <Button Style="{StaticResource ResourceKey=flatbutton}" x:Name="AddPokemonToEvolve" 
                             Content="Add" HorizontalAlignment="Right" VerticalAlignment="Top" Width="59" Height="22" Margin="0,10,10,0" FontFamily="BOLD" TextOptions.TextFormattingMode="Display" FontWeight="Bold" Click="AddPokemonToEvolve_Click">
@@ -66,7 +66,7 @@
                 </LinearGradientBrush>
             </ListBox.Background>
         </ListBox>
-        <Label x:Name="PokemonsToEvolve_Copy" Content="Not To Transfer" HorizontalAlignment="Left" Margin="10,7,0,0" VerticalAlignment="Top" FontSize="16" FontFamily="Calibri" Width="144" Grid.Column="1">
+        <Label x:Name="PokemonsToEvolve_Copy" Content="Not To Transfer" HorizontalAlignment="Left" Margin="10,7,0,0" VerticalAlignment="Top" FontSize="16" FontFamily="Calibri" Width="120" Grid.Column="1">
             <Label.Foreground>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <LinearGradientBrush.RelativeTransform>
@@ -82,7 +82,7 @@
                 </LinearGradientBrush>
             </Label.Foreground>
         </Label>
-        <ComboBox x:Name="NotToTransferCb" Margin="159,10,74,0" VerticalAlignment="Top"
+        <ComboBox x:Name="NotToTransferCb" Margin="135,10,74,0" VerticalAlignment="Top"
                     	ItemsSource="{Binding Source={StaticResource PokemonIdDataProvider}}" Grid.Column="1"/>
         <Button Style="{StaticResource ResourceKey=flatbutton}" x:Name="NotToTransferBtn" 
                     	Content="Add" HorizontalAlignment="Right" VerticalAlignment="Top" Width="59" Height="22" Margin="0,10,10,0" FontFamily="BOLD" TextOptions.TextFormattingMode="Display" FontWeight="Bold" Click="NotToTransferBtn_Click" Grid.Column="1">
@@ -109,7 +109,7 @@
                 </LinearGradientBrush>
             </ListBox.Background>
         </ListBox>
-        <Label x:Name="l_PokemonsNotToCatch" Content="Not To Catch" HorizontalAlignment="Left" Margin="10,7,0,0" VerticalAlignment="Top" FontSize="16" FontFamily="Calibri" Width="144" Grid.Row="1">
+        <Label x:Name="l_PokemonsNotToCatch" Content="Not To Catch" HorizontalAlignment="Left" Margin="10,7,0,0" VerticalAlignment="Top" FontSize="16" FontFamily="Calibri" Width="120" Grid.Row="1">
             <Label.Foreground>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <LinearGradientBrush.RelativeTransform>
@@ -125,7 +125,7 @@
                 </LinearGradientBrush>
             </Label.Foreground>
         </Label>
-        <ComboBox x:Name="PokemonsNotToCatchCb" Margin="159,10,74,0" VerticalAlignment="Top"
+        <ComboBox x:Name="PokemonsNotToCatchCb" Margin="135,10,74,0" VerticalAlignment="Top"
                     	ItemsSource="{Binding Source={StaticResource PokemonIdDataProvider}}" Grid.Row="1"/>
         <Button Style="{StaticResource ResourceKey=flatbutton}" x:Name="PokemonsNotToCatchBtn" 
                     	Content="Add" HorizontalAlignment="Right" VerticalAlignment="Top" Width="59" Height="22" Margin="0,10,10,0" FontFamily="BOLD" TextOptions.TextFormattingMode="Display" FontWeight="Bold" Grid.Row="1" Click="PokemonsNotToCatchBtn_Click">
@@ -152,7 +152,7 @@
                 </LinearGradientBrush>
             </ListBox.Background>
         </ListBox>
-        <Label x:Name="l_PokemonToUseMasterball" Content="To Use Masterball" HorizontalAlignment="Left" Margin="10,7,0,0" VerticalAlignment="Top" FontSize="16" FontFamily="Calibri" Width="144" Grid.Row="1" Grid.Column="1">
+        <Label x:Name="l_PokemonToUseMasterball" Content="To Use Masterball" HorizontalAlignment="Left" Margin="10,7,0,0" VerticalAlignment="Top" FontSize="16" FontFamily="Calibri" Width="126" Grid.Row="1" Grid.Column="1">
             <Label.Foreground>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <LinearGradientBrush.RelativeTransform>
@@ -168,7 +168,7 @@
                 </LinearGradientBrush>
             </Label.Foreground>
         </Label>
-        <ComboBox x:Name="PokemonToUseMasterballCb" Margin="159,10,74,0" VerticalAlignment="Top"
+        <ComboBox x:Name="PokemonToUseMasterballCb" Margin="141,10,74,0" VerticalAlignment="Top"
                     	ItemsSource="{Binding Source={StaticResource PokemonIdDataProvider}}" Grid.Row="1" Grid.Column="1"/>
         <Button Style="{StaticResource ResourceKey=flatbutton}" x:Name="PokemonToUseMasterballBtn" 
                     	Content="Add" HorizontalAlignment="Right" VerticalAlignment="Top" Width="59" Height="22" Margin="0,10,10,0" FontFamily="BOLD" TextOptions.TextFormattingMode="Display" FontWeight="Bold" Grid.Row="1" Click="PokemonToUseMasterballBtn_Click" Grid.Column="1">

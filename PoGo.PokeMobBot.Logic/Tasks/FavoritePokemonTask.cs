@@ -35,16 +35,19 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                     await session.Inventory.SetFavoritePokemon(pokemon.Id, true);
                     session.EventDispatcher.Send(new PokemonFavoriteEvent
                     {
+                        Uid = pokemon.Id,
                         Pokemon = pokemon.PokemonId,
                         Cp = pokemon.Cp,
-                        Iv = PokemonInfo.CalculatePokemonPerfection(pokemon),
-                        Candies = family.Candy_
+                        Iv = pokemon.CalculatePokemonPerfection(),
+                        Candies = family.Candy_,
+                        Favoured = true
                     });
                 }
+                await Task.Delay(session.LogicSettings.DelayTransferPokemon, cancellationToken);
             }
             //pokemons not in gym, favorited, and IV lower than FavoriteMinIv %
             var pokemonsToBeUnFavorited = pokemons.Where(p => p.DeployedFortId == string.Empty &&
-                        p.Favorite == 1 && (PokemonInfo.CalculatePokemonPerfection(p) < session.LogicSettings.FavoriteMinIvPercentage)).ToList();
+                        p.Favorite == 1 && (p.CalculatePokemonPerfection() < session.LogicSettings.FavoriteMinIvPercentage)).ToList();
             //unfavorite
             foreach (var pokemon in pokemonsToBeUnFavorited)
             {
@@ -54,14 +57,17 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                     var family = pokemonFamilies.First(q => q.FamilyId == setting.FamilyId);
 
                     await session.Inventory.SetFavoritePokemon(pokemon.Id, false);
-                    session.EventDispatcher.Send(new PokemonUnFavoriteEvent
+                    session.EventDispatcher.Send(new PokemonFavoriteEvent
                     {
+                        Uid = pokemon.Id,
                         Pokemon = pokemon.PokemonId,
                         Cp = pokemon.Cp,
-                        Iv = PokemonInfo.CalculatePokemonPerfection(pokemon),
-                        Candies = family.Candy_
+                        Iv = pokemon.CalculatePokemonPerfection(),
+                        Candies = family.Candy_,
+                        Favoured = false
                     });
                 }
+                await Task.Delay(session.LogicSettings.DelayTransferPokemon, cancellationToken);
             }
         }
     }

@@ -45,7 +45,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
 
             // iterate on whatever meets both minimums
             // to disable one or the other, set to 0
-            foreach (var pokemon in allPokemon.Where(p => session.Inventory.GetPerfect(p) >= session.LogicSettings.UpgradePokemonIvMinimum && p.Cp >= session.LogicSettings.UpgradePokemonCpMinimum))
+            foreach (var pokemon in allPokemon.Where(p => string.IsNullOrEmpty(p.DeployedFortId) && session.Inventory.GetPerfect(p) >= session.LogicSettings.UpgradePokemonIvMinimum && p.Cp >= session.LogicSettings.UpgradePokemonCpMinimum))
             {
                 int pokeLevel = (int)PokemonInfo.GetLevel(pokemon);
                 var currentPokemonSettings = pokemonSettings.FirstOrDefault(q => pokemon != null && q.PokemonId.Equals(pokemon.PokemonId));

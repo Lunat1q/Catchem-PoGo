@@ -120,7 +120,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                     var fortTry = 0; //Current check
                     const int retryNumber = 50; //How many times it needs to check to clear softban
                     const int zeroCheck = 5; //How many times it checks fort before it thinks it's softban
-                    var shownSoftBanMessage = false;
+                    //var shownSoftBanMessage = false;
                     do
                     {
                         cancellationToken.ThrowIfCancellationRequested();
@@ -131,30 +131,30 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                         {
                             if (TimesZeroXPawarded == 0) await MoveToPokestop(session, cancellationToken, pokeStop);
                             timesZeroXPawarded++;
-
-                            if (timesZeroXPawarded <= zeroCheck) continue;
                             if ((int) fortSearch.CooldownCompleteTimestampMs != 0)
                             {
                                 break;
                                 // Check if successfully looted, if so program can continue as this was "false alarm".
                             }
+                            if (timesZeroXPawarded <= zeroCheck) continue;
 
-                            fortTry += 1;
+                            //fortTry += 1;
 
-                            if (!shownSoftBanMessage || fortTry % 5 == 0)
-                            {
-                                session.EventDispatcher.Send(new FortFailedEvent
-                                {
-                                    Name = fortInfo.Name,
-                                    Try = fortTry,
-                                    Max = retryNumber - zeroCheck
-                                });
-                                shownSoftBanMessage = true;
-                            }
-                            if (session.LogicSettings.Teleport)
-                                await Task.Delay(session.LogicSettings.DelaySoftbanRetry, cancellationToken);
-                            else
-                                await DelayingUtils.Delay(session.LogicSettings.DelayBetweenPlayerActions, 400);
+                            //if (!shownSoftBanMessage || fortTry % 5 == 0)
+                            //{
+                            //    session.EventDispatcher.Send(new FortFailedEvent
+                            //    {
+                            //        Name = fortInfo.Name,
+                            //        Try = fortTry,
+                            //        Max = retryNumber - zeroCheck
+                            //    });
+                            //    shownSoftBanMessage = true;
+                            //}
+                            //await DelayingUtils.Delay(session.LogicSettings.DelaySoftbanRetry, 400);
+
+                            session.MapCache.UsedPokestop(pokeStop); //fuck that pokestop - skip it
+
+                            break;
                         }
                         else
                         {

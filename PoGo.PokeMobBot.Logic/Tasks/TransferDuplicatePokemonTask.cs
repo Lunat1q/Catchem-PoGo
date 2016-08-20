@@ -45,6 +45,8 @@ namespace PoGo.PokeMobBot.Logic.Tasks
             {
                 cancellationToken.ThrowIfCancellationRequested();
 
+                if (!string.IsNullOrEmpty(duplicatePokemon.DeployedFortId)) continue;
+                
                 if (duplicatePokemon.Cp >=
                     session.Inventory.GetPokemonTransferFilter(duplicatePokemon.PokemonId).KeepMinCp ||
                     duplicatePokemon.CalculatePokemonPerfection() >

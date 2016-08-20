@@ -3203,6 +3203,26 @@ namespace Catchem.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap favoured {
+            get {
+                object obj = ResourceManager.GetObject("favoured", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap favouredSort {
+            get {
+                object obj = ResourceManager.GetObject("favouredSort", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Fighting_inv {
             get {
                 object obj = ResourceManager.GetObject("Fighting_inv", resourceCulture);
@@ -3266,6 +3286,16 @@ namespace Catchem.Properties {
         internal static System.Drawing.Bitmap Ground_inv {
             get {
                 object obj = ResourceManager.GetObject("Ground_inv", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap gym {
+            get {
+                object obj = ResourceManager.GetObject("gym", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3483,6 +3513,16 @@ namespace Catchem.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap refresh {
+            get {
+                object obj = ResourceManager.GetObject("refresh", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap revive_1 {
             get {
                 object obj = ResourceManager.GetObject("revive_1", resourceCulture);
@@ -3556,6 +3596,16 @@ namespace Catchem.Properties {
         internal static System.Drawing.Bitmap team_valor {
             get {
                 object obj = ResourceManager.GetObject("team_valor", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap time {
+            get {
+                object obj = ResourceManager.GetObject("time", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

@@ -26,7 +26,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
             await session.Inventory.RefreshCachedInventory();
 
             var pokemonToEvolveTask = await session.Inventory.GetPokemonToEvolve(session.LogicSettings.PokemonsToEvolve);
-            var pokemonToEvolve = pokemonToEvolveTask.ToList();
+            var pokemonToEvolve = pokemonToEvolveTask.Where(x => string.IsNullOrEmpty(x.DeployedFortId)).ToList();
 
             if (pokemonToEvolve.Any())
             {
