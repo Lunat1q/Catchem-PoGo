@@ -1,21 +1,31 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Input;
 
 namespace Catchem.SupportForms
 {
-    public partial class InputDialogSample : Window
+    public partial class InputDialog : Window
     {
-        public InputDialogSample(string question, string defaultAnswer = "", bool onlyNum = false, int maxLength = 0)
+        public InputDialog(string question, string defaultAnswer = "", bool onlyNum = false, int maxLength = 0, List<object> selectList = null)
         {
             InitializeComponent();
             lblQuestion.Content = question;
-            txtAnswer.Text = defaultAnswer;
-            if (maxLength != 0) txtAnswer.MaxLength = maxLength;
-            if (onlyNum)
+            if (selectList == null)
             {
-                txtAnswer.PreviewTextInput += TxtAnswerOnPreviewTextInput;
+                txtAnswer.Text = defaultAnswer;
+                if (maxLength != 0) txtAnswer.MaxLength = maxLength;
+                if (onlyNum)
+                {
+                    txtAnswer.PreviewTextInput += TxtAnswerOnPreviewTextInput;
+                }
+            }
+            else
+            {
+                txtAnswer.Visibility = Visibility.Collapsed;
+                comboBox.Visibility = Visibility.Visible;
+                comboBox.ItemsSource = selectList;
             }
         }
 
@@ -42,5 +52,6 @@ namespace Catchem.SupportForms
         }
 
         public string Answer => txtAnswer.Text;
+        public object ObjectAnswer => comboBox.SelectedItem;
     }
 }

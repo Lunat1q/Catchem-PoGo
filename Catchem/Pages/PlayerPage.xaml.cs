@@ -91,7 +91,7 @@ namespace Catchem.Pages
             var item = GetSelectedItem();
             if (item == null) return;
             int amount;
-            var inputDialog = new SupportForms.InputDialogSample("Please, enter amout to recycle:", "1", true);
+            var inputDialog = new SupportForms.InputDialog("Please, enter amout to recycle:", "1", true);
             if (inputDialog.ShowDialog() != true) return;
             if (int.TryParse(inputDialog.Answer, out amount))
                 RecycleItem(CurSession, item, amount, _bot.CancellationToken);
@@ -107,12 +107,8 @@ namespace Catchem.Pages
             return (ItemUiData)ItemListBox.SelectedItem;
         }
 
-
-
-        public void UpdatePlayerTab()
+        public void UpdatePlayerTeam()
         {
-            l_coins.Content = _bot.Coins;
-            Playername.Content = _bot.PlayerName;
             switch (_bot.Team)
             {
                 case TeamColor.Neutral:
@@ -128,6 +124,13 @@ namespace Catchem.Pages
                     team_image.Source = Properties.Resources.team_instinct.LoadBitmap();
                     break;
             }
+        }
+
+        public void UpdatePlayerTab()
+        {
+            l_coins.Content = _bot.Coins;
+            Playername.Content = _bot.PlayerName;
+            UpdatePlayerTeam();
             l_poke_inventory.Content = $"({_bot.PokemonList.Count}/{_bot.MaxPokemonStorageSize})";
             l_inventory.Content = $"({_bot.ItemList.Sum(x => x.Amount)}/{_bot.MaxItemStorageSize})";
             l_StarDust.Content = _bot.StartStarDust;
@@ -202,6 +205,11 @@ namespace Catchem.Pages
             await InventoryListTask.Execute(CurSession, action);
         }
 
+        private async void SelectTeam(TeamColor clr)
+        {
+            await SetPlayerTeamTask.Execute(CurSession, clr);
+        }
+
         private void refreshPokemonList_Click(object sender, RoutedEventArgs e)
         {
             RefreshPokemons();
@@ -212,6 +220,15 @@ namespace Catchem.Pages
             if (_bot == null || _loadingUi) return;
             DoPresorting();
             PokeListBox.Items.SortDescriptions.Add(new SortDescription("Favoured", ListSortDirection.Descending));
+        }
+
+        private void team_image_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            if (_bot == null || !_bot.Started || _bot.Team != TeamColor.Neutral || _bot.Level < 5) return;
+            var inputDialog = new SupportForms.InputDialog("Please, select a team:", null, false, 0, new List<object>{TeamColor.Blue, TeamColor.Yellow, TeamColor.Red});
+            if (inputDialog.ShowDialog() != true || inputDialog.ObjectAnswer == null) return;
+            var team = (TeamColor)inputDialog.ObjectAnswer;
+            SelectTeam(team);
         }
     }
 }

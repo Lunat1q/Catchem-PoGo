@@ -1,8 +1,8 @@
-﻿<Window x:Class="Catchem.SupportForms.InputDialogSample"
+﻿<Window x:Class="Catchem.SupportForms.InputDialog"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Input" SizeToContent="WidthAndHeight" WindowStartupLocation="CenterScreen"
-        ContentRendered="Window_ContentRendered" Width="349.812" Height="161.791">
+        ContentRendered="Window_ContentRendered" Width="360" Height="160" MaxHeight="160" MaxWidth="900" MinHeight="160" MinWidth="360">
     <Window.Background>
         <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
             <GradientStop Color="#FFDAFBFA" Offset="0.721"/>
@@ -16,7 +16,7 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
+            <RowDefinition />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
@@ -41,13 +41,13 @@
         	IsDefault="True"
         	Width="70"
         	Height="30"
-        	Margin="0,0,10,3"
+        	Margin="0,4,10,0"
         	Click="btnDialogOk_Click"
         	Content="Ok"
         	FontFamily="BOLD"
         	FontWeight="Bold"
         	Style="{StaticResource ResourceKey=flatbutton}"
-        	TextOptions.TextFormattingMode="Display" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Right" VerticalAlignment="Center">
+        	TextOptions.TextFormattingMode="Display" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Right" VerticalAlignment="Bottom">
             <Button.Background>
                 <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
                     <LinearGradientBrush.RelativeTransform>
@@ -67,7 +67,7 @@
         	IsCancel="True"
         	Width="70"
         	Height="30"
-        	Margin="0,0,85,4"
+        	Margin="0,4,85,0"
         	HorizontalAlignment="Right"
         	VerticalAlignment="Bottom"
         	Content="Cancel"
@@ -90,5 +90,6 @@
                 </LinearGradientBrush>
             </Button.Background>
         </Button>
+        <ComboBox x:Name="comboBox" Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" Visibility="Collapsed"/>
     </Grid>
 </Window>

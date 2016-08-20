@@ -103,7 +103,7 @@
         </ListBox>
         <Label x:Name="label6_Copy6" Content="INVENTORY" HorizontalAlignment="Left" Margin="10,102,0,0" VerticalAlignment="Top" Foreground="#FF363636" FontSize="15" TextOptions.TextFormattingMode="Display" FontFamily="Source Sans Pro Semibold" Height="28" Width="89" Grid.Column="2"/>
         <Label x:Name="l_inventory" Content="(HAVE/MAX)" HorizontalAlignment="Right" Margin="0,102,10,0" VerticalAlignment="Top" Foreground="#FF324AB4" FontSize="15" TextOptions.TextFormattingMode="Display" FontFamily="Source Sans Pro Semibold" Height="28" Width="100" HorizontalContentAlignment="Right" Grid.Column="2"/>
-        <Image x:Name="team_image" Grid.Column="2" HorizontalAlignment="Right" Height="100" Margin="0" VerticalAlignment="Top" Width="100" Source="pack://siteoforigin:,,,/Resources/team_instinct.png"/>
+        <Image x:Name="team_image" Grid.Column="2" HorizontalAlignment="Right" Height="100" Margin="0" VerticalAlignment="Top" Width="100" Source="pack://siteoforigin:,,,/Resources/team_instinct.png" MouseDown="team_image_MouseDown"/>
         <Grid Height="31" Margin="10,0,0,10" VerticalAlignment="Bottom" Grid.ColumnSpan="2">
             <Button Style="{StaticResource ResourceKey=flatbutton}" x:Name="sortByCp" Content="CP" HorizontalAlignment="Left" VerticalAlignment="Top" Width="50" Height="30" Margin="85,0,0,0" FontFamily="BOLD" TextOptions.TextFormattingMode="Display" FontWeight="Bold" Click="SortByCpClick">
                 <Button.Background>

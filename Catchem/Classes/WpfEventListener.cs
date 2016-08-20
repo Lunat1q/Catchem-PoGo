@@ -93,6 +93,11 @@ namespace Catchem.Classes
             Logger.PushToUi("pm_upd", session, evt.Uid, evt.Id, evt.Cp, evt.Iv, evt.Family, evt.Candy, evt.Favourite, evt.Name);
         }
 
+        public void HandleEvent(TeamSetEvent evt, ISession session)
+        {
+            Logger.PushToUi("team_set", session, evt.Color);
+        }
+
         public void HandleEvent(BotCompleteFailureEvent evt, ISession session)
         {
             Logger.PushToUi("bot_failure", session, evt.Shutdown, evt.Stop);

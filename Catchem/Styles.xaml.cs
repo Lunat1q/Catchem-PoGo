@@ -94,7 +94,7 @@ namespace Catchem
             if (pokeListBox?.SelectedIndex == -1) return;
             var pokemonToRename = GetMultipleSelectedPokemon(pokeListBox);
             if (pokemonToRename == null) return;
-            var inputDialog = new SupportForms.InputDialogSample("Please Enter a Name to Rename Pokemon:", "", false, 12);
+            var inputDialog = new SupportForms.InputDialog("Please Enter a Name to Rename Pokemon:", "", false, 12);
             if (inputDialog.ShowDialog() != true) return;
             var customName = inputDialog.Answer;
             if (customName.Length > 12) return;

@@ -247,7 +247,7 @@
                              VerticalAlignment="Bottom"
                              Foreground="#FF6CCDAC"
                              Template="{StaticResource pogo}"
-                             Text="Profile name here..." />
+                             Text="Profile name here..." GotFocus="InputTextBox_GotFocus" />
                     <Button x:Name="YesButton"
                             Width="Auto"
                             Height="31"

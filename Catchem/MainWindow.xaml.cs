@@ -227,6 +227,16 @@ namespace Catchem
             }
         }
 
+        private void SetPlayerTeam(ISession session, object[] paramObjects)
+        {
+            if (paramObjects == null || paramObjects.Length == 0 || !(paramObjects[0] is TeamColor)) return;
+            var receiverBot = BotsCollection.FirstOrDefault(x => x.Session == session);
+            if (receiverBot == null) return;
+            receiverBot.Team = (TeamColor) paramObjects[0];
+            if (CurSession == session)
+                SettingsView.BotPlayerPage.UpdatePlayerTeam();
+        }
+
         private void BuildPokemonList(ISession session, object[] objData)
         {
             try
@@ -487,6 +497,9 @@ namespace Catchem
                             case "pm_upd":
                                 PokemonChanged(message.Session, message.ParamObjects);
                                 break;
+                            case "team_set":
+                                SetPlayerTeam(message.Session, message.ParamObjects);
+                                break;
                             case "pm_fav":
                                 PokemonFavouriteChanged(message.Session, message.ParamObjects);
                                 break;
@@ -513,6 +526,7 @@ namespace Catchem
                 await Task.Delay(5);
             }
         }
+
         #endregion
 
         #region Controll's events
@@ -808,6 +822,14 @@ namespace Catchem
                 MessageBox.Show("There is an error while trying to delete your bot profile! ex:\r\n" + ex.Message,
                     "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+        }
+
+        private void InputTextBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            var tb = sender as System.Windows.Controls.TextBox;
+            if (tb == null) return;
+            if (tb.Text == @"Profile name here...")
+                tb.Text = "";
         }
     }
 }
