@@ -254,6 +254,7 @@
     <Compile Include="Settings\DownloadSettingsAction.cs" />
     <Compile Include="Settings\FortSettings.cs" />
     <Compile Include="Settings\GlobalSettings.cs" />
+    <Compile Include="Settings\GpsSettings.cs" />
     <Compile Include="Settings\InventorySettings.cs" />
     <Compile Include="Settings\LevelSettings.cs" />
     <Compile Include="Settings\MapSettings.cs" />

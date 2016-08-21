@@ -12,6 +12,7 @@ using PokemonGo.RocketAPI.Extensions;
 using PokemonGo.RocketAPI.Rpc;
 using POGOProtos.Data;
 using POGOProtos.Enums;
+using POGOProtos.Inventory.Item;
 using POGOProtos.Map.Fort;
 using POGOProtos.Map.Pokemon;
 
@@ -276,7 +277,8 @@ namespace PoGo.PokeMobBot.Logic
 
     public class FortCacheItem
     {
-        public ByteString ActiveFortModifier;
+        public List<ItemId> ActiveFortModifier;
+        //public ByteString ActiveFortModifier;
         public long CooldownCompleteTimestampMS;
         public bool Enabled;
         public int GuardPokemonCp;
@@ -295,7 +297,7 @@ namespace PoGo.PokeMobBot.Logic
 
         public FortCacheItem(FortData fort)
         {
-            ActiveFortModifier = fort.ActiveFortModifier;
+            ActiveFortModifier = fort.ActiveFortModifier.ToList();
             CooldownCompleteTimestampMS = fort.CooldownCompleteTimestampMs;
             Enabled = fort.Enabled;
             GuardPokemonCp = fort.GuardPokemonCp;
