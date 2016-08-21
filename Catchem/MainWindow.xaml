@@ -7,8 +7,8 @@
                       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                       xmlns:pages="clr-namespace:Catchem.Pages"
                       Title="Catchem"
-                      Width="1226"
-                      Height="697"
+                      Width="1120"
+                      Height="428"
                       MinWidth="1080"
                       MinHeight="600"
                       Closing="Window_Closing"
@@ -286,12 +286,10 @@
         </Grid>
         <Grid x:Name="batchInput" Visibility="Collapsed" Grid.ColumnSpan="2">
             <Grid Background="Black" Opacity="0.45" />
-            <Border Width="818"
-                    Height="629"
+            <Border
                     MinWidth="250"
-                    Margin="322,58,200,58"
+                    Margin="0,50"
                     HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
                     CornerRadius="7,7,7,7">
                 <Border.Background>
                     <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
@@ -308,13 +306,13 @@
                     </LinearGradientBrush>
                 </Border.Background>
                 <Grid>
-                    <TextBlock Margin="21,13,19,581"
+                    <TextBlock Margin="15,13,15,0"
                                FontFamily="Calibri"
                                FontSize="24"
                                FontWeight="Bold"
                                Foreground="#FF7E7E7E"
                                Text="Paste profiles data here"
-                               TextAlignment="Center" />
+                               TextAlignment="Center" VerticalAlignment="Top" />
                     <Button x:Name="batch_Yes"
                             Width="Auto"
                             Height="31"
@@ -350,27 +348,25 @@
                             Style="{StaticResource flatbutton}" />
                     <TextBox x:Name="batch_botText"
                              Width="778"
-                             Height="428"
-                             Margin="21,117,0,0"
-                             HorizontalAlignment="Left"
-                             VerticalAlignment="Top"
+                             Margin="15,111,15,84"
+                             HorizontalAlignment="Center"
                              AcceptsReturn="True"
                              Text=""
                              TextWrapping="Wrap" />
-                    <TextBlock Margin="21,48,19,546"
+                    <TextBlock Margin="15,48,15,0"
                                FontFamily="Calibri"
                                FontSize="20"
                                FontStyle="Italic"
                                Foreground="#FF7E7E7E"
                                Text="Format: type;login;pass;proxyuri:port;proxy_login;proxy_pass"
-                               TextAlignment="Center" />
-                    <TextBlock Margin="21,82,19,512"
+                               TextAlignment="Center" VerticalAlignment="Top" />
+                    <TextBlock Margin="15,82,15,0"
                                FontFamily="Calibri"
                                FontSize="20"
                                FontStyle="Italic"
                                Foreground="#FF7E7E7E"
                                Text="If you have bot selected, all bots will inherit his settings"
-                               TextAlignment="Center" />
+                               TextAlignment="Center" VerticalAlignment="Top" />
                 </Grid>
             </Border>
         </Grid>

@@ -82,6 +82,17 @@ namespace Catchem.Pages
                     uiElem.IsChecked = val;
             }
 
+            foreach (var uiElem in settings_grid.GetLogicalChildCollection<ComboBox>())
+            {
+                Enum val;
+                if (Extensions.Extensions.GetValueByName(uiElem.Name.Substring(2), Bot.GlobalSettings, out val))
+                {
+                    var valType = val.GetType();
+                    uiElem.ItemsSource = Enum.GetValues(valType);
+                    uiElem.SelectedItem = val;
+                }
+            }
+
             LoadingUi = false;
         }
 
@@ -111,6 +122,12 @@ namespace Catchem.Pages
                 var propName = passBox.Name.Replace("c_", "");
                 Extensions.Extensions.SetValueByName(propName, passBox.Password, Bot.GlobalSettings);
             }
+            var comboBox = uiElement as ComboBox;
+            if (comboBox != null)
+            {
+                var propName = comboBox.Name.Replace("c_", "");
+                Extensions.Extensions.SetValueByName(propName, comboBox.SelectedItem, Bot.GlobalSettings);
+            }
         }
 
         private void BotPropertyChanged(object sender, EventArgs e)
@@ -123,8 +140,21 @@ namespace Catchem.Pages
         {
             if (Bot == null || LoadingUi) return;
             var comboBox = sender as ComboBox;
-            if (comboBox != null)
+            if (comboBox == null) return;
+            if (Equals(Bot.GlobalSettings.Auth.AuthType, (AuthType) comboBox.SelectedItem)) return;
+            if (Bot.GlobalSettings.Auth.AuthType == AuthType.Google)
+            {
                 Bot.GlobalSettings.Auth.AuthType = (AuthType)comboBox.SelectedItem;
+                loginBox.Text = Bot.GlobalSettings.Auth.PtcUsername;
+                passwordBox.Password = Bot.GlobalSettings.Auth.PtcPassword;
+            }
+            else
+            {
+                Bot.GlobalSettings.Auth.AuthType = (AuthType)comboBox.SelectedItem;
+                loginBox.Text = Bot.GlobalSettings.Auth.GoogleUsername;
+                passwordBox.Password = Bot.GlobalSettings.Auth.GooglePassword;
+            }
+            
         }
 
         private void loginBox_TextChanged(object sender, TextChangedEventArgs e)

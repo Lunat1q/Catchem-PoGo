@@ -104,7 +104,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                                     Latitude = pokeStop.Latitude,
                                     Longitude = pokeStop.Longitude
                                 });
-                                session.MapCache.UsedPokestop(pokeStop);
+                                session.MapCache.UsedPokestop(pokeStop, session);
                             }
                             if (fortSearch.ItemsAwarded.Count > 0)
                             {
@@ -153,6 +153,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                         var nextMoveSpeed = session.Client.rnd.NextInRange(session.LogicSettings.WalkingSpeedMin, session.LogicSettings.WalkingSpeedMax) * session.Settings.MoveSpeedFactor;
 
                         await navi.HumanPathWalking(
+                            session,
                             targetLocation,
                             nextMoveSpeed,
                             async () =>

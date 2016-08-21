@@ -112,7 +112,7 @@ namespace PoGo.PokeMobBot.Logic
    //         return result;
    //     }
 
-        public async Task<PlayerUpdateResponse> HumanPathWalking(GeoCoordinate targetLocation,
+        public async Task<PlayerUpdateResponse> HumanPathWalking(ISession session, GeoCoordinate targetLocation,
             double walkingSpeedInKilometersPerHour, Func<Task<bool>> functionExecutedWhileWalking,
             Func<Task<bool>> functionExecutedWhileWalking2,
             CancellationToken cancellationToken)
@@ -160,11 +160,11 @@ namespace PoGo.PokeMobBot.Logic
             
             do
             {
-                if(RuntimeSettings.BreakOutOfPathing)
-                if (RuntimeSettings.lastPokeStopCoordinate.Latitude.Equals(targetLocation.Latitude) &&
-                    RuntimeSettings.lastPokeStopCoordinate.Longitude.Equals(targetLocation.Latitude))
+                if(session.Runtime.BreakOutOfPathing)
+                if (session.Runtime.lastPokeStopCoordinate.Latitude.Equals(targetLocation.Latitude) &&
+                    session.Runtime.lastPokeStopCoordinate.Longitude.Equals(targetLocation.Latitude))
                 {
-                    RuntimeSettings.BreakOutOfPathing = true;
+                    session.Runtime.BreakOutOfPathing = true;
                     break;
                 }
 
@@ -224,7 +224,7 @@ namespace PoGo.PokeMobBot.Logic
                     await functionExecutedWhileWalking2();
 
                 await Task.Delay(300, cancellationToken);
-            } while (LocationUtils.CalculateDistanceInMeters(sourceLocation, targetLocation) >= 2 && RuntimeSettings.BreakOutOfPathing == false);
+            } while (LocationUtils.CalculateDistanceInMeters(sourceLocation, targetLocation) >= 2 && session.Runtime.BreakOutOfPathing == false);
             if (trueAlt) altitude = targetLocation.Altitude;
             _client.Settings.DefaultAltitude = altitude;
             return result;

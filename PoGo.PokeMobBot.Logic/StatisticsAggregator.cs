@@ -212,6 +212,25 @@ namespace PoGo.PokeMobBot.Logic
 
         }
 
+        public void HandleEvent(GymPokeEvent evt, ISession session)
+        {
+
+        }
+
+        public void HandleEvent(PokestopsOptimalPathEvent evt, ISession session)
+        {
+
+        }
+
+        public void HandleEvent(TeamSetEvent evt, ISession session)
+        {
+
+        }
+        public void HandleEvent(ItemLostEvent evt, ISession session)
+        {
+
+        }
+
         public void Listen(IEvent evt, ISession session)
         {
             try

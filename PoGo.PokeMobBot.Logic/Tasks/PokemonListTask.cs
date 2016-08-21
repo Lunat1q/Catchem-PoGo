@@ -16,7 +16,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
         public static async Task Execute(ISession session, Action<IEvent> action)
         {
             // Refresh inventory so that the player stats are fresh
-            await session.Inventory.RefreshCachedInventory();
+            //await session.Inventory.RefreshCachedInventory();
 
             var myPokemonSettings = await session.Inventory.GetPokemonSettings();
             var pokemonSettings = myPokemonSettings.ToList();

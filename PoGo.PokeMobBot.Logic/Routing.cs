@@ -22,6 +22,8 @@ namespace PoGo.PokeMobBot.Logic
                 var request = WebRequest.Create(
                   $"http://mobrouting.com" + $"/api/dev/gosmore.php?format=geojson&flat={start.Latitude.ToString(CultureInfo.InvariantCulture)}&flon={start.Longitude.ToString(CultureInfo.InvariantCulture)}&tlat={dest.Latitude.ToString(CultureInfo.InvariantCulture)}&tlon={dest.Longitude.ToString(CultureInfo.InvariantCulture)}&v=foot&fast=1&layer=mapnik");
                 request.Credentials = CredentialCache.DefaultCredentials;
+                request.Proxy = WebRequest.DefaultWebProxy;
+                request.Proxy.Credentials = CredentialCache.DefaultCredentials;
 
                 var responseFromServer = "";
                 request.Timeout = 20000;
