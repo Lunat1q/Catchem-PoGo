@@ -224,7 +224,7 @@ namespace Catchem.Classes
             else
                 Xpph = Stats.TotalExperience / RealWorkH;
 
-            if (Stats != null) Level = Stats.ExportStats.Level;
+            if (Stats?.ExportStats != null) Level = Stats.ExportStats.Level;
         }
 
         public void PushNewRoutePoint(PointLatLng nextPoint)
