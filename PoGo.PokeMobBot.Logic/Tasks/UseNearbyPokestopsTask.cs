@@ -49,6 +49,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                 if (fortSearch.ExperienceAwarded > 0)
                 {
                     RuntimeSettings.StopsHit++;
+                    RuntimeSettings.PokestopsToCheckGym--;
                     session.EventDispatcher.Send(new FortUsedEvent
                     {
                         Id = pokeStop.Id,

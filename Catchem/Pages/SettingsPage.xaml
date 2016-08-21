@@ -5,7 +5,7 @@
              xmlns:local="clr-namespace:Catchem"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              Width="890.487"
-             Height="1889.5"
+             Height="1933.5"
              mc:Ignorable="d">
     <Grid Background="#FFF9F9F9">
         <ScrollViewer Grid.ColumnSpan="2">
@@ -863,7 +863,7 @@
                 </GroupBox>
                 <GroupBox x:Name="groupBox3"
                           Grid.Column="1"
-                          Height="497"
+                          Height="539"
                           Margin="5,171,5,0"
                           VerticalAlignment="Top"
                           Header="Navigation">
@@ -1067,22 +1067,41 @@
                         	Template="{StaticResource pogo}"
                         	TextChanged="BotPropertyChanged"
                         	TextWrapping="Wrap" />
-                        <CheckBox x:Name="c_UseOpenLsRouting"
-                        	Width="196"
-                        	Height="16"
-                        	Margin="10,455,0,0"
+                        <ComboBox x:Name="c_RoutingService"
+                        	Height="24"
+                        	Margin="10,455,10,0"
+                        	VerticalAlignment="Top" Grid.Column="1" SelectionChanged="BotPropertyChanged" />
+                        <Label x:Name="label7_Copy21"
+                        	Width="179"
+                        	Height="26"
+                        	Margin="10,453,0,0"
                         	HorizontalAlignment="Left"
                         	VerticalAlignment="Top"
-                        	Checked="BotPropertyChanged"
-                        	Content="Use OpenLS Routing"
-                        	Unchecked="BotPropertyChanged" Grid.ColumnSpan="2" />
+                        	Content="Routing service"
+                        	RenderTransformOrigin="0.5,0.423" />
+                        <Label x:Name="label7_Copy22"
+                        	Width="179"
+                        	Height="26"
+                        	Margin="10,484,0,0"
+                        	HorizontalAlignment="Left"
+                        	VerticalAlignment="Top"
+                        	Content="Google Directions API Key"
+                        	RenderTransformOrigin="0.5,0.423" />
+                        <TextBox x:Name="c_GoogleDirectionsApiKey"
+                        	Grid.Column="1"
+                        	Height="29"
+                        	Margin="10,484,10,0"
+                        	VerticalAlignment="Top"
+                        	Template="{StaticResource pogo}"
+                        	TextChanged="BotPropertyChanged"
+                        	TextWrapping="Wrap" />
 
                     </Grid>
                 </GroupBox>
                 <GroupBox x:Name="groupBox3_Copy"
                           Grid.Column="1"
                           Height="509"
-                          Margin="5,668,5,0"
+                          Margin="5,710,5,0"
                           VerticalAlignment="Top"
                           Header="Device Info">
                     <Grid>
@@ -1273,7 +1292,6 @@
                                  TextChanged="BotPropertyChanged"
                                  TextWrapping="Wrap" />
                         <Button x:Name="b_getDataFromRealPhone"
-                                Grid.Column="1"
                                 Height="29"
                                 Margin="10,455,10,0"
                                 VerticalAlignment="Top"
@@ -1282,7 +1300,7 @@
                                 FontFamily="BOLD"
                                 FontWeight="Bold"
                                 Style="{StaticResource ResourceKey=flatbutton}"
-                                TextOptions.TextFormattingMode="Display" Width="205">
+                                TextOptions.TextFormattingMode="Display" Width="Auto" Grid.ColumnSpan="2">
                             <Button.Background>
                                 <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
                                     <LinearGradientBrush.RelativeTransform>
@@ -1330,7 +1348,7 @@
                 </GroupBox>
                 <GroupBox x:Name="groupBox4_Copy2"
                           Height="656"
-                          Margin="5,1177,5,0"
+                          Margin="5,1219,5,0"
                           VerticalAlignment="Top"
                           Header="Delays"
                           RenderTransformOrigin="0.479,0.565" Grid.Column="1">
@@ -1593,7 +1611,7 @@
                         Grid.Column="1"
                         Width="110"
                         Height="30"
-                        Margin="0,1838,10,0"
+                        Margin="0,1880,10,0"
                         HorizontalAlignment="Right"
                         VerticalAlignment="Top"
                         Click="btn_SaveBot_Click"

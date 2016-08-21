@@ -8,12 +8,17 @@ namespace PoGo.PokeMobBot.Logic.Utils
 {
     public static class RoutingUtils
     {
-        public static List<FortCacheItem> GetBestRoute(FortCacheItem startingPokestop,
+        public static List<GeoCoordinate> GetBestRoute(FortCacheItem startingPokestop,
             IEnumerable<FortCacheItem> pokestopsList, int amountToVisit)
         {
             var map = new MapMatrix(pokestopsList, startingPokestop, amountToVisit);
             var route = map.Optimize();
-            return route;
+            var result = new List<GeoCoordinate>();
+            foreach (var wp in route)
+            {
+                result.Add(new GeoCoordinate(wp.Latitude, wp.Longitude));
+            }
+            return result;
         }
     }
 

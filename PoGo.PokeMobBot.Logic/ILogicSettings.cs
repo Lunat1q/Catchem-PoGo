@@ -84,11 +84,12 @@ namespace PoGo.PokeMobBot.Logic
         int PokestopSkipLuckyNumber { get; }
         int PokestopSkipLuckyMin { get; }
         int PokestopSkipLuckyMax { get; }
-        bool UseOpenLsRouting { get; }
+        RoutingService RoutingService { get; }
 
         //MapzenAPI
         bool UseMapzenApiElevation { get; }
         string MapzenApiElevationKey { get; }
+        string GoogleDirectionsApiKey { get; }
         //delays
         int DelayBetweenPlayerActions { get; }
         int DelayBetweenPokemonCatch { get; }

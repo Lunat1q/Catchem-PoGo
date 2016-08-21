@@ -62,6 +62,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Device" />
     <Reference Include="System.IO.Compression.FileSystem" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -134,6 +135,7 @@
     <Compile Include="ILogicSettings.cs" />
     <Compile Include="Navigation.cs" />
     <Compile Include="Navigation2.cs" />
+    <Compile Include="GoogleRoute.cs" />
     <Compile Include="PoGoUtils\PokemonMoveInfo.cs" />
     <Compile Include="PoGoUtils\PokemonInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

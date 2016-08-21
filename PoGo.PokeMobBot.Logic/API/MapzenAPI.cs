@@ -70,20 +70,20 @@ namespace PoGo.PokeMobBot.Logic.API
         {
             return Api + Options[0] + lat + Options[1] + lon + Options[2] + key;
         }
-        protected string Request(string httpUrl)
+        protected async Task<string> Request(string httpUrl)
         {
+            var stopWatch = new Stopwatch();
+            stopWatch.Start();
             try
             {
-                var stopWatch = new Stopwatch();;
-                stopWatch.Start();
                 var get = "";
-                var request = (HttpWebRequest)WebRequest.Create(httpUrl);
+                var request = (HttpWebRequest) WebRequest.Create(httpUrl);
                 request.Proxy = _session == null ? WebRequest.GetSystemWebProxy() : _session.Proxy;
                 if (_session == null)
                     request.Proxy.Credentials = CredentialCache.DefaultCredentials;
 
                 request.AutomaticDecompression = DecompressionMethods.GZip;
-                using (var response = (HttpWebResponse)request.GetResponse())
+                using (var response = (HttpWebResponse) request.GetResponse())
                 using (var stream = response.GetResponseStream())
                     if (stream != null)
                         using (var reader = new StreamReader(stream))
@@ -96,14 +96,19 @@ namespace PoGo.PokeMobBot.Logic.API
                 Logger.Write("Altitude: " + json["height"][0], LogLevel.Debug);
 #endif
                 stopWatch.Stop();
-                if (stopWatch.ElapsedMilliseconds < 180)
-                    Task.Delay(180 - (int)stopWatch.ElapsedMilliseconds).Wait();
-                return (string)json["height"][0];
+                if (stopWatch.ElapsedMilliseconds < 1000)
+                    await Task.Delay(1000 - (int) stopWatch.ElapsedMilliseconds);
+                return (string) json["height"][0];
             }
             catch (Exception ex)
             {
                 Logger.Write("ERROR: " + ex.Message, LogLevel.Error);
                 return "ERROR";
+            }
+            finally
+            {
+                if (stopWatch.IsRunning)
+                    stopWatch.Stop();
             }
 
         }
@@ -136,7 +141,7 @@ namespace PoGo.PokeMobBot.Logic.API
             return _knownAltitude.FirstOrDefault(x => LocationUtils.CalculateDistanceInMeters(x.Lat, x.Lon, lat, lon) < 5)?.Alt ?? R.NextInRange(_session.Settings.DefaultAltitudeMin, _session.Settings.DefaultAltitudeMax);
         }
 
-        public double GetAltitude(double lat, double lon, string key = "")
+        public async Task<double> GetAltitude(double lat, double lon, string key = "")
         {
             Logger.Write("Using MapzenAPI to obtian Altitude based on Longitude and Latitude.");
             if (key != "") ApiKey = key;
@@ -151,7 +156,7 @@ namespace PoGo.PokeMobBot.Logic.API
                 {
                     lat.ToString(CultureInfo.InvariantCulture),
                     lon.ToString(CultureInfo.InvariantCulture),
-                    Request(Url(lat.ToString(CultureInfo.InvariantCulture), lon.ToString(CultureInfo.InvariantCulture),
+                    await Request(Url(lat.ToString(CultureInfo.InvariantCulture), lon.ToString(CultureInfo.InvariantCulture),
                         key))
                 });
             }

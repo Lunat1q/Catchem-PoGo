@@ -1,0 +1,206 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Net;
+using System.IO;
+using System.Text;
+using GeoCoordinatePortable;
+using PoGo.PokeMobBot.Logic.Logging;
+using PoGo.PokeMobBot.Logic.State;
+using System.Xml;
+using System.Globalization;
+using System.Linq;
+using System.Runtime.Serialization;
+using Google.Protobuf.WellKnownTypes;
+using Newtonsoft.Json;
+using PoGo.PokeMobBot.Logic.Extensions;
+using Enum = System.Enum;
+
+namespace PoGo.PokeMobBot.Logic
+{
+    public static class GoogleRouting
+    {
+        public static RoutingResponse GetRoute(GeoCoordinate start, GeoCoordinate dest, ISession session, List<GeoCoordinate> waypoints)
+        {
+            string apiKey = session.LogicSettings.GoogleDirectionsApiKey;
+            string waypointsRequest = "";
+            if (waypoints != null && waypoints.Count > 0)
+            {
+                waypointsRequest = "&waypoints=";
+                var wpList = new List<string>();
+                foreach (var wp in waypoints)
+                {
+                    wpList.Add($"{wp.Latitude.ToString(CultureInfo.InvariantCulture)},{wp.Longitude.ToString(CultureInfo.InvariantCulture)}");
+                }
+                waypointsRequest += wpList.Aggregate((x, v) => x + "|" + v);
+            }
+            try
+            {
+                Logger.Write("Requesting routing info to Google Directions API", LogLevel.Debug);
+
+                var request = WebRequest.Create(
+                  "https://maps.googleapis.com/maps/api/directions/json?" + $"origin={start.Latitude.ToString(CultureInfo.InvariantCulture)},{start.Longitude.ToString(CultureInfo.InvariantCulture)}" +
+                  $"&destination={dest.Latitude.ToString(CultureInfo.InvariantCulture)},{dest.Longitude.ToString(CultureInfo.InvariantCulture)}" + 
+                  waypointsRequest +
+                  "&mode=walking" +
+                  $"&key={apiKey}");
+                request.Credentials = CredentialCache.DefaultCredentials;
+                request.Proxy = WebRequest.DefaultWebProxy;
+                request.Proxy.Credentials = CredentialCache.DefaultCredentials;
+
+                var responseFromServer = "";
+                request.Timeout = 20000;
+                using (var response = request.GetResponse())
+                {
+                    Logger.Write("Got response from Google", LogLevel.Debug);
+                    //Console.WriteLine(((HttpWebResponse)response).StatusDescription);
+                    using (var dataStream = response.GetResponseStream())
+                    using (var reader = new StreamReader(dataStream))
+                    {
+                        responseFromServer = reader.ReadToEnd();
+                    }
+                }
+               
+                var googleResponse = JsonConvert.DeserializeObject<GoogleResponse>(responseFromServer); ;// HandleResponse(responseFromServer);
+
+                var responseParsed = new RoutingResponse();
+                var googleCoords = new List<List<double>>();
+                var legs = googleResponse.routes.FirstOrDefault()?.legs;
+                if (legs != null)
+                    foreach (var leg in legs)
+                    {
+                        foreach (var step in leg.steps)
+                        {
+                            googleCoords.Add(new List<double> { step.start_location.lat, step.start_location.lng });
+                        }
+                    }
+                responseParsed.Coordinates = googleCoords;
+
+                return responseParsed;
+            }
+            catch(Exception ex)
+            {
+                Logger.Write("Routing error: " + ex.Message, LogLevel.Debug);
+            }
+            RoutingResponse emptyResponse = new RoutingResponse();
+            return emptyResponse;  
+        }
+    }
+
+    public class GoogleResponse
+    {
+        public List<Route> routes { get; set; }
+        public string status { get; set; }
+    }
+
+    public class Northeast
+    {
+        public double lat { get; set; }
+        public double lng { get; set; }
+    }
+
+    public class Southwest
+    {
+        public double lat { get; set; }
+        public double lng { get; set; }
+    }
+
+    public class Bounds
+    {
+        public Northeast northeast { get; set; }
+        public Southwest southwest { get; set; }
+    }
+
+    public class Distance
+    {
+        public string text { get; set; }
+        public int value { get; set; }
+    }
+
+    public class Duration
+    {
+        public string text { get; set; }
+        public int value { get; set; }
+    }
+
+    public class EndLocation
+    {
+        public double lat { get; set; }
+        public double lng { get; set; }
+    }
+
+    public class StartLocation
+    {
+        public double lat { get; set; }
+        public double lng { get; set; }
+    }
+
+    public class Distance2
+    {
+        public string text { get; set; }
+        public int value { get; set; }
+    }
+
+    public class Duration2
+    {
+        public string text { get; set; }
+        public int value { get; set; }
+    }
+
+    public class EndLocation2
+    {
+        public double lat { get; set; }
+        public double lng { get; set; }
+    }
+
+    public class Polyline
+    {
+        public string points { get; set; }
+    }
+
+    public class StartLocation2
+    {
+        public double lat { get; set; }
+        public double lng { get; set; }
+    }
+
+    public class Step
+    {
+        public Distance2 distance { get; set; }
+        public Duration2 duration { get; set; }
+        public EndLocation2 end_location { get; set; }
+        public string html_instructions { get; set; }
+        public Polyline polyline { get; set; }
+        public StartLocation2 start_location { get; set; }
+        public string travel_mode { get; set; }
+        public string maneuver { get; set; }
+    }
+
+    public class Leg
+    {
+        public Distance distance { get; set; }
+        public Duration duration { get; set; }
+        public string end_address { get; set; }
+        public EndLocation end_location { get; set; }
+        public string start_address { get; set; }
+        public StartLocation start_location { get; set; }
+        public List<Step> steps { get; set; }
+        public List<object> via_waypoint { get; set; }
+    }
+
+    public class OverviewPolyline
+    {
+        public string points { get; set; }
+    }
+
+    public class Route
+    {
+        public Bounds bounds { get; set; }
+        public string copyrights { get; set; }
+        public List<Leg> legs { get; set; }
+        public OverviewPolyline overview_polyline { get; set; }
+        public string summary { get; set; }
+        public List<object> warnings { get; set; }
+        public List<object> waypoint_order { get; set; }
+    }
+
+}

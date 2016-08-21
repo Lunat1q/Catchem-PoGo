@@ -105,6 +105,7 @@ namespace PoGo.PokeMobBot.Logic
     public static class RuntimeSettings
     {
 		public static int StopsHit = 0;
+        public static int PokestopsToCheckGym = 0;
         public static DateTime StartTime = DateTime.Now;
         public static bool DelayingScan = false;
         public static int PokemonScanDelay = 10000;// in ms
@@ -948,11 +949,12 @@ namespace PoGo.PokeMobBot.Logic
         public int PokestopSkipLuckyMin = 0;
         public int PokestopSkipLuckyMax = 4;
 		public bool UseDiscoveryPathing = true;
-        public bool UseOpenLsRouting = false;
+        public RoutingService RoutingService = RoutingService.MobBot;
         [JsonIgnore]
         public double MoveSpeedFactor = 1;
 		public bool UseMapzenApiElevation = false;
         public string MapzenApiElevationKey = "";
+        public string GoogleDirectionsApiKey = "";
     }
 
     public class CatchSettings
@@ -1418,7 +1420,7 @@ namespace PoGo.PokeMobBot.Logic
                         {
                             settings.LocationSettings.DefaultAltitude = settings.MapzenAPI.GetAltitude(settings.LocationSettings.DefaultLatitude,
                                                                                                     settings.LocationSettings.DefaultLongitude,
-                                                                                                    settings.LocationSettings.MapzenApiElevationKey);
+                                                                                                    settings.LocationSettings.MapzenApiElevationKey).Result;
                         }
                         else
                         {
@@ -1824,10 +1826,11 @@ namespace PoGo.PokeMobBot.Logic
         public bool CatchWildPokemon => _settings.CatchSettings.CatchWildPokemon;
 
         public bool UseHumanPathing => _settings.StartUpSettings.UseHumanPathing;
-        public bool UseOpenLsRouting => _settings.LocationSettings.UseOpenLsRouting;
+        public RoutingService RoutingService => _settings.LocationSettings.RoutingService;
 
         public bool UseMapzenApiElevation => _settings.LocationSettings.UseMapzenApiElevation;
         public string MapzenApiElevationKey => _settings.LocationSettings.MapzenApiElevationKey;
+        public string GoogleDirectionsApiKey => _settings.LocationSettings.GoogleDirectionsApiKey;
         public bool PrioritizeBothIvAndCpForTransfer => _settings.PokemonSettings.PrioritizeBothIvAndCpForTransfer;
         public int MinRandomizeDelayMilliseconds => _settings.DelaySettings.MinRandomizeDelayMilliseconds;
         public int MaxRandomizeDelayMilliseconds => _settings.DelaySettings.MaxRandomizeDelayMilliseconds;
@@ -1837,5 +1840,10 @@ namespace PoGo.PokeMobBot.Logic
 
     }
 
-
+    public enum RoutingService
+    {
+        MobBot,
+        OpenLs,
+        GoogleDirections
+    }
 }
