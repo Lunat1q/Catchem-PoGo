@@ -2,18 +2,13 @@
 using System.Collections.Generic;
 using System.Net;
 using System.IO;
-using System.Text;
 using GeoCoordinatePortable;
 using PoGo.PokeMobBot.Logic.Logging;
 using PoGo.PokeMobBot.Logic.State;
-using System.Xml;
 using System.Globalization;
 using System.Linq;
-using System.Runtime.Serialization;
-using Google.Protobuf.WellKnownTypes;
 using Newtonsoft.Json;
-using PoGo.PokeMobBot.Logic.Extensions;
-using Enum = System.Enum;
+using PoGo.PokeMobBot.Logic.Event;
 
 namespace PoGo.PokeMobBot.Logic
 {
@@ -22,6 +17,21 @@ namespace PoGo.PokeMobBot.Logic
         public static RoutingResponse GetRoute(GeoCoordinate start, GeoCoordinate dest, ISession session, List<GeoCoordinate> waypoints)
         {
             string apiKey = session.LogicSettings.GoogleDirectionsApiKey;
+            if (string.IsNullOrEmpty(apiKey))
+            {
+                session.EventDispatcher.Send(new WarnEvent
+                {
+                    Message = "Google API Key is Empty!"
+                });
+                return new RoutingResponse();
+            }
+
+            if (waypoints != null && waypoints.Count > 0)
+            {
+                dest = waypoints.Last();
+                waypoints.RemoveAt(waypoints.Count - 1);
+            }
+
             string waypointsRequest = "";
             if (waypoints != null && waypoints.Count > 0)
             {

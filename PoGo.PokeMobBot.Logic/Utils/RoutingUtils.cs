@@ -60,7 +60,7 @@ namespace PoGo.PokeMobBot.Logic.Utils
                     }
                 }
             }
-            if (_fortsToVisit < _size)
+            if (_fortsToVisit < _size - 1)
                 _fortsToVisit = fortsToVisit;
 
             _opt = LimitedVisit ? new int[_fortsToVisit] : new int[_size];
@@ -126,7 +126,7 @@ namespace PoGo.PokeMobBot.Logic.Utils
         {
             for (var i = 1; i < _opt.Length; i++)
             {
-                var curDist = double.MaxValue;
+                var curDist = MaxValue;
                 for (var j = 0; j < _size; j++)
                 {
                     if (_opt.Contains(j)) continue;

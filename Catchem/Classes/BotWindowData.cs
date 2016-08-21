@@ -217,12 +217,14 @@ namespace Catchem.Classes
             };
         }
 
-        public void UpdateXppH()
+        public void UpdateRunTime()
         {
             if (Stats == null || Math.Abs(RealWorkH) < 0.0000001)
                 Xpph = 0;
             else
                 Xpph = Stats.TotalExperience / RealWorkH;
+
+            if (Stats != null) Level = Stats.ExportStats.Level;
         }
 
         public void PushNewRoutePoint(PointLatLng nextPoint)

@@ -8,9 +8,11 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using GeoCoordinatePortable;
+using PoGo.PokeMobBot.Logic.Extensions;
 using PoGo.PokeMobBot.Logic.State;
 using PoGo.PokeMobBot.Logic.Utils;
-using PokemonGo.RocketAPI.Extensions;
+using RandomExtensions = PokemonGo.RocketAPI.Extensions.RandomExtensions;
 
 namespace PoGo.PokeMobBot.Logic.API
 {
@@ -112,33 +114,115 @@ namespace PoGo.PokeMobBot.Logic.API
             }
 
         }
+
+        protected async Task<List<double>> RequestHeights(List<GeoCoordinate> points)
+        {
+            var stopWatch = new Stopwatch();
+            stopWatch.Start();
+            var resList = new List<double>();
+            try
+            {
+                var httpUrl = PrepareUrlForList(points);
+
+                var get = "";
+                var request = (HttpWebRequest)WebRequest.Create(httpUrl);
+                request.Proxy = _session == null ? WebRequest.GetSystemWebProxy() : _session.Proxy;
+                if (_session == null)
+                    request.Proxy.Credentials = CredentialCache.DefaultCredentials;
+
+                request.AutomaticDecompression = DecompressionMethods.GZip;
+                using (var response = (HttpWebResponse)request.GetResponse())
+                using (var stream = response.GetResponseStream())
+                    if (stream != null)
+                        using (var reader = new StreamReader(stream))
+                        {
+                            get = reader.ReadToEnd();
+                        }
+                var json = JObject.Parse(get);
+                stopWatch.Stop();
+                if (stopWatch.ElapsedMilliseconds < 10000)
+                    await Task.Delay(10000 - (int)stopWatch.ElapsedMilliseconds);
+                
+                foreach (var h in json["height"])
+                {
+                    if (h.ToString().Equals("ERROR"))
+                    {
+                        resList.Add(_session != null ? RandomExtensions.NextInRange(R, _session.Settings.DefaultAltitudeMin, _session.Settings.DefaultAltitudeMax) : R.Next(10, 120));
+                    }
+                    double hVal = 0;
+                    if (!double.TryParse(h.ToString(), out hVal))
+                    {
+                        hVal = _session != null
+                            ? RandomExtensions.NextInRange(R, _session.Settings.DefaultAltitudeMin, _session.Settings.DefaultAltitudeMax)
+                            : R.Next(10, 120);
+                    }
+                    resList.Add(hVal);
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Write("ERROR: " + ex.Message, LogLevel.Error);
+                return resList;
+            }
+            finally
+            {
+                if (stopWatch.IsRunning)
+                    stopWatch.Stop();
+            }
+            while (points.Count < resList.Count)
+            {
+                resList.Add(_session != null
+                    ? RandomExtensions.NextInRange(R, _session.Settings.DefaultAltitudeMin, _session.Settings.DefaultAltitudeMax)
+                    : R.Next(10, 120));
+            }
+            return resList;
+        }
+
+        private string PrepareUrlForList(List<GeoCoordinate> points)
+        {
+            string coordsPart = "";
+            var coordsJson = new List<string>();
+            foreach (var point in points)
+            {
+                coordsJson.Add($"{{\"lat\":{point.Latitude.ToString(CultureInfo.InvariantCulture)},\"lon\":{point.Longitude.ToString(CultureInfo.InvariantCulture)}}}");
+            }
+            coordsPart = coordsJson.Aggregate((x, v) => x + "," + v);
+            return "https://elevation.mapzen.com/height?json={\"shape\":[" + coordsPart + "]}&api_key=" + ApiKey;
+
+        }
+
         protected double GetHeight(string[] data)
         {
             if (data[2].Equals("ERROR"))
             {
                 Logger.Write("There was an error grabbing Altitude from Mapzen API! Check your Elevation API Key!",
                     LogLevel.Warning);
-                return _session != null ? R.NextInRange(_session.Settings.DefaultAltitudeMin, _session.Settings.DefaultAltitudeMax) : R.Next(10, 120);
+                return _session != null ? RandomExtensions.NextInRange(R, _session.Settings.DefaultAltitudeMin, _session.Settings.DefaultAltitudeMax) : R.Next(10, 120);
             }
             Logger.Write("Successfully grabbed new Mapzen Elevation: " + data[2] + " Meters.");
             var latLonAlt = new GeoLatLonAlt()
             {
                 Lat = double.Parse(data[0], NumberStyles.Any, CultureInfo.InvariantCulture),
                 Lon = double.Parse(data[1], NumberStyles.Any, CultureInfo.InvariantCulture),
-                Alt = double.Parse(data[2], NumberStyles.Any, CultureInfo.InvariantCulture) + 0.8 + Math.Round(R.NextInRange(0, 0.2), 7)
+                Alt = double.Parse(data[2], NumberStyles.Any, CultureInfo.InvariantCulture) + 0.8 + Math.Round(RandomExtensions.NextInRange(R, 0, 0.2), 7)
             };
             _knownAltitude.Add(latLonAlt);
             return latLonAlt.Alt;
         }
         public bool CheckForExistingAltitude(double lat, double lon)
         {
-            return _knownAltitude.Any(x => LocationUtils.CalculateDistanceInMeters(x.Lat, x.Lon, lat, lon) < 5);
+            return _knownAltitude.Any(x => LocationUtils.CalculateDistanceInMeters(x.Lat, x.Lon, lat, lon) < 30);
         }
 
         public double GetExistingAltitude(double lat, double lon)
         {
             //trying to find points closer then 5m from search loc
-            return _knownAltitude.FirstOrDefault(x => LocationUtils.CalculateDistanceInMeters(x.Lat, x.Lon, lat, lon) < 5)?.Alt ?? R.NextInRange(_session.Settings.DefaultAltitudeMin, _session.Settings.DefaultAltitudeMax);
+            return _knownAltitude.FirstOrDefault(x => LocationUtils.CalculateDistanceInMeters(x.Lat, x.Lon, lat, lon) < 30)?.Alt ?? RandomExtensions.NextInRange(R, _session.Settings.DefaultAltitudeMin, _session.Settings.DefaultAltitudeMax);
+        }
+
+        public double GetAltitudeSync(double lat, double lon, string key = "")
+        {
+            return AsyncHelpers.RunSync(() => GetAltitude(lat, lon, key));
         }
 
         public async Task<double> GetAltitude(double lat, double lon, string key = "")
@@ -160,7 +244,48 @@ namespace PoGo.PokeMobBot.Logic.API
                         key))
                 });
             }
-            return _session != null ? R.NextInRange(_session.Settings.DefaultAltitudeMin, _session.Settings.DefaultAltitudeMax) : R.Next(10, 120);
+            return _session != null ? RandomExtensions.NextInRange(R, _session.Settings.DefaultAltitudeMin, _session.Settings.DefaultAltitudeMax) : R.Next(10, 120);
+        }
+
+        public async Task<List<GeoCoordinate>> FillAltitude(List<GeoCoordinate> points, string key = "")
+        {
+            Logger.Write("Using MapzenAPI to obtian Altitude based on Longitude and Latitude.");
+            if (key != "") ApiKey = key;
+
+            if (!ApiKey.Equals(""))
+            {
+                List<GeoCoordinate> pointsToRequest = new List<GeoCoordinate>();
+                foreach (var point in points)
+                {
+                    if (CheckForExistingAltitude(point.Latitude, point.Longitude))
+                    {
+                        point.Altitude = GetExistingAltitude(point.Latitude, point.Longitude);
+                    }
+                    pointsToRequest.Add(point);
+                }
+                var heights = await RequestHeights(pointsToRequest);
+                for (int index = 0; index < pointsToRequest.Count; index++)
+                {
+                    if (index < heights.Count)
+                    {
+                        pointsToRequest[index].Altitude = heights[index];
+                        _knownAltitude.Add(new GeoLatLonAlt()
+                        {
+                            Lat = pointsToRequest[index].Latitude,
+                            Lon = pointsToRequest[index].Longitude,
+                            Alt = pointsToRequest[index].Altitude
+                        });
+                    }
+                }
+            }
+            else
+            {
+                foreach (var point in points)
+                {
+                    point.Altitude = _session != null ? RandomExtensions.NextInRange(R, _session.Settings.DefaultAltitudeMin, _session.Settings.DefaultAltitudeMax) : R.Next(10, 120);
+                }
+            }
+            return points;
         }
     }
 

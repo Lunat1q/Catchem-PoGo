@@ -117,6 +117,7 @@
     <Compile Include="Classes\Adb.cs" />
     <Compile Include="Classes\BotRpcMessage.cs" />
     <Compile Include="Classes\BotWindowData.cs" />
+    <Compile Include="Extensions\AsyncHelpers.cs" />
     <Compile Include="Extensions\Converters.cs" />
     <Compile Include="Extensions\Extensions.cs" />
     <Compile Include="Extensions\GifImage.cs" />

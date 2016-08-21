@@ -48,8 +48,8 @@ namespace PoGo.PokeMobBot.Logic.Tasks
 
                 if (fortSearch.ExperienceAwarded > 0)
                 {
-                    RuntimeSettings.StopsHit++;
-                    RuntimeSettings.PokestopsToCheckGym--;
+                    session.Runtime.StopsHit++;
+                    session.Runtime.PokestopsToCheckGym--;
                     session.EventDispatcher.Send(new FortUsedEvent
                     {
                         Id = pokeStop.Id,
@@ -60,7 +60,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                         Latitude = pokeStop.Latitude,
                         Longitude = pokeStop.Longitude
                     });
-                    session.MapCache.UsedPokestop(pokeStop);
+                    session.MapCache.UsedPokestop(pokeStop, session);
                     session.EventDispatcher.Send(new InventoryNewItemsEvent()
                     {
                         Items = fortSearch.ItemsAwarded.ToItemList()

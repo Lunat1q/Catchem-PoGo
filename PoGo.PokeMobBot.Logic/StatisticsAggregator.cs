@@ -239,7 +239,7 @@ namespace PoGo.PokeMobBot.Logic
                 HandleEvent(eve, session);
             }
             // ReSharper disable once EmptyGeneralCatchClause
-            catch (Exception ex)
+            catch (Exception)
             {
             }
         }
