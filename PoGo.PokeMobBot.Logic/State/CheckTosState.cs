@@ -88,6 +88,7 @@ namespace PoGo.PokeMobBot.Logic.State
                     await DelayingUtils.Delay(3000, 2000);
                 }
             }
+            DoMagicTask.Execute(session, cancellationToken);
             return new FarmState();
         }
 
