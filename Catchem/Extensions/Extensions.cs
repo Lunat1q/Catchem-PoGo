@@ -62,6 +62,11 @@ namespace Catchem.Extensions
             }
         }
 
+        public static string ToN1(this float val)
+        {
+            return val.ToString("N1");
+        }
+
         public static List<T> GetLogicalChildCollection<T>(this UIElement parent) where T : DependencyObject
         {
             var logicalCollection = new List<T>();
