@@ -100,6 +100,7 @@
     <Compile Include="Event\PokemonSettingsEvent.cs" />
     <Compile Include="Event\NextRouteEvent.cs" />
     <Compile Include="Event\TeamSetEvent.cs" />
+    <Compile Include="Event\TelegramMessageEvent.cs" />
     <Compile Include="Event\UseLuckyEggMinPokemonEvent.cs" />
     <Compile Include="Event\DisplayHighestsPokemonEvent.cs" />
     <Compile Include="Event\EggHatchedEvent.cs" />

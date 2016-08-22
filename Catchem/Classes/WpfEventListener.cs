@@ -50,6 +50,11 @@ namespace Catchem.Classes
             Logger.Write("Level up! Rewards: " + evt.Items, session: session);
         }
 
+        public void HandleEvent(TelegramMessageEvent evt, ISession session)
+        {
+           Logger.Write(evt.Message, LogLevel.Telegram, session: session);
+        }
+
         public void HandleEvent(WarnEvent evt, ISession session)
         {
             Logger.Write(evt.ToString(), LogLevel.Warning, session: session);

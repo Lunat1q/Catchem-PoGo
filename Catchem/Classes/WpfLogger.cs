@@ -29,6 +29,7 @@ namespace Catchem.Classes
         private static string _strGym = "GYM";
         private static string _strFavourite = "FAVOURITE";
         private static string _strUnFavourite = "UNFAVOURITE";
+        private static string _strTelegram = "TLGRM";
 
         public void SetSession(ISession session)
         {
@@ -128,6 +129,9 @@ namespace Catchem.Classes
                     break;
                 case LogLevel.Gym:
                     SendWindowMsg("log", session, $"[{DateTime.Now.ToString("HH:mm:ss")}] ({_strGym}) {message}", Color.FromRgb(192, 0, 255));
+                    break;
+				case LogLevel.Telegram:
+                    SendWindowMsg("log", session, $"[{DateTime.Now.ToString("HH:mm:ss")}] ({_strTelegram}) {message}", Color.FromRgb(60, 197, 255));
                     break;
                 default:
                     SendWindowMsg("log", session, $"[{DateTime.Now.ToString("HH:mm:ss")}] ({_strError}) {message}", Color.FromRgb(255, 255, 255));

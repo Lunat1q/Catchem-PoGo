@@ -498,12 +498,12 @@ namespace Catchem.Classes
             {
                 if (!GlobalSettings.CatchSettings.PauseBotOnMaxHourlyRates || 
                     RealWorkH < 1 || 
-                    Stats == null ||
-                    GlobalSettings.CatchSettings.MaxCatchPerHour == 0 ||
-                    GlobalSettings.CatchSettings.MaxPokestopsPerHour == 0) return;
+                    Stats == null) return;
 
                 var countXp = GlobalSettings.CatchSettings.MaxXPPerHour > 0;
                 var countSd = GlobalSettings.CatchSettings.MaxStarDustPerHour > 0;
+                var countPokemons = GlobalSettings.CatchSettings.MaxCatchPerHour > 0;
+                var countPokestops = GlobalSettings.CatchSettings.MaxPokestopsPerHour > 0;
 
                 var pokemonsRate = Stats.TotalPokemons/RealWorkH;
                 var pokestopsRate = Stats.TotalPokestops/RealWorkH;
@@ -511,8 +511,8 @@ namespace Catchem.Classes
                 var stardustRate = Stats.TotalStardust/RealWorkH;
 
 
-                var tooMuchPokemons = pokemonsRate > GlobalSettings.CatchSettings.MaxCatchPerHour;
-                var tooMuchPokestops = pokestopsRate > GlobalSettings.CatchSettings.MaxPokestopsPerHour;
+                var tooMuchPokemons = countPokemons && pokemonsRate > GlobalSettings.CatchSettings.MaxCatchPerHour;
+                var tooMuchPokestops = countPokestops && pokestopsRate > GlobalSettings.CatchSettings.MaxPokestopsPerHour;
                 var tooMuchXp = countXp && xpRate > GlobalSettings.CatchSettings.MaxXPPerHour;
                 var tooMuchStarDust = countSd && stardustRate > GlobalSettings.CatchSettings.MaxStarDustPerHour;
                 if (!tooMuchPokemons && !tooMuchPokestops && !tooMuchXp && !tooMuchStarDust) return;
@@ -525,9 +525,7 @@ namespace Catchem.Classes
                 var stardustSec = tooMuchStarDust
                     ? (stardustRate - GlobalSettings.CatchSettings.MaxStarDustPerHour) / GlobalSettings.CatchSettings.MaxStarDustPerHour * 60 * 60 : 0;
 
-                var maxSec1 = Math.Max(pokemonSec, pokestopSec);
-                var maxSec2 = Math.Max(xpSec, stardustSec);
-                var stopSec = 10 * 60 + _rnd.Next(60 * 5) + (int)Math.Max(maxSec1, maxSec2);
+                var stopSec = 10 * 60 + _rnd.Next(60 * 5) + (int)(new double[] { pokestopSec, pokemonSec, xpSec, stardustSec }).Max();
                 var stopMs = stopSec * 1000;
 
                 Session.EventDispatcher.Send(new WarnEvent
