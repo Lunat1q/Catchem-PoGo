@@ -29,7 +29,7 @@ namespace Catchem.Extensions
 
         public static void CloneProperties<T>(this T from, T to)
         {
-            var objType = typeof(T);
+            var objType = from.GetType();
             foreach (var property in objType.GetProperties())
             {
                 if (property.PropertyType == objType) continue;
@@ -47,7 +47,7 @@ namespace Catchem.Extensions
         }
         public static void CloneFields<T>(this T from, T to)
         {
-            var objType = typeof(T);
+            var objType = from.GetType();
             foreach (var property in objType.GetFields())
             {
                 if (property.FieldType == objType) continue;
@@ -55,8 +55,8 @@ namespace Catchem.Extensions
                 {
                     var nextObjFrom = property.GetValue(from);
                     var nextObjTo = property.GetValue(to);
-                    CloneProperties(nextObjFrom, nextObjTo);
-                    CloneFields(nextObjFrom, nextObjTo);
+                    nextObjFrom.CloneProperties(nextObjTo);
+                    nextObjFrom.CloneFields(nextObjTo);
                     continue;
                 }
                 var value = property.GetValue(from);

@@ -23,7 +23,7 @@ namespace PoGo.PokeMobBot.Logic.API
         public double Alt { get; set; }
     }
     // ReSharper disable once InconsistentNaming
-    public class MapzenAPI
+    public class MapzenAPI //Improved by Catchem project: https://github.com/Lunat1q/Catchem-PoGo - by Lunat1q
     {
         private static List<GeoLatLonAlt> _knownAltitude = new List<GeoLatLonAlt>();
         private static string _jsonFile = "Altitude-data.json";
