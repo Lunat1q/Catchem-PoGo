@@ -1,6 +1,7 @@
 #region using directives
 
 using System;
+using System.Collections;
 using System.IO;
 using PoGo.PokeMobBot.Logic.State;
 using System.Collections.Generic;
@@ -12,12 +13,12 @@ namespace PoGo.PokeMobBot.Logic.Logging
     {
         private static ILogger _logger;
         private static string _path;
-        private static readonly Queue<string> LogQueue = new Queue<string>();
-        private static bool _writerActive;
+        private static Queue<string> _logQueue = new Queue<string>();
+        private static bool _writerActive = false;
 
         private static async void Log(string message)
         {
-            LogQueue.Enqueue(message);
+            _logQueue.Enqueue(message);
             if (_writerActive) return;
             _writerActive = true;
             try
@@ -28,9 +29,9 @@ namespace PoGo.PokeMobBot.Logic.Logging
                             $"PokeMobBot-{DateTime.Today.ToString("yyyy-MM-dd")}-{DateTime.Now.ToString("HH")}.txt"))
                     )
                 {
-                    while (LogQueue.Count > 0)
+                    while (_logQueue.Count > 0)
                     {
-                        var m = LogQueue.Dequeue();
+                        var m = _logQueue.Dequeue();
                         log.WriteLine(m);
                         await System.Threading.Tasks.Task.Delay(10);
                     }
@@ -45,7 +46,7 @@ namespace PoGo.PokeMobBot.Logic.Logging
         }
 
         /// <summary>
-        ///     Set the logger. All future requests to <see cref="Write(string,LogLevel,ConsoleColor,ISession)" /> will use that logger, any
+        ///     Set the logger. All future requests to <see cref="Write(string,LogLevel,ConsoleColor)" /> will use that logger, any
         ///     old will be
         ///     unset.
         /// </summary>
@@ -74,7 +75,6 @@ namespace PoGo.PokeMobBot.Logic.Logging
         /// <param name="message">The message to log.</param>
         /// <param name="level">Optional level to log. Default <see cref="LogLevel.Info" />.</param>
         /// <param name="color">Optional. Default is automatic color.</param>
-        /// <param name="session">Bot's session parameter</param>
         public static void Write(string message, LogLevel level = LogLevel.Info, ConsoleColor color = ConsoleColor.Black, ISession session = null)
         {
             if (_logger == null)

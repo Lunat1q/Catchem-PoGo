@@ -20,8 +20,6 @@ namespace PoGo.PokeMobBot.Logic.Common
         string GetTranslation(TranslationString translationString);
 
         string GetPokemonName(PokemonId pkmnId);
-
-        string CurrentCode { get; set; }
     }
 
     public enum TranslationString
@@ -373,7 +371,7 @@ namespace PoGo.PokeMobBot.Logic.Common
             new KeyValuePair<TranslationString, string>(TranslationString.NianticServerUnstable, 
                 "Niantic Servers unstable, throttling API Calls."),
             new KeyValuePair<TranslationString, string>(TranslationString.OperationCanceled, 
-                "Current Operation was canceled. Bot stopped/paused."),
+                "Current Operation was canceled."),
             new KeyValuePair<TranslationString, string>(TranslationString.PokemonUpgradeSuccess,
                 "Pokemon upgraded: {0}:{1}"),
             new KeyValuePair<TranslationString, string>(TranslationString.PokemonUpgradeFailed,
@@ -402,9 +400,6 @@ namespace PoGo.PokeMobBot.Logic.Common
             new KeyValuePair<TranslationString, string>(TranslationString.StopBotToAvoidBan, "The bot was stopped to avoid ban!"), // added by Lars
             new KeyValuePair<TranslationString, string>(TranslationString.BotNotStoppedRiskOfBan, "Somethng happened that shouldn't have and bot hasn't stopped. Higher possibility of ban. (suggested action: stop the bot \"Control+C\").") // added by Lars
         };
-
-        [JsonIgnore]
-        public string CurrentCode { get; set; }
 
         [JsonProperty("Pokemon",
             ItemTypeNameHandling = TypeNameHandling.Arrays,
@@ -577,7 +572,7 @@ namespace PoGo.PokeMobBot.Logic.Common
                     ? string.Format(translation, data)
                     : $"Translation for {translationString} is missing";
             }
-            catch (Exception ex)
+            catch
             {
                 return $"Translation for {translationString} failed";
             }
@@ -629,17 +624,16 @@ namespace PoGo.PokeMobBot.Logic.Common
                         item => translations._pokemons.All(a => a.Key != item.Key))
                         .ToList()
                         .ForEach(translations._pokemons.Add);
-                    translations.CurrentCode = translationsLanguageCode;
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
-                    translations = new Translation {CurrentCode = "en"};
+                    translations = new Translation();
                     translations.Save(Path.Combine(translationPath, "translation.en.json"));
                 }
             }
             else
             {
-                translations = new Translation {CurrentCode = "en"};
+                translations = new Translation();
                 translations.Save(Path.Combine(translationPath, "translation.en.json"));
             }
             return translations;
