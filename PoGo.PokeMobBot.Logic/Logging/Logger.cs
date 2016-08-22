@@ -109,6 +109,7 @@ namespace PoGo.PokeMobBot.Logic.Logging
         Favorite = 15, //added by lars
         UnFavorite = 16, //added by lars
         Gym = 17,
-        Debug = 18, //always have debug as last enum.
+		Telegram = 18,
+        Debug = 19, //always have debug as last enum.
     }
 }

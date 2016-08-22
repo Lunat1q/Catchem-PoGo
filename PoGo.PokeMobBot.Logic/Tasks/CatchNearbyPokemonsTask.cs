@@ -30,7 +30,18 @@ namespace PoGo.PokeMobBot.Logic.Tasks
             });
 
             var pokemons = await GetNearbyPokemons(session);
-            session.EventDispatcher.Send(new PokemonsFoundEvent {Pokemons = pokemons.Select(x => x.BaseMapPokemon)});
+
+            if (session.LogicSettings.UsePokemonToNotCatchFilter)
+            {
+                var pokeToCatch =
+                    pokemons.Select(x => x.BaseMapPokemon)
+                        .Where(x => !session.LogicSettings.PokemonsNotToCatch.Contains(x.PokemonId));
+                session.EventDispatcher.Send(new PokemonsFoundEvent {Pokemons = pokeToCatch});
+            }
+            else
+            {
+                session.EventDispatcher.Send(new PokemonsFoundEvent { Pokemons = pokemons.Select(x => x.BaseMapPokemon) });
+            }
             foreach (var pokemon in pokemons)
             {
                 cancellationToken.ThrowIfCancellationRequested();

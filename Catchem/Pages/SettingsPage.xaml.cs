@@ -64,28 +64,28 @@ namespace Catchem.Pages
             foreach (var uiElem in settings_grid.GetLogicalChildCollection<TextBox>())
             {
                 string val;
-                if (Extensions.Extensions.GetValueByName(uiElem.Name.Substring(2), Bot.GlobalSettings, out val))
+                if (UiHandlers.GetValueByName(uiElem.Name.Substring(2), Bot.GlobalSettings, out val))
                     uiElem.Text = val;
             }
 
             foreach (var uiElem in settings_grid.GetLogicalChildCollection<PasswordBox>())
             {
                 string val;
-                if (Extensions.Extensions.GetValueByName(uiElem.Name.Substring(2), Bot.GlobalSettings, out val))
+                if (UiHandlers.GetValueByName(uiElem.Name.Substring(2), Bot.GlobalSettings, out val))
                     uiElem.Password = val;
             }
 
             foreach (var uiElem in settings_grid.GetLogicalChildCollection<CheckBox>())
             {
                 bool val;
-                if (Extensions.Extensions.GetValueByName(uiElem.Name.Substring(2), Bot.GlobalSettings, out val))
+                if (UiHandlers.GetValueByName(uiElem.Name.Substring(2), Bot.GlobalSettings, out val))
                     uiElem.IsChecked = val;
             }
 
             foreach (var uiElem in settings_grid.GetLogicalChildCollection<ComboBox>())
             {
                 Enum val;
-                if (Extensions.Extensions.GetValueByName(uiElem.Name.Substring(2), Bot.GlobalSettings, out val))
+                if (UiHandlers.GetValueByName(uiElem.Name.Substring(2), Bot.GlobalSettings, out val))
                 {
                     var valType = val.GetType();
                     uiElem.ItemsSource = Enum.GetValues(valType);
@@ -101,39 +101,10 @@ namespace Catchem.Pages
             authBox.ItemsSource = Enum.GetValues(typeof(AuthType));
         }
 
-        private void HandleUiElementChangedEvent(object uiElement)
-        {
-            var box = uiElement as TextBox;
-            if (box != null)
-            {
-                var propName = box.Name.Replace("c_", "");
-                Extensions.Extensions.SetValueByName(propName, box.Text, Bot.GlobalSettings);
-                return;
-            }
-            var chB = uiElement as CheckBox;
-            if (chB != null)
-            {
-                var propName = chB.Name.Replace("c_", "");
-                Extensions.Extensions.SetValueByName(propName, chB.IsChecked, Bot.GlobalSettings);
-            }
-            var passBox = uiElement as PasswordBox;
-            if (passBox != null)
-            {
-                var propName = passBox.Name.Replace("c_", "");
-                Extensions.Extensions.SetValueByName(propName, passBox.Password, Bot.GlobalSettings);
-            }
-            var comboBox = uiElement as ComboBox;
-            if (comboBox != null)
-            {
-                var propName = comboBox.Name.Replace("c_", "");
-                Extensions.Extensions.SetValueByName(propName, comboBox.SelectedItem, Bot.GlobalSettings);
-            }
-        }
-
         private void BotPropertyChanged(object sender, EventArgs e)
         {
             if (Bot == null || LoadingUi) return;
-            HandleUiElementChangedEvent(sender);
+            UiHandlers.HandleUiElementChangedEvent(sender, Bot.GlobalSettings);
         }
 
         private void authBox_SelectionChanged(object sender, SelectionChangedEventArgs e)

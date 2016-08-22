@@ -150,4 +150,28 @@
         <MenuItem x:Name="mi_renamePokemon" Header="Rename Selected Pokemon" Click="mi_renamePokemon_Click" />
         <MenuItem x:Name="mi_renametoDefaultPokemon" Header="Rename Selected Pokemon to Default" Click="mi_renametoDefaultPokemon_Click" />
     </ContextMenu>
+    <LinearGradientBrush x:Key="StartBrush" StartPoint="0.5,0" EndPoint="0.5,1">
+        <LinearGradientBrush.RelativeTransform>
+            <TransformGroup>
+                <ScaleTransform CenterX="0.5" CenterY="0.5" />
+                <SkewTransform CenterX="0.5" CenterY="0.5" />
+                <RotateTransform Angle="90" CenterX="0.5" CenterY="0.5" />
+                <TranslateTransform />
+            </TransformGroup>
+        </LinearGradientBrush.RelativeTransform>
+        <GradientStop Offset="0" Color="#FFB0EE9C" />
+        <GradientStop Offset="1" Color="#FF53C05D" />
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="StopBrush" StartPoint="0.5,0" EndPoint="0.5,1">
+        <LinearGradientBrush.RelativeTransform>
+            <TransformGroup>
+                <ScaleTransform CenterX="0.5" CenterY="0.5" />
+                <SkewTransform CenterX="0.5" CenterY="0.5" />
+                <RotateTransform Angle="90" CenterX="0.5" CenterY="0.5" />
+                <TranslateTransform />
+            </TransformGroup>
+        </LinearGradientBrush.RelativeTransform>
+        <GradientStop Offset="0" Color="#FFEEB29C" />
+        <GradientStop Offset="1" Color="#FFC04F53" />
+    </LinearGradientBrush>
 </ResourceDictionary>

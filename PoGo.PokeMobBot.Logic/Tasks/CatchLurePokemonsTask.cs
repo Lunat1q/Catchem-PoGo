@@ -65,12 +65,24 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                         PokemonId = currentFortData.LureInfo.ActivePokemonId,
                         SpawnPointId = currentFortData.LureInfo.FortId
                     };
-					session.EventDispatcher.Send(new PokemonsFoundEvent { Pokemons = new[] { _pokemon } });
-                    PokemonCacheItem pokemon = new PokemonCacheItem(_pokemon);
+                    if (session.LogicSettings.UsePokemonToNotCatchFilter &&
+                        session.LogicSettings.PokemonsNotToCatch.Contains(_pokemon.PokemonId))
+                    {
+                        session.EventDispatcher.Send(new NoticeEvent()
+                        {
+                            Message = session.Translation.GetTranslation(TranslationString.PokemonIgnoreFilter, session.Translation.GetPokemonName(_pokemon.PokemonId))
+                        });
+                    }
+                    else
+                    {
+                        session.EventDispatcher.Send(new PokemonsFoundEvent { Pokemons = new[] { _pokemon } });
+                        PokemonCacheItem pokemon = new PokemonCacheItem(_pokemon);
 
-                    await CatchPokemonTask.Execute(session, encounter, pokemon, currentFortData, encounterId);
-                    currentFortData.LureInfo = null;
-                    session.EventDispatcher.Send(new PokemonDisappearEvent { Pokemon = _pokemon });
+                        await CatchPokemonTask.Execute(session, encounter, pokemon, currentFortData, encounterId);
+                        currentFortData.LureInfo = null;
+                        session.EventDispatcher.Send(new PokemonDisappearEvent { Pokemon = _pokemon });
+                    }
+                    
                     //await CatchPokemonTask.Execute(session, encounter, pokemon, currentFortData, encounterId);
                 }
                 else if (encounter.Result == DiskEncounterResponse.Types.Result.PokemonInventoryFull)
