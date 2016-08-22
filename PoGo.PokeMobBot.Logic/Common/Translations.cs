@@ -577,7 +577,7 @@ namespace PoGo.PokeMobBot.Logic.Common
                     ? string.Format(translation, data)
                     : $"Translation for {translationString} is missing";
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return $"Translation for {translationString} failed";
             }
@@ -631,7 +631,7 @@ namespace PoGo.PokeMobBot.Logic.Common
                         .ForEach(translations._pokemons.Add);
                     translations.CurrentCode = translationsLanguageCode;
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     translations = new Translation {CurrentCode = "en"};
                     translations.Save(Path.Combine(translationPath, "translation.en.json"));

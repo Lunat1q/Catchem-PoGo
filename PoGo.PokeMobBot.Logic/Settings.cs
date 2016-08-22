@@ -976,6 +976,8 @@ namespace PoGo.PokeMobBot.Logic
         public bool PauseBotOnMaxHourlyRates = true;
         public int MaxCatchPerHour = 42;
         public int MaxPokestopsPerHour = 69;
+        public int MaxXPPerHour = 10000;
+        public int MaxStarDustPerHour = 20000;
         public double MissChance = 0.13;
 
         //berries
