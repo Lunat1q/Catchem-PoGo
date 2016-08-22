@@ -66,7 +66,19 @@ namespace PoGo.PokeMobBot.Logic
             }
             return result;
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="destination">Desired location to move</param>
+        /// <param name="walkingSpeedMin">Minimal walking speed during the move</param>
+        /// <param name="walkingSpeedMax">Maximal walking speed during the move</param>
+        /// <param name="functionExecutedWhileWalking">Functions #1 to be exec while walking, like task or smth</param>
+        /// <param name="functionExecutedWhileWalking2">Functions #1 to be exec while walking, like task or smth</param>
+        /// <param name="cancellationToken">regular session cancelation token</param>
+        /// <param name="session">ISession param of the bot, to detect which bot started it</param>
+        /// <param name="direct">Directly move to the point, skip routing services</param>
+        /// <param name="waypointsToVisit">Waypoints to visit during the move, required to redure Google Directions API usage</param>
+        /// <returns></returns>
         public async Task<PlayerUpdateResponse> Move(GeoCoordinate destination, double walkingSpeedMin, double walkingSpeedMax, Func<Task<bool>> functionExecutedWhileWalking, Func<Task<bool>> functionExecutedWhileWalking2,
             CancellationToken cancellationToken, ISession session, bool direct = false, List<GeoCoordinate> waypointsToVisit = null )
         {
@@ -173,6 +185,7 @@ namespace PoGo.PokeMobBot.Logic
                     {
                         Coords = nextPath
                     });
+                    destination = waypoints.Last();
                 }
 
 

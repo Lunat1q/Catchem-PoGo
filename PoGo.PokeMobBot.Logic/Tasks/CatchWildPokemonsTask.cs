@@ -26,16 +26,22 @@ namespace PoGo.PokeMobBot.Logic.Tasks
             Logger.Write(session.Translation.GetTranslation(TranslationString.LookingForPokemon), LogLevel.Debug, session: session);
 
             var pokemons = await GetWildPokemons(session);
-            session.EventDispatcher.Send(new PokemonsWildFoundEvent { Pokemons = pokemons });
-            foreach (var pokemon in pokemons)
+            if (pokemons != null && pokemons.Any())
             {
-                cancellationToken.ThrowIfCancellationRequested();
+                session.EventDispatcher.Send(new NoticeEvent{
+                    Message = "Found some hiding pokemons in the area, trying to catch'em now!"
+                });
+                session.EventDispatcher.Send(new PokemonsWildFoundEvent {Pokemons = pokemons});
+                foreach (var pokemon in pokemons)
+                {
+                    cancellationToken.ThrowIfCancellationRequested();
 
-                if (session.LogicSettings.Teleport)
-                    await session.Client.Player.UpdatePlayerLocation(pokemon.Latitude, pokemon.Longitude,
-                        session.Client.Settings.DefaultAltitude);
-                else
-                    await MoveToPokemon(pokemon, session, cancellationToken);
+                    if (session.LogicSettings.Teleport)
+                        await session.Client.Player.UpdatePlayerLocation(pokemon.Latitude, pokemon.Longitude,
+                            session.Client.Settings.DefaultAltitude);
+                    else
+                        await MoveToPokemon(pokemon, session, cancellationToken);
+                }
             }
         }
 
@@ -59,7 +65,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                     //Catch Incense Pokemon
                     await CatchIncensePokemonsTask.Execute(session, cancellationToken);
                     return true;
-                }, null, cancellationToken, session, true);
+                }, null, cancellationToken, session);
                 if (session.MapCache.CheckPokemonCaught(pokemon.EncounterId)) return;
                 waypoint = LocationUtils.CreateWaypoint(waypoint, nextWaypointDistance, nextWaypointBearing);
             }

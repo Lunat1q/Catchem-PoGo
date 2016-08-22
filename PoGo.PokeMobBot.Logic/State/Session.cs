@@ -62,7 +62,7 @@ namespace PoGo.PokeMobBot.Logic.State
         public MapCache MapCache { get; private set; }
         public ILogicSettings LogicSettings { get; }
 
-        public ITranslation Translation { get; }
+        public ITranslation Translation { get; set; }
 
         public IEventDispatcher EventDispatcher { get; }
 
