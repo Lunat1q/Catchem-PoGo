@@ -14,6 +14,7 @@ namespace PoGo.PokeMobBot.Logic
 {
     public static class GoogleRouting
     {
+        //Catchem project: https://github.com/Lunat1q/Catchem-PoGo - by Lunat1q
         public static RoutingResponse GetRoute(GeoCoordinate start, GeoCoordinate dest, ISession session, List<GeoCoordinate> waypoints)
         {
             string apiKey = session.LogicSettings.GoogleDirectionsApiKey;
