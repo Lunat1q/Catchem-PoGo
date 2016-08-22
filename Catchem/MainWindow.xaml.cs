@@ -659,7 +659,7 @@ namespace Catchem
                 SettingsView.tabControl.IsEnabled = true;
             if (grid_pickBot.Visibility == Visibility.Visible)
                 grid_pickBot.Visibility = Visibility.Collapsed;
-            if (transit.SelectedIndex != 0) ChangeTransistor();
+            if (transit.SelectedIndex != 0) ChangeTransistorTo(0);
             SettingsView.BotSettingsPage.SetBot(Bot);
             SettingsView.BotPlayerPage.SetBot(Bot);
             SettingsView.BotPokemonListPage.SetBot(Bot);
@@ -696,25 +696,36 @@ namespace Catchem
                 Task.Delay(330);
             }
         }
-
+        private void InputTextBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            var tb = sender as System.Windows.Controls.TextBox;
+            if (tb == null) return;
+            if (tb.Text == @"Profile name here...")
+                tb.Text = "";
+        }
         private void btn_changeViewSettingsMap_Click(object sender, RoutedEventArgs e)
         {
-            ChangeTransistor();
+            GlobalMapView.FitTheStuff();
+            ChangeTransistorTo(1);
         }
 
-        private void ChangeTransistor()
+
+        private void btn_ChangeViewToSettings_Click(object sender, RoutedEventArgs e)
+        {
+            ChangeTransistorTo(0);
+        }
+
+        private void btn_ChangeViewToTelegram_Click(object sender, RoutedEventArgs e)
+        {
+            ChangeTransistorTo(2);
+        }
+
+        private void ChangeTransistorTo(int i)
         {
             if (grid_pickBot.Visibility == Visibility.Visible) return;
-            if (transit.SelectedIndex == 0)
+            if (transit.SelectedIndex != i)
             {
-                GlobalMapView.FitTheStuff();
-                transit.SelectedIndex = 1;
-                changeViewSettingsMap.Content = "Settings";
-            }
-            else
-            {
-                transit.SelectedIndex = 0;
-                changeViewSettingsMap.Content = "World Map";
+                transit.SelectedIndex = i;
             }
         }
 
@@ -828,12 +839,6 @@ namespace Catchem
             }
         }
 
-        private void InputTextBox_GotFocus(object sender, RoutedEventArgs e)
-        {
-            var tb = sender as System.Windows.Controls.TextBox;
-            if (tb == null) return;
-            if (tb.Text == @"Profile name here...")
-                tb.Text = "";
-        }
+
     }
 }

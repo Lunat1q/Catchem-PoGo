@@ -17,7 +17,11 @@
                       mc:Ignorable="d">
     <controls:MetroWindow.RightWindowCommands>
         <controls:WindowCommands>
-            <Button x:Name="changeViewSettingsMap"
+            <Button x:Name="btn_ChangeViewToTelegram"
+                    Content="Telegram" BorderBrush="{x:Null}" Background="{x:Null}" Click="btn_ChangeViewToTelegram_Click" />
+            <Button x:Name="btn_ChangeViewToSettings"
+                    Content="Settings" BorderBrush="{x:Null}" Background="{x:Null}" Click="btn_ChangeViewToSettings_Click" />
+            <Button x:Name="btn_ChangeViewSettingsMap"
                     Click="btn_changeViewSettingsMap_Click"
                     Content="WorldMap" BorderBrush="{x:Null}" Background="{x:Null}" />
         </controls:WindowCommands>
@@ -36,6 +40,7 @@
         <materialDesign:Transitioner Name="transit" Margin="0.5,0,10,0" SelectedIndex="0" Grid.Column="1">
             <pages:AccountSettingsTab x:Name="SettingsView" />
             <pages:GlobalMapPage x:Name="GlobalMapView" />
+            <pages:TelegramPage x:Name="TelegramView" />
         </materialDesign:Transitioner>
         <Grid Width="246" HorizontalAlignment="Left">
             <Rectangle Width="246" HorizontalAlignment="Left">
