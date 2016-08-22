@@ -508,7 +508,7 @@ namespace Catchem.Classes
                 var pokemonsRate = Stats.TotalPokemons/RealWorkH;
                 var pokestopsRate = Stats.TotalPokestops/RealWorkH;
                 var xpRate = Stats.TotalExperience/RealWorkH;
-                var stardustRate = Stats.TotalStardust/RealWorkH;
+                var stardustRate = (Stats.TotalStardust - StartStarDust)/RealWorkH;
 
 
                 var tooMuchPokemons = countPokemons && pokemonsRate > GlobalSettings.CatchSettings.MaxCatchPerHour;
