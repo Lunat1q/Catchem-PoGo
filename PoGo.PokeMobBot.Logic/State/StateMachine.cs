@@ -48,7 +48,8 @@ namespace PoGo.PokeMobBot.Logic.State
                 }
                 catch (OperationCanceledException)
                 {
-                    session.EventDispatcher.Send(new WarnEvent {Message = session.Translation.GetTranslation(TranslationString.OperationCanceled) });
+                    session.EventDispatcher.Send(new ErrorEvent {Message = session.Translation.GetTranslation(TranslationString.OperationCanceled) });
+                    state = _initialState;
                     break;
                 }
                 catch (Exception ex)

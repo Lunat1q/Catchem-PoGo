@@ -23,9 +23,9 @@ namespace PoGo.PokeMobBot.Logic
 		private static Random rand = new Random();
 		public double FuzzyFactorBearing()
         {
-            const double maximum = -8.0f;
-            const double minimum = 8.0f;
-		    return rand.NextInRange(minimum, maximum);
+            double maximum = -8.0f;
+            double minimum = 8.0f;
+            return rand.NextDouble() * (maximum - minimum) + minimum;
         }
 
         public Navigation(Client client, UpdatePositionDelegate updatePos)

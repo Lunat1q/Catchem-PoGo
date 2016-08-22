@@ -223,6 +223,10 @@
         "Les coordonnées définies dans le fichier \"Coords.ini\" sont invalides, utilisation des coordonnées par défaut."
     },
     {
+      "Key": "gotUpToDate",
+      "Value": "PokeMobBot v{0} est à jour."
+    },
+    {
       "Key": "autoUpdaterDisabled",
       "Value": "La mise à jour automatique est désactivée. Rendez-vous sur : {0}\n "
     },
@@ -282,18 +286,18 @@
       "Key": "checkingForRevivesToRecycle",
       "Value": "Recherche de Rappels à supprimer. En garder {0}"
     },
-    //{
-    //  "Key": "pokeballsToKeepIncorrect",
-    //  "Value": "TotalAmountOfPokebalsToKeep est mal configuré. Le nombre est inférieur à 1."
-    //},
-    //{
-    //  "Key": "potionsToKeepIncorrect",
-    //  "Value": "TotalAmountOfPotionsToKeep est mal configuré. Le nombre est inférieur à 1."
-    //},
-    //{
-    //  "Key": "revivesToKeepIncorrect",
-    //  "Value": "TotalAmountOfRevivesToKeep est mal configuré. Le nombre est inférieur à 1."
-    //},
+    {
+      "Key": "pokeballsToKeepIncorrect",
+      "Value": "TotalAmountOfPokebalsToKeep est mal configuré. Le nombre est inférieur à 1."
+    },
+    {
+      "Key": "potionsToKeepIncorrect",
+      "Value": "TotalAmountOfPotionsToKeep est mal configuré. Le nombre est inférieur à 1."
+    },
+    {
+      "Key": "revivesToKeepIncorrect",
+      "Value": "TotalAmountOfRevivesToKeep est mal configuré. Le nombre est inférieur à 1."
+    },
     {
       "Key": "invFullTransferring",
       "Value": "L'inventaire de pokémon est plein. Transfert en cours..."
