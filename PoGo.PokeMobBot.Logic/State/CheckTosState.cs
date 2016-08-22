@@ -32,7 +32,11 @@ namespace PoGo.PokeMobBot.Logic.State
                         {
                             TutorialState.LegalScreen
                         });
-                    await DelayingUtils.Delay(7000, 2000);
+                    session.EventDispatcher.Send(new NoticeEvent()
+                    {
+                        Message = "Just read the Niantic ToS, looks legit, accepting!"
+                    });
+                    await DelayingUtils.Delay(9000, 2000);
                 }
                 if (!tutState.Contains(TutorialState.AvatarSelection))
                 {
@@ -56,6 +60,10 @@ namespace PoGo.PokeMobBot.Logic.State
                         {
                             TutorialState.AvatarSelection
                         });
+                        session.EventDispatcher.Send(new NoticeEvent()
+                        {
+                            Message = $"Selected your avatar, now you are {gen}!"
+                        });
                     }
                 }
                 if (!tutState.Contains(TutorialState.PokemonCapture))
@@ -73,6 +81,10 @@ namespace PoGo.PokeMobBot.Logic.State
                         {
                             TutorialState.FirstTimeExperienceComplete
                         });
+                    session.EventDispatcher.Send(new NoticeEvent()
+                    {
+                        Message = "First time experience complete, looks like i just spinned an virtual pokestop :P"
+                    });
                     await DelayingUtils.Delay(3000, 2000);
                 }
             }
@@ -93,7 +105,12 @@ namespace PoGo.PokeMobBot.Logic.State
 
             var res = await session.Client.Encounter.EncounterTutorialComplete(firstPoke);
             await DelayingUtils.Delay(7000, 2000);
-            return res.Result == EncounterTutorialCompleteResponse.Types.Result.Success;
+            if (res.Result != EncounterTutorialCompleteResponse.Types.Result.Success) return false;
+            session.EventDispatcher.Send(new NoticeEvent()
+            {
+                Message = $"Caught Tutorial pokemon! it's {firstPoke}!"
+            });
+            return true;
         }
 
         public async Task<bool> SelectNicnname(ISession session)
