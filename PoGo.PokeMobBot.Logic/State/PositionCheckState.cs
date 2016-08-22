@@ -70,7 +70,7 @@ namespace PoGo.PokeMobBot.Logic.State
             {
                 Message =
                     session.Translation.GetTranslation(TranslationString.WelcomeWarning, session.Client.CurrentLatitude,
-                        session.Client.CurrentLongitude),
+                        session.Client.CurrentLongitude, session.Client.CurrentAltitude),
                 RequireInput = session.LogicSettings.StartupWelcomeDelay
             });
 

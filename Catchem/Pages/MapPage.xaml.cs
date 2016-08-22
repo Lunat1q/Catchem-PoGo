@@ -172,8 +172,8 @@ namespace Catchem.Pages
 
         public void UpdatePathRoute()
         {
-            _pathRoute.RegenerateShape(pokeMap);
-            var path = _pathRoute.Shape as Path;
+            _pathRoute?.RegenerateShape(pokeMap);
+            var path = _pathRoute?.Shape as Path;
             if (path != null)
                 path.Stroke = new SolidColorBrush(Color.FromRgb(255, 0, 0));
         }
