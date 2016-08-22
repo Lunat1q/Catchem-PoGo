@@ -401,8 +401,8 @@
                 </GroupBox>
 
                 <GroupBox x:Name="catchGroupBox"
-                        Height="576"
-                        Margin="0,796,0,0"
+                        Height="640"
+                        Margin="0,792,0,0"
                         VerticalAlignment="Top"
                         Header="Catch"
                         RenderTransformOrigin="0.479,0.565">
@@ -659,7 +659,7 @@
                         <Label x:Name="c_MaxPokestopsPerHourLabel"
                                 Width="210"
                                 Height="26"
-                                Margin="10,518,0,0"
+                                Margin="10,520,0,0"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Top"
                                 Content="Max Pokestops Per Hour" />
@@ -672,13 +672,44 @@
                                 Text="0"
                                 TextChanged="BotPropertyChanged"
                                 TextWrapping="Wrap" />
-
+                        <TextBox x:Name="c_MaxXPPerHour"
+                        	Grid.Column="1"
+                        	Height="29"
+                        	Margin="5,551,10,0"
+                        	VerticalAlignment="Top"
+                        	Template="{StaticResource pogo}"
+                        	Text="0"
+                        	TextChanged="BotPropertyChanged"
+                        	TextWrapping="Wrap" />
+                        <TextBox x:Name="c_MaxStarDustPerHour"
+                        	Grid.Column="1"
+                        	Height="29"
+                        	Margin="5,585,10,0"
+                        	VerticalAlignment="Top"
+                        	Template="{StaticResource pogo}"
+                        	Text="0"
+                        	TextChanged="BotPropertyChanged"
+                        	TextWrapping="Wrap" />
+                        <Label x:Name="c_MaxXPPerHourLabel"
+                        	Width="210"
+                        	Height="26"
+                        	Margin="10,554,0,0"
+                        	HorizontalAlignment="Left"
+                        	VerticalAlignment="Top"
+                        	Content="Max XP Per Hour" />
+                        <Label x:Name="c_MaxStarDustPerHourLabel_Copy"
+                        	Width="210"
+                        	Height="26"
+                        	Margin="10,588,0,0"
+                        	HorizontalAlignment="Left"
+                        	VerticalAlignment="Top"
+                        	Content="Max Star Dust Per Hour" />
                     </Grid>
                 </GroupBox>
 
                 <GroupBox x:Name="itemsGroupBox"
                         Height="232"
-                        Margin="0,1377,0,0"
+                        Margin="0,1434,0,0"
                         VerticalAlignment="Top"
                         Header="Items"
                         RenderTransformOrigin="0.479,0.565">
