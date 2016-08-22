@@ -879,6 +879,7 @@ namespace PoGo.PokeMobBot.Logic
         public int AmountOfPokemonToDisplayOnStart = 10;
         public bool StartupWelcomeDelay = false;
         public string TranslationLanguageCode = "en";
+        public bool AutoCompleteTutorial = false;
         public int WebSocketPort = 14251;
         //display
         public bool DisplayPokemonMaxPoweredCp = true;
@@ -1033,6 +1034,8 @@ namespace PoGo.PokeMobBot.Logic
         [JsonIgnore] public string GeneralConfigPath;
         [JsonIgnore] public string ProfilePath;
         [JsonIgnore] public string ProfileConfigPath;
+
+        public string DesiredNickname = "CatchemFan" + DeviceSettings.RandomString(6);
 
         public DeviceSettings Device = new DeviceSettings();
 
@@ -1709,6 +1712,8 @@ namespace PoGo.PokeMobBot.Logic
             _settings = settings;
         }
 
+        public bool AutoCompleteTutorial => _settings.StartUpSettings.AutoCompleteTutorial;
+        public string DesiredNickname => _settings.DesiredNickname;
         public string ProfilePath => _settings.ProfilePath;
         public string ProfileConfigPath => _settings.ProfileConfigPath;
         public int SnipeRequestTimeoutSeconds => _settings.SnipeSettings.SnipeRequestTimeoutSeconds * 1000;

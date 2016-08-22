@@ -18,7 +18,7 @@
     <controls:MetroWindow.RightWindowCommands>
         <controls:WindowCommands>
             <Button x:Name="btn_ChangeViewToTelegram"
-                    Content="Telegram" BorderBrush="{x:Null}" Background="{x:Null}" Click="btn_ChangeViewToTelegram_Click" />
+                    Content="Telegram" BorderBrush="{x:Null}" Background="{x:Null}" Click="btn_ChangeViewToTelegram_Click" Visibility="Hidden" />
             <Button x:Name="btn_ChangeViewToSettings"
                     Content="Settings" BorderBrush="{x:Null}" Background="{x:Null}" Click="btn_ChangeViewToSettings_Click" />
             <Button x:Name="btn_ChangeViewSettingsMap"
@@ -329,7 +329,7 @@
                                FontSize="20"
                                FontStyle="Italic"
                                Foreground="#FF7E7E7E"
-                               Text="Format: type;login;pass;proxyuri:port;proxy_login;proxy_pass"
+                               Text="Format: type;login;pass;proxyuri:port;proxy_login;proxy_pass;desiredname"
                                TextAlignment="Center" VerticalAlignment="Top" />
                     <TextBlock Margin="15,82,15,0"
                                FontFamily="Calibri"

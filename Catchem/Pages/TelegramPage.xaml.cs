@@ -48,6 +48,17 @@ namespace Catchem.Pages
             }
         }
 
+        public void SaveSettings()
+        {
+            var settingsPath = Path.Combine(Directory.GetCurrentDirectory(), TlgrmFilePath);
+            var jsonSettings = new JsonSerializerSettings();
+            jsonSettings.Converters.Add(new StringEnumConverter { CamelCaseText = true });
+            jsonSettings.ObjectCreationHandling = ObjectCreationHandling.Replace;
+            jsonSettings.DefaultValueHandling = DefaultValueHandling.Populate;
+
+            _tlgrmSettings.SerializeDataJson(settingsPath);
+        }
+
         private void LoadSettings()
         {
             LoadingUi = true;
@@ -133,11 +144,7 @@ namespace Catchem.Pages
 
         public class TelegramSettings
         {
-            public ObservableCollection<PokemonId> AutoReportPokemon = new ObservableCollection<PokemonId>
-            {
-                PokemonId.Mew,
-                PokemonId.Mewtwo
-            };
+            public ObservableCollection<PokemonId> AutoReportPokemon = new ObservableCollection<PokemonId>();
             public bool AutoStart = false;
             public string ApiKey = "";
         }

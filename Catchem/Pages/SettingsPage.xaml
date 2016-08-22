@@ -16,7 +16,7 @@
                 </Grid.ColumnDefinitions>
 
                 <GroupBox x:Name="authGroupBox"
-                        Height="147"
+                        Height="222"
                         VerticalAlignment="Top"
                         Header="Authentication">
                     <Grid Margin="0,0,0,0">
@@ -67,6 +67,27 @@
                                 Checked="BotPropertyChanged"
                                 Content="Autostart"
                                 Unchecked="BotPropertyChanged"/>
+                        <CheckBox x:Name="c_AutoCompleteTutorial"
+                        	Margin="42,127,0,0"
+                        	HorizontalAlignment="Left"
+                        	VerticalAlignment="Top"
+                        	Checked="BotPropertyChanged"
+                        	Content="Auto Complete Tutorial and set name as below"
+                        	Unchecked="BotPropertyChanged" FontSize="14.667" />
+                        <Label x:Name="c_EvolveAboveIvValueLabel_Copy"
+                        	Width="80"
+                        	Margin="10,161,0,0"
+                        	HorizontalAlignment="Left"
+                        	VerticalAlignment="Top"
+                        	Content="Desired nick" />
+                        <TextBox x:Name="c_DesiredNickname"
+                        	Height="29"
+                        	Margin="95,161,10,0"
+                        	VerticalAlignment="Top"
+                        	Template="{StaticResource pogo}"
+                        	Text="CatchemFan"
+                        	TextChanged="BotPropertyChanged"
+                        	TextWrapping="Wrap" />
                     </Grid>
                 </GroupBox>
 
@@ -75,7 +96,7 @@
                         Height="147"
                         VerticalAlignment="Top"
                         Header="Proxy"
-                        Margin="10,0,0,0">
+                        Margin="5,0,0,0">
                     <Grid Margin="0,0,0,0" IsEnabled="True">
                         <CheckBox x:Name="c_UseProxy"
                                 Width="101"
@@ -161,8 +182,8 @@
                 </GroupBox>
 
                 <GroupBox x:Name="pokemonGroupBox"
-                        Height="639"
-                        Margin="0,152,0,0"
+                        Height="656"
+                        Margin="0,222,0,0"
                         VerticalAlignment="Top"
                         Header="Pokemons">
                     <Grid>
@@ -402,7 +423,7 @@
 
                 <GroupBox x:Name="catchGroupBox"
                         Height="640"
-                        Margin="0,792,0,0"
+                        Margin="0,878,0,0"
                         VerticalAlignment="Top"
                         Header="Catch"
                         RenderTransformOrigin="0.479,0.565">
@@ -709,7 +730,7 @@
 
                 <GroupBox x:Name="itemsGroupBox"
                         Height="232"
-                        Margin="0,1434,0,0"
+                        Margin="0,1518,0,0"
                         VerticalAlignment="Top"
                         Header="Items"
                         RenderTransformOrigin="0.479,0.565">

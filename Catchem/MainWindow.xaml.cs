@@ -40,7 +40,7 @@ namespace Catchem
 
         public static ObservableCollection<BotWindowData> BotsCollection = new ObservableCollection<BotWindowData>();
 
-        private ISession CurSession => Bot.Session;
+        private ISession CurSession => Bot?.Session;
         private readonly Queue<BotRpcMessage> _messageQueue = new Queue<BotRpcMessage>();
 
         private BotWindowData _bot;
@@ -681,6 +681,7 @@ namespace Catchem
             SettingsView.BotMapPage.WindowClosing = true;
             if (Bot == null || _loadingUi) return;
             Bot.GlobalSettings.StoreData(SubPath + "\\" + Bot.ProfileName);
+            TelegramView.SaveSettings();
             foreach (var b in BotsCollection)
             {
                 b.Stop();
@@ -756,13 +757,14 @@ namespace Catchem
                     var proxy = rowData.Length > 3 ? rowData[3] : "";
                     var proxyLogin = rowData.Length > 4 ? rowData[4] : "";
                     var proxyPass = rowData.Length > 5 ? rowData[5] : "";
+                    var desiredName = rowData.Length > 6 ? rowData[6] : "";
                     var path = login;
                     var created = false;
                     do
                     {
                         if (!Directory.Exists(SubPath + "\\" + path))
                         {
-                            CreateBotFromClone(path, login, auth, pass, proxy, proxyLogin, proxyPass);
+                            CreateBotFromClone(path, login, auth, pass, proxy, proxyLogin, proxyPass, desiredName);
                             created = true;
                         }
                         else
@@ -779,7 +781,7 @@ namespace Catchem
             batch_botText.Text = Empty;
         }
 
-        private void CreateBotFromClone(string path, string login, string auth, string pass, string proxy, string proxyLogin, string proxyPass)
+        private void CreateBotFromClone(string path, string login, string auth, string pass, string proxy, string proxyLogin, string proxyPass, string desiredName)
         {
             var dir = Directory.CreateDirectory(SubPath + "\\" + path);
             var settings = GlobalSettings.Load(dir.FullName) ?? GlobalSettings.Load(dir.FullName);
@@ -804,6 +806,11 @@ namespace Catchem
                 settings.Auth.ProxyUri = proxy;
                 settings.Auth.ProxyLogin = proxyLogin;
                 settings.Auth.ProxyPass = proxyPass;
+            }
+            if (desiredName != "")
+            {
+                settings.DesiredNickname = desiredName;
+                settings.StartUpSettings.AutoCompleteTutorial = true;
             }
             settings.Device.DeviceId = DeviceSettings.RandomString(16, "0123456789abcdef");
             settings.StoreData(dir.FullName);
