@@ -10,6 +10,7 @@ using scg = global::System.Collections.Generic;
 namespace POGOProtos.Networking.Responses {
 
   /// <summary>Holder for reflection information generated from POGOProtos/Networking/Responses/FortSearchResponse.proto</summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
   public static partial class FortSearchResponseReflection {
 
     #region Descriptor
@@ -25,7 +26,7 @@ namespace POGOProtos.Networking.Responses {
             "CjhQT0dPUHJvdG9zL05ldHdvcmtpbmcvUmVzcG9uc2VzL0ZvcnRTZWFyY2hS",
             "ZXNwb25zZS5wcm90bxIfUE9HT1Byb3Rvcy5OZXR3b3JraW5nLlJlc3BvbnNl",
             "cxohUE9HT1Byb3Rvcy9EYXRhL1Bva2Vtb25EYXRhLnByb3RvGilQT0dPUHJv",
-            "dG9zL0ludmVudG9yeS9JdGVtL0l0ZW1Bd2FyZC5wcm90byK7AwoSRm9ydFNl",
+            "dG9zL0ludmVudG9yeS9JdGVtL0l0ZW1Bd2FyZC5wcm90byLWAwoSRm9ydFNl",
             "YXJjaFJlc3BvbnNlEkoKBnJlc3VsdBgBIAEoDjI6LlBPR09Qcm90b3MuTmV0",
             "d29ya2luZy5SZXNwb25zZXMuRm9ydFNlYXJjaFJlc3BvbnNlLlJlc3VsdBI7",
             "Cg1pdGVtc19hd2FyZGVkGAIgAygLMiQuUE9HT1Byb3Rvcy5JbnZlbnRvcnku",
@@ -33,9 +34,10 @@ namespace POGOProtos.Networking.Responses {
             "b25fZGF0YV9lZ2cYBCABKAsyHC5QT0dPUHJvdG9zLkRhdGEuUG9rZW1vbkRh",
             "dGESGgoSZXhwZXJpZW5jZV9hd2FyZGVkGAUgASgFEiYKHmNvb2xkb3duX2Nv",
             "bXBsZXRlX3RpbWVzdGFtcF9tcxgGIAEoAxIiChpjaGFpbl9oYWNrX3NlcXVl",
-            "bmNlX251bWJlchgHIAEoBSJmCgZSZXN1bHQSEQoNTk9fUkVTVUxUX1NFVBAA",
-            "EgsKB1NVQ0NFU1MQARIQCgxPVVRfT0ZfUkFOR0UQAhIWChJJTl9DT09MRE9X",
-            "Tl9QRVJJT0QQAxISCg5JTlZFTlRPUllfRlVMTBAEYgZwcm90bzM="));
+            "bmNlX251bWJlchgHIAEoBSKAAQoGUmVzdWx0EhEKDU5PX1JFU1VMVF9TRVQQ",
+            "ABILCgdTVUNDRVNTEAESEAoMT1VUX09GX1JBTkdFEAISFgoSSU5fQ09PTERP",
+            "V05fUEVSSU9EEAMSEgoOSU5WRU5UT1JZX0ZVTEwQBBIYChRFWENFRURFRF9E",
+            "QUlMWV9MSU1JVBAFYgZwcm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { global::POGOProtos.Data.PokemonDataReflection.Descriptor, global::POGOProtos.Inventory.Item.ItemAwardReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
@@ -46,29 +48,25 @@ namespace POGOProtos.Networking.Responses {
 
   }
   #region Messages
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
   public sealed partial class FortSearchResponse : pb::IMessage<FortSearchResponse> {
     private static readonly pb::MessageParser<FortSearchResponse> _parser = new pb::MessageParser<FortSearchResponse>(() => new FortSearchResponse());
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pb::MessageParser<FortSearchResponse> Parser { get { return _parser; } }
 
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
       get { return global::POGOProtos.Networking.Responses.FortSearchResponseReflection.Descriptor.MessageTypes[0]; }
     }
 
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     pbr::MessageDescriptor pb::IMessage.Descriptor {
       get { return Descriptor; }
     }
 
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public FortSearchResponse() {
       OnConstruction();
     }
 
     partial void OnConstruction();
 
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public FortSearchResponse(FortSearchResponse other) : this() {
       result_ = other.result_;
       itemsAwarded_ = other.itemsAwarded_.Clone();
@@ -79,15 +77,13 @@ namespace POGOProtos.Networking.Responses {
       chainHackSequenceNumber_ = other.chainHackSequenceNumber_;
     }
 
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public FortSearchResponse Clone() {
       return new FortSearchResponse(this);
     }
 
     /// <summary>Field number for the "result" field.</summary>
     public const int ResultFieldNumber = 1;
-    private global::POGOProtos.Networking.Responses.FortSearchResponse.Types.Result result_ = 0;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    private global::POGOProtos.Networking.Responses.FortSearchResponse.Types.Result result_ = global::POGOProtos.Networking.Responses.FortSearchResponse.Types.Result.NoResultSet;
     public global::POGOProtos.Networking.Responses.FortSearchResponse.Types.Result Result {
       get { return result_; }
       set {
@@ -100,7 +96,6 @@ namespace POGOProtos.Networking.Responses {
     private static readonly pb::FieldCodec<global::POGOProtos.Inventory.Item.ItemAward> _repeated_itemsAwarded_codec
         = pb::FieldCodec.ForMessage(18, global::POGOProtos.Inventory.Item.ItemAward.Parser);
     private readonly pbc::RepeatedField<global::POGOProtos.Inventory.Item.ItemAward> itemsAwarded_ = new pbc::RepeatedField<global::POGOProtos.Inventory.Item.ItemAward>();
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public pbc::RepeatedField<global::POGOProtos.Inventory.Item.ItemAward> ItemsAwarded {
       get { return itemsAwarded_; }
     }
@@ -108,7 +103,6 @@ namespace POGOProtos.Networking.Responses {
     /// <summary>Field number for the "gems_awarded" field.</summary>
     public const int GemsAwardedFieldNumber = 3;
     private int gemsAwarded_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int GemsAwarded {
       get { return gemsAwarded_; }
       set {
@@ -119,7 +113,6 @@ namespace POGOProtos.Networking.Responses {
     /// <summary>Field number for the "pokemon_data_egg" field.</summary>
     public const int PokemonDataEggFieldNumber = 4;
     private global::POGOProtos.Data.PokemonData pokemonDataEgg_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public global::POGOProtos.Data.PokemonData PokemonDataEgg {
       get { return pokemonDataEgg_; }
       set {
@@ -130,7 +123,6 @@ namespace POGOProtos.Networking.Responses {
     /// <summary>Field number for the "experience_awarded" field.</summary>
     public const int ExperienceAwardedFieldNumber = 5;
     private int experienceAwarded_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int ExperienceAwarded {
       get { return experienceAwarded_; }
       set {
@@ -141,7 +133,6 @@ namespace POGOProtos.Networking.Responses {
     /// <summary>Field number for the "cooldown_complete_timestamp_ms" field.</summary>
     public const int CooldownCompleteTimestampMsFieldNumber = 6;
     private long cooldownCompleteTimestampMs_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public long CooldownCompleteTimestampMs {
       get { return cooldownCompleteTimestampMs_; }
       set {
@@ -152,7 +143,6 @@ namespace POGOProtos.Networking.Responses {
     /// <summary>Field number for the "chain_hack_sequence_number" field.</summary>
     public const int ChainHackSequenceNumberFieldNumber = 7;
     private int chainHackSequenceNumber_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int ChainHackSequenceNumber {
       get { return chainHackSequenceNumber_; }
       set {
@@ -160,12 +150,10 @@ namespace POGOProtos.Networking.Responses {
       }
     }
 
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override bool Equals(object other) {
       return Equals(other as FortSearchResponse);
     }
 
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public bool Equals(FortSearchResponse other) {
       if (ReferenceEquals(other, null)) {
         return false;
@@ -183,10 +171,9 @@ namespace POGOProtos.Networking.Responses {
       return true;
     }
 
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override int GetHashCode() {
       int hash = 1;
-      if (Result != 0) hash ^= Result.GetHashCode();
+      if (Result != global::POGOProtos.Networking.Responses.FortSearchResponse.Types.Result.NoResultSet) hash ^= Result.GetHashCode();
       hash ^= itemsAwarded_.GetHashCode();
       if (GemsAwarded != 0) hash ^= GemsAwarded.GetHashCode();
       if (pokemonDataEgg_ != null) hash ^= PokemonDataEgg.GetHashCode();
@@ -196,14 +183,12 @@ namespace POGOProtos.Networking.Responses {
       return hash;
     }
 
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override string ToString() {
       return pb::JsonFormatter.ToDiagnosticString(this);
     }
 
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void WriteTo(pb::CodedOutputStream output) {
-      if (Result != 0) {
+      if (Result != global::POGOProtos.Networking.Responses.FortSearchResponse.Types.Result.NoResultSet) {
         output.WriteRawTag(8);
         output.WriteEnum((int) Result);
       }
@@ -230,10 +215,9 @@ namespace POGOProtos.Networking.Responses {
       }
     }
 
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int CalculateSize() {
       int size = 0;
-      if (Result != 0) {
+      if (Result != global::POGOProtos.Networking.Responses.FortSearchResponse.Types.Result.NoResultSet) {
         size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Result);
       }
       size += itemsAwarded_.CalculateSize(_repeated_itemsAwarded_codec);
@@ -255,12 +239,11 @@ namespace POGOProtos.Networking.Responses {
       return size;
     }
 
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void MergeFrom(FortSearchResponse other) {
       if (other == null) {
         return;
       }
-      if (other.Result != 0) {
+      if (other.Result != global::POGOProtos.Networking.Responses.FortSearchResponse.Types.Result.NoResultSet) {
         Result = other.Result;
       }
       itemsAwarded_.Add(other.itemsAwarded_);
@@ -284,7 +267,6 @@ namespace POGOProtos.Networking.Responses {
       }
     }
 
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void MergeFrom(pb::CodedInputStream input) {
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
@@ -329,15 +311,17 @@ namespace POGOProtos.Networking.Responses {
 
     #region Nested types
     /// <summary>Container for nested types declared in the FortSearchResponse message type.</summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     public static partial class Types {
-      public enum Result {
+    public enum Result
+    {
         [pbr::OriginalName("NO_RESULT_SET")] NoResultSet = 0,
         [pbr::OriginalName("SUCCESS")] Success = 1,
         [pbr::OriginalName("OUT_OF_RANGE")] OutOfRange = 2,
         [pbr::OriginalName("IN_COOLDOWN_PERIOD")] InCooldownPeriod = 3,
         [pbr::OriginalName("INVENTORY_FULL")] InventoryFull = 4,
-      }
+        [pbr::OriginalName("EXCEEDED_DAILY_LIMIT")] ExceededDailyLimit = 5,
+    }
 
     }
     #endregion

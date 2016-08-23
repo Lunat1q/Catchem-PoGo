@@ -119,7 +119,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                 if (session.LogicSettings.RoutingService == RoutingService.GoogleDirections)
                 {
 #if DEBUG
-                    bestRoute = RoutingUtils.GetBestRoute(pokeStop, pokestopList.Where(x => !session.MapCache.CheckPokestopUsed(x)), 5);
+                    bestRoute = RoutingUtils.GetBestRoute(pokeStop, pokestopList.Where(x => !session.MapCache.CheckPokestopUsed(x)), 10);
 #else
                     bestRoute = RoutingUtils.GetBestRoute(pokeStop, pokestopList.Where(x => !session.MapCache.CheckPokestopUsed(x)), 20);
 #endif

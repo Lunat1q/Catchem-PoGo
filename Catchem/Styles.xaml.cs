@@ -17,7 +17,10 @@ namespace Catchem
             var bot = btn?.DataContext as BotWindowData;
             if (bot == null) return;
             if (bot.Started)
+            {
                 bot.Stop();
+                MainWindow.BotWindow.ClearPokemonData(bot);
+            }
             else
                 bot.Start();
         }

@@ -246,6 +246,8 @@ namespace Catchem.Classes
             MapMarkers = new Dictionary<string, GMapMarker>();
             MarkersQueue = new Queue<NewMapObject>();
             LogQueue = new Queue<Tuple<string, Color>>();
+            PathRoute.Points.Clear();
+            PathRoute.RegenerateShape(null);
         }
 
         public void Stop(bool soft = false)

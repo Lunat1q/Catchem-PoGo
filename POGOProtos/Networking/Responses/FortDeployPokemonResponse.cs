@@ -10,6 +10,7 @@ using scg = global::System.Collections.Generic;
 namespace POGOProtos.Networking.Responses {
 
   /// <summary>Holder for reflection information generated from POGOProtos/Networking/Responses/FortDeployPokemonResponse.proto</summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
   public static partial class FortDeployPokemonResponseReflection {
 
     #region Descriptor
@@ -27,19 +28,20 @@ namespace POGOProtos.Networking.Responses {
             "ZXNwb25zZXMaIVBPR09Qcm90b3MvRGF0YS9Qb2tlbW9uRGF0YS5wcm90bxoi",
             "UE9HT1Byb3Rvcy9EYXRhL0d5bS9HeW1TdGF0ZS5wcm90bxo5UE9HT1Byb3Rv",
             "cy9OZXR3b3JraW5nL1Jlc3BvbnNlcy9Gb3J0RGV0YWlsc1Jlc3BvbnNlLnBy",
-            "b3RvIqgEChlGb3J0RGVwbG95UG9rZW1vblJlc3BvbnNlElEKBnJlc3VsdBgB",
+            "b3RvIsQEChlGb3J0RGVwbG95UG9rZW1vblJlc3BvbnNlElEKBnJlc3VsdBgB",
             "IAEoDjJBLlBPR09Qcm90b3MuTmV0d29ya2luZy5SZXNwb25zZXMuRm9ydERl",
             "cGxveVBva2Vtb25SZXNwb25zZS5SZXN1bHQSSgoMZm9ydF9kZXRhaWxzGAIg",
             "ASgLMjQuUE9HT1Byb3Rvcy5OZXR3b3JraW5nLlJlc3BvbnNlcy5Gb3J0RGV0",
             "YWlsc1Jlc3BvbnNlEjIKDHBva2Vtb25fZGF0YRgDIAEoCzIcLlBPR09Qcm90",
             "b3MuRGF0YS5Qb2tlbW9uRGF0YRIwCglneW1fc3RhdGUYBCABKAsyHS5QT0dP",
-            "UHJvdG9zLkRhdGEuR3ltLkd5bVN0YXRlIoUCCgZSZXN1bHQSEQoNTk9fUkVT",
+            "UHJvdG9zLkRhdGEuR3ltLkd5bVN0YXRlIqECCgZSZXN1bHQSEQoNTk9fUkVT",
             "VUxUX1NFVBAAEgsKB1NVQ0NFU1MQARIlCiFFUlJPUl9BTFJFQURZX0hBU19Q",
             "T0tFTU9OX09OX0ZPUlQQAhIhCh1FUlJPUl9PUFBPU0lOR19URUFNX09XTlNf",
             "Rk9SVBADEhYKEkVSUk9SX0ZPUlRfSVNfRlVMTBAEEhYKEkVSUk9SX05PVF9J",
             "Tl9SQU5HRRAFEhwKGEVSUk9SX1BMQVlFUl9IQVNfTk9fVEVBTRAGEh0KGUVS",
             "Uk9SX1BPS0VNT05fTk9UX0ZVTExfSFAQBxIkCiBFUlJPUl9QTEFZRVJfQkVM",
-            "T1dfTUlOSU1VTV9MRVZFTBAIYgZwcm90bzM="));
+            "T1dfTUlOSU1VTV9MRVZFTBAIEhoKFkVSUk9SX1BPS0VNT05fSVNfQlVERFkQ",
+            "CWIGcHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { global::POGOProtos.Data.PokemonDataReflection.Descriptor, global::POGOProtos.Data.Gym.GymStateReflection.Descriptor, global::POGOProtos.Networking.Responses.FortDetailsResponseReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
@@ -50,29 +52,25 @@ namespace POGOProtos.Networking.Responses {
 
   }
   #region Messages
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
   public sealed partial class FortDeployPokemonResponse : pb::IMessage<FortDeployPokemonResponse> {
     private static readonly pb::MessageParser<FortDeployPokemonResponse> _parser = new pb::MessageParser<FortDeployPokemonResponse>(() => new FortDeployPokemonResponse());
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pb::MessageParser<FortDeployPokemonResponse> Parser { get { return _parser; } }
 
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
       get { return global::POGOProtos.Networking.Responses.FortDeployPokemonResponseReflection.Descriptor.MessageTypes[0]; }
     }
 
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     pbr::MessageDescriptor pb::IMessage.Descriptor {
       get { return Descriptor; }
     }
 
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public FortDeployPokemonResponse() {
       OnConstruction();
     }
 
     partial void OnConstruction();
 
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public FortDeployPokemonResponse(FortDeployPokemonResponse other) : this() {
       result_ = other.result_;
       FortDetails = other.fortDetails_ != null ? other.FortDetails.Clone() : null;
@@ -80,15 +78,13 @@ namespace POGOProtos.Networking.Responses {
       GymState = other.gymState_ != null ? other.GymState.Clone() : null;
     }
 
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public FortDeployPokemonResponse Clone() {
       return new FortDeployPokemonResponse(this);
     }
 
     /// <summary>Field number for the "result" field.</summary>
     public const int ResultFieldNumber = 1;
-    private global::POGOProtos.Networking.Responses.FortDeployPokemonResponse.Types.Result result_ = 0;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    private global::POGOProtos.Networking.Responses.FortDeployPokemonResponse.Types.Result result_ = global::POGOProtos.Networking.Responses.FortDeployPokemonResponse.Types.Result.NO_RESULT_SET;
     public global::POGOProtos.Networking.Responses.FortDeployPokemonResponse.Types.Result Result {
       get { return result_; }
       set {
@@ -99,7 +95,6 @@ namespace POGOProtos.Networking.Responses {
     /// <summary>Field number for the "fort_details" field.</summary>
     public const int FortDetailsFieldNumber = 2;
     private global::POGOProtos.Networking.Responses.FortDetailsResponse fortDetails_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public global::POGOProtos.Networking.Responses.FortDetailsResponse FortDetails {
       get { return fortDetails_; }
       set {
@@ -110,7 +105,6 @@ namespace POGOProtos.Networking.Responses {
     /// <summary>Field number for the "pokemon_data" field.</summary>
     public const int PokemonDataFieldNumber = 3;
     private global::POGOProtos.Data.PokemonData pokemonData_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public global::POGOProtos.Data.PokemonData PokemonData {
       get { return pokemonData_; }
       set {
@@ -121,7 +115,6 @@ namespace POGOProtos.Networking.Responses {
     /// <summary>Field number for the "gym_state" field.</summary>
     public const int GymStateFieldNumber = 4;
     private global::POGOProtos.Data.Gym.GymState gymState_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public global::POGOProtos.Data.Gym.GymState GymState {
       get { return gymState_; }
       set {
@@ -129,12 +122,10 @@ namespace POGOProtos.Networking.Responses {
       }
     }
 
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override bool Equals(object other) {
       return Equals(other as FortDeployPokemonResponse);
     }
 
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public bool Equals(FortDeployPokemonResponse other) {
       if (ReferenceEquals(other, null)) {
         return false;
@@ -149,24 +140,21 @@ namespace POGOProtos.Networking.Responses {
       return true;
     }
 
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override int GetHashCode() {
       int hash = 1;
-      if (Result != 0) hash ^= Result.GetHashCode();
+      if (Result != global::POGOProtos.Networking.Responses.FortDeployPokemonResponse.Types.Result.NO_RESULT_SET) hash ^= Result.GetHashCode();
       if (fortDetails_ != null) hash ^= FortDetails.GetHashCode();
       if (pokemonData_ != null) hash ^= PokemonData.GetHashCode();
       if (gymState_ != null) hash ^= GymState.GetHashCode();
       return hash;
     }
 
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override string ToString() {
       return pb::JsonFormatter.ToDiagnosticString(this);
     }
 
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void WriteTo(pb::CodedOutputStream output) {
-      if (Result != 0) {
+      if (Result != global::POGOProtos.Networking.Responses.FortDeployPokemonResponse.Types.Result.NO_RESULT_SET) {
         output.WriteRawTag(8);
         output.WriteEnum((int) Result);
       }
@@ -184,10 +172,9 @@ namespace POGOProtos.Networking.Responses {
       }
     }
 
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int CalculateSize() {
       int size = 0;
-      if (Result != 0) {
+      if (Result != global::POGOProtos.Networking.Responses.FortDeployPokemonResponse.Types.Result.NO_RESULT_SET) {
         size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Result);
       }
       if (fortDetails_ != null) {
@@ -202,12 +189,11 @@ namespace POGOProtos.Networking.Responses {
       return size;
     }
 
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void MergeFrom(FortDeployPokemonResponse other) {
       if (other == null) {
         return;
       }
-      if (other.Result != 0) {
+      if (other.Result != global::POGOProtos.Networking.Responses.FortDeployPokemonResponse.Types.Result.NO_RESULT_SET) {
         Result = other.Result;
       }
       if (other.fortDetails_ != null) {
@@ -230,7 +216,6 @@ namespace POGOProtos.Networking.Responses {
       }
     }
 
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void MergeFrom(pb::CodedInputStream input) {
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
@@ -269,18 +254,19 @@ namespace POGOProtos.Networking.Responses {
 
     #region Nested types
     /// <summary>Container for nested types declared in the FortDeployPokemonResponse message type.</summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     public static partial class Types {
       public enum Result {
-        [pbr::OriginalName("NO_RESULT_SET")] NoResultSet = 0,
-        [pbr::OriginalName("SUCCESS")] Success = 1,
-        [pbr::OriginalName("ERROR_ALREADY_HAS_POKEMON_ON_FORT")] ErrorAlreadyHasPokemonOnFort = 2,
-        [pbr::OriginalName("ERROR_OPPOSING_TEAM_OWNS_FORT")] ErrorOpposingTeamOwnsFort = 3,
-        [pbr::OriginalName("ERROR_FORT_IS_FULL")] ErrorFortIsFull = 4,
-        [pbr::OriginalName("ERROR_NOT_IN_RANGE")] ErrorNotInRange = 5,
-        [pbr::OriginalName("ERROR_PLAYER_HAS_NO_TEAM")] ErrorPlayerHasNoTeam = 6,
-        [pbr::OriginalName("ERROR_POKEMON_NOT_FULL_HP")] ErrorPokemonNotFullHp = 7,
-        [pbr::OriginalName("ERROR_PLAYER_BELOW_MINIMUM_LEVEL")] ErrorPlayerBelowMinimumLevel = 8,
+        NO_RESULT_SET = 0,
+        SUCCESS = 1,
+        ERROR_ALREADY_HAS_POKEMON_ON_FORT = 2,
+        ERROR_OPPOSING_TEAM_OWNS_FORT = 3,
+        ERROR_FORT_IS_FULL = 4,
+        ERROR_NOT_IN_RANGE = 5,
+        ERROR_PLAYER_HAS_NO_TEAM = 6,
+        ERROR_POKEMON_NOT_FULL_HP = 7,
+        ERROR_PLAYER_BELOW_MINIMUM_LEVEL = 8,
+        ERROR_POKEMON_IS_BUDDY = 9,
       }
 
     }

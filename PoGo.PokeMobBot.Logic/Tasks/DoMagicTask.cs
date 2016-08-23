@@ -27,11 +27,11 @@ namespace PoGo.PokeMobBot.Logic.Tasks
             cancellationToken.ThrowIfCancellationRequested();
             try
             {
-                while (!cancellationToken.IsCancellationRequested)
-                {
+                //while (!cancellationToken.IsCancellationRequested)
+                //{
                     await Task.Delay(29*60*1000, cancellationToken);
-                    await session.Client.UpdateTicket();
-                }
+                //    await session.Client.UpdateTicket();
+                //}
             }
             catch (Exception)
             {
