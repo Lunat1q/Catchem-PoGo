@@ -1,16 +1,10 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Globalization;
 using System.Runtime.InteropServices;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using Newtonsoft.Json;
 using PoGo.PokeMobBot.Logic;
 using POGOProtos.Enums;
 using POGOProtos.Inventory.Item;
@@ -21,10 +15,24 @@ namespace Catchem.Extensions
     {
         public static GlobalSettings Clone(this GlobalSettings gs)
         {
-            var newSettings = new GlobalSettings();
-            gs.CloneProperties(newSettings);
-            gs.CloneFields(newSettings);
-            return newSettings;
+            return gs.CloneJson();
+        }
+
+        public static T CloneJson<T>(this T source)
+        {
+            // Don't serialize a null object, simply return the default for that object
+            if (ReferenceEquals(source, null))
+            {
+                return default(T);
+            }
+
+            // initialize inner objects individually
+            // for example in default constructor some list property initialized with some values,
+            // but in 'source' these items are cleaned -
+            // without ObjectCreationHandling.Replace default constructor values will be added to result
+            var deserializeSettings = new JsonSerializerSettings { ObjectCreationHandling = ObjectCreationHandling.Replace };
+
+            return JsonConvert.DeserializeObject<T>(JsonConvert.SerializeObject(source), deserializeSettings);
         }
 
         public static void CloneProperties<T>(this T from, T to)
@@ -41,8 +49,11 @@ namespace Catchem.Extensions
                     CloneFields(nextObjFrom, nextObjTo);
                     continue;
                 }
-                var value = property.GetValue(from);
-                property.SetValue(to, value);
+                if (property.SetMethod != null)
+                {
+                    var value = property.GetValue(from);
+                    property.SetValue(to, value);
+                }
             }
         }
         public static void CloneFields<T>(this T from, T to)
