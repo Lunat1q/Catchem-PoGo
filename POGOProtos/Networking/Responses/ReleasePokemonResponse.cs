@@ -10,6 +10,7 @@ using scg = global::System.Collections.Generic;
 namespace POGOProtos.Networking.Responses {
 
   /// <summary>Holder for reflection information generated from POGOProtos/Networking/Responses/ReleasePokemonResponse.proto</summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
   public static partial class ReleasePokemonResponseReflection {
 
     #region Descriptor
@@ -24,12 +25,12 @@ namespace POGOProtos.Networking.Responses {
           string.Concat(
             "CjxQT0dPUHJvdG9zL05ldHdvcmtpbmcvUmVzcG9uc2VzL1JlbGVhc2VQb2tl",
             "bW9uUmVzcG9uc2UucHJvdG8SH1BPR09Qcm90b3MuTmV0d29ya2luZy5SZXNw",
-            "b25zZXMi3QEKFlJlbGVhc2VQb2tlbW9uUmVzcG9uc2USTgoGcmVzdWx0GAEg",
+            "b25zZXMi+QEKFlJlbGVhc2VQb2tlbW9uUmVzcG9uc2USTgoGcmVzdWx0GAEg",
             "ASgOMj4uUE9HT1Byb3Rvcy5OZXR3b3JraW5nLlJlc3BvbnNlcy5SZWxlYXNl",
             "UG9rZW1vblJlc3BvbnNlLlJlc3VsdBIVCg1jYW5keV9hd2FyZGVkGAIgASgF",
-            "IlwKBlJlc3VsdBIJCgVVTlNFVBAAEgsKB1NVQ0NFU1MQARIUChBQT0tFTU9O",
+            "IngKBlJlc3VsdBIJCgVVTlNFVBAAEgsKB1NVQ0NFU1MQARIUChBQT0tFTU9O",
             "X0RFUExPWUVEEAISCgoGRkFJTEVEEAMSGAoURVJST1JfUE9LRU1PTl9JU19F",
-            "R0cQBGIGcHJvdG8z"));
+            "R0cQBBIaChZFUlJPUl9QT0tFTU9OX0lTX0JVRERZEAViBnByb3RvMw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
@@ -40,43 +41,37 @@ namespace POGOProtos.Networking.Responses {
 
   }
   #region Messages
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
   public sealed partial class ReleasePokemonResponse : pb::IMessage<ReleasePokemonResponse> {
     private static readonly pb::MessageParser<ReleasePokemonResponse> _parser = new pb::MessageParser<ReleasePokemonResponse>(() => new ReleasePokemonResponse());
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pb::MessageParser<ReleasePokemonResponse> Parser { get { return _parser; } }
 
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
       get { return global::POGOProtos.Networking.Responses.ReleasePokemonResponseReflection.Descriptor.MessageTypes[0]; }
     }
 
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     pbr::MessageDescriptor pb::IMessage.Descriptor {
       get { return Descriptor; }
     }
 
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public ReleasePokemonResponse() {
       OnConstruction();
     }
 
     partial void OnConstruction();
 
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public ReleasePokemonResponse(ReleasePokemonResponse other) : this() {
       result_ = other.result_;
       candyAwarded_ = other.candyAwarded_;
     }
 
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public ReleasePokemonResponse Clone() {
       return new ReleasePokemonResponse(this);
     }
 
     /// <summary>Field number for the "result" field.</summary>
     public const int ResultFieldNumber = 1;
-    private global::POGOProtos.Networking.Responses.ReleasePokemonResponse.Types.Result result_ = 0;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    private global::POGOProtos.Networking.Responses.ReleasePokemonResponse.Types.Result result_ = global::POGOProtos.Networking.Responses.ReleasePokemonResponse.Types.Result.UNSET;
     public global::POGOProtos.Networking.Responses.ReleasePokemonResponse.Types.Result Result {
       get { return result_; }
       set {
@@ -87,7 +82,6 @@ namespace POGOProtos.Networking.Responses {
     /// <summary>Field number for the "candy_awarded" field.</summary>
     public const int CandyAwardedFieldNumber = 2;
     private int candyAwarded_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int CandyAwarded {
       get { return candyAwarded_; }
       set {
@@ -95,12 +89,10 @@ namespace POGOProtos.Networking.Responses {
       }
     }
 
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override bool Equals(object other) {
       return Equals(other as ReleasePokemonResponse);
     }
 
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public bool Equals(ReleasePokemonResponse other) {
       if (ReferenceEquals(other, null)) {
         return false;
@@ -113,22 +105,19 @@ namespace POGOProtos.Networking.Responses {
       return true;
     }
 
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override int GetHashCode() {
       int hash = 1;
-      if (Result != 0) hash ^= Result.GetHashCode();
+      if (Result != global::POGOProtos.Networking.Responses.ReleasePokemonResponse.Types.Result.UNSET) hash ^= Result.GetHashCode();
       if (CandyAwarded != 0) hash ^= CandyAwarded.GetHashCode();
       return hash;
     }
 
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override string ToString() {
       return pb::JsonFormatter.ToDiagnosticString(this);
     }
 
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void WriteTo(pb::CodedOutputStream output) {
-      if (Result != 0) {
+      if (Result != global::POGOProtos.Networking.Responses.ReleasePokemonResponse.Types.Result.UNSET) {
         output.WriteRawTag(8);
         output.WriteEnum((int) Result);
       }
@@ -138,10 +127,9 @@ namespace POGOProtos.Networking.Responses {
       }
     }
 
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int CalculateSize() {
       int size = 0;
-      if (Result != 0) {
+      if (Result != global::POGOProtos.Networking.Responses.ReleasePokemonResponse.Types.Result.UNSET) {
         size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Result);
       }
       if (CandyAwarded != 0) {
@@ -150,12 +138,11 @@ namespace POGOProtos.Networking.Responses {
       return size;
     }
 
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void MergeFrom(ReleasePokemonResponse other) {
       if (other == null) {
         return;
       }
-      if (other.Result != 0) {
+      if (other.Result != global::POGOProtos.Networking.Responses.ReleasePokemonResponse.Types.Result.UNSET) {
         Result = other.Result;
       }
       if (other.CandyAwarded != 0) {
@@ -163,7 +150,6 @@ namespace POGOProtos.Networking.Responses {
       }
     }
 
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void MergeFrom(pb::CodedInputStream input) {
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
@@ -185,14 +171,15 @@ namespace POGOProtos.Networking.Responses {
 
     #region Nested types
     /// <summary>Container for nested types declared in the ReleasePokemonResponse message type.</summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     public static partial class Types {
       public enum Result {
-        [pbr::OriginalName("UNSET")] Unset = 0,
-        [pbr::OriginalName("SUCCESS")] Success = 1,
-        [pbr::OriginalName("POKEMON_DEPLOYED")] PokemonDeployed = 2,
-        [pbr::OriginalName("FAILED")] Failed = 3,
-        [pbr::OriginalName("ERROR_POKEMON_IS_EGG")] ErrorPokemonIsEgg = 4,
+        UNSET = 0,
+        SUCCESS = 1,
+        POKEMON_DEPLOYED = 2,
+        FAILED = 3,
+        ERROR_POKEMON_IS_EGG = 4,
+        ERROR_POKEMON_IS_BUDDY = 5,
       }
 
     }

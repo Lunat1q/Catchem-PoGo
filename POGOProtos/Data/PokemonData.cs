@@ -10,6 +10,7 @@ using scg = global::System.Collections.Generic;
 namespace POGOProtos.Data {
 
   /// <summary>Holder for reflection information generated from POGOProtos/Data/PokemonData.proto</summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
   public static partial class PokemonDataReflection {
 
     #region Descriptor
@@ -25,7 +26,7 @@ namespace POGOProtos.Data {
             "CiFQT0dPUHJvdG9zL0RhdGEvUG9rZW1vbkRhdGEucHJvdG8SD1BPR09Qcm90",
             "b3MuRGF0YRogUE9HT1Byb3Rvcy9FbnVtcy9Qb2tlbW9uSWQucHJvdG8aIlBP",
             "R09Qcm90b3MvRW51bXMvUG9rZW1vbk1vdmUucHJvdG8aJlBPR09Qcm90b3Mv",
-            "SW52ZW50b3J5L0l0ZW0vSXRlbUlkLnByb3RvIpgGCgtQb2tlbW9uRGF0YRIK",
+            "SW52ZW50b3J5L0l0ZW0vSXRlbUlkLnByb3RvIrUGCgtQb2tlbW9uRGF0YRIK",
             "CgJpZBgBIAEoBhIvCgpwb2tlbW9uX2lkGAIgASgOMhsuUE9HT1Byb3Rvcy5F",
             "bnVtcy5Qb2tlbW9uSWQSCgoCY3AYAyABKAUSDwoHc3RhbWluYRgEIAEoBRIT",
             "CgtzdGFtaW5hX21heBgFIAEoBRItCgZtb3ZlXzEYBiABKA4yHS5QT0dPUHJv",
@@ -43,40 +44,37 @@ namespace POGOProtos.Data {
             "cl9pZBgZIAEoCRIYChBjcmVhdGlvbl90aW1lX21zGBogASgEEhQKDG51bV91",
             "cGdyYWRlcxgbIAEoBRIgChhhZGRpdGlvbmFsX2NwX211bHRpcGxpZXIYHCAB",
             "KAISEAoIZmF2b3JpdGUYHSABKAUSEAoIbmlja25hbWUYHiABKAkSEQoJZnJv",
-            "bV9mb3J0GB8gASgFYgZwcm90bzM="));
+            "bV9mb3J0GB8gASgFEhsKE2J1ZGR5X2NhbmR5X2F3YXJkZWQYICABKAViBnBy",
+            "b3RvMw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { global::POGOProtos.Enums.PokemonIdReflection.Descriptor, global::POGOProtos.Enums.PokemonMoveReflection.Descriptor, global::POGOProtos.Inventory.Item.ItemIdReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::POGOProtos.Data.PokemonData), global::POGOProtos.Data.PokemonData.Parser, new[]{ "Id", "PokemonId", "Cp", "Stamina", "StaminaMax", "Move1", "Move2", "DeployedFortId", "OwnerName", "IsEgg", "EggKmWalkedTarget", "EggKmWalkedStart", "Origin", "HeightM", "WeightKg", "IndividualAttack", "IndividualDefense", "IndividualStamina", "CpMultiplier", "Pokeball", "CapturedCellId", "BattlesAttacked", "BattlesDefended", "EggIncubatorId", "CreationTimeMs", "NumUpgrades", "AdditionalCpMultiplier", "Favorite", "Nickname", "FromFort" }, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::POGOProtos.Data.PokemonData), global::POGOProtos.Data.PokemonData.Parser, new[]{ "Id", "PokemonId", "Cp", "Stamina", "StaminaMax", "Move1", "Move2", "DeployedFortId", "OwnerName", "IsEgg", "EggKmWalkedTarget", "EggKmWalkedStart", "Origin", "HeightM", "WeightKg", "IndividualAttack", "IndividualDefense", "IndividualStamina", "CpMultiplier", "Pokeball", "CapturedCellId", "BattlesAttacked", "BattlesDefended", "EggIncubatorId", "CreationTimeMs", "NumUpgrades", "AdditionalCpMultiplier", "Favorite", "Nickname", "FromFort", "BuddyCandyAwarded" }, null, null, null)
           }));
     }
     #endregion
 
   }
   #region Messages
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
   public sealed partial class PokemonData : pb::IMessage<PokemonData> {
     private static readonly pb::MessageParser<PokemonData> _parser = new pb::MessageParser<PokemonData>(() => new PokemonData());
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pb::MessageParser<PokemonData> Parser { get { return _parser; } }
 
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
       get { return global::POGOProtos.Data.PokemonDataReflection.Descriptor.MessageTypes[0]; }
     }
 
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     pbr::MessageDescriptor pb::IMessage.Descriptor {
       get { return Descriptor; }
     }
 
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public PokemonData() {
       OnConstruction();
     }
 
     partial void OnConstruction();
 
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public PokemonData(PokemonData other) : this() {
       id_ = other.id_;
       pokemonId_ = other.pokemonId_;
@@ -108,9 +106,9 @@ namespace POGOProtos.Data {
       favorite_ = other.favorite_;
       nickname_ = other.nickname_;
       fromFort_ = other.fromFort_;
+      buddyCandyAwarded_ = other.buddyCandyAwarded_;
     }
 
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public PokemonData Clone() {
       return new PokemonData(this);
     }
@@ -118,7 +116,6 @@ namespace POGOProtos.Data {
     /// <summary>Field number for the "id" field.</summary>
     public const int IdFieldNumber = 1;
     private ulong id_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public ulong Id {
       get { return id_; }
       set {
@@ -128,8 +125,7 @@ namespace POGOProtos.Data {
 
     /// <summary>Field number for the "pokemon_id" field.</summary>
     public const int PokemonIdFieldNumber = 2;
-    private global::POGOProtos.Enums.PokemonId pokemonId_ = 0;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    private global::POGOProtos.Enums.PokemonId pokemonId_ = global::POGOProtos.Enums.PokemonId.Missingno;
     public global::POGOProtos.Enums.PokemonId PokemonId {
       get { return pokemonId_; }
       set {
@@ -140,7 +136,6 @@ namespace POGOProtos.Data {
     /// <summary>Field number for the "cp" field.</summary>
     public const int CpFieldNumber = 3;
     private int cp_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int Cp {
       get { return cp_; }
       set {
@@ -151,7 +146,6 @@ namespace POGOProtos.Data {
     /// <summary>Field number for the "stamina" field.</summary>
     public const int StaminaFieldNumber = 4;
     private int stamina_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int Stamina {
       get { return stamina_; }
       set {
@@ -162,7 +156,6 @@ namespace POGOProtos.Data {
     /// <summary>Field number for the "stamina_max" field.</summary>
     public const int StaminaMaxFieldNumber = 5;
     private int staminaMax_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int StaminaMax {
       get { return staminaMax_; }
       set {
@@ -172,8 +165,7 @@ namespace POGOProtos.Data {
 
     /// <summary>Field number for the "move_1" field.</summary>
     public const int Move1FieldNumber = 6;
-    private global::POGOProtos.Enums.PokemonMove move1_ = 0;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    private global::POGOProtos.Enums.PokemonMove move1_ = global::POGOProtos.Enums.PokemonMove.MoveUnset;
     public global::POGOProtos.Enums.PokemonMove Move1 {
       get { return move1_; }
       set {
@@ -183,8 +175,7 @@ namespace POGOProtos.Data {
 
     /// <summary>Field number for the "move_2" field.</summary>
     public const int Move2FieldNumber = 7;
-    private global::POGOProtos.Enums.PokemonMove move2_ = 0;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    private global::POGOProtos.Enums.PokemonMove move2_ = global::POGOProtos.Enums.PokemonMove.MoveUnset;
     public global::POGOProtos.Enums.PokemonMove Move2 {
       get { return move2_; }
       set {
@@ -195,7 +186,6 @@ namespace POGOProtos.Data {
     /// <summary>Field number for the "deployed_fort_id" field.</summary>
     public const int DeployedFortIdFieldNumber = 8;
     private string deployedFortId_ = "";
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public string DeployedFortId {
       get { return deployedFortId_; }
       set {
@@ -206,7 +196,6 @@ namespace POGOProtos.Data {
     /// <summary>Field number for the "owner_name" field.</summary>
     public const int OwnerNameFieldNumber = 9;
     private string ownerName_ = "";
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public string OwnerName {
       get { return ownerName_; }
       set {
@@ -217,7 +206,6 @@ namespace POGOProtos.Data {
     /// <summary>Field number for the "is_egg" field.</summary>
     public const int IsEggFieldNumber = 10;
     private bool isEgg_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public bool IsEgg {
       get { return isEgg_; }
       set {
@@ -228,7 +216,6 @@ namespace POGOProtos.Data {
     /// <summary>Field number for the "egg_km_walked_target" field.</summary>
     public const int EggKmWalkedTargetFieldNumber = 11;
     private double eggKmWalkedTarget_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public double EggKmWalkedTarget {
       get { return eggKmWalkedTarget_; }
       set {
@@ -239,7 +226,6 @@ namespace POGOProtos.Data {
     /// <summary>Field number for the "egg_km_walked_start" field.</summary>
     public const int EggKmWalkedStartFieldNumber = 12;
     private double eggKmWalkedStart_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public double EggKmWalkedStart {
       get { return eggKmWalkedStart_; }
       set {
@@ -250,7 +236,6 @@ namespace POGOProtos.Data {
     /// <summary>Field number for the "origin" field.</summary>
     public const int OriginFieldNumber = 14;
     private int origin_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int Origin {
       get { return origin_; }
       set {
@@ -261,7 +246,6 @@ namespace POGOProtos.Data {
     /// <summary>Field number for the "height_m" field.</summary>
     public const int HeightMFieldNumber = 15;
     private float heightM_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public float HeightM {
       get { return heightM_; }
       set {
@@ -272,7 +256,6 @@ namespace POGOProtos.Data {
     /// <summary>Field number for the "weight_kg" field.</summary>
     public const int WeightKgFieldNumber = 16;
     private float weightKg_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public float WeightKg {
       get { return weightKg_; }
       set {
@@ -283,7 +266,6 @@ namespace POGOProtos.Data {
     /// <summary>Field number for the "individual_attack" field.</summary>
     public const int IndividualAttackFieldNumber = 17;
     private int individualAttack_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int IndividualAttack {
       get { return individualAttack_; }
       set {
@@ -294,7 +276,6 @@ namespace POGOProtos.Data {
     /// <summary>Field number for the "individual_defense" field.</summary>
     public const int IndividualDefenseFieldNumber = 18;
     private int individualDefense_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int IndividualDefense {
       get { return individualDefense_; }
       set {
@@ -305,7 +286,6 @@ namespace POGOProtos.Data {
     /// <summary>Field number for the "individual_stamina" field.</summary>
     public const int IndividualStaminaFieldNumber = 19;
     private int individualStamina_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int IndividualStamina {
       get { return individualStamina_; }
       set {
@@ -316,7 +296,6 @@ namespace POGOProtos.Data {
     /// <summary>Field number for the "cp_multiplier" field.</summary>
     public const int CpMultiplierFieldNumber = 20;
     private float cpMultiplier_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public float CpMultiplier {
       get { return cpMultiplier_; }
       set {
@@ -326,8 +305,7 @@ namespace POGOProtos.Data {
 
     /// <summary>Field number for the "pokeball" field.</summary>
     public const int PokeballFieldNumber = 21;
-    private global::POGOProtos.Inventory.Item.ItemId pokeball_ = 0;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    private global::POGOProtos.Inventory.Item.ItemId pokeball_ = global::POGOProtos.Inventory.Item.ItemId.ItemUnknown;
     public global::POGOProtos.Inventory.Item.ItemId Pokeball {
       get { return pokeball_; }
       set {
@@ -338,7 +316,6 @@ namespace POGOProtos.Data {
     /// <summary>Field number for the "captured_cell_id" field.</summary>
     public const int CapturedCellIdFieldNumber = 22;
     private ulong capturedCellId_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public ulong CapturedCellId {
       get { return capturedCellId_; }
       set {
@@ -349,7 +326,6 @@ namespace POGOProtos.Data {
     /// <summary>Field number for the "battles_attacked" field.</summary>
     public const int BattlesAttackedFieldNumber = 23;
     private int battlesAttacked_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int BattlesAttacked {
       get { return battlesAttacked_; }
       set {
@@ -360,7 +336,6 @@ namespace POGOProtos.Data {
     /// <summary>Field number for the "battles_defended" field.</summary>
     public const int BattlesDefendedFieldNumber = 24;
     private int battlesDefended_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int BattlesDefended {
       get { return battlesDefended_; }
       set {
@@ -371,7 +346,6 @@ namespace POGOProtos.Data {
     /// <summary>Field number for the "egg_incubator_id" field.</summary>
     public const int EggIncubatorIdFieldNumber = 25;
     private string eggIncubatorId_ = "";
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public string EggIncubatorId {
       get { return eggIncubatorId_; }
       set {
@@ -382,7 +356,6 @@ namespace POGOProtos.Data {
     /// <summary>Field number for the "creation_time_ms" field.</summary>
     public const int CreationTimeMsFieldNumber = 26;
     private ulong creationTimeMs_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public ulong CreationTimeMs {
       get { return creationTimeMs_; }
       set {
@@ -393,7 +366,6 @@ namespace POGOProtos.Data {
     /// <summary>Field number for the "num_upgrades" field.</summary>
     public const int NumUpgradesFieldNumber = 27;
     private int numUpgrades_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int NumUpgrades {
       get { return numUpgrades_; }
       set {
@@ -404,7 +376,6 @@ namespace POGOProtos.Data {
     /// <summary>Field number for the "additional_cp_multiplier" field.</summary>
     public const int AdditionalCpMultiplierFieldNumber = 28;
     private float additionalCpMultiplier_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public float AdditionalCpMultiplier {
       get { return additionalCpMultiplier_; }
       set {
@@ -415,7 +386,6 @@ namespace POGOProtos.Data {
     /// <summary>Field number for the "favorite" field.</summary>
     public const int FavoriteFieldNumber = 29;
     private int favorite_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int Favorite {
       get { return favorite_; }
       set {
@@ -426,7 +396,6 @@ namespace POGOProtos.Data {
     /// <summary>Field number for the "nickname" field.</summary>
     public const int NicknameFieldNumber = 30;
     private string nickname_ = "";
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public string Nickname {
       get { return nickname_; }
       set {
@@ -437,7 +406,6 @@ namespace POGOProtos.Data {
     /// <summary>Field number for the "from_fort" field.</summary>
     public const int FromFortFieldNumber = 31;
     private int fromFort_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int FromFort {
       get { return fromFort_; }
       set {
@@ -445,12 +413,20 @@ namespace POGOProtos.Data {
       }
     }
 
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    /// <summary>Field number for the "buddy_candy_awarded" field.</summary>
+    public const int BuddyCandyAwardedFieldNumber = 32;
+    private int buddyCandyAwarded_;
+    public int BuddyCandyAwarded {
+      get { return buddyCandyAwarded_; }
+      set {
+        buddyCandyAwarded_ = value;
+      }
+    }
+
     public override bool Equals(object other) {
       return Equals(other as PokemonData);
     }
 
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public bool Equals(PokemonData other) {
       if (ReferenceEquals(other, null)) {
         return false;
@@ -488,19 +464,19 @@ namespace POGOProtos.Data {
       if (Favorite != other.Favorite) return false;
       if (Nickname != other.Nickname) return false;
       if (FromFort != other.FromFort) return false;
+      if (BuddyCandyAwarded != other.BuddyCandyAwarded) return false;
       return true;
     }
 
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override int GetHashCode() {
       int hash = 1;
       if (Id != 0UL) hash ^= Id.GetHashCode();
-      if (PokemonId != 0) hash ^= PokemonId.GetHashCode();
+      if (PokemonId != global::POGOProtos.Enums.PokemonId.Missingno) hash ^= PokemonId.GetHashCode();
       if (Cp != 0) hash ^= Cp.GetHashCode();
       if (Stamina != 0) hash ^= Stamina.GetHashCode();
       if (StaminaMax != 0) hash ^= StaminaMax.GetHashCode();
-      if (Move1 != 0) hash ^= Move1.GetHashCode();
-      if (Move2 != 0) hash ^= Move2.GetHashCode();
+      if (Move1 != global::POGOProtos.Enums.PokemonMove.MoveUnset) hash ^= Move1.GetHashCode();
+      if (Move2 != global::POGOProtos.Enums.PokemonMove.MoveUnset) hash ^= Move2.GetHashCode();
       if (DeployedFortId.Length != 0) hash ^= DeployedFortId.GetHashCode();
       if (OwnerName.Length != 0) hash ^= OwnerName.GetHashCode();
       if (IsEgg != false) hash ^= IsEgg.GetHashCode();
@@ -513,7 +489,7 @@ namespace POGOProtos.Data {
       if (IndividualDefense != 0) hash ^= IndividualDefense.GetHashCode();
       if (IndividualStamina != 0) hash ^= IndividualStamina.GetHashCode();
       if (CpMultiplier != 0F) hash ^= CpMultiplier.GetHashCode();
-      if (Pokeball != 0) hash ^= Pokeball.GetHashCode();
+      if (Pokeball != global::POGOProtos.Inventory.Item.ItemId.ItemUnknown) hash ^= Pokeball.GetHashCode();
       if (CapturedCellId != 0UL) hash ^= CapturedCellId.GetHashCode();
       if (BattlesAttacked != 0) hash ^= BattlesAttacked.GetHashCode();
       if (BattlesDefended != 0) hash ^= BattlesDefended.GetHashCode();
@@ -524,21 +500,20 @@ namespace POGOProtos.Data {
       if (Favorite != 0) hash ^= Favorite.GetHashCode();
       if (Nickname.Length != 0) hash ^= Nickname.GetHashCode();
       if (FromFort != 0) hash ^= FromFort.GetHashCode();
+      if (BuddyCandyAwarded != 0) hash ^= BuddyCandyAwarded.GetHashCode();
       return hash;
     }
 
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override string ToString() {
       return pb::JsonFormatter.ToDiagnosticString(this);
     }
 
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void WriteTo(pb::CodedOutputStream output) {
       if (Id != 0UL) {
         output.WriteRawTag(9);
         output.WriteFixed64(Id);
       }
-      if (PokemonId != 0) {
+      if (PokemonId != global::POGOProtos.Enums.PokemonId.Missingno) {
         output.WriteRawTag(16);
         output.WriteEnum((int) PokemonId);
       }
@@ -554,11 +529,11 @@ namespace POGOProtos.Data {
         output.WriteRawTag(40);
         output.WriteInt32(StaminaMax);
       }
-      if (Move1 != 0) {
+      if (Move1 != global::POGOProtos.Enums.PokemonMove.MoveUnset) {
         output.WriteRawTag(48);
         output.WriteEnum((int) Move1);
       }
-      if (Move2 != 0) {
+      if (Move2 != global::POGOProtos.Enums.PokemonMove.MoveUnset) {
         output.WriteRawTag(56);
         output.WriteEnum((int) Move2);
       }
@@ -610,7 +585,7 @@ namespace POGOProtos.Data {
         output.WriteRawTag(165, 1);
         output.WriteFloat(CpMultiplier);
       }
-      if (Pokeball != 0) {
+      if (Pokeball != global::POGOProtos.Inventory.Item.ItemId.ItemUnknown) {
         output.WriteRawTag(168, 1);
         output.WriteEnum((int) Pokeball);
       }
@@ -654,15 +629,18 @@ namespace POGOProtos.Data {
         output.WriteRawTag(248, 1);
         output.WriteInt32(FromFort);
       }
+      if (BuddyCandyAwarded != 0) {
+        output.WriteRawTag(128, 2);
+        output.WriteInt32(BuddyCandyAwarded);
+      }
     }
 
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int CalculateSize() {
       int size = 0;
       if (Id != 0UL) {
         size += 1 + 8;
       }
-      if (PokemonId != 0) {
+      if (PokemonId != global::POGOProtos.Enums.PokemonId.Missingno) {
         size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) PokemonId);
       }
       if (Cp != 0) {
@@ -674,10 +652,10 @@ namespace POGOProtos.Data {
       if (StaminaMax != 0) {
         size += 1 + pb::CodedOutputStream.ComputeInt32Size(StaminaMax);
       }
-      if (Move1 != 0) {
+      if (Move1 != global::POGOProtos.Enums.PokemonMove.MoveUnset) {
         size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Move1);
       }
-      if (Move2 != 0) {
+      if (Move2 != global::POGOProtos.Enums.PokemonMove.MoveUnset) {
         size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Move2);
       }
       if (DeployedFortId.Length != 0) {
@@ -716,7 +694,7 @@ namespace POGOProtos.Data {
       if (CpMultiplier != 0F) {
         size += 2 + 4;
       }
-      if (Pokeball != 0) {
+      if (Pokeball != global::POGOProtos.Inventory.Item.ItemId.ItemUnknown) {
         size += 2 + pb::CodedOutputStream.ComputeEnumSize((int) Pokeball);
       }
       if (CapturedCellId != 0UL) {
@@ -749,10 +727,12 @@ namespace POGOProtos.Data {
       if (FromFort != 0) {
         size += 2 + pb::CodedOutputStream.ComputeInt32Size(FromFort);
       }
+      if (BuddyCandyAwarded != 0) {
+        size += 2 + pb::CodedOutputStream.ComputeInt32Size(BuddyCandyAwarded);
+      }
       return size;
     }
 
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void MergeFrom(PokemonData other) {
       if (other == null) {
         return;
@@ -760,7 +740,7 @@ namespace POGOProtos.Data {
       if (other.Id != 0UL) {
         Id = other.Id;
       }
-      if (other.PokemonId != 0) {
+      if (other.PokemonId != global::POGOProtos.Enums.PokemonId.Missingno) {
         PokemonId = other.PokemonId;
       }
       if (other.Cp != 0) {
@@ -772,10 +752,10 @@ namespace POGOProtos.Data {
       if (other.StaminaMax != 0) {
         StaminaMax = other.StaminaMax;
       }
-      if (other.Move1 != 0) {
+      if (other.Move1 != global::POGOProtos.Enums.PokemonMove.MoveUnset) {
         Move1 = other.Move1;
       }
-      if (other.Move2 != 0) {
+      if (other.Move2 != global::POGOProtos.Enums.PokemonMove.MoveUnset) {
         Move2 = other.Move2;
       }
       if (other.DeployedFortId.Length != 0) {
@@ -814,7 +794,7 @@ namespace POGOProtos.Data {
       if (other.CpMultiplier != 0F) {
         CpMultiplier = other.CpMultiplier;
       }
-      if (other.Pokeball != 0) {
+      if (other.Pokeball != global::POGOProtos.Inventory.Item.ItemId.ItemUnknown) {
         Pokeball = other.Pokeball;
       }
       if (other.CapturedCellId != 0UL) {
@@ -847,9 +827,11 @@ namespace POGOProtos.Data {
       if (other.FromFort != 0) {
         FromFort = other.FromFort;
       }
+      if (other.BuddyCandyAwarded != 0) {
+        BuddyCandyAwarded = other.BuddyCandyAwarded;
+      }
     }
 
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void MergeFrom(pb::CodedInputStream input) {
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
@@ -975,6 +957,10 @@ namespace POGOProtos.Data {
           }
           case 248: {
             FromFort = input.ReadInt32();
+            break;
+          }
+          case 256: {
+            BuddyCandyAwarded = input.ReadInt32();
             break;
           }
         }

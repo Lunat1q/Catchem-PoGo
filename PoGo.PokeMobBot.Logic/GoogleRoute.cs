@@ -36,11 +36,11 @@ namespace PoGo.PokeMobBot.Logic
             string waypointsRequest = "";
             if (waypoints != null && waypoints.Count > 0)
             {
-                waypointsRequest = "&waypoints=";
+                waypointsRequest = "&waypoints=optimize:true|";
                 var wpList = new List<string>();
                 foreach (var wp in waypoints)
                 {
-                    wpList.Add($"{wp.Latitude.ToString(CultureInfo.InvariantCulture)},{wp.Longitude.ToString(CultureInfo.InvariantCulture)}");
+                    wpList.Add($"via:{wp.Latitude.ToString(CultureInfo.InvariantCulture)},{wp.Longitude.ToString(CultureInfo.InvariantCulture)}");
                 }
                 waypointsRequest += wpList.Aggregate((x, v) => x + "|" + v);
             }
@@ -75,17 +75,32 @@ namespace PoGo.PokeMobBot.Logic
 
                 var responseParsed = new RoutingResponse();
                 var googleCoords = new List<List<double>>();
-                var legs = googleResponse.routes.FirstOrDefault()?.legs;
-                if (legs != null)
-                    foreach (var leg in legs)
+                var route = googleResponse.routes.FirstOrDefault();
+                if (route != null)
+                {
+                    var wpOrder = route.waypoint_order;
+                    var legs = googleResponse.routes.FirstOrDefault()?.legs;
+                    if (legs != null)
                     {
-                        foreach (var step in leg.steps)
+                        if (wpOrder != null && wpOrder.Count > 0)
                         {
-                            googleCoords.Add(new List<double> { step.start_location.lat, step.start_location.lng });
+                            var orderedLegs = new List<Leg>();
+                            foreach (int index in wpOrder)
+                            {
+                                orderedLegs.Add(legs[index]);
+                            }
+                            legs = orderedLegs;
+                        }
+                        foreach (var leg in legs)
+                        {
+                            foreach (var step in leg.steps)
+                            {
+                                googleCoords.Add(new List<double> {step.start_location.lat, step.start_location.lng});
+                            }
                         }
                     }
-                responseParsed.Coordinates = googleCoords;
-
+                    responseParsed.Coordinates = googleCoords;
+                }
                 return responseParsed;
             }
             catch(Exception ex)

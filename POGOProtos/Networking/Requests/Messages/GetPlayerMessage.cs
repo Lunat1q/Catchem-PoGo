@@ -7,135 +7,286 @@ using pb = global::Google.Protobuf;
 using pbc = global::Google.Protobuf.Collections;
 using pbr = global::Google.Protobuf.Reflection;
 using scg = global::System.Collections.Generic;
-namespace POGOProtos.Networking.Requests.Messages
-{
+namespace POGOProtos.Networking.Requests.Messages {
 
-    /// <summary>Holder for reflection information generated from POGOProtos/Networking/Requests/Messages/GetPlayerMessage.proto</summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-    public static partial class GetPlayerMessageReflection
-    {
+  /// <summary>Holder for reflection information generated from POGOProtos/Networking/Requests/Messages/GetPlayerMessage.proto</summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+  public static partial class GetPlayerMessageReflection {
 
-        #region Descriptor
-        /// <summary>File descriptor for POGOProtos/Networking/Requests/Messages/GetPlayerMessage.proto</summary>
-        public static pbr::FileDescriptor Descriptor
-        {
-            get { return descriptor; }
-        }
-        private static pbr::FileDescriptor descriptor;
-
-        static GetPlayerMessageReflection()
-        {
-            byte[] descriptorData = global::System.Convert.FromBase64String(
-                string.Concat(
-                  "Cj5QT0dPUHJvdG9zL05ldHdvcmtpbmcvUmVxdWVzdHMvTWVzc2FnZXMvR2V0",
-                  "UGxheWVyTWVzc2FnZS5wcm90bxInUE9HT1Byb3Rvcy5OZXR3b3JraW5nLlJl",
-                  "cXVlc3RzLk1lc3NhZ2VzIhIKEEdldFBsYXllck1lc3NhZ2ViBnByb3RvMw=="));
-            descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
-                new pbr::FileDescriptor[] { },
-                new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::POGOProtos.Networking.Requests.Messages.GetPlayerMessage), global::POGOProtos.Networking.Requests.Messages.GetPlayerMessage.Parser, null, null, null, null), 
-                }));
-        }
-        #endregion
-
+    #region Descriptor
+    /// <summary>File descriptor for POGOProtos/Networking/Requests/Messages/GetPlayerMessage.proto</summary>
+    public static pbr::FileDescriptor Descriptor {
+      get { return descriptor; }
     }
-    #region Messages
+    private static pbr::FileDescriptor descriptor;
+
+    static GetPlayerMessageReflection() {
+      byte[] descriptorData = global::System.Convert.FromBase64String(
+          string.Concat(
+            "Cj5QT0dPUHJvdG9zL05ldHdvcmtpbmcvUmVxdWVzdHMvTWVzc2FnZXMvR2V0",
+            "UGxheWVyTWVzc2FnZS5wcm90bxInUE9HT1Byb3Rvcy5OZXR3b3JraW5nLlJl",
+            "cXVlc3RzLk1lc3NhZ2VzIqQBChBHZXRQbGF5ZXJNZXNzYWdlEl0KDXBsYXll",
+            "cl9sb2NhbGUYASABKAsyRi5QT0dPUHJvdG9zLk5ldHdvcmtpbmcuUmVxdWVz",
+            "dHMuTWVzc2FnZXMuR2V0UGxheWVyTWVzc2FnZS5QbGF5ZXJMb2NhbGUaMQoM",
+            "UGxheWVyTG9jYWxlEg8KB2NvdW50cnkYASABKAkSEAoIbGFuZ3VhZ2UYAiAB",
+            "KAliBnByb3RvMw=="));
+      descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
+          new pbr::FileDescriptor[] { },
+          new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
+            new pbr::GeneratedClrTypeInfo(typeof(global::POGOProtos.Networking.Requests.Messages.GetPlayerMessage), global::POGOProtos.Networking.Requests.Messages.GetPlayerMessage.Parser, new[]{ "PlayerLocale" }, null, null, new pbr::GeneratedClrTypeInfo[] { new pbr::GeneratedClrTypeInfo(typeof(global::POGOProtos.Networking.Requests.Messages.GetPlayerMessage.Types.PlayerLocale), global::POGOProtos.Networking.Requests.Messages.GetPlayerMessage.Types.PlayerLocale.Parser, new[]{ "Country", "Language" }, null, null, null)})
+          }));
+    }
+    #endregion
+
+  }
+  #region Messages
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+  public sealed partial class GetPlayerMessage : pb::IMessage<GetPlayerMessage> {
+    private static readonly pb::MessageParser<GetPlayerMessage> _parser = new pb::MessageParser<GetPlayerMessage>(() => new GetPlayerMessage());
+    public static pb::MessageParser<GetPlayerMessage> Parser { get { return _parser; } }
+
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::POGOProtos.Networking.Requests.Messages.GetPlayerMessageReflection.Descriptor.MessageTypes[0]; }
+    }
+
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    public GetPlayerMessage() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    public GetPlayerMessage(GetPlayerMessage other) : this() {
+      PlayerLocale = other.playerLocale_ != null ? other.PlayerLocale.Clone() : null;
+    }
+
+    public GetPlayerMessage Clone() {
+      return new GetPlayerMessage(this);
+    }
+
+    /// <summary>Field number for the "player_locale" field.</summary>
+    public const int PlayerLocaleFieldNumber = 1;
+    private global::POGOProtos.Networking.Requests.Messages.GetPlayerMessage.Types.PlayerLocale playerLocale_;
+    public global::POGOProtos.Networking.Requests.Messages.GetPlayerMessage.Types.PlayerLocale PlayerLocale {
+      get { return playerLocale_; }
+      set {
+        playerLocale_ = value;
+      }
+    }
+
+    public override bool Equals(object other) {
+      return Equals(other as GetPlayerMessage);
+    }
+
+    public bool Equals(GetPlayerMessage other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (!object.Equals(PlayerLocale, other.PlayerLocale)) return false;
+      return true;
+    }
+
+    public override int GetHashCode() {
+      int hash = 1;
+      if (playerLocale_ != null) hash ^= PlayerLocale.GetHashCode();
+      return hash;
+    }
+
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    public void WriteTo(pb::CodedOutputStream output) {
+      if (playerLocale_ != null) {
+        output.WriteRawTag(10);
+        output.WriteMessage(PlayerLocale);
+      }
+    }
+
+    public int CalculateSize() {
+      int size = 0;
+      if (playerLocale_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(PlayerLocale);
+      }
+      return size;
+    }
+
+    public void MergeFrom(GetPlayerMessage other) {
+      if (other == null) {
+        return;
+      }
+      if (other.playerLocale_ != null) {
+        if (playerLocale_ == null) {
+          playerLocale_ = new global::POGOProtos.Networking.Requests.Messages.GetPlayerMessage.Types.PlayerLocale();
+        }
+        PlayerLocale.MergeFrom(other.PlayerLocale);
+      }
+    }
+
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            input.SkipLastField();
+            break;
+          case 10: {
+            if (playerLocale_ == null) {
+              playerLocale_ = new global::POGOProtos.Networking.Requests.Messages.GetPlayerMessage.Types.PlayerLocale();
+            }
+            input.ReadMessage(playerLocale_);
+            break;
+          }
+        }
+      }
+    }
+
+    #region Nested types
+    /// <summary>Container for nested types declared in the GetPlayerMessage message type.</summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-    public sealed partial class GetPlayerMessage : pb::IMessage<GetPlayerMessage>
-    {
-        private static readonly pb::MessageParser<GetPlayerMessage> _parser = new pb::MessageParser<GetPlayerMessage>(() => new GetPlayerMessage());
-        public static pb::MessageParser<GetPlayerMessage> Parser { get { return _parser; } }
+    public static partial class Types {
+      [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+      public sealed partial class PlayerLocale : pb::IMessage<PlayerLocale> {
+        private static readonly pb::MessageParser<PlayerLocale> _parser = new pb::MessageParser<PlayerLocale>(() => new PlayerLocale());
+        public static pb::MessageParser<PlayerLocale> Parser { get { return _parser; } }
 
-        public static pbr::MessageDescriptor Descriptor
-        {
-            get { return global::POGOProtos.Networking.Requests.Messages.GetPlayerMessageReflection.Descriptor.MessageTypes[0]; }
+        public static pbr::MessageDescriptor Descriptor {
+          get { return global::POGOProtos.Networking.Requests.Messages.GetPlayerMessage.Descriptor.NestedTypes[0]; }
         }
 
-        pbr::MessageDescriptor pb::IMessage.Descriptor
-        {
-            get { return Descriptor; }
+        pbr::MessageDescriptor pb::IMessage.Descriptor {
+          get { return Descriptor; }
         }
 
-        public GetPlayerMessage()
-        {
-            OnConstruction();
+        public PlayerLocale() {
+          OnConstruction();
         }
 
         partial void OnConstruction();
 
-        public GetPlayerMessage(GetPlayerMessage other) : this()
-        {
+        public PlayerLocale(PlayerLocale other) : this() {
+          country_ = other.country_;
+          language_ = other.language_;
         }
 
-        public GetPlayerMessage Clone()
-        {
-            return new GetPlayerMessage(this);
+        public PlayerLocale Clone() {
+          return new PlayerLocale(this);
         }
 
-        public override bool Equals(object other)
-        {
-            return Equals(other as GetPlayerMessage);
+        /// <summary>Field number for the "country" field.</summary>
+        public const int CountryFieldNumber = 1;
+        private string country_ = "";
+        public string Country {
+          get { return country_; }
+          set {
+            country_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+          }
         }
 
-        public bool Equals(GetPlayerMessage other)
-        {
-            if (ReferenceEquals(other, null))
-            {
-                return false;
-            }
-            if (ReferenceEquals(other, this))
-            {
-                return true;
-            }
+        /// <summary>Field number for the "language" field.</summary>
+        public const int LanguageFieldNumber = 2;
+        private string language_ = "";
+        public string Language {
+          get { return language_; }
+          set {
+            language_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+          }
+        }
+
+        public override bool Equals(object other) {
+          return Equals(other as PlayerLocale);
+        }
+
+        public bool Equals(PlayerLocale other) {
+          if (ReferenceEquals(other, null)) {
+            return false;
+          }
+          if (ReferenceEquals(other, this)) {
             return true;
+          }
+          if (Country != other.Country) return false;
+          if (Language != other.Language) return false;
+          return true;
         }
 
-        public override int GetHashCode()
-        {
-            int hash = 1;
-            return hash;
+        public override int GetHashCode() {
+          int hash = 1;
+          if (Country.Length != 0) hash ^= Country.GetHashCode();
+          if (Language.Length != 0) hash ^= Language.GetHashCode();
+          return hash;
         }
 
-        public override string ToString()
-        {
-            return pb::JsonFormatter.ToDiagnosticString(this);
+        public override string ToString() {
+          return pb::JsonFormatter.ToDiagnosticString(this);
         }
 
-        public void WriteTo(pb::CodedOutputStream output)
-        {
+        public void WriteTo(pb::CodedOutputStream output) {
+          if (Country.Length != 0) {
+            output.WriteRawTag(10);
+            output.WriteString(Country);
+          }
+          if (Language.Length != 0) {
+            output.WriteRawTag(18);
+            output.WriteString(Language);
+          }
         }
 
-        public int CalculateSize()
-        {
-            int size = 0;
-            return size;
+        public int CalculateSize() {
+          int size = 0;
+          if (Country.Length != 0) {
+            size += 1 + pb::CodedOutputStream.ComputeStringSize(Country);
+          }
+          if (Language.Length != 0) {
+            size += 1 + pb::CodedOutputStream.ComputeStringSize(Language);
+          }
+          return size;
         }
 
-        public void MergeFrom(GetPlayerMessage other)
-        {
-            if (other == null)
-            {
-                return;
+        public void MergeFrom(PlayerLocale other) {
+          if (other == null) {
+            return;
+          }
+          if (other.Country.Length != 0) {
+            Country = other.Country;
+          }
+          if (other.Language.Length != 0) {
+            Language = other.Language;
+          }
+        }
+
+        public void MergeFrom(pb::CodedInputStream input) {
+          uint tag;
+          while ((tag = input.ReadTag()) != 0) {
+            switch(tag) {
+              default:
+                input.SkipLastField();
+                break;
+              case 10: {
+                Country = input.ReadString();
+                break;
+              }
+              case 18: {
+                Language = input.ReadString();
+                break;
+              }
             }
+          }
         }
 
-        public void MergeFrom(pb::CodedInputStream input)
-        {
-            uint tag;
-            while ((tag = input.ReadTag()) != 0)
-            {
-                switch (tag)
-                {
-                    default:
-                        input.SkipLastField();
-                        break;
-                }
-            }
-        }
+      }
 
     }
-
     #endregion
+
+  }
+
+  #endregion
 
 }
 

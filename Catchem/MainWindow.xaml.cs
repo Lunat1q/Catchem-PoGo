@@ -773,7 +773,7 @@ namespace Catchem
                         }
                     } while (!created);
                 }
-                catch
+                catch (Exception)
                 {
                     //ignore
                 }
@@ -786,7 +786,14 @@ namespace Catchem
             var dir = Directory.CreateDirectory(SubPath + "\\" + path);
             var settings = GlobalSettings.Load(dir.FullName) ?? GlobalSettings.Load(dir.FullName);
             if (Bot != null)
+            {
                 settings = Bot.GlobalSettings.Clone();
+                var profilePath = dir.FullName;
+                var profileConfigPath = Path.Combine(profilePath, "config");
+                settings.ProfilePath = profilePath;
+                settings.ProfileConfigPath = profileConfigPath;
+                settings.GeneralConfigPath = Path.Combine(Directory.GetCurrentDirectory(), "config");
+            }
 
             //set new settings
             Enum.TryParse(auth, out settings.Auth.AuthType);

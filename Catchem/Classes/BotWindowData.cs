@@ -246,6 +246,8 @@ namespace Catchem.Classes
             MapMarkers = new Dictionary<string, GMapMarker>();
             MarkersQueue = new Queue<NewMapObject>();
             LogQueue = new Queue<Tuple<string, Color>>();
+            PathRoute.Points.Clear();
+            PathRoute.RegenerateShape(null);
         }
 
         public void Stop(bool soft = false)
@@ -508,7 +510,7 @@ namespace Catchem.Classes
                 var pokemonsRate = Stats.TotalPokemons/RealWorkH;
                 var pokestopsRate = Stats.TotalPokestops/RealWorkH;
                 var xpRate = Stats.TotalExperience/RealWorkH;
-                var stardustRate = Stats.TotalStardust/RealWorkH;
+                var stardustRate = (Stats.TotalStardust - StartStarDust)/RealWorkH;
 
 
                 var tooMuchPokemons = countPokemons && pokemonsRate > GlobalSettings.CatchSettings.MaxCatchPerHour;
