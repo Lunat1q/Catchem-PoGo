@@ -68,6 +68,8 @@ namespace PoGo.PokeMobBot.Logic
         bool StartupWelcomeDelay { get; }
         string TranslationLanguageCode { get; }
 		bool StopBotToAvoidBanOnUnknownLoginError { get; }
+        bool AutoCompleteTutorial { get; }
+        string DesiredNickname { get; }
        
 
         //coords and movement

@@ -186,6 +186,10 @@ namespace PoGo.PokeMobBot.Logic
         {
 
         }
+        public void HandleEvent(PokemonsWildFoundEvent evt, ISession session)
+        {
+
+        }
         public void HandleEvent(PokemonStatsChangedEvent evt, ISession session)
         {
 

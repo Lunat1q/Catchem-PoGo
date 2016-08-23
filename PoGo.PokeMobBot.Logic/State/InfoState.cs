@@ -23,7 +23,8 @@ namespace PoGo.PokeMobBot.Logic.State
             await PokemonListTask.Execute(session, action);
             await InventoryListTask.Execute(session, action);
 
-            return new FarmState();
+            //return new CheckTosState();
+            return new CheckTosState(); 
         }
     }
 }

@@ -66,7 +66,19 @@ namespace PoGo.PokeMobBot.Logic
             }
             return result;
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="destination">Desired location to move</param>
+        /// <param name="walkingSpeedMin">Minimal walking speed during the move</param>
+        /// <param name="walkingSpeedMax">Maximal walking speed during the move</param>
+        /// <param name="functionExecutedWhileWalking">Functions #1 to be exec while walking, like task or smth</param>
+        /// <param name="functionExecutedWhileWalking2">Functions #1 to be exec while walking, like task or smth</param>
+        /// <param name="cancellationToken">regular session cancelation token</param>
+        /// <param name="session">ISession param of the bot, to detect which bot started it</param>
+        /// <param name="direct">Directly move to the point, skip routing services</param>
+        /// <param name="waypointsToVisit">Waypoints to visit during the move, required to redure Google Directions API usage</param>
+        /// <returns></returns>
         public async Task<PlayerUpdateResponse> Move(GeoCoordinate destination, double walkingSpeedMin, double walkingSpeedMax, Func<Task<bool>> functionExecutedWhileWalking, Func<Task<bool>> functionExecutedWhileWalking2,
             CancellationToken cancellationToken, ISession session, bool direct = false, List<GeoCoordinate> waypointsToVisit = null )
         {
@@ -74,41 +86,11 @@ namespace PoGo.PokeMobBot.Logic
             var result = new PlayerUpdateResponse();
             if (session.LogicSettings.UseHumanPathing)
             {
-                ////initial coordinate generaton
 
-                ////prepare the result object for further manipulation + return
+                var waypoints = new List<GeoCoordinate>();       
 
-
-                ////initial time
-                //var requestSendDateTime = DateTime.Now;
-                //var distanceToDest = LocationUtils.CalculateDistanceInMeters(currentLocation, destination);
-                //double metersPerInterval = 0.5; //approximate meters for each interval/waypoint to be spaced from the last.
-                //////get distance ofc
-                //////create segments
-                //var segments = Math.Floor(distanceToDest / metersPerInterval);
-                List<GeoCoordinate> waypoints = new List<GeoCoordinate>();
-                ////get differences in lat / long
-                //var latDiff = Math.Abs(currentLocation.Latitude - destination.Latitude);
-                //var lonDiff = Math.Abs(currentLocation.Longitude - destination.Longitude);
-                //var latAdd = latDiff / segments;
-                //var lonAdd = latDiff / segments;
-                //var lastLat = currentLocation.Latitude;
-                //var lastLon = currentLocation.Longitude;
-                ////generate waypoints old code -goes in straight line basically
-                //for (int i = 0; i < segments; i++)
-                //{
-                //    //TODO: add altitude calculations into everything
-                //    lastLat += latAdd;
-                //    lastLon += lonAdd;
-                //    waypoints.Add(new GeoCoordinate(lastLat, lastLon, currentLocation.Altitude));
-                //}
-
-                //TODO: refactor the generation of waypoint code to break the waypoints given to us by the routing information down into segements like above.
-                //generate waypoints new code
                 if (!direct)
                 {
-                    //var routingResponse = OsmRouting.GetRoute(currentLocation, destination, session);
-                    //waypoints = routingResponse.Coordinates;
 					RoutingResponse routingResponse = null;
 	                try
 	                {
@@ -173,27 +155,9 @@ namespace PoGo.PokeMobBot.Logic
                     {
                         Coords = nextPath
                     });
+                    destination = waypoints.Last();
                 }
 
-
-                //var timeSinceMoveStart = DateTime.Now.Ticks;
-                //double curAcceleration = 1.66; //Lets assume we accelerate at 1.66 m/s ish. TODO: Fuzz this a bit
-                //double curWalkingSpeed = 0;
-                //double maxWalkingSpeed = (session.LogicSettings.WalkingSpeedInKilometerPerHour / 3.6); //Get movement speed in meters
-
-                ////TODO: Maybe update SensorInfo to replicate/mimic movement, or is it fine as is?
-                //bool StopWalking = false;
-                //double TimeToAccelerate = GetAccelerationTime(curWalkingSpeed, maxWalkingSpeed, curAcceleration);
-                ////double InitialMove = getDistanceTraveledAccelerating(TimeToAccelerate, curAcceleration, curWalkingSpeed);
-
-
-                //double MoveLeft = curWalkingSpeed;
-                //bool NeedMoreMove = false;
-                //bool StopMove = false;
-                //int UpdateInterval = 1; // in seconds - any more than this breaks the calculations for distance and such. It all relys on taking ~1 second to perform the actions needed, pretty much.
-
-                //makes you appear to move slower if you're catching pokemon, hitting stops, etc.
-                //This feels like more human behavior. Dunnomateee
                 Navigation navi = new Navigation(_client, UpdatePositionEvent);
                 var waypointsArr = waypoints.ToArray();
                 //MILD REWRITE TO USE HUMANPATHWALKING;

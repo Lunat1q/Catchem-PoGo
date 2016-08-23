@@ -23,9 +23,9 @@ namespace PoGo.PokeMobBot.Logic
 		private static Random rand = new Random();
 		public double FuzzyFactorBearing()
         {
-            double maximum = -8.0f;
-            double minimum = 8.0f;
-            return rand.NextDouble() * (maximum - minimum) + minimum;
+            const double maximum = -8.0f;
+            const double minimum = 8.0f;
+		    return rand.NextInRange(minimum, maximum);
         }
 
         public Navigation(Client client, UpdatePositionDelegate updatePos)
@@ -38,79 +38,6 @@ namespace PoGo.PokeMobBot.Logic
         {
             _client = client;
         }
-
-   //     public async Task<PlayerUpdateResponse> HumanLikeWalking(GeoCoordinate targetLocation,
-   //         double walkingSpeedInKilometersPerHour, Func<Task<bool>> functionExecutedWhileWalking,
-   //         CancellationToken cancellationToken)
-   //     {
-   //         cancellationToken.ThrowIfCancellationRequested();
-
-   //         var speedInMetersPerSecond = walkingSpeedInKilometersPerHour/3.6;
-
-   //         var sourceLocation = new GeoCoordinate(_client.CurrentLatitude, _client.CurrentLongitude);
-   //         var distanceTo = LocationUtils.CalculateDistanceInMeters(sourceLocation, targetLocation);
-   //         // Logger.Write($"Distance to target location: {distanceToTarget:0.##} meters. Will take {distanceToTarget/speedInMetersPerSecond:0.##} seconds!", LogLevel.Info);
-
-   //         //Randomizing next step, we don't like straight lines!
-   //         var nextWaypointBearing = LocationUtils.DegreeBearing(sourceLocation, targetLocation) *(1 + _client.rnd.NextDouble() * 0.06 - 0.03);
-   //         var nextWaypointDistance = speedInMetersPerSecond * (1 + _client.rnd.NextDouble() * 0.2 - 0.1);
-   //         var waypoint = LocationUtils.CreateWaypoint(sourceLocation, nextWaypointDistance, nextWaypointBearing);
-
-   //         var Waypoints = new List<GeoCoordinate>();
-
-   //         //Initial walking
-   //         var requestSendDateTime = DateTime.Now;
-   //         var result =
-   //             await
-   //                 _client.Player.UpdatePlayerLocation(waypoint.Latitude, waypoint.Longitude,
-   //                     _client.Settings.DefaultAltitude);
-
-   //         UpdatePositionEvent?.Invoke(waypoint.Latitude, waypoint.Longitude, _client.Settings.DefaultAltitude);
-
-			////TODO: min-max altitude variations
-   //         var altitudeStep = (_client.rnd.NextDouble() * 10 - 5) * (nextWaypointDistance / distanceTo);
-   //         var altitude = _client.Settings.DefaultAltitude + altitudeStep;
-   //         do
-   //         {
-   //             cancellationToken.ThrowIfCancellationRequested();
-
-   //             var millisecondsUntilGetUpdatePlayerLocationResponse =
-   //                 (DateTime.Now - requestSendDateTime).TotalMilliseconds;
-
-   //             sourceLocation = new GeoCoordinate(_client.CurrentLatitude, _client.CurrentLongitude);
-   //             var currentDistanceToTarget = LocationUtils.CalculateDistanceInMeters(sourceLocation, targetLocation);
-
-   //             if (currentDistanceToTarget < 40)
-   //             {
-   //                 if (speedInMetersPerSecond > SpeedDownTo)
-   //                 {
-   //                     //Logger.Write("We are within 40 meters of the target. Speeding down to 10 km/h to not pass the target.", LogLevel.Info);
-   //                     speedInMetersPerSecond = SpeedDownTo;
-   //                 }
-   //             }
-
-   //             nextWaypointDistance = Math.Min(currentDistanceToTarget,
-   //                 (millisecondsUntilGetUpdatePlayerLocationResponse/1000*speedInMetersPerSecond) * (1 + _client.rnd.NextDouble() * 0.2 - 0.1) * _client.Settings.MoveSpeedFactor);
-   //             nextWaypointBearing = LocationUtils.DegreeBearing(sourceLocation, targetLocation) * (1 + _client.rnd.NextDouble() * 0.06 - 0.03);
-   //             waypoint = LocationUtils.CreateWaypoint(sourceLocation, nextWaypointDistance, nextWaypointBearing);
-
-   //             requestSendDateTime = DateTime.Now;
-   //             result =
-   //                 await
-   //                     _client.Player.UpdatePlayerLocation(waypoint.Latitude, waypoint.Longitude,
-   //                         altitude);
-   //             altitude += altitudeStep;
-
-   //             UpdatePositionEvent?.Invoke(waypoint.Latitude, waypoint.Longitude);
-
-
-   //             if (functionExecutedWhileWalking != null)
-   //                 await functionExecutedWhileWalking(); // look for pokemon
-   //             await Task.Delay(500, cancellationToken);
-   //         } while (LocationUtils.CalculateDistanceInMeters(sourceLocation, targetLocation) >= 30);
-
-   //         return result;
-   //     }
 
         public async Task<PlayerUpdateResponse> HumanPathWalking(ISession session, GeoCoordinate targetLocation,
             double walkingSpeedInKilometersPerHour, Func<Task<bool>> functionExecutedWhileWalking,
@@ -135,17 +62,21 @@ namespace PoGo.PokeMobBot.Logic
             double altitudeStep;
             double altitude;
             var trueAlt = false;
+            var round = rand.Next(5) == 0 ? 6 : 1;
             if (Math.Abs(targetLocation.Altitude) > 0.001)
             {
                 trueAlt = true;
                 altitudeStep = (_client.Settings.DefaultAltitude - targetLocation.Altitude) / (distanceToTarget / (nextWaypointDistance > 1 ? nextWaypointDistance : 1));
-                altitude = _client.Settings.DefaultAltitude - altitudeStep;
+                
+                altitude = Math.Round(_client.Settings.DefaultAltitude - altitudeStep, round);
+                altitudeStep = Math.Round(altitudeStep, round);
                 waypoint = LocationUtils.CreateWaypoint(sourceLocation, nextWaypointDistance, nextWaypointBearing, altitude);
             }
             else
             {
                 altitudeStep = (_client.Settings.DefaultAltitude - _client.rnd.NextInRange(_client.Settings.DefaultAltitudeMin, _client.Settings.DefaultAltitudeMax)) / (distanceToTarget / nextWaypointDistance);
-                altitude = _client.Settings.DefaultAltitude + altitudeStep;
+                altitude = Math.Round(_client.Settings.DefaultAltitude - altitudeStep, round);
+                altitudeStep = Math.Round(altitudeStep, round);
                 waypoint = LocationUtils.CreateWaypoint(sourceLocation, nextWaypointDistance, nextWaypointBearing, _client.Settings.DefaultAltitude);
             }
 

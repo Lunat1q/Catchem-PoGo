@@ -17,7 +17,11 @@
                       mc:Ignorable="d">
     <controls:MetroWindow.RightWindowCommands>
         <controls:WindowCommands>
-            <Button x:Name="changeViewSettingsMap"
+            <Button x:Name="btn_ChangeViewToTelegram"
+                    Content="Telegram" BorderBrush="{x:Null}" Background="{x:Null}" Click="btn_ChangeViewToTelegram_Click" Visibility="Hidden" />
+            <Button x:Name="btn_ChangeViewToSettings"
+                    Content="Settings" BorderBrush="{x:Null}" Background="{x:Null}" Click="btn_ChangeViewToSettings_Click" />
+            <Button x:Name="btn_ChangeViewSettingsMap"
                     Click="btn_changeViewSettingsMap_Click"
                     Content="WorldMap" BorderBrush="{x:Null}" Background="{x:Null}" />
         </controls:WindowCommands>
@@ -36,6 +40,7 @@
         <materialDesign:Transitioner Name="transit" Margin="0.5,0,10,0" SelectedIndex="0" Grid.Column="1">
             <pages:AccountSettingsTab x:Name="SettingsView" />
             <pages:GlobalMapPage x:Name="GlobalMapView" />
+            <pages:TelegramPage x:Name="TelegramView" />
         </materialDesign:Transitioner>
         <Grid Width="246" HorizontalAlignment="Left">
             <Rectangle Width="246" HorizontalAlignment="Left">
@@ -54,25 +59,9 @@
                     VerticalAlignment="Top"
                     Click="button_Click"
                     Content="ADD NEW BOT"
-                    FontFamily="BOLD"
                     FontWeight="Bold"
                     Style="{StaticResource ResourceKey=flatbutton}"
-                    TextOptions.TextFormattingMode="Display">
-                <Button.Background>
-                    <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
-                        <LinearGradientBrush.RelativeTransform>
-                            <TransformGroup>
-                                <ScaleTransform CenterX="0.5" CenterY="0.5" />
-                                <SkewTransform CenterX="0.5" CenterY="0.5" />
-                                <RotateTransform Angle="90" CenterX="0.5" CenterY="0.5" />
-                                <TranslateTransform />
-                            </TransformGroup>
-                        </LinearGradientBrush.RelativeTransform>
-                        <GradientStop Offset="0" Color="#FFB0EE9C" />
-                        <GradientStop Offset="1" Color="#FF53C05D" />
-                    </LinearGradientBrush>
-                </Button.Background>
-            </Button>
+                    TextOptions.TextFormattingMode="Display" Background="{DynamicResource StartBrush}"/>
             <Label x:Name="label4"
                    Width="246"
                    Height="38"
@@ -91,7 +80,6 @@
                     VerticalAlignment="Top"
                     Click="btn_StartAll_Click"
                     Content="START ALL"
-                    FontFamily="BOLD"
                     FontWeight="Bold"
                     Style="{StaticResource ResourceKey=flatbutton}"
                     TextOptions.TextFormattingMode="Display">
@@ -118,25 +106,9 @@
                     VerticalAlignment="Top"
                     Click="btn_StopAll_Click"
                     Content="STOP ALL"
-                    FontFamily="BOLD"
                     FontWeight="Bold"
                     Style="{StaticResource ResourceKey=flatbutton}"
-                    TextOptions.TextFormattingMode="Display">
-                <Button.Background>
-                    <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
-                        <LinearGradientBrush.RelativeTransform>
-                            <TransformGroup>
-                                <ScaleTransform CenterX="0.5" CenterY="0.5" />
-                                <SkewTransform CenterX="0.5" CenterY="0.5" />
-                                <RotateTransform Angle="90" CenterX="0.5" CenterY="0.5" />
-                                <TranslateTransform />
-                            </TransformGroup>
-                        </LinearGradientBrush.RelativeTransform>
-                        <GradientStop Offset="0" Color="#FFEEB29C" />
-                        <GradientStop Offset="1" Color="#FFC04F53" />
-                    </LinearGradientBrush>
-                </Button.Background>
-            </Button>
+                    TextOptions.TextFormattingMode="Display" Background="{DynamicResource StopBrush}"/>
             <ListBox x:Name="botsBox"
                      Width="246"
                      Margin="0,110,0,0"
@@ -164,7 +136,6 @@
                     VerticalAlignment="Top"
                     Click="btn_BatchCreation_Click"
                     Content="BATCH CREATION"
-                    FontFamily="BOLD"
                     FontWeight="Bold"
                     Style="{StaticResource ResourceKey=flatbutton}"
                     TextOptions.TextFormattingMode="Display">
@@ -358,7 +329,7 @@
                                FontSize="20"
                                FontStyle="Italic"
                                Foreground="#FF7E7E7E"
-                               Text="Format: type;login;pass;proxyuri:port;proxy_login;proxy_pass"
+                               Text="Format: type;login;pass;proxyuri:port;proxy_login;proxy_pass;desiredname"
                                TextAlignment="Center" VerticalAlignment="Top" />
                     <TextBlock Margin="15,82,15,0"
                                FontFamily="Calibri"

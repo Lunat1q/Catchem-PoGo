@@ -45,21 +45,19 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                 };
  				var pokemon = new PokemonCacheItem(_pokemon);
 
-                session.EventDispatcher.Send(new PokemonsFoundEvent { Pokemons = new MapPokemon[] { _pokemon } });
-
                 if (session.LogicSettings.UsePokemonToNotCatchFilter &&
                     session.LogicSettings.PokemonsNotToCatch.Contains(pokemon.PokemonId))
                 {
                     session.EventDispatcher.Send(new NoticeEvent()
                     {
-                        Message = session.Translation.GetTranslation(TranslationString.PokemonIgnoreFilter,session.Translation.GetPokemonName(pokemon.PokemonId))
+                        Message = session.Translation.GetTranslation(TranslationString.PokemonIgnoreFilter, session.Translation.GetPokemonName(pokemon.PokemonId))
                     });
                 }
                 else
                 {
-                    var distance = LocationUtils.CalculateDistanceInMeters(session.Client.CurrentLatitude,
-                        session.Client.CurrentLongitude, pokemon.Latitude, pokemon.Longitude);
-                        await Task.Delay(session.LogicSettings.DelayCatchIncensePokemon);
+                    session.EventDispatcher.Send(new PokemonsFoundEvent { Pokemons = new[] { _pokemon } });
+
+                    await Task.Delay(session.LogicSettings.DelayCatchIncensePokemon);
 
                     var encounter =
                         await

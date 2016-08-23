@@ -100,6 +100,7 @@
     <Compile Include="Event\PokemonSettingsEvent.cs" />
     <Compile Include="Event\NextRouteEvent.cs" />
     <Compile Include="Event\TeamSetEvent.cs" />
+    <Compile Include="Event\TelegramMessageEvent.cs" />
     <Compile Include="Event\UseLuckyEggMinPokemonEvent.cs" />
     <Compile Include="Event\DisplayHighestsPokemonEvent.cs" />
     <Compile Include="Event\EggHatchedEvent.cs" />
@@ -143,6 +144,8 @@
     <Compile Include="OSMRoute.cs" />
     <Compile Include="Routing.cs" />
     <Compile Include="Service\BotService.cs" />
+    <Compile Include="State\CheckTosState.cs" />
+    <Compile Include="Tasks\DoMagicTask.cs" />
     <Compile Include="Tasks\FavoriteSpecificPokemonTask.cs" />
     <Compile Include="Tasks\LevelUpSpecificPokemonTask.cs" />
     <Compile Include="Tasks\SetPlayerTeamTask.cs" />
