@@ -9,7 +9,10 @@ using System.Net;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Markup;
+<<<<<<< HEAD
 using Catchem.Pages;
+=======
+>>>>>>> refs/remotes/Lunat1q/master
 using PoGo.PokeMobBot.Logic.Event;
 using PoGo.PokeMobBot.Logic.Logging;
 using PoGo.PokeMobBot.Logic.State;
@@ -21,7 +24,10 @@ namespace Catchem.Classes
         public static bool _stopTelegram = false;
         public static TelegramBot _telegram;
         public Queue<Update> _telegramMessages;
+<<<<<<< HEAD
         public bool _firstMessageUpdate = true;
+=======
+>>>>>>> refs/remotes/Lunat1q/master
 
         public async void Start(string accessToken)
         {
@@ -59,6 +65,7 @@ namespace Catchem.Classes
                 var updates = _telegram.MakeRequestAsync(new GetUpdates() {Offset = offset}).Result;
                 if (updates != null)
                 {
+<<<<<<< HEAD
                     if (_firstMessageUpdate)
                     {
                         if (updates.Count() > 1)
@@ -79,6 +86,16 @@ namespace Catchem.Classes
                             }
                             _telegramMessages.Enqueue(update);
                         }
+=======
+                    foreach (var update in updates)
+                    {
+                        offset = update.UpdateId + 1;
+                        if (update.Message == null)
+                        {
+                            continue;
+                        }
+                        _telegramMessages.Enqueue(update);
+>>>>>>> refs/remotes/Lunat1q/master
                     }
                     await UseMessage();
                 }
@@ -105,6 +122,7 @@ namespace Catchem.Classes
                 }
                 if (messageReceived.ToLower() == "listbots")
                 {
+<<<<<<< HEAD
                     int _botNumber = 0;
                     string botsString = "Current Bots Avaliable: \n";
                     foreach (var bot in MainWindow.BotsCollection)
@@ -119,6 +137,17 @@ namespace Catchem.Classes
                     if (_botNumber > 0)
                         await _telegram.MakeRequestAsync(new SendMessage(update.Message.Chat.Id, botsString));
                     continue;
+=======
+                    int number = 1;
+                    string botsString = "Current Bots Avaliable: \n";
+                    foreach (var bot in MainWindow.BotsCollection)
+                    {
+                        string status = "STOPPED";
+                        if (bot.Started) status = "RUNNING";
+                        botsString += $"{number}) {bot.ProfileName} [{status}] \n";
+                        number++;
+                    }
+>>>>>>> refs/remotes/Lunat1q/master
                 }
                 if (messageReceived.ToLower() == "start all")
                 {
@@ -209,6 +238,10 @@ namespace Catchem.Classes
             }
         }
 
+<<<<<<< HEAD
         
+=======
+
+>>>>>>> refs/remotes/Lunat1q/master
     }
 }
