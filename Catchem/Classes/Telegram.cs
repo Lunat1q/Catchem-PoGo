@@ -9,6 +9,7 @@ using System.Net;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Markup;
+using Catchem.Pages;
 using PoGo.PokeMobBot.Logic.Event;
 using PoGo.PokeMobBot.Logic.Logging;
 using PoGo.PokeMobBot.Logic.State;
@@ -20,6 +21,7 @@ namespace Catchem.Classes
         public static bool _stopTelegram = false;
         public static TelegramBot _telegram;
         public Queue<Update> _telegramMessages;
+        public bool _firstMessageUpdate = true;
 
         public async void Start(string accessToken)
         {
@@ -57,14 +59,26 @@ namespace Catchem.Classes
                 var updates = _telegram.MakeRequestAsync(new GetUpdates() {Offset = offset}).Result;
                 if (updates != null)
                 {
-                    foreach (var update in updates)
+                    if (_firstMessageUpdate)
                     {
-                        offset = update.UpdateId + 1;
-                        if (update.Message == null)
+                        if (updates.Count() > 1)
                         {
-                            continue;
+                            if (updates[(updates.Count() - 1)].Message == null) continue;
+                            _telegramMessages.Enqueue(updates[updates.Count() - 1]);
                         }
-                        _telegramMessages.Enqueue(update);
+                        _firstMessageUpdate = false;
+                    }
+                    else if (_firstMessageUpdate == false)
+                    {
+                        foreach (var update in updates)
+                        {
+                            offset = update.UpdateId + 1;
+                            if (update.Message == null)
+                            {
+                                continue;
+                            }
+                            _telegramMessages.Enqueue(update);
+                        }
                     }
                     await UseMessage();
                 }
@@ -91,15 +105,20 @@ namespace Catchem.Classes
                 }
                 if (messageReceived.ToLower() == "listbots")
                 {
-                    int number = 1;
+                    int _botNumber = 0;
                     string botsString = "Current Bots Avaliable: \n";
                     foreach (var bot in MainWindow.BotsCollection)
                     {
+                        _botNumber++;
                         string status = "STOPPED";
                         if (bot.Started) status = "RUNNING";
-                        botsString += $"{number}) {bot.ProfileName} [{status}] \n";
-                        number++;
+                        botsString += $"{_botNumber}) {bot.ProfileName} [{status}] \n";
                     }
+                    if (_botNumber == 0)
+                        await _telegram.MakeRequestAsync(new SendMessage(update.Message.Chat.Id, "There are no bots created"));
+                    if (_botNumber > 0)
+                        await _telegram.MakeRequestAsync(new SendMessage(update.Message.Chat.Id, botsString));
+                    continue;
                 }
                 if (messageReceived.ToLower() == "start all")
                 {
@@ -190,6 +209,6 @@ namespace Catchem.Classes
             }
         }
 
-
+        
     }
 }
