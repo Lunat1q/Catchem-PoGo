@@ -773,7 +773,7 @@ namespace Catchem
                         }
                     } while (!created);
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     //ignore
                 }
@@ -788,7 +788,7 @@ namespace Catchem
             if (Bot != null)
             {
                 settings = Bot.GlobalSettings.Clone();
-                var profilePath = Path.Combine(Directory.GetCurrentDirectory(), path);
+                var profilePath = dir.FullName;
                 var profileConfigPath = Path.Combine(profilePath, "config");
                 settings.ProfilePath = profilePath;
                 settings.ProfileConfigPath = profileConfigPath;
