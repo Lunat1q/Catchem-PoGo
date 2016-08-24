@@ -66,22 +66,22 @@ namespace PoGo.PokeMobBot.Logic.Tasks
 
             var bestRoute = new List<GeoCoordinate>();
 
-            RuntimeSettings.PokestopsToCheckGym = 13 + session.Client.rnd.Next(15); 
+            session.Runtime.PokestopsToCheckGym = 13 + session.Client.rnd.Next(15); 
 
             while (pokestopList.Any())
             {
                 cancellationToken.ThrowIfCancellationRequested();
 
-                if (RuntimeSettings.PokestopsToCheckGym <= 0)
+                if (session.Runtime.PokestopsToCheckGym <= 0)
                 {
-                    RuntimeSettings.PokestopsToCheckGym = 0;
+                    session.Runtime.PokestopsToCheckGym = 0;
                     var gymsNear = (await GetGyms(session)).OrderBy(i =>
                         LocationUtils.CalculateDistanceInMeters(session.Client.CurrentLatitude,
                             session.Client.CurrentLongitude, i.Latitude, i.Longitude))
                         .ToList();
                     if (gymsNear.Count > 0)
                     {
-                        RuntimeSettings.PokestopsToCheckGym = 13 + session.Client.rnd.Next(15);
+                        session.Runtime.PokestopsToCheckGym = 13 + session.Client.rnd.Next(15);
                         var nearestGym = gymsNear.FirstOrDefault();
                         if (nearestGym != null)
                         {
@@ -183,7 +183,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                             //}
                             //await DelayingUtils.Delay(session.LogicSettings.DelaySoftbanRetry, 400);
 
-                            session.MapCache.UsedPokestop(pokeStop); //fuck that pokestop - skip it
+                            session.MapCache.UsedPokestop(pokeStop, session); //fuck that pokestop - skip it
 
                             break;
                         }
@@ -204,8 +204,8 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                             {
                                 Items = fortSearch.ItemsAwarded.ToItemList()
                             });
-                            session.MapCache.UsedPokestop(pokeStop);
-                            RuntimeSettings.StopsHit++;
+                            session.MapCache.UsedPokestop(pokeStop, session);
+                            session.Runtime.StopsHit++;
                             pokeStop.CooldownCompleteTimestampMS = DateTime.UtcNow.AddMinutes(5).ToUnixTime();
                             if (session.LogicSettings.CatchWildPokemon)
                             {
@@ -235,7 +235,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                     await eggWalker.ApplyDistance(distance, cancellationToken);
 
                 }
-                RuntimeSettings.PokestopsToCheckGym--;
+                session.Runtime.PokestopsToCheckGym--;
                 if (session.LogicSettings.SnipeAtPokestops || session.LogicSettings.UseSnipeLocationServer)
                 {
                     await SnipePokemonTask.Execute(session, cancellationToken);

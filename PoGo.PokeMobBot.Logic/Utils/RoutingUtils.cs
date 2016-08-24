@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using C5;
 using GeoCoordinatePortable;
@@ -60,7 +61,7 @@ namespace PoGo.PokeMobBot.Logic.Utils
                     }
                 }
             }
-            if (_fortsToVisit < _size)
+            if (_fortsToVisit < _size - 1)
                 _fortsToVisit = fortsToVisit;
 
             _opt = LimitedVisit ? new int[_fortsToVisit] : new int[_size];
@@ -124,19 +125,25 @@ namespace PoGo.PokeMobBot.Logic.Utils
 
         private List<FortCacheItem> OptimizeNearest()
         {
-            for (var i = 1; i < _opt.Length; i++)
+            try
             {
-                var curDist = double.MaxValue;
-                for (var j = 0; j < _size; j++)
+                for (var i = 1; i < _opt.Length; i++)
                 {
-                    if (_opt.Contains(j)) continue;
-                    if (curDist < _fortsDistance[_opt[i - 1], j]) continue;
-                    curDist = _fortsDistance[_opt[i - 1], j];
-                    _opt[i] = j;
+                    var curDist = MaxValue;
+                    for (var j = 0; j < _size; j++)
+                    {
+                        if (_opt.Contains(j)) continue;
+                        if (curDist < _fortsDistance[_opt[i - 1], j]) continue;
+                        curDist = _fortsDistance[_opt[i - 1], j];
+                        _opt[i] = j;
+                    }
                 }
             }
-
-            return _opt.Select(t => Forts[t]).ToList();
+            catch (Exception)
+            {
+                //ignore
+            }
+            return _opt.Where(x => x >= 0).Select(t => Forts[t]).ToList();
         }
 
         private List<FortCacheItem> OptimizePart()

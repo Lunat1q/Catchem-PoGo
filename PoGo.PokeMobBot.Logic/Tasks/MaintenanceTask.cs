@@ -12,9 +12,9 @@ namespace PoGo.PokeMobBot.Logic.Tasks
             var recycleInventoryAtUsagePercentage = session.LogicSettings.RecycleInventoryAtUsagePercentage > 1
                 ? session.LogicSettings.RecycleInventoryAtUsagePercentage / 100 : session.LogicSettings.RecycleInventoryAtUsagePercentage;
 
-            if (RuntimeSettings.StopsHit %5 + session.Client.rnd.Next(5) == 0 || session.Profile.PlayerData.MaxItemStorage * recycleInventoryAtUsagePercentage < currentTotalItems)
+            if (session.Runtime.StopsHit %5 + session.Client.rnd.Next(5) == 0 || session.Profile.PlayerData.MaxItemStorage * recycleInventoryAtUsagePercentage < currentTotalItems)
             {
-                RuntimeSettings.StopsHit = 0;
+                session.Runtime.StopsHit = 0;
                 // need updated stardust information for upgrading, so refresh your profile now
                 await DownloadProfile(session);
 

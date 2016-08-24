@@ -102,18 +102,18 @@ namespace PoGo.PokeMobBot.Logic
         }
     }
 
-    public static class RuntimeSettings
+    public class RuntimeSettings
     {
-		public static int StopsHit = 0;
-        public static int PokestopsToCheckGym = 0;
-        public static DateTime StartTime = DateTime.Now;
-        public static bool DelayingScan = false;
-        public static int PokemonScanDelay = 10000;// in ms
-        public static bool BreakOutOfPathing = false;
-        public static string lastPokeStopId = "69694201337";
-        public static string TargetStopID = "420Ayylmao";
-        public static GeoCoordinate lastPokeStopCoordinate = new GeoCoordinate(0,0);
-        public static bool CheckScan()
+		public int StopsHit = 0;
+        public int PokestopsToCheckGym = 0;
+        public DateTime StartTime = DateTime.Now;
+        public bool DelayingScan = false;
+        public int PokemonScanDelay = 10000;// in ms
+        public bool BreakOutOfPathing = false;
+        public string lastPokeStopId = "69694201337";
+        public string TargetStopID = "420Ayylmao";
+        public GeoCoordinate lastPokeStopCoordinate = new GeoCoordinate(0,0);
+        public bool CheckScan()
         {
             if (DelayingScan)
             {
@@ -1418,9 +1418,9 @@ namespace PoGo.PokeMobBot.Logic
                     {
                         if (!settings.LocationSettings.MapzenApiElevationKey?.Equals("") ?? false)
                         {
-                            settings.LocationSettings.DefaultAltitude = settings.MapzenAPI.GetAltitude(settings.LocationSettings.DefaultLatitude,
+                            settings.LocationSettings.DefaultAltitude = settings.MapzenAPI.GetAltitudeSync(settings.LocationSettings.DefaultLatitude,
                                                                                                     settings.LocationSettings.DefaultLongitude,
-                                                                                                    settings.LocationSettings.MapzenApiElevationKey).Result;
+                                                                                                    settings.LocationSettings.MapzenApiElevationKey);
                         }
                         else
                         {

@@ -623,7 +623,7 @@ namespace Catchem
         private void StatsOnDirtyEvent(BotWindowData bot)
         {
             if (bot == null) return;
-            Dispatcher.BeginInvoke(new ThreadStart(bot.UpdateXppH));
+            Dispatcher.BeginInvoke(new ThreadStart(bot.UpdateRunTime));
             if (Bot == bot)
             {
                 Dispatcher.BeginInvoke(new ThreadStart(delegate
@@ -691,7 +691,10 @@ namespace Catchem
         private void btn_StartAll_Click(object sender, RoutedEventArgs e)
         {
             foreach (var bot in BotsCollection)
+            {
                 bot.Start();
+                Task.Delay(330);
+            }
         }
 
         private void btn_changeViewSettingsMap_Click(object sender, RoutedEventArgs e)
