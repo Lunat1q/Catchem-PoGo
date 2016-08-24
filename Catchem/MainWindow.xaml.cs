@@ -431,6 +431,7 @@ namespace Catchem
 
         private async void RpcWorker()
         {
+            int delay = 5;
             while (!_windowClosing)
             {
                 if (_messageQueue.Count > 0)
@@ -440,8 +441,6 @@ namespace Catchem
                     if (message == null) continue;
                     try
                     {
-
-
                         switch (message.Type)
                         {
                             case "bot_failure":
@@ -524,7 +523,13 @@ namespace Catchem
                         Logger.Write(ex.Message, session: message.Session);
                     }
                 }
-                await Task.Delay(5);
+
+                if (_messageQueue.Count > 50)
+                    delay = 1;
+                else if (delay == 1 && _messageQueue.Count == 0)
+                    delay = 5;
+                
+                await Task.Delay(delay);
             }
         }
 

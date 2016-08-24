@@ -31,10 +31,10 @@
                     <ColumnDefinition Width="25*"/>
                     <ColumnDefinition Width="42*"/>
                 </Grid.ColumnDefinitions>
-                <CheckBox x:Name="CbAutoStart" Content="Auto start Telegram bot" HorizontalAlignment="Left" Margin="10,0,0,0" Grid.ColumnSpan="2" Height="16" VerticalContentAlignment="Center" VerticalAlignment="Center" Checked="CbAutoStart_Checked"/>
+                <CheckBox x:Name="c_AutoStart" Content="Auto start Telegram bot" HorizontalAlignment="Left" Margin="10,0,0,0" Grid.ColumnSpan="2" Height="16" VerticalContentAlignment="Center" VerticalAlignment="Center" Checked="ElementPropertyChanged" Unchecked="ElementPropertyChanged"/>
                 <Label x:Name="BotApiKeyLabel" Content="Bot API Key" Margin="10,0,0,0" Grid.Row="1" Grid.Column="0"
                        VerticalContentAlignment="Center"/>
-                <TextBox x:Name="ApiKeyBox" Grid.Column="1" Margin="5,0,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Center" Template="{Binding Mode=OneWay, Source={StaticResource pogo}}"/>
+                <TextBox x:Name="c_ApiKey" Grid.Column="1" Margin="5,0,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Center" Template="{Binding Mode=OneWay, Source={StaticResource pogo}}" TextChanged="ElementPropertyChanged"/>
             </Grid>
         </GroupBox>
         <RichTextBox x:Name="LogBox" Margin="10,13,10,10" Grid.Row="3"
@@ -46,9 +46,9 @@
             </FlowDocument>
         </RichTextBox>
         <Button x:Name="StartButton" Content="START" Margin="10,85,10,0" Grid.Row="1" Grid.Column="1"
-                VerticalAlignment="Top" Style="{Binding Mode=OneWay, Source={StaticResource flatbutton}}" Width="130" Height="30" Background="{Binding Mode=OneWay, Source={StaticResource StartBrush}}" FontWeight="Bold" HorizontalAlignment="Center"/>
+                VerticalAlignment="Top" Style="{Binding Mode=OneWay, Source={StaticResource flatbutton}}" Width="130" Height="30" Background="{Binding Mode=OneWay, Source={StaticResource StartBrush}}" FontWeight="Bold" HorizontalAlignment="Center" Click="StartButton_Click"/>
         <Button x:Name="StopButton" Content="STOP" Margin="15,85,10,0" Grid.Row="1" Grid.Column="0"
-                VerticalAlignment="Top" Style="{Binding Mode=OneWay, Source={StaticResource flatbutton}}" Width="125" Height="30" Background="{Binding Mode=OneWay, Source={StaticResource StopBrush}}" FontWeight="Bold" HorizontalAlignment="Center"/>
+                VerticalAlignment="Top" Style="{Binding Mode=OneWay, Source={StaticResource flatbutton}}" Width="125" Height="30" Background="{Binding Mode=OneWay, Source={StaticResource StopBrush}}" FontWeight="Bold" HorizontalAlignment="Center" Click="StopButton_Click"/>
         <ListBox x:Name="PokemonList" Grid.Column="2" Margin="10,35,10,10" Grid.Row="1" Grid.RowSpan="2" RenderTransformOrigin="0.52,0.51" Grid.ColumnSpan="2" ItemTemplate="{DynamicResource PokemonListTemplate}" HorizontalContentAlignment="Stretch"/>
         <Label x:Name="PokemonsToEvolve" Content="To Auto Report" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16" FontFamily="Calibri" Width="112" Margin="10,0,0,0" Grid.Row="1" Grid.Column="2" Height="30">
             <Label.Foreground>
@@ -100,7 +100,7 @@
                     <ColumnDefinition Width="25*"/>
                     <ColumnDefinition Width="42*"/>
                 </Grid.ColumnDefinitions>
-                <CheckBox x:Name="CbReportSelected" Content="Auto report selected pokemons" HorizontalAlignment="Left" Margin="10,0,0,0" Grid.ColumnSpan="2" VerticalContentAlignment="Center" VerticalAlignment="Center" Width="184"/>
+                <CheckBox x:Name="c_AutoReportSelectedPokemon" Content="Auto report selected pokemons" HorizontalAlignment="Left" Margin="10,0,0,0" Grid.ColumnSpan="2" VerticalContentAlignment="Center" VerticalAlignment="Center" Width="184" Checked="ElementPropertyChanged" Unchecked="ElementPropertyChanged"/>
             </Grid>
         </GroupBox>
 
