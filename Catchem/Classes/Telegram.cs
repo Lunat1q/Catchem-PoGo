@@ -78,10 +78,11 @@ namespace Catchem.Classes
         public void Stop()
         {
             StopTelegram = true;
-            EventDispatcher.Send(new TelegramMessageEvent
-            {
-                Message = "Telegram bot has been stopped!"
-            });
+            if (_started)
+                EventDispatcher.Send(new TelegramMessageEvent
+                {
+                    Message = "Telegram bot has been stopped!"
+                });
         }
 
 
@@ -90,7 +91,7 @@ namespace Catchem.Classes
             long offset = 0;
             while (!StopTelegram)
             {
-                var updates = TelegramBot.MakeRequestAsync(new GetUpdates() { Offset = offset }).Result;
+                var updates = await TelegramBot.MakeRequestAsync(new GetUpdates() { Offset = offset });
                 if (updates != null)
                 {
                     if (FirstMessageUpdate)

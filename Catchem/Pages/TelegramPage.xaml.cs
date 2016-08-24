@@ -26,7 +26,7 @@ namespace Catchem.Pages
     /// </summary>
     public partial class TelegramPage
     {
-        public bool WindowClosing;
+        private bool _windowClosing;
         public readonly Telegram TlgrmBot = new Telegram();
         private TelegramSettings _tlgrmSettings;
         private const string TlgrmFilePath = "tlgrm.json";
@@ -51,7 +51,11 @@ namespace Catchem.Pages
             TelegramLogWorker();
             TelegramCommandWorker();
         }
-
+        public void TurnOff()
+        {
+            _windowClosing = true;
+            TlgrmBot?.Stop();
+        }
         #region UI handlers
 
         public void SaveSettings()
@@ -151,9 +155,11 @@ namespace Catchem.Pages
 
         private void AddBotOwner_Click(object sender, RoutedEventArgs e)
         {
+            var name = BotOwnerTextBox.Text;
+            if (name[0] == '@') name = name.Substring(1);
             _tlgrmSettings.Owners.Add(new TelegramBotOwner()
             {
-                TelegramName = BotOwnerTextBox.Text
+                TelegramName = name
             });
             BotOwnerTextBox.Clear();
         }
@@ -195,7 +201,7 @@ namespace Catchem.Pages
 
         private async void TelegramCommandWorker()
         {
-            while (!WindowClosing)
+            while (!_windowClosing)
             {
                 if (_commandsQueue.Count > 0)
                 {
@@ -323,7 +329,7 @@ namespace Catchem.Pages
 
         private async void TelegramLogWorker()
         {
-            while (!WindowClosing)
+            while (!_windowClosing)
             {
                 if (_logQueue.Count > 0)
                 {

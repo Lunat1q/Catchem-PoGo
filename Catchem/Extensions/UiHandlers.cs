@@ -20,26 +20,26 @@ namespace Catchem.Extensions
             var box = uiElement as TextBox;
             if (box != null)
             {
-                var propName = box.Name.Replace("c_", "");
+                var propName = box.Name.Substring(2);
                 SetValueByName(propName, box.Text, obj);
                 return;
             }
             var chB = uiElement as CheckBox;
             if (chB != null)
             {
-                var propName = chB.Name.Replace("c_", "");
+                var propName = chB.Name.Substring(2);
                 SetValueByName(propName, chB.IsChecked, obj);
             }
             var passBox = uiElement as PasswordBox;
             if (passBox != null)
             {
-                var propName = passBox.Name.Replace("c_", "");
+                var propName = passBox.Name.Substring(2);
                 SetValueByName(propName, passBox.Password, obj);
             }
             var comboBox = uiElement as ComboBox;
             if (comboBox != null)
             {
-                var propName = comboBox.Name.Replace("c_", "");
+                var propName = comboBox.Name.Substring(2);
                 SetValueByName(propName, comboBox.SelectedItem, obj);
             }
         }

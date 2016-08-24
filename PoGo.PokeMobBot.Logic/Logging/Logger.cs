@@ -4,6 +4,8 @@ using System;
 using System.IO;
 using PoGo.PokeMobBot.Logic.State;
 using System.Collections.Generic;
+using PoGo.PokeMobBot.Logic.Extensions;
+
 #endregion
 
 namespace PoGo.PokeMobBot.Logic.Logging
@@ -15,32 +17,61 @@ namespace PoGo.PokeMobBot.Logic.Logging
         private static readonly Queue<string> LogQueue = new Queue<string>();
         private static bool _writerActive;
 
-        private static async void Log(string message)
+        private static void Log(string message)
         {
             LogQueue.Enqueue(message);
-            if (_writerActive) return;
+
+            if (!_writerActive) LogWorker();
+        }
+
+        private static async void LogWorker()
+        {
             _writerActive = true;
+            var delay = 10;
+            var currentLogPath = Path.Combine(_path,
+                $"PokeMobBot-{DateTime.Today.ToString("yyyy-MM-dd")}-{DateTime.Now.ToString("HH")}.txt");
+            var prevH = DateTime.Now.Hour;
+            var nextHour = false;
             try
             {
-                using (
-                    var log =
-                        File.AppendText(Path.Combine(_path,
-                            $"PokeMobBot-{DateTime.Today.ToString("yyyy-MM-dd")}-{DateTime.Now.ToString("HH")}.txt"))
-                    )
+                using (var w = File.AppendText(currentLogPath))
                 {
-                    while (LogQueue.Count > 0)
+                    var loggedLines = 0;
+                    while (!nextHour)
                     {
-                        var m = LogQueue.Dequeue();
-                        log.WriteLine(m);
-                        await System.Threading.Tasks.Task.Delay(10);
+                        if (LogQueue.Count > 0)
+                        {
+                            var m = LogQueue.Dequeue();
+                            await w.WriteLineAsync(m);
+                            loggedLines++;
+                        }
+                        if (loggedLines >= 100)
+                        {
+                            w.Flush();
+                            loggedLines = 0;
+                        }
+
+                        if (LogQueue.Count > 100)
+                        {
+                            delay = 0;
+                        }
+                        else if (delay == 0 && LogQueue.Count == 0)
+                        {
+                            delay = 10;
+                        }
+                        if (DateTime.Now.Hour != prevH)
+                        {
+                            nextHour = true;
+                            LogWorker();
+                        }
+                        await System.Threading.Tasks.Task.Delay(delay);
                     }
-                    log.Flush();
-                    _writerActive = false;
+                    w.Flush();
                 }
             }
-            catch
+            catch (Exception)
             {
-                //ignore
+                LogWorker();
             }
         }
 

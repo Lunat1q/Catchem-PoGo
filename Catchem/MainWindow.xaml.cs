@@ -702,6 +702,7 @@ namespace Catchem
             if (Bot == null || _loadingUi) return;
             Bot.GlobalSettings.StoreData(SubPath + "\\" + Bot.ProfileName);
             TelegramView.SaveSettings();
+            TelegramView.TurnOff();
             foreach (var b in BotsCollection)
             {
                 b.Stop();

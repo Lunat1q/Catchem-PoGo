@@ -144,9 +144,32 @@ namespace PoGo.PokeMobBot.Logic.State
             }
             else
             {
+                var errorText = "Niantic error";
+                switch (res.Status)
+                {
+                    case ClaimCodenameResponse.Types.Status.UNSET:
+                        errorText = "Unset, somehow";
+                        break;
+                    case ClaimCodenameResponse.Types.Status.SUCCESS:
+                        errorText = "No errors, nickname changed";
+                        break;
+                    case ClaimCodenameResponse.Types.Status.CODENAME_NOT_AVAILABLE:
+                        errorText = "That nickname isn't available, pick another one and restart the bot!";
+                        break;
+                    case ClaimCodenameResponse.Types.Status.CODENAME_NOT_VALID:
+                        errorText = "That nickname isn't valid, pick another one!";
+                        break;
+                    case ClaimCodenameResponse.Types.Status.CURRENT_OWNER:
+                        errorText = "You already own that nickname!";
+                        break;
+                    case ClaimCodenameResponse.Types.Status.CODENAME_CHANGE_NOT_ALLOWED:
+                        errorText = "You can't change your nickname anymore!";
+                        break;
+                }
+
                 session.EventDispatcher.Send(new NoticeEvent()
                 {
-                    Message = $"Name selection failed! Error: {res.Status}"
+                    Message = $"Name selection failed! Error: {errorText}"
                 });
             }
             await DelayingUtils.Delay(3000, 2000);
