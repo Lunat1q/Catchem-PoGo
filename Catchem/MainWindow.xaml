@@ -255,7 +255,7 @@
                 </Grid>
             </Border>
         </Grid>
-        <Grid x:Name="batchInput" Visibility="Collapsed" Grid.ColumnSpan="2">
+        <Grid x:Name="batchInput" Grid.ColumnSpan="2" Visibility="Collapsed">
             <Grid Background="Black" Opacity="0.45" />
             <Border
                     MinWidth="250"
@@ -329,14 +329,14 @@
                                FontSize="20"
                                FontStyle="Italic"
                                Foreground="#FF7E7E7E"
-                               Text="Format: type;login;pass;proxyuri:port;proxy_login;proxy_pass;desiredname"
+                               Text="Format: type;login;pass;proxyuri:port;proxy_login;proxy_pass;desiredname;latitude;longitude"
                                TextAlignment="Center" VerticalAlignment="Top" />
                     <TextBlock Margin="15,82,15,0"
                                FontFamily="Calibri"
                                FontSize="20"
                                FontStyle="Italic"
                                Foreground="#FF7E7E7E"
-                               Text="If you have bot selected, all bots will inherit his settings"
+                               Text="If you have bot selected, all bots will inherit its settings"
                                TextAlignment="Center" VerticalAlignment="Top" />
                 </Grid>
             </Border>
