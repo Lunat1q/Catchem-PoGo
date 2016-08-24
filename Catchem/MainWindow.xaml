@@ -20,7 +20,7 @@
             <Button x:Name="btn_ChangeViewToTelegram"
                     Content="Telegram" BorderBrush="{x:Null}" Background="{x:Null}" Click="btn_ChangeViewToTelegram_Click" />
             <Button x:Name="btn_ChangeViewToSettings"
-                    Content="Settings" BorderBrush="{x:Null}" Background="{x:Null}" Click="btn_ChangeViewToSettings_Click" />
+                    Content="Bot Info" BorderBrush="{x:Null}" Background="{x:Null}" Click="btn_ChangeViewToSettings_Click" />
             <Button x:Name="btn_ChangeViewSettingsMap"
                     Click="btn_changeViewSettingsMap_Click"
                     Content="WorldMap" BorderBrush="{x:Null}" Background="{x:Null}" />

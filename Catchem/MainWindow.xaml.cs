@@ -220,14 +220,20 @@ namespace Catchem
                 if ((ulong) objData[0] == 0) return;
                 var receiverBot = BotsCollection.FirstOrDefault(x => x.Session == session);
                 if (receiverBot == null) return;
-                receiverBot.GotNewPokemon((ulong)objData[0], (PokemonId)objData[1], (int)objData[2], (double)objData[3], (PokemonFamilyId)objData[4], (int)objData[5], false, false);
+                receiverBot.GotNewPokemon((ulong) objData[0], (PokemonId) objData[1], (int) objData[2],
+                    (double) objData[3], (PokemonFamilyId) objData[4], (int) objData[5], false, false,
+                    (double) objData[6],
+                    (PokemonMove) objData[7], (PokemonMove) objData[8]);
                 TelegramView.TlgrmBot.EventDispatcher.Send(new TelegramPokemonCaughtEvent
                 {
                     PokemonId = (PokemonId)objData[1],
                     Cp = (int)objData[2],
                     Iv = (double)objData[3],
                     ProfileName = receiverBot.ProfileName,
-                    BotNicnname = receiverBot.PlayerName
+                    BotNicnname = receiverBot.PlayerName,
+                    Level = (double)objData[6],
+                    Move1 = (PokemonMove)objData[7],
+                    Move2 = (PokemonMove)objData[8]
                 });
             }
             catch (Exception)

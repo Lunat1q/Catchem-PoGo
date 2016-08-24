@@ -56,8 +56,6 @@ namespace Catchem.Classes
                     {
                         Message = "Error: Please enter Telegram HTTP API token."
                     });
-                    //Log to console  [08:56:32](TLGRM-ERR)Failed to start Telegram. Please check API Token.
-                    //Stops Telegram Bot From Being Used
                     return;
                 }
                 EventDispatcher.Send(new TelegramMessageEvent
@@ -97,10 +95,10 @@ namespace Catchem.Classes
                 {
                     if (FirstMessageUpdate)
                     {
-                        if (updates.Count() > 1)
+                        if (updates.Length > 1)
                         {
-                            if (updates[(updates.Count() - 1)].Message == null) continue;
-                            TelegramMessages.Enqueue(updates[updates.Count() - 1]);
+                            if (updates[(updates.Length - 1)].Message == null) continue;
+                            TelegramMessages.Enqueue(updates[updates.Length - 1]);
                         }
                         FirstMessageUpdate = false;
                     }
@@ -138,7 +136,7 @@ namespace Catchem.Classes
                     var messageReceived = update.Message.Text;
                     EventDispatcher.Send(new TelegramMessageEvent
                     {
-                        Message = "Recived Message From " + update.Message.From.Username
+                        Message = $"Recived Message ({messageReceived}) from @{update.Message.From.Username}"
                     });
 
                     if (string.IsNullOrEmpty(messageReceived)) continue;
@@ -148,6 +146,7 @@ namespace Catchem.Classes
 
                     EventDispatcher.Send(new TelegramCommandEvent()
                     {
+                        Sender = update.Message.From.Username,
                         Command = messageFractions[0],
                         Args = messageFractions.Where((x, i) => i > 0).ToArray(),
                         ChatId = update.Message.Chat.Id

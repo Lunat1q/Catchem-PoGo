@@ -9,6 +9,7 @@ using PoGo.PokeMobBot.Logic.Extensions;
 using PoGo.PokeMobBot.Logic.PoGoUtils;
 using PoGo.PokeMobBot.Logic.State;
 using PoGo.PokeMobBot.Logic.Utils;
+using POGOProtos.Data;
 using POGOProtos.Inventory.Item;
 using POGOProtos.Map.Fort;
 using POGOProtos.Networking.Responses;
@@ -198,24 +199,24 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                         ? session.Translation.GetTranslation(TranslationString.CatchTypeLure)
                         : session.Translation.GetTranslation(TranslationString.CatchTypeIncense);
                 evt.Id = encounter is EncounterResponse ? pokemon.PokemonId : encounter?.PokemonData.PokemonId;
-                evt.Level =
-                    PokemonInfo.GetLevel(encounter is EncounterResponse
-                        ? encounter.WildPokemon?.PokemonData
-                        : encounter?.PokemonData);
-                evt.Cp = encounter is EncounterResponse
-                    ? encounter.WildPokemon?.PokemonData?.Cp
-                    : encounter?.PokemonData?.Cp ?? 0;
-                evt.MaxCp =
-                    PokemonInfo.CalculateMaxCp(encounter is EncounterResponse
-                        ? encounter.WildPokemon?.PokemonData
-                        : encounter?.PokemonData);
-                evt.Perfection =
-                    Math.Round(
-                        PokemonInfo.CalculatePokemonPerfection(encounter is EncounterResponse
-                            ? encounter.WildPokemon?.PokemonData
-                            : encounter?.PokemonData), 2);
-                evt.Probability =
-                    Math.Round(probability*100, 2);
+
+                var pokeData = (encounter is EncounterResponse
+                    ? encounter.WildPokemon?.PokemonData
+                    : encounter?.PokemonData) as PokemonData;
+
+                if (pokeData != null)
+                {
+                    evt.Level = PokemonInfo.GetLevel(pokeData);
+                    evt.Cp = pokeData.Cp;
+                    evt.MaxCp = PokemonInfo.CalculateMaxCp(pokeData);
+                    evt.Perfection = Math.Round(pokeData.CalculatePokemonPerfection(), 2);
+                    evt.Probability =
+                        Math.Round(probability*100, 2);
+
+                    evt.Move1 = pokeData.Move1;
+                    evt.Move2 = pokeData.Move2;
+
+                }
                 evt.Distance = distance;
                 evt.Pokeball = pokeball;
                 evt.Attempt = attemptCounter;

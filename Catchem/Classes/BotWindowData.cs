@@ -25,6 +25,7 @@ using PoGo.PokeMobBot.Logic.Logging;
 using System.Net;
 using System.Windows;
 using PoGo.PokeMobBot.Logic.Common;
+using PoGo.PokeMobBot.Logic.PoGoUtils;
 
 namespace Catchem.Classes
 {
@@ -387,13 +388,16 @@ namespace Catchem.Classes
                     family.Candy_,
                     pokemon.Item1.CreationTimeMs,
                     pokemon.Item1.Favorite == 1,
-                    !string.IsNullOrEmpty(pokemon.Item1.DeployedFortId));
+                    !string.IsNullOrEmpty(pokemon.Item1.DeployedFortId),
+                    PokemonInfo.GetLevel(pokemon.Item1),
+                    pokemon.Item1.Move1,
+                    pokemon.Item1.Move2);
                 PokemonList.Add(mon);
                 mon.UpdateTags(Logic);
             }
         }
 
-        public void GotNewPokemon(ulong uid, PokemonId pokemonId, int cp, double iv, PokemonFamilyId family, int candy, bool fav, bool inGym)
+        public void GotNewPokemon(ulong uid, PokemonId pokemonId, int cp, double iv, PokemonFamilyId family, int candy, bool fav, bool inGym, double level, PokemonMove move1, PokemonMove move2)
         {
             PokemonList.Add(new PokemonUiData(
                     this,
@@ -407,7 +411,10 @@ namespace Catchem.Classes
                     candy,
                     (ulong)DateTime.UtcNow.ToUnixTime(),
                     fav,
-                    inGym));
+                    inGym,
+                    level,
+                    move1,
+                    move2));
             foreach (var pokemon in PokemonList.Where(x => x.Family == family))
             {
                 pokemon.Candy = candy;

@@ -10,5 +10,8 @@ namespace Catchem.Events
         public double Iv;
         public string ProfileName;
         public string BotNicnname;
+        public double Level;
+        public PokemonMove Move2;
+        public PokemonMove Move1;
     }
 }
