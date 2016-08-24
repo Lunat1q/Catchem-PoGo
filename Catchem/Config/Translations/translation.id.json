@@ -136,7 +136,7 @@
     },
     {
       "Key": "incubatorEggHatched",
-      "Value": "Inkubasi telur telah menetas: {0}"
+      "Value": "Telur dalam inkubasi telah menetas: {0}"
     },
     {
       "Key": "logEntryError",
@@ -196,11 +196,11 @@
     },
     {
       "Key": "ptcOffline",
-      "Value": "Server PTC mungkin sedang turun ATAU kredensial anda salah. Coba google"
+      "Value": "Server PTC mungkin sedang offline ATAU kredensial anda salah. Coba google"
     },
     {
       "Key": "accessTokenExpired",
-      "Value": "Access token expired. Relogin to get a new token."
+      "Value": "Access token habis masa berlakunya. login ulang untuk mendapatkan token baru."
     },
     {
       "Key": "tryingAgainIn",
@@ -232,7 +232,7 @@
     },
     {
       "Key": "coordinatesAreInvalid",
-      "Value": "Koordinat di file \"Coords.ini\" cacat, menggunakan koordinat default"
+      "Value": "Koordinat di file \"Coords.ini\" bermasalah, menggunakan koordinat default"
     },
     {
       "Key": "gotUpToDateVersion",
@@ -293,11 +293,11 @@
     },
     {
       "Key": "encounterProblem",
-      "Value": "Masalah Encounter: {0}"
+      "Value": "Menemukan masalah: {0}"
     },
     {
       "Key": "encounterProblemLurePokemon",
-      "Value": "Masalah Encounter: Lure pokemon {0}"
+      "Value": "Menemukan masalah: Lure pokemon {0}"
     },
     {
       "Key": "desiredDestTooFar",
@@ -321,7 +321,7 @@
     },
     {
       "Key": "catchStatusEscape",
-      "Value": "Tangkapan Lari"
+      "Value": "Tangkapan Lepas"
     },
     {
       "Key": "catchStatusFlee",
