@@ -20,7 +20,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
             cancellationToken.ThrowIfCancellationRequested();
 
             // Refresh inventory so that the player stats are fresh
-            await session.Inventory.RefreshCachedInventory();
+            // await session.Inventory.RefreshCachedInventory();
 
             var duplicatePokemons =
                 await
@@ -34,7 +34,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
             var currentPokemonCount = await session.Inventory.GetPokemonsCount();
             var maxPokemonCount = session.Profile.PlayerData.MaxPokemonStorage;
 
-            session.EventDispatcher.Send(new NoticeEvent()
+            session.EventDispatcher.Send(new NoticeEvent
             {
                 Message = session.Translation.GetTranslation(TranslationString.CurrentPokemonUsage,
                     currentPokemonCount, maxPokemonCount)

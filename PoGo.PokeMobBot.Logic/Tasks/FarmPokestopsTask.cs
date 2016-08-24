@@ -245,38 +245,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
 
                         await eggWalker.ApplyDistance(distance, cancellationToken);
 
-                        if (++stopsHit%5 == 0) //TODO: OR item/pokemon bag is full
-                        {
-                            // need updated stardust information for upgrading, so refresh your profile now
-                            await DownloadProfile(session);
-
-                            if (fortSearch.ItemsAwarded.Count > 0)
-                            {
-                                await session.Inventory.RefreshCachedInventory();
-                            }
-                            await RecycleItemsTask.Execute(session, cancellationToken);
-                            if (session.LogicSettings.EvolveAllPokemonWithEnoughCandy ||
-                                session.LogicSettings.EvolveAllPokemonAboveIv)
-                            {
-                                await EvolvePokemonTask.Execute(session, cancellationToken);
-                            }
-                            if (session.LogicSettings.AutomaticallyLevelUpPokemon)
-                            {
-                                await LevelUpPokemonTask.Execute(session, cancellationToken);
-                            }
-                            if (session.LogicSettings.TransferDuplicatePokemon)
-                            {
-                                await TransferDuplicatePokemonTask.Execute(session, cancellationToken);
-                            }
-                            if (session.LogicSettings.RenamePokemon)
-                            {
-                                await RenamePokemonTask.Execute(session, cancellationToken);
-                            }
-                            if (++displayStatsHit >= 4)
-                            {
-                                await DisplayPokemonStatsTask.Execute(session);
-                            }
-                        }
+                        await MaintenanceTask.Execute(session, cancellationToken);
                     }
                     if (session.LogicSettings.SnipeAtPokestops || session.LogicSettings.UseSnipeLocationServer)
                     {
