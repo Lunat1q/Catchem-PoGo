@@ -115,6 +115,14 @@ namespace PoGo.PokeMobBot.Logic.State
 
         public async Task<bool> SelectNicnname(ISession session)
         {
+            if (string.IsNullOrEmpty(session.LogicSettings.DesiredNickname))
+            {
+                session.EventDispatcher.Send(new NoticeEvent()
+                {
+                    Message = "You didn't pick the desired nickname!"
+                });
+                return false;
+            }
             var res = await session.Client.Misc.ClaimCodename(session.LogicSettings.DesiredNickname);
             if (res.Status == ClaimCodenameResponse.Types.Status.SUCCESS)
             {

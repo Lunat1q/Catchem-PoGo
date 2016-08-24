@@ -258,6 +258,7 @@ namespace Catchem.Classes
             _ts = new TimeSpan();
             Started = false;
             ErrorsCount = 0;
+            Session.Client.Login.UpdateHash();
             if (soft) return;
             _realWorkSec = 0;
             if (Stats == null) return;

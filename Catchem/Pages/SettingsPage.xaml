@@ -398,7 +398,7 @@
                                 Content="Always Preffer Long Distance Egg"
                                 Unchecked="BotPropertyChanged" />
                         <CheckBox x:Name="c_AutoFavoritePokemon"
-                                Margin="10,556,0,0"
+                                Margin="10,577,0,0"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Top"
                                 Checked="BotPropertyChanged"
@@ -406,18 +406,25 @@
                                 Unchecked="BotPropertyChanged" />
                         <Label x:Name="c_FavoriteMinIvPercentageLabel"
                                 Width="155"
-                                Margin="10,579,0,0"
+                                Margin="10,596,0,0"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Top"
                                 Content="Favorite Min Iv Percentage" />
                         <TextBox x:Name="c_FavoriteMinIvPercentage"
                                 Height="29"      
-                                Margin="233,578,10,0"
+                                Margin="233,595,10,0"
                                 VerticalAlignment="Top"
                                 Template="{StaticResource pogo}"
                                 Text="0"
                                 TextChanged="BotPropertyChanged"
                                 TextWrapping="Wrap" />
+                        <CheckBox x:Name="c_UseOnlyUnlimitedIncubator"
+                        	Margin="10,556,0,0"
+                        	HorizontalAlignment="Left"
+                        	VerticalAlignment="Top"
+                        	Checked="BotPropertyChanged"
+                        	Content="Use Only Unlimited Incubator"
+                        	Unchecked="BotPropertyChanged" />
                     </Grid>
                 </GroupBox>
 
@@ -664,7 +671,7 @@
                         <Label x:Name="c_MaxCatchPerHourLabel"
                                 Width="210"
                                 Height="26"
-                                Margin="10,484,0,0"
+                                Margin="9,484,0,0"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Top"
                                 Content="Max Catch Per Hour" />
@@ -680,7 +687,7 @@
                         <Label x:Name="c_MaxPokestopsPerHourLabel"
                                 Width="210"
                                 Height="26"
-                                Margin="10,520,0,0"
+                                Margin="9,518,0,0"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Top"
                                 Content="Max Pokestops Per Hour" />
@@ -1358,7 +1365,7 @@
                                 TextWrapping="Wrap" />
                         <Button x:Name="b_getDataFromRealPhone"
                                 Height="29"
-                                Margin="10,455,10,0"
+                                Margin="111,455,10,0"
                                 VerticalAlignment="Top"
                                 Click="b_getDataFromRealPhone_Click"
                                 Content="Get Data from Your Android"
@@ -1407,6 +1414,30 @@
                                     </LinearGradientBrush.RelativeTransform>
                                     <GradientStop Offset="0" Color="#FF07D8E2" />
                                     <GradientStop Offset="1" Color="#FF008E95" />
+                                </LinearGradientBrush>
+                            </Button.Background>
+                        </Button>
+                        <Button x:Name="b_GenerateNewAndroid"
+                        	Height="29"
+                        	Margin="10,455,0,0"
+                        	VerticalAlignment="Top"
+                        	Content="Create new"
+                        	FontFamily="BOLD"
+                        	FontWeight="Bold"
+                        	Style="{StaticResource ResourceKey=flatbutton}"
+                        	TextOptions.TextFormattingMode="Display" Width="96" HorizontalAlignment="Left" Click="b_GenerateNewAndroid_Click">
+                            <Button.Background>
+                                <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                                    <LinearGradientBrush.RelativeTransform>
+                                        <TransformGroup>
+                                            <ScaleTransform CenterX="0.5" CenterY="0.5" />
+                                            <SkewTransform CenterX="0.5" CenterY="0.5" />
+                                            <RotateTransform Angle="90" CenterX="0.5" CenterY="0.5" />
+                                            <TranslateTransform />
+                                        </TransformGroup>
+                                    </LinearGradientBrush.RelativeTransform>
+                                    <GradientStop Color="#FF038EA4" />
+                                    <GradientStop Offset="1" Color="#FF02B8A7" />
                                 </LinearGradientBrush>
                             </Button.Background>
                         </Button>

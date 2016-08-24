@@ -759,12 +759,14 @@ namespace Catchem
                     var proxyPass = rowData.Length > 5 ? rowData[5] : "";
                     var desiredName = rowData.Length > 6 ? rowData[6] : "";
                     var path = login;
+                    var lat = rowData.Length > 7 ? rowData[7] : "";
+                    var lon = rowData.Length > 8 ? rowData[8] : "";
                     var created = false;
                     do
                     {
                         if (!Directory.Exists(SubPath + "\\" + path))
                         {
-                            CreateBotFromClone(path, login, auth, pass, proxy, proxyLogin, proxyPass, desiredName);
+                            CreateBotFromClone(path, login, auth, pass, proxy, proxyLogin, proxyPass, desiredName, lat, lon);
                             created = true;
                         }
                         else
@@ -781,7 +783,8 @@ namespace Catchem
             batch_botText.Text = Empty;
         }
 
-        private void CreateBotFromClone(string path, string login, string auth, string pass, string proxy, string proxyLogin, string proxyPass, string desiredName)
+        private void CreateBotFromClone(string path, string login, string auth, string pass, string proxy,
+            string proxyLogin, string proxyPass, string desiredName, string lat, string lon)
         {
             var dir = Directory.CreateDirectory(SubPath + "\\" + path);
             var settings = GlobalSettings.Load(dir.FullName) ?? GlobalSettings.Load(dir.FullName);
@@ -819,10 +822,19 @@ namespace Catchem
                 settings.DesiredNickname = desiredName;
                 settings.StartUpSettings.AutoCompleteTutorial = true;
             }
+            if (lat != "")
+            {
+                lat.GetVal(out settings.LocationSettings.DefaultLatitude);
+            }
+            if (lon != "")
+            {
+                lon.GetVal(out settings.LocationSettings.DefaultLongitude);
+            }
             settings.Device.DeviceId = DeviceSettings.RandomString(16, "0123456789abcdef");
             settings.StoreData(dir.FullName);
             InitBot(settings, path);
         }
+
         private void batch_No_Click(object sender, RoutedEventArgs e)
         {
             batchInput.Visibility = Visibility.Collapsed;

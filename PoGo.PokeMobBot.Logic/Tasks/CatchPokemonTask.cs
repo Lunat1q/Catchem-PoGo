@@ -54,7 +54,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                 }
 
                 var useBerryBelowCatchProbability = session.LogicSettings.UseBerryBelowCatchProbability > 1
-                    ? session.LogicSettings.UseBerryBelowCatchProbability/100
+                    ? session.LogicSettings.UseBerryBelowCatchProbability / 100
                     : session.LogicSettings.UseBerryBelowCatchProbability;
                 var isLowProbability = probability < useBerryBelowCatchProbability;
                 var isHighCp = encounter != null &&
