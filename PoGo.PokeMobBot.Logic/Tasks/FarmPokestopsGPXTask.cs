@@ -39,11 +39,43 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                     cancellationToken.ThrowIfCancellationRequested();
 
                     var trackPoints = track.Segments.ElementAt(0).TrackPoints;
+
+                    // Find the nearest point
+                    var min_distance = 0.0;
+                    var nearTrkPt = 0;
+                    if (trackPoints.Count > 1)
+                    {
+                        var nextPoint = trackPoints.ElementAt(0);
+                        min_distance = LocationUtils.CalculateDistanceInMeters(session.Client.CurrentLatitude,
+                            session.Client.CurrentLongitude,
+                            Convert.ToDouble(nextPoint.Lat, CultureInfo.InvariantCulture),
+                            Convert.ToDouble(nextPoint.Lon, CultureInfo.InvariantCulture));
+
+                        for (var curTrkPt = 1; curTrkPt < trackPoints.Count; curTrkPt++)
+                        {
+                            cancellationToken.ThrowIfCancellationRequested();
+                            nextPoint = trackPoints.ElementAt(curTrkPt);
+                            var distance = LocationUtils.CalculateDistanceInMeters(session.Client.CurrentLatitude,
+                                session.Client.CurrentLongitude,
+                                Convert.ToDouble(nextPoint.Lat, CultureInfo.InvariantCulture),
+                                Convert.ToDouble(nextPoint.Lon, CultureInfo.InvariantCulture));
+                            if (distance < min_distance)
+                            {
+                                min_distance = distance;
+                                nearTrkPt = curTrkPt;
+                            }
+                        }
+
+
+                    }
+
+
+                   
                     for (var curTrkPt = 0; curTrkPt < trackPoints.Count; curTrkPt++)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-
-                        var nextPoint = trackPoints.ElementAt(curTrkPt);
+                        var newTrkPt = (curTrkPt+nearTrkPt) % trackPoints.Count;
+                        var nextPoint = trackPoints.ElementAt(newTrkPt);
                         var distance = LocationUtils.CalculateDistanceInMeters(session.Client.CurrentLatitude,
                             session.Client.CurrentLongitude,
                             Convert.ToDouble(nextPoint.Lat, CultureInfo.InvariantCulture),
@@ -142,8 +174,8 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                             }
                         }
 
-                        var targetLocation = new GeoCoordinate(Convert.ToDouble(trackPoints.ElementAt(curTrkPt).Lat, CultureInfo.InvariantCulture),
-                Convert.ToDouble(trackPoints.ElementAt(curTrkPt).Lon, CultureInfo.InvariantCulture));
+                        var targetLocation = new GeoCoordinate(Convert.ToDouble(nextPoint.Lat, CultureInfo.InvariantCulture),
+                Convert.ToDouble(nextPoint.Lon, CultureInfo.InvariantCulture));
 
                         Navigation navi = new Navigation(session.Client);
 						navi.UpdatePositionEvent += (lat, lng, alt) =>
