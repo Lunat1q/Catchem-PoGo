@@ -27,6 +27,7 @@ using POGOProtos.Inventory.Item;
 using static System.String;
 using LogLevel = PoGo.PokeMobBot.Logic.Logging.LogLevel;
 using System.Reflection;
+using Catchem.Events;
 using PoGo.PokeMobBot.Logic.API;
 // ReSharper disable PossibleLossOfFraction
 
@@ -220,6 +221,14 @@ namespace Catchem
                 var receiverBot = BotsCollection.FirstOrDefault(x => x.Session == session);
                 if (receiverBot == null) return;
                 receiverBot.GotNewPokemon((ulong)objData[0], (PokemonId)objData[1], (int)objData[2], (double)objData[3], (PokemonFamilyId)objData[4], (int)objData[5], false, false);
+                TelegramView.TlgrmBot.EventDispatcher.Send(new TelegramPokemonCaughtEvent
+                {
+                    PokemonId = (PokemonId)objData[1],
+                    Cp = (int)objData[2],
+                    Iv = (double)objData[3],
+                    ProfileName = receiverBot.ProfileName,
+                    BotNicnname = receiverBot.PlayerName
+                });
             }
             catch (Exception)
             {

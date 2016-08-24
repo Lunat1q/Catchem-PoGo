@@ -174,4 +174,35 @@
         <GradientStop Offset="0" Color="#FFEEB29C" />
         <GradientStop Offset="1" Color="#FFC04F53" />
     </LinearGradientBrush>
+    <DataTemplate x:Key="TelegramOwnerTemplate">
+        <Grid Height="Auto">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="10"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition  Width="1*"/>
+                <ColumnDefinition Width="65"/>
+            </Grid.ColumnDefinitions>
+            <Rectangle Fill="#FFFFFFFF" HorizontalAlignment="Stretch" Height="Auto" VerticalAlignment="Stretch" Width="Auto" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
+            <TextBlock Text="{Binding TelegramName, FallbackValue='@Unknown',  StringFormat='@{0}'}" Margin="3,0,20,0" Grid.Column="0" Foreground="#FF59C3B0" TextAlignment="Center" Grid.ColumnSpan="1" VerticalAlignment="Center" Height="18"/>
+            <Button Tag="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}}}" Style="{StaticResource ResourceKey=flatbutton}" x:Name="btn_removeFromList" Content="Delete" HorizontalAlignment="Stretch" Margin="3" FontFamily="BOLD" TextOptions.TextFormattingMode="Display" FontWeight="Bold" VerticalAlignment="Center" Width="Auto" Height="24" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="1" Click="btn_removeTelegramOwnerFromList_Click" Grid.RowSpan="2">
+                <Button.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <LinearGradientBrush.RelativeTransform>
+                            <TransformGroup>
+                                <ScaleTransform CenterY="0.5" CenterX="0.5"/>
+                                <SkewTransform CenterY="0.5" CenterX="0.5"/>
+                                <RotateTransform Angle="90" CenterY="0.5" CenterX="0.5"/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </LinearGradientBrush.RelativeTransform>
+                        <GradientStop Color="#FFEEB29C" Offset="0"/>
+                        <GradientStop Color="#FFC04F53" Offset="1"/>
+                    </LinearGradientBrush>
+                </Button.Background>
+            </Button>
+            <TextBlock Text="{Binding ChatId, FallbackValue=0}" Margin="0,1.5,0,3" Grid.Column="0" Foreground="#FF5F6160" TextAlignment="Center" Grid.ColumnSpan="1" VerticalAlignment="Center" Height="13" Grid.Row="1" FontSize="8"/>
+        </Grid>
+    </DataTemplate>
 </ResourceDictionary>

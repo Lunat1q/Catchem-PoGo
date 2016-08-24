@@ -77,9 +77,6 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                         await ForceMoveTask.Execute(session, cancellationToken);
                         pokestopList = await GetPokeStops(session);
                     }
-
-
-                    var displayStatsHit = 0;
                     var eggWalker = new EggWalker(1000, session);
 
                     if (pokestopList.Count <= 0)

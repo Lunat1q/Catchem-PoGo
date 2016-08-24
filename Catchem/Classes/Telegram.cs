@@ -19,10 +19,13 @@ namespace Catchem.Classes
         public Queue<Update> TelegramMessages;
         public bool FirstMessageUpdate = true;
         public IEventDispatcher EventDispatcher;
+        private bool _started;
 
         public Telegram()
         {
+            TelegramMessages = new Queue<Update>();
             EventDispatcher = new EventDispatcher();
+            StopTelegram = true;
         }
 
         /// <summary>
@@ -31,7 +34,8 @@ namespace Catchem.Classes
         /// <param name="accessToken">API KEY</param>
         public async void Start(string accessToken)
         {
-
+            if (_started) return;
+            StopTelegram = false;
             if (string.IsNullOrEmpty(accessToken))
             {
                 EventDispatcher.Send(new TelegramMessageEvent
@@ -45,8 +49,6 @@ namespace Catchem.Classes
             TelegramBot.WebProxy.Credentials = CredentialCache.DefaultCredentials;
             try
             {
-
-
                 var me = await TelegramBot.MakeRequestAsync(new GetMe());
                 if (me == null)
                 {
@@ -62,7 +64,9 @@ namespace Catchem.Classes
                 {
                     Message = "Telegram Started Successfuly with account: @" + me.Username
                 });
-                await UpdateMessages();
+                UpdateMessagesWorker();
+                ReadMessagesWorker();
+                _started = true;
             }
             catch (Exception)
             {
@@ -83,7 +87,7 @@ namespace Catchem.Classes
         }
 
 
-        public async Task UpdateMessages()
+        public async void UpdateMessagesWorker()
         {
             long offset = 0;
             while (!StopTelegram)
@@ -112,9 +116,10 @@ namespace Catchem.Classes
                             TelegramMessages.Enqueue(update);
                         }
                     }
-                    await UseMessage();
                 }
+                await Task.Delay(1000);
             }
+            _started = false;
         }
 
         public async void SendToTelegram(string message, long chatId)
@@ -122,28 +127,32 @@ namespace Catchem.Classes
             await TelegramBot.MakeRequestAsync(new SendMessage(chatId, message));
         }
 
-        public async Task UseMessage()
+        public async void ReadMessagesWorker()
         {
-            while (TelegramMessages.Count > 0)
+            while (!StopTelegram)
             {
-                var update = TelegramMessages.Dequeue();
-                var messageReceived = update.Message.Text;
-                EventDispatcher.Send(new TelegramMessageEvent
+                if (TelegramMessages != null && TelegramMessages.Count > 0)
                 {
-                    Message = "Recived Message From " + update.Message.From.Username
-                });
+                    var update = TelegramMessages.Dequeue();
+                    if (update == null) continue;
+                    var messageReceived = update.Message.Text;
+                    EventDispatcher.Send(new TelegramMessageEvent
+                    {
+                        Message = "Recived Message From " + update.Message.From.Username
+                    });
 
-                if (string.IsNullOrEmpty(messageReceived)) continue;
+                    if (string.IsNullOrEmpty(messageReceived)) continue;
 
-                var messageFractions = messageReceived.Split(' ');
-                if (messageFractions.Length < 1) return;
+                    var messageFractions = messageReceived.ToLower().Split(' ');
+                    if (messageFractions.Length < 1) return;
 
-                EventDispatcher.Send(new TelegramCommandEvent()
-                {
-                    Command = messageFractions[0],
-                    Args = messageFractions.Where((x, i) => i > 0).ToArray(),
-                    ChatId = update.Message.Chat.Id
-                });
+                    EventDispatcher.Send(new TelegramCommandEvent()
+                    {
+                        Command = messageFractions[0],
+                        Args = messageFractions.Where((x, i) => i > 0).ToArray(),
+                        ChatId = update.Message.Chat.Id
+                    });
+                }
                 await Task.Delay(50);
             }
         }

@@ -121,7 +121,9 @@
     <Compile Include="Classes\Adb.cs" />
     <Compile Include="Classes\BotRpcMessage.cs" />
     <Compile Include="Classes\BotWindowData.cs" />
+    <Compile Include="Classes\CatchemNotified.cs" />
     <Compile Include="Classes\Telegram.cs" />
+    <Compile Include="Events\TelegramPokemonCaughtEvent.cs" />
     <Compile Include="Events\TelegramMessageEvent.cs" />
     <Compile Include="Events\TelegramCommandEvent.cs" />
     <Compile Include="Extensions\AsyncHelpers.cs" />

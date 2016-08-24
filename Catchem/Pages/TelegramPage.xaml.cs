@@ -27,7 +27,7 @@ namespace Catchem.Pages
     public partial class TelegramPage
     {
         public bool WindowClosing;
-        private readonly Telegram _tlgrmBot = new Telegram();
+        public readonly Telegram TlgrmBot = new Telegram();
         private TelegramSettings _tlgrmSettings;
         private const string TlgrmFilePath = "tlgrm.json";
         private bool _loadingUi;
@@ -41,13 +41,13 @@ namespace Catchem.Pages
             ReadTelegramSettings();
             LoadSettings();
             _listener = new TelegramListener(this);
-            _tlgrmBot.EventDispatcher.EventReceived += evt => _listener.Listen(evt);
+            TlgrmBot.EventDispatcher.EventReceived += evt => _listener.Listen(evt);
 
             if (_tlgrmSettings.AutoStart)
             {
-                _tlgrmBot.Start(_tlgrmSettings.ApiKey);
+                TlgrmBot.Start(_tlgrmSettings.ApiKey);
             }
-
+           
             TelegramLogWorker();
             TelegramCommandWorker();
         }
@@ -70,6 +70,7 @@ namespace Catchem.Pages
             _loadingUi = true;
 
             PokemonList.ItemsSource = _tlgrmSettings.AutoReportPokemon;
+            OwnerBox.ItemsSource = _tlgrmSettings.Owners;
 
             foreach (var uiElem in TlgrmGrid.GetLogicalChildCollection<TextBox>())
             {
@@ -140,12 +141,21 @@ namespace Catchem.Pages
 
         private void StartButton_Click(object sender, RoutedEventArgs e)
         {
-            _tlgrmBot?.Start(_tlgrmSettings.ApiKey);
+            TlgrmBot?.Start(_tlgrmSettings.ApiKey);
         }
 
         private void StopButton_Click(object sender, RoutedEventArgs e)
         {
-            _tlgrmBot?.Stop();
+            TlgrmBot?.Stop();
+        }
+
+        private void AddBotOwner_Click(object sender, RoutedEventArgs e)
+        {
+            _tlgrmSettings.Owners.Add(new TelegramBotOwner()
+            {
+                TelegramName = BotOwnerTextBox.Text
+            });
+            BotOwnerTextBox.Clear();
         }
 
         #endregion
@@ -166,6 +176,18 @@ namespace Catchem.Pages
         {
             if (message == null) return;
             _logQueue.Enqueue(message);
+        }
+
+        private void PokemonCaught(PokemonId pokemon, int cp, double iv, string profileName, string botNick)
+        {
+            if (_tlgrmSettings.AutoReportSelectedPokemon && _tlgrmSettings.AutoReportPokemon.Contains(pokemon))
+            {
+                string messageToSend = $"[{botNick}]({profileName}) caught {pokemon}! CP:{cp}, Iv:{iv.ToN1()}";
+                foreach (var owner in _tlgrmSettings.Owners.Where(x=>x.ChatId != 0))
+                {
+                    TlgrmBot.SendToTelegram(messageToSend, owner.ChatId);
+                }
+            }
         }
 
         private async void TelegramCommandWorker()
@@ -200,14 +222,14 @@ namespace Catchem.Pages
 
         private void HandleUnknownCommand(long chatId)
         {
-            _tlgrmBot.SendToTelegram("Unknown command!", chatId);
+            TlgrmBot.SendToTelegram("Unknown command!", chatId);
         }
 
         private void HandleToggle(long chatId, bool start, string[] args)
         {
             if (args == null || args.Length == 0)
             {
-                _tlgrmBot.SendToTelegram($"Wrong {(start ? "start" : "stop")} command!", chatId);
+                TlgrmBot.SendToTelegram($"Wrong {(start ? "start" : "stop")} command!", chatId);
                 return;
             }
             if (args[0] == "all")
@@ -229,7 +251,7 @@ namespace Catchem.Pages
                         }
                     }
                 }
-                _tlgrmBot.SendToTelegram($"{(start ? "Started" : "Stopped")} all bots", chatId);
+                TlgrmBot.SendToTelegram($"{(start ? "Started" : "Stopped")} all bots", chatId);
                 return;
             }
             int botNum;
@@ -244,15 +266,15 @@ namespace Catchem.Pages
                     else
                         targetBot.Stop();
 
-                    _tlgrmBot.SendToTelegram($"Bot {targetBot.ProfileName} {(start ? "started" : "stopped")}!", chatId);
+                    TlgrmBot.SendToTelegram($"Bot {targetBot.ProfileName} {(start ? "started" : "stopped")}!", chatId);
                 }
                 else
                 {
-                    _tlgrmBot.SendToTelegram("Bot with that index not found!", chatId);
+                    TlgrmBot.SendToTelegram("Bot with that index not found!", chatId);
                 }
                 return;
             }
-            _tlgrmBot.SendToTelegram($"Wrong {(start ? "start" : "stop")} command!", chatId);
+            TlgrmBot.SendToTelegram($"Wrong {(start ? "start" : "stop")} command!", chatId);
         }
 
         private void HandleHelp(long chatId)
@@ -261,7 +283,7 @@ namespace Catchem.Pages
                                      "- listbots \n" +
                                      "- start [bot Number / all] \n" +
                                      "- stop [bot Number / all]";
-            _tlgrmBot.SendToTelegram(helpMsg, chatId);
+            TlgrmBot.SendToTelegram(helpMsg, chatId);
         }
 
         private void HandleListBots(long chatId)
@@ -274,9 +296,9 @@ namespace Catchem.Pages
                 botStringBuilder.AppendLine($"{++botNumber}) {bot.ProfileName} [{(bot.Started ? "RUNNING" : "STOPPED")}]");
             }
             if (botNumber == 0)
-                _tlgrmBot.SendToTelegram("There are no bots created", chatId);
+                TlgrmBot.SendToTelegram("There are no bots created", chatId);
             if (botNumber > 0)
-                _tlgrmBot.SendToTelegram(botStringBuilder.ToString(), chatId);
+                TlgrmBot.SendToTelegram(botStringBuilder.ToString(), chatId);
         }
 
 
@@ -313,9 +335,35 @@ namespace Catchem.Pages
         public class TelegramSettings
         {
             public ObservableCollection<PokemonId> AutoReportPokemon = new ObservableCollection<PokemonId>();
+            public ObservableCollection<TelegramBotOwner> Owners = new ObservableCollection<TelegramBotOwner>();
             public bool AutoStart = false;
             public bool AutoReportSelectedPokemon = false;
             public string ApiKey = "";
+        }
+
+        public class TelegramBotOwner : CatchemNotified
+        {
+            private string _telegramName;
+            public string TelegramName
+            {
+                get { return _telegramName; }
+                set { _telegramName = value;
+                    OnPropertyChanged();
+                }
+            }
+
+            private long _chatId;
+            public long ChatId
+            {
+                get { return _chatId; }
+                set
+                {
+                    _chatId = value;
+                    OnPropertyChanged();
+                }
+            }
+            
+
         }
 
         public class TelegramListener
@@ -329,12 +377,17 @@ namespace Catchem.Pages
 
             private void HandleEvent(TelegramMessageEvent eve)
             {
-                _receiver.TelegramMessageReceiver(eve.Message);
+                _receiver.TelegramMessageReceiver($"[{DateTime.Now.ToString("hh:mm:ss")}] " + eve.Message);
             }
 
             private void HandleEvent(TelegramCommandEvent eve)
             {
                 _receiver.TelegramCommandReceiver(eve.Command, eve.ChatId, eve.Args);
+            }
+
+            private void HandleEvent(TelegramPokemonCaughtEvent eve)
+            {
+                _receiver.PokemonCaught(eve.PokemonId, eve.Cp, eve.Iv, eve.ProfileName, eve.BotNicnname);
             }
 
             public void Listen(IEvent evt)
@@ -350,7 +403,5 @@ namespace Catchem.Pages
                 }
             }
         }
-
-
     }
 }

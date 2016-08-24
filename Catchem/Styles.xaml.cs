@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
 using Catchem.Classes;
+using Catchem.Pages;
 using PoGo.PokeMobBot.Logic.State;
 using PoGo.PokeMobBot.Logic.Tasks;
 using POGOProtos.Enums;
@@ -34,6 +35,17 @@ namespace Catchem
             var source = parentList?.ItemsSource as ObservableCollection<PokemonId>;
             if (source != null && source.Contains(pokemonId))
                 source.Remove(pokemonId);
+        }
+
+        private void btn_removeTelegramOwnerFromList_Click(object sender, RoutedEventArgs e)
+        {
+            var btn = sender as Button;
+            if (btn?.DataContext == null) return;
+            var botOwner = (TelegramPage.TelegramBotOwner)btn.DataContext;
+            var parentList = btn.Tag as ListBox;
+            var source = parentList?.ItemsSource as ObservableCollection<TelegramPage.TelegramBotOwner>;
+            if (source != null && source.Contains(botOwner))
+                source.Remove(botOwner);
         }
 
         private void mi_favouritePokemon_Click(object sender, RoutedEventArgs e)
