@@ -22,6 +22,7 @@ namespace Catchem.Pages
         private BotWindowData _bot;
         private ISession CurSession => _bot.Session;
         private bool _loadingUi;
+        private bool _inRefresh;
         public PlayerPage()
         {
             InitializeComponent();
@@ -80,9 +81,11 @@ namespace Catchem.Pages
 
         private async void RefreshPokemons()
         {
-            if (_bot == null || !_bot.Started) return;
+            if (_bot == null || !_bot.Started || _inRefresh) return;
+            _inRefresh = true;
             Action<IEvent> action = (evt) => _bot.Session.EventDispatcher.Send(evt);
             await PokemonListTask.Execute(_bot.Session, action);
+            _inRefresh = false;
         }
 
         private void mi_recycleItem_Click(object sender, RoutedEventArgs e)

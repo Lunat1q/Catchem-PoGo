@@ -152,6 +152,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                         };
                         var nextMoveSpeed = session.Client.rnd.NextInRange(session.LogicSettings.WalkingSpeedMin, session.LogicSettings.WalkingSpeedMax) * session.Settings.MoveSpeedFactor;
 
+                        session.State = BotState.Walk;
                         await navi.HumanPathWalking(
                             session,
                             targetLocation,
@@ -171,6 +172,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                             },   
                             cancellationToken
                             );
+                        session.State = BotState.Idle;
 
                         await eggWalker.ApplyDistance(distance, cancellationToken);
                     } //end trkpts

@@ -53,18 +53,18 @@
         </Setter>
     </Style>
     <DataTemplate x:Key="PokemonDataTemplate">
-        <Grid Height="160" Width="150" Margin="1" MinWidth="150" MinHeight="160" MaxWidth="200">
+        <Grid Height="Auto" Margin="1" MinWidth="150" MinHeight="160" MaxWidth="200">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <Rectangle Fill="White" HorizontalAlignment="Stretch" Height="Auto" VerticalAlignment="Stretch" Width="Auto" Grid.ColumnSpan="2" RadiusX="7" RadiusY="7"/>
             <Grid HorizontalAlignment="Left" Height="90" VerticalAlignment="Top" Width="150" Grid.ColumnSpan="2">
-                <Image Source="{Binding Path=Image}" x:Name="image" HorizontalAlignment="Center" Height="Auto" Margin="0" VerticalAlignment="Center" Width="Auto"/>
+                <Image Source="{Binding Path=Image}" x:Name="image" HorizontalAlignment="Stretch" Height="Auto" Margin="0" VerticalAlignment="Center" Width="Auto"/>
                 <Image Source="{Binding Favoured, Converter={StaticResource LoadImageSourceFromResource}, ConverterParameter='favoured'}" x:Name="favImage" Height="20" Margin="0,4,4,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="20" Stretch="Uniform"/>
                 <Image Source="{Binding InGym, ConverterParameter='gym', Converter={StaticResource LoadImageSourceFromResource}}" x:Name="favImage_Copy" Height="20" Margin="4,4,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="20" Stretch="Uniform"/>
             </Grid>
-            <TextBlock Text="{Binding Name, FallbackValue=NoName}" HorizontalAlignment="Left" Margin="0,95,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2" Width="150" Padding="0" Foreground="#FF59C3B0" FontSize="16" TextAlignment="Center"/>
+            <TextBlock Text="{Binding Name, FallbackValue=NoName}" HorizontalAlignment="Stretch" Margin="0,95,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2" Width="Auto" Padding="0" Foreground="#FF59C3B0" FontSize="16" TextAlignment="Center"/>
             <TextBlock Text="{Binding Cp, FallbackValue='Cp: 0', StringFormat='Cp: {0}'}" HorizontalAlignment="Left" Margin="0,121,0,0" VerticalAlignment="Top" Grid.ColumnSpan="1" Width="75" Padding="0" Foreground="#FF59C3B0" FontSize="14" TextAlignment="Center" />
             <TextBlock Text="{Binding Iv, FallbackValue='Iv: 0%', StringFormat='Iv: {0:N1}%'}" HorizontalAlignment="Left" Margin="0,121,0,0" VerticalAlignment="Top" Width="75" Padding="0" Foreground="#FF59C3B0" Grid.Column="1" FontSize="14" TextAlignment="Center" />
             <TextBlock Text="{Binding Candy, FallbackValue='Candy: 0', StringFormat='Candy: {0}'}" HorizontalAlignment="Left" Margin="0,140,0,0" VerticalAlignment="Top" Width="75" Padding="0" Foreground="#FF59C3B0" Grid.Column="1" FontSize="12" TextAlignment="Center" />
