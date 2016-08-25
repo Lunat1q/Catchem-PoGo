@@ -966,9 +966,9 @@ namespace PoGo.PokeMobBot.Logic
         public bool HumanizeThrows = true;
         public bool NonLinearThrows = false;
         public double ThrowChanceExcellent = 0.01;
-        public double ThrowChanceGreat = 0.01;
-        public double ThrowChanceNice = 0.01;
-        public double ThrowChanceNormal = 0.01;
+        public double ThrowChanceGreat = 0.40;
+        public double ThrowChanceNice = 0.60;
+        public double ThrowChanceNormal = 0.90;
         public double ThrowAccuracyMin = 0.80;
         public double ThrowAccuracyMax = 1.00;
         public double ThrowSpinFrequency = 0.80;
