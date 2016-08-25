@@ -187,7 +187,7 @@ namespace Catchem.Pages
             _logQueue.Enqueue(message);
         }
 
-        private void PokemonCaught(PokemonId pokemon, int cp, double iv, string profileName, string botNick, double level, PokemonMove move1, PokemonMove move2)
+        private void PokemonCaught(PokemonId pokemon, int cp, double iv, string profileName, string botNick, double level, PokemonMove? move1, PokemonMove? move2)
         {
             if ((!_tlgrmSettings.AutoReportSelectedPokemon || !_tlgrmSettings.AutoReportPokemon.Contains(pokemon)) &&
                 (cp <= _tlgrmSettings.ReportAllPokemonsAboveCp || _tlgrmSettings.ReportAllPokemonsAboveCp <= 0)) return;

@@ -155,35 +155,7 @@
                 </Button.Background>
             </Button>
         </Grid>
-        <Grid x:Name="grid_pickBot"
-              Margin="-1,0,0,0" Grid.Column="1" Visibility="Collapsed">
-            <Rectangle Margin="0" >
-                <Rectangle.Fill>
-                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                        <GradientStop Color="#FF93FFBA" Offset="0"/>
-                        <GradientStop Color="#FF024F3A" Offset="1"/>
-                    </LinearGradientBrush>
-                </Rectangle.Fill>
-            </Rectangle>
-            <Label x:Name="label13"
-                   Margin="0"
-                   HorizontalAlignment="Center"
-                   VerticalAlignment="Center"
-                   Content="Select Bot at left menu"
-                   FontSize="48"
-                   FontWeight="Bold"
-                   Foreground="White" />
-            <Label x:Name="label13_Copy"
-                   Margin="214,410,214,261"
-                   HorizontalAlignment="Center"
-                   VerticalAlignment="Center"
-                   Content="or create a new one"
-                   FontSize="36"
-                   FontStyle="Italic"
-                   FontWeight="Bold"
-                   Foreground="White" />
-        </Grid>
-        <Grid x:Name="InputBox" Visibility="Collapsed" Grid.ColumnSpan="2">
+        <Grid x:Name="InputBox" Visibility="Collapsed" Grid.ColumnSpan="2" Grid.Column="0">
             <Grid Background="Black" Opacity="0.45" />
             <Border MinWidth="250"
                     HorizontalAlignment="Center"
