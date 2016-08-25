@@ -145,7 +145,7 @@ namespace Catchem.Pages
 
         private void StartButton_Click(object sender, RoutedEventArgs e)
         {
-            TlgrmBot?.Start(_tlgrmSettings.ApiKey);
+            TlgrmBot?.Start(_tlgrmSettings?.ApiKey);
         }
 
         private void StopButton_Click(object sender, RoutedEventArgs e)

@@ -1061,7 +1061,7 @@ namespace PoGo.PokeMobBot.Logic
         [JsonIgnore] public string ProfilePath;
         [JsonIgnore] public string ProfileConfigPath;
 
-        public string DesiredNickname = "CatchemFan" + DeviceSettings.RandomString(6);
+        public string DesiredNickname = "CatchemFan" + DeviceSettings.RandomString(4);
 
         public DeviceSettings Device = new DeviceSettings();
 

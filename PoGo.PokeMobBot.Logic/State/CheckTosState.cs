@@ -40,7 +40,7 @@ namespace PoGo.PokeMobBot.Logic.State
                 }
                 if (!tutState.Contains(TutorialState.AvatarSelection))
                 {
-                    var gen = session.Client.rnd.Next(1) == 0 ? Gender.Male : Gender.Female;
+                    var gen = session.Client.rnd.Next(2) == 1 ? Gender.Male : Gender.Female;
                     var avatarRes = await session.Client.Player.SetAvatar(new PlayerAvatar()
                     {
                         Backpack = 0,
@@ -120,6 +120,14 @@ namespace PoGo.PokeMobBot.Logic.State
                 session.EventDispatcher.Send(new NoticeEvent()
                 {
                     Message = "You didn't pick the desired nickname!"
+                });
+                return false;
+            }
+            if (session.LogicSettings.DesiredNickname.Length > 15)
+            {
+                session.EventDispatcher.Send(new NoticeEvent()
+                {
+                    Message = "You selected too long Desired name, max length: 15!"
                 });
                 return false;
             }
