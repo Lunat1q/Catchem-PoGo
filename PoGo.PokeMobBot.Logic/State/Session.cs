@@ -44,6 +44,7 @@ namespace PoGo.PokeMobBot.Logic.State
         Evolve,
         LevelPoke,
         Renaming,
+        Recycle,
         Busy
     }
 

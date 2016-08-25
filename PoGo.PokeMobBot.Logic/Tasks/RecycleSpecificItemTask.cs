@@ -15,6 +15,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
     {
         public static async Task Execute(ISession session, ItemId item, int amount, CancellationToken cancellationToken)
         {
+            if (!await CheckBotStateTask.Execute(session, cancellationToken)) return;
             cancellationToken.ThrowIfCancellationRequested();
             await session.Inventory.RefreshCachedInventory();
             var itemCount = await session.Inventory.GetItemAmountByType(item);
