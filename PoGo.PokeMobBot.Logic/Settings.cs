@@ -964,6 +964,11 @@ namespace PoGo.PokeMobBot.Logic
 
         //catch
         public bool HumanizeThrows = true;
+        public bool NonLinearThrows = false;
+        public double ThrowChanceExcellent = 0.01;
+        public double ThrowChanceGreat = 0.40;
+        public double ThrowChanceNice = 0.60;
+        public double ThrowChanceNormal = 0.90;
         public double ThrowAccuracyMin = 0.80;
         public double ThrowAccuracyMax = 1.00;
         public double ThrowSpinFrequency = 0.80;
@@ -1824,6 +1829,11 @@ namespace PoGo.PokeMobBot.Logic
         public double ThrowAccuracyMin => _settings.CatchSettings.ThrowAccuracyMin;
         public double ThrowAccuracyMax => _settings.CatchSettings.ThrowAccuracyMax;
         public double ThrowSpinFrequency => _settings.CatchSettings.ThrowSpinFrequency;
+        public bool NonLinearThrows => _settings.CatchSettings.NonLinearThrows;
+        public double ThrowChanceExcellent => _settings.CatchSettings.ThrowChanceExcellent;
+        public double ThrowChanceGreat => _settings.CatchSettings.ThrowChanceGreat;
+        public double ThrowChanceNice => _settings.CatchSettings.ThrowChanceNice;
+        public double ThrowChanceNormal => _settings.CatchSettings.ThrowChanceNormal;
         public int UseBerryMinCp => _settings.CatchSettings.UseBerryMinCp;
         public float UseBerryMinIv => _settings.CatchSettings.UseBerryMinIv;
         public double UseBerryBelowCatchProbability => _settings.CatchSettings.UseBerryBelowCatchProbability;

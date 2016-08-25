@@ -87,13 +87,69 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                     encounter is EncounterResponse || encounter is IncenseEncounterResponse
                         ? pokemon.Longitude
                         : currentFortData.Longitude);
+                double normalizedRecticleSize = 1.01d, spinModifier = 0.0;
+                double insidecircle = 1;
+                bool hitPokemon = true;
 
-                double normalizedRecticleSize, spinModifier;
                 if (session.LogicSettings.HumanizeThrows)
                 {
-                    normalizedRecticleSize =
-                        Rng.NextInRange(session.LogicSettings.ThrowAccuracyMin, session.LogicSettings.ThrowAccuracyMax)*
-                        1.85 + 0.1; // 0.1..1.95
+                    if (session.LogicSettings.NonLinearThrows) {
+                        double spinmod = 1;
+                        //if (spinModifier == 1.0)
+                        //{
+                        //    spinmod = session.LogicSettings.ThrowSpinModifier;
+                        //}
+                        //else
+                        //{
+                        //    spinmod = 1;
+                        //}
+                        double minsize = 0, maxsize = 0;
+                        /*if (probability == 1)
+                        {
+                            minsize = 1.01d;
+                            maxsize = 1.999d;
+                            insidecircle = 0;
+                        }
+                        else */if (Rng.NextInRange(0, 1) <= session.LogicSettings.ThrowChanceExcellent * spinmod)
+                        {
+                            minsize = 1.7d;
+                            maxsize = 1.999d;
+                        }
+                        else if (Rng.NextInRange(0, 1) <= session.LogicSettings.ThrowChanceGreat * spinmod)
+                        {
+                            minsize = 1.3d;
+                            maxsize = 1.699d;
+                        }
+                        else if (Rng.NextInRange(0, 1) <= session.LogicSettings.ThrowChanceNice * spinmod)
+                        {
+                            minsize = 1.0d;
+                            maxsize = 1.299d;
+
+                        }
+                        else if (Rng.NextInRange(0, 1) <= session.LogicSettings.ThrowChanceNormal * spinmod)
+                        {
+                            minsize = 1.01d;
+                            maxsize = 1.999d;
+                            insidecircle = 0;
+                        }
+                        else
+                        {
+                            minsize = 1;
+                            maxsize = 1;
+                            insidecircle = 0;
+                            hitPokemon = false;
+                        }
+
+                        normalizedRecticleSize =
+                        Rng.NextInRange(minsize, maxsize); // 0.1..1.95
+
+                    }
+                    else
+                    {
+                        normalizedRecticleSize =
+                     Rng.NextInRange(session.LogicSettings.ThrowAccuracyMin, session.LogicSettings.ThrowAccuracyMax) *
+                     1.85 + 0.1; // 0.1..1.95
+                    }
                     spinModifier = Rng.NextDouble() > session.LogicSettings.ThrowSpinFrequency ? 0.0 : 1.0;
                 }
                 else
@@ -127,7 +183,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                         return "Great! ";
                     return a > 1.6 ? "Excellent! " : "unknown ";
                 };
-                var hit = Rng.NextDouble() > session.LogicSettings.MissChance;
+                var hit = (session.LogicSettings.NonLinearThrows) ? hitPokemon : Rng.NextDouble() > session.LogicSettings.MissChance;
                 Logging.Logger.Write($"Throwing {(Math.Abs(spinModifier - 1) < 0.00001 ?"Spinning " : "" )}{getThrowType(normalizedRecticleSize)}{returnRealBallName(pokeball)} - {(hit ? "WILL HIT" : "WILL MISS")}", Logging.LogLevel.Caught, session: session);
                 caughtPokemonResponse =
                     await session.Client.Encounter.CatchPokemon(
@@ -138,7 +194,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                             ? pokemon.SpawnPointId
                             : currentFortData.Id, pokeball,
                         normalizedRecticleSize,
-                        spinModifier, hitPokemon: hit);
+                        spinModifier, normalizedHitPos: insidecircle, hitPokemon: hit);
 
                 session.EventDispatcher.Send(new ItemLostEvent { Id = pokeball, Count = 1 });
 
