@@ -123,6 +123,14 @@ namespace PoGo.PokeMobBot.Logic.State
                 });
                 return false;
             }
+            if (session.LogicSettings.DesiredNickname.Length > 12)
+            {
+                session.EventDispatcher.Send(new NoticeEvent()
+                {
+                    Message = "Your nickname is too long, max length: 12!"
+                });
+                return false;
+            }
             var res = await session.Client.Misc.ClaimCodename(session.LogicSettings.DesiredNickname);
             if (res.Status == ClaimCodenameResponse.Types.Status.SUCCESS)
             {

@@ -866,9 +866,9 @@ namespace PoGo.PokeMobBot.Logic
         [JsonIgnore]
         private static Random r = new Random();
         [JsonIgnore]
-        private static int FirstRunMin = 2141;
+        private static int FirstRunMin = 5876;
         [JsonIgnore]
-        private static int FirstRunMax = 6736;
+        private static int FirstRunMax = 12789;
 
         //delays
         public int MinRandomizeDelayMilliseconds = FirstRunMin;
@@ -1061,7 +1061,7 @@ namespace PoGo.PokeMobBot.Logic
         [JsonIgnore] public string ProfilePath;
         [JsonIgnore] public string ProfileConfigPath;
 
-        public string DesiredNickname = "CatchemFan" + DeviceSettings.RandomString(6);
+        public string DesiredNickname = "Catchem" + DeviceSettings.RandomString(5);
 
         public DeviceSettings Device = new DeviceSettings();
 
