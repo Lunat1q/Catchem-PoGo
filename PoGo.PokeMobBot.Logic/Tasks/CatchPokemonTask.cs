@@ -78,6 +78,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                                 ? pokemon.SpawnPointId
                                 : currentFortData?.Id);
 
+                    await DelayingUtils.Delay(session.LogicSettings.DelayBetweenPlayerActions, 1000);
                 }
 
                 var distance = LocationUtils.CalculateDistanceInMeters(session.Client.CurrentLatitude,
