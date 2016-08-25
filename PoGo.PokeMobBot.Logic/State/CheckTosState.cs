@@ -123,6 +123,7 @@ namespace PoGo.PokeMobBot.Logic.State
                 });
                 return false;
             }
+
             if (session.LogicSettings.DesiredNickname.Length > 15)
             {
                 session.EventDispatcher.Send(new NoticeEvent()
@@ -131,6 +132,7 @@ namespace PoGo.PokeMobBot.Logic.State
                 });
                 return false;
             }
+			
             var res = await session.Client.Misc.ClaimCodename(session.LogicSettings.DesiredNickname);
             if (res.Status == ClaimCodenameResponse.Types.Status.SUCCESS)
             {
