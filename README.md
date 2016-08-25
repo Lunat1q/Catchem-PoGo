@@ -45,5 +45,5 @@ Without him, this would not have been available.
  
  
  <h2>Rights</h2>
- All rights to Pokemon trademark are going to Nintendo (C)
+ All rights to trademarks used are going to Nintendo and Niantic 
 
