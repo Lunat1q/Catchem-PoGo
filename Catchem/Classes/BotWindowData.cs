@@ -164,7 +164,7 @@ namespace Catchem.Classes
         {
             get
             {
-                if (Stats == null || RealWorkH < 0.001) return 0;
+                if (Stats == null || RealWorkH < 0.001 || Stats.TotalStardust == 0) return 0;
                 return (Stats.TotalStardust - StartStarDust) / RealWorkH;
             }
         }
