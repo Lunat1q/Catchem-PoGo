@@ -45,4 +45,7 @@ If you have any problems with getting device info, consider watching this post: 
 Thanks to Feroxs' hard work on the API & Console we are able to manage something like this.
 Without him, this would not have been available.
  
+ 
+ <h2>Rights</h2>
+ All rights to Pokemon trademark are going to Nintendo (C)
 
