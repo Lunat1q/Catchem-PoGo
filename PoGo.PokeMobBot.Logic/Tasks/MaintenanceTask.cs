@@ -8,6 +8,8 @@ namespace PoGo.PokeMobBot.Logic.Tasks
     {
         public static async Task Execute(ISession session, CancellationToken cancellationToken)
         {
+            var prevState = session.State;
+            session.State = BotState.Busy;
             var currentTotalItems = await session.Inventory.GetTotalItemCount();
             var recycleInventoryAtUsagePercentage = session.LogicSettings.RecycleInventoryAtUsagePercentage > 1
                 ? session.LogicSettings.RecycleInventoryAtUsagePercentage / 100 : session.LogicSettings.RecycleInventoryAtUsagePercentage;
@@ -38,8 +40,8 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                 }
                 //Do we need this?
                 //await DisplayPokemonStatsTask.Execute(session);
-
             }
+            session.State = prevState;
         }
         private static async Task DownloadProfile(ISession session)
         {

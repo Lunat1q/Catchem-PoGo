@@ -866,9 +866,9 @@ namespace PoGo.PokeMobBot.Logic
         [JsonIgnore]
         private static Random r = new Random();
         [JsonIgnore]
-        private static int FirstRunMin = 2141;
+        private static int FirstRunMin = 5876;
         [JsonIgnore]
-        private static int FirstRunMax = 6736;
+        private static int FirstRunMax = 12789;
 
         //delays
         public int MinRandomizeDelayMilliseconds = FirstRunMin;
@@ -906,6 +906,7 @@ namespace PoGo.PokeMobBot.Logic
         public string TranslationLanguageCode = "en";
         public bool AutoCompleteTutorial = false;
         public int WebSocketPort = 14251;
+        public bool BeLikeRobot = false;
         //display
         public bool DisplayPokemonMaxPoweredCp = true;
         public bool DisplayPokemonMovesetRank = true;
@@ -1740,6 +1741,7 @@ namespace PoGo.PokeMobBot.Logic
             _settings = settings;
         }
 
+        public bool BeLikeRobot => _settings.StartUpSettings.BeLikeRobot;
         public bool AutoCompleteTutorial => _settings.StartUpSettings.AutoCompleteTutorial;
         public string DesiredNickname => _settings.DesiredNickname;
         public string ProfilePath => _settings.ProfilePath;

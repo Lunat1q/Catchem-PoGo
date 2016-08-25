@@ -2,6 +2,7 @@
 
 using System;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using PoGo.PokeMobBot.Logic.Common;
 using PoGo.PokeMobBot.Logic.Event;
@@ -22,14 +23,15 @@ namespace PoGo.PokeMobBot.Logic.Tasks
     {
         private static readonly Random Rng = new Random();
 
-        public static async Task<bool> Execute(ISession session, dynamic encounter, PokemonCacheItem pokemon,
+        public static async Task<bool> Execute(ISession session, dynamic encounter, PokemonCacheItem pokemon, CancellationToken cancellationToken,
             FortData currentFortData = null, ulong encounterId = 0)
         {
+            if (!await CheckBotStateTask.Execute(session, cancellationToken)) return false;
             if (encounter is EncounterResponse && pokemon == null)
                 throw new ArgumentException("Parameter pokemon must be set, if encounter is of type EncounterResponse",
                     nameof(pokemon));
-            
-
+            var prevState = session.State;
+            session.State = BotState.Catch;
             CatchPokemonResponse caughtPokemonResponse;
             var attemptCounter = 1;
             do
@@ -51,6 +53,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                                 ? encounter.WildPokemon?.PokemonData?.Cp
                                 : encounter?.PokemonData?.Cp) ?? 0
                     });
+                    session.State = prevState;
                     return false;
                 }
 
@@ -230,7 +233,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                     await Task.Delay(session.LogicSettings.DelayCatchPokemon);
             } while (caughtPokemonResponse.Status == CatchPokemonResponse.Types.CatchStatus.CatchMissed ||
                      caughtPokemonResponse.Status == CatchPokemonResponse.Types.CatchStatus.CatchEscape);
-
+            session.State = prevState;
             return true;
         }
 

@@ -148,6 +148,7 @@
     <Compile Include="Service\BotService.cs" />
     <Compile Include="State\CheckTosState.cs" />
     <Compile Include="Tasks\FavoriteSpecificPokemonTask.cs" />
+    <Compile Include="Tasks\CheckBotStateTask.cs" />
     <Compile Include="Tasks\LevelUpSpecificPokemonTask.cs" />
     <Compile Include="Tasks\SetPlayerTeamTask.cs" />
     <Compile Include="Tasks\PlayerStatsTask.cs" />

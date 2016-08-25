@@ -5,6 +5,7 @@ using PoGo.PokeMobBot.Logic.Common;
 using PoGo.PokeMobBot.Logic.Event;
 using PoGo.PokeMobBot.Logic.State;
 using System.Linq;
+using System.Threading;
 using PoGo.PokeMobBot.Logic.PoGoUtils;
 using PoGo.PokeMobBot.Logic.Utils;
 using POGOProtos.Networking.Responses;
@@ -15,10 +16,11 @@ namespace PoGo.PokeMobBot.Logic.Tasks
 {
     public class RenameSpecificPokemonTask
     {
-        public static async Task Execute(ISession session, ulong pokemonId, string customName = null,
-            bool toDefault = false)
+        public static async Task Execute(ISession session, ulong pokemonId, CancellationToken cancellationToken,
+            string customName = null, bool toDefault = false)
         {
             if (customName == null) return;
+            if (!await CheckBotStateTask.Execute(session, cancellationToken)) return;
             var id = pokemonId;
             var all = await session.Inventory.GetPokemons();
             var pokemons = all.OrderByDescending(x => x.Cp).ThenBy(n => n.StaminaMax);
@@ -33,6 +35,9 @@ namespace PoGo.PokeMobBot.Logic.Tasks
 
             if (currentNickname == customName) return;
             var resp = await session.Client.Inventory.NicknamePokemon(id, customName);
+
+            var prevState = session.State;
+            session.State = BotState.Renaming;
 
             await DelayingUtils.Delay(session.LogicSettings.DelayBetweenPlayerActions, 2000);
             session.EventDispatcher.Send(new NoticeEvent
@@ -61,6 +66,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                     Favourite = pokemon.Favorite == 1
                 });
             }
+            session.State = prevState;
         }
     }
 }

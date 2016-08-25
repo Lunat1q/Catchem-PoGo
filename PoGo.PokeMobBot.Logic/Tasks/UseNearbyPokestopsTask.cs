@@ -42,10 +42,10 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                 if (pokeStop.Used)
                     break;
                 var fortInfo = await session.Client.Fort.GetFort(pokeStop.Id, pokeStop.Latitude, pokeStop.Longitude);
-
+                await DelayingUtils.Delay(session.LogicSettings.DelayBetweenPlayerActions, 2000);
                 var fortSearch =
                     await session.Client.Fort.SearchFort(pokeStop.Id, pokeStop.Latitude, pokeStop.Longitude);
-
+                await DelayingUtils.Delay(session.LogicSettings.DelayPokestop, 5000);
                 if (fortSearch.ExperienceAwarded > 0)
                 {
                     session.Runtime.StopsHit++;
@@ -70,14 +70,6 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                 {//because we're all fucking idiots for not catching this sooner
                     await CatchLurePokemonsTask.Execute(session, pokeStop.BaseFortData, cancellationToken);
                 }
-
-
-                //await RecycleItemsTask.Execute(session, cancellationToken);
-
-                //if (session.LogicSettings.TransferDuplicatePokemon)
-                //{
-                //    await TransferDuplicatePokemonTask.Execute(session, cancellationToken);
-                //}
             }
         }
 

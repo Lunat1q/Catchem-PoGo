@@ -153,7 +153,7 @@ namespace PoGo.PokeMobBot.Logic.API
                     if (!double.TryParse(h.ToString(), out hVal))
                     {
                         hVal = _session != null
-                            ? RandomExtensions.NextInRange(R, _session.Settings.DefaultAltitudeMin, _session.Settings.DefaultAltitudeMax) + +0.8 + Math.Round(RandomExtensions.NextInRange(R, 0, 0.2), 5)
+                            ? RandomExtensions.NextInRange(R, _session.Settings.DefaultAltitudeMin, _session.Settings.DefaultAltitudeMax) + 0.8 + Math.Round(RandomExtensions.NextInRange(R, 0, 0.2), 5)
                             : R.Next(10, 120);
                     }
                     resList.Add(hVal);
