@@ -13,6 +13,7 @@ using PokemonGo.RocketAPI.Enums;
 using POGOProtos.Enums;
 using POGOProtos.Inventory.Item;
 using GeoCoordinatePortable;
+using Google.Protobuf;
 using PoGo.PokeMobBot.Logic.API;
 
 #endregion
@@ -134,8 +135,8 @@ namespace PoGo.PokeMobBot.Logic
 
     public class DeviceSettings
     {
-	   private static Random random = new Random();
-       public static IDictionary<string, string> phone_item = RandomPhone();
+	    private static Random random = new Random();
+        public static IDictionary<string, string> phone_item = RandomPhone();
 
         public string DeviceId = RandomString(16, "0123456789abcdef"); // "ro.build.id";
         public string AndroidBoardName = phone_item["board"]; // "ro.product.board";
@@ -150,7 +151,7 @@ namespace PoGo.PokeMobBot.Logic
         public string FirmwareTags = "test-keys"; //"build.tags";
         public string FirmwareType = "eng"; //"build.type"; //iOS is "iOS version"
         public string FirmwareFingerprint =
-           phone_item["mft"] + "/" +
+            phone_item["mft"] + "/" +
             phone_item["mft"] + "_" + phone_item["board"] + ":" +
                                                     RandomAndroidVersion() + "/" +
                                                     RandomString(random.Next(4, 10), "0123456789abcdef") +
@@ -163,6 +164,30 @@ namespace PoGo.PokeMobBot.Logic
             return new string(Enumerable.Repeat(chars, length)
               .Select(s => s[random.Next(s.Length)]).ToArray());
         }
+
+        public void NewRandomPhone()
+        {
+            phone_item = RandomPhone();
+            DeviceId = RandomString(16, "0123456789abcdef");
+            AndroidBoardName = phone_item["board"];
+            AndroidBootLoader = "unknown";
+            DeviceBrand = phone_item["mft"];
+            DeviceModel = phone_item["model"];
+            DeviceModelIdentifier = phone_item["name"] + "_" + RandomString(random.Next(4, 10), "0123456789abcdef");
+            DeviceModelBoot = phone_item["board"];
+            HardwareManufacturer = phone_item["mft"];
+            HardWareModel = phone_item["model"];
+            FirmwareBrand = phone_item["board"];
+            FirmwareTags = "test-keys";
+            FirmwareType = "eng";
+            FirmwareFingerprint =
+                phone_item["mft"] + "/" +
+                phone_item["mft"] + "_" + phone_item["board"] + ":" +
+                RandomAndroidVersion() + "/" +
+                RandomString(random.Next(4, 10), "0123456789abcdef") +
+                ":user/release-keys";
+        }
+
         private static string RandomAndroidVersion()
         {
             //possible android versions based on PokemonGo requirements
@@ -896,6 +921,7 @@ namespace PoGo.PokeMobBot.Logic
         //incubator
         public bool UseEggIncubators = true;
 		public bool AlwaysPrefferLongDistanceEgg = false;
+        public bool UseOnlyUnlimitedIncubator = true;
         //rename
         public bool RenamePokemon = false;
         public bool RenameOnlyAboveIv = true;
@@ -964,10 +990,10 @@ namespace PoGo.PokeMobBot.Logic
 
         //catch
         public bool HumanizeThrows = true;
-        public double ThrowAccuracyMin = 0.80;
+        public double ThrowAccuracyMin = 0.20;
         public double ThrowAccuracyMax = 1.00;
-        public double ThrowSpinFrequency = 0.80;
-        public int MaxPokeballsPerPokemon = 8;
+        public double ThrowSpinFrequency = 0.60;
+        public int MaxPokeballsPerPokemon = 10;
         public int UseGreatBallAboveIv = 80;
         public int UseUltraBallAboveIv = 90;
         public double UseGreatBallBelowCatchProbability = 0.35;
@@ -979,7 +1005,7 @@ namespace PoGo.PokeMobBot.Logic
         public int MaxPokestopsPerHour = 69;
         public int MaxXPPerHour = 10000;
         public int MaxStarDustPerHour = 20000;
-        public double MissChance = 0.13;
+        public double MissChance = 0.21;
 
         //berries
         public int UseBerryMinCp = 1000;
@@ -1035,7 +1061,7 @@ namespace PoGo.PokeMobBot.Logic
         [JsonIgnore] public string ProfilePath;
         [JsonIgnore] public string ProfileConfigPath;
 
-        public string DesiredNickname = "CatchemFan" + DeviceSettings.RandomString(6);
+        public string DesiredNickname = "CatchemFan" + DeviceSettings.RandomString(4);
 
         public DeviceSettings Device = new DeviceSettings();
 
@@ -1529,6 +1555,8 @@ namespace PoGo.PokeMobBot.Logic
             }
         }
 
+        public ByteString SessionHash { get; set; }
+
         AuthType ISettings.AuthType
         {
             get { return _settings.Auth.AuthType; }
@@ -1831,6 +1859,7 @@ namespace PoGo.PokeMobBot.Logic
         public bool UseDiscoveryPathing => _settings.LocationSettings.UseDiscoveryPathing;
         public double UseMasterBallBelowCatchProbability => _settings.CatchSettings.UseMasterBallBelowCatchProbability;
         public bool CatchWildPokemon => _settings.CatchSettings.CatchWildPokemon;
+        public bool UseOnlyUnlimitedIncubator => _settings.PokemonSettings.UseOnlyUnlimitedIncubator;
 
         public bool UseHumanPathing => _settings.StartUpSettings.UseHumanPathing;
         public RoutingService RoutingService => _settings.LocationSettings.RoutingService;

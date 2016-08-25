@@ -185,7 +185,7 @@
                         Height="656"
                         Margin="0,222,0,0"
                         VerticalAlignment="Top"
-                        Header="Pokemons">
+                        Header="Pokes">
                     <Grid>
 
                         <CheckBox x:Name="c_EvolveAllPokemonAboveIv"
@@ -193,7 +193,7 @@
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Top"
                                 Checked="BotPropertyChanged"
-                                Content="Evolve All Pokemon Above Iv"
+                                Content="Evolve All Poke Above Iv"
                                 Unchecked="BotPropertyChanged" />
                         <Label x:Name="c_EvolveAboveIvValueLabel"
                                 Width="131"
@@ -214,14 +214,14 @@
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Top"
                                 Checked="BotPropertyChanged"
-                                Content="Evolve All Pokemon With Enough Candy"
+                                Content="Evolve All Poke With Enough Candy"
                                 Unchecked="BotPropertyChanged" />
                         <CheckBox x:Name="c_TransferDuplicatePokemon"
                                 Margin="10,88,0,0"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Top"
                                 Checked="BotPropertyChanged"
-                                Content="Transfer Duplicate Pokemon"
+                                Content="Transfer Duplicate Poke"
                                 Unchecked="BotPropertyChanged" />
                         <Label x:Name="c_KeepMinCpLabel"
                                 Width="131"
@@ -270,7 +270,7 @@
                                 Margin="10,206,0,0"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Top"
-                                Content="Pokeballs/Pokemon" />
+                                Content="PBalls/Poke" />
                         <TextBox x:Name="c_MaxPokeballsPerPokemon"
                                 Height="29"
                                 Margin="233,205,10,0"
@@ -284,7 +284,7 @@
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Top"
                                 Checked="BotPropertyChanged"
-                                Content="Keep Pokemons That Can Evolve"
+                                Content="Keep Poke That Can Evolve"
                                 Unchecked="BotPropertyChanged" />
                         <CheckBox x:Name="c_PrioritizeBothIvAndCpForTransfer"
                                 Margin="10,258,0,0"
@@ -312,14 +312,14 @@
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Top"
                                 Checked="BotPropertyChanged"
-                                Content="Rename Pokemon"
+                                Content="Rename Poke"
                                 Unchecked="BotPropertyChanged" />
                         <CheckBox x:Name="c_AutoLevelPokemons"
                                 Margin="10,342,0,0"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Top"
                                 Checked="BotPropertyChanged"
-                                Content="Auto Level Pokemons"
+                                Content="Auto Level Poke"
                                 Unchecked="BotPropertyChanged" />
                         <Label x:Name="c_RenameTemplateLabel"
                                 Width="131"
@@ -339,7 +339,7 @@
                                 Margin="10,397,0,0"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Top"
-                                Content="Upgrade Pokemon Cp Min" />
+                                Content="Upgrade Poke Cp Min" />
                         <TextBox x:Name="c_UpgradePokemonCpMinimum"
                                 Height="29"
                                 Margin="233,396,10,0"
@@ -353,7 +353,7 @@
                                 Margin="10,431,0,0"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Top"
-                                Content="Upgrade Pokemon Iv Min" />
+                                Content="Upgrade Poke Iv Min" />
                         <TextBox x:Name="c_UpgradePokemonIvMinimum"
                                 Height="29"
                                 Margin="233,430,10,0"
@@ -367,7 +367,7 @@
                                 Margin="10,462,0,0"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Top"
-                                Content="Lucky Eggs Min Pokemon" />
+                                Content="Lucky Eggs Min Poke" />
                         <TextBox x:Name="c_UseLuckyEggsMinPokemonAmount"
                                 Height="29"
                                 Margin="233,464,10,0"
@@ -398,26 +398,33 @@
                                 Content="Always Preffer Long Distance Egg"
                                 Unchecked="BotPropertyChanged" />
                         <CheckBox x:Name="c_AutoFavoritePokemon"
-                                Margin="10,556,0,0"
+                                Margin="10,577,0,0"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Top"
                                 Checked="BotPropertyChanged"
-                                Content="Auto Favorite Pokemon"
+                                Content="Auto Favorite Poke"
                                 Unchecked="BotPropertyChanged" />
                         <Label x:Name="c_FavoriteMinIvPercentageLabel"
                                 Width="155"
-                                Margin="10,579,0,0"
+                                Margin="10,596,0,0"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Top"
                                 Content="Favorite Min Iv Percentage" />
                         <TextBox x:Name="c_FavoriteMinIvPercentage"
                                 Height="29"      
-                                Margin="233,578,10,0"
+                                Margin="233,595,10,0"
                                 VerticalAlignment="Top"
                                 Template="{StaticResource pogo}"
                                 Text="0"
                                 TextChanged="BotPropertyChanged"
                                 TextWrapping="Wrap" />
+                        <CheckBox x:Name="c_UseOnlyUnlimitedIncubator"
+                        	Margin="10,556,0,0"
+                        	HorizontalAlignment="Left"
+                        	VerticalAlignment="Top"
+                        	Checked="BotPropertyChanged"
+                        	Content="Use Only Unlimited Incubator"
+                        	Unchecked="BotPropertyChanged" />
                     </Grid>
                 </GroupBox>
 
@@ -561,7 +568,7 @@
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Top"
                                 Checked="BotPropertyChanged"
-                                Content="Use Pokemon Not To Catch Filter"
+                                Content="Use Poke Not To Catch Filter"
                                 Unchecked="BotPropertyChanged" />
                         <Label x:Name="c_UseUltraBallAboveIvLabel"
                                 Width="155"
@@ -650,7 +657,7 @@
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Top"
                                 Checked="BotPropertyChanged"
-                                Content="Catch Wild Pokemon"
+                                Content="Catch Wild Poke"
                                 Unchecked="BotPropertyChanged" />
                         <CheckBox x:Name="c_PauseBotOnMaxHourlyRates"
                                 Width="207"
@@ -664,7 +671,7 @@
                         <Label x:Name="c_MaxCatchPerHourLabel"
                                 Width="210"
                                 Height="26"
-                                Margin="10,484,0,0"
+                                Margin="9,484,0,0"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Top"
                                 Content="Max Catch Per Hour" />
@@ -680,7 +687,7 @@
                         <Label x:Name="c_MaxPokestopsPerHourLabel"
                                 Width="210"
                                 Height="26"
-                                Margin="10,520,0,0"
+                                Margin="9,518,0,0"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Top"
                                 Content="Max Pokestops Per Hour" />
@@ -1358,7 +1365,7 @@
                                 TextWrapping="Wrap" />
                         <Button x:Name="b_getDataFromRealPhone"
                                 Height="29"
-                                Margin="10,455,10,0"
+                                Margin="111,455,10,0"
                                 VerticalAlignment="Top"
                                 Click="b_getDataFromRealPhone_Click"
                                 Content="Get Data from Your Android"
@@ -1407,6 +1414,30 @@
                                     </LinearGradientBrush.RelativeTransform>
                                     <GradientStop Offset="0" Color="#FF07D8E2" />
                                     <GradientStop Offset="1" Color="#FF008E95" />
+                                </LinearGradientBrush>
+                            </Button.Background>
+                        </Button>
+                        <Button x:Name="b_GenerateNewAndroid"
+                        	Height="29"
+                        	Margin="10,455,0,0"
+                        	VerticalAlignment="Top"
+                        	Content="Create new"
+                        	FontFamily="BOLD"
+                        	FontWeight="Bold"
+                        	Style="{StaticResource ResourceKey=flatbutton}"
+                        	TextOptions.TextFormattingMode="Display" Width="96" HorizontalAlignment="Left" Click="b_GenerateNewAndroid_Click">
+                            <Button.Background>
+                                <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                                    <LinearGradientBrush.RelativeTransform>
+                                        <TransformGroup>
+                                            <ScaleTransform CenterX="0.5" CenterY="0.5" />
+                                            <SkewTransform CenterX="0.5" CenterY="0.5" />
+                                            <RotateTransform Angle="90" CenterX="0.5" CenterY="0.5" />
+                                            <TranslateTransform />
+                                        </TransformGroup>
+                                    </LinearGradientBrush.RelativeTransform>
+                                    <GradientStop Color="#FF038EA4" />
+                                    <GradientStop Offset="1" Color="#FF02B8A7" />
                                 </LinearGradientBrush>
                             </Button.Background>
                         </Button>
@@ -1470,7 +1501,7 @@
                                 Height="26"
                                 Margin="10,110,0,0"
                                 VerticalAlignment="Top"
-                                Content="Delay Catch Pokemon" />
+                                Content="Delay Catch Poke" />
                         <TextBox x:Name="c_DelayCatchPokemon"
                                 Grid.Column="1"
                                 Height="29"
@@ -1484,7 +1515,7 @@
                                 Height="26"
                                 Margin="10,144,0,0"
                                 VerticalAlignment="Top"
-                                Content="Delay Between Pokemon Catch" />
+                                Content="Delay Between Poke Catch" />
                         <TextBox x:Name="c_DelayBetweenPokemonCatch"
                                 Grid.Column="1"
                                 Height="29"
@@ -1498,7 +1529,7 @@
                                 Height="26"
                                 Margin="10,178,0,0"
                                 VerticalAlignment="Top"
-                                Content="Delay Catch Nearby Pokemon" />
+                                Content="Delay Catch Nearby Poke" />
                         <TextBox x:Name="c_DelayCatchNearbyPokemon"
                                 Grid.Column="1"
                                 Height="29"
@@ -1511,7 +1542,7 @@
                                 Height="26"
                                 Margin="10,212,0,0"
                                 VerticalAlignment="Top"
-                                Content="Delay Catch Lure Pokemon" />
+                                Content="Delay Catch Lure Poke" />
                         <TextBox x:Name="c_DelayCatchLurePokemon"
                                 Grid.Column="1"
                                 Height="29"
@@ -1524,7 +1555,7 @@
                                 Height="26"
                                 Margin="10,246,0,0"
                                 VerticalAlignment="Top"
-                                Content="Delay Catch Incense Pokemon" />
+                                Content="Delay Catch Incense Poke" />
                         <TextBox x:Name="c_DelayCatchIncensePokemon"
                                 Grid.Column="1"
                                 Height="29"
@@ -1537,7 +1568,7 @@
                                 Height="26"
                                 Margin="10,280,0,0"
                                 VerticalAlignment="Top"
-                                Content="Delay Evolve Pokemon" />
+                                Content="Delay Evolve Poke" />
                         <TextBox x:Name="c_DelayEvolvePokemon"
                                 Grid.Column="1"
                                 Height="29"
@@ -1563,7 +1594,7 @@
                                 Height="26"
                                 Margin="10,348,0,0"
                                 VerticalAlignment="Top"
-                                Content="Delay Transfer Pokemon" />
+                                Content="Delay Transfer Poke" />
                         <TextBox x:Name="c_DelayTransferPokemon"
                                 Grid.Column="1"
                                 Height="29"
@@ -1576,7 +1607,7 @@
                                 Height="26"
                                 Margin="10,382,0,0"
                                 VerticalAlignment="Top"
-                                Content="Delay Display Pokemon" />
+                                Content="Delay Display Poke" />
                         <TextBox x:Name="c_DelayDisplayPokemon"
                                 Grid.Column="1"
                                 Height="29"
@@ -1628,7 +1659,7 @@
                                 Height="26"
                                 Margin="10,518,0,0"
                                 VerticalAlignment="Top"
-                                Content="Delay Snipe Pokemon" />
+                                Content="Delay Snipe Poke" />
                         <TextBox x:Name="c_DelaySnipePokemon"
                                 Grid.Column="1"
                                 Height="29"

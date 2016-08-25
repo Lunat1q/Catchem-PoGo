@@ -3,193 +3,158 @@ using System.Collections.Generic;
 using NetTelegramBotApi;
 using NetTelegramBotApi.Requests;
 using NetTelegramBotApi.Types;
-using System.Configuration;
 using System.Linq;
 using System.Net;
-using System.Reflection;
 using System.Threading.Tasks;
-using System.Windows.Markup;
+using Catchem.Events;
 using PoGo.PokeMobBot.Logic.Event;
-using PoGo.PokeMobBot.Logic.Logging;
-using PoGo.PokeMobBot.Logic.State;
+using TelegramMessageEvent = PoGo.PokeMobBot.Logic.Event.TelegramMessageEvent;
 
 namespace Catchem.Classes
 {
     public class Telegram
     {
-        public static bool _stopTelegram = false;
-        public static TelegramBot _telegram;
-        public Queue<Update> _telegramMessages;
+        public static bool StopTelegram;
+        public static TelegramBot TelegramBot;
+        public Queue<Update> TelegramMessages;
+        public bool FirstMessageUpdate = true;
+        public IEventDispatcher EventDispatcher;
+        private bool _started;
 
+        public Telegram()
+        {
+            TelegramMessages = new Queue<Update>();
+            EventDispatcher = new EventDispatcher();
+            StopTelegram = true;
+        }
+
+        /// <summary>
+        /// Start Tlgrm bot
+        /// </summary>
+        /// <param name="accessToken">API KEY</param>
         public async void Start(string accessToken)
         {
-            
-           if (string.IsNullOrEmpty(accessToken))
+            if (_started) return;
+            StopTelegram = false;
+            if (string.IsNullOrEmpty(accessToken))
             {
-                TelegramLog("Error: Please enter Telegram HTTP API token.");
+                EventDispatcher.Send(new TelegramMessageEvent
+                {
+                    Message = "Error: Please enter Telegram HTTP API token."
+                });
                 return;
             }
-            
-            _telegram = new TelegramBot(accessToken);
-            var me = await _telegram.MakeRequestAsync(new GetMe());
-            if (me == null)
+
+            TelegramBot = new TelegramBot(accessToken) {WebProxy = WebRequest.DefaultWebProxy};
+            TelegramBot.WebProxy.Credentials = CredentialCache.DefaultCredentials;
+            try
             {
-                TelegramLog("Error: Please enter Telegram HTTP API token.");
-                //Log to console  [08:56:32](TLGRM-ERR)Failed to start Telegram. Please check API Token.
-                //Stops Telegram Bot From Being Used
-                return;
+                var me = await TelegramBot.MakeRequestAsync(new GetMe());
+                if (me == null)
+                {
+                    EventDispatcher.Send(new TelegramMessageEvent
+                    {
+                        Message = "Error: Please enter Telegram HTTP API token."
+                    });
+                    return;
+                }
+                EventDispatcher.Send(new TelegramMessageEvent
+                {
+                    Message = "Telegram Started Successfuly with account: @" + me.Username
+                });
+                UpdateMessagesWorker();
+                ReadMessagesWorker();
+                _started = true;
             }
-            TelegramLog("Telegram Started Successfuly with account: @" + me.Username);
-           await UpdateMessages();
-        }
-
-        public void Stop()
-        {
-            _stopTelegram = Equals(true);
-        }
-
-
-        public async Task UpdateMessages()
-        {
-            long offset = 0;
-            while (!_stopTelegram)
+            catch (Exception)
             {
-                var updates = _telegram.MakeRequestAsync(new GetUpdates() {Offset = offset}).Result;
-                if (updates != null)
+                EventDispatcher.Send(new TelegramMessageEvent
                 {
-                    foreach (var update in updates)
-                    {
-                        offset = update.UpdateId + 1;
-                        if (update.Message == null)
-                        {
-                            continue;
-                        }
-                        _telegramMessages.Enqueue(update);
-                    }
-                    await UseMessage();
-                }
-            }
-        }
-
-        public async Task UseMessage()
-        {
-            while (_telegramMessages.Count > 0)
-            {
-                var update = _telegramMessages.Dequeue();
-                var messageReceived = update.Message.Text;
-                string[] splitMessage = messageReceived.Split(default(string[]), StringSplitOptions.RemoveEmptyEntries);
-                TelegramLog("Recived Message From " + update.Message.From.Username);
-                if (string.IsNullOrEmpty(messageReceived)) continue;
-                if (messageReceived == "help")
-                {
-                    string helpMsg = "The following commands are avaliable: \n" +
-                                     "- listbots \n" +
-                                     "- start [bot Number / all] \n" +
-                                     "- stop [bot Number / all]";
-                    await _telegram.MakeRequestAsync(new SendMessage(update.Message.Chat.Id, helpMsg));
-                    continue;
-                }
-                if (messageReceived.ToLower() == "listbots")
-                {
-                    int number = 1;
-                    string botsString = "Current Bots Avaliable: \n";
-                    foreach (var bot in MainWindow.BotsCollection)
-                    {
-                        string status = "STOPPED";
-                        if (bot.Started) status = "RUNNING";
-                        botsString += $"{number}) {bot.ProfileName} [{status}] \n";
-                        number++;
-                    }
-                }
-                if (messageReceived.ToLower() == "start all")
-                {
-                    foreach (var bot in MainWindow.BotsCollection)
-                    {
-                        if (bot.Started == false)
-                        {
-                            bot.Start();
-                        }
-                    }
-                    await _telegram.MakeRequestAsync(new SendMessage(update.Message.Chat.Id, "Stopped all running Bots"));
-                    continue;
-                }
-                if (splitMessage[0].ToLower() == "start")
-                {
-                    if (splitMessage.Length != 2) continue;
-                    if (string.IsNullOrEmpty(splitMessage[1]) || string.IsNullOrEmpty(splitMessage[2])) continue;
-                    int selectedBot;
-                    if (int.TryParse(splitMessage[1], out selectedBot))
-                    {
-                        int botAmount = MainWindow.BotsCollection.Count;
-                        if (selectedBot > botAmount || selectedBot <= 0)
-                        {
-                           await _telegram.MakeRequestAsync(new SendMessage(update.Message.Chat.Id, "No such bot Exists"));
-                            continue;
-                        }
-                        selectedBot --;
-                        if (MainWindow.BotsCollection.ElementAt(selectedBot).Started == false)
-                            MainWindow.BotsCollection.ElementAt(selectedBot).Start();
-                        await _telegram.MakeRequestAsync(new SendMessage(update.Message.Chat.Id, "Started Bot: " + MainWindow.BotsCollection.ElementAt(selectedBot).ProfileName));
-                    }
-                    continue;
-                }
-
-                if (messageReceived.ToLower() == "stop all")
-                {
-                    foreach (var bot in MainWindow.BotsCollection)
-                    {
-                        if (bot.Started)
-                        {
-                            bot.Stop();
-                        }
-                    }
-                    await _telegram.MakeRequestAsync(new SendMessage(update.Message.Chat.Id, "Stopped all running Bots"));
-                    continue;
-                }
-
-                if (splitMessage[0].ToLower() == "stop")
-                {
-                    if (splitMessage.Length != 2) continue;
-                    if (string.IsNullOrEmpty(splitMessage[1]) || string.IsNullOrEmpty(splitMessage[2])) continue;
-                    int selectedBot;
-                    if (int.TryParse(splitMessage[1], out selectedBot))
-                    {
-                        int botAmount = MainWindow.BotsCollection.Count();
-                        if (selectedBot > botAmount || selectedBot <= 0)
-                        {
-                            await _telegram.MakeRequestAsync(new SendMessage(update.Message.Chat.Id, "No such Bot Exists"));
-                            continue;
-                        }
-                        selectedBot --;
-                        if (MainWindow.BotsCollection.ElementAt(selectedBot).Started)
-                            MainWindow.BotsCollection.ElementAt(selectedBot).Stop();
-                        await _telegram.MakeRequestAsync(new SendMessage(update.Message.Chat.Id, "Stopped Bot: " + MainWindow.BotsCollection.ElementAt(selectedBot).ProfileName));
-                    }
-                    continue;
-                }
-                if (messageReceived.Length >= 50)
-                {
-                   await _telegram.MakeRequestAsync(new SendMessage(update.Message.Chat.Id, "Unknown Command"));
-                }
-                else
-                {
-                    await _telegram.MakeRequestAsync(new SendMessage(update.Message.Chat.Id, "Unknown Command: \n" + messageReceived));
-                }
-                await Task.Delay(50);
-            }  
-        }
-
-        public static void TelegramLog(string logMessage)
-        {
-            foreach (var bot in MainWindow.BotsCollection)
-            {
-                bot.Session.EventDispatcher.Send(new TelegramMessageEvent
-                {
-                    Message = logMessage
+                    Message = "Error during request"
                 });
             }
         }
 
+        public void Stop()
+        {
+            StopTelegram = true;
+            if (_started)
+                EventDispatcher.Send(new TelegramMessageEvent
+                {
+                    Message = "Telegram bot has been stopped!"
+                });
+        }
 
+
+        public async void UpdateMessagesWorker()
+        {
+            long offset = 0;
+            while (!StopTelegram)
+            {
+                var updates = await TelegramBot.MakeRequestAsync(new GetUpdates() { Offset = offset });
+                if (updates != null)
+                {
+                    if (FirstMessageUpdate)
+                    {
+                        if (updates.Length > 1)
+                        {
+                            if (updates[(updates.Length - 1)].Message == null) continue;
+                            TelegramMessages.Enqueue(updates[updates.Length - 1]);
+                        }
+                        FirstMessageUpdate = false;
+                    }
+                    else if (FirstMessageUpdate == false)
+                    {
+                        foreach (var update in updates)
+                        {
+                            offset = update.UpdateId + 1;
+                            if (update.Message == null)
+                            {
+                                continue;
+                            }
+                            TelegramMessages.Enqueue(update);
+                        }
+                    }
+                }
+                await Task.Delay(1000);
+            }
+            _started = false;
+        }
+
+        public async void SendToTelegram(string message, long chatId)
+        {
+            await TelegramBot.MakeRequestAsync(new SendMessage(chatId, message));
+        }
+
+        public async void ReadMessagesWorker()
+        {
+            while (!StopTelegram)
+            {
+                if (TelegramMessages != null && TelegramMessages.Count > 0)
+                {
+                    var update = TelegramMessages.Dequeue();
+                    if (update == null) continue;
+                    var messageReceived = update.Message.Text;
+                    EventDispatcher.Send(new TelegramMessageEvent
+                    {
+                        Message = $"Recived Message ({messageReceived}) from @{update.Message.From.Username}"
+                    });
+
+                    if (string.IsNullOrEmpty(messageReceived)) continue;
+
+                    var messageFractions = messageReceived.ToLower().Split(' ');
+                    if (messageFractions.Length < 1) return;
+
+                    EventDispatcher.Send(new TelegramCommandEvent()
+                    {
+                        Sender = update.Message.From.Username,
+                        Command = messageFractions[0],
+                        Args = messageFractions.Where((x, i) => i > 0).ToArray(),
+                        ChatId = update.Message.Chat.Id
+                    });
+                }
+                await Task.Delay(50);
+            }
+        }
     }
 }

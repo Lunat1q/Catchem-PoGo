@@ -82,7 +82,10 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                             Cp = evolveResponse.EvolvedPokemonData.Cp,
                             Perfection = evolveResponse.EvolvedPokemonData.CalculatePokemonPerfection(),
                             Family = family.FamilyId,
-                            Candy = family.Candy_
+                            Candy = family.Candy_,
+                            Level = PokemonInfo.GetLevel(pokemon),
+                            Move1 = pokemon.Move1,
+                            Move2 = pokemon.Move2
                         });
                     }
                     await DelayingEvolveUtils.Delay(session.LogicSettings.DelayEvolvePokemon, 0, session.LogicSettings.DelayEvolveVariation);

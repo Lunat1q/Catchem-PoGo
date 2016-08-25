@@ -16,5 +16,7 @@ namespace PoGo.PokeMobBot.Logic.Event
         public PokemonId PokemonId;
         public PokemonFamilyId Family;
         public int Candy;
+        public PokemonMove Move1;
+        public PokemonMove Move2;
     }
 }

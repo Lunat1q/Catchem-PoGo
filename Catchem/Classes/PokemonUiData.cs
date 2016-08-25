@@ -35,6 +35,7 @@ namespace Catchem.Classes
         }
 
         private int _cp;
+
         public int Cp
         {
             get { return _cp; }
@@ -58,6 +59,7 @@ namespace Catchem.Classes
         }
 
         private double _iv;
+
         public double Iv
         {
             get { return _iv; }
@@ -67,10 +69,12 @@ namespace Catchem.Classes
                 OnPropertyChanged();
             }
         }
+
         public PokemonId PokemonId { get; set; }
         public PokemonFamilyId Family { get; set; }
         private int _candy;
         public ulong Timestamp { get; set; }
+
         public int Candy
         {
             get { return _candy; }
@@ -105,6 +109,42 @@ namespace Catchem.Classes
             }
         }
 
+        public double Level
+        {
+            get { return _level; }
+            set
+            {
+                _level = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public PokemonMove Move1
+        {
+            get { return _move1; }
+
+            set
+            {
+                _move1 = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public PokemonMove Move2
+        {
+            get { return _move2; }
+
+            set
+            {
+                _move2 = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private double _level;
+        private PokemonMove _move1;
+        private PokemonMove _move2;
+
         public void UpdateTags(LogicSettings ls)
         {
             var tags = new List<string>();
@@ -121,7 +161,8 @@ namespace Catchem.Classes
             Tags = tags.Count > 0 ? tags.Aggregate((x, v) => x + ", " + v) : "";
         }
 
-        public PokemonUiData(BotWindowData ownerBot, ulong id, PokemonId pokemonid, BitmapSource img, string name, int cp, double iv, PokemonFamilyId family, int candy, ulong stamp, bool fav, bool inGym)
+        public PokemonUiData(BotWindowData ownerBot, ulong id, PokemonId pokemonid, BitmapSource img, string name,
+            int cp, double iv, PokemonFamilyId family, int candy, ulong stamp, bool fav, bool inGym, double level, PokemonMove move1, PokemonMove move2)
         {
             OwnerBot = ownerBot;
             Favoured = fav;
@@ -135,6 +176,9 @@ namespace Catchem.Classes
             Candy = candy;
             Family = family;
             Timestamp = stamp;
+            Level = level;
+            Move1 = move1;
+            Move2 = move2;
         }
     }
 }

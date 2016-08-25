@@ -168,35 +168,58 @@ namespace Catchem.Pages
         private async void StartFillFromRealDevice()
         {
             var dd = await Adb.GetDeviceData();
-            c_DeviceId.Text = Bot.GlobalSettings.Device.DeviceId = dd.DeviceId;
-            c_AndroidBoardName.Text = Bot.GlobalSettings.Device.AndroidBoardName = dd.AndroidBoardName;
-            c_AndroidBootLoader.Text = Bot.GlobalSettings.Device.AndroidBootLoader = dd.AndroidBootloader;
-            c_DeviceBrand.Text = Bot.GlobalSettings.Device.DeviceBrand = dd.DeviceBrand;
-            c_DeviceModel.Text = Bot.GlobalSettings.Device.DeviceModel = dd.DeviceModel;
-            c_DeviceModelIdentifier.Text = Bot.GlobalSettings.Device.DeviceModelIdentifier = dd.DeviceModelIdentifier;
-            c_HardwareManufacturer.Text = Bot.GlobalSettings.Device.HardwareManufacturer = dd.HardwareManufacturer;
-            c_HardWareModel.Text = Bot.GlobalSettings.Device.HardWareModel = dd.HardwareModel;
-            c_FirmwareBrand.Text = Bot.GlobalSettings.Device.FirmwareBrand = dd.FirmwareBrand;
-            c_FirmwareTags.Text = Bot.GlobalSettings.Device.FirmwareTags = dd.FirmwareTags;
-            c_FirmwareType.Text = Bot.GlobalSettings.Device.FirmwareType = dd.FirmwareType;
-            c_FirmwareFingerprint.Text = Bot.GlobalSettings.Device.FirmwareFingerprint = dd.FirmwareFingerprint;
+            Bot.GlobalSettings.Device.DeviceId = dd.DeviceId;
+            Bot.GlobalSettings.Device.AndroidBoardName = dd.AndroidBoardName;
+            Bot.GlobalSettings.Device.AndroidBootLoader = dd.AndroidBootloader;
+            Bot.GlobalSettings.Device.DeviceBrand = dd.DeviceBrand;
+            Bot.GlobalSettings.Device.DeviceModel = dd.DeviceModel;
+            Bot.GlobalSettings.Device.DeviceModelIdentifier = dd.DeviceModelIdentifier;
+            Bot.GlobalSettings.Device.HardwareManufacturer = dd.HardwareManufacturer;
+            Bot.GlobalSettings.Device.HardWareModel = dd.HardwareModel;
+            Bot.GlobalSettings.Device.FirmwareBrand = dd.FirmwareBrand;
+            Bot.GlobalSettings.Device.FirmwareTags = dd.FirmwareTags;
+            Bot.GlobalSettings.Device.FirmwareType = dd.FirmwareType;
+            Bot.GlobalSettings.Device.FirmwareFingerprint = dd.FirmwareFingerprint;
+            FillBoxesFromSettings();
+        }
+
+        private void FillBoxesFromSettings()
+        {
+            c_DeviceId.Text = Bot.GlobalSettings.Device.DeviceId;
+            c_AndroidBoardName.Text = Bot.GlobalSettings.Device.AndroidBoardName;
+            c_AndroidBootLoader.Text = Bot.GlobalSettings.Device.AndroidBootLoader;
+            c_DeviceBrand.Text = Bot.GlobalSettings.Device.DeviceBrand;
+            c_DeviceModel.Text = Bot.GlobalSettings.Device.DeviceModel;
+            c_DeviceModelIdentifier.Text = Bot.GlobalSettings.Device.DeviceModelIdentifier;
+            c_HardwareManufacturer.Text = Bot.GlobalSettings.Device.HardwareManufacturer;
+            c_HardWareModel.Text = Bot.GlobalSettings.Device.HardWareModel;
+            c_FirmwareBrand.Text = Bot.GlobalSettings.Device.FirmwareBrand;
+            c_FirmwareTags.Text = Bot.GlobalSettings.Device.FirmwareTags;
+            c_FirmwareType.Text = Bot.GlobalSettings.Device.FirmwareType;
+            c_FirmwareFingerprint.Text = Bot.GlobalSettings.Device.FirmwareFingerprint;
         }
 
         private void btn_textProxy_Click(object sender, RoutedEventArgs e)
         {
-            if (!Bot.GlobalSettings.Auth.UseProxy)
+            if (Bot == null || !Bot.GlobalSettings.Auth.UseProxy)
             {
                 MessageBox.Show("Proxy disabled!", "Proxy test", MessageBoxButton.OK, MessageBoxImage.Information);
                 return;
             }
             try
             {
-                WebClient wc = new WebClient();
-                wc.Proxy = Bot.Session.Proxy;
+                var wc = new WebClient {Proxy = Bot.Session.Proxy};
                 wc.DownloadString("http://google.com/ncr");
                 MessageBox.Show("Proxy works fine!", "Proxy test", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             catch { MessageBox.Show("Proxy failed!", "Proxy test", MessageBoxButton.OK, MessageBoxImage.Warning); }
+        }
+
+        private void b_GenerateNewAndroid_Click(object sender, RoutedEventArgs e)
+        {
+            if (Bot?.GlobalSettings?.Device == null) return;
+            Bot.GlobalSettings.Device.NewRandomPhone();
+            FillBoxesFromSettings();
         }
     }
 }

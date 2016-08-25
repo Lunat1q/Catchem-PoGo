@@ -1,5 +1,6 @@
 ﻿#region using directives
 
+using PoGo.PokeMobBot.Logic.PoGoUtils;
 using POGOProtos.Enums;
 using POGOProtos.Inventory.Item;
 using POGOProtos.Networking.Responses;
@@ -29,5 +30,7 @@ namespace PoGo.PokeMobBot.Logic.Event
         public CatchPokemonResponse.Types.CatchStatus Status;
         public double Latitude;
         public double Longitude;
+        public PokemonMove Move1;
+        public PokemonMove Move2;
     }
 }

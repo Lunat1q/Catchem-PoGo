@@ -113,6 +113,7 @@ namespace PoGo.PokeMobBot.Logic
         //incubator
         bool UseEggIncubators { get; } 
         bool AlwaysPrefferLongDistanceEgg { get; }
+        bool UseOnlyUnlimitedIncubator { get; }
         
 		//display
         bool DisplayPokemonMaxPoweredCp { get; }
