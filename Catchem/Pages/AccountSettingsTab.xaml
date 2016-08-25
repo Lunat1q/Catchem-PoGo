@@ -67,7 +67,7 @@
                               Width="Auto"
                               Height="Auto" />
             </TabItem>
-            <TabItem Header="Pokemon Lists Settings">
+            <TabItem Header="Poke Lists Settings">
                 <pages:PokemonListPage x:Name="BotPokemonListPage"
                                    Width="Auto"
                                    Height="Auto"
