@@ -20,7 +20,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
         {
             if (session.State == BotState.Idle || session.State == BotState.Walk) return true;
             var attempt = 0;
-            while (session.State != BotState.Idle && session.State != BotState.Walk && attempt < 31)
+            while (session.State != BotState.Idle && session.State != BotState.Walk && attempt < 31) //trying to get free status
             {
                 attempt++;
                 await Task.Delay(2000, cancellationToken);
