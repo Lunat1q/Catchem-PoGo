@@ -23,7 +23,7 @@ If you really like this project, feel free to buy <b>pizza</b> :pizza: for devs 
  - [Proxy support]
  - [All settings from UI]
  - [You can set startup location from the map, just select the bot (don't hit Start), go to the map tab, and just double-click to desired position]
- - [Full controll of your inventory/pokemons]
+ - [Full controll of your inventory/poke]
  - [Smooth controll of movement speed on the run via MoveSpeedFactor slider]
  - [Make map follow your player]
 
