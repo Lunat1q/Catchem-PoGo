@@ -84,7 +84,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                     switch (encounter.Status)
                     {
                         case EncounterResponse.Types.Status.EncounterSuccess:
-                            await CatchPokemonTask.Execute(session, encounter, pokemon);
+                            await CatchPokemonTask.Execute(session, encounter, pokemon, cancellationToken);
                             break;
                         case EncounterResponse.Types.Status.PokemonInventoryFull:
                             if (session.LogicSettings.TransferDuplicatePokemon)

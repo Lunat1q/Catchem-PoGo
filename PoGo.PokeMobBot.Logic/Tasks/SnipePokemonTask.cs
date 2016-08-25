@@ -320,7 +320,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                         Longitude = CurrentLongitude
                     });
 
-                    if (!await CatchPokemonTask.Execute(session, encounter, new PokemonCacheItem(pokemon)))
+                    if (!await CatchPokemonTask.Execute(session, encounter, new PokemonCacheItem(pokemon), cancellationToken))
                     {
                         // Don't snipe any more pokemon if we ran out of one kind of pokeballs.
                         session.EventDispatcher.Send(new SnipeModeEvent { Active = false });
