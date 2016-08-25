@@ -86,7 +86,7 @@ namespace Catchem
         {
             Logger.SetLogger(new WpfLogger(LogLevel.Debug), SubPath);
             botsBox.ItemsSource = BotsCollection;
-            grid_pickBot.Visibility = Visibility.Visible;
+            SettingsView.grid_pickBot.Visibility = Visibility.Visible;
             foreach (var item in Directory.GetDirectories(SubPath))
             {
                 if (item != SubPath + "\\Logs")
@@ -232,8 +232,8 @@ namespace Catchem
                     ProfileName = receiverBot.ProfileName,
                     BotNicnname = receiverBot.PlayerName,
                     Level = (double)objData[6],
-                    Move1 = (PokemonMove)objData[7],
-                    Move2 = (PokemonMove)objData[8]
+                    Move1 = (PokemonMove?)objData[7] ?? PokemonMove.MoveUnset,
+                    Move2 = (PokemonMove?)objData[8] ?? PokemonMove.MoveUnset
                 });
             }
             catch (Exception)
@@ -621,8 +621,8 @@ namespace Catchem
             {
                 if (SettingsView.tabControl.IsEnabled)
                     SettingsView.tabControl.IsEnabled = false;
-                if (grid_pickBot.Visibility == Visibility.Collapsed)
-                    grid_pickBot.Visibility = Visibility.Visible;
+                if (SettingsView.grid_pickBot.Visibility == Visibility.Collapsed)
+                    SettingsView.grid_pickBot.Visibility = Visibility.Visible;
                 return;
             }
             
@@ -677,8 +677,8 @@ namespace Catchem
             _loadingUi = true;            
             if (!SettingsView.tabControl.IsEnabled)
                 SettingsView.tabControl.IsEnabled = true;
-            if (grid_pickBot.Visibility == Visibility.Visible)
-                grid_pickBot.Visibility = Visibility.Collapsed;
+            if (SettingsView.grid_pickBot.Visibility == Visibility.Visible)
+                SettingsView.grid_pickBot.Visibility = Visibility.Collapsed;
             if (transit.SelectedIndex != 0) ChangeTransistorTo(0);
             SettingsView.BotSettingsPage.SetBot(Bot);
             SettingsView.BotPlayerPage.SetBot(Bot);
@@ -744,7 +744,6 @@ namespace Catchem
 
         private void ChangeTransistorTo(int i)
         {
-            if (grid_pickBot.Visibility == Visibility.Visible) return;
             if (transit.SelectedIndex != i)
             {
                 transit.SelectedIndex = i;

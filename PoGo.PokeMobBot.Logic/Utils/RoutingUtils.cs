@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using C5;
 using GeoCoordinatePortable;
 using static System.Double;
 
@@ -30,13 +29,11 @@ namespace PoGo.PokeMobBot.Logic.Utils
         private readonly double[,] _newFortsDistance;
         private bool LimitedVisit => _fortsToVisit > 0;
         private readonly int _fortsToVisit;
-        private int[] _opt;
+        private readonly int[] _opt;
         private double[] _rowMin;
         private double[] _colMin;
         private int _size;
-        private bool _nearestNeigh;
-
-        private int[] _currentRoute = new [] {0};
+        private readonly bool _nearestNeigh;
 
         public MapMatrix(IEnumerable<FortCacheItem> forts, FortCacheItem fortToStart, int fortsToVisit = 0, bool nearestNeigh = true)
         {

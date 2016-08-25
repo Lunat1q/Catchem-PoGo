@@ -143,6 +143,32 @@ namespace Catchem.Classes
 
         private float RealWorkH => _realWorkSec/(60*60);
 
+        public double PokemonsRate
+        {
+            get
+            {
+                if (Stats == null || RealWorkH < 0.001) return 0;
+                return Stats.TotalPokemons/RealWorkH;
+            }
+        }
+        public double PokestopsRate
+        {
+            get
+            {
+                if (Stats == null || RealWorkH < 0.001) return 0;
+                return Stats.TotalPokestops / RealWorkH;
+            }
+        }
+
+        public double StardustRate
+        {
+            get
+            {
+                if (Stats == null || RealWorkH < 0.001 || Stats.TotalStardust == 0) return 0;
+                return (Stats.TotalStardust - StartStarDust) / RealWorkH;
+            }
+        }
+
         public TimeSpan Ts
         {
             get { return _ts; }
@@ -515,25 +541,20 @@ namespace Catchem.Classes
                 var countPokemons = GlobalSettings.CatchSettings.MaxCatchPerHour > 0;
                 var countPokestops = GlobalSettings.CatchSettings.MaxPokestopsPerHour > 0;
 
-                var pokemonsRate = Stats.TotalPokemons/RealWorkH;
-                var pokestopsRate = Stats.TotalPokestops/RealWorkH;
-                var xpRate = Stats.TotalExperience/RealWorkH;
-                var stardustRate = (Stats.TotalStardust - StartStarDust)/RealWorkH;
 
-
-                var tooMuchPokemons = countPokemons && pokemonsRate > GlobalSettings.CatchSettings.MaxCatchPerHour;
-                var tooMuchPokestops = countPokestops && pokestopsRate > GlobalSettings.CatchSettings.MaxPokestopsPerHour;
-                var tooMuchXp = countXp && xpRate > GlobalSettings.CatchSettings.MaxXPPerHour;
-                var tooMuchStarDust = countSd && stardustRate > GlobalSettings.CatchSettings.MaxStarDustPerHour;
+                var tooMuchPokemons = countPokemons && PokemonsRate > GlobalSettings.CatchSettings.MaxCatchPerHour;
+                var tooMuchPokestops = countPokestops && PokestopsRate > GlobalSettings.CatchSettings.MaxPokestopsPerHour;
+                var tooMuchXp = countXp && Xpph > GlobalSettings.CatchSettings.MaxXPPerHour;
+                var tooMuchStarDust = countSd && StardustRate > GlobalSettings.CatchSettings.MaxStarDustPerHour;
                 if (!tooMuchPokemons && !tooMuchPokestops && !tooMuchXp && !tooMuchStarDust) return;
                 var pokemonSec = tooMuchPokemons
-                    ? (pokemonsRate - GlobalSettings.CatchSettings.MaxCatchPerHour) / GlobalSettings.CatchSettings.MaxCatchPerHour * 60 * 60 : 0;
+                    ? (PokemonsRate - GlobalSettings.CatchSettings.MaxCatchPerHour) / GlobalSettings.CatchSettings.MaxCatchPerHour * 60 * 60 : 0;
                 var pokestopSec = tooMuchPokestops
-                    ? (pokestopsRate - GlobalSettings.CatchSettings.MaxPokestopsPerHour) / GlobalSettings.CatchSettings.MaxPokestopsPerHour * 60 * 60 : 0;
+                    ? (PokestopsRate - GlobalSettings.CatchSettings.MaxPokestopsPerHour) / GlobalSettings.CatchSettings.MaxPokestopsPerHour * 60 * 60 : 0;
                 var xpSec = tooMuchXp
-                    ? (xpRate - GlobalSettings.CatchSettings.MaxXPPerHour) / GlobalSettings.CatchSettings.MaxXPPerHour * 60 * 60 : 0;
+                    ? (Xpph - GlobalSettings.CatchSettings.MaxXPPerHour) / GlobalSettings.CatchSettings.MaxXPPerHour * 60 * 60 : 0;
                 var stardustSec = tooMuchStarDust
-                    ? (stardustRate - GlobalSettings.CatchSettings.MaxStarDustPerHour) / GlobalSettings.CatchSettings.MaxStarDustPerHour * 60 * 60 : 0;
+                    ? (StardustRate - GlobalSettings.CatchSettings.MaxStarDustPerHour) / GlobalSettings.CatchSettings.MaxStarDustPerHour * 60 * 60 : 0;
 
                 var stopSec = 10 * 60 + _rnd.Next(60 * 5) + (int)(new double[] { pokestopSec, pokemonSec, xpSec, stardustSec }).Max();
                 var stopMs = stopSec * 1000;
@@ -541,7 +562,7 @@ namespace Catchem.Classes
                 Session.EventDispatcher.Send(new WarnEvent
                 {
                     Message =
-                        $"Max amount of Pokemon ({pokemonsRate.ToN1()})/Pokestops ({pokestopsRate.ToN1()})/XP ({xpRate.ToN1()})/Star Dust ({stardustRate.ToN1()}) per hour reached, bot will be stoped for {(stopMs/60000).ToString("N1")} minutes"
+                        $"Max amount of Pokemon ({PokemonsRate.ToN1()})/Pokestops ({PokestopsRate.ToN1()})/XP ({Xpph.ToN1()})/Star Dust ({StardustRate.ToN1()}) per hour reached, bot will be stoped for {(stopMs/60000).ToString("N1")} minutes"
                 });
                 _realWorkSec += stopSec;
                 Stop(true);

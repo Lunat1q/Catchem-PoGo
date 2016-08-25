@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             mc:Ignorable="d" d:DesignHeight="600" d:DesignWidth="700">
+             mc:Ignorable="d" d:DesignHeight="600" d:DesignWidth="760">
     <Grid x:Name="TlgrmGrid">
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -121,7 +121,7 @@
                 <ListBox x:Name="OwnerBox" Height="79" Margin="10,0" Grid.Row="2" Grid.ColumnSpan="2" Grid.Column="0"
                          ItemTemplate="{DynamicResource TelegramOwnerTemplate}" HorizontalContentAlignment="Stretch"/>
                 <TextBox x:Name="TbReportAllPokemonsAboveCp" Margin="10,0" TextWrapping="Wrap" VerticalAlignment="Center" Template="{Binding Mode=OneWay, Source={StaticResource pogo}}" TextChanged="ElementPropertyChanged" Grid.Row="3" Grid.Column="1"/>
-                <Label x:Name="ReportAllPokemonsAboveCpLabel" Content="Report above CP (set 0 to disable)" Margin="10,0,0,0" Grid.Column="0"
+                <Label x:Name="ReportAllPokemonsAboveCpLabel" Content="Report any above CP (set 0 to disable)" Margin="10,0,0,0" Grid.Column="0"
                 	VerticalContentAlignment="Center" Grid.Row="3" VerticalAlignment="Center"/>
                 <Label x:Name="OwnerAddLabel" Content="Owners" Margin="10,0,0,0" Grid.Column="0"
                 	VerticalContentAlignment="Center" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Left"/>

@@ -17,6 +17,8 @@ namespace PoGo.PokeMobBot.Logic.Tasks
 
         public static async Task Execute(ISession session, CancellationToken cancellationToken)
         {
+            var prevState = session.State;
+            session.State = BotState.Recycle;
             cancellationToken.ThrowIfCancellationRequested();
             await session.Inventory.RefreshCachedInventory();
             var currentTotalItems = await session.Inventory.GetTotalItemCount();
@@ -39,6 +41,8 @@ namespace PoGo.PokeMobBot.Logic.Tasks
             await OptimizedRecycleBerries(session, cancellationToken);
 
             await session.Inventory.RefreshCachedInventory();
+
+            session.State = prevState;
         }
 
         private static async Task OptimizedRecycleBalls(ISession session, CancellationToken cancellationToken)

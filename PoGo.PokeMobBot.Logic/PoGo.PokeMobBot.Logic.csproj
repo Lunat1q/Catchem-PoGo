@@ -148,6 +148,7 @@
     <Compile Include="Service\BotService.cs" />
     <Compile Include="State\CheckTosState.cs" />
     <Compile Include="Tasks\FavoriteSpecificPokemonTask.cs" />
+    <Compile Include="Tasks\CheckBotStateTask.cs" />
     <Compile Include="Tasks\LevelUpSpecificPokemonTask.cs" />
     <Compile Include="Tasks\SetPlayerTeamTask.cs" />
     <Compile Include="Tasks\PlayerStatsTask.cs" />
@@ -219,7 +220,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\PokemonGoAPI\PokemonGo.RocketAPI\PokemonGo.RocketAPI.csproj">
+    <ProjectReference Include="..\PoGoAPI\PoGo.RocketAPI\PoGo.RocketAPI.csproj">
       <Project>{05D2DA44-1B8E-4CF7-94ED-4D52451CD095}</Project>
       <Name>PokemonGo.RocketAPI</Name>
     </ProjectReference>

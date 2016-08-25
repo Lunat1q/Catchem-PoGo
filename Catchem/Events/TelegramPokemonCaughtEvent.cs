@@ -11,7 +11,7 @@ namespace Catchem.Events
         public string ProfileName;
         public string BotNicnname;
         public double Level;
-        public PokemonMove Move2;
-        public PokemonMove Move1;
+        public PokemonMove? Move2;
+        public PokemonMove? Move1;
     }
 }

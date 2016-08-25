@@ -144,7 +144,7 @@ namespace Catchem
             {
                 var pokemon = pokemonQueue.Dequeue();
                 if (pokemon?.OwnerBot != null && pokemon.OwnerBot.Started)
-                    await EvolveSpecificPokemonTask.Execute(pokemon.OwnerBot.Session, pokemon.Id);
+                    await EvolveSpecificPokemonTask.Execute(pokemon.OwnerBot.Session, pokemon.Id, pokemon.OwnerBot.CancellationToken);
             }
             pokeListBox.IsEnabled = true;
         }
@@ -157,7 +157,7 @@ namespace Catchem
             {
                 var pokemon = pokemonQueue.Dequeue();
                 if (pokemon?.OwnerBot != null && pokemon.OwnerBot.Started)
-                    await LevelUpSpecificPokemonTask.Execute(pokemon.OwnerBot.Session, pokemon.Id, toMax);
+                    await LevelUpSpecificPokemonTask.Execute(pokemon.OwnerBot.Session, pokemon.Id, pokemon.OwnerBot.CancellationToken, toMax);
             }
             pokeListBox.IsEnabled = true;
         }
@@ -171,7 +171,7 @@ namespace Catchem
             {
                 var pokemon = pokemonQueue.Dequeue();
                 if (pokemon?.OwnerBot != null && pokemon.OwnerBot.Started)
-                    await RenameSpecificPokemonTask.Execute(pokemon.OwnerBot.Session, pokemon.Id, name, toDefault);
+                    await RenameSpecificPokemonTask.Execute(pokemon.OwnerBot.Session, pokemon.Id, pokemon.OwnerBot.CancellationToken, name, toDefault);
             }
             pokeListBox.IsEnabled = true;
         }
