@@ -32,6 +32,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                     nameof(pokemon));
             var prevState = session.State;
             session.State = BotState.Catch;
+            var canUseBerry = true;
             CatchPokemonResponse caughtPokemonResponse;
             var attemptCounter = 1;
             do
@@ -70,7 +71,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                         ? encounter.WildPokemon?.PokemonData
                         : encounter?.PokemonData) >= session.LogicSettings.UseBerryMinIv;
 
-                if (isLowProbability && ((session.LogicSettings.PrioritizeIvOverCp && isHighPerfection) || isHighCp))
+                if (isLowProbability && ((session.LogicSettings.PrioritizeIvOverCp && isHighPerfection) || isHighCp) && canUseBerry)
                 {
                     await
                         UseBerry(session,
@@ -80,7 +81,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                             encounter is EncounterResponse || encounter is IncenseEncounterResponse
                                 ? pokemon.SpawnPointId
                                 : currentFortData?.Id);
-
+                    canUseBerry = false;
                     await DelayingUtils.Delay(session.LogicSettings.DelayBetweenPlayerActions, 1000);
                 }
 
@@ -191,11 +192,14 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                     }
                     session.MapCache.PokemonCaught(pokemon);
                 }
-                if (caughtPokemonResponse.Status == CatchPokemonResponse.Types.CatchStatus.CatchFlee)
+                else if (caughtPokemonResponse.Status == CatchPokemonResponse.Types.CatchStatus.CatchFlee)
                 {
                     pokemon.Caught = true;
                 }
-
+                else if (caughtPokemonResponse.Status == CatchPokemonResponse.Types.CatchStatus.CatchEscape)
+                {
+                    canUseBerry = true;
+                }
 
                 evt.CatchType = encounter is EncounterResponse
                     ? session.Translation.GetTranslation(TranslationString.CatchTypeNormal)

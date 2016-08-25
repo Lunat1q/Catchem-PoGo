@@ -126,7 +126,7 @@ namespace Catchem
         private void DrawNextOptRoute(ISession session, List<Tuple<double, double>> list)
         {
             var receiverBot = BotsCollection.FirstOrDefault(x => x.Session == session);
-            if (receiverBot == null || !receiverBot.Started) return;
+            if (receiverBot == null || !receiverBot.Started || receiverBot != Bot) return;
             SettingsView.BotMapPage.UpdateOptPathRoute(list);
         }
 
