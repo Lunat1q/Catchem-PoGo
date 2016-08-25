@@ -70,7 +70,7 @@ namespace PoGo.PokeMobBot.Logic
 		bool StopBotToAvoidBanOnUnknownLoginError { get; }
         bool AutoCompleteTutorial { get; }
         string DesiredNickname { get; }
-       
+        bool BeLikeRobot { get; }
 
         //coords and movement
         bool Teleport { get; }
