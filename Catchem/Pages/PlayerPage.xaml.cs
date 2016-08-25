@@ -23,6 +23,7 @@ namespace Catchem.Pages
         private ISession CurSession => _bot.Session;
         private bool _loadingUi;
         private bool _inRefresh;
+        private bool _inRefreshItems;
         public PlayerPage()
         {
             InitializeComponent();
@@ -197,14 +198,16 @@ namespace Catchem.Pages
 
         private void mi_refreshItems_Click(object sender, RoutedEventArgs e)
         {
-            if (!_bot.Started) return;
+            if (!_bot.Started || _inRefreshItems) return;
             RefreshItems();
         }
 
         private async void RefreshItems()
         {
+            _inRefreshItems = true;
             Action<IEvent> action = (evt) => CurSession.EventDispatcher.Send(evt);
             await InventoryListTask.Execute(CurSession, action);
+            _inRefreshItems = false;
         }
 
         private async void SelectTeam(TeamColor clr)
