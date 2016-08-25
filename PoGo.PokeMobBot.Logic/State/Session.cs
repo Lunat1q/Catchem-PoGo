@@ -17,6 +17,7 @@ namespace PoGo.PokeMobBot.Logic.State
         ISettings Settings { get; }
         Inventory Inventory { get; }
         Client Client { get; }
+        BotState State { get; set; }
         GetPlayerResponse Profile { get; set; }
         HumanNavigation Navigation { get; }
         MapCache MapCache { get; }
@@ -33,6 +34,19 @@ namespace PoGo.PokeMobBot.Logic.State
         void StartForceMove(double lat, double lng);
     }
 
+    public enum BotState
+    {
+        Idle,
+        Walk,
+        Catch,
+        Transfer,
+        Battle,
+        Evolve,
+        LevelPoke,
+        Renaming,
+        Busy
+    }
+
 
     public class Session : ISession
     {
@@ -45,7 +59,10 @@ namespace PoGo.PokeMobBot.Logic.State
             Translation = Common.Translation.Load(logicSettings);
             Reset(settings, LogicSettings);
             Runtime = new RuntimeSettings();
+            State = BotState.Idle;
         }
+
+        public BotState State { get; set; }
 
         public ISettings Settings { get; }
 

@@ -28,8 +28,8 @@ namespace PoGo.PokeMobBot.Logic.Tasks
             if (encounter is EncounterResponse && pokemon == null)
                 throw new ArgumentException("Parameter pokemon must be set, if encounter is of type EncounterResponse",
                     nameof(pokemon));
-            
 
+            session.State = BotState.Catch;
             CatchPokemonResponse caughtPokemonResponse;
             var attemptCounter = 1;
             do
@@ -230,7 +230,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                     await Task.Delay(session.LogicSettings.DelayCatchPokemon);
             } while (caughtPokemonResponse.Status == CatchPokemonResponse.Types.CatchStatus.CatchMissed ||
                      caughtPokemonResponse.Status == CatchPokemonResponse.Types.CatchStatus.CatchEscape);
-
+            session.State = BotState.Idle;
             return true;
         }
 

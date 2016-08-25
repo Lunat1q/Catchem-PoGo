@@ -21,7 +21,8 @@ namespace PoGo.PokeMobBot.Logic.Tasks
         public static async Task Execute(ISession session, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
-
+            var prevState = session.State;
+            session.State = BotState.Evolve;
             // Refresh inventory so that the player stats are fresh
             await session.Inventory.RefreshCachedInventory();
 
@@ -91,6 +92,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                     await DelayingEvolveUtils.Delay(session.LogicSettings.DelayEvolvePokemon, 0, session.LogicSettings.DelayEvolveVariation);
                 }
             }
+            session.State = prevState;
         }
 
         public static async Task UseLuckyEgg(ISession session)

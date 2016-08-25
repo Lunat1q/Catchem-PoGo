@@ -174,13 +174,15 @@ namespace PoGo.PokeMobBot.Logic
                         continue;
 
                     var nextSpeed = session.Client.rnd.NextInRange(walkingSpeedMin, walkingSpeedMax)*session.Settings.MoveSpeedFactor;
-
+                    session.State = BotState.Walk;
                     result = await navi.HumanPathWalking(session, t, nextSpeed, functionExecutedWhileWalking, functionExecutedWhileWalking2, cancellationToken);
                     if (session.Runtime.BreakOutOfPathing)
                         return result;
                     UpdatePositionEvent?.Invoke(t.Latitude, t.Longitude, t.Altitude);
+                    
                     //Console.WriteLine("Hit waypoint " + x);
                 }
+                session.State = BotState.Idle;
                 var curcoord = new GeoCoordinate(session.Client.CurrentLatitude, session.Client.CurrentLongitude);
                 if (LocationUtils.CalculateDistanceInMeters(curcoord, destination) > 40)
                 {

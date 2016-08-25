@@ -13,7 +13,8 @@ namespace PoGo.PokeMobBot.Logic.Tasks
         public static async Task Execute(ISession session, ulong pokemonId)
         {
             var id = pokemonId;
-
+            var prevState = session.State;
+            session.State = BotState.Evolve;
             var all = await session.Inventory.GetPokemons();
             var pokemons = all.OrderByDescending(x => x.Cp).ThenBy(n => n.StaminaMax);
             var pokemon = pokemons.FirstOrDefault(p => p.Id == id);
@@ -58,6 +59,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
             });
 
             await Task.Delay(session.LogicSettings.DelayTransferPokemon);
+            session.State = prevState;
         }
     }
 }
