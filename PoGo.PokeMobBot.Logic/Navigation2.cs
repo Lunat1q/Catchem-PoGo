@@ -33,39 +33,6 @@ namespace PoGo.PokeMobBot.Logic
         {
             _client = client;
         }
-
-
-        public async Task<PlayerUpdateResponse> MoveEH(GeoCoordinate destination, double walkingSpeedInKilometersPerHour,
-            Func<Task<bool>> functionExecutedWhileWalking, Func<Task<bool>> functionExecutedWhileWalking2,
-            CancellationToken cancellationToken, ISession session)
-        {
-            GeoCoordinate currentLocation = new GeoCoordinate(_client.CurrentLatitude, _client.CurrentLongitude, _client.CurrentAltitude);
-            PlayerUpdateResponse result = new PlayerUpdateResponse();
-            List<GeoCoordinate> waypoints = new List<GeoCoordinate>();
-            var routingResponse = Routing.GetRoute(currentLocation, destination);
-            foreach (var item in routingResponse.Coordinates)
-            {
-                //0 = lat, 1 = long (MAYBE NOT THO?)
-                waypoints.Add(new GeoCoordinate(item.ToArray()[1], item.ToArray()[0]));
-            }
-            Navigation navi = new Navigation(_client, UpdatePositionEvent);
-            for (var x = 0; x < waypoints.Count; x++)
-            {
-                var nextSpeed = session.Client.rnd.NextInRange(session.LogicSettings.WalkingSpeedMin, session.LogicSettings.WalkingSpeedMax) * session.Settings.MoveSpeedFactor;
-                await navi.HumanPathWalking(session, waypoints.ToArray()[x], nextSpeed,
-                    functionExecutedWhileWalking, functionExecutedWhileWalking2, cancellationToken);
-                UpdatePositionEvent?.Invoke(waypoints.ToArray()[x].Latitude, waypoints.ToArray()[x].Longitude, waypoints.ToArray()[x].Altitude);
-                //Console.WriteLine("Hit waypoint " + x);
-            }
-            var curcoord = new GeoCoordinate(session.Client.CurrentLatitude, session.Client.CurrentLongitude);
-            if (!(LocationUtils.CalculateDistanceInMeters(curcoord, destination) > 40)) return result;
-            {
-                var nextSpeed = session.Client.rnd.NextInRange(session.LogicSettings.WalkingSpeedMin, session.LogicSettings.WalkingSpeedMax) * session.Settings.MoveSpeedFactor;
-                await navi.HumanPathWalking(session, destination, nextSpeed,
-                    functionExecutedWhileWalking, functionExecutedWhileWalking2, cancellationToken);
-            }
-            return result;
-        }
         /// <summary>
         /// 
         /// </summary>
@@ -210,6 +177,7 @@ namespace PoGo.PokeMobBot.Logic
                     result = await navi.HumanPathWalking(session, destination, nextSpeed, functionExecutedWhileWalking, functionExecutedWhileWalking2, cancellationToken);
                 }
             }
+            session.State = BotState.Idle;
             await MaintenanceTask.Execute(session, cancellationToken);
             return result;
         }
