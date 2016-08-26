@@ -4,7 +4,6 @@ using System.Windows;
 using System.Windows.Controls;
 using Catchem.Classes;
 using Catchem.Pages;
-using PoGo.PokeMobBot.Logic.State;
 using PoGo.PokeMobBot.Logic.Tasks;
 using POGOProtos.Enums;
 
@@ -136,7 +135,7 @@ namespace Catchem
             LevelUpPokemon(pokemonToLevel, pokeListBox, true);
         }
 
-        private async void EvolvePokemon(Queue<PokemonUiData> pokemonQueue, ListBox pokeListBox)
+        private static async void EvolvePokemon(Queue<PokemonUiData> pokemonQueue, ListBox pokeListBox)
         {
             if (pokemonQueue == null) return;
             pokeListBox.IsEnabled = false;
@@ -149,7 +148,7 @@ namespace Catchem
             pokeListBox.IsEnabled = true;
         }
 
-        private async void LevelUpPokemon(Queue<PokemonUiData> pokemonQueue, ListBox pokeListBox, bool toMax = false)
+        private static async void LevelUpPokemon(Queue<PokemonUiData> pokemonQueue, ListBox pokeListBox, bool toMax = false)
         {
             if (pokemonQueue == null) return;
             pokeListBox.IsEnabled = false;
@@ -162,7 +161,7 @@ namespace Catchem
             pokeListBox.IsEnabled = true;
         }
 
-        private async void RenamePokemon(Queue<PokemonUiData> pokemonQueue, ListBox pokeListBox, string name = null, bool toDefault = false)
+        private static async void RenamePokemon(Queue<PokemonUiData> pokemonQueue, ListBox pokeListBox, string name = null, bool toDefault = false)
         {
             if (pokemonQueue == null) return;
             if (name == null) return;
@@ -176,7 +175,7 @@ namespace Catchem
             pokeListBox.IsEnabled = true;
         }
 
-        private async void TransferPokemon(Queue<PokemonUiData> pokemonQueue, ListBox pokeListBox)
+        private static async void TransferPokemon(Queue<PokemonUiData> pokemonQueue, ListBox pokeListBox)
         {
             if (pokemonQueue == null) return;
             pokeListBox.IsEnabled = false;
@@ -189,7 +188,7 @@ namespace Catchem
             pokeListBox.IsEnabled = true;
         }
 
-        private Queue<PokemonUiData> GetMultipleSelectedPokemon(ListBox pokeListBox)
+        private static Queue<PokemonUiData> GetMultipleSelectedPokemon(ListBox pokeListBox)
         {
             var pokemonQueue = new Queue<PokemonUiData>();
             if (pokeListBox == null) return pokemonQueue;

@@ -241,7 +241,7 @@ namespace Catchem.Pages
         {
             var uGrid = sender as UniformGrid;
             if (uGrid == null) return;
-            if (uGrid.Width <= 500) uGrid.Columns = 3;
+            uGrid.Columns = (int)(uGrid.ActualWidth/150);
         }
     }
 }
