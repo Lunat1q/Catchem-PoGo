@@ -94,7 +94,7 @@
                    FontWeight="Bold"
                    Foreground="White" />
             <Label x:Name="label13_Copy"
-                   Margin="214,410,214,261"
+                   Margin="0,100,0,0"
                    HorizontalAlignment="Center"
                    VerticalAlignment="Center"
                    Content="or create a new one"

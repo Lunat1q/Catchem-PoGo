@@ -4,6 +4,7 @@
                     xmlns:extensions="clr-namespace:Catchem.Extensions"
                     xmlns:sys="clr-namespace:System;assembly=mscorlib"
                     xmlns:pokemon="clr-namespace:POGOProtos.Enums;assembly=POGOProtos"
+                    xmlns:classes="clr-namespace:Catchem.Classes"
                     x:Class="Catchem.Styles">
     <ObjectDataProvider MethodName="GetValues"
                     ObjectType="{x:Type sys:Enum}"
@@ -52,15 +53,15 @@
             </Setter.Value>
         </Setter>
     </Style>
-    <DataTemplate x:Key="PokemonDataTemplate">
-        <Grid Height="Auto" Margin="1" MinWidth="150" MinHeight="160" MaxWidth="200">
+    <DataTemplate x:Key="PokemonDataTemplate" DataType="classes:PokemonUiData">
+        <Grid Height="Auto" Margin="1" MinWidth="150" MinHeight="160" MaxWidth="300">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Rectangle Fill="White" HorizontalAlignment="Stretch" Height="Auto" VerticalAlignment="Stretch" Width="Auto" Grid.ColumnSpan="2" RadiusX="7" RadiusY="7"/>
-            <Grid HorizontalAlignment="Left" Height="90" VerticalAlignment="Top" Width="150" Grid.ColumnSpan="2">
-                <Image Source="{Binding Path=Image}" x:Name="image" HorizontalAlignment="Stretch" Height="Auto" Margin="0" VerticalAlignment="Center" Width="Auto"/>
+            <Rectangle x:Name="PokeBg" Fill="White" HorizontalAlignment="Stretch" Height="Auto" VerticalAlignment="Stretch" Width="Auto" Grid.ColumnSpan="2" RadiusX="7" RadiusY="7"/>
+            <Grid HorizontalAlignment="Stretch" Height="90" VerticalAlignment="Top" Width="Auto" Grid.ColumnSpan="2">
+                <Image Source="{Binding Path=Image}" x:Name="image" HorizontalAlignment="Center" Height="Auto" Margin="0" VerticalAlignment="Center" Width="Auto"/>
                 <Image Source="{Binding Favoured, Converter={StaticResource LoadImageSourceFromResource}, ConverterParameter='favoured'}" x:Name="favImage" Height="20" Margin="0,4,4,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="20" Stretch="Uniform"/>
                 <Image Source="{Binding InGym, ConverterParameter='gym', Converter={StaticResource LoadImageSourceFromResource}}" x:Name="favImage_Copy" Height="20" Margin="4,4,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="20" Stretch="Uniform"/>
             </Grid>
@@ -70,6 +71,18 @@
             <TextBlock Text="{Binding Candy, FallbackValue='Candy: 0', StringFormat='Candy: {0}'}" HorizontalAlignment="Left" Margin="0,140,0,0" VerticalAlignment="Top" Width="75" Padding="0" Foreground="#FF59C3B0" Grid.Column="1" FontSize="12" TextAlignment="Center" />
             <TextBlock Text="{Binding Tags, FallbackValue='', StringFormat=''}" HorizontalAlignment="Left" Margin="0,140,0,0" VerticalAlignment="Top" Width="75" Padding="0" Foreground="#FF59C3B0" Grid.Column="0" FontSize="12" TextAlignment="Center" />
         </Grid>
+        <DataTemplate.Triggers>
+            <DataTrigger Value="True" Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}}">
+                <Setter Property="Fill" TargetName="PokeBg" >
+                    <Setter.Value>
+                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                            <GradientStop Color="#0C00FFD1" Offset="0"/>
+                            <GradientStop Color="#0C00FF80" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Setter.Value>
+                </Setter>
+            </DataTrigger>
+        </DataTemplate.Triggers>
     </DataTemplate>
     <DataTemplate x:Key="InventoryItemTemplate">
         <Grid Height="75" Margin="3" Width="Auto">
@@ -205,4 +218,11 @@
             <TextBlock Text="{Binding ChatId, FallbackValue=0}" Margin="0" Grid.Column="1" Foreground="#FF5F6160" TextAlignment="Center" Grid.ColumnSpan="1" VerticalAlignment="Center" Height="Auto" Grid.Row="0" FontSize="10.667"/>
         </Grid>
     </DataTemplate>
+    <Style x:Key="ListBoxItemStyleTransparentSelect" TargetType="ListBoxItem">
+        <Style.Resources>
+            <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Transparent"/>
+            <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="Transparent"/>
+            <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}" Color="Black"/>
+        </Style.Resources>
+    </Style>
 </ResourceDictionary>
