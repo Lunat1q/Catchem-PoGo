@@ -82,7 +82,7 @@
             </ListBox.Background>
             <ListBox.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <WrapPanel />
+                    <UniformGrid x:Name="PokeWrapper" Columns="3" SizeChanged="PokeWrapper_SizeChanged"/>
                 </ItemsPanelTemplate>
             </ListBox.ItemsPanel>
         </ListBox>

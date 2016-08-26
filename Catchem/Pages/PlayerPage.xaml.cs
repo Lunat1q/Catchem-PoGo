@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Threading;
 using System.Windows;
+using System.Windows.Controls.Primitives;
 using Catchem.Classes;
 using Catchem.Extensions;
 using Catchem.Interfaces;
@@ -234,6 +235,13 @@ namespace Catchem.Pages
             if (inputDialog.ShowDialog() != true || inputDialog.ObjectAnswer == null) return;
             var team = (TeamColor)inputDialog.ObjectAnswer;
             SelectTeam(team);
+        }
+
+        private void PokeWrapper_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            var uGrid = sender as UniformGrid;
+            if (uGrid == null) return;
+            if (uGrid.Width <= 500) uGrid.Columns = 3;
         }
     }
 }

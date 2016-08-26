@@ -36,12 +36,15 @@ namespace PoGo.PokeMobBot.Logic.Tasks
             }
 
             await OptimizedRecycleBalls(session, cancellationToken);
+            await Task.Delay(session.LogicSettings.DelayBetweenPlayerActions, cancellationToken);
             await OptimizedRecyclePotions(session, cancellationToken);
+            await Task.Delay(session.LogicSettings.DelayBetweenPlayerActions, cancellationToken);
             await OptimizedRecycleRevives(session, cancellationToken);
+            await Task.Delay(session.LogicSettings.DelayBetweenPlayerActions, cancellationToken);
             await OptimizedRecycleBerries(session, cancellationToken);
-
+            await Task.Delay(session.LogicSettings.DelayBetweenPlayerActions, cancellationToken);
             await session.Inventory.RefreshCachedInventory();
-
+            await Task.Delay(session.LogicSettings.DelayBetweenPlayerActions, cancellationToken);
             session.State = prevState;
         }
 
@@ -175,10 +178,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                 cancellationToken.ThrowIfCancellationRequested();
                 session.EventDispatcher.Send(new ItemRecycledEvent { Id = item, Count = itemsToRecycle });
                 await session.Client.Inventory.RecycleItem(item, itemsToRecycle);
-                if (session.LogicSettings.Teleport)
-                    await Task.Delay(session.LogicSettings.DelayRecyleItem, cancellationToken);
-                else
-                    await DelayingUtils.Delay(session.LogicSettings.DelayBetweenPlayerActions, 500);
+                await Task.Delay(session.LogicSettings.DelayRecyleItem, cancellationToken);
             }
         }
     }
