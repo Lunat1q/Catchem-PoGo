@@ -37,7 +37,7 @@ namespace Catchem.Pages
             pokeMap.Zoom = 2;
             GMap.NET.MapProviders.GMapProvider.WebProxy = System.Net.WebRequest.GetSystemWebProxy();
             GMap.NET.MapProviders.GMapProvider.WebProxy.Credentials = System.Net.CredentialCache.DefaultCredentials;
-            pokeMap.MapProvider = GMap.NET.MapProviders.GMapProviders.OpenStreetMap;
+            pokeMap.MapProvider = GMap.NET.MapProviders.GMapProviders.GoogleMap;
             GMaps.Instance.Mode = AccessMode.ServerOnly;
             
         }
