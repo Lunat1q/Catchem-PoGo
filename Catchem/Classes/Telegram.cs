@@ -89,34 +89,47 @@ namespace Catchem.Classes
         public async void UpdateMessagesWorker()
         {
             long offset = 0;
+            int delay = 2000;
             while (!StopTelegram)
             {
-                var updates = await TelegramBot.MakeRequestAsync(new GetUpdates() { Offset = offset });
-                if (updates != null)
+                try
                 {
-                    if (FirstMessageUpdate)
+                    var updates = await TelegramBot.MakeRequestAsync(new GetUpdates() {Offset = offset});
+                    if (updates != null)
                     {
-                        if (updates.Length > 1)
+                        if (FirstMessageUpdate)
                         {
-                            if (updates[(updates.Length - 1)].Message == null) continue;
-                            TelegramMessages.Enqueue(updates[updates.Length - 1]);
-                        }
-                        FirstMessageUpdate = false;
-                    }
-                    else if (FirstMessageUpdate == false)
-                    {
-                        foreach (var update in updates)
-                        {
-                            offset = update.UpdateId + 1;
-                            if (update.Message == null)
+                            if (updates.Length > 1)
                             {
-                                continue;
+                                if (updates[(updates.Length - 1)].Message == null) continue;
+                                TelegramMessages.Enqueue(updates[updates.Length - 1]);
                             }
-                            TelegramMessages.Enqueue(update);
+                            FirstMessageUpdate = false;
                         }
+                        else if (FirstMessageUpdate == false)
+                        {
+                            foreach (var update in updates)
+                            {
+                                offset = update.UpdateId + 1;
+                                if (update.Message == null)
+                                {
+                                    continue;
+                                }
+                                TelegramMessages.Enqueue(update);
+                            }
+                        }
+                        if (delay > 2000) delay = 2000;
                     }
                 }
-                await Task.Delay(1000);
+                catch (Exception ex)
+                {
+                    EventDispatcher.Send(new TelegramMessageEvent
+                    {
+                        Message = $"Error during request to api.telegram.com, retry in 30 sec, ex: {ex.Message.Substring(0, 40)}..."
+                    });
+                    delay = 30000;
+                }
+                await Task.Delay(delay);
             }
             _started = false;
         }
