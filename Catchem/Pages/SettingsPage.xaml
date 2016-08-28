@@ -5,7 +5,7 @@
              xmlns:local="clr-namespace:Catchem"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              Width="890.487"
-             Height="1933.5"
+             Height="2047.5"
              mc:Ignorable="d">
     <Grid Background="#FFF9F9F9">
         <ScrollViewer Grid.ColumnSpan="2">
@@ -931,7 +931,7 @@
 
                 <GroupBox x:Name="navigationGroupBox3"
                         Grid.Column="1"
-                        Height="539"
+                        Height="476"
                         Margin="5,152,5,0"
                         VerticalAlignment="Top"
                         Header="Navigation">
@@ -1121,51 +1121,19 @@
                                 Checked="BotPropertyChanged"
                                 Content="Use Mapzen Api Elevation"
                                 Unchecked="BotPropertyChanged" Grid.ColumnSpan="2" />
-                        <Label x:Name="c_MapzenApiElevationKeyLabel"
-                                Width="179"
-                                Height="26"
-                                Margin="10,421,0,0"
-                                HorizontalAlignment="Left"
-                                VerticalAlignment="Top"
-                                Content="Mapzen Api Elevation Key"
-                                RenderTransformOrigin="0.5,0.423" />
-                        <TextBox x:Name="c_MapzenApiElevationKey"
-                                Grid.Column="1"
-                                Height="29"
-                                Margin="10,421,10,0"
-                                VerticalAlignment="Top"
-                                Template="{StaticResource pogo}"
-                                TextChanged="BotPropertyChanged"
-                                TextWrapping="Wrap" />
                         <Label x:Name="c_RoutingServiceLabel"          
                                 Width="179"
                                 Height="26"
-                                Margin="10,453,0,0"
+                                Margin="10,421,0,0"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Top"
                                 Content="Routing service"
                                 RenderTransformOrigin="0.5,0.423" />
                         <ComboBox x:Name="c_RoutingService"
                                 Height="24"
-                                Margin="10,455,10,0"  
+                                Margin="10,423,10,0"  
                                 VerticalAlignment="Top" Grid.Column="1"  
                                 SelectionChanged="BotPropertyChanged" />
-                        <Label x:Name="c_GoogleDirectionsApiKeyLabel"
-                                Width="179"
-                                Height="26"
-                                Margin="10,484,0,0"
-                                HorizontalAlignment="Left"
-                                VerticalAlignment="Top"
-                                Content="Google Directions API Key"
-                                RenderTransformOrigin="0.5,0.423" />
-                        <TextBox x:Name="c_GoogleDirectionsApiKey"
-                                Grid.Column="1"
-                                Height="29"
-                                Margin="10,484,10,0"
-                                VerticalAlignment="Top"
-                                Template="{StaticResource pogo}"
-                                TextChanged="BotPropertyChanged"
-                                TextWrapping="Wrap" />
 
                     </Grid>
                 </GroupBox>
@@ -1173,7 +1141,7 @@
                 <GroupBox x:Name="deviceInfoGroupBox"
                         Grid.Column="1"
                         Height="509"
-                        Margin="5,696,5,0"
+                        Margin="5,799,5,0"
                         VerticalAlignment="Top"
                         Header="Device Info">
                     <Grid>
@@ -1446,7 +1414,7 @@
 
                 <GroupBox x:Name="delaysGroupBox"
                         Height="656"
-                        Margin="5,1210,5,0"
+                        Margin="5,1308,5,0"
                         VerticalAlignment="Top"
                         Header="Delays"
                         RenderTransformOrigin="0.479,0.565" Grid.Column="1">
@@ -1710,7 +1678,7 @@
                         Grid.Column="1"
                         Width="110"
                         Height="30"
-                        Margin="0,1871,10,0"
+                        Margin="0,1969,10,0"
                         HorizontalAlignment="Right"
                         VerticalAlignment="Top"
                         Click="btn_SaveBot_Click"
@@ -1734,6 +1702,83 @@
                         </LinearGradientBrush>
                     </Button.Background>
                 </Button>
+                <GroupBox x:Name="ApiKeysBox"
+                	Height="171"
+                	Margin="5,628,5,0"
+                	VerticalAlignment="Top"
+                	Header="API Keys" Grid.Column="1">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="190" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Label x:Name="c_MapzenApiElevationKeyLabel1"
+                			Width="179"
+                			Height="26"
+                			Margin="10,10,0,0"
+                			HorizontalAlignment="Left"
+                			VerticalAlignment="Top"
+                			Content="Mapzen Api Elevation Key"
+                			RenderTransformOrigin="0.5,0.423" />
+                        <TextBox x:Name="c_MapzenApiElevationKey"
+                			Grid.Column="1"
+                			Height="29"
+                			Margin="10,10,10,0"
+                			VerticalAlignment="Top"
+                			Template="{StaticResource pogo}"
+                			TextChanged="BotPropertyChanged"
+                			TextWrapping="Wrap" />
+                        <Label x:Name="c_GoogleDirectionsApiKeyLabel1"
+                			Width="179"
+                			Height="26"
+                			Margin="10,44,0,0"
+                			HorizontalAlignment="Left"
+                			VerticalAlignment="Top"
+                			Content="Google Directions API Key"
+                			RenderTransformOrigin="0.5,0.423" />
+                        <TextBox x:Name="c_GoogleDirectionsApiKey"
+                			Grid.Column="1"
+                			Height="29"
+                			Margin="10,44,10,0"
+                			VerticalAlignment="Top"
+                			Template="{StaticResource pogo}"
+                			TextChanged="BotPropertyChanged"
+                			TextWrapping="Wrap" />
+                        <Label x:Name="c_MapzenValhallaApiKeyLabel"
+                        	Width="179"
+                        	Height="26"
+                        	Margin="10,78,0,0"
+                        	HorizontalAlignment="Left"
+                        	VerticalAlignment="Top"
+                        	Content="Mapzen Valhalla API Key"
+                        	RenderTransformOrigin="0.5,0.423" />
+                        <TextBox x:Name="c_MapzenValhallaApiKey"
+                        	Grid.Column="1"
+                        	Height="29"
+                        	Margin="10,78,10,0"
+                        	VerticalAlignment="Top"
+                        	Template="{StaticResource pogo}"
+                        	TextChanged="BotPropertyChanged"
+                        	TextWrapping="Wrap" />
+                        <Label x:Name="c_MobBotRoutingApiKeyLabel"
+                        	Width="179"
+                        	Height="26"
+                        	Margin="10,112,0,0"
+                        	HorizontalAlignment="Left"
+                        	VerticalAlignment="Top"
+                        	Content="MobBot route API Key"
+                        	RenderTransformOrigin="0.5,0.423" />
+                        <TextBox x:Name="c_MobBotRoutingApiKey"
+                        	Grid.Column="1"
+                        	Height="29"
+                        	Margin="10,112,10,0"
+                        	VerticalAlignment="Top"
+                        	Template="{StaticResource pogo}"
+                        	TextChanged="BotPropertyChanged"
+                        	TextWrapping="Wrap" />
+
+                    </Grid>
+                </GroupBox>
             </Grid>
         </ScrollViewer>
     </Grid>
