@@ -47,6 +47,20 @@ namespace PoGo.PokeMobBot.Logic
                 inventory.InventoryDelta.InventoryItems.Remove(pokemon);
         }
 
+        public async Task<List<AppliedItem>>  GetUsedItems()
+        {
+            var inventory = await GetCachedInventory();
+            var appliedItems =
+                inventory?.InventoryDelta?.InventoryItems?.Where(x=> x.InventoryItemData?.AppliedItems?.Item?.Count > 0).Select(x=>x.InventoryItemData?.AppliedItems?.Item?.ToList());
+            if (appliedItems == null) return new List<AppliedItem>();
+            List<AppliedItem> appliedItemses = new List<AppliedItem>();
+            foreach (var applied in appliedItems)
+            {
+                appliedItemses.AddRange(applied);
+            }
+            return appliedItemses;
+        }
+
         private async Task<GetInventoryResponse> GetCachedInventory()
         {
             var now = DateTime.UtcNow;

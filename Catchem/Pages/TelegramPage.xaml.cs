@@ -51,18 +51,20 @@ namespace Catchem.Pages
             TelegramLogWorker();
             TelegramCommandWorker();
         }
+
         public void TurnOff()
         {
             _windowClosing = true;
             TlgrmBot?.Stop();
         }
+
         #region UI handlers
 
         public void SaveSettings()
         {
             var settingsPath = Path.Combine(Directory.GetCurrentDirectory(), TlgrmFilePath);
             var jsonSettings = new JsonSerializerSettings();
-            jsonSettings.Converters.Add(new StringEnumConverter { CamelCaseText = true });
+            jsonSettings.Converters.Add(new StringEnumConverter {CamelCaseText = true});
             jsonSettings.ObjectCreationHandling = ObjectCreationHandling.Replace;
             jsonSettings.DefaultValueHandling = DefaultValueHandling.Populate;
 
@@ -123,11 +125,12 @@ namespace Catchem.Pages
             if (File.Exists(settingsPath))
             {
                 var jsonSettings = new JsonSerializerSettings();
-                jsonSettings.Converters.Add(new StringEnumConverter { CamelCaseText = true });
+                jsonSettings.Converters.Add(new StringEnumConverter {CamelCaseText = true});
                 jsonSettings.ObjectCreationHandling = ObjectCreationHandling.Replace;
                 jsonSettings.DefaultValueHandling = DefaultValueHandling.Populate;
 
-                _tlgrmSettings = SerializeUtils.DeserializeDataJson<TelegramSettings>(settingsPath) ?? new TelegramSettings();
+                _tlgrmSettings = SerializeUtils.DeserializeDataJson<TelegramSettings>(settingsPath) ??
+                                 new TelegramSettings();
                 return;
             }
             _tlgrmSettings = new TelegramSettings();
@@ -137,7 +140,7 @@ namespace Catchem.Pages
         {
 
             if (AddToAutoReport.SelectedIndex <= -1) return;
-            var pokemonId = (PokemonId)AddToAutoReport.SelectedItem;
+            var pokemonId = (PokemonId) AddToAutoReport.SelectedItem;
             if (!_tlgrmSettings.AutoReportPokemon.Contains(pokemonId))
                 _tlgrmSettings.AutoReportPokemon.Add(pokemonId);
             AddToAutoReport.SelectedIndex = -1;
@@ -169,7 +172,7 @@ namespace Catchem.Pages
 
         public void TelegramCommandReceiver(string sender, string command, long chatId, string[] args)
         {
-            if (!CheckOwner(sender)) return;
+            if (!RefreshOwnerChatId(sender, chatId)) return;
 
             var cmd = new TelegramCommand
             {
@@ -188,11 +191,14 @@ namespace Catchem.Pages
             _logQueue.Enqueue(message);
         }
 
-        private void PokemonCaught(PokemonId pokemon, int cp, double iv, string profileName, string botNick, double level, PokemonMove? move1, PokemonMove? move2)
+        private void PokemonCaught(PokemonId pokemon, int cp, double iv, string profileName, string botNick,
+            double level, PokemonMove? move1, PokemonMove? move2)
         {
             if ((!_tlgrmSettings.AutoReportSelectedPokemon || !_tlgrmSettings.AutoReportPokemon.Contains(pokemon)) &&
-                (cp <= _tlgrmSettings.ReportAllPokemonsAboveCp || _tlgrmSettings.ReportAllPokemonsAboveCp <= 0)) return;
-            string messageToSend = $"[{botNick}]({profileName}) got {pokemon}! CP:{cp}, Iv:{iv.ToN1()}, Level:{level.ToN1()}, Move 1: {move1}, Move 2: {move2}";
+                (cp <= _tlgrmSettings.ReportAllPokemonsAboveCp || _tlgrmSettings.ReportAllPokemonsAboveCp <= 0))
+                return;
+            string messageToSend =
+                $"[{botNick}]({profileName}) got {pokemon}! CP:{cp}, Iv:{iv.ToN1()}, Level:{level.ToN1()}, Move 1: {move1}, Move 2: {move2}";
 
             foreach (var owner in _tlgrmSettings.Owners.Where(x => x.ChatId != 0))
             {
@@ -211,7 +217,6 @@ namespace Catchem.Pages
                     {
                         case "/start":
                             HandleHelp(t.ChatId);
-                            RefreshOwnerChatId(t.Sender, t.ChatId);
                             break;
                         case "help":
                             HandleHelp(t.ChatId);
@@ -231,6 +236,12 @@ namespace Catchem.Pages
                         case "status":
                             HandleStatus(t.ChatId, t.Args);
                             break;
+                        case "report":
+                            HandleReport(t.ChatId, t.Args);
+                            break;
+                        case "reportabovecp":
+                            HandleReportAboveCp(t.ChatId, t.Args);
+                            break;
                         default:
                             HandleUnknownCommand(t.ChatId);
                             break;
@@ -240,16 +251,12 @@ namespace Catchem.Pages
             }
         }
 
-        private bool CheckOwner(string senderName)
-        {
-            return _tlgrmSettings.Owners.Any(x => x.TelegramName == senderName);
-        }
-
-        private void RefreshOwnerChatId(string senderName, long chatId)
+        private bool RefreshOwnerChatId(string senderName, long chatId)
         {
             var targetOwner = _tlgrmSettings?.Owners?.FirstOrDefault(x => x.TelegramName == senderName);
-            if (targetOwner == null) return;
+            if (targetOwner == null) return false;
             targetOwner.ChatId = chatId;
+            return true;
         }
 
         private void HandleUnknownCommand(long chatId)
@@ -287,18 +294,18 @@ namespace Catchem.Pages
             //var rank = 1;
             var topPokemon = new StringBuilder();
             IEnumerable<string> sb = null;
-            if (args[1].ToLower() == "cp") 
+            if (args[1].ToLower() == "cp")
             {
                 topPokemon.AppendLine($"Top 10 Highest CP Poke for {targetBot.ProfileName}: \n");
                 sb = targetBot.PokemonList?.OrderByDescending(x => x.Cp).Take(10)
                     .Select((x, i) => BuildPokemonRow(i + 1, x));
-               
+
             }
             if (args[1].ToLower() == "iv")
             {
                 topPokemon.AppendLine($"Top 10 Highest IV Poke for {targetBot.ProfileName}: \n");
                 sb = targetBot.PokemonList?.OrderByDescending(x => x.Iv).Take(10)
-                   .Select((x, i) => BuildPokemonRow(i + 1, x));
+                    .Select((x, i) => BuildPokemonRow(i + 1, x));
             }
             if (sb != null)
                 foreach (var s in sb)
@@ -307,7 +314,8 @@ namespace Catchem.Pages
             TlgrmBot.SendToTelegram(topPokemon.ToString(), chatId);
         }
 
-        private static string BuildPokemonRow(int indx, PokemonUiData pokemon) => $"{indx}) {pokemon.Name} CP:{pokemon.Cp} IV:{pokemon.Iv.ToN1()}";
+        private static string BuildPokemonRow(int indx, PokemonUiData pokemon)
+            => $"{indx}) {pokemon.Name} CP:{pokemon.Cp} IV:{pokemon.Iv.ToN1()}";
 
         private void HandleStatus(long chatId, string[] args)
         {
@@ -337,9 +345,12 @@ namespace Catchem.Pages
                     status.AppendLine($"Current Status for {targetBot.ProfileName}:");
                     status.AppendLine($"Current bot Run Time: {targetBot.Ts}");
                     status.AppendLine($"Level: {targetBot.Level} Exp/h: {targetBot.Xpph.ToN1()}");
-                    status.AppendLine($"Stardust {targetBot.StarDust}, Farmed: {(targetBot.StarDust > 0 ? targetBot.StarDust - targetBot.StartStarDust : 0)} ({targetBot.StardustRate.ToN1()}/h)");
-                    status.AppendLine($"Poke Caught: {targetBot.Stats?.TotalPokemons} ({targetBot.PokemonsRate.ToN1()}/h)");
-                    status.AppendLine($"PokeStops spinned: {targetBot.Stats?.TotalPokestops} ({targetBot.PokestopsRate.ToN1()}/h)");
+                    status.AppendLine(
+                        $"Stardust {targetBot.StarDust}, Farmed: {(targetBot.StarDust > 0 ? targetBot.StarDust - targetBot.StartStarDust : 0)} ({targetBot.StardustRate.ToN1()}/h)");
+                    status.AppendLine(
+                        $"Poke Caught: {targetBot.Stats?.TotalPokemons} ({targetBot.PokemonsRate.ToN1()}/h)");
+                    status.AppendLine(
+                        $"PokeStops spinned: {targetBot.Stats?.TotalPokestops} ({targetBot.PokestopsRate.ToN1()}/h)");
                     // Status.AppendLine($"Team: {targetBot.Stats.}");
                     TlgrmBot.SendToTelegram(status.ToString(), chatId);
                     return;
@@ -403,11 +414,14 @@ namespace Catchem.Pages
         private void HandleHelp(long chatId)
         {
             var helpMsg = "The following commands are avaliable: \n" +
-                                     "- listbots \n" +
-                                     "- start [bot Number / all] \n" +
-                                     "- stop [bot Number / all] \n" +
-                                     "- status [bot Number] \n" +
-                                     "- top [bot Number] [cp/iv]";
+                          "- bots \n" +
+                          "- start [bot Number / all] \n" +
+                          "- stop [bot Number / all] \n" +
+                          "- status [bot Number] \n" +
+                          "- top [bot Number] [cp/iv] \n" +
+                          "- report [enable/disable] \n" +
+                          "- reportabovecp [cp (0 to disable)]";
+
             TlgrmBot.SendToTelegram(helpMsg, chatId);
         }
 
@@ -418,7 +432,8 @@ namespace Catchem.Pages
             botStringBuilder.AppendLine("Current Bots Avaliable:");
             foreach (var bot in MainWindow.BotsCollection)
             {
-                botStringBuilder.AppendLine($"{++botNumber}) {bot.ProfileName} [{(bot.Started ? "RUNNING" : "STOPPED")}]");
+                botStringBuilder.AppendLine(
+                    $"{++botNumber}) {bot.ProfileName} [{(bot.Started ? "RUNNING" : "STOPPED")}]");
             }
             if (botNumber == 0)
                 TlgrmBot.SendToTelegram("There are no bots created", chatId);
@@ -426,6 +441,62 @@ namespace Catchem.Pages
                 TlgrmBot.SendToTelegram(botStringBuilder.ToString(), chatId);
         }
 
+        private void HandleReport(long chatId, string[] args)
+        {
+            if (args.Length <= 0 | args.Length > 1)
+            {
+                TlgrmBot.SendToTelegram("Error Invalid Command Structure!", chatId);
+                return;
+            }
+            if (args[0].ToLower() == "enable")
+            {
+                if (CbAutoReportSelectedPokemon.IsChecked == true)
+                {
+                    TlgrmBot.SendToTelegram("Reporting Selected Pokemon is already Enabled.", chatId);
+                    return;
+                }
+                CbAutoReportSelectedPokemon.IsChecked = true;
+                TlgrmBot.SendToTelegram("Reporting Selected Pokemon set to Enabled.", chatId);
+                SaveSettings();
+                return;
+            }
+            if (args[0].ToLower() == "disable")
+            {
+                if (CbAutoReportSelectedPokemon.IsChecked == false)
+                {
+                    TlgrmBot.SendToTelegram("Reporting Selected Pokemon is already Disabled.", chatId);
+                    return;
+                }
+                CbAutoReportSelectedPokemon.IsChecked = false;
+                TlgrmBot.SendToTelegram("Reporting Selected Pokemon set to Disabled.", chatId);
+                SaveSettings();
+                return;
+            }
+            TlgrmBot.SendToTelegram("Error Invalid Command Structure!", chatId);
+        }
+
+        private void HandleReportAboveCp(long chatId, string[] args)
+        {
+            if (args.Length <= 0 || args.Length > 1)
+            {
+                TlgrmBot.SendToTelegram("Error Invalid Command Structure!", chatId);
+                return;
+            }
+            int cp;
+            if (int.TryParse(args[0], out cp))
+            {
+                if (cp < 0 || cp > 5000)
+                {
+                    TlgrmBot.SendToTelegram("Error Invalid CP Entered!", chatId);
+                    return;
+                }
+                TbReportAllPokemonsAboveCp.Text = cp.ToString();
+                SaveSettings();
+                TlgrmBot.SendToTelegram($"Set Report Above CP to: {cp}", chatId);
+                return;
+            }
+            TlgrmBot.SendToTelegram("Error Invalid CP Entered!", chatId);
+        }
 
         private async void TelegramLogWorker()
         {
@@ -471,6 +542,7 @@ namespace Catchem.Pages
         public class TelegramBotOwner : CatchemNotified
         {
             private string _telegramName;
+
             public string TelegramName
             {
                 get { return _telegramName; }
@@ -482,6 +554,7 @@ namespace Catchem.Pages
             }
 
             private long _chatId;
+
             public long ChatId
             {
                 get { return _chatId; }
@@ -514,7 +587,8 @@ namespace Catchem.Pages
 
             private void HandleEvent(TelegramPokemonCaughtEvent eve)
             {
-                _receiver.PokemonCaught(eve.PokemonId, eve.Cp, eve.Iv, eve.ProfileName, eve.BotNicnname, eve.Level, eve.Move1, eve.Move2);
+                _receiver.PokemonCaught(eve.PokemonId, eve.Cp, eve.Iv, eve.ProfileName, eve.BotNicnname, eve.Level,
+                    eve.Move1, eve.Move2);
             }
 
             public void Listen(IEvent evt)
