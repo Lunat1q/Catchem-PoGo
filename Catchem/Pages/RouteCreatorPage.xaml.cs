@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Remoting.Channels;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -58,43 +59,29 @@ namespace Catchem.Pages
 
         private void RouteCreatorMap_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            if (e.ChangedButton == MouseButton.Left)
+            var mousePos = e.GetPosition(RouteCreatorMap);
+            //Getting real coordinates from mouse click
+            var mapPos = RouteCreatorMap.FromLocalToLatLng((int) mousePos.X, (int) mousePos.Y);
+            var markerShape = Properties.Resources.force_move.ToImage("Route Marker");
+            var marker = new GMapMarker(mapPos)
             {
-                var mousePos = e.GetPosition(RouteCreatorMap);
-                //Getting real coordinates from mouse click
-                var mapPos = RouteCreatorMap.FromLocalToLatLng((int) mousePos.X, (int) mousePos.Y);
-                var lat = mapPos.Lat;
-                var lng = mapPos.Lng;
-                // _routeMarkers.Enqueue(new PointLatLng(lat, lng));
-                var marker = new GMapMarker(mapPos)
-                {
-                    Shape = Properties.Resources.force_move.ToImage("Route Marker"),
-                    Offset = new Point(-24, -48),
-                    ZIndex = int.MaxValue
-                };
-                AddMarker(marker);
+                Shape = markerShape,
+                Offset = new Point(-24, -48),
+                ZIndex = int.MaxValue
+            };
+       
+             markerShape.MouseRightButtonDown += delegate
+                        {
+                            RemoveMarker(marker);
+                        };
+            AddMarker(marker);       
             }
-            if (e.ChangedButton == MouseButton.Right)
-            {
-                var mousePos = e.GetPosition(RouteCreatorMap);
-                //Getting real coordinates from mouse click
-                var mapPos = RouteCreatorMap.FromLocalToLatLng((int)mousePos.X, (int)mousePos.Y);
-                var minLat = mapPos.Lat - 0.0001;
-                var maxLat = mapPos.Lat + 0.0001;
-                var minLng = mapPos.Lng - 0.0001;
-                var maxLng = mapPos.Lng + 0.0001;
-                foreach (var marker in RouteCreatorMap.Markers)
-                {
-                    if (marker.Position.Lat >= minLat && marker.Position.Lat <= maxLat && marker.Position.Lng >= minLng && marker.Position.Lng <= maxLng)
-                    {
-                        RouteCreatorMap.Markers.Remove(new GMapMarker(marker.Position));
-                        marker.Clear();
-                    }
-                
-                }
-            }
-        }
-
+        
+            private void RemoveMarker(GMapMarker marker)
+             {
+                marker.Clear();
+                RouteCreatorMap.Markers.Remove(marker);
+             }
 
         private void RouteCreatorMap_MouseWheel(object sender, MouseWheelEventArgs e)
         {
@@ -111,8 +98,6 @@ namespace Catchem.Pages
         {
             RouteCreatorMap.Markers.Add(marker);
         }
-
-
-       
+  
     }
 }
