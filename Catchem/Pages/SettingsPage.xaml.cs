@@ -20,6 +20,13 @@ namespace Catchem.Pages
         public BotWindowData Bot;
         public bool LoadingUi;
         public string SubPath;
+        private CatchemSettings _globalSettings;
+
+        public void SetGlobalSettings(CatchemSettings settings)
+        {
+            _globalSettings = settings;
+            
+        }
 
         public SettingsPage()
         {
