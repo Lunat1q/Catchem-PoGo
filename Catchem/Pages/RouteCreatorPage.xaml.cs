@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,7 +14,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Catchem.Classes;
+using Catchem.Extensions;
 using GMap.NET;
+using GMap.NET.WindowsPresentation;
 
 namespace Catchem.Pages
 {
@@ -50,8 +53,44 @@ namespace Catchem.Pages
 
         private void RouteCreatorMap_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-
+            if (e.ChangedButton == MouseButton.Left)
+            {
+                var mousePos = e.GetPosition(RouteCreatorMap);
+                //Getting real coordinates from mouse click
+                var mapPos = RouteCreatorMap.FromLocalToLatLng((int) mousePos.X, (int) mousePos.Y);
+                var lat = mapPos.Lat;
+                var lng = mapPos.Lng;
+                // _routeMarkers.Enqueue(new PointLatLng(lat, lng));
+                var marker = new GMapMarker(mapPos)
+                {
+                    Shape = Properties.Resources.force_move.ToImage("Route Marker"),
+                    Offset = new Point(-24, -48),
+                    ZIndex = int.MaxValue
+                };
+                AddMarker(marker);
+            }
+            if (e.ChangedButton == MouseButton.Right)
+            {
+                var mousePos = e.GetPosition(RouteCreatorMap);
+                //Getting real coordinates from mouse click
+                var mapPos = RouteCreatorMap.FromLocalToLatLng((int)mousePos.X, (int)mousePos.Y);
+                var minLat = mapPos.Lat - 0.0001;
+                var maxLat = mapPos.Lat + 0.0001;
+                var minLng = mapPos.Lng - 0.0001;
+                var maxLng = mapPos.Lng + 0.0001;
+                foreach (var marker in RouteCreatorMap.Markers)
+                {
+                    if (marker.Position.Lat >= minLat && marker.Position.Lat <= maxLat && marker.Position.Lng >= minLng && marker.Position.Lng <= maxLng)
+                    {
+                        RouteCreatorMap.Markers.Remove(new GMapMarker(marker.Position));
+                        marker.Clear();
+                    }
+                
+                }
+            }
         }
+
+
         private void RouteCreatorMap_MouseWheel(object sender, MouseWheelEventArgs e)
         {
             sl_mapZoom.Value = RouteCreatorMap.Zoom;
@@ -63,6 +102,9 @@ namespace Catchem.Pages
             RouteCreatorMap.Zoom = (int)sl.Value;
         }
 
-
+        public void AddMarker(GMapMarker marker)
+        {
+            RouteCreatorMap.Markers.Add(marker);
+        }
     }
 }
