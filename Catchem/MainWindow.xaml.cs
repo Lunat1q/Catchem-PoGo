@@ -750,6 +750,11 @@ namespace Catchem
             ChangeTransistorTo(2);
         }
 
+        private void btn_ChangeViewToRouteCreator_Click(object sender, RoutedEventArgs e)
+        {
+            ChangeTransistorTo(3);
+        }
+
         private void ChangeTransistorTo(int i)
         {
             if (transit.SelectedIndex != i)

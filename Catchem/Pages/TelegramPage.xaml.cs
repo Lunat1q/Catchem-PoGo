@@ -231,6 +231,12 @@ namespace Catchem.Pages
                         case "status":
                             HandleStatus(t.ChatId, t.Args);
                             break;
+                        case "report":
+                            HandleReport(t.ChatId, t.Args);
+                            break;
+                        case "reportabovecp":
+                            HandleReportAboveCP(t.ChatId, t.Args);
+                            break;
                         default:
                             HandleUnknownCommand(t.ChatId);
                             break;
@@ -403,11 +409,14 @@ namespace Catchem.Pages
         private void HandleHelp(long chatId)
         {
             var helpMsg = "The following commands are avaliable: \n" +
-                                     "- listbots \n" +
-                                     "- start [bot Number / all] \n" +
-                                     "- stop [bot Number / all] \n" +
-                                     "- status [bot Number] \n" +
-                                     "- top [bot Number] [cp/iv]";
+                          "- bots \n" +
+                          "- start [bot Number / all] \n" +
+                          "- stop [bot Number / all] \n" +
+                          "- status [bot Number] \n" +
+                          "- top [bot Number] [cp/iv] \n" +
+                          "- report [enable/disable] \n" +
+                          "- reportabovecp [cp (0 to disable)]";
+
             TlgrmBot.SendToTelegram(helpMsg, chatId);
         }
 
@@ -426,6 +435,62 @@ namespace Catchem.Pages
                 TlgrmBot.SendToTelegram(botStringBuilder.ToString(), chatId);
         }
 
+        private void HandleReport(long chatId, string[] args)
+        {
+            if (args.Length <= 0 | args.Length > 1)
+            {
+                TlgrmBot.SendToTelegram("Error Invalid Command Structure!", chatId);
+                return;
+            }
+            if (args[0].ToLower() == "enable")
+            {
+                if (CbAutoReportSelectedPokemon.IsChecked == true)
+                {
+                    TlgrmBot.SendToTelegram("Reporting Selected Pokemon is already Enabled.", chatId);
+                    return;
+                }
+                CbAutoReportSelectedPokemon.IsChecked = true;
+                TlgrmBot.SendToTelegram("Reporting Selected Pokemon set to Enabled.", chatId);
+                SaveSettings();
+                return;
+            }
+            if (args[0].ToLower() == "disable")
+            {
+                if (CbAutoReportSelectedPokemon.IsChecked == false)
+                {
+                    TlgrmBot.SendToTelegram("Reporting Selected Pokemon is already Disabled.", chatId);
+                    return;
+                }
+                CbAutoReportSelectedPokemon.IsChecked = false;
+                TlgrmBot.SendToTelegram("Reporting Selected Pokemon set to Disabled.", chatId);
+                SaveSettings();
+                return;
+            }
+            TlgrmBot.SendToTelegram("Error Invalid Command Structure!", chatId);
+        }
+
+        private void HandleReportAboveCP(long chatId, string[] args)
+        {
+            if (args.Length <= 0 | args.Length > 1)
+            {
+                TlgrmBot.SendToTelegram("Error Invalid Command Structure!", chatId);
+                return;
+            }
+            int CP;
+            if (int.TryParse(args[0], out CP))
+            {
+                if (CP < 0 | CP > 5000)
+                {
+                    TlgrmBot.SendToTelegram("Error Invalid CP Entered!", chatId);
+                    return;
+                }
+                TbReportAllPokemonsAboveCp.Text = CP.ToString();
+                SaveSettings();
+                TlgrmBot.SendToTelegram($"Set Report Above CP to: {CP}", chatId);
+                return;
+            }
+            TlgrmBot.SendToTelegram("Error Invalid CP Entered!", chatId);
+           }
 
         private async void TelegramLogWorker()
         {

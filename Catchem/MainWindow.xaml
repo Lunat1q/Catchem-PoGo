@@ -17,6 +17,8 @@
                       mc:Ignorable="d">
     <controls:MetroWindow.RightWindowCommands>
         <controls:WindowCommands>
+            <Button x:Name="btn_ChangeViewRouteCreator"
+                    Content="RouteCreator" BorderBrush="{x:Null}" Background="{x:Null}" Click="btn_ChangeViewToRouteCreator_Click"/>
             <Button x:Name="btn_ChangeViewToTelegram"
                     Content="Telegram" BorderBrush="{x:Null}" Background="{x:Null}" Click="btn_ChangeViewToTelegram_Click" />
             <Button x:Name="btn_ChangeViewToSettings"
@@ -41,6 +43,7 @@
             <pages:AccountSettingsTab x:Name="SettingsView" />
             <pages:GlobalMapPage x:Name="GlobalMapView" />
             <pages:TelegramPage x:Name="TelegramView" />
+            <pages:RouteCreatorPage x:Name="RouteCreatorView"/>
         </materialDesign:Transitioner>
         <Grid Width="246" HorizontalAlignment="Left">
             <Rectangle Width="246" HorizontalAlignment="Left">

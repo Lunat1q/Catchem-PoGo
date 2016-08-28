@@ -146,6 +146,9 @@
     <Compile Include="Pages\PokemonListPage.xaml.cs">
       <DependentUpon>PokemonListPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\RouteCreatorPage.xaml.cs">
+      <DependentUpon>RouteCreatorPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\TelegramPage.xaml.cs">
       <DependentUpon>TelegramPage.xaml</DependentUpon>
     </Compile>
@@ -183,6 +186,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\PokemonListPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\RouteCreatorPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
