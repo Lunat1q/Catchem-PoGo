@@ -57,6 +57,11 @@ namespace Catchem.Pages
             await Task.Delay(10);
         }
 
+        private void btn_GenerateRoute_Click(object sender, EventArgs e)
+        {
+            
+        }
+     
         private void RouteCreatorMap_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             var mousePos = e.GetPosition(RouteCreatorMap);
