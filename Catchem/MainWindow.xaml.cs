@@ -363,7 +363,7 @@ namespace Catchem
             if (botReceiver.LogQueue.Count > 100)
             {
                 botReceiver.LogQueue.Dequeue();
-            }
+        }
         }
 
         private static void PushRemoveForceMoveMarker(ISession session)
