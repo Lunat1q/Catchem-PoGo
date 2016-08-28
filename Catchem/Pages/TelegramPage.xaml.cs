@@ -234,6 +234,9 @@ namespace Catchem.Pages
                         case "report":
                             HandleReport(t.ChatId, t.Args);
                             break;
+                        case "reportabovecp":
+                            HandleReportAboveCP(t.ChatId, t.Args);
+                            break;
                         default:
                             HandleUnknownCommand(t.ChatId);
                             break;
@@ -411,7 +414,8 @@ namespace Catchem.Pages
                           "- stop [bot Number / all] \n" +
                           "- status [bot Number] \n" +
                           "- top [bot Number] [cp/iv] \n" +
-                          "- report [enable/disable]";
+                          "- report [enable/disable] \n" +
+                          "- reportabovecp [cp (0 to disable)]";
 
             TlgrmBot.SendToTelegram(helpMsg, chatId);
         }
@@ -447,6 +451,7 @@ namespace Catchem.Pages
                 }
                 CbAutoReportSelectedPokemon.IsChecked = true;
                 TlgrmBot.SendToTelegram("Reporting Selected Pokemon set to Enabled.", chatId);
+                SaveSettings();
                 return;
             }
             if (args[0].ToLower() == "disable")
@@ -458,10 +463,35 @@ namespace Catchem.Pages
                 }
                 CbAutoReportSelectedPokemon.IsChecked = false;
                 TlgrmBot.SendToTelegram("Reporting Selected Pokemon set to Disabled.", chatId);
+                SaveSettings();
                 return;
             }
             TlgrmBot.SendToTelegram("Error Invalid Command Structure!", chatId);
         }
+
+        private void HandleReportAboveCP(long chatId, string[] args)
+        {
+            if (args.Length <= 0 | args.Length > 1)
+            {
+                TlgrmBot.SendToTelegram("Error Invalid Command Structure!", chatId);
+                return;
+            }
+            int CP;
+            if (int.TryParse(args[0], out CP))
+            {
+                if (CP < 0 | CP > 5000)
+                {
+                    TlgrmBot.SendToTelegram("Error Invalid CP Entered!", chatId);
+                    return;
+                }
+                TbReportAllPokemonsAboveCp.Text = CP.ToString();
+                SaveSettings();
+                TlgrmBot.SendToTelegram($"Set Report Above CP to: {CP}", chatId);
+                return;
+            }
+            TlgrmBot.SendToTelegram("Error Invalid CP Entered!", chatId);
+           }
+
         private async void TelegramLogWorker()
         {
             while (!_windowClosing)
