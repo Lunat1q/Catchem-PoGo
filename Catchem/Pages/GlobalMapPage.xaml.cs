@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Catchem.Classes;
 
 namespace Catchem.Pages
 {
@@ -22,6 +23,8 @@ namespace Catchem.Pages
     /// </summary>
     public partial class GlobalMapPage : UserControl
     {
+        private CatchemSettings _globalSettings;
+        
         public GlobalMapPage()
         {
             InitializeComponent();
@@ -40,6 +43,17 @@ namespace Catchem.Pages
             pokeMap.MapProvider = GMap.NET.MapProviders.GMapProviders.GoogleMap;
             GMaps.Instance.Mode = AccessMode.ServerOnly;
             
+        }
+
+        public void SetGlobalSettings(CatchemSettings settings)
+        {
+            _globalSettings = settings;
+            pokeMap.MapProvider = _globalSettings.Provider;
+            _globalSettings.BindNewMapProbider((provider) =>
+            {
+                pokeMap.MapProvider = provider;
+                return true;
+            });
         }
 
         public void addMarker(GMapMarker marker)
