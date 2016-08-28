@@ -406,11 +406,13 @@ namespace Catchem.Pages
         private void HandleHelp(long chatId)
         {
             var helpMsg = "The following commands are avaliable: \n" +
-                                     "- bots \n" +
-                                     "- start [bot Number / all] \n" +
-                                     "- stop [bot Number / all] \n" +
-                                     "- status [bot Number] \n" +
-                                     "- top [bot Number] [cp/iv]";
+                          "- bots \n" +
+                          "- start [bot Number / all] \n" +
+                          "- stop [bot Number / all] \n" +
+                          "- status [bot Number] \n" +
+                          "- top [bot Number] [cp/iv] \n" +
+                          "- report [enable/disable]";
+
             TlgrmBot.SendToTelegram(helpMsg, chatId);
         }
 
