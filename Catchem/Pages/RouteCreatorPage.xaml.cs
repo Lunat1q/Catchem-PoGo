@@ -23,8 +23,13 @@ namespace Catchem.Pages
     /// <summary>
     /// Interaction logic for RouteCreatorPage.xaml
     /// </summary>
-    public partial class RouteCreatorPage : UserControl
+
+       
+
+        public partial class RouteCreatorPage : UserControl
     {
+       
+
         public RouteCreatorPage()
         {
             InitializeComponent();
@@ -106,5 +111,8 @@ namespace Catchem.Pages
         {
             RouteCreatorMap.Markers.Add(marker);
         }
+
+
+       
     }
 }

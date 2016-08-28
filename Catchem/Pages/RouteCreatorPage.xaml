@@ -51,8 +51,5 @@
             <Slider x:Name="sl_mapZoom" Margin="51,8,10,0" VerticalAlignment="Top" RenderTransformOrigin="3.583,0.25" Height="25" Minimum="2" Maximum="18" TickPlacement="BottomRight" Value="18" SmallChange="0" LargeChange="3" ValueChanged="sl_mapZoom_ValueChanged"/>
             <Label x:Name="lbl_Zoom" Content="Zoom:" HorizontalAlignment="Left" Margin="0,4,0,0" VerticalAlignment="Top" Width="45" Height="26"/>
         </Grid>
-
-
-
     </Grid>
 </UserControl>
