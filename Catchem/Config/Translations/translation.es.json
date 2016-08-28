@@ -52,7 +52,7 @@
     },
 	{
       "Key": "eventUseLuckyEggMinPokemonCheck",
-      "Value": "Not enough Pokemon to trigger a lucky egg. Waiting for {0} more. ({1}/{2})"
+      "Value": "No hay suficientes Pokémon para activar un huevo suerte. A la espera de más. Esperando {0} más. ({1}/{2})"
     },
     {
       "Key": "eventPokemonEvolvedSuccess",
@@ -77,7 +77,7 @@
     },
     {
       "Key": "eventNoPokeballs",
-      "Value": "¡Sin Pokéballs! - Hemos perdido un {0} con {1} PC :("
+      "Value": "¡Sin Poké Balls! - Hemos perdido un {0} con {1} PC :("
     },
     {
       "Key": "catchStatusAttempt",
@@ -97,7 +97,7 @@
     },
     {
       "Key": "displayHighestsHeader",
-      "Value": "Pokemons"
+      "Value": "Pokémons"
     },
     {
       "Key": "commonWordPerfect",
@@ -113,15 +113,15 @@
     },
     {
       "Key": "displayHighestsCpHeader",
-      "Value": "Pokemons con mayor CP"
+      "Value": "Pokémons con mayor CP"
     },
     {
       "Key": "displayHighestsPerfectHeader",
-      "Value": "Pokemons con mayor Perfección"
+      "Value": "Pokémons con mayor Perfección"
     },
     {
       "Key": "displayHighestsLevelHeader",
-      "Value": "Pokemons con mayor Nivel"
+      "Value": "Pokémons con mayor Nivel"
     },
     {
       "Key": "welcomeWarning",
@@ -266,15 +266,15 @@
     },
     {
       "Key": "lookingForIncensePokemon",
-      "Value": "Buscando incienso para pokemon..."
+      "Value": "Buscando incienso para Pokémon..."
     },
     {
       "Key": "lookingForPokemon",
-      "Value": "Buscando Pokemon..."
+      "Value": "Buscando Pokémon..."
     },
     {
       "Key": "lookingForLurePokemon",
-      "Value": "Buscando Cebos pokemon..."
+      "Value": "Buscando Cebos Pokémon..."
     },
     {
       "Key": "pokemonSkipped",
@@ -282,12 +282,12 @@
     },
     {
       "Key": "invFullTransferring",
-      "Value": "El inventario de pokemons está lleno. Transferir pokemons..."
+      "Value": "El inventario de Pokémons está lleno. Transferir Pokémons..."
     },
     {
       "Key": "invFullTransferManually",
       "Value":
-        "El inventario de pokemons está lleno. Por favor transfiera los pokemons manualmente o active (true) TransferDuplicatePokemon en el archivo de opciones..."
+        "El inventario de Pokémons está lleno. Por favor transfiera los Pokémons manualmente o active (true) TransferDuplicatePokemon en el archivo de opciones..."
     },
     {
       "Key": "invFullPokestopLooting",
@@ -299,7 +299,7 @@
     },
     {
       "Key": "encounterProblemLurePokemon",
-      "Value": "Se encontró un problema: Cebo pokemon {0}"
+      "Value": "Se encontró un problema: Cebo Pokémon {0}"
     },
     {
       "Key": "desiredDestTooFar",
@@ -307,11 +307,11 @@
     },
     {
       "Key": "pokemonRename",
-      "Value": "Pokemon {0} ({1}) renombrado de {2} a {3}."
+      "Value": "Pokémon {0} ({1}) renombrado de {2} a {3}."
     },
     {
       "Key": "pokemonIgnoreFilter",
-      "Value": "[Filtro Pokemons Ignorados] - Ignorando {0} tal y como se definió en la configuración actual."
+      "Value": "[Filtro Pokémons Ignorados] - Ignorando {0} tal y como se definió en la configuración actual."
     },
     {
       "Key": "catchStatusAttempt",
@@ -390,7 +390,7 @@
     },
     {
       "Key": "snipeScan",
-      "Value": "[Sniper] Escaneando en busca de Pokemons en {0}..."
+      "Value": "[Sniper] Escaneando en busca de Pokémons en {0}..."
     },
     {
       "Key": "snipeScanEx",
@@ -398,11 +398,11 @@
     },
     {
       "Key": "noPokemonToSnipe",
-      "Value": "[Sniper] No se encontraron Pokemons :("
+      "Value": "[Sniper] No se encontraron Pokémons :("
     },
     {
       "Key": "notEnoughPokeballsToSnipe",
-      "Value": "No hay suficientes Pokeballs para iniciar Sniping! ({0}/{1})"
+      "Value": "No hay suficientes Poké Balls para iniciar Sniping! ({0}/{1})"
     },
     {
       "Key": "displayHighestMOVE1Header",
