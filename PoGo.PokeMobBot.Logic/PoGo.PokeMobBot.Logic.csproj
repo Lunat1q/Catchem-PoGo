@@ -82,6 +82,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="API\MapzenAPI.cs" />
+    <Compile Include="API\MapzenRouting.cs" />
     <Compile Include="Common\ApiFailureStrategy.cs" />
     <Compile Include="DataDumper\IDumper.cs" />
     <Compile Include="DataDumper\Dumper.cs" />
@@ -139,11 +140,11 @@
     <Compile Include="ILogicSettings.cs" />
     <Compile Include="Navigation.cs" />
     <Compile Include="Navigation2.cs" />
-    <Compile Include="GoogleRoute.cs" />
+    <Compile Include="API\GoogleRoute.cs" />
     <Compile Include="PoGoUtils\PokemonMoveInfo.cs" />
     <Compile Include="PoGoUtils\PokemonInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="OSMRoute.cs" />
+    <Compile Include="API\OSMRoute.cs" />
     <Compile Include="Routing.cs" />
     <Compile Include="Service\BotService.cs" />
     <Compile Include="State\CheckTosState.cs" />

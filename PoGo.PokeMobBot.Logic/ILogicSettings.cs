@@ -92,6 +92,8 @@ namespace PoGo.PokeMobBot.Logic
         bool UseMapzenApiElevation { get; }
         string MapzenApiElevationKey { get; }
         string GoogleDirectionsApiKey { get; }
+        string MapzenValhallaApiKey { get; }
+        string MobBotRoutingApiKey { get; }
         //delays
         int DelayBetweenPlayerActions { get; }
         int DelayBetweenPokemonCatch { get; }

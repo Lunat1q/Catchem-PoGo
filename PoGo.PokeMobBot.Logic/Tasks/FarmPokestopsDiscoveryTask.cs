@@ -116,7 +116,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                     continue;
                 }
 
-                if (session.LogicSettings.RoutingService == RoutingService.GoogleDirections)
+                if (session.LogicSettings.RoutingService == RoutingService.GoogleDirections || session.LogicSettings.RoutingService == RoutingService.MapzenValhalla )
                 {
 #if DEBUG
                     bestRoute = RoutingUtils.GetBestRoute(pokeStop, pokestopList.Where(x => !session.MapCache.CheckPokestopUsed(x)), 10);

@@ -983,6 +983,8 @@ namespace PoGo.PokeMobBot.Logic
 		public bool UseMapzenApiElevation = false;
         public string MapzenApiElevationKey = "";
         public string GoogleDirectionsApiKey = "";
+        public string MapzenValhallaApiKey = "";
+        public string MobBotRoutingApiKey = "";
     }
 
     public class CatchSettings
@@ -1869,6 +1871,8 @@ namespace PoGo.PokeMobBot.Logic
         public bool UseMapzenApiElevation => _settings.LocationSettings.UseMapzenApiElevation;
         public string MapzenApiElevationKey => _settings.LocationSettings.MapzenApiElevationKey;
         public string GoogleDirectionsApiKey => _settings.LocationSettings.GoogleDirectionsApiKey;
+        public string MobBotRoutingApiKey => _settings.LocationSettings.MobBotRoutingApiKey;
+        public string MapzenValhallaApiKey => _settings.LocationSettings.MapzenValhallaApiKey;
         public bool PrioritizeBothIvAndCpForTransfer => _settings.PokemonSettings.PrioritizeBothIvAndCpForTransfer;
         public int MinRandomizeDelayMilliseconds => _settings.DelaySettings.MinRandomizeDelayMilliseconds;
         public int MaxRandomizeDelayMilliseconds => _settings.DelaySettings.MaxRandomizeDelayMilliseconds;
@@ -1882,6 +1886,7 @@ namespace PoGo.PokeMobBot.Logic
     {
         MobBot,
         OpenLs,
-        GoogleDirections
+        GoogleDirections,
+        MapzenValhalla
     }
 }
