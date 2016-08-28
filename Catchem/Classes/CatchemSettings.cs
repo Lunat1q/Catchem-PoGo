@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
-using System.Threading.Tasks;
+using GeoCoordinatePortable;
 using GMap.NET.MapProviders;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using PoGo.PokeMobBot.Logic.PoGoUtils;
 using PoGo.PokeMobBot.Logic.Utils;
 
 namespace Catchem.Classes
@@ -19,6 +21,7 @@ namespace Catchem.Classes
         [JsonIgnore]
         private readonly List<Func<GMapProvider, bool>> _mapAutoSetFuncs = new List<Func<GMapProvider, bool>>();
 
+        public ObservableCollection<BotRoute> Routes = new ObservableCollection<BotRoute>();
         
         public MapProvider ProviderEnum = MapProvider.Google;
 
@@ -93,6 +96,7 @@ namespace Catchem.Classes
 
                     JsonConvert.PopulateObject(input, this, jsonSettings);
                     LoadProperProvider();
+                    if (Routes == null) Routes = new ObservableCollection<BotRoute>();
                 }
                 else
                 {
@@ -104,6 +108,32 @@ namespace Catchem.Classes
                 Save();
             }
         }
+    }
+
+    public class BotRoute : CatchemNotified
+    {
+        private string _name;
+
+        public string Name
+        {
+            get { return _name; }
+            set
+            {
+                _name = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public override string ToString()
+        {
+            return _name;
+        }
+
+        public List<GeoCoordinate> InitialWp;
+
+        public int WpCount => Route.RoutePoints.Count;
+
+        public CustomRoute Route = new CustomRoute();
     }
 
 

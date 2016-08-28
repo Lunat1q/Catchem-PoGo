@@ -7,6 +7,7 @@ using POGOProtos.Networking.Responses;
 using System.Net;
 using GeoCoordinatePortable;
 using PoGo.PokeMobBot.Logic.API;
+using PoGo.PokeMobBot.Logic.PoGoUtils;
 
 #endregion
 

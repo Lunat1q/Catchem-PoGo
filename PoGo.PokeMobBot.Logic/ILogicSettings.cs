@@ -1,6 +1,7 @@
 ﻿#region using directives
 
 using System.Collections.Generic;
+using PoGo.PokeMobBot.Logic.PoGoUtils;
 using POGOProtos.Enums;
 using POGOProtos.Inventory.Item;
 
@@ -79,14 +80,15 @@ namespace PoGo.PokeMobBot.Logic
         bool UseHumanPathing { get; }
 
         int MaxTravelDistanceInMeters { get; }
-        bool UseGpxPathing { get; }
-        string GpxFile { get; }
+        bool UseCustomRoute { get; }
         bool UsePokeStopLuckyNumber { get; }
         int PokestopSkipLuckyNumberMinUse { get; }
         int PokestopSkipLuckyNumber { get; }
         int PokestopSkipLuckyMin { get; }
         int PokestopSkipLuckyMax { get; }
         RoutingService RoutingService { get; }
+
+        CustomRoute CustomRoute { get; }
 
         //MapzenAPI
         bool UseMapzenApiElevation { get; }

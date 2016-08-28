@@ -556,7 +556,7 @@ namespace Catchem.Classes
                 var stardustSec = tooMuchStarDust
                     ? (StardustRate - GlobalSettings.CatchSettings.MaxStarDustPerHour) / GlobalSettings.CatchSettings.MaxStarDustPerHour * 60 * 60 : 0;
 
-                var stopSec = 10 * 60 + _rnd.Next(60 * 5) + (int)(new double[] { pokestopSec, pokemonSec, xpSec, stardustSec }).Max();
+                var stopSec = 10 * 60 + _rnd.Next(60 * 5) + (int)(new [] { pokestopSec, pokemonSec, xpSec, stardustSec }).Max();
                 var stopMs = stopSec * 1000;
 
                 Session.EventDispatcher.Send(new WarnEvent

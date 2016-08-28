@@ -169,7 +169,7 @@ namespace Catchem.Pages
 
         public void TelegramCommandReceiver(string sender, string command, long chatId, string[] args)
         {
-            if (!CheckOwner(sender)) return;
+            if (!RefreshOwnerChatId(sender, chatId)) return;
 
             var cmd = new TelegramCommand
             {
@@ -211,7 +211,6 @@ namespace Catchem.Pages
                     {
                         case "/start":
                             HandleHelp(t.ChatId);
-                            RefreshOwnerChatId(t.Sender, t.ChatId);
                             break;
                         case "help":
                             HandleHelp(t.ChatId);
@@ -240,16 +239,12 @@ namespace Catchem.Pages
             }
         }
 
-        private bool CheckOwner(string senderName)
-        {
-            return _tlgrmSettings.Owners.Any(x => x.TelegramName == senderName);
-        }
-
-        private void RefreshOwnerChatId(string senderName, long chatId)
+        private bool RefreshOwnerChatId(string senderName, long chatId)
         {
             var targetOwner = _tlgrmSettings?.Owners?.FirstOrDefault(x => x.TelegramName == senderName);
-            if (targetOwner == null) return;
+            if (targetOwner == null) return false;
             targetOwner.ChatId = chatId;
+            return true;
         }
 
         private void HandleUnknownCommand(long chatId)

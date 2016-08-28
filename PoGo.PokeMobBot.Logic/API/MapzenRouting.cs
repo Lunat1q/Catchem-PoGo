@@ -16,28 +16,29 @@ using PoGo.PokeMobBot.Logic.Utils;
 
 namespace PoGo.PokeMobBot.Logic.API
 {
-    internal class MapzenRouting
+    public class MapzenRouting
     {
-        public static RoutingResponse GetRoute(GeoCoordinate start, GeoCoordinate dest, ISession session, List<GeoCoordinate> waypoints)
+        public static RoutingResponse GetRoute(GeoCoordinate start, GeoCoordinate dest, ISession session, List<GeoCoordinate> waypoints, bool silent = false)
         {
             string apiKey = session.LogicSettings.MapzenValhallaApiKey;
             if (string.IsNullOrEmpty(apiKey))
             {
-                session.EventDispatcher.Send(new WarnEvent
-                {
-                    Message = "Mapzen Valhalla API Key is Empty!"
-                });
+                if (!silent)
+                    session.EventDispatcher.Send(new WarnEvent
+                    {
+                        Message = "Mapzen Valhalla API Key is Empty!"
+                    });
                 return new RoutingResponse();
             }
 
-            if (waypoints != null && waypoints.Count > 0)
+            if (waypoints == null || waypoints.Count > 0)
             {
-                dest = waypoints.Last();
-                waypoints.RemoveAt(waypoints.Count - 1);
+                waypoints = new List<GeoCoordinate> {dest};
             }
+            waypoints.Insert(0, start);
 
             string waypointsRequest = "";
-            if (waypoints != null && waypoints.Count > 0)
+            if (waypoints.Count > 0)
             {
                 waypointsRequest = "\"locations\":[";
                 var wpList = new List<string>();

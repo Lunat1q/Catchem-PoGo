@@ -78,6 +78,11 @@ namespace Catchem.Extensions
 
         private static bool GetPropertyRecursive<T>(string propertyName, object obj, out T value)
         {
+            if (obj == null)
+            {
+                value = default(T);
+                return false;
+            }
             var objType = obj.GetType();
             if (objType.IsGenericType && objType.GetGenericTypeDefinition() == typeof(ObservableCollection<>))
             {
@@ -110,6 +115,11 @@ namespace Catchem.Extensions
 
         private static bool GetFieldRecursive<T>(string propertyName, object obj, out T value)
         {
+            if (obj == null)
+            {
+                value = default(T);
+                return false;
+            }
             var objType = obj.GetType();
             if (CheckObservable(objType))
             {

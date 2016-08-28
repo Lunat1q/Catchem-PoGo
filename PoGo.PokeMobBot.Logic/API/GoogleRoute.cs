@@ -16,15 +16,16 @@ namespace PoGo.PokeMobBot.Logic
     public static class GoogleRouting
     {
         //Catchem project: https://github.com/Lunat1q/Catchem-PoGo - by Lunat1q
-        public static RoutingResponse GetRoute(GeoCoordinate start, GeoCoordinate dest, ISession session, List<GeoCoordinate> waypoints, bool silent = true)
+        public static RoutingResponse GetRoute(GeoCoordinate start, GeoCoordinate dest, ISession session, List<GeoCoordinate> waypoints, bool silent = false, bool via = true)
         {
             string apiKey = session.LogicSettings.GoogleDirectionsApiKey;
-            if (string.IsNullOrEmpty(apiKey) && !silent)
+            if (string.IsNullOrEmpty(apiKey))
             {
-                session.EventDispatcher.Send(new WarnEvent
-                {
-                    Message = "Google API Key is Empty!"
-                });
+                if (!silent)
+                    session.EventDispatcher.Send(new WarnEvent
+                    {
+                        Message = "Google API Key is Empty!"
+                    });
                 return new RoutingResponse();
             }
 
@@ -41,7 +42,7 @@ namespace PoGo.PokeMobBot.Logic
                 var wpList = new List<string>();
                 foreach (var wp in waypoints)
                 {
-                    wpList.Add($"via:{wp.Latitude.ToString(CultureInfo.InvariantCulture)},{wp.Longitude.ToString(CultureInfo.InvariantCulture)}");
+                    wpList.Add($"{(via ? "via:" : "")}{wp.Latitude.ToString(CultureInfo.InvariantCulture)},{wp.Longitude.ToString(CultureInfo.InvariantCulture)}");
                 }
                 waypointsRequest += wpList.Aggregate((x, v) => x + "|" + v);
             }

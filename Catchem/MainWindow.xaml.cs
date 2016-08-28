@@ -65,9 +65,6 @@ namespace Catchem
 
             //global settings
             GlobalCatchemSettings.Load();
-            SettingsView.BotMapPage.SetGlobalSettings(GlobalCatchemSettings);
-            GlobalMapView.SetGlobalSettings(GlobalCatchemSettings);
-            SettingsView.BotSettingsPage.SetGlobalSettings(GlobalCatchemSettings);
 
             InitWindowsControlls();
             BotWindow = this;
@@ -76,6 +73,11 @@ namespace Catchem
             InitBots();
             SettingsView.BotMapPage.SetSettingsPage(SettingsView.BotSettingsPage);
             SetVersionTag();
+
+            SettingsView.BotMapPage.SetGlobalSettings(GlobalCatchemSettings);
+            GlobalMapView.SetGlobalSettings(GlobalCatchemSettings);
+            SettingsView.BotSettingsPage.SetGlobalSettings(GlobalCatchemSettings);
+            RouteCreatorView.SetGlobalSettings(GlobalCatchemSettings);
         }
 
 
@@ -353,13 +355,18 @@ namespace Catchem
 
         #region DataFlow - Push
 
-        private void PushNewConsoleRow(ISession session, string rowText, Color rowColor)
+        private static void PushNewConsoleRow(ISession session, string rowText, Color rowColor)
         {
             var botReceiver = BotsCollection.FirstOrDefault(x => x.Session == session);
-            botReceiver?.LogQueue.Enqueue(Tuple.Create(rowText, rowColor));
+            if (botReceiver == null) return;
+            botReceiver.LogQueue.Enqueue(Tuple.Create(rowText, rowColor));
+            if (botReceiver.LogQueue.Count > 100)
+            {
+                botReceiver.LogQueue.Dequeue();
+            }
         }
 
-        private void PushRemoveForceMoveMarker(ISession session)
+        private static void PushRemoveForceMoveMarker(ISession session)
         {
             var botReceiver = BotsCollection.FirstOrDefault(x => x.Session == session);
             var nMapObj = new NewMapObject("forcemove_done", "", 0, 0, "");
@@ -369,11 +376,21 @@ namespace Catchem
         private void PushRemovePokemon(ISession session, MapPokemon mapPokemon)
         {
             var botReceiver = BotsCollection.FirstOrDefault(x => x.Session == session);
+            if (botReceiver == null) return;
             var nMapObj = new NewMapObject("pm_rm", mapPokemon.PokemonId.ToString(), mapPokemon.Latitude, mapPokemon.Longitude, mapPokemon.EncounterId.ToString());
-            botReceiver?.MarkersQueue.Enqueue(nMapObj);
+            var queueCleanup = botReceiver.MarkersQueue.Where(x => x.Uid == mapPokemon.PokemonId.ToString()).ToList();
+            if (queueCleanup.Any() && botReceiver != Bot)
+            {
+                botReceiver.MarkersQueue =
+                    new Queue<NewMapObject>(botReceiver.MarkersQueue.Where(x => queueCleanup.Any(v => x == v)));
+            }
+            else
+            {
+                botReceiver.MarkersQueue.Enqueue(nMapObj);
+            }
         }
 
-        private void PushNewPokemons(ISession session, IEnumerable<MapPokemon> pokemons)
+        private static void PushNewPokemons(ISession session, IEnumerable<MapPokemon> pokemons)
         {
             var botReceiver = BotsCollection.FirstOrDefault(x => x.Session == session);
             if (botReceiver == null) return;
@@ -385,7 +402,7 @@ namespace Catchem
             }
         }
 
-        private void PushNewWildPokemons(ISession session, IEnumerable<WildPokemon> pokemons)
+        private static void PushNewWildPokemons(ISession session, IEnumerable<WildPokemon> pokemons)
         {
             var botReceiver = BotsCollection.FirstOrDefault(x => x.Session == session);
             if (botReceiver == null) return;
@@ -397,7 +414,7 @@ namespace Catchem
             }
         }
 
-        private void PushNewPokestop(ISession session, IEnumerable<FortData> pstops)
+        private static void PushNewPokestop(ISession session, IEnumerable<FortData> pstops)
         {
             var botReceiver = BotsCollection.FirstOrDefault(x => x.Session == session);
             if (botReceiver == null) return;
@@ -603,6 +620,24 @@ namespace Catchem
                 newBot.Machine.SetFailureState(new LoginState());
                 GlobalMapView.addMarker(newBot.GlobalPlayerMarker);
 
+                if (newBot.Logic.UseCustomRoute)
+                {
+                    if (!IsNullOrEmpty(newBot.GlobalSettings.LocationSettings.CustomRouteName))
+                    {
+                        var route =
+                            GlobalCatchemSettings.Routes.FirstOrDefault(
+                                x => x.Name.ToLower() == newBot.GlobalSettings.LocationSettings.CustomRouteName);
+                        if (route != null)
+                        {
+                            newBot.GlobalSettings.LocationSettings.CustomRoute = route.Route;
+                        }
+                    }
+                }
+                else if (!IsNullOrEmpty(newBot.GlobalSettings.LocationSettings.CustomRouteName))
+                {
+                    newBot.GlobalSettings.LocationSettings.CustomRouteName = "";
+                }
+
                 BotsCollection.Add(newBot);
                 if (newBot.GlobalSettings.AutoStartThisProfile)
                     newBot.Start();
@@ -748,6 +783,11 @@ namespace Catchem
         private void btn_ChangeViewToTelegram_Click(object sender, RoutedEventArgs e)
         {
             ChangeTransistorTo(2);
+        }
+
+        private void btn_ChangeViewToRouteCreator_Click(object sender, RoutedEventArgs e)
+        {
+            ChangeTransistorTo(3);
         }
 
         private void ChangeTransistorTo(int i)
