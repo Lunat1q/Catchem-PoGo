@@ -3,8 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:windowsPresentation="clr-namespace:GMap.NET.WindowsPresentation;assembly=GMap.NET.WindowsPresentation"
              mc:Ignorable="d" d:DesignHeight="600" d:DesignWidth="760">
-    <Grid x:Name="TlgrmGrdfgdid">
+    <Grid x:Name="RouteCreatorGrid">
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition/>
@@ -12,13 +13,46 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
+
             <RowDefinition Height="50"/>
-            <RowDefinition Height="125"/>
+            <RowDefinition Height="30"/>
             <RowDefinition Height="46*"/>
-            <RowDefinition Height="39*"/>
+            <RowDefinition Height="30"/>
         </Grid.RowDefinitions>
         <Rectangle Fill="#FFF4F4F5" StrokeThickness="0" Grid.RowSpan="4" Grid.ColumnSpan="4"/>
-        <Label x:Name="lbl_RouteCreator_Heading" Content="Route Creator" Margin="60,8,50,8" VerticalAlignment="Center" FontSize="18" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="34" HorizontalAlignment="Center"
-               Grid.Row="0" Grid.ColumnSpan="2" Grid.Column="1" Width="190"/>
+      
+        <Grid Grid.Row="0" Grid.RowSpan="2"  Grid.ColumnSpan="4" Grid.Column="0">
+            <Rectangle Margin="0" Grid.ColumnSpan="4">
+                <Rectangle.Fill>
+                    <LinearGradientBrush EndPoint="0,0.5" StartPoint="1,0.5">
+                        <GradientStop Color="#FF9AFF7D"/>
+                        <GradientStop Color="#FF97FFC2" Offset="1"/>
+                    </LinearGradientBrush>
+                </Rectangle.Fill>
+            </Rectangle>
+        </Grid>
+        <Grid Grid.Row ="0" Grid.Column="1" Grid.ColumnSpan="2">
+            <Label x:Name="lbl_RouteCreator_Heading" Content="Route Creator" Margin="60,8,50,8" VerticalAlignment="Center" FontSize="18" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="34" HorizontalAlignment="Center" Grid.Row="0"  Width="190"/>
+        </Grid>
+        <Grid Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="4">
+            <windowsPresentation:GMapControl x:Name="RouteCreatorMap" MouseDoubleClick="RouteCreatorMap_MouseDoubleClick" MouseWheel="RouteCreatorMap_MouseWheel"/>
+        </Grid>
+        <Grid Grid.Row="3" Grid.Column="0"  Grid.ColumnSpan="4">
+            <Rectangle Margin="0" Grid.ColumnSpan="4">
+                <Rectangle.Fill>
+                    <LinearGradientBrush EndPoint="0,0.5" StartPoint="1,0.5">
+                        <GradientStop Color="#FF9AFF7D"/>
+                        <GradientStop Color="#FF97FFC2" Offset="1"/>
+                    </LinearGradientBrush>
+                </Rectangle.Fill>
+            </Rectangle>
+        </Grid>
+        <Grid Grid.Row="3" Grid.Column="3">
+            <Slider x:Name="sl_mapZoom" Margin="51,8,10,0" VerticalAlignment="Top" RenderTransformOrigin="3.583,0.25" Height="25" Minimum="2" Maximum="18" TickPlacement="BottomRight" Value="18" SmallChange="0" LargeChange="3" ValueChanged="sl_mapZoom_ValueChanged"/>
+            <Label x:Name="lbl_Zoom" Content="Zoom:" HorizontalAlignment="Left" Margin="0,4,0,0" VerticalAlignment="Top" Width="45" Height="26"/>
+        </Grid>
+        
+
+       
     </Grid>
 </UserControl>
