@@ -14,7 +14,7 @@ If you really like this project, feel free to buy <b>pizza</b> :pizza: for devs 
 #####If you don't have PayPal account but still want to donate for my work, Please contact me in Discord :)
 
 ##See it in action:
-[![YoutTube clip](http://i.imgur.com/A3vzydu.png)](https://youtu.be/Wmn0zFeIRRM)
+<p align="center"><a href="https://www.google.com/search?ie=UTF-8&q=Catchem&gws_rd=ssl#q=Catchem&newwindow=1&tbm=vid"><img src="http://i.imgur.com/3NzF9iV.png"/></a></p>
 
 <h2>Extra features (from PokeMobBot) project)</h2>
 
@@ -23,15 +23,13 @@ If you really like this project, feel free to buy <b>pizza</b> :pizza: for devs 
  - [Proxy support]
  - [All settings from UI]
  - [You can set startup location from the map, just select the bot (don't hit Start), go to the map tab, and just double-click to desired position]
- - [Full controll of your inventory/pokemons]
+ - [Full controll of your inventory/poke]
  - [Smooth controll of movement speed on the run via MoveSpeedFactor slider]
  - [Make map follow your player]
 
 <br/>
 <h2>Screenshots</h2>
-![Player info tab](http://i.imgur.com/ZdSuy3z.png)<br/>
 ![Map/Console tab](http://i.imgur.com/UD0hc2B.png)<br/>
-![Settings tab](http://i.imgur.com/nCi8rnr.png)<br/>
 
  
 Get Device data from real android device:
@@ -45,4 +43,7 @@ If you have any problems with getting device info, consider watching this post: 
 Thanks to Feroxs' hard work on the API & Console we are able to manage something like this.
 Without him, this would not have been available.
  
+ 
+ <h2>Rights</h2>
+ All rights to trademarks used are going to Nintendo and Niantic 
 
