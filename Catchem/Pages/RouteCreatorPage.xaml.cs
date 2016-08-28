@@ -210,7 +210,19 @@ namespace Catchem.Pages
         private async void BuildTheRoute_Click(object sender, RoutedEventArgs e)
         {
             if (_mapPoints.Count < 2) return;
-            BotWindowData bot;
+            if (_mapPoints.Count > 20)
+            {
+                _prefferMapzen = true;
+                PrefferMapzenOverGoogleCb.IsChecked = true;
+            }
+            if (_mapPoints.Count > 47)
+            {
+                MessageBox.Show(
+                    "Too many waypoints, try to reduce them to 45, or wait for next releases, where that limit will be increased!",
+                    "Routing Error", MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
+                BotWindowData bot;
             var route = GetWorkingRouting(out bot);
             if (route == "error")
             {
@@ -295,7 +307,7 @@ namespace Catchem.Pages
                     "Routing error", MessageBoxButton.OK, MessageBoxImage.Information);
                 return;
             }
-            if (_globalSettings.Routes.Any(x => x.Name == routeName))
+            if (_globalSettings.Routes.Any(x => string.Equals(x.Name, routeName, StringComparison.CurrentCultureIgnoreCase)))
                 routeName += "_" + DeviceSettings.RandomString(5);
             var route = new BotRoute
             {

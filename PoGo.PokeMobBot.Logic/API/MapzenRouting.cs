@@ -31,7 +31,7 @@ namespace PoGo.PokeMobBot.Logic.API
                 return new RoutingResponse();
             }
 
-            if (waypoints == null || waypoints.Count > 0)
+            if (waypoints == null || waypoints.Count == 0)
             {
                 waypoints = new List<GeoCoordinate> {dest};
             }

@@ -189,6 +189,11 @@ namespace Catchem.Extensions
                     if (((string)value).GetVal(out val))
                         property.SetValue(obj, val);
                 }
+                else if (property.PropertyType == typeof(string))
+                {
+                    var val = value.ToString().Trim();
+                    property.SetValue(obj, val);
+                }
                 else
                     property.SetValue(obj, value);
                 return true;
@@ -232,6 +237,11 @@ namespace Catchem.Extensions
                     float val;
                     if (((string)value).GetVal(out val))
                         property.SetValue(obj, val);
+                }
+                else if (property.FieldType == typeof(string))
+                {
+                    var val = value.ToString().Trim();
+                    property.SetValue(obj, val);
                 }
                 else
                     property.SetValue(obj, value);

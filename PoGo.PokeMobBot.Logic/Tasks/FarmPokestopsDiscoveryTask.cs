@@ -118,11 +118,11 @@ namespace PoGo.PokeMobBot.Logic.Tasks
 
                 if (session.LogicSettings.RoutingService == RoutingService.GoogleDirections || session.LogicSettings.RoutingService == RoutingService.MapzenValhalla )
                 {
-#if DEBUG
-                    bestRoute = RoutingUtils.GetBestRoute(pokeStop, pokestopList.Where(x => !session.MapCache.CheckPokestopUsed(x)), 10);
-#else
+//#if DEBUG
+//                    bestRoute = RoutingUtils.GetBestRoute(pokeStop, pokestopList.Where(x => !session.MapCache.CheckPokestopUsed(x)), 10);
+//#else
                     bestRoute = RoutingUtils.GetBestRoute(pokeStop, pokestopList.Where(x => !session.MapCache.CheckPokestopUsed(x)), 20);
-#endif
+//#endif
                     session.EventDispatcher.Send(new PokestopsOptimalPathEvent()
                     {
                         Coords = bestRoute.Select(x => Tuple.Create(x.Latitude, x.Longitude)).ToList()
@@ -172,20 +172,6 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                                 // Check if successfully looted, if so program can continue as this was "false alarm".
                             }
                             if (timesZeroXPawarded <= zeroCheck) continue;
-
-                            //fortTry += 1;
-
-                            //if (!shownSoftBanMessage || fortTry % 5 == 0)
-                            //{
-                            //    session.EventDispatcher.Send(new FortFailedEvent
-                            //    {
-                            //        Name = fortInfo.Name,
-                            //        Try = fortTry,
-                            //        Max = retryNumber - zeroCheck
-                            //    });
-                            //    shownSoftBanMessage = true;
-                            //}
-                            //await DelayingUtils.Delay(session.LogicSettings.DelaySoftbanRetry, 400);
 
                             session.MapCache.UsedPokestop(pokeStop, session); //fuck that pokestop - skip it
 

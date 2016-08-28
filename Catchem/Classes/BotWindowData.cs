@@ -291,6 +291,7 @@ namespace Catchem.Classes
             if (Stats == null) return;
             Stats.TotalPokemons = 0;
             Stats.TotalPokestops = 0;
+            Stats.TotalExperience = 0;
         }
 
         public async void Start()
