@@ -36,6 +36,7 @@ namespace Catchem
     public partial class MainWindow
     {
         public static MainWindow BotWindow;
+        public CatchemSettings GlobalCatchemSettings = new CatchemSettings();
         private bool _windowClosing;
         private const string SubPath = "Profiles";
 
@@ -61,6 +62,13 @@ namespace Catchem
         public MainWindow()
         {
             InitializeComponent();
+
+            //global settings
+            GlobalCatchemSettings.Load();
+            SettingsView.BotMapPage.SetGlobalSettings(GlobalCatchemSettings);
+            GlobalMapView.SetGlobalSettings(GlobalCatchemSettings);
+            SettingsView.BotSettingsPage.SetGlobalSettings(GlobalCatchemSettings);
+
             InitWindowsControlls();
             BotWindow = this;
             LogWorker();
@@ -69,7 +77,6 @@ namespace Catchem
             SettingsView.BotMapPage.SetSettingsPage(SettingsView.BotSettingsPage);
             SetVersionTag();
         }
-
 
 
         public void SetVersionTag(Version remoteVersion = null)
@@ -698,6 +705,7 @@ namespace Catchem
         private void Window_Closing(object sender, CancelEventArgs e)
         {
             _windowClosing = true;
+            GlobalCatchemSettings.Save();
             SettingsView.BotMapPage.WindowClosing = true;
             if (Bot == null || _loadingUi) return;
             Bot.GlobalSettings.StoreData(SubPath + "\\" + Bot.ProfileName);
