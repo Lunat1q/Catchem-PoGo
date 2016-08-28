@@ -30,12 +30,43 @@
                     </LinearGradientBrush>
                 </Rectangle.Fill>
             </Rectangle>
+            <Button x:Name="btn_GenerateRoute"
+                    Width="Auto"
+                    Height="Auto"
+                    Margin="640,40,10,10"
+                    Click="btn_GenerateRoute_Click"
+                    Content="Generate Route"
+                    FontWeight="Bold"
+                    Style="{StaticResource ResourceKey=flatbutton}"
+                    TextOptions.TextFormattingMode="Display">
+                <Button.Background>
+                    <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                        <LinearGradientBrush.RelativeTransform>
+                            <TransformGroup>
+                                <ScaleTransform CenterX="0.5" CenterY="0.5" />
+                                <SkewTransform CenterX="0.5" CenterY="0.5" />
+                                <RotateTransform Angle="90" CenterX="0.5" CenterY="0.5" />
+                                <TranslateTransform />
+                            </TransformGroup>
+                        </LinearGradientBrush.RelativeTransform>
+                        <GradientStop Offset="0" Color="#FF9CEAEE" />
+                        <GradientStop Offset="1" Color="#FF5398C0" />
+                    </LinearGradientBrush>
+                </Button.Background>
+            </Button>
         </Grid>
         <Grid Grid.Row ="0" Grid.Column="1" Grid.ColumnSpan="2">
             <Label x:Name="lbl_RouteCreator_Heading" Content="Route Creator" Margin="60,8,50,8" VerticalAlignment="Center" FontSize="18" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="34" HorizontalAlignment="Center" Grid.Row="0"  Width="190"/>
         </Grid>
         <Grid Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="4">
-            <windowsPresentation:GMapControl x:Name="RouteCreatorMap" MouseDoubleClick="RouteCreatorMap_MouseDoubleClick" MouseWheel="RouteCreatorMap_MouseWheel"/>
+            <windowsPresentation:GMapControl x:Name="RouteCreatorMap" MouseDoubleClick="RouteCreatorMap_MouseDoubleClick" MouseWheel="RouteCreatorMap_MouseWheel">
+                <windowsPresentation:GMapControl.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem x:Name="mi_StartPoint" Header="Start Point" Click="mi_StartPoint_Click"/>
+                        <MenuItem x:Name="mi_EndPoint" Header="End Point" Click="mi_EndPoint_Click" />
+                    </ContextMenu>
+                </windowsPresentation:GMapControl.ContextMenu>
+            </windowsPresentation:GMapControl>
         </Grid>
         <Grid Grid.Row="3" Grid.Column="0"  Grid.ColumnSpan="4">
             <Rectangle Margin="0" Grid.ColumnSpan="4">
@@ -46,6 +77,7 @@
                     </LinearGradientBrush>
                 </Rectangle.Fill>
             </Rectangle>
+            <Label x:Name="lbl_markerAmount" Content="Markers: 0" HorizontalAlignment="Left" Margin="10,4,0,0" VerticalAlignment="Top"/>
         </Grid>
         <Grid Grid.Row="3" Grid.Column="3">
             <Slider x:Name="sl_mapZoom" Margin="51,8,10,0" VerticalAlignment="Top" RenderTransformOrigin="3.583,0.25" Height="25" Minimum="2" Maximum="18" TickPlacement="BottomRight" Value="18" SmallChange="0" LargeChange="3" ValueChanged="sl_mapZoom_ValueChanged"/>

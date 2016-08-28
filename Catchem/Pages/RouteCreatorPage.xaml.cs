@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -25,11 +26,10 @@ namespace Catchem.Pages
     /// Interaction logic for RouteCreatorPage.xaml
     /// </summary>
 
-       
 
-        public partial class RouteCreatorPage : UserControl
+
+    public partial class RouteCreatorPage : UserControl
     {
-       
 
         public RouteCreatorPage()
         {
@@ -69,35 +69,50 @@ namespace Catchem.Pages
                 Offset = new Point(-24, -48),
                 ZIndex = int.MaxValue
             };
-       
-             markerShape.MouseRightButtonDown += delegate
-                        {
-                            RemoveMarker(marker);
-                        };
-            AddMarker(marker);       
-            }
-        
-            private void RemoveMarker(GMapMarker marker)
-             {
-                marker.Clear();
-                RouteCreatorMap.Markers.Remove(marker);
-             }
+
+            markerShape.MouseRightButtonDown += delegate
+            {
+                RemoveMarker(marker);
+            };
+            AddMarker(marker);
+        }
 
         private void RouteCreatorMap_MouseWheel(object sender, MouseWheelEventArgs e)
         {
             sl_mapZoom.Value = RouteCreatorMap.Zoom;
         }
+
         private void sl_mapZoom_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             var sl = (sender as Slider);
             if (sl == null) return;
-            RouteCreatorMap.Zoom = (int)sl.Value;
+            RouteCreatorMap.Zoom = (int) sl.Value;
         }
 
         public void AddMarker(GMapMarker marker)
         {
             RouteCreatorMap.Markers.Add(marker);
+            lbl_markerAmount.Content = $"Markers: {RouteCreatorMap.Markers.Count}";
         }
-  
+
+        private void RemoveMarker(GMapMarker marker)
+        {
+            marker.Clear();
+            RouteCreatorMap.Markers.Remove(marker);
+            lbl_markerAmount.Content = $"Markers: {RouteCreatorMap.Markers.Count}";
+        }
+
+        private void mi_StartPoint_Click(object sender, EventArgs e)
+        {
+            //Add the StartPoint (making sure there is only one)
+
+        }
+
+        private void mi_EndPoint_Click(object sender, EventArgs e)
+        {
+            //Add the EndPoint (making sure there is only one)
+            ContextMenu contextMenu = sender as ContextMenu;
+
+        }
     }
 }
