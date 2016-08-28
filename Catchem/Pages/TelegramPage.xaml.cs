@@ -231,6 +231,9 @@ namespace Catchem.Pages
                         case "status":
                             HandleStatus(t.ChatId, t.Args);
                             break;
+                        case "report":
+                            HandleReport(t.ChatId, t.Args);
+                            break;
                         default:
                             HandleUnknownCommand(t.ChatId);
                             break;
@@ -426,7 +429,37 @@ namespace Catchem.Pages
                 TlgrmBot.SendToTelegram(botStringBuilder.ToString(), chatId);
         }
 
-
+        private void HandleReport(long chatId, string[] args)
+        {
+            if (args.Length <= 0 | args.Length > 1)
+            {
+                TlgrmBot.SendToTelegram("Error Invalid Command Structure!", chatId);
+                return;
+            }
+            if (args[0].ToLower() == "enable")
+            {
+                if (CbAutoReportSelectedPokemon.IsChecked == true)
+                {
+                    TlgrmBot.SendToTelegram("Reporting Selected Pokemon is already Enabled.", chatId);
+                    return;
+                }
+                CbAutoReportSelectedPokemon.IsChecked = true;
+                TlgrmBot.SendToTelegram("Reporting Selected Pokemon set to Enabled.", chatId);
+                return;
+            }
+            if (args[0].ToLower() == "disable")
+            {
+                if (CbAutoReportSelectedPokemon.IsChecked == false)
+                {
+                    TlgrmBot.SendToTelegram("Reporting Selected Pokemon is already Disabled.", chatId);
+                    return;
+                }
+                CbAutoReportSelectedPokemon.IsChecked = false;
+                TlgrmBot.SendToTelegram("Reporting Selected Pokemon set to Disabled.", chatId);
+                return;
+            }
+            TlgrmBot.SendToTelegram("Error Invalid Command Structure!", chatId);
+        }
         private async void TelegramLogWorker()
         {
             while (!_windowClosing)
