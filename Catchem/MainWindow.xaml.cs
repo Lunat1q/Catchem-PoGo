@@ -235,7 +235,7 @@ namespace Catchem
                     (double) objData[3], (PokemonFamilyId) objData[4], (int) objData[5], false, false,
                     (double) objData[6],
                     (PokemonMove) objData[7], (PokemonMove) objData[8], (PokemonType) objData[9],
-                    (PokemonType) objData[10], (int) objData[12], (int)objData[13], (int)objData[14]);
+                    (PokemonType) objData[10], (int) objData[11], (int)objData[12], (int)objData[13]);
                 TelegramView.TlgrmBot.EventDispatcher.Send(new TelegramPokemonCaughtEvent
                 {
                     PokemonId = (PokemonId)objData[1],

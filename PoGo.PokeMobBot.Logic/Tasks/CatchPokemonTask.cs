@@ -249,7 +249,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                 session.EventDispatcher.Send(evt);
 
                 attemptCounter++;
-                    await Task.Delay(session.LogicSettings.DelayCatchPokemon);
+                    await Task.Delay(session.LogicSettings.DelayCatchPokemon, cancellationToken);
             } while (caughtPokemonResponse.Status == CatchPokemonResponse.Types.CatchStatus.CatchMissed ||
                      caughtPokemonResponse.Status == CatchPokemonResponse.Types.CatchStatus.CatchEscape);
             session.State = prevState;

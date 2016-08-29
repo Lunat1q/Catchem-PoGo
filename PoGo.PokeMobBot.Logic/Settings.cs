@@ -108,7 +108,7 @@ namespace PoGo.PokeMobBot.Logic
     {
 		public int StopsHit = 0;
         public int PokestopsToCheckGym = 0;
-        public int CurrentLevel = 1;
+        public int CurrentLevel = 0;
         public DateTime StartTime = DateTime.Now;
         public bool DelayingScan = false;
         public int PokemonScanDelay = 10000;// in ms
