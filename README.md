@@ -42,6 +42,8 @@ If you have any problems with getting device info, consider watching this post: 
 <h2>Credits</h2>
 Thanks to Feroxs' hard work on the API & Console we are able to manage something like this.
 Without him, this would not have been available.
+Design ideas: <i><b>[@Morphir](https://github.com/ephran)</b> - Poke info design</i>, <i><b>Su**ro</b> - initial design idea</i>
+
  
  
  <h2>Rights</h2>
