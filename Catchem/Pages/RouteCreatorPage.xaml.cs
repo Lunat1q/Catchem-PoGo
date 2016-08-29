@@ -1,26 +1,4 @@
 ﻿using System;
-<<<<<<< HEAD
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Remoting.Channels;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using Catchem.Classes;
-using Catchem.Extensions;
-using GMap.NET;
-using GMap.NET.WindowsPresentation;
-=======
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -38,20 +16,12 @@ using GMap.NET.WindowsPresentation;
 using PoGo.PokeMobBot.Logic;
 using PoGo.PokeMobBot.Logic.API;
 using PoGo.PokeMobBot.Logic.PoGoUtils;
->>>>>>> refs/remotes/Lunat1q/dev
 
 namespace Catchem.Pages
 {
     /// <summary>
     /// Interaction logic for RouteCreatorPage.xaml
     /// </summary>
-<<<<<<< HEAD
-
-
-
-    public partial class RouteCreatorPage : UserControl
-    {
-=======
     public partial class RouteCreatorPage
     {
         private CatchemSettings _globalSettings;
@@ -79,7 +49,6 @@ namespace Catchem.Pages
                     bot.GlobalSettings.LocationSettings.DefaultLongitude);
             }
         }
->>>>>>> refs/remotes/Lunat1q/dev
 
         public RouteCreatorPage()
         {
@@ -107,72 +76,6 @@ namespace Catchem.Pages
             await Task.Delay(10);
         }
 
-<<<<<<< HEAD
-        private void btn_GenerateRoute_Click(object sender, EventArgs e)
-        {
-            
-        }
-     
-        private void RouteCreatorMap_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            var mousePos = e.GetPosition(RouteCreatorMap);
-            //Getting real coordinates from mouse click
-            var mapPos = RouteCreatorMap.FromLocalToLatLng((int) mousePos.X, (int) mousePos.Y);
-            var markerShape = Properties.Resources.force_move.ToImage("Route Marker");
-            var marker = new GMapMarker(mapPos)
-            {
-                Shape = markerShape,
-                Offset = new Point(-24, -48),
-                ZIndex = int.MaxValue
-            };
-
-            markerShape.MouseRightButtonDown += delegate
-            {
-                RemoveMarker(marker);
-            };
-            AddMarker(marker);
-        }
-
-        private void RouteCreatorMap_MouseWheel(object sender, MouseWheelEventArgs e)
-        {
-            sl_mapZoom.Value = RouteCreatorMap.Zoom;
-        }
-
-        private void sl_mapZoom_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            var sl = (sender as Slider);
-            if (sl == null) return;
-            RouteCreatorMap.Zoom = (int) sl.Value;
-        }
-
-        public void AddMarker(GMapMarker marker)
-        {
-            RouteCreatorMap.Markers.Add(marker);
-            lbl_markerAmount.Content = $"Markers: {RouteCreatorMap.Markers.Count}";
-        }
-
-        private void RemoveMarker(GMapMarker marker)
-        {
-            marker.Clear();
-            RouteCreatorMap.Markers.Remove(marker);
-            lbl_markerAmount.Content = $"Markers: {RouteCreatorMap.Markers.Count}";
-        }
-
-        private void mi_StartPoint_Click(object sender, EventArgs e)
-        {
-            //Add the StartPoint (making sure there is only one)
-
-        }
-
-        private void mi_EndPoint_Click(object sender, EventArgs e)
-        {
-            //Add the EndPoint (making sure there is only one)
-            ContextMenu contextMenu = sender as ContextMenu;
-
-        }
-    }
-}
-=======
         private void RouteCreatorMap_MouseWheel(object sender, MouseWheelEventArgs e)
         {
             SlMapZoom.Value = RouteCreatorMap.Zoom;
@@ -202,7 +105,7 @@ namespace Catchem.Pages
                 }
             }
             _mapPoints.Add(marker);
-           RouteCreatorMap.Markers.Add(marker.Marker);
+            RouteCreatorMap.Markers.Add(marker.Marker);
             UpdateMarkerCounter();
         }
 
@@ -241,7 +144,7 @@ namespace Catchem.Pages
         {
             _builded = false;
             var rPoint = point;
-            var mapPos = RouteCreatorMap.FromLocalToLatLng((int) rPoint.X, (int) rPoint.Y);
+            var mapPos = RouteCreatorMap.FromLocalToLatLng((int)rPoint.X, (int)rPoint.Y);
             CreateNewMarker(mapPos, starter);
         }
 
@@ -319,7 +222,7 @@ namespace Catchem.Pages
                     "Routing Error", MessageBoxButton.OK, MessageBoxImage.Information);
                 return;
             }
-                BotWindowData bot;
+            BotWindowData bot;
             var route = GetWorkingRouting(out bot);
             if (route == "error")
             {
@@ -359,7 +262,7 @@ namespace Catchem.Pages
             {
                 _currentRoute.Points?.Add(new PointLatLng(item.Latitude, item.Longitude));
             }
-            
+
             _currentRoute?.RegenerateShape(RouteCreatorMap);
             var path = _currentRoute?.Shape as Path;
             if (path != null)
@@ -370,7 +273,7 @@ namespace Catchem.Pages
                        x => !string.IsNullOrEmpty(x.GlobalSettings.LocationSettings.MapzenApiElevationKey));
             if (bot != null)
             {
-               await bot.Session.MapzenApi.FillAltitude(_buildedRoute.ToList());
+                await bot.Session.MapzenApi.FillAltitude(_buildedRoute.ToList());
             }
             _builded = true;
         }
@@ -442,4 +345,3 @@ namespace Catchem.Pages
         }
     }
 }
->>>>>>> refs/remotes/Lunat1q/dev

@@ -43,11 +43,7 @@
             <pages:AccountSettingsTab x:Name="SettingsView" />
             <pages:GlobalMapPage x:Name="GlobalMapView" />
             <pages:TelegramPage x:Name="TelegramView" />
-<<<<<<< HEAD
-            <pages:RouteCreatorPage x:Name="RouteCreatorView"/>
-=======
             <pages:RouteCreatorPage x:Name="RouteCreatorView" />
->>>>>>> refs/remotes/Lunat1q/dev
         </materialDesign:Transitioner>
         <Grid Width="246" HorizontalAlignment="Left">
             <Rectangle Width="246" HorizontalAlignment="Left">
@@ -323,6 +319,3 @@
     </Grid>
 
 </controls:MetroWindow>
-
-
-

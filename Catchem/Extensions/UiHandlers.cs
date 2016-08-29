@@ -154,6 +154,7 @@ namespace Catchem.Extensions
 
         private static bool SetPropertyRecursive(string propertyName, object value, object obj)
         {
+            if (obj == null) return false;
             var objType = obj.GetType();
             if (CheckObservable(objType))
             {
@@ -203,6 +204,7 @@ namespace Catchem.Extensions
 
         private static bool SetFieldRecursive(string propertyName, object value, object obj)
         {
+            if (obj == null) return false;
             var objType = obj.GetType();
             if (CheckObservable(objType))
             {

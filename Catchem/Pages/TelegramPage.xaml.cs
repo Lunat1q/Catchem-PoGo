@@ -64,7 +64,7 @@ namespace Catchem.Pages
         {
             var settingsPath = Path.Combine(Directory.GetCurrentDirectory(), TlgrmFilePath);
             var jsonSettings = new JsonSerializerSettings();
-            jsonSettings.Converters.Add(new StringEnumConverter {CamelCaseText = true});
+            jsonSettings.Converters.Add(new StringEnumConverter { CamelCaseText = true });
             jsonSettings.ObjectCreationHandling = ObjectCreationHandling.Replace;
             jsonSettings.DefaultValueHandling = DefaultValueHandling.Populate;
 
@@ -125,7 +125,7 @@ namespace Catchem.Pages
             if (File.Exists(settingsPath))
             {
                 var jsonSettings = new JsonSerializerSettings();
-                jsonSettings.Converters.Add(new StringEnumConverter {CamelCaseText = true});
+                jsonSettings.Converters.Add(new StringEnumConverter { CamelCaseText = true });
                 jsonSettings.ObjectCreationHandling = ObjectCreationHandling.Replace;
                 jsonSettings.DefaultValueHandling = DefaultValueHandling.Populate;
 
@@ -140,7 +140,7 @@ namespace Catchem.Pages
         {
 
             if (AddToAutoReport.SelectedIndex <= -1) return;
-            var pokemonId = (PokemonId) AddToAutoReport.SelectedItem;
+            var pokemonId = (PokemonId)AddToAutoReport.SelectedItem;
             if (!_tlgrmSettings.AutoReportPokemon.Contains(pokemonId))
                 _tlgrmSettings.AutoReportPokemon.Add(pokemonId);
             AddToAutoReport.SelectedIndex = -1;
@@ -240,11 +240,7 @@ namespace Catchem.Pages
                             HandleReport(t.ChatId, t.Args);
                             break;
                         case "reportabovecp":
-<<<<<<< HEAD
-                            HandleReportAboveCP(t.ChatId, t.Args);
-=======
                             HandleReportAboveCp(t.ChatId, t.Args);
->>>>>>> refs/remotes/Lunat1q/dev
                             break;
                         default:
                             HandleUnknownCommand(t.ChatId);
@@ -320,7 +316,6 @@ namespace Catchem.Pages
 
         private static string BuildPokemonRow(int indx, PokemonUiData pokemon)
             => $"{indx}) {pokemon.Name} CP:{pokemon.Cp} IV:{pokemon.Iv.ToN1()}";
-
         private void HandleStatus(long chatId, string[] args)
         {
             if (args == null || args.Length == 0)
@@ -362,7 +357,6 @@ namespace Catchem.Pages
             }
             TlgrmBot.SendToTelegram("Unknown command!", chatId);
         }
-
         private void HandleToggle(long chatId, bool start, string[] args)
         {
             if (args == null || args.Length == 0)
@@ -403,7 +397,6 @@ namespace Catchem.Pages
                         targetBot.Start();
                     else
                         targetBot.Stop();
-
                     TlgrmBot.SendToTelegram($"Bot {targetBot.ProfileName} {(start ? "started" : "stopped")}!", chatId);
                 }
                 else
@@ -414,7 +407,6 @@ namespace Catchem.Pages
             }
             TlgrmBot.SendToTelegram($"Wrong {(start ? "start" : "stop")} command!", chatId);
         }
-
         private void HandleHelp(long chatId)
         {
             var helpMsg = "The following commands are avaliable: \n" +
@@ -479,43 +471,21 @@ namespace Catchem.Pages
             TlgrmBot.SendToTelegram("Error Invalid Command Structure!", chatId);
         }
 
-<<<<<<< HEAD
-        private void HandleReportAboveCP(long chatId, string[] args)
-        {
-            if (args.Length <= 0 | args.Length > 1)
-=======
         private void HandleReportAboveCp(long chatId, string[] args)
         {
             if (args.Length <= 0 || args.Length > 1)
->>>>>>> refs/remotes/Lunat1q/dev
             {
                 TlgrmBot.SendToTelegram("Error Invalid Command Structure!", chatId);
                 return;
             }
-<<<<<<< HEAD
-            int CP;
-            if (int.TryParse(args[0], out CP))
-            {
-                if (CP < 0 | CP > 5000)
-=======
             int cp;
             if (int.TryParse(args[0], out cp))
             {
                 if (cp < 0 || cp > 5000)
->>>>>>> refs/remotes/Lunat1q/dev
                 {
                     TlgrmBot.SendToTelegram("Error Invalid CP Entered!", chatId);
                     return;
                 }
-<<<<<<< HEAD
-                TbReportAllPokemonsAboveCp.Text = CP.ToString();
-                SaveSettings();
-                TlgrmBot.SendToTelegram($"Set Report Above CP to: {CP}", chatId);
-                return;
-            }
-            TlgrmBot.SendToTelegram("Error Invalid CP Entered!", chatId);
-           }
-=======
                 TbReportAllPokemonsAboveCp.Text = cp.ToString();
                 SaveSettings();
                 TlgrmBot.SendToTelegram($"Set Report Above CP to: {cp}", chatId);
@@ -523,7 +493,6 @@ namespace Catchem.Pages
             }
             TlgrmBot.SendToTelegram("Error Invalid CP Entered!", chatId);
         }
->>>>>>> refs/remotes/Lunat1q/dev
 
         private async void TelegramLogWorker()
         {
