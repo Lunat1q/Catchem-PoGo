@@ -16,6 +16,7 @@
     <extensions:CamelCaseConverter x:Key="CamelCaseConverter" />
     <extensions:LoadImageSourceFromResource x:Key="LoadImageSourceFromResource" />
     <extensions:LoadImageFromResource x:Key="LoadImageFromResource" />
+    <extensions:LoadImageIconFromResource x:Key="LoadImageIconFromResource" />
     <extensions:ButtonStatusConverter x:Key="ButtonStatusConverter" />
     <extensions:MethodToValueConverter x:Key="MethodToValueConverter" />
     <ControlTemplate TargetType="TextBoxBase" x:Key="pogo">
@@ -224,13 +225,13 @@
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition  Width="73*"/>
-                <ColumnDefinition Width="50"/>
+                <ColumnDefinition  Width="*"/>
+                <ColumnDefinition Width="30"/>
                 <ColumnDefinition Width="65"/>
             </Grid.ColumnDefinitions>
-            <Rectangle Fill="#FFFFFFFF" HorizontalAlignment="Stretch" Height="Auto" VerticalAlignment="Stretch" Width="Auto" Grid.ColumnSpan="3" Grid.RowSpan="2"/>
-            <TextBlock Text="{Binding Name, FallbackValue='Unknown'}" Margin="3,1,8.25,1" Grid.Column="0" Foreground="#FF59C3B0" TextAlignment="Center" Grid.ColumnSpan="1" VerticalAlignment="Center" Height="Auto"/>
-            <Button Tag="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}}}" Style="{StaticResource ResourceKey=flatbutton}" x:Name="btn_removeFromList" Content="Delete" HorizontalAlignment="Stretch" Margin="3" FontFamily="BOLD" TextOptions.TextFormattingMode="Display" FontWeight="Bold" VerticalAlignment="Center" Width="Auto" Height="22" Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="1" Click="btn_removeFromListGeneric_Click" Grid.RowSpan="2">
+            <Rectangle Fill="#FFFFFFFF" HorizontalAlignment="Stretch" Height="Auto" VerticalAlignment="Stretch" Width="Auto" Grid.ColumnSpan="3" Grid.RowSpan="1"/>
+            <TextBlock Text="{Binding Name, FallbackValue='Unknown'}" Margin="3,6,8,6" Grid.Column="0" Foreground="#FF59C3B0" TextAlignment="Center" Grid.ColumnSpan="1" VerticalAlignment="Center" Height="16"/>
+            <Button Tag="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}}}" Style="{StaticResource ResourceKey=flatbutton}" x:Name="btn_removeFromList" Content="Delete" HorizontalAlignment="Stretch" Margin="3" FontFamily="BOLD" TextOptions.TextFormattingMode="Display" FontWeight="Bold" VerticalAlignment="Center" Width="Auto" Height="22" Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="1" Click="btn_removeFromListGeneric_Click" Grid.RowSpan="1">
                 <Button.Background>
                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                         <LinearGradientBrush.RelativeTransform>
@@ -246,7 +247,7 @@
                     </LinearGradientBrush>
                 </Button.Background>
             </Button>
-            <TextBlock Text="{Binding WpCount, FallbackValue=0}" Margin="0" Grid.Column="1" Foreground="#FF5F6160" TextAlignment="Center" Grid.ColumnSpan="1" VerticalAlignment="Center" Height="Auto" Grid.Row="0" FontSize="10.667"/>
+            <TextBlock Text="{Binding WpCount, FallbackValue=0}" Margin="0,7,65,7" Grid.Column="1" Foreground="#FF5F6160" TextAlignment="Center" Grid.ColumnSpan="2" VerticalAlignment="Center" Height="14" Grid.Row="0" FontSize="10.667"/>
         </Grid>
     </DataTemplate>
     <Style x:Key="ListBoxItemStyleTransparentSelect" TargetType="ListBoxItem">

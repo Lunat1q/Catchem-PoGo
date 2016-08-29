@@ -190,7 +190,8 @@ namespace Catchem.Pages
             l_Pokemons_transfered.Content = _bot.Stats.TotalPokemonsTransfered;
             l_Pokestops_farmed.Content = _bot.Stats.TotalPokestops;
             l_level.Content = _bot.Stats.ExportStats.Level;
-            l_level_nextime.Content = $"{_bot.Stats.ExportStats.HoursUntilLvl.ToString("00")}:{_bot.Stats.ExportStats.MinutesUntilLevel.ToString("00")}";
+            NextLevelInTextBox.Text = $"{_bot.Stats.ExportStats.HoursUntilLvl.ToString("00")}:{_bot.Stats.ExportStats.MinutesUntilLevel.ToString("00")} ({_bot.Stats.ExportStats.CurrentXp}/{_bot.Stats.ExportStats.LevelupXp})";
+            LevelProgressBar.Value = (int)(_bot.Stats.ExportStats.CurrentXp*100/_bot.Stats.ExportStats.LevelupXp);
         }
 
         public void ClearData()

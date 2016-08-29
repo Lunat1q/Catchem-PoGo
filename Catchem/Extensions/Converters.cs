@@ -81,6 +81,28 @@ namespace Catchem.Extensions
         }
     }
 
+    public sealed class LoadImageIconFromResource : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            var imageName = parameter as string;
+            if (value == null || imageName == null)
+                return value;
+            var img =
+                (Properties.Resources.ResourceManager.GetObject(imageName, Properties.Resources.Culture) as Bitmap)
+                    .ToImage(imageName.Substring(0, 1).ToUpper() + imageName.Substring(1));
+            img.HorizontalAlignment = HorizontalAlignment.Stretch;
+            img.VerticalAlignment = VerticalAlignment.Stretch;
+            img.Stretch = Stretch.Uniform;
+            return img;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return value;
+        }
+    }
+
     public sealed class ButtonStatusConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)

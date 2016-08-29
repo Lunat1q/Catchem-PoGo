@@ -218,11 +218,12 @@ namespace Catchem.Pages
             if (_mapPoints.Count > 47)
             {
                 MessageBox.Show(
-                    "Too many waypoints, try to reduce them to 45, or wait for next releases, where that limit will be increased!",
+                    "Too many waypoints, try to reduce them to 47, or wait for next releases, where that limit will be increased!",
                     "Routing Error", MessageBoxButton.OK, MessageBoxImage.Information);
                 return;
             }
-                BotWindowData bot;
+            BuildingProgressBar.Value = 0;
+            BotWindowData bot;
             var route = GetWorkingRouting(out bot);
             if (route == "error")
             {
@@ -233,7 +234,7 @@ namespace Catchem.Pages
             }
 
             var start = _mapPoints.FirstOrDefault(x => x.IsStart) ?? _mapPoints.First();
-
+            BuildingProgressBar.Value = 10;
             RoutingResponse response = null;
             var cycleWp = _mapPoints.Where(x => !x.IsStart).Select(x => x.Location).ToList();
             cycleWp.Add(start.Location);
@@ -245,8 +246,8 @@ namespace Catchem.Pages
             {
                 response = MapzenRouting.GetRoute(start.Location, null, bot.Session, cycleWp, true);
             }
-            if (response == null || response.Coordinates.Count == 0) return;
-
+            if (response?.Coordinates == null || response.Coordinates.Count == 0) return;
+            BuildingProgressBar.Value = 60;
             _currentRoute?.Points?.Clear();
             if (_currentRoute == null)
             {
@@ -255,7 +256,7 @@ namespace Catchem.Pages
             }
 
             var routePoints = response.Coordinates.Select(wp => new GeoCoordinate(wp[0], wp[1])).ToList();
-
+            BuildingProgressBar.Value = 70;
             _buildedRoute = new List<GeoCoordinate>(routePoints);
 
             foreach (var item in routePoints)
@@ -275,6 +276,7 @@ namespace Catchem.Pages
             {
                await bot.Session.MapzenApi.FillAltitude(_buildedRoute.ToList());
             }
+            BuildingProgressBar.Value = 100;
             _builded = true;
         }
 
@@ -285,10 +287,9 @@ namespace Catchem.Pages
 
         private void ClearRouteBuilder()
         {
-            if (_currentRoute != null)
-            {
-                RouteCreatorMap.Markers.Remove(_currentRoute);
-            }
+            _currentRoute?.Points.Clear();
+            _currentRoute?.RegenerateShape(RouteCreatorMap);
+            BuildingProgressBar.Value = 0;
             _builded = false;
             while (_mapPoints.Any())
             {
