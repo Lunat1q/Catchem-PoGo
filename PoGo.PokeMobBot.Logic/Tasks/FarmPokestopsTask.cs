@@ -327,7 +327,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                 var pokeStop = pokestopList[0];
                 pokestopList.RemoveAt(0);
 
-                if (session.LogicSettings.RoutingService == RoutingService.GoogleDirections)
+                if (session.LogicSettings.RoutingService == RoutingService.GoogleDirections || session.LogicSettings.RoutingService == RoutingService.MapzenValhalla)
                 {
                     bestRoute = RoutingUtils.GetBestRoute(pokeStop, pokestopList.Where(x => !session.MapCache.CheckPokestopUsed(x)), 20);
                     session.EventDispatcher.Send(new PokestopsOptimalPathEvent()

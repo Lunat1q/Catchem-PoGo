@@ -228,7 +228,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                 evt.Distance = distance;
                 evt.Pokeball = pokeball;
                 evt.Attempt = attemptCounter;
-                await session.Inventory.RefreshCachedInventory();
+                //await session.Inventory.RefreshCachedInventory();
                 evt.BallAmount = await session.Inventory.GetItemAmountByType(pokeball);
 
                 session.EventDispatcher.Send(evt);
@@ -262,7 +262,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                 ? session.LogicSettings.UseGreatBallBelowCatchProbability/100
                 : session.LogicSettings.UseGreatBallBelowCatchProbability;
 
-            await session.Inventory.RefreshCachedInventory();
+            //await session.Inventory.RefreshCachedInventory();
             var pokeBallsCount = await session.Inventory.GetItemAmountByType(ItemId.ItemPokeBall);
             var greatBallsCount = await session.Inventory.GetItemAmountByType(ItemId.ItemGreatBall);
             var ultraBallsCount = await session.Inventory.GetItemAmountByType(ItemId.ItemUltraBall);

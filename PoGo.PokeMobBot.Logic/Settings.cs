@@ -15,6 +15,7 @@ using POGOProtos.Inventory.Item;
 using GeoCoordinatePortable;
 using Google.Protobuf;
 using PoGo.PokeMobBot.Logic.API;
+using PoGo.PokeMobBot.Logic.PoGoUtils;
 
 #endregion
 
@@ -969,8 +970,8 @@ namespace PoGo.PokeMobBot.Logic
         public double WalkingSpeedMax = random.Next(10, 16);
         public int MaxSpawnLocationOffset = 10;
         public int MaxTravelDistanceInMeters = 5000;
-        public bool UseGpxPathing = false;
-        public string GpxFile = "GPXPath.GPX";
+        public bool UseCustomRoute = false;
+        public string CustomRouteName = "";
         public bool UsePokeStopLuckyNumber = true;
         public int PokestopSkipLuckyNumberMinUse = 3;
         public int PokestopSkipLuckyNumber = 1;
@@ -983,6 +984,11 @@ namespace PoGo.PokeMobBot.Logic
 		public bool UseMapzenApiElevation = false;
         public string MapzenApiElevationKey = "";
         public string GoogleDirectionsApiKey = "";
+        public string MapzenValhallaApiKey = "";
+        public string MobBotRoutingApiKey = "";
+
+        [JsonIgnore]
+        public CustomRoute CustomRoute;
     }
 
     public class CatchSettings
@@ -1772,8 +1778,7 @@ namespace PoGo.PokeMobBot.Logic
         public int KeepMinDuplicatePokemon => _settings.PokemonSettings.KeepMinDuplicatePokemon;
         public bool PrioritizeIvOverCp => _settings.PokemonSettings.PrioritizeIvOverCp;
         public int MaxTravelDistanceInMeters => _settings.LocationSettings.MaxTravelDistanceInMeters;
-        public string GpxFile => _settings.LocationSettings.GpxFile;
-        public bool UseGpxPathing => _settings.LocationSettings.UseGpxPathing;
+        public bool UseCustomRoute => _settings.LocationSettings.UseCustomRoute;
         public bool UsePokeStopLuckyNumber => _settings.LocationSettings.UsePokeStopLuckyNumber;
         public int PokestopSkipLuckyNumberMinUse => _settings.LocationSettings.PokestopSkipLuckyNumberMinUse;
         public int PokestopSkipLuckyNumber => _settings.LocationSettings.PokestopSkipLuckyNumber;
@@ -1805,6 +1810,8 @@ namespace PoGo.PokeMobBot.Logic
         public int MinPokeballsWhileSnipe => _settings.SnipeSettings.MinPokeballsWhileSnipe;
         public int MaxPokeballsPerPokemon => _settings.CatchSettings.MaxPokeballsPerPokemon;
         public SnipeSettings PokemonToSnipe => _settings.PokemonToSnipe;
+
+        public CustomRoute CustomRoute => _settings.LocationSettings.CustomRoute;
         public string SnipeLocationServer => _settings.SnipeSettings.SnipeLocationServer;
         public int SnipeLocationServerPort => _settings.SnipeSettings.SnipeLocationServerPort;
         public bool UseSnipeLocationServer => _settings.SnipeSettings.UseSnipeLocationServer;
@@ -1869,6 +1876,8 @@ namespace PoGo.PokeMobBot.Logic
         public bool UseMapzenApiElevation => _settings.LocationSettings.UseMapzenApiElevation;
         public string MapzenApiElevationKey => _settings.LocationSettings.MapzenApiElevationKey;
         public string GoogleDirectionsApiKey => _settings.LocationSettings.GoogleDirectionsApiKey;
+        public string MobBotRoutingApiKey => _settings.LocationSettings.MobBotRoutingApiKey;
+        public string MapzenValhallaApiKey => _settings.LocationSettings.MapzenValhallaApiKey;
         public bool PrioritizeBothIvAndCpForTransfer => _settings.PokemonSettings.PrioritizeBothIvAndCpForTransfer;
         public int MinRandomizeDelayMilliseconds => _settings.DelaySettings.MinRandomizeDelayMilliseconds;
         public int MaxRandomizeDelayMilliseconds => _settings.DelaySettings.MaxRandomizeDelayMilliseconds;
@@ -1882,6 +1891,7 @@ namespace PoGo.PokeMobBot.Logic
     {
         MobBot,
         OpenLs,
-        GoogleDirections
+        GoogleDirections,
+        MapzenValhalla
     }
 }

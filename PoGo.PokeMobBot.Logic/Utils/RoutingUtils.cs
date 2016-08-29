@@ -20,6 +20,112 @@ namespace PoGo.PokeMobBot.Logic.Utils
             }
             return result;
         }
+
+
+        public static IEnumerable<GoogleLocation> DecodePolyline(string polyline)
+        {
+            if (string.IsNullOrEmpty(polyline))
+                throw new ArgumentNullException("encodedPoints");
+
+            char[] polylineChars = polyline.ToCharArray();
+            int index = 0;
+
+            int currentLat = 0;
+            int currentLng = 0;
+            int next5bits;
+            int sum;
+            int shifter;
+
+            while (index < polylineChars.Length)
+            {
+                // calculate next latitude
+                sum = 0;
+                shifter = 0;
+                do
+                {
+                    next5bits = (int)polylineChars[index++] - 63;
+                    sum |= (next5bits & 31) << shifter;
+                    shifter += 5;
+                } while (next5bits >= 32 && index < polylineChars.Length);
+
+                if (index >= polylineChars.Length)
+                    break;
+
+                currentLat += (sum & 1) == 1 ? ~(sum >> 1) : (sum >> 1);
+
+                //calculate next longitude
+                sum = 0;
+                shifter = 0;
+                do
+                {
+                    next5bits = (int)polylineChars[index++] - 63;
+                    sum |= (next5bits & 31) << shifter;
+                    shifter += 5;
+                } while (next5bits >= 32 && index < polylineChars.Length);
+
+                if (index >= polylineChars.Length && next5bits >= 32)
+                    break;
+
+                currentLng += (sum & 1) == 1 ? ~(sum >> 1) : (sum >> 1);
+
+                yield return new GoogleLocation
+                {
+                    lat = Convert.ToDouble(currentLat) / 1E5,
+                    lng = Convert.ToDouble(currentLng) / 1E5
+                };
+            }
+        }
+
+        public static IEnumerable<List<double>> DecodePolylineToList(string polyline, int precision = 5)
+        {
+            if (string.IsNullOrEmpty(polyline))
+                throw new ArgumentNullException("encodedPoints");
+
+            char[] polylineChars = polyline.ToCharArray();
+            int index = 0;
+
+            int currentLat = 0;
+            int currentLng = 0;
+            int next5bits;
+            int sum;
+            int shifter;
+            var factor = Math.Pow(10, precision);
+
+            while (index < polylineChars.Length)
+            {
+                // calculate next latitude
+                sum = 0;
+                shifter = 0;
+                do
+                {
+                    next5bits = (int)polylineChars[index++] - 63;
+                    sum |= (next5bits & 31) << shifter;
+                    shifter += 5;
+                } while (next5bits >= 32 && index < polylineChars.Length);
+
+                if (index >= polylineChars.Length)
+                    break;
+
+                currentLat += (sum & 1) == 1 ? ~(sum >> 1) : (sum >> 1);
+
+                //calculate next longitude
+                sum = 0;
+                shifter = 0;
+                do
+                {
+                    next5bits = (int)polylineChars[index++] - 63;
+                    sum |= (next5bits & 31) << shifter;
+                    shifter += 5;
+                } while (next5bits >= 32 && index < polylineChars.Length);
+
+                if (index >= polylineChars.Length && next5bits >= 32)
+                    break;
+
+                currentLng += (sum & 1) == 1 ? ~(sum >> 1) : (sum >> 1);
+
+                yield return new List<double> { Convert.ToDouble(currentLat) / factor, Convert.ToDouble(currentLng) / factor };
+            }
+        }
     }
 
     public class MapMatrix

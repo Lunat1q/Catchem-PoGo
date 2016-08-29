@@ -49,9 +49,9 @@ namespace PoGo.PokeMobBot.Logic.State
                     await UseIncubatorsTask.Execute(session, cancellationToken);
                 }
 
-                if (session.LogicSettings.UseGpxPathing)
+                if (session.LogicSettings.UseCustomRoute)
                 {
-                    await FarmPokestopsGpxTask.Execute(session, cancellationToken);
+                    await FarmPokestopsCustomRouteTask.Execute(session, cancellationToken);
                 }
                 else
                 {

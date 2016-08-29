@@ -257,10 +257,8 @@ namespace PoGo.PokeMobBot.Logic.API
                 List<GeoCoordinate> pointsToRequest = new List<GeoCoordinate>();
                 foreach (var point in points)
                 {
-                    if (CheckForExistingAltitude(point.Latitude, point.Longitude))
-                    {
-                        point.Altitude = GetExistingAltitude(point.Latitude, point.Longitude);
-                    }
+                    if (pointsToRequest.Any(x=> LocationUtils.CalculateDistanceInMeters(x, point) <= 30)) continue;
+                    
                     pointsToRequest.Add(point);
                 }
                 var heights = await RequestHeights(pointsToRequest);
@@ -275,6 +273,17 @@ namespace PoGo.PokeMobBot.Logic.API
                             Lon = pointsToRequest[index].Longitude,
                             Alt = pointsToRequest[index].Altitude
                         });
+                    }
+                }
+                foreach (var point in points)
+                {
+                    if (CheckForExistingAltitude(point.Latitude, point.Longitude))
+                    {
+                        point.Altitude = GetExistingAltitude(point.Latitude, point.Longitude);
+                    }
+                    else
+                    {
+                        point.Altitude = _session != null ? RandomExtensions.NextInRange(R, _session.Settings.DefaultAltitudeMin, _session.Settings.DefaultAltitudeMax) : R.Next(10, 120);
                     }
                 }
             }
