@@ -7,6 +7,7 @@
              mc:Ignorable="d" d:DesignHeight="600" d:DesignWidth="760">
     <Grid x:Name="RouteCreatorGrid">
         <Grid.ColumnDefinitions>
+<<<<<<< HEAD
             <ColumnDefinition/>
             <ColumnDefinition/>
             <ColumnDefinition/>
@@ -69,6 +70,38 @@
             </windowsPresentation:GMapControl>
         </Grid>
         <Grid Grid.Row="3" Grid.Column="0"  Grid.ColumnSpan="4">
+=======
+            <ColumnDefinition Width="4*"/>
+            <ColumnDefinition Width="4*"/>
+            <ColumnDefinition Width="4*"/>
+            <ColumnDefinition Width="4*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="3*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="33"/>
+            <RowDefinition Height="30"/>
+        </Grid.RowDefinitions>
+        <Rectangle Fill="#FFF4F4F5" StrokeThickness="0" Grid.ColumnSpan="4" Grid.RowSpan="4"/>
+        <Label x:Name="LblRouteCreatorHeading" Content="Route Creator" Margin="0,3" VerticalAlignment="Center" FontSize="18" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="34" Grid.Row="0" Grid.ColumnSpan="4"
+               Grid.Column="0" />
+        <windowsPresentation:GMapControl x:Name="RouteCreatorMap" MouseWheel="RouteCreatorMap_MouseWheel" Grid.ColumnSpan="3" Grid.Row="1" Grid.RowSpan="2" Grid.Column="1" BorderBrush="#FF006444" BorderThickness="1" Margin="5,0,10,0" ContextMenuOpening="RouteCreatorMap_ContextMenuOpening">
+            <windowsPresentation:GMapControl.ContextMenu>
+                <ContextMenu x:Name="RouteCm" >
+                    <MenuItem x:Name="MiSetStart" Header="Set start" Click="MiSetStart_Click"/>
+                    <MenuItem x:Name="MiSetWp" Header="Set waypoint" Click="MiSetWp_Click"/>
+                </ContextMenu>
+            </windowsPresentation:GMapControl.ContextMenu>
+        </windowsPresentation:GMapControl>
+        <Grid Grid.Row="4" Grid.Column="0"  Grid.ColumnSpan="4">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="155"/>
+                <ColumnDefinition Width="253*"/>
+                <ColumnDefinition Width="93*"/>
+                <ColumnDefinition Width="259*"/>
+            </Grid.ColumnDefinitions>
+>>>>>>> refs/remotes/Lunat1q/dev
             <Rectangle Margin="0" Grid.ColumnSpan="4">
                 <Rectangle.Fill>
                     <LinearGradientBrush EndPoint="0,0.5" StartPoint="1,0.5">
@@ -77,6 +110,7 @@
                     </LinearGradientBrush>
                 </Rectangle.Fill>
             </Rectangle>
+<<<<<<< HEAD
             <Label x:Name="lbl_markerAmount" Content="Markers: 0" HorizontalAlignment="Left" Margin="10,4,0,0" VerticalAlignment="Top"/>
         </Grid>
         <Grid Grid.Row="3" Grid.Column="3">
@@ -85,3 +119,43 @@
         </Grid>
     </Grid>
 </UserControl>
+=======
+            <Slider x:Name="SlMapZoom" Margin="64,4,10,0" VerticalAlignment="Top" RenderTransformOrigin="3.583,0.25" Height="25" Minimum="2" Maximum="18" TickPlacement="BottomRight" Value="18" SmallChange="0" LargeChange="3" ValueChanged="sl_mapZoom_ValueChanged" Grid.Column="3"/>
+            <Label x:Name="LblZoom" Content="Zoom:" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Width="49" Height="26" Grid.Column="3"/>
+            <Label Grid.Column="0" x:Name="PointsNumber" Content="Number of waypoints: 0" HorizontalAlignment="Left" Margin="10,2,0,2" VerticalAlignment="Center" Height="26" Width="137"/>
+            <CheckBox x:Name="PrefferMapzenOverGoogleCb" Content="Preffer Mapzen Routing Over Google" Grid.Column="1" Margin="10,8,0,8" VerticalAlignment="Center" Height="14" Checked="PrefferMapzenOverGoogleCb_Checked"/>
+        </Grid>
+        <Button x:Name="BuildTheRoute" Content="Build the route" Margin="0,0,10,0" Grid.Row="3" VerticalAlignment="Center" Width="170" Height="27" Grid.Column="3" Style="{DynamicResource flatbutton}" HorizontalAlignment="Right" FontWeight="Bold" Click="BuildTheRoute_Click">
+            <Button.Background>
+                <LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
+                    <GradientStop Color="#FF068D00" Offset="0"/>
+                    <GradientStop Color="#FF51DE00" Offset="1"/>
+                </LinearGradientBrush>
+            </Button.Background>
+        </Button>
+        <Label x:Name="CurrentRoutesLabel" Content="Current routes:" HorizontalAlignment="Left" Margin="10,0,0,0" Grid.Row="1"
+               Grid.Column="0" VerticalAlignment="Top" Width="170"/>
+        <ListBox x:Name="RoutesListBox" Margin="10,26,5,5" Grid.Row="1" Grid.RowSpan="2"
+                 Grid.Column="0" ItemTemplate="{DynamicResource RouteListTemplate}" HorizontalContentAlignment="Stretch" SelectionChanged="RoutesListBox_SelectionChanged" />
+        <TextBox x:Name="NewRouteNameBox" Margin="59,3,5,3" Grid.Row="3" Grid.Column="0" TextWrapping="Wrap" VerticalAlignment="Center" Template="{DynamicResource pogo}"/>
+        <Button x:Name="SaveTheRoute" Content="Save the route" Margin="5,0,0,0" Grid.Row="3" VerticalAlignment="Center" Width="170" Height="27" Grid.Column="1" Style="{DynamicResource flatbutton}" HorizontalAlignment="Left" FontWeight="Bold" Click="SaveTheRoute_Click">
+            <Button.Background>
+                <LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
+                    <GradientStop Color="#FF00BF8B" Offset="0"/>
+                    <GradientStop Color="#FF0055BB" Offset="1"/>
+                </LinearGradientBrush>
+            </Button.Background>
+        </Button>
+        <Button x:Name="ClearTheRoute" Content="Clear the route" Margin="0" Grid.Row="3" VerticalAlignment="Center" Width="170" Height="27" Grid.Column="2" Style="{DynamicResource flatbutton}" HorizontalAlignment="Center" FontWeight="Bold" Click="ClearTheRoute_Click">
+            <Button.Background>
+                <LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
+                    <GradientStop Color="#FFE47C00" Offset="0"/>
+                    <GradientStop Color="#FFF13700" Offset="1"/>
+                </LinearGradientBrush>
+            </Button.Background>
+        </Button>
+        <Label x:Name="CurrentRoutesLabel_Copy" Content="Name:" HorizontalAlignment="Left" Margin="10,0,0,0" Grid.Row="3"
+        	Grid.Column="0" VerticalAlignment="Center" Width="49"/>
+    </Grid>
+</UserControl>
+>>>>>>> refs/remotes/Lunat1q/dev
