@@ -10,6 +10,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 
 namespace Catchem.Extensions
 {
@@ -154,6 +155,7 @@ namespace Catchem.Extensions
 
         private static bool SetPropertyRecursive(string propertyName, object value, object obj)
         {
+            if (obj == null) return false;
             var objType = obj.GetType();
             if (CheckObservable(objType))
             {
@@ -203,6 +205,7 @@ namespace Catchem.Extensions
 
         private static bool SetFieldRecursive(string propertyName, object value, object obj)
         {
+            if (obj == null) return false;
             var objType = obj.GetType();
             if (CheckObservable(objType))
             {
