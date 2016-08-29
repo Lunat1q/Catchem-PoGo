@@ -23,7 +23,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
             cancellationToken.ThrowIfCancellationRequested();
             //Refresh inventory so that the player stats are fresh
             //await session.Inventory.RefreshCachedInventory(); too much inventore refresh
-
+            if (!session.LogicSettings.CatchWildPokemon) return;
             session.EventDispatcher.Send(new DebugEvent()
             {
                 Message = session.Translation.GetTranslation(TranslationString.LookingForPokemon)

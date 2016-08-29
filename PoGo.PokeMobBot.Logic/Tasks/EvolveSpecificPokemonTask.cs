@@ -59,7 +59,13 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                     Cp = evolveResponse.EvolvedPokemonData.Cp,
                     Perfection = evolveResponse.EvolvedPokemonData.CalculatePokemonPerfection(),
                     Family = family.FamilyId,
-                    Candy = family.Candy_
+                    Candy = family.Candy_,
+                    Type1 = setting.Type,
+                    Type2 = setting.Type2,
+                    Stats = setting.Stats,
+                    MaxCp = (int)PokemonInfo.GetMaxCpAtTrainerLevel(pokemon, session.Runtime.CurrentLevel),
+                    Stamina = pokemon.Stamina,
+                    MaxStamina = pokemon.StaminaMax
                 });
             }
             await DelayingUtils.Delay(session.LogicSettings.DelayEvolvePokemon, 25000);

@@ -135,7 +135,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                     return a > 1.6 ? "Excellent! " : "unknown ";
                 };
                 var hit = Rng.NextDouble() > session.LogicSettings.MissChance;
-                Logging.Logger.Write($"Throwing {(Math.Abs(spinModifier - 1) < 0.00001 ?"Spinning " : "" )}{getThrowType(normalizedRecticleSize)}{returnRealBallName(pokeball)} - {(hit ? "WILL HIT" : "WILL MISS")}", Logging.LogLevel.Caught, session: session);
+                Logger.Write($"Throwing {(Math.Abs(spinModifier - 1) < 0.00001 ?"Spinning " : "" )}{getThrowType(normalizedRecticleSize)}{returnRealBallName(pokeball)} - {(hit ? "WILL HIT" : "WILL MISS")}", Logging.LogLevel.Caught, session: session);
                 caughtPokemonResponse =
                     await session.Client.Encounter.CatchPokemon(
                         encounter is EncounterResponse || encounter is IncenseEncounterResponse
@@ -183,9 +183,21 @@ namespace PoGo.PokeMobBot.Logic.Tasks
 
                     if (family != null)
                     {
+                       
+
                         family.Candy_ += caughtPokemonResponse.CaptureAward.Candy.Sum();
                         evt.Family = family.FamilyId;
                         evt.FamilyCandies = family.Candy_;
+                        evt.Type1 = setting.Type;
+                        evt.Type2 = setting.Type2;
+                        evt.Stats = setting.Stats;
+
+                        PokemonData poke = encounter is EncounterResponse ? encounter.WildPokemon?.PokemonData : encounter?.PokemonData;
+                        if (poke != null)
+                        {
+                            evt.Stamina = poke.Stamina;
+                            evt.MaxStamina = poke.StaminaMax;
+                        }
                     }
                     else
                     {
@@ -219,7 +231,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                 {
                     evt.Level = PokemonInfo.GetLevel(pokeData);
                     evt.Cp = pokeData.Cp;
-                    evt.MaxCp = PokemonInfo.CalculateMaxCp(pokeData);
+                    evt.MaxCp = (int)PokemonInfo.GetMaxCpAtTrainerLevel(pokeData, session.Runtime.CurrentLevel);
                     evt.Perfection = Math.Round(pokeData.CalculatePokemonPerfection(), 2);
                     evt.Probability =
                         Math.Round(probability*100, 2);

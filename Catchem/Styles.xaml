@@ -17,6 +17,8 @@
     <extensions:LoadImageSourceFromResource x:Key="LoadImageSourceFromResource" />
     <extensions:LoadImageFromResource x:Key="LoadImageFromResource" />
     <extensions:LoadImageIconFromResource x:Key="LoadImageIconFromResource" />
+    <extensions:PokeToImageSource x:Key="PokeToImageSource" />
+    <extensions:PokeTypeToImageSource x:Key="PokeTypeToImageSource" />
     <extensions:ButtonStatusConverter x:Key="ButtonStatusConverter" />
     <extensions:MethodToValueConverter x:Key="MethodToValueConverter" />
     <ControlTemplate TargetType="TextBoxBase" x:Key="pogo">
@@ -54,15 +56,88 @@
             </Setter.Value>
         </Setter>
     </Style>
+
+    <Style TargetType="{x:Type ToolTip}" x:Key="PokeTooltipInfoStyle">
+        <Setter Property="OverridesDefaultStyle" Value="true"/>
+        <Setter Property="HasDropShadow" Value="True"/>
+        <Setter Property="DataContext" Value="{Binding Path=PlacementTarget.DataContext, RelativeSource={RelativeSource Self}}"/>
+        <!--<Setter Property="Template">           
+            <Setter.Value>
+                
+            </Setter.Value>
+        </Setter>-->
+    </Style>
+    <ControlTemplate TargetType="ToolTip" x:Key="PokeTooltipInfoTemplate">
+        <Grid Width="300" Margin="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="30"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="30"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="32"/>
+                <RowDefinition Height="18"/>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="45"/>
+                <RowDefinition Height="15"/>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="20"/>
+            </Grid.RowDefinitions>
+            <Rectangle Fill="White" HorizontalAlignment="Stretch" Height="Auto" VerticalAlignment="Stretch" Width="Auto" RadiusX="7" RadiusY="7" Stroke="#FF007A37" StrokeThickness="2" Grid.RowSpan="17" Grid.ColumnSpan="6"/>
+            <TextBlock Text="{Binding Name, FallbackValue=NoName}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" FontWeight="Bold" Foreground="#FF00443D" Margin="0" Grid.Column="1" Grid.ColumnSpan="4"/>
+            <Image Source="{Binding Converter={StaticResource LoadImageSourceFromResource}, ConverterParameter='hp'}" Grid.Column="1" Grid.Row="5" Margin="10"/>
+            <Image Source="{Binding Converter={StaticResource LoadImageSourceFromResource}, ConverterParameter='atk'}" Grid.Column="2" Grid.Row="5" Margin="10"/>
+            <Image Source="{Binding Converter={StaticResource LoadImageSourceFromResource}, ConverterParameter='def'}" Grid.Column="3" Grid.Row="5" Margin="10"/>
+            <Image Source="{Binding Converter={StaticResource LoadImageSourceFromResource}, ConverterParameter='sta'}" Grid.Column="4" Grid.Row="5" Margin="10"/>
+            <TextBlock Text="{Binding HpText, FallbackValue=24/30}" Grid.Column="1" HorizontalAlignment="Center" Grid.Row="6" TextWrapping="Wrap" VerticalAlignment="Center" FontWeight="Bold" Foreground="#FF00443D" Margin="0" Height="16"/>
+            <TextBlock Text="{Binding Atk, FallbackValue=12}" Grid.Column="2" HorizontalAlignment="Center" Grid.Row="6" TextWrapping="Wrap" VerticalAlignment="Center" FontWeight="Bold" Foreground="#FF00443D" Margin="0" Height="16"/>
+            <TextBlock Text="{Binding Def, FallbackValue=24}" Grid.Column="3" HorizontalAlignment="Center" Grid.Row="6" TextWrapping="Wrap" VerticalAlignment="Center" FontWeight="Bold" Foreground="#FF00443D" Margin="0" Height="16"/>
+            <TextBlock Text="{Binding Sta, FallbackValue=60}" Grid.Column="4" HorizontalAlignment="Center" Grid.Row="6" TextWrapping="Wrap" VerticalAlignment="Center" FontWeight="Bold" Foreground="#FF00443D" Margin="0" Height="16"/>
+            <TextBlock Text="{Binding TypeText, FallbackValue=Grass/Poison}" Grid.Column="2" HorizontalAlignment="Center" Grid.Row="7" TextWrapping="Wrap" VerticalAlignment="Center" Foreground="#FF00443D" Margin="0" Height="16" Grid.ColumnSpan="2"/>
+            <Image Source="{Binding Type1, Converter={StaticResource PokeTypeToImageSource}}" Grid.Column="2" Grid.Row="8"/>
+            <Image Source="{Binding Type2, Converter={StaticResource PokeTypeToImageSource}}" Grid.Column="3" Grid.Row="8"/>
+            <TextBlock Text="Type" Grid.Column="2" HorizontalAlignment="Center" Grid.Row="9" TextWrapping="Wrap" VerticalAlignment="Center" Foreground="#FF00443D" Margin="0" Grid.ColumnSpan="2" FontSize="10"/>
+            <TextBlock Text="{Binding Move1, FallbackValue=Unset}" Grid.Column="1" HorizontalAlignment="Center" Grid.Row="12" TextWrapping="Wrap" VerticalAlignment="Center" FontWeight="Bold" Foreground="#FF00443D" Margin="0" Grid.ColumnSpan="2"/>
+            <TextBlock Text="Move Set" Grid.Column="2" HorizontalAlignment="Center" Grid.Row="11" TextWrapping="Wrap" VerticalAlignment="Center" Foreground="#FF00443D" Margin="0" Grid.ColumnSpan="2" FontSize="10"/>
+            <TextBlock Text="{Binding Move2, FallbackValue=Unset}" Grid.Column="3" HorizontalAlignment="Center" Grid.Row="12" TextWrapping="Wrap" VerticalAlignment="Center" FontWeight="Bold" Foreground="#FF00443D" Margin="0" Grid.ColumnSpan="2"/>
+            <TextBlock  Text="{Binding Level, FallbackValue=Level: 0, StringFormat=Level: \{0:N1\}}" Grid.Column="1" HorizontalAlignment="Center" Grid.Row="14" TextWrapping="Wrap" VerticalAlignment="Center" FontWeight="Bold" Foreground="#FF00443D" Margin="0" Grid.ColumnSpan="2"/>
+            <Grid Grid.ColumnSpan="2" Grid.Column="3" HorizontalAlignment="Center" Grid.Row="14" VerticalAlignment="Center" Margin="0">
+                <Image Source="{Binding ConverterParameter=candy, Converter={StaticResource LoadImageSourceFromResource}}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0" Width="18" Height="18"/>
+                <TextBlock  Text="{Binding Candy, FallbackValue=Candy: 0, StringFormat=Candy: \{0:N0\}}" TextWrapping="Wrap" VerticalAlignment="Top" FontWeight="Bold" Foreground="#FF00443D" Margin="23,0,0,0"/>
+            </Grid>
+            <TextBlock  Text="{Binding Cp, FallbackValue=0, StringFormat=\{0:N0\}}" Grid.Column="2" HorizontalAlignment="Center" Grid.Row="3" TextWrapping="Wrap" VerticalAlignment="Center" FontWeight="Bold" Foreground="#FF00443D" Margin="0" Height="16"/>
+            <TextBlock  Text="{Binding Iv, FallbackValue=Iv: 0%, StringFormat=Iv: \{0:N1\}%}" Grid.Column="2" HorizontalAlignment="Center" Grid.Row="15" TextWrapping="Wrap" VerticalAlignment="Center" FontWeight="Bold" Foreground="#FF00443D" Margin="0" Grid.ColumnSpan="2"/>
+            <TextBlock  Text="{Binding MaxCp, FallbackValue=0, StringFormat=\{0:N0\}}" Grid.Column="3" HorizontalAlignment="Center" Grid.Row="3" TextWrapping="Wrap" VerticalAlignment="Center" FontWeight="Bold" Foreground="#FF00443D" Margin="0" Height="16" RenderTransformOrigin="0.645,0.5"/>
+            <TextBlock  Text="HP" Grid.Column="1" HorizontalAlignment="Center" Grid.Row="4" TextWrapping="Wrap" VerticalAlignment="Center" Foreground="#FF00443D" Margin="0"/>
+            <TextBlock  Text="ATK" Grid.Column="2" HorizontalAlignment="Center" Grid.Row="4" TextWrapping="Wrap" VerticalAlignment="Center" Foreground="#FF00443D" Margin="0"/>
+            <TextBlock  Text="DEF" Grid.Column="3" HorizontalAlignment="Center" Grid.Row="4" TextWrapping="Wrap" VerticalAlignment="Center" Foreground="#FF00443D" Margin="0"/>
+            <TextBlock  Text="STA" Grid.Column="4" HorizontalAlignment="Center" Grid.Row="4" TextWrapping="Wrap" VerticalAlignment="Center" Foreground="#FF00443D" Margin="0"/>
+            <ProgressBar Grid.ColumnSpan="4" Grid.Column="1" Height="10" Margin="0,10,0,0" Grid.Row="2" VerticalAlignment="Top" Value="{Binding Cp, FallbackValue=5}" Maximum="{Binding MaxCp, FallbackValue=100}"/>
+        </Grid>
+    </ControlTemplate>
+    <ToolTip x:Key="PokeTooltip" Style="{DynamicResource PokeTooltipInfoStyle}" Template="{DynamicResource PokeTooltipInfoTemplate}"/>
     <DataTemplate x:Key="PokemonDataTemplate" DataType="classes:PokemonUiData">
-        <Grid Height="Auto" Margin="1" MinWidth="150" MinHeight="160" MaxWidth="300">
+        <Grid Height="Auto" Margin="1" MinWidth="150" MinHeight="160" MaxWidth="300" ToolTip="{StaticResource PokeTooltip}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <Rectangle x:Name="PokeBg" Fill="White" HorizontalAlignment="Stretch" Height="Auto" VerticalAlignment="Stretch" Width="Auto" Grid.ColumnSpan="2" RadiusX="7" RadiusY="7"/>
             <Grid HorizontalAlignment="Stretch" Height="90" VerticalAlignment="Top" Width="Auto" Grid.ColumnSpan="2">
-                <Image Source="{Binding Path=Image}" x:Name="image" HorizontalAlignment="Center" Height="Auto" Margin="0" VerticalAlignment="Center" Width="Auto"/>
+                <Image Source="{Binding PokemonId, Converter={StaticResource PokeToImageSource}}" x:Name="image" HorizontalAlignment="Center" Height="Auto" Margin="0" VerticalAlignment="Center" Width="Auto"/>
                 <Image Source="{Binding Favoured, Converter={StaticResource LoadImageSourceFromResource}, ConverterParameter='favoured'}" x:Name="favImage" Height="20" Margin="0,4,4,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="20" Stretch="Uniform"/>
                 <Image Source="{Binding InGym, ConverterParameter='gym', Converter={StaticResource LoadImageSourceFromResource}}" x:Name="favImage_Copy" Height="20" Margin="4,4,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="20" Stretch="Uniform"/>
             </Grid>

@@ -50,7 +50,8 @@ namespace Catchem.Extensions
                 var bVal = (bool)value;
                 return bVal ? (Properties.Resources.ResourceManager.GetObject(imageName, Properties.Resources.Culture) as Bitmap).LoadBitmap() : null;
             }
-            return (Properties.Resources.ResourceManager.GetObject(imageName, Properties.Resources.Culture) as Bitmap).LoadBitmap();
+            var bm = Properties.Resources.ResourceManager.GetObject(imageName, Properties.Resources.Culture) as Bitmap;
+            return bm?.LoadBitmap();
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -94,6 +95,36 @@ namespace Catchem.Extensions
             img.HorizontalAlignment = HorizontalAlignment.Stretch;
             img.VerticalAlignment = VerticalAlignment.Stretch;
             img.Stretch = Stretch.Uniform;
+            return img;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return value;
+        }
+    }
+
+    public sealed class PokeToImageSource : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            var poke = value as PokemonId?;
+            var img = poke?.ToInventorySource();
+            return img;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return value;
+        }
+    }
+
+    public sealed class PokeTypeToImageSource : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            var poke = value as PokemonType?;
+            var img = poke?.ToInventorySource();
             return img;
         }
 

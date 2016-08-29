@@ -149,6 +149,12 @@ namespace PoGo.PokeMobBot.Logic.Tasks
 
                 bestRoute.Clear();
 
+                if (!session.LogicSettings.LootPokestops)
+                {
+                    session.MapCache.UsedPokestop(pokeStop, session);
+                    continue;
+                }
+
                 if (!session.ForceMoveJustDone)
                 {
                     var timesZeroXPawarded = 0;
