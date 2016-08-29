@@ -19,38 +19,39 @@ namespace PoGo.PokeMobBot.Logic.State
         {
             try
             {
-                if (session.LogicSettings.AutoFavoritePokemon)
-                {
-                    await FavoritePokemonTask.Execute(session, cancellationToken);
-                }
                 if (session.LogicSettings.EvolveAllPokemonAboveIv || session.LogicSettings.EvolveAllPokemonWithEnoughCandy)
                 {
                     await EvolvePokemonTask.Execute(session, cancellationToken);
                 }
-
-                if (session.LogicSettings.TransferDuplicatePokemon)
+                if (session.LogicSettings.BeLikeRobot)
                 {
-                    await TransferDuplicatePokemonTask.Execute(session, cancellationToken);
-                }
-                if (session.LogicSettings.AutomaticallyLevelUpPokemon)
-                {
-                    await LevelUpPokemonTask.Execute(session, cancellationToken);
-                }
-                if (session.LogicSettings.RenamePokemon)
-                {
-                    await RenamePokemonTask.Execute(session, cancellationToken);
-                }
+                    if (session.LogicSettings.AutoFavoritePokemon)
+                    {
+                        await FavoritePokemonTask.Execute(session, cancellationToken);
+                    }
+                    if (session.LogicSettings.TransferDuplicatePokemon)
+                    {
+                        await TransferDuplicatePokemonTask.Execute(session, cancellationToken);
+                    }
+                    if (session.LogicSettings.AutomaticallyLevelUpPokemon)
+                    {
+                        await LevelUpPokemonTask.Execute(session, cancellationToken);
+                    }
+                    if (session.LogicSettings.RenamePokemon)
+                    {
+                        await RenamePokemonTask.Execute(session, cancellationToken);
+                    }
 
-                await RecycleItemsTask.Execute(session, cancellationToken);
-
+                    await RecycleItemsTask.Execute(session, cancellationToken);
+                }
                 if (session.LogicSettings.UseEggIncubators)
                 {
                     await UseIncubatorsTask.Execute(session, cancellationToken);
                 }
 
-                if (session.LogicSettings.UseGpxPathing)
+                if (session.LogicSettings.UseCustomRoute)
                 {
-                    await FarmPokestopsGpxTask.Execute(session, cancellationToken);
+                    await FarmPokestopsCustomRouteTask.Execute(session, cancellationToken);
                 }
                 else
                 {

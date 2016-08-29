@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -9,6 +10,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 
 namespace Catchem.Extensions
 {
@@ -19,26 +21,26 @@ namespace Catchem.Extensions
             var box = uiElement as TextBox;
             if (box != null)
             {
-                var propName = box.Name.Replace("c_", "");
+                var propName = box.Name.Substring(2);
                 SetValueByName(propName, box.Text, obj);
                 return;
             }
             var chB = uiElement as CheckBox;
             if (chB != null)
             {
-                var propName = chB.Name.Replace("c_", "");
+                var propName = chB.Name.Substring(2);
                 SetValueByName(propName, chB.IsChecked, obj);
             }
             var passBox = uiElement as PasswordBox;
             if (passBox != null)
             {
-                var propName = passBox.Name.Replace("c_", "");
+                var propName = passBox.Name.Substring(2);
                 SetValueByName(propName, passBox.Password, obj);
             }
             var comboBox = uiElement as ComboBox;
             if (comboBox != null)
             {
-                var propName = comboBox.Name.Replace("c_", "");
+                var propName = comboBox.Name.Substring(2);
                 SetValueByName(propName, comboBox.SelectedItem, obj);
             }
         }
@@ -51,6 +53,7 @@ namespace Catchem.Extensions
         }
 
         public static string ToN1(this float val) => val.ToString("N1");
+        public static string ToN1(this double val) => val.ToString("N1");
 
         private static void GetLogicalChildCollection<T>(DependencyObject parent, List<T> logicalCollection) where T : DependencyObject
         {
@@ -76,7 +79,17 @@ namespace Catchem.Extensions
 
         private static bool GetPropertyRecursive<T>(string propertyName, object obj, out T value)
         {
+            if (obj == null)
+            {
+                value = default(T);
+                return false;
+            }
             var objType = obj.GetType();
+            if (objType.IsGenericType && objType.GetGenericTypeDefinition() == typeof(ObservableCollection<>))
+            {
+                value = default(T);
+                return false;
+            }
             foreach (var property in objType.GetProperties())
             {
                 if (property.PropertyType == objType) continue;
@@ -96,9 +109,24 @@ namespace Catchem.Extensions
             return false;
         }
 
+        private static bool CheckObservable(Type objType)
+        {
+            return objType.IsGenericType && objType.GetGenericTypeDefinition() == typeof(ObservableCollection<>);
+        }
+
         private static bool GetFieldRecursive<T>(string propertyName, object obj, out T value)
         {
+            if (obj == null)
+            {
+                value = default(T);
+                return false;
+            }
             var objType = obj.GetType();
+            if (CheckObservable(objType))
+            {
+                value = default(T);
+                return false;
+            }
             foreach (var property in objType.GetFields())
             {
                 if (property.FieldType == objType) continue;
@@ -127,7 +155,12 @@ namespace Catchem.Extensions
 
         private static bool SetPropertyRecursive(string propertyName, object value, object obj)
         {
+            if (obj == null) return false;
             var objType = obj.GetType();
+            if (CheckObservable(objType))
+            {
+                return false;
+            }
             foreach (var property in objType.GetProperties())
             {
                 if (property.PropertyType == objType) continue;
@@ -158,6 +191,11 @@ namespace Catchem.Extensions
                     if (((string)value).GetVal(out val))
                         property.SetValue(obj, val);
                 }
+                else if (property.PropertyType == typeof(string))
+                {
+                    var val = value.ToString().Trim();
+                    property.SetValue(obj, val);
+                }
                 else
                     property.SetValue(obj, value);
                 return true;
@@ -167,7 +205,12 @@ namespace Catchem.Extensions
 
         private static bool SetFieldRecursive(string propertyName, object value, object obj)
         {
+            if (obj == null) return false;
             var objType = obj.GetType();
+            if (CheckObservable(objType))
+            {
+                return false;
+            }
             foreach (var property in objType.GetFields())
             {
                 if (property.FieldType == objType) continue;
@@ -197,6 +240,11 @@ namespace Catchem.Extensions
                     float val;
                     if (((string)value).GetVal(out val))
                         property.SetValue(obj, val);
+                }
+                else if (property.FieldType == typeof(string))
+                {
+                    var val = value.ToString().Trim();
+                    property.SetValue(obj, val);
                 }
                 else
                     property.SetValue(obj, value);

@@ -10,6 +10,7 @@ using scg = global::System.Collections.Generic;
 namespace POGOProtos.Data.Player {
 
   /// <summary>Holder for reflection information generated from POGOProtos/Data/Player/PlayerStats.proto</summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
   public static partial class PlayerStatsReflection {
 
     #region Descriptor
@@ -36,7 +37,7 @@ namespace POGOProtos.Data.Player {
             "aW5nX3dvbhgRIAEoBRIdChViYXR0bGVfdHJhaW5pbmdfdG90YWwYEiABKAUS",
             "HQoVcHJlc3RpZ2VfcmFpc2VkX3RvdGFsGBMgASgFEh4KFnByZXN0aWdlX2Ry",
             "b3BwZWRfdG90YWwYFCABKAUSGAoQcG9rZW1vbl9kZXBsb3llZBgVIAEoBRIe",
-            "ChZwb2tlbW9uX2NhdWdodF9ieV90eXBlGBYgASgMEhwKFHNtYWxsX3JhdHRh",
+            "ChZwb2tlbW9uX2NhdWdodF9ieV90eXBlGBYgAygFEhwKFHNtYWxsX3JhdHRh",
             "dGFfY2F1Z2h0GBcgASgFYgZwcm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
@@ -48,29 +49,25 @@ namespace POGOProtos.Data.Player {
 
   }
   #region Messages
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
   public sealed partial class PlayerStats : pb::IMessage<PlayerStats> {
     private static readonly pb::MessageParser<PlayerStats> _parser = new pb::MessageParser<PlayerStats>(() => new PlayerStats());
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pb::MessageParser<PlayerStats> Parser { get { return _parser; } }
 
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
       get { return global::POGOProtos.Data.Player.PlayerStatsReflection.Descriptor.MessageTypes[0]; }
     }
 
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     pbr::MessageDescriptor pb::IMessage.Descriptor {
       get { return Descriptor; }
     }
 
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public PlayerStats() {
       OnConstruction();
     }
 
     partial void OnConstruction();
 
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public PlayerStats(PlayerStats other) : this() {
       level_ = other.level_;
       experience_ = other.experience_;
@@ -93,11 +90,10 @@ namespace POGOProtos.Data.Player {
       prestigeRaisedTotal_ = other.prestigeRaisedTotal_;
       prestigeDroppedTotal_ = other.prestigeDroppedTotal_;
       pokemonDeployed_ = other.pokemonDeployed_;
-      pokemonCaughtByType_ = other.pokemonCaughtByType_;
+      pokemonCaughtByType_ = other.pokemonCaughtByType_.Clone();
       smallRattataCaught_ = other.smallRattataCaught_;
     }
 
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public PlayerStats Clone() {
       return new PlayerStats(this);
     }
@@ -105,7 +101,6 @@ namespace POGOProtos.Data.Player {
     /// <summary>Field number for the "level" field.</summary>
     public const int LevelFieldNumber = 1;
     private int level_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int Level {
       get { return level_; }
       set {
@@ -116,7 +111,6 @@ namespace POGOProtos.Data.Player {
     /// <summary>Field number for the "experience" field.</summary>
     public const int ExperienceFieldNumber = 2;
     private long experience_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public long Experience {
       get { return experience_; }
       set {
@@ -127,7 +121,6 @@ namespace POGOProtos.Data.Player {
     /// <summary>Field number for the "prev_level_xp" field.</summary>
     public const int PrevLevelXpFieldNumber = 3;
     private long prevLevelXp_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public long PrevLevelXp {
       get { return prevLevelXp_; }
       set {
@@ -138,7 +131,6 @@ namespace POGOProtos.Data.Player {
     /// <summary>Field number for the "next_level_xp" field.</summary>
     public const int NextLevelXpFieldNumber = 4;
     private long nextLevelXp_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public long NextLevelXp {
       get { return nextLevelXp_; }
       set {
@@ -149,7 +141,6 @@ namespace POGOProtos.Data.Player {
     /// <summary>Field number for the "km_walked" field.</summary>
     public const int KmWalkedFieldNumber = 5;
     private float kmWalked_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public float KmWalked {
       get { return kmWalked_; }
       set {
@@ -160,7 +151,6 @@ namespace POGOProtos.Data.Player {
     /// <summary>Field number for the "pokemons_encountered" field.</summary>
     public const int PokemonsEncounteredFieldNumber = 6;
     private int pokemonsEncountered_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int PokemonsEncountered {
       get { return pokemonsEncountered_; }
       set {
@@ -171,7 +161,6 @@ namespace POGOProtos.Data.Player {
     /// <summary>Field number for the "unique_pokedex_entries" field.</summary>
     public const int UniquePokedexEntriesFieldNumber = 7;
     private int uniquePokedexEntries_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int UniquePokedexEntries {
       get { return uniquePokedexEntries_; }
       set {
@@ -182,7 +171,6 @@ namespace POGOProtos.Data.Player {
     /// <summary>Field number for the "pokemons_captured" field.</summary>
     public const int PokemonsCapturedFieldNumber = 8;
     private int pokemonsCaptured_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int PokemonsCaptured {
       get { return pokemonsCaptured_; }
       set {
@@ -193,7 +181,6 @@ namespace POGOProtos.Data.Player {
     /// <summary>Field number for the "evolutions" field.</summary>
     public const int EvolutionsFieldNumber = 9;
     private int evolutions_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int Evolutions {
       get { return evolutions_; }
       set {
@@ -204,7 +191,6 @@ namespace POGOProtos.Data.Player {
     /// <summary>Field number for the "poke_stop_visits" field.</summary>
     public const int PokeStopVisitsFieldNumber = 10;
     private int pokeStopVisits_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int PokeStopVisits {
       get { return pokeStopVisits_; }
       set {
@@ -215,7 +201,6 @@ namespace POGOProtos.Data.Player {
     /// <summary>Field number for the "pokeballs_thrown" field.</summary>
     public const int PokeballsThrownFieldNumber = 11;
     private int pokeballsThrown_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int PokeballsThrown {
       get { return pokeballsThrown_; }
       set {
@@ -226,7 +211,6 @@ namespace POGOProtos.Data.Player {
     /// <summary>Field number for the "eggs_hatched" field.</summary>
     public const int EggsHatchedFieldNumber = 12;
     private int eggsHatched_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int EggsHatched {
       get { return eggsHatched_; }
       set {
@@ -237,7 +221,6 @@ namespace POGOProtos.Data.Player {
     /// <summary>Field number for the "big_magikarp_caught" field.</summary>
     public const int BigMagikarpCaughtFieldNumber = 13;
     private int bigMagikarpCaught_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int BigMagikarpCaught {
       get { return bigMagikarpCaught_; }
       set {
@@ -248,7 +231,6 @@ namespace POGOProtos.Data.Player {
     /// <summary>Field number for the "battle_attack_won" field.</summary>
     public const int BattleAttackWonFieldNumber = 14;
     private int battleAttackWon_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int BattleAttackWon {
       get { return battleAttackWon_; }
       set {
@@ -259,7 +241,6 @@ namespace POGOProtos.Data.Player {
     /// <summary>Field number for the "battle_attack_total" field.</summary>
     public const int BattleAttackTotalFieldNumber = 15;
     private int battleAttackTotal_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int BattleAttackTotal {
       get { return battleAttackTotal_; }
       set {
@@ -270,7 +251,6 @@ namespace POGOProtos.Data.Player {
     /// <summary>Field number for the "battle_defended_won" field.</summary>
     public const int BattleDefendedWonFieldNumber = 16;
     private int battleDefendedWon_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int BattleDefendedWon {
       get { return battleDefendedWon_; }
       set {
@@ -281,7 +261,6 @@ namespace POGOProtos.Data.Player {
     /// <summary>Field number for the "battle_training_won" field.</summary>
     public const int BattleTrainingWonFieldNumber = 17;
     private int battleTrainingWon_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int BattleTrainingWon {
       get { return battleTrainingWon_; }
       set {
@@ -292,7 +271,6 @@ namespace POGOProtos.Data.Player {
     /// <summary>Field number for the "battle_training_total" field.</summary>
     public const int BattleTrainingTotalFieldNumber = 18;
     private int battleTrainingTotal_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int BattleTrainingTotal {
       get { return battleTrainingTotal_; }
       set {
@@ -303,7 +281,6 @@ namespace POGOProtos.Data.Player {
     /// <summary>Field number for the "prestige_raised_total" field.</summary>
     public const int PrestigeRaisedTotalFieldNumber = 19;
     private int prestigeRaisedTotal_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int PrestigeRaisedTotal {
       get { return prestigeRaisedTotal_; }
       set {
@@ -314,7 +291,6 @@ namespace POGOProtos.Data.Player {
     /// <summary>Field number for the "prestige_dropped_total" field.</summary>
     public const int PrestigeDroppedTotalFieldNumber = 20;
     private int prestigeDroppedTotal_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int PrestigeDroppedTotal {
       get { return prestigeDroppedTotal_; }
       set {
@@ -325,7 +301,6 @@ namespace POGOProtos.Data.Player {
     /// <summary>Field number for the "pokemon_deployed" field.</summary>
     public const int PokemonDeployedFieldNumber = 21;
     private int pokemonDeployed_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int PokemonDeployed {
       get { return pokemonDeployed_; }
       set {
@@ -335,22 +310,16 @@ namespace POGOProtos.Data.Player {
 
     /// <summary>Field number for the "pokemon_caught_by_type" field.</summary>
     public const int PokemonCaughtByTypeFieldNumber = 22;
-    private pb::ByteString pokemonCaughtByType_ = pb::ByteString.Empty;
-    /// <summary>
-    ///  TODO: repeated PokemonType ??
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public pb::ByteString PokemonCaughtByType {
+    private static readonly pb::FieldCodec<int> _repeated_pokemonCaughtByType_codec
+        = pb::FieldCodec.ForInt32(178);
+    private readonly pbc::RepeatedField<int> pokemonCaughtByType_ = new pbc::RepeatedField<int>();
+    public pbc::RepeatedField<int> PokemonCaughtByType {
       get { return pokemonCaughtByType_; }
-      set {
-        pokemonCaughtByType_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-      }
     }
 
     /// <summary>Field number for the "small_rattata_caught" field.</summary>
     public const int SmallRattataCaughtFieldNumber = 23;
     private int smallRattataCaught_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int SmallRattataCaught {
       get { return smallRattataCaught_; }
       set {
@@ -358,12 +327,10 @@ namespace POGOProtos.Data.Player {
       }
     }
 
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override bool Equals(object other) {
       return Equals(other as PlayerStats);
     }
 
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public bool Equals(PlayerStats other) {
       if (ReferenceEquals(other, null)) {
         return false;
@@ -392,12 +359,11 @@ namespace POGOProtos.Data.Player {
       if (PrestigeRaisedTotal != other.PrestigeRaisedTotal) return false;
       if (PrestigeDroppedTotal != other.PrestigeDroppedTotal) return false;
       if (PokemonDeployed != other.PokemonDeployed) return false;
-      if (PokemonCaughtByType != other.PokemonCaughtByType) return false;
+      if(!pokemonCaughtByType_.Equals(other.pokemonCaughtByType_)) return false;
       if (SmallRattataCaught != other.SmallRattataCaught) return false;
       return true;
     }
 
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override int GetHashCode() {
       int hash = 1;
       if (Level != 0) hash ^= Level.GetHashCode();
@@ -421,17 +387,15 @@ namespace POGOProtos.Data.Player {
       if (PrestigeRaisedTotal != 0) hash ^= PrestigeRaisedTotal.GetHashCode();
       if (PrestigeDroppedTotal != 0) hash ^= PrestigeDroppedTotal.GetHashCode();
       if (PokemonDeployed != 0) hash ^= PokemonDeployed.GetHashCode();
-      if (PokemonCaughtByType.Length != 0) hash ^= PokemonCaughtByType.GetHashCode();
+      hash ^= pokemonCaughtByType_.GetHashCode();
       if (SmallRattataCaught != 0) hash ^= SmallRattataCaught.GetHashCode();
       return hash;
     }
 
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override string ToString() {
       return pb::JsonFormatter.ToDiagnosticString(this);
     }
 
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void WriteTo(pb::CodedOutputStream output) {
       if (Level != 0) {
         output.WriteRawTag(8);
@@ -517,17 +481,13 @@ namespace POGOProtos.Data.Player {
         output.WriteRawTag(168, 1);
         output.WriteInt32(PokemonDeployed);
       }
-      if (PokemonCaughtByType.Length != 0) {
-        output.WriteRawTag(178, 1);
-        output.WriteBytes(PokemonCaughtByType);
-      }
+      pokemonCaughtByType_.WriteTo(output, _repeated_pokemonCaughtByType_codec);
       if (SmallRattataCaught != 0) {
         output.WriteRawTag(184, 1);
         output.WriteInt32(SmallRattataCaught);
       }
     }
 
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int CalculateSize() {
       int size = 0;
       if (Level != 0) {
@@ -593,16 +553,13 @@ namespace POGOProtos.Data.Player {
       if (PokemonDeployed != 0) {
         size += 2 + pb::CodedOutputStream.ComputeInt32Size(PokemonDeployed);
       }
-      if (PokemonCaughtByType.Length != 0) {
-        size += 2 + pb::CodedOutputStream.ComputeBytesSize(PokemonCaughtByType);
-      }
+      size += pokemonCaughtByType_.CalculateSize(_repeated_pokemonCaughtByType_codec);
       if (SmallRattataCaught != 0) {
         size += 2 + pb::CodedOutputStream.ComputeInt32Size(SmallRattataCaught);
       }
       return size;
     }
 
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void MergeFrom(PlayerStats other) {
       if (other == null) {
         return;
@@ -670,15 +627,12 @@ namespace POGOProtos.Data.Player {
       if (other.PokemonDeployed != 0) {
         PokemonDeployed = other.PokemonDeployed;
       }
-      if (other.PokemonCaughtByType.Length != 0) {
-        PokemonCaughtByType = other.PokemonCaughtByType;
-      }
+      pokemonCaughtByType_.Add(other.pokemonCaughtByType_);
       if (other.SmallRattataCaught != 0) {
         SmallRattataCaught = other.SmallRattataCaught;
       }
     }
 
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void MergeFrom(pb::CodedInputStream input) {
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
@@ -770,8 +724,9 @@ namespace POGOProtos.Data.Player {
             PokemonDeployed = input.ReadInt32();
             break;
           }
-          case 178: {
-            PokemonCaughtByType = input.ReadBytes();
+          case 178:
+          case 176: {
+            pokemonCaughtByType_.AddEntriesFrom(input, _repeated_pokemonCaughtByType_codec);
             break;
           }
           case 184: {

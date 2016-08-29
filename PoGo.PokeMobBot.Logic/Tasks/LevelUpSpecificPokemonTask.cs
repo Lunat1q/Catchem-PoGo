@@ -1,6 +1,8 @@
 ﻿#region using directives
 
+using System;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using PoGo.PokeMobBot.Logic.Event;
 using PoGo.PokeMobBot.Logic.PoGoUtils;
@@ -15,8 +17,13 @@ namespace PoGo.PokeMobBot.Logic.Tasks
 {
     public class LevelUpSpecificPokemonTask
     {
-        public static async Task Execute(ISession session, ulong pokemonId, bool toMax = false)
+        public static async Task Execute(ISession session, ulong pokemonId, CancellationToken cancellationToken, bool toMax = false)
         {
+
+            if (!await CheckBotStateTask.Execute(session, cancellationToken)) return;
+
+            var prevState = session.State;
+            session.State = BotState.LevelPoke;
             var all = await session.Inventory.GetPokemons();
             var pokemon = all.FirstOrDefault(p => p.Id == pokemonId);
             if (pokemon == null) return;
@@ -97,6 +104,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                     Favourite = pokemon.Favorite == 1
                 });
             }
+            session.State = prevState;
         }
     }
 }

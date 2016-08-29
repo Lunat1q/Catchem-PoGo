@@ -9,69 +9,99 @@
     <UserControl.Resources>
         <ResourceDictionary Source="../Styles.xaml" />
     </UserControl.Resources>
-    <TabControl x:Name="tabControl"
+    <Grid>
+        <TabControl x:Name="tabControl"
                 Margin="0,0,0,0"
                 VerticalContentAlignment="Top"
                 IsEnabled="False"
                 RenderTransformOrigin="0.5,0.5">
-        <TabControl.RenderTransform>
-            <TransformGroup>
-                <ScaleTransform />
-                <SkewTransform />
-                <RotateTransform />
-                <TranslateTransform />
-            </TransformGroup>
-        </TabControl.RenderTransform>
-        <TabItem Header="Settings">
-            <pages:SettingsPage x:Name="BotSettingsPage"
+            <TabControl.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform />
+                    <SkewTransform />
+                    <RotateTransform />
+                    <TranslateTransform />
+                </TransformGroup>
+            </TabControl.RenderTransform>
+            <TabItem Header="Settings">
+                <pages:SettingsPage x:Name="BotSettingsPage"
                                 Width="Auto"
                                 Height="Auto"
                                 Margin="0" />
-        </TabItem>
-        <TabItem Header="Map &amp; Console">
-            <Grid Margin="0" Background="#FFE5E5E5">
-                <Grid.RowDefinitions>
-                    <RowDefinition />
-                    <RowDefinition Height="220"/>
-                </Grid.RowDefinitions>
-                <pages:MapPage x:Name="BotMapPage"
+            </TabItem>
+            <TabItem Header="Map &amp; Console">
+                <Grid Margin="0" Background="#FFE5E5E5">
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition Height="220"/>
+                    </Grid.RowDefinitions>
+                    <pages:MapPage x:Name="BotMapPage"
                                Grid.Row="0"
                                Width="Auto"
                                Height="Auto"
                                Margin="0" />
-                <GridSplitter x:Name="gridSplitter"
+                    <GridSplitter x:Name="gridSplitter"
                               Grid.Row="1"
                               Height="3"
                               HorizontalAlignment="Stretch"
                               VerticalAlignment="Top"
                               ResizeDirection="Rows">
-                    <GridSplitter.Background>
-                        <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
-                            <GradientStop Offset="0" Color="#FFADFB80" />
-                            <GradientStop Offset="1" Color="#FF33D47C" />
-                        </LinearGradientBrush>
-                    </GridSplitter.Background>
-                </GridSplitter>
-                <RichTextBox x:Name="consoleBox"
+                        <GridSplitter.Background>
+                            <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                                <GradientStop Offset="0" Color="#FFADFB80" />
+                                <GradientStop Offset="1" Color="#FF33D47C" />
+                            </LinearGradientBrush>
+                        </GridSplitter.Background>
+                    </GridSplitter>
+                    <RichTextBox x:Name="consoleBox"
                              Background="#FF252525"
                              Block.LineHeight="1"
                              Grid.Row="1"
                              Foreground="#FFCDCDCD"
                              VerticalScrollBarVisibility="Visible" Margin="0,3,0,0" FontFamily="Gill Sans MT" FontSize="14">
-                </RichTextBox>
-            </Grid>
-        </TabItem>
-        <TabItem Header="Information">
-            <pages:PlayerPage x:Name="BotPlayerPage"
+                    </RichTextBox>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Information">
+                <pages:PlayerPage x:Name="BotPlayerPage"
                               Width="Auto"
                               Height="Auto" />
-        </TabItem>
-        <TabItem Header="Pokemon Lists Settings">
-            <pages:PokemonListPage x:Name="BotPokemonListPage"
+            </TabItem>
+            <TabItem Header="Poke Lists Settings">
+                <pages:PokemonListPage x:Name="BotPokemonListPage"
                                    Width="Auto"
                                    Height="Auto"
                                    Margin="0" />
-        </TabItem>
+            </TabItem>
 
-    </TabControl>
+        </TabControl>
+        <Grid x:Name="grid_pickBot"
+              Margin="-1,0,0,0" Grid.Column="1" Visibility="Collapsed">
+            <Rectangle Margin="0" >
+                <Rectangle.Fill>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#FF93FFBA" Offset="0"/>
+                        <GradientStop Color="#FF024F3A" Offset="1"/>
+                    </LinearGradientBrush>
+                </Rectangle.Fill>
+            </Rectangle>
+            <Label x:Name="label13"
+                   Margin="0,-50,0,0"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   Content="Select Bot at left menu"
+                   FontSize="48"
+                   FontWeight="Bold"
+                   Foreground="White" />
+            <Label x:Name="label13_Copy"
+                   Margin="0,50,0,0"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   Content="or create a new one"
+                   FontSize="36"
+                   FontStyle="Italic"
+                   FontWeight="Bold"
+                   Foreground="White" />
+        </Grid>
+    </Grid>
 </UserControl>

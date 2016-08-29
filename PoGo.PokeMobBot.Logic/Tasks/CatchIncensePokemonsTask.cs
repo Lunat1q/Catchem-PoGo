@@ -18,9 +18,10 @@ namespace PoGo.PokeMobBot.Logic.Tasks
     {
         public static async Task Execute(ISession session, CancellationToken cancellationToken)
         {
-            
-            
             cancellationToken.ThrowIfCancellationRequested();
+
+            var usedItems = await session.Inventory.GetUsedItems();
+            if (usedItems == null || usedItems.Count <= 0) return;
 
             // Refresh inventory so that the player stats are fresh
             //await session.Inventory.RefreshCachedInventory();
@@ -66,7 +67,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
 
                     if (encounter.Result == IncenseEncounterResponse.Types.Result.IncenseEncounterSuccess)
                     {
-                        await CatchPokemonTask.Execute(session, encounter, pokemon);
+                        await CatchPokemonTask.Execute(session, encounter, pokemon, cancellationToken);
                     }
                     else if (encounter.Result == IncenseEncounterResponse.Types.Result.PokemonInventoryFull)
                     {

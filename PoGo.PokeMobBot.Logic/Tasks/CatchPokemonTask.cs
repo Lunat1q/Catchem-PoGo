@@ -2,6 +2,7 @@
 
 using System;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using PoGo.PokeMobBot.Logic.Common;
 using PoGo.PokeMobBot.Logic.Event;
@@ -9,6 +10,7 @@ using PoGo.PokeMobBot.Logic.Extensions;
 using PoGo.PokeMobBot.Logic.PoGoUtils;
 using PoGo.PokeMobBot.Logic.State;
 using PoGo.PokeMobBot.Logic.Utils;
+using POGOProtos.Data;
 using POGOProtos.Inventory.Item;
 using POGOProtos.Map.Fort;
 using POGOProtos.Networking.Responses;
@@ -21,14 +23,16 @@ namespace PoGo.PokeMobBot.Logic.Tasks
     {
         private static readonly Random Rng = new Random();
 
-        public static async Task<bool> Execute(ISession session, dynamic encounter, PokemonCacheItem pokemon,
+        public static async Task<bool> Execute(ISession session, dynamic encounter, PokemonCacheItem pokemon, CancellationToken cancellationToken,
             FortData currentFortData = null, ulong encounterId = 0)
         {
+            if (!await CheckBotStateTask.Execute(session, cancellationToken)) return false;
             if (encounter is EncounterResponse && pokemon == null)
                 throw new ArgumentException("Parameter pokemon must be set, if encounter is of type EncounterResponse",
                     nameof(pokemon));
-            
-
+            var prevState = session.State;
+            session.State = BotState.Catch;
+            var canUseBerry = true;
             CatchPokemonResponse caughtPokemonResponse;
             var attemptCounter = 1;
             do
@@ -50,11 +54,12 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                                 ? encounter.WildPokemon?.PokemonData?.Cp
                                 : encounter?.PokemonData?.Cp) ?? 0
                     });
+                    session.State = prevState;
                     return false;
                 }
 
                 var useBerryBelowCatchProbability = session.LogicSettings.UseBerryBelowCatchProbability > 1
-                    ? session.LogicSettings.UseBerryBelowCatchProbability/100
+                    ? session.LogicSettings.UseBerryBelowCatchProbability / 100
                     : session.LogicSettings.UseBerryBelowCatchProbability;
                 var isLowProbability = probability < useBerryBelowCatchProbability;
                 var isHighCp = encounter != null &&
@@ -66,7 +71,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                         ? encounter.WildPokemon?.PokemonData
                         : encounter?.PokemonData) >= session.LogicSettings.UseBerryMinIv;
 
-                if (isLowProbability && ((session.LogicSettings.PrioritizeIvOverCp && isHighPerfection) || isHighCp))
+                if (isLowProbability && ((session.LogicSettings.PrioritizeIvOverCp && isHighPerfection) || isHighCp) && canUseBerry)
                 {
                     await
                         UseBerry(session,
@@ -76,7 +81,8 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                             encounter is EncounterResponse || encounter is IncenseEncounterResponse
                                 ? pokemon.SpawnPointId
                                 : currentFortData?.Id);
-
+                    canUseBerry = false;
+                    await DelayingUtils.Delay(session.LogicSettings.DelayBetweenPlayerActions, 1000);
                 }
 
                 var distance = LocationUtils.CalculateDistanceInMeters(session.Client.CurrentLatitude,
@@ -186,11 +192,14 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                     }
                     session.MapCache.PokemonCaught(pokemon);
                 }
-                if (caughtPokemonResponse.Status == CatchPokemonResponse.Types.CatchStatus.CatchFlee)
+                else if (caughtPokemonResponse.Status == CatchPokemonResponse.Types.CatchStatus.CatchFlee)
                 {
                     pokemon.Caught = true;
                 }
-
+                else if (caughtPokemonResponse.Status == CatchPokemonResponse.Types.CatchStatus.CatchEscape)
+                {
+                    canUseBerry = true;
+                }
 
                 evt.CatchType = encounter is EncounterResponse
                     ? session.Translation.GetTranslation(TranslationString.CatchTypeNormal)
@@ -198,28 +207,28 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                         ? session.Translation.GetTranslation(TranslationString.CatchTypeLure)
                         : session.Translation.GetTranslation(TranslationString.CatchTypeIncense);
                 evt.Id = encounter is EncounterResponse ? pokemon.PokemonId : encounter?.PokemonData.PokemonId;
-                evt.Level =
-                    PokemonInfo.GetLevel(encounter is EncounterResponse
-                        ? encounter.WildPokemon?.PokemonData
-                        : encounter?.PokemonData);
-                evt.Cp = encounter is EncounterResponse
-                    ? encounter.WildPokemon?.PokemonData?.Cp
-                    : encounter?.PokemonData?.Cp ?? 0;
-                evt.MaxCp =
-                    PokemonInfo.CalculateMaxCp(encounter is EncounterResponse
-                        ? encounter.WildPokemon?.PokemonData
-                        : encounter?.PokemonData);
-                evt.Perfection =
-                    Math.Round(
-                        PokemonInfo.CalculatePokemonPerfection(encounter is EncounterResponse
-                            ? encounter.WildPokemon?.PokemonData
-                            : encounter?.PokemonData), 2);
-                evt.Probability =
-                    Math.Round(probability*100, 2);
+
+                var pokeData = (encounter is EncounterResponse
+                    ? encounter.WildPokemon?.PokemonData
+                    : encounter?.PokemonData) as PokemonData;
+
+                if (pokeData != null)
+                {
+                    evt.Level = PokemonInfo.GetLevel(pokeData);
+                    evt.Cp = pokeData.Cp;
+                    evt.MaxCp = PokemonInfo.CalculateMaxCp(pokeData);
+                    evt.Perfection = Math.Round(pokeData.CalculatePokemonPerfection(), 2);
+                    evt.Probability =
+                        Math.Round(probability*100, 2);
+
+                    evt.Move1 = pokeData.Move1;
+                    evt.Move2 = pokeData.Move2;
+
+                }
                 evt.Distance = distance;
                 evt.Pokeball = pokeball;
                 evt.Attempt = attemptCounter;
-                await session.Inventory.RefreshCachedInventory();
+                //await session.Inventory.RefreshCachedInventory();
                 evt.BallAmount = await session.Inventory.GetItemAmountByType(pokeball);
 
                 session.EventDispatcher.Send(evt);
@@ -228,7 +237,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                     await Task.Delay(session.LogicSettings.DelayCatchPokemon);
             } while (caughtPokemonResponse.Status == CatchPokemonResponse.Types.CatchStatus.CatchMissed ||
                      caughtPokemonResponse.Status == CatchPokemonResponse.Types.CatchStatus.CatchEscape);
-
+            session.State = prevState;
             return true;
         }
 
@@ -253,7 +262,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                 ? session.LogicSettings.UseGreatBallBelowCatchProbability/100
                 : session.LogicSettings.UseGreatBallBelowCatchProbability;
 
-            await session.Inventory.RefreshCachedInventory();
+            //await session.Inventory.RefreshCachedInventory();
             var pokeBallsCount = await session.Inventory.GetItemAmountByType(ItemId.ItemPokeBall);
             var greatBallsCount = await session.Inventory.GetItemAmountByType(ItemId.ItemGreatBall);
             var ultraBallsCount = await session.Inventory.GetItemAmountByType(ItemId.ItemUltraBall);

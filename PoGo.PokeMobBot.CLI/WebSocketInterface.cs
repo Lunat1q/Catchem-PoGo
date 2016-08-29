@@ -11,6 +11,7 @@ using SuperSocket.SocketBase;
 using SuperSocket.SocketBase.Config;
 using SuperSocket.WebSocket;
 using System;
+using System.Threading;
 
 #endregion
 
@@ -116,7 +117,7 @@ namespace PoGo.PokeMobBot.CLI
                     break;
                 case "EvolvePokemon":
                     if (msgObj?.Data != null)
-                        await EvolveSpecificPokemonTask.Execute(_session, ulong.Parse(msgObj?.Data));
+                        await EvolveSpecificPokemonTask.Execute(_session, ulong.Parse(msgObj?.Data), default(CancellationToken));
                     break;
             }
         }

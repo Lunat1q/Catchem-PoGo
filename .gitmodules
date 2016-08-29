@@ -1,3 +1,3 @@
-[submodule "PokemonGoAPI"]
-	path = PokemonGoAPI
-	url = https://github.com/Lunat1q/PokemonGoAPI
+[submodule "PoGoAPI"]
+	path = PoGoAPI
+	url = https://github.com/Lunat1q/PoGoAPI

@@ -78,7 +78,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                         session.EventDispatcher.Send(new PokemonsFoundEvent { Pokemons = new[] { _pokemon } });
                         PokemonCacheItem pokemon = new PokemonCacheItem(_pokemon);
 
-                        await CatchPokemonTask.Execute(session, encounter, pokemon, currentFortData, encounterId);
+                        await CatchPokemonTask.Execute(session, encounter, pokemon, cancellationToken, currentFortData, encounterId);
                         currentFortData.LureInfo = null;
                         session.EventDispatcher.Send(new PokemonDisappearEvent { Pokemon = _pokemon });
                     }

@@ -22,16 +22,16 @@ namespace PoGo.PokeMobBot.Logic.Tasks
 
             var eggWalker = new EggWalker(1000, session);
 
-            session.EventDispatcher.Send(new WarnEvent
-            {
-                Message = $"ForceMove to {session.ForceMoveTo.Latitude} - {session.ForceMoveTo.Longitude} Started!"
-            });
-            var moveToCoords = session.ForceMoveTo;
-            session.ForceMoveTo = null;
            
-
+            var moveToCoords = session.ForceMoveTo;
             var distance = LocationUtils.CalculateDistanceInMeters(session.Client.CurrentLatitude,
                 session.Client.CurrentLongitude, moveToCoords.Latitude, moveToCoords.Longitude);
+
+            session.EventDispatcher.Send(new WarnEvent
+            {
+                Message = $"ForceMove to {session.ForceMoveTo.Latitude} - {session.ForceMoveTo.Longitude} Started! Distance: {distance.ToString("N1")}m"
+            });
+            session.ForceMoveTo = null;
             PlayerUpdateResponse result;
 
             if (session.LogicSettings.Teleport)

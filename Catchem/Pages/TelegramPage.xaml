@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             mc:Ignorable="d" d:DesignHeight="600" d:DesignWidth="600">
+             mc:Ignorable="d" d:DesignHeight="600" d:DesignWidth="760">
     <Grid x:Name="TlgrmGrid">
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -21,7 +21,7 @@
         <Label x:Name="TelegramLabel" Content="Telegram control page" Margin="60,8,50,8" VerticalAlignment="Center" FontSize="18" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="34" HorizontalAlignment="Center"
                Grid.Row="0" Grid.ColumnSpan="2" Grid.Column="1" Width="190"/>
         <GroupBox x:Name="SettingsGroupBox" Header="Main settings" Margin="15,0,5,0" Grid.Row="1" Grid.Column="0"
-                  VerticalAlignment="Top" Height="80" Grid.ColumnSpan="2">
+                  VerticalAlignment="Top" Height="236" Grid.ColumnSpan="2" Grid.RowSpan="2">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="1*"/>
@@ -31,26 +31,47 @@
                     <ColumnDefinition Width="25*"/>
                     <ColumnDefinition Width="42*"/>
                 </Grid.ColumnDefinitions>
-                <CheckBox x:Name="CbAutoStart" Content="Auto start Telegram bot" HorizontalAlignment="Left" Margin="10,0,0,0" Grid.ColumnSpan="2" Height="16" VerticalContentAlignment="Center" VerticalAlignment="Center" Checked="CbAutoStart_Checked"/>
-                <Label x:Name="BotApiKeyLabel" Content="Bot API Key" Margin="10,0,0,0" Grid.Row="1" Grid.Column="0"
+                <CheckBox x:Name="CbAutoStart" Content="Auto start Telegram bot" HorizontalAlignment="Left" Margin="10,10,0,81" Grid.ColumnSpan="2" Height="16" VerticalContentAlignment="Center" VerticalAlignment="Center" Checked="ElementPropertyChanged" Unchecked="ElementPropertyChanged"/>
+                <Label x:Name="BotApiKeyLabel" Content="Bot API Key" Margin="0,31,10,21" Grid.Column="0"
                        VerticalContentAlignment="Center"/>
-                <TextBox x:Name="ApiKeyBox" Grid.Column="1" Margin="5,0,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Center" Template="{Binding Mode=OneWay, Source={StaticResource pogo}}"/>
+                <TextBox x:Name="TbApiKey" Margin="125,36,10,26" TextWrapping="Wrap" VerticalAlignment="Center" Template="{Binding Mode=OneWay, Source={StaticResource pogo}}" TextChanged="ElementPropertyChanged" Height="45" Grid.ColumnSpan="2"/>
+                <TextBox x:Name="BotOwnerTextBox" Margin="71,89,113,95" TextWrapping="Wrap" Template="{Binding Mode=OneWay, Source={StaticResource pogo}}" TextChanged="ElementPropertyChanged" BorderThickness="1,0" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
+                <Button Style="{StaticResource ResourceKey=flatbutton}" x:Name="AddBotOwner" 
+                	Content="Add" Width="98" Height="Auto" FontFamily="BOLD" TextOptions.TextFormattingMode="Display" FontWeight="Bold" Margin="0,89,10,96" Click="AddBotOwner_Click" Grid.Column="1" Grid.RowSpan="2" HorizontalAlignment="Right">
+                    <Button.Background>
+                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                            <LinearGradientBrush.RelativeTransform>
+                                <TransformGroup>
+                                    <ScaleTransform CenterY="0.5" CenterX="0.5"/>
+                                    <SkewTransform CenterY="0.5" CenterX="0.5"/>
+                                    <RotateTransform Angle="90" CenterY="0.5" CenterX="0.5"/>
+                                    <TranslateTransform/>
+                                </TransformGroup>
+                            </LinearGradientBrush.RelativeTransform>
+                            <GradientStop Color="#FFB0EE9C" Offset="0"/>
+                            <GradientStop Color="#FF53C05D" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Button.Background>
+                </Button>
+                <ListBox x:Name="OwnerBox" Height="79" Margin="10,16,10,12"
+                	ItemTemplate="{DynamicResource TelegramOwnerTemplate}" HorizontalContentAlignment="Stretch" Grid.ColumnSpan="2" Grid.Row="1"/>
+                <Label x:Name="OwnerAddLabel" Content="Owners" Margin="10,90,0,96"
+                	VerticalContentAlignment="Center" HorizontalAlignment="Left" Grid.RowSpan="2"/>
             </Grid>
         </GroupBox>
         <RichTextBox x:Name="LogBox" Margin="10,13,10,10" Grid.Row="3"
                      Grid.Column="0" Background="#FF767676" Foreground="White" Grid.ColumnSpan="4">
-            <FlowDocument>
+            <FlowDocument LineHeight="1">
                 <Paragraph>
                     <Run Text="Telegram Console Log"/>
                 </Paragraph>
             </FlowDocument>
         </RichTextBox>
-        <Button x:Name="StartButton" Content="START" Margin="10,85,10,0" Grid.Row="1" Grid.Column="1"
-                VerticalAlignment="Top" Style="{Binding Mode=OneWay, Source={StaticResource flatbutton}}" Width="130" Height="30" Background="{Binding Mode=OneWay, Source={StaticResource StartBrush}}" FontWeight="Bold" HorizontalAlignment="Center"/>
-        <Button x:Name="StopButton" Content="STOP" Margin="15,85,10,0" Grid.Row="1" Grid.Column="0"
-                VerticalAlignment="Top" Style="{Binding Mode=OneWay, Source={StaticResource flatbutton}}" Width="125" Height="30" Background="{Binding Mode=OneWay, Source={StaticResource StopBrush}}" FontWeight="Bold" HorizontalAlignment="Center"/>
-        <ListBox x:Name="PokemonList" Grid.Column="2" Margin="10,35,10,10" Grid.Row="1" Grid.RowSpan="2" RenderTransformOrigin="0.52,0.51" Grid.ColumnSpan="2" ItemTemplate="{DynamicResource PokemonListTemplate}" HorizontalContentAlignment="Stretch"/>
-        <Label x:Name="PokemonsToEvolve" Content="To Auto Report" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16" FontFamily="Calibri" Width="112" Margin="10,0,0,0" Grid.Row="1" Grid.Column="2" Height="30">
+        <Button x:Name="StartButton" Content="START" Margin="28,116,32,0" Grid.Row="2" Grid.Column="1"
+                VerticalAlignment="Top" Style="{Binding Mode=OneWay, Source={StaticResource flatbutton}}" Width="Auto" Height="30" Background="{Binding Mode=OneWay, Source={StaticResource StartBrush}}" FontWeight="Bold" Click="StartButton_Click"/>
+        <Button x:Name="StopButton" Content="STOP" Margin="33,116,32,0" Grid.Row="2" Grid.Column="0" Style="{Binding Mode=OneWay, Source={StaticResource flatbutton}}" Width="Auto" Height="30" Background="{Binding Mode=OneWay, Source={StaticResource StopBrush}}" FontWeight="Bold" Click="StopButton_Click" VerticalAlignment="Top"/>
+        <ListBox x:Name="PokemonList" Grid.Column="2" Margin="10,71,10,10" Grid.Row="1" Grid.RowSpan="2" RenderTransformOrigin="0.52,0.51" Grid.ColumnSpan="2" ItemTemplate="{DynamicResource PokemonListTemplate}" HorizontalContentAlignment="Stretch"/>
+        <Label x:Name="PokemonsToEvolve" Content="To Auto Report" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16" FontFamily="Calibri" Width="112" Margin="10,36,0,0" Grid.Row="1" Grid.Column="2" Height="30">
             <Label.Foreground>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <LinearGradientBrush.RelativeTransform>
@@ -67,9 +88,9 @@
             </Label.Foreground>
         </Label>
         <ComboBox x:Name="AddToAutoReport" VerticalAlignment="Top"
-        		ItemsSource="{Binding Source={StaticResource PokemonIdDataProvider}}" Margin="127,4,70,0" Grid.Row="1" Grid.ColumnSpan="2" Grid.Column="2" Height="22"/>
+        		ItemsSource="{Binding Source={StaticResource PokemonIdDataProvider}}" Margin="127,40,70,0" Grid.Row="1" Grid.ColumnSpan="2" Grid.Column="2" Height="22"/>
         <Button Style="{StaticResource ResourceKey=flatbutton}" x:Name="AddPokemonToReport" 
-        		Content="Add" HorizontalAlignment="Right" VerticalAlignment="Top" Width="55" Height="22" FontFamily="BOLD" TextOptions.TextFormattingMode="Display" FontWeight="Bold" Margin="0,4,10,0" Grid.Row="1" Grid.Column="3" Click="AddPokemonToReport_Click">
+        		Content="Add" HorizontalAlignment="Right" VerticalAlignment="Top" Width="55" Height="22" FontFamily="BOLD" TextOptions.TextFormattingMode="Display" FontWeight="Bold" Margin="0,40,10,0" Grid.Row="1" Grid.Column="3" Click="AddPokemonToReport_Click">
             <Button.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <LinearGradientBrush.RelativeTransform>
@@ -85,24 +106,24 @@
                 </LinearGradientBrush>
             </Button.Background>
         </Button>
-        <GroupBox x:Name="ExtraSettingsGroupBox" Header="Extra settings" Margin="15,0,5,0" Grid.Row="2" Grid.Column="0"
-        	VerticalAlignment="Top" Height="225" Grid.ColumnSpan="2">
+        <GroupBox x:Name="ExtraSettingsGroupBox" Header="Extra settings" Margin="15,146,5,10" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="1*"/>
                     <RowDefinition Height="1*"/>
+                    <RowDefinition Height="2*"/>
                     <RowDefinition Height="1*"/>
-                    <RowDefinition Height="1*"/>
-                    <RowDefinition Height="49
-                                   "/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="25*"/>
-                    <ColumnDefinition Width="42*"/>
+                    <ColumnDefinition Width="177*"/>
+                    <ColumnDefinition Width="91*"/>
                 </Grid.ColumnDefinitions>
-                <CheckBox x:Name="CbReportSelected" Content="Auto report selected pokemons" HorizontalAlignment="Left" Margin="10,0,0,0" Grid.ColumnSpan="2" VerticalContentAlignment="Center" VerticalAlignment="Center" Width="184"/>
+                <TextBox x:Name="TbReportAllPokemonsAboveCp" Margin="10,0,10,-2" TextWrapping="Wrap" VerticalAlignment="Center" Template="{Binding Mode=OneWay, Source={StaticResource pogo}}" TextChanged="ElementPropertyChanged" Grid.Column="1" Height="44" Grid.Row="1" Grid.RowSpan="3"/>
+                <Label x:Name="ReportAllPokemonsAboveCpLabel" Content="Report any above CP (set 0 to disable)" Margin="10,0,0,-2" Grid.Column="0"
+                	VerticalContentAlignment="Center" VerticalAlignment="Center" Height="44" Grid.Row="1" Grid.RowSpan="3"/>
             </Grid>
         </GroupBox>
+        <CheckBox x:Name="CbAutoReportSelectedPokemon" Content="Auto report selected pokemons" Margin="10,10,170,0" VerticalContentAlignment="Center" VerticalAlignment="Top" Width="200" Checked="ElementPropertyChanged" Unchecked="ElementPropertyChanged" Height="16" Grid.Row="1" Grid.ColumnSpan="2" Grid.Column="2"/>
 
     </Grid>
 </UserControl>

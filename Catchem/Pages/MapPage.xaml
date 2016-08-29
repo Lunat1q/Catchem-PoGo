@@ -11,15 +11,20 @@
             <RowDefinition/>
             <RowDefinition Height="33"/>
         </Grid.RowDefinitions>
-        <windowsPresentation:GMapControl x:Name="pokeMap" Margin="0,0,0,1" MouseDoubleClick="pokeMap_MouseDoubleClick" MouseWheel="pokeMap_MouseWheel"/>
+        <windowsPresentation:GMapControl x:Name="pokeMap" Margin="0,0,0,1" MouseDoubleClick="pokeMap_MouseDoubleClick" MouseWheel="pokeMap_MouseWheel">
+        </windowsPresentation:GMapControl>
+        <ComboBox x:Name="MapProviderComboBox" Margin="0" VerticalAlignment="Top" SelectionChanged="MapProviderComboBox_SelectionChanged" HorizontalAlignment="Right" Width="129" BorderThickness="0"></ComboBox>
         <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="119"/>
                 <ColumnDefinition Width="53*"/>
                 <ColumnDefinition Width="155"/>
                 <ColumnDefinition Width="39*"/>
             </Grid.ColumnDefinitions>
-            <Rectangle Margin="0" Grid.ColumnSpan="4">
+            <Rectangle Margin="0" Grid.ColumnSpan="4" Grid.RowSpan="2">
                 <Rectangle.Fill>
                     <LinearGradientBrush EndPoint="0,0.5" StartPoint="1,0.5">
                         <GradientStop Color="#FF9AFF7D"/>
@@ -31,7 +36,7 @@
             <Slider x:Name="sl_moveSpeedFactor" Margin="111,8,31,0" VerticalAlignment="Top" RenderTransformOrigin="3.583,0.25" Height="25" Minimum="0.3" Maximum="3" TickPlacement="BottomRight" Value="1" ValueChanged="sl_moveSpeedFactor_ValueChanged" TickFrequency="0.1" SmallChange="0" Grid.Column="1" />
             <Label x:Name="label5" Content="Speed Factor:" HorizontalAlignment="Left" Margin="5,5,0,0" VerticalAlignment="Top" Width="83" Grid.Column="1" Height="26"/>
             <Label x:Name="l_moveSpeedFactor" Content="1" HorizontalAlignment="Right" Margin="0,4,0,0" VerticalAlignment="Top" Width="26" Grid.Column="1" Height="26"/>
-            <CheckBox x:Name="cb_keepPokemonMarkers" Content="Keep pokemon markers" HorizontalAlignment="Left" Margin="0,8,0,0" VerticalAlignment="Top" Width="155" Checked="cb_keepPokemonMarkers_Checked" Unchecked="cb_keepPokemonMarkers_Checked" Grid.Column="2" Height="16"/>
+            <CheckBox x:Name="cb_keepPokemonMarkers" Content="Keep poke markers" HorizontalAlignment="Left" Margin="0,8,0,0" VerticalAlignment="Top" Width="155" Checked="cb_keepPokemonMarkers_Checked" Unchecked="cb_keepPokemonMarkers_Checked" Grid.Column="2" Height="16"/>
             <Slider x:Name="sl_mapZoom" Margin="51,8,10,0" VerticalAlignment="Top" RenderTransformOrigin="3.583,0.25" Height="25" Minimum="2" Maximum="18" TickPlacement="BottomRight" Value="18" SmallChange="0" LargeChange="3" ValueChanged="sl_mapZoom_ValueChanged" Grid.Column="3" />
             <Label x:Name="label5_Copy" Content="Zoom:" HorizontalAlignment="Left" Margin="0,4,0,0" VerticalAlignment="Top" Width="45" Grid.Column="3" Height="26"/>
         </Grid>

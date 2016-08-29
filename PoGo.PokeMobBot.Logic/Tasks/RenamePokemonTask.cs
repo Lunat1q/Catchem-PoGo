@@ -21,7 +21,8 @@ namespace PoGo.PokeMobBot.Logic.Tasks
             cancellationToken.ThrowIfCancellationRequested();
 
             var pokemons = await session.Inventory.GetPokemons();
-
+            var prevState = session.State;
+            session.State = BotState.Renaming;
             foreach (var pokemon in pokemons)
             {
                 cancellationToken.ThrowIfCancellationRequested();
@@ -54,6 +55,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                     });
                 }
             }
+            session.State = prevState;
         }
     }
 }

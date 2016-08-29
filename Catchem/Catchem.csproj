@@ -58,6 +58,10 @@
     <ApplicationIcon>unnamed.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="GeoCoordinatePortable, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\GeoCoordinate.1.1.0\lib\portable-net45+wp80+win+wpa81\GeoCoordinatePortable.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="GMap.NET.Core, Version=1.7.0.0, Culture=neutral, PublicKeyToken=b85b9027b614afef, processorArchitecture=MSIL">
       <HintPath>..\packages\GMap.NET.Presentation.1.7.1\lib\net40\GMap.NET.Core.dll</HintPath>
       <Private>True</Private>
@@ -67,7 +71,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Google.Protobuf, Version=3.0.0.0, Culture=neutral, PublicKeyToken=a7d26565bac4d604, processorArchitecture=MSIL">
-      <HintPath>..\packages\Google.Protobuf.3.0.0-beta4\lib\net45\Google.Protobuf.dll</HintPath>
+      <HintPath>..\packages\Google.Protobuf.3.0.0\lib\net45\Google.Protobuf.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="MahApps.Metro, Version=1.2.4.0, Culture=neutral, PublicKeyToken=f4fb5a3c4d1e5b4f, processorArchitecture=MSIL">
@@ -121,7 +125,12 @@
     <Compile Include="Classes\Adb.cs" />
     <Compile Include="Classes\BotRpcMessage.cs" />
     <Compile Include="Classes\BotWindowData.cs" />
+    <Compile Include="Classes\CatchemNotified.cs" />
+    <Compile Include="Classes\CatchemSettings.cs" />
     <Compile Include="Classes\Telegram.cs" />
+    <Compile Include="Events\TelegramPokemonCaughtEvent.cs" />
+    <Compile Include="Events\TelegramMessageEvent.cs" />
+    <Compile Include="Events\TelegramCommandEvent.cs" />
     <Compile Include="Extensions\AsyncHelpers.cs" />
     <Compile Include="Extensions\Converters.cs" />
     <Compile Include="Extensions\Extensions.cs" />
@@ -140,6 +149,9 @@
     </Compile>
     <Compile Include="Pages\PokemonListPage.xaml.cs">
       <DependentUpon>PokemonListPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\RouteCreatorPage.xaml.cs">
+      <DependentUpon>RouteCreatorPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\TelegramPage.xaml.cs">
       <DependentUpon>TelegramPage.xaml</DependentUpon>
@@ -178,6 +190,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\PokemonListPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\RouteCreatorPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -312,7 +328,7 @@
       <Project>{a03a7bb2-4f0b-467b-84b2-9a76e6aae6fb}</Project>
       <Name>POGOProtos</Name>
     </ProjectReference>
-    <ProjectReference Include="..\PokemonGoAPI\PokemonGo.RocketAPI\PokemonGo.RocketAPI.csproj">
+    <ProjectReference Include="..\PoGoAPI\PoGo.RocketAPI\PoGo.RocketAPI.csproj">
       <Project>{05d2da44-1b8e-4cf7-94ed-4d52451cd095}</Project>
       <Name>PokemonGo.RocketAPI</Name>
     </ProjectReference>
@@ -810,6 +826,7 @@
     <Content Include="adb\AdbWinUsbApi.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\wp.png" />
     <None Include="Resources\favouredSort.png" />
     <None Include="Resources\gym.png" />
     <None Include="Resources\refresh.png" />

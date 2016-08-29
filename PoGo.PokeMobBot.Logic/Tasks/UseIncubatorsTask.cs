@@ -60,13 +60,15 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                     Level = PokemonInfo.GetLevel(hatched),
                     Cp = hatched.Cp,
                     MaxCp = PokemonInfo.CalculateMaxCp(hatched),
-                    Perfection = Math.Round(PokemonInfo.CalculatePokemonPerfection(hatched), 2)
+                    Perfection = Math.Round(hatched.CalculatePokemonPerfection(), 2),
+                    Move1 = hatched.Move1,
+                    Move2 = hatched.Move2
                 });
             }
 
             var newRememberedIncubators = new List<IncubatorUsage>();
 
-            foreach (var incubator in incubators)
+            foreach (var incubator in incubators.Where(x=>x.ItemId == ItemId.ItemIncubatorBasicUnlimited || !session.LogicSettings.UseOnlyUnlimitedIncubator))
             {
                 cancellationToken.ThrowIfCancellationRequested();
 

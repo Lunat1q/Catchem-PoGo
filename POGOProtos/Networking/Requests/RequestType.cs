@@ -277,6 +277,9 @@ namespace POGOProtos.Networking.Requests {
     ///  Implemented [R &amp; M]
     /// </summary>
     [pbr::OriginalName("SET_CONTACT_SETTINGS")] SetContactSettings = 151,
+
+    [pbr::OriginalName("SET_BUDDY_POKEMON")] SetBuddyPokemon = 152,
+    [pbr::OriginalName("GET_BUDDY_WALKED")] GetBuddyWalked = 153,
     /// <summary>
     ///  Implemented [R &amp; M]
     /// </summary>
@@ -313,6 +316,8 @@ namespace POGOProtos.Networking.Requests {
     ///  Can't find this one
     /// </summary>
     [pbr::OriginalName("LOAD_SPAWN_POINTS")] LoadSpawnPoints = 500,
+    [pbr::OriginalName("CHECK_CHALLENGE")] CheckChallenge = 600,
+    [pbr::OriginalName("VERIFY_CHALLENGE")] VerifyChallenge = 601,
     /// <summary>
     ///  Implemented [R &amp; M]
     /// </summary>

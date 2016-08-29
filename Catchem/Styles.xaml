@@ -4,6 +4,7 @@
                     xmlns:extensions="clr-namespace:Catchem.Extensions"
                     xmlns:sys="clr-namespace:System;assembly=mscorlib"
                     xmlns:pokemon="clr-namespace:POGOProtos.Enums;assembly=POGOProtos"
+                    xmlns:classes="clr-namespace:Catchem.Classes"
                     x:Class="Catchem.Styles">
     <ObjectDataProvider MethodName="GetValues"
                     ObjectType="{x:Type sys:Enum}"
@@ -52,24 +53,36 @@
             </Setter.Value>
         </Setter>
     </Style>
-    <DataTemplate x:Key="PokemonDataTemplate">
-        <Grid Height="160" Width="150" Margin="1">
+    <DataTemplate x:Key="PokemonDataTemplate" DataType="classes:PokemonUiData">
+        <Grid Height="Auto" Margin="1" MinWidth="150" MinHeight="160" MaxWidth="300">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Rectangle Fill="White" HorizontalAlignment="Stretch" Height="Auto" VerticalAlignment="Stretch" Width="Auto" Grid.ColumnSpan="2" RadiusX="7" RadiusY="7"/>
-            <Grid HorizontalAlignment="Left" Height="90" VerticalAlignment="Top" Width="150" Grid.ColumnSpan="2">
+            <Rectangle x:Name="PokeBg" Fill="White" HorizontalAlignment="Stretch" Height="Auto" VerticalAlignment="Stretch" Width="Auto" Grid.ColumnSpan="2" RadiusX="7" RadiusY="7"/>
+            <Grid HorizontalAlignment="Stretch" Height="90" VerticalAlignment="Top" Width="Auto" Grid.ColumnSpan="2">
                 <Image Source="{Binding Path=Image}" x:Name="image" HorizontalAlignment="Center" Height="Auto" Margin="0" VerticalAlignment="Center" Width="Auto"/>
                 <Image Source="{Binding Favoured, Converter={StaticResource LoadImageSourceFromResource}, ConverterParameter='favoured'}" x:Name="favImage" Height="20" Margin="0,4,4,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="20" Stretch="Uniform"/>
                 <Image Source="{Binding InGym, ConverterParameter='gym', Converter={StaticResource LoadImageSourceFromResource}}" x:Name="favImage_Copy" Height="20" Margin="4,4,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="20" Stretch="Uniform"/>
             </Grid>
-            <TextBlock Text="{Binding Name, FallbackValue=NoName}" HorizontalAlignment="Left" Margin="0,95,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2" Width="150" Padding="0" Foreground="#FF59C3B0" FontSize="16" TextAlignment="Center"/>
+            <TextBlock Text="{Binding Name, FallbackValue=NoName}" HorizontalAlignment="Stretch" Margin="0,95,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2" Width="Auto" Padding="0" Foreground="#FF59C3B0" FontSize="16" TextAlignment="Center"/>
             <TextBlock Text="{Binding Cp, FallbackValue='Cp: 0', StringFormat='Cp: {0}'}" HorizontalAlignment="Left" Margin="0,121,0,0" VerticalAlignment="Top" Grid.ColumnSpan="1" Width="75" Padding="0" Foreground="#FF59C3B0" FontSize="14" TextAlignment="Center" />
             <TextBlock Text="{Binding Iv, FallbackValue='Iv: 0%', StringFormat='Iv: {0:N1}%'}" HorizontalAlignment="Left" Margin="0,121,0,0" VerticalAlignment="Top" Width="75" Padding="0" Foreground="#FF59C3B0" Grid.Column="1" FontSize="14" TextAlignment="Center" />
             <TextBlock Text="{Binding Candy, FallbackValue='Candy: 0', StringFormat='Candy: {0}'}" HorizontalAlignment="Left" Margin="0,140,0,0" VerticalAlignment="Top" Width="75" Padding="0" Foreground="#FF59C3B0" Grid.Column="1" FontSize="12" TextAlignment="Center" />
             <TextBlock Text="{Binding Tags, FallbackValue='', StringFormat=''}" HorizontalAlignment="Left" Margin="0,140,0,0" VerticalAlignment="Top" Width="75" Padding="0" Foreground="#FF59C3B0" Grid.Column="0" FontSize="12" TextAlignment="Center" />
         </Grid>
+        <DataTemplate.Triggers>
+            <DataTrigger Value="True" Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}}">
+                <Setter Property="Fill" TargetName="PokeBg" >
+                    <Setter.Value>
+                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                            <GradientStop Color="#0C00FFD1" Offset="0"/>
+                            <GradientStop Color="#0C00FF80" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Setter.Value>
+                </Setter>
+            </DataTrigger>
+        </DataTemplate.Triggers>
     </DataTemplate>
     <DataTemplate x:Key="InventoryItemTemplate">
         <Grid Height="75" Margin="3" Width="Auto">
@@ -174,4 +187,73 @@
         <GradientStop Offset="0" Color="#FFEEB29C" />
         <GradientStop Offset="1" Color="#FFC04F53" />
     </LinearGradientBrush>
+    <DataTemplate x:Key="TelegramOwnerTemplate">
+        <Grid Height="Auto">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition  Width="73*"/>
+                <ColumnDefinition Width="80"/>
+                <ColumnDefinition Width="65"/>
+            </Grid.ColumnDefinitions>
+            <Rectangle Fill="#FFFFFFFF" HorizontalAlignment="Stretch" Height="Auto" VerticalAlignment="Stretch" Width="Auto" Grid.ColumnSpan="3" Grid.RowSpan="2"/>
+            <TextBlock Text="{Binding TelegramName, FallbackValue='@Unknown',  StringFormat='@{0}'}" Margin="3,1,8.25,1" Grid.Column="0" Foreground="#FF59C3B0" TextAlignment="Center" Grid.ColumnSpan="1" VerticalAlignment="Center" Height="Auto"/>
+            <Button Tag="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}}}" Style="{StaticResource ResourceKey=flatbutton}" x:Name="btn_removeFromList" Content="Delete" HorizontalAlignment="Stretch" Margin="3" FontFamily="BOLD" TextOptions.TextFormattingMode="Display" FontWeight="Bold" VerticalAlignment="Center" Width="Auto" Height="22" Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="1" Click="btn_removeFromListGeneric_Click" Grid.RowSpan="2">
+                <Button.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <LinearGradientBrush.RelativeTransform>
+                            <TransformGroup>
+                                <ScaleTransform CenterY="0.5" CenterX="0.5"/>
+                                <SkewTransform CenterY="0.5" CenterX="0.5"/>
+                                <RotateTransform Angle="90" CenterY="0.5" CenterX="0.5"/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </LinearGradientBrush.RelativeTransform>
+                        <GradientStop Color="#FFEEB29C" Offset="0"/>
+                        <GradientStop Color="#FFC04F53" Offset="1"/>
+                    </LinearGradientBrush>
+                </Button.Background>
+            </Button>
+            <TextBlock Text="{Binding ChatId, FallbackValue=0}" Margin="0" Grid.Column="1" Foreground="#FF5F6160" TextAlignment="Center" Grid.ColumnSpan="1" VerticalAlignment="Center" Height="Auto" Grid.Row="0" FontSize="10.667"/>
+        </Grid>
+    </DataTemplate>
+    <DataTemplate x:Key="RouteListTemplate">
+        <Grid Height="Auto">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition  Width="73*"/>
+                <ColumnDefinition Width="50"/>
+                <ColumnDefinition Width="65"/>
+            </Grid.ColumnDefinitions>
+            <Rectangle Fill="#FFFFFFFF" HorizontalAlignment="Stretch" Height="Auto" VerticalAlignment="Stretch" Width="Auto" Grid.ColumnSpan="3" Grid.RowSpan="2"/>
+            <TextBlock Text="{Binding Name, FallbackValue='Unknown'}" Margin="3,1,8.25,1" Grid.Column="0" Foreground="#FF59C3B0" TextAlignment="Center" Grid.ColumnSpan="1" VerticalAlignment="Center" Height="Auto"/>
+            <Button Tag="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}}}" Style="{StaticResource ResourceKey=flatbutton}" x:Name="btn_removeFromList" Content="Delete" HorizontalAlignment="Stretch" Margin="3" FontFamily="BOLD" TextOptions.TextFormattingMode="Display" FontWeight="Bold" VerticalAlignment="Center" Width="Auto" Height="22" Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="1" Click="btn_removeFromListGeneric_Click" Grid.RowSpan="2">
+                <Button.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <LinearGradientBrush.RelativeTransform>
+                            <TransformGroup>
+                                <ScaleTransform CenterY="0.5" CenterX="0.5"/>
+                                <SkewTransform CenterY="0.5" CenterX="0.5"/>
+                                <RotateTransform Angle="90" CenterY="0.5" CenterX="0.5"/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </LinearGradientBrush.RelativeTransform>
+                        <GradientStop Color="#FFEEB29C" Offset="0"/>
+                        <GradientStop Color="#FFC04F53" Offset="1"/>
+                    </LinearGradientBrush>
+                </Button.Background>
+            </Button>
+            <TextBlock Text="{Binding WpCount, FallbackValue=0}" Margin="0" Grid.Column="1" Foreground="#FF5F6160" TextAlignment="Center" Grid.ColumnSpan="1" VerticalAlignment="Center" Height="Auto" Grid.Row="0" FontSize="10.667"/>
+        </Grid>
+    </DataTemplate>
+    <Style x:Key="ListBoxItemStyleTransparentSelect" TargetType="ListBoxItem">
+        <Style.Resources>
+            <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Transparent"/>
+            <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="Transparent"/>
+            <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}" Color="Black"/>
+        </Style.Resources>
+    </Style>
 </ResourceDictionary>

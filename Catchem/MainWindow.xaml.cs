@@ -27,6 +27,7 @@ using POGOProtos.Inventory.Item;
 using static System.String;
 using LogLevel = PoGo.PokeMobBot.Logic.Logging.LogLevel;
 using System.Reflection;
+using Catchem.Events;
 using PoGo.PokeMobBot.Logic.API;
 // ReSharper disable PossibleLossOfFraction
 
@@ -35,6 +36,7 @@ namespace Catchem
     public partial class MainWindow
     {
         public static MainWindow BotWindow;
+        public CatchemSettings GlobalCatchemSettings = new CatchemSettings();
         private bool _windowClosing;
         private const string SubPath = "Profiles";
 
@@ -60,6 +62,10 @@ namespace Catchem
         public MainWindow()
         {
             InitializeComponent();
+
+            //global settings
+            GlobalCatchemSettings.Load();
+
             InitWindowsControlls();
             BotWindow = this;
             LogWorker();
@@ -67,8 +73,12 @@ namespace Catchem
             InitBots();
             SettingsView.BotMapPage.SetSettingsPage(SettingsView.BotSettingsPage);
             SetVersionTag();
-        }
 
+            SettingsView.BotMapPage.SetGlobalSettings(GlobalCatchemSettings);
+            GlobalMapView.SetGlobalSettings(GlobalCatchemSettings);
+            SettingsView.BotSettingsPage.SetGlobalSettings(GlobalCatchemSettings);
+            RouteCreatorView.SetGlobalSettings(GlobalCatchemSettings);
+        }
 
 
         public void SetVersionTag(Version remoteVersion = null)
@@ -85,7 +95,7 @@ namespace Catchem
         {
             Logger.SetLogger(new WpfLogger(LogLevel.Debug), SubPath);
             botsBox.ItemsSource = BotsCollection;
-            grid_pickBot.Visibility = Visibility.Visible;
+            SettingsView.grid_pickBot.Visibility = Visibility.Visible;
             foreach (var item in Directory.GetDirectories(SubPath))
             {
                 if (item != SubPath + "\\Logs")
@@ -125,7 +135,7 @@ namespace Catchem
         private void DrawNextOptRoute(ISession session, List<Tuple<double, double>> list)
         {
             var receiverBot = BotsCollection.FirstOrDefault(x => x.Session == session);
-            if (receiverBot == null || !receiverBot.Started) return;
+            if (receiverBot == null || !receiverBot.Started || receiverBot != Bot) return;
             SettingsView.BotMapPage.UpdateOptPathRoute(list);
         }
 
@@ -219,7 +229,21 @@ namespace Catchem
                 if ((ulong) objData[0] == 0) return;
                 var receiverBot = BotsCollection.FirstOrDefault(x => x.Session == session);
                 if (receiverBot == null) return;
-                receiverBot.GotNewPokemon((ulong)objData[0], (PokemonId)objData[1], (int)objData[2], (double)objData[3], (PokemonFamilyId)objData[4], (int)objData[5], false, false);
+                receiverBot.GotNewPokemon((ulong) objData[0], (PokemonId) objData[1], (int) objData[2],
+                    (double) objData[3], (PokemonFamilyId) objData[4], (int) objData[5], false, false,
+                    (double) objData[6],
+                    (PokemonMove) objData[7], (PokemonMove) objData[8]);
+                TelegramView.TlgrmBot.EventDispatcher.Send(new TelegramPokemonCaughtEvent
+                {
+                    PokemonId = (PokemonId)objData[1],
+                    Cp = (int)objData[2],
+                    Iv = (double)objData[3],
+                    ProfileName = receiverBot.ProfileName,
+                    BotNicnname = receiverBot.PlayerName,
+                    Level = (double)objData[6],
+                    Move1 = (PokemonMove?)objData[7] ?? PokemonMove.MoveUnset,
+                    Move2 = (PokemonMove?)objData[8] ?? PokemonMove.MoveUnset
+                });
             }
             catch (Exception)
             {
@@ -331,13 +355,18 @@ namespace Catchem
 
         #region DataFlow - Push
 
-        private void PushNewConsoleRow(ISession session, string rowText, Color rowColor)
+        private static void PushNewConsoleRow(ISession session, string rowText, Color rowColor)
         {
             var botReceiver = BotsCollection.FirstOrDefault(x => x.Session == session);
-            botReceiver?.LogQueue.Enqueue(Tuple.Create(rowText, rowColor));
+            if (botReceiver == null) return;
+            botReceiver.LogQueue.Enqueue(Tuple.Create(rowText, rowColor));
+            if (botReceiver.LogQueue.Count > 100)
+            {
+                botReceiver.LogQueue.Dequeue();
+        }
         }
 
-        private void PushRemoveForceMoveMarker(ISession session)
+        private static void PushRemoveForceMoveMarker(ISession session)
         {
             var botReceiver = BotsCollection.FirstOrDefault(x => x.Session == session);
             var nMapObj = new NewMapObject("forcemove_done", "", 0, 0, "");
@@ -347,11 +376,21 @@ namespace Catchem
         private void PushRemovePokemon(ISession session, MapPokemon mapPokemon)
         {
             var botReceiver = BotsCollection.FirstOrDefault(x => x.Session == session);
+            if (botReceiver == null) return;
             var nMapObj = new NewMapObject("pm_rm", mapPokemon.PokemonId.ToString(), mapPokemon.Latitude, mapPokemon.Longitude, mapPokemon.EncounterId.ToString());
-            botReceiver?.MarkersQueue.Enqueue(nMapObj);
+            var queueCleanup = botReceiver.MarkersQueue.Where(x => x.Uid == mapPokemon.PokemonId.ToString()).ToList();
+            if (queueCleanup.Any() && botReceiver != Bot)
+            {
+                botReceiver.MarkersQueue =
+                    new Queue<NewMapObject>(botReceiver.MarkersQueue.Where(x => queueCleanup.Any(v => x == v)));
+            }
+            else
+            {
+                botReceiver.MarkersQueue.Enqueue(nMapObj);
+            }
         }
 
-        private void PushNewPokemons(ISession session, IEnumerable<MapPokemon> pokemons)
+        private static void PushNewPokemons(ISession session, IEnumerable<MapPokemon> pokemons)
         {
             var botReceiver = BotsCollection.FirstOrDefault(x => x.Session == session);
             if (botReceiver == null) return;
@@ -363,7 +402,7 @@ namespace Catchem
             }
         }
 
-        private void PushNewWildPokemons(ISession session, IEnumerable<WildPokemon> pokemons)
+        private static void PushNewWildPokemons(ISession session, IEnumerable<WildPokemon> pokemons)
         {
             var botReceiver = BotsCollection.FirstOrDefault(x => x.Session == session);
             if (botReceiver == null) return;
@@ -375,7 +414,7 @@ namespace Catchem
             }
         }
 
-        private void PushNewPokestop(ISession session, IEnumerable<FortData> pstops)
+        private static void PushNewPokestop(ISession session, IEnumerable<FortData> pstops)
         {
             var botReceiver = BotsCollection.FirstOrDefault(x => x.Session == session);
             if (botReceiver == null) return;
@@ -431,6 +470,7 @@ namespace Catchem
 
         private async void RpcWorker()
         {
+            int delay = 5;
             while (!_windowClosing)
             {
                 if (_messageQueue.Count > 0)
@@ -440,8 +480,6 @@ namespace Catchem
                     if (message == null) continue;
                     try
                     {
-
-
                         switch (message.Type)
                         {
                             case "bot_failure":
@@ -524,7 +562,13 @@ namespace Catchem
                         Logger.Write(ex.Message, session: message.Session);
                     }
                 }
-                await Task.Delay(5);
+
+                if (_messageQueue.Count > 50)
+                    delay = 1;
+                else if (delay == 1 && _messageQueue.Count == 0)
+                    delay = 5;
+                
+                await Task.Delay(delay);
             }
         }
 
@@ -576,6 +620,24 @@ namespace Catchem
                 newBot.Machine.SetFailureState(new LoginState());
                 GlobalMapView.addMarker(newBot.GlobalPlayerMarker);
 
+                if (newBot.Logic.UseCustomRoute)
+                {
+                    if (!IsNullOrEmpty(newBot.GlobalSettings.LocationSettings.CustomRouteName))
+                    {
+                        var route =
+                            GlobalCatchemSettings.Routes.FirstOrDefault(
+                                x => x.Name.ToLower() == newBot.GlobalSettings.LocationSettings.CustomRouteName);
+                        if (route != null)
+                        {
+                            newBot.GlobalSettings.LocationSettings.CustomRoute = route.Route;
+                        }
+                    }
+                }
+                else if (!IsNullOrEmpty(newBot.GlobalSettings.LocationSettings.CustomRouteName))
+                {
+                    newBot.GlobalSettings.LocationSettings.CustomRouteName = "";
+                }
+
                 BotsCollection.Add(newBot);
                 if (newBot.GlobalSettings.AutoStartThisProfile)
                     newBot.Start();
@@ -601,8 +663,8 @@ namespace Catchem
             {
                 if (SettingsView.tabControl.IsEnabled)
                     SettingsView.tabControl.IsEnabled = false;
-                if (grid_pickBot.Visibility == Visibility.Collapsed)
-                    grid_pickBot.Visibility = Visibility.Visible;
+                if (SettingsView.grid_pickBot.Visibility == Visibility.Collapsed)
+                    SettingsView.grid_pickBot.Visibility = Visibility.Visible;
                 return;
             }
             
@@ -657,8 +719,8 @@ namespace Catchem
             _loadingUi = true;            
             if (!SettingsView.tabControl.IsEnabled)
                 SettingsView.tabControl.IsEnabled = true;
-            if (grid_pickBot.Visibility == Visibility.Visible)
-                grid_pickBot.Visibility = Visibility.Collapsed;
+            if (SettingsView.grid_pickBot.Visibility == Visibility.Visible)
+                SettingsView.grid_pickBot.Visibility = Visibility.Collapsed;
             if (transit.SelectedIndex != 0) ChangeTransistorTo(0);
             SettingsView.BotSettingsPage.SetBot(Bot);
             SettingsView.BotPlayerPage.SetBot(Bot);
@@ -678,10 +740,12 @@ namespace Catchem
         private void Window_Closing(object sender, CancelEventArgs e)
         {
             _windowClosing = true;
+            GlobalCatchemSettings.Save();
             SettingsView.BotMapPage.WindowClosing = true;
             if (Bot == null || _loadingUi) return;
             Bot.GlobalSettings.StoreData(SubPath + "\\" + Bot.ProfileName);
             TelegramView.SaveSettings();
+            TelegramView.TurnOff();
             foreach (var b in BotsCollection)
             {
                 b.Stop();
@@ -721,9 +785,13 @@ namespace Catchem
             ChangeTransistorTo(2);
         }
 
+        private void btn_ChangeViewToRouteCreator_Click(object sender, RoutedEventArgs e)
+        {
+            ChangeTransistorTo(3);
+        }
+
         private void ChangeTransistorTo(int i)
         {
-            if (grid_pickBot.Visibility == Visibility.Visible) return;
             if (transit.SelectedIndex != i)
             {
                 transit.SelectedIndex = i;
@@ -759,12 +827,14 @@ namespace Catchem
                     var proxyPass = rowData.Length > 5 ? rowData[5] : "";
                     var desiredName = rowData.Length > 6 ? rowData[6] : "";
                     var path = login;
+                    var lat = rowData.Length > 7 ? rowData[7] : "";
+                    var lon = rowData.Length > 8 ? rowData[8] : "";
                     var created = false;
                     do
                     {
                         if (!Directory.Exists(SubPath + "\\" + path))
                         {
-                            CreateBotFromClone(path, login, auth, pass, proxy, proxyLogin, proxyPass, desiredName);
+                            CreateBotFromClone(path, login, auth, pass, proxy, proxyLogin, proxyPass, desiredName, lat, lon);
                             created = true;
                         }
                         else
@@ -773,7 +843,7 @@ namespace Catchem
                         }
                     } while (!created);
                 }
-                catch
+                catch (Exception)
                 {
                     //ignore
                 }
@@ -781,12 +851,20 @@ namespace Catchem
             batch_botText.Text = Empty;
         }
 
-        private void CreateBotFromClone(string path, string login, string auth, string pass, string proxy, string proxyLogin, string proxyPass, string desiredName)
+        private void CreateBotFromClone(string path, string login, string auth, string pass, string proxy,
+            string proxyLogin, string proxyPass, string desiredName, string lat, string lon)
         {
             var dir = Directory.CreateDirectory(SubPath + "\\" + path);
             var settings = GlobalSettings.Load(dir.FullName) ?? GlobalSettings.Load(dir.FullName);
             if (Bot != null)
+            {
                 settings = Bot.GlobalSettings.Clone();
+                var profilePath = dir.FullName;
+                var profileConfigPath = Path.Combine(profilePath, "config");
+                settings.ProfilePath = profilePath;
+                settings.ProfileConfigPath = profileConfigPath;
+                settings.GeneralConfigPath = Path.Combine(Directory.GetCurrentDirectory(), "config");
+            }
 
             //set new settings
             Enum.TryParse(auth, out settings.Auth.AuthType);
@@ -812,10 +890,19 @@ namespace Catchem
                 settings.DesiredNickname = desiredName;
                 settings.StartUpSettings.AutoCompleteTutorial = true;
             }
+            if (lat != "")
+            {
+                lat.GetVal(out settings.LocationSettings.DefaultLatitude);
+            }
+            if (lon != "")
+            {
+                lon.GetVal(out settings.LocationSettings.DefaultLongitude);
+            }
             settings.Device.DeviceId = DeviceSettings.RandomString(16, "0123456789abcdef");
             settings.StoreData(dir.FullName);
             InitBot(settings, path);
         }
+
         private void batch_No_Click(object sender, RoutedEventArgs e)
         {
             batchInput.Visibility = Visibility.Collapsed;

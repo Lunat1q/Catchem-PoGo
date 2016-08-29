@@ -17,10 +17,12 @@
                       mc:Ignorable="d">
     <controls:MetroWindow.RightWindowCommands>
         <controls:WindowCommands>
+            <Button x:Name="btn_ChangeViewRouteCreator"
+                    Content="RouteCreator" BorderBrush="{x:Null}" Background="{x:Null}" Click="btn_ChangeViewToRouteCreator_Click"/>
             <Button x:Name="btn_ChangeViewToTelegram"
-                    Content="Telegram" BorderBrush="{x:Null}" Background="{x:Null}" Click="btn_ChangeViewToTelegram_Click" Visibility="Hidden" />
+                    Content="Telegram" BorderBrush="{x:Null}" Background="{x:Null}" Click="btn_ChangeViewToTelegram_Click" />
             <Button x:Name="btn_ChangeViewToSettings"
-                    Content="Settings" BorderBrush="{x:Null}" Background="{x:Null}" Click="btn_ChangeViewToSettings_Click" />
+                    Content="Bot Info" BorderBrush="{x:Null}" Background="{x:Null}" Click="btn_ChangeViewToSettings_Click" />
             <Button x:Name="btn_ChangeViewSettingsMap"
                     Click="btn_changeViewSettingsMap_Click"
                     Content="WorldMap" BorderBrush="{x:Null}" Background="{x:Null}" />
@@ -41,6 +43,7 @@
             <pages:AccountSettingsTab x:Name="SettingsView" />
             <pages:GlobalMapPage x:Name="GlobalMapView" />
             <pages:TelegramPage x:Name="TelegramView" />
+            <pages:RouteCreatorPage x:Name="RouteCreatorView" />
         </materialDesign:Transitioner>
         <Grid Width="246" HorizontalAlignment="Left">
             <Rectangle Width="246" HorizontalAlignment="Left">
@@ -155,35 +158,7 @@
                 </Button.Background>
             </Button>
         </Grid>
-        <Grid x:Name="grid_pickBot"
-              Margin="-1,0,0,0" Grid.Column="1" Visibility="Collapsed">
-            <Rectangle Margin="0" >
-                <Rectangle.Fill>
-                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                        <GradientStop Color="#FF93FFBA" Offset="0"/>
-                        <GradientStop Color="#FF024F3A" Offset="1"/>
-                    </LinearGradientBrush>
-                </Rectangle.Fill>
-            </Rectangle>
-            <Label x:Name="label13"
-                   Margin="0"
-                   HorizontalAlignment="Center"
-                   VerticalAlignment="Center"
-                   Content="Select Bot at left menu"
-                   FontSize="48"
-                   FontWeight="Bold"
-                   Foreground="White" />
-            <Label x:Name="label13_Copy"
-                   Margin="214,410,214,261"
-                   HorizontalAlignment="Center"
-                   VerticalAlignment="Center"
-                   Content="or create a new one"
-                   FontSize="36"
-                   FontStyle="Italic"
-                   FontWeight="Bold"
-                   Foreground="White" />
-        </Grid>
-        <Grid x:Name="InputBox" Visibility="Collapsed" Grid.ColumnSpan="2">
+        <Grid x:Name="InputBox" Visibility="Collapsed" Grid.ColumnSpan="2" Grid.Column="0">
             <Grid Background="Black" Opacity="0.45" />
             <Border MinWidth="250"
                     HorizontalAlignment="Center"
@@ -329,14 +304,14 @@
                                FontSize="20"
                                FontStyle="Italic"
                                Foreground="#FF7E7E7E"
-                               Text="Format: type;login;pass;proxyuri:port;proxy_login;proxy_pass;desiredname"
+                               Text="Format: type;login;pass;proxyuri:port;proxy_login;proxy_pass;desiredname;latitude;longitude"
                                TextAlignment="Center" VerticalAlignment="Top" />
                     <TextBlock Margin="15,82,15,0"
                                FontFamily="Calibri"
                                FontSize="20"
                                FontStyle="Italic"
                                Foreground="#FF7E7E7E"
-                               Text="If you have bot selected, all bots will inherit his settings"
+                               Text="If you have bot selected, all bots will inherit its settings"
                                TextAlignment="Center" VerticalAlignment="Top" />
                 </Grid>
             </Border>

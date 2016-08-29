@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Web;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -15,9 +13,9 @@ using Catchem.Classes;
 using Catchem.Extensions;
 using Catchem.Interfaces;
 using GMap.NET;
+using GMap.NET.MapProviders;
 using GMap.NET.WindowsPresentation;
 using PoGo.PokeMobBot.Logic.State;
-using PoGo.PokeMobBot.Logic.Utils;
 using POGOProtos.Enums;
 
 namespace Catchem.Pages
@@ -42,6 +40,24 @@ namespace Catchem.Pages
         private bool _loadingUi;
         public static int Delay = 25;
         private readonly PlayerMovement _playerMovement = new PlayerMovement();
+        private CatchemSettings _globalSettings;
+
+        public void SetGlobalSettings(CatchemSettings settings)
+        {
+            _globalSettings = settings;
+            pokeMap.MapProvider = _globalSettings.Provider;
+            MapProviderComboBox.SelectedItem = _globalSettings.ProviderEnum;
+            _globalSettings.BindNewMapProbider((provider) =>
+            {
+                pokeMap.MapProvider = provider;
+                return true;
+            });
+        }
+
+        public void SetProvider(GMapProvider provider)
+        {
+            pokeMap.MapProvider = provider;
+        }
 
         public MapPage()
         {
@@ -69,12 +85,16 @@ namespace Catchem.Pages
             pokeMap.ShowCenter = false;
             pokeMap.ShowTileGridLines = false;
             pokeMap.Zoom = 18;
-            GMap.NET.MapProviders.GMapProvider.WebProxy = System.Net.WebRequest.GetSystemWebProxy();
-            GMap.NET.MapProviders.GMapProvider.WebProxy.Credentials = System.Net.CredentialCache.DefaultCredentials;
-            pokeMap.MapProvider = GMap.NET.MapProviders.GMapProviders.OpenStreetMap;
-            GMaps.Instance.Mode = AccessMode.ServerOnly;
+            GMapProvider.WebProxy = WebRequest.GetSystemWebProxy();
+            GMapProvider.WebProxy.Credentials = CredentialCache.DefaultCredentials;
+            pokeMap.MapProvider = GMapProviders.GoogleMap;
+            GMaps.Instance.Mode = AccessMode.ServerAndCache;
             if (_bot != null)
                 pokeMap.Position = new PointLatLng(_bot.Lat, _bot.Lng);
+
+            MapProviderComboBox.ItemsSource = Enum.GetValues(typeof(MapProvider));
+
+
             await Task.Delay(10);
         }
 
@@ -431,6 +451,16 @@ namespace Catchem.Pages
             var sl = (sender as Slider);
             if (sl == null) return;
             pokeMap.Zoom = (int) sl.Value;
+        }
+
+        private void MapProviderComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var cb = sender as ComboBox;
+            var provider = cb?.SelectedItem as MapProvider?;
+            if (provider == null) return;
+
+            _globalSettings.ProviderEnum = (MapProvider)provider;
+            _globalSettings.LoadProperProvider();
         }
     }
 

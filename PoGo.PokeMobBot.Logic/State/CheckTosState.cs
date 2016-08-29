@@ -40,7 +40,7 @@ namespace PoGo.PokeMobBot.Logic.State
                 }
                 if (!tutState.Contains(TutorialState.AvatarSelection))
                 {
-                    var gen = session.Client.rnd.Next(1) == 0 ? Gender.Male : Gender.Female;
+                    var gen = session.Client.rnd.Next(2) == 1 ? Gender.Male : Gender.Female;
                     var avatarRes = await session.Client.Player.SetAvatar(new PlayerAvatar()
                     {
                         Backpack = 0,
@@ -88,7 +88,6 @@ namespace PoGo.PokeMobBot.Logic.State
                     await DelayingUtils.Delay(3000, 2000);
                 }
             }
-            DoMagicTask.Execute(session, cancellationToken);
             return new FarmState();
         }
 
@@ -116,6 +115,24 @@ namespace PoGo.PokeMobBot.Logic.State
 
         public async Task<bool> SelectNicnname(ISession session)
         {
+            if (string.IsNullOrEmpty(session.LogicSettings.DesiredNickname))
+            {
+                session.EventDispatcher.Send(new NoticeEvent()
+                {
+                    Message = "You didn't pick the desired nickname!"
+                });
+                return false;
+            }
+
+            if (session.LogicSettings.DesiredNickname.Length > 15)
+            {
+                session.EventDispatcher.Send(new NoticeEvent()
+                {
+                    Message = "You selected too long Desired name, max length: 15!"
+                });
+                return false;
+            }
+			
             var res = await session.Client.Misc.ClaimCodename(session.LogicSettings.DesiredNickname);
             if (res.Status == ClaimCodenameResponse.Types.Status.SUCCESS)
             {
@@ -137,9 +154,32 @@ namespace PoGo.PokeMobBot.Logic.State
             }
             else
             {
+                var errorText = "Niantic error";
+                switch (res.Status)
+                {
+                    case ClaimCodenameResponse.Types.Status.UNSET:
+                        errorText = "Unset, somehow";
+                        break;
+                    case ClaimCodenameResponse.Types.Status.SUCCESS:
+                        errorText = "No errors, nickname changed";
+                        break;
+                    case ClaimCodenameResponse.Types.Status.CODENAME_NOT_AVAILABLE:
+                        errorText = "That nickname isn't available, pick another one and restart the bot!";
+                        break;
+                    case ClaimCodenameResponse.Types.Status.CODENAME_NOT_VALID:
+                        errorText = "That nickname isn't valid, pick another one!";
+                        break;
+                    case ClaimCodenameResponse.Types.Status.CURRENT_OWNER:
+                        errorText = "You already own that nickname!";
+                        break;
+                    case ClaimCodenameResponse.Types.Status.CODENAME_CHANGE_NOT_ALLOWED:
+                        errorText = "You can't change your nickname anymore!";
+                        break;
+                }
+
                 session.EventDispatcher.Send(new NoticeEvent()
                 {
-                    Message = $"Name selection failed! Error: {res.Status}"
+                    Message = $"Name selection failed! Error: {errorText}"
                 });
             }
             await DelayingUtils.Delay(3000, 2000);

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using C5;
 using GeoCoordinatePortable;
 using static System.Double;
 
@@ -21,6 +20,112 @@ namespace PoGo.PokeMobBot.Logic.Utils
             }
             return result;
         }
+
+
+        public static IEnumerable<GoogleLocation> DecodePolyline(string polyline)
+        {
+            if (string.IsNullOrEmpty(polyline))
+                throw new ArgumentNullException("encodedPoints");
+
+            char[] polylineChars = polyline.ToCharArray();
+            int index = 0;
+
+            int currentLat = 0;
+            int currentLng = 0;
+            int next5bits;
+            int sum;
+            int shifter;
+
+            while (index < polylineChars.Length)
+            {
+                // calculate next latitude
+                sum = 0;
+                shifter = 0;
+                do
+                {
+                    next5bits = (int)polylineChars[index++] - 63;
+                    sum |= (next5bits & 31) << shifter;
+                    shifter += 5;
+                } while (next5bits >= 32 && index < polylineChars.Length);
+
+                if (index >= polylineChars.Length)
+                    break;
+
+                currentLat += (sum & 1) == 1 ? ~(sum >> 1) : (sum >> 1);
+
+                //calculate next longitude
+                sum = 0;
+                shifter = 0;
+                do
+                {
+                    next5bits = (int)polylineChars[index++] - 63;
+                    sum |= (next5bits & 31) << shifter;
+                    shifter += 5;
+                } while (next5bits >= 32 && index < polylineChars.Length);
+
+                if (index >= polylineChars.Length && next5bits >= 32)
+                    break;
+
+                currentLng += (sum & 1) == 1 ? ~(sum >> 1) : (sum >> 1);
+
+                yield return new GoogleLocation
+                {
+                    lat = Convert.ToDouble(currentLat) / 1E5,
+                    lng = Convert.ToDouble(currentLng) / 1E5
+                };
+            }
+        }
+
+        public static IEnumerable<List<double>> DecodePolylineToList(string polyline, int precision = 5)
+        {
+            if (string.IsNullOrEmpty(polyline))
+                throw new ArgumentNullException("encodedPoints");
+
+            char[] polylineChars = polyline.ToCharArray();
+            int index = 0;
+
+            int currentLat = 0;
+            int currentLng = 0;
+            int next5bits;
+            int sum;
+            int shifter;
+            var factor = Math.Pow(10, precision);
+
+            while (index < polylineChars.Length)
+            {
+                // calculate next latitude
+                sum = 0;
+                shifter = 0;
+                do
+                {
+                    next5bits = (int)polylineChars[index++] - 63;
+                    sum |= (next5bits & 31) << shifter;
+                    shifter += 5;
+                } while (next5bits >= 32 && index < polylineChars.Length);
+
+                if (index >= polylineChars.Length)
+                    break;
+
+                currentLat += (sum & 1) == 1 ? ~(sum >> 1) : (sum >> 1);
+
+                //calculate next longitude
+                sum = 0;
+                shifter = 0;
+                do
+                {
+                    next5bits = (int)polylineChars[index++] - 63;
+                    sum |= (next5bits & 31) << shifter;
+                    shifter += 5;
+                } while (next5bits >= 32 && index < polylineChars.Length);
+
+                if (index >= polylineChars.Length && next5bits >= 32)
+                    break;
+
+                currentLng += (sum & 1) == 1 ? ~(sum >> 1) : (sum >> 1);
+
+                yield return new List<double> { Convert.ToDouble(currentLat) / factor, Convert.ToDouble(currentLng) / factor };
+            }
+        }
     }
 
     public class MapMatrix
@@ -30,13 +135,11 @@ namespace PoGo.PokeMobBot.Logic.Utils
         private readonly double[,] _newFortsDistance;
         private bool LimitedVisit => _fortsToVisit > 0;
         private readonly int _fortsToVisit;
-        private int[] _opt;
+        private readonly int[] _opt;
         private double[] _rowMin;
         private double[] _colMin;
         private int _size;
-        private bool _nearestNeigh;
-
-        private int[] _currentRoute = new [] {0};
+        private readonly bool _nearestNeigh;
 
         public MapMatrix(IEnumerable<FortCacheItem> forts, FortCacheItem fortToStart, int fortsToVisit = 0, bool nearestNeigh = true)
         {

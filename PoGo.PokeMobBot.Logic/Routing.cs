@@ -8,19 +8,31 @@ using System.Text;
 using GeoCoordinatePortable;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json;
+using PoGo.PokeMobBot.Logic.Event;
 using PoGo.PokeMobBot.Logic.Logging;
+using PoGo.PokeMobBot.Logic.State;
 
 namespace PoGo.PokeMobBot.Logic
 {
     public static class Routing
     {
-        public static RoutingResponse GetRoute(GeoCoordinate start, GeoCoordinate dest)
+        public static RoutingResponse GetRoute(GeoCoordinate start, GeoCoordinate dest, ISession session)
         {
+
+            string apiKey = session.LogicSettings.MobBotRoutingApiKey;
+            if (string.IsNullOrEmpty(apiKey))
+            {
+                session.EventDispatcher.Send(new WarnEvent
+                {
+                    Message = "Mapzen Valhalla API Key is Empty!"
+                });
+                return new RoutingResponse();
+            }
             try
             {
                 Logger.Write("Requesting routing info from MobRouting.com", LogLevel.Debug);
                 var request = WebRequest.Create(
-                  $"http://mobrouting.com" + $"/api/dev/gosmore.php?format=geojson&flat={start.Latitude.ToString(CultureInfo.InvariantCulture)}&flon={start.Longitude.ToString(CultureInfo.InvariantCulture)}&tlat={dest.Latitude.ToString(CultureInfo.InvariantCulture)}&tlon={dest.Longitude.ToString(CultureInfo.InvariantCulture)}&v=foot&fast=1&layer=mapnik");
+                  $"http://mobrouting.com" + $"/api/dev/gosmore.php?format=geojson&apikey={apiKey}&flat={start.Latitude.ToString(CultureInfo.InvariantCulture)}&flon={start.Longitude.ToString(CultureInfo.InvariantCulture)}&tlat={dest.Latitude.ToString(CultureInfo.InvariantCulture)}&tlon={dest.Longitude.ToString(CultureInfo.InvariantCulture)}&v=foot&fast=1&layer=mapnik");
                 request.Credentials = CredentialCache.DefaultCredentials;
                 request.Proxy = WebRequest.DefaultWebProxy;
                 request.Proxy.Credentials = CredentialCache.DefaultCredentials;

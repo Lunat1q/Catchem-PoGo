@@ -10,6 +10,7 @@ using scg = global::System.Collections.Generic;
 namespace POGOProtos.Settings.Master {
 
   /// <summary>Holder for reflection information generated from POGOProtos/Settings/Master/PokemonSettings.proto</summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
   public static partial class PokemonSettingsReflection {
 
     #region Descriptor
@@ -31,7 +32,7 @@ namespace POGOProtos.Settings.Master {
             "b3Rvcy9TZXR0aW5ncy9NYXN0ZXIvUG9rZW1vbi9TdGF0c0F0dHJpYnV0ZXMu",
             "cHJvdG8aOVBPR09Qcm90b3MvU2V0dGluZ3MvTWFzdGVyL1Bva2Vtb24vQ2Ft",
             "ZXJhQXR0cmlidXRlcy5wcm90bxo8UE9HT1Byb3Rvcy9TZXR0aW5ncy9NYXN0",
-            "ZXIvUG9rZW1vbi9FbmNvdW50ZXJBdHRyaWJ1dGVzLnByb3RvIpQHCg9Qb2tl",
+            "ZXIvUG9rZW1vbi9FbmNvdW50ZXJBdHRyaWJ1dGVzLnByb3RvIs4ICg9Qb2tl",
             "bW9uU2V0dGluZ3MSLwoKcG9rZW1vbl9pZBgBIAEoDjIbLlBPR09Qcm90b3Mu",
             "RW51bXMuUG9rZW1vbklkEhMKC21vZGVsX3NjYWxlGAMgASgCEisKBHR5cGUY",
             "BCABKA4yHS5QT0dPUHJvdG9zLkVudW1zLlBva2Vtb25UeXBlEi0KBnR5cGVf",
@@ -52,40 +53,40 @@ namespace POGOProtos.Settings.Master {
             "dGRfZGV2GBIgASgCEhYKDndlaWdodF9zdGRfZGV2GBMgASgCEhwKFGttX2Rp",
             "c3RhbmNlX3RvX2hhdGNoGBQgASgCEjQKCWZhbWlseV9pZBgVIAEoDjIhLlBP",
             "R09Qcm90b3MuRW51bXMuUG9rZW1vbkZhbWlseUlkEhcKD2NhbmR5X3RvX2V2",
-            "b2x2ZRgWIAEoBWIGcHJvdG8z"));
+            "b2x2ZRgWIAEoBRIZChFrbV9idWRkeV9kaXN0YW5jZRgXIAEoAhJJCgpidWRk",
+            "eV9zaXplGBggASgOMjUuUE9HT1Byb3Rvcy5TZXR0aW5ncy5NYXN0ZXIuUG9r",
+            "ZW1vblNldHRpbmdzLkJ1ZGR5U2l6ZSJSCglCdWRkeVNpemUSEAoMQlVERFlf",
+            "TUVESVVNEAASEgoOQlVERFlfU0hPVUxERVIQARINCglCVUREWV9CSUcQAhIQ",
+            "CgxCVUREWV9GTFlJTkcQA2IGcHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { global::POGOProtos.Enums.PokemonIdReflection.Descriptor, global::POGOProtos.Enums.PokemonRarityReflection.Descriptor, global::POGOProtos.Enums.PokemonTypeReflection.Descriptor, global::POGOProtos.Enums.PokemonMoveReflection.Descriptor, global::POGOProtos.Enums.PokemonFamilyIdReflection.Descriptor, global::POGOProtos.Settings.Master.Pokemon.StatsAttributesReflection.Descriptor, global::POGOProtos.Settings.Master.Pokemon.CameraAttributesReflection.Descriptor, global::POGOProtos.Settings.Master.Pokemon.EncounterAttributesReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::POGOProtos.Settings.Master.PokemonSettings), global::POGOProtos.Settings.Master.PokemonSettings.Parser, new[]{ "PokemonId", "ModelScale", "Type", "Type2", "Camera", "Encounter", "Stats", "QuickMoves", "CinematicMoves", "AnimationTime", "EvolutionIds", "EvolutionPips", "Rarity", "PokedexHeightM", "PokedexWeightKg", "ParentPokemonId", "HeightStdDev", "WeightStdDev", "KmDistanceToHatch", "FamilyId", "CandyToEvolve" }, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::POGOProtos.Settings.Master.PokemonSettings), global::POGOProtos.Settings.Master.PokemonSettings.Parser, new[]{ "PokemonId", "ModelScale", "Type", "Type2", "Camera", "Encounter", "Stats", "QuickMoves", "CinematicMoves", "AnimationTime", "EvolutionIds", "EvolutionPips", "Rarity", "PokedexHeightM", "PokedexWeightKg", "ParentPokemonId", "HeightStdDev", "WeightStdDev", "KmDistanceToHatch", "FamilyId", "CandyToEvolve", "KmBuddyDistance", "BuddySize" }, null, new[]{ typeof(global::POGOProtos.Settings.Master.PokemonSettings.Types.BuddySize) }, null)
           }));
     }
     #endregion
 
   }
   #region Messages
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
   public sealed partial class PokemonSettings : pb::IMessage<PokemonSettings> {
     private static readonly pb::MessageParser<PokemonSettings> _parser = new pb::MessageParser<PokemonSettings>(() => new PokemonSettings());
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pb::MessageParser<PokemonSettings> Parser { get { return _parser; } }
 
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
       get { return global::POGOProtos.Settings.Master.PokemonSettingsReflection.Descriptor.MessageTypes[0]; }
     }
 
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     pbr::MessageDescriptor pb::IMessage.Descriptor {
       get { return Descriptor; }
     }
 
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public PokemonSettings() {
       OnConstruction();
     }
 
     partial void OnConstruction();
 
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public PokemonSettings(PokemonSettings other) : this() {
       pokemonId_ = other.pokemonId_;
       modelScale_ = other.modelScale_;
@@ -108,17 +109,17 @@ namespace POGOProtos.Settings.Master {
       kmDistanceToHatch_ = other.kmDistanceToHatch_;
       familyId_ = other.familyId_;
       candyToEvolve_ = other.candyToEvolve_;
+      kmBuddyDistance_ = other.kmBuddyDistance_;
+      buddySize_ = other.buddySize_;
     }
 
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public PokemonSettings Clone() {
       return new PokemonSettings(this);
     }
 
     /// <summary>Field number for the "pokemon_id" field.</summary>
     public const int PokemonIdFieldNumber = 1;
-    private global::POGOProtos.Enums.PokemonId pokemonId_ = 0;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    private global::POGOProtos.Enums.PokemonId pokemonId_ = global::POGOProtos.Enums.PokemonId.Missingno;
     public global::POGOProtos.Enums.PokemonId PokemonId {
       get { return pokemonId_; }
       set {
@@ -129,7 +130,6 @@ namespace POGOProtos.Settings.Master {
     /// <summary>Field number for the "model_scale" field.</summary>
     public const int ModelScaleFieldNumber = 3;
     private float modelScale_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public float ModelScale {
       get { return modelScale_; }
       set {
@@ -139,8 +139,7 @@ namespace POGOProtos.Settings.Master {
 
     /// <summary>Field number for the "type" field.</summary>
     public const int TypeFieldNumber = 4;
-    private global::POGOProtos.Enums.PokemonType type_ = 0;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    private global::POGOProtos.Enums.PokemonType type_ = global::POGOProtos.Enums.PokemonType.None;
     public global::POGOProtos.Enums.PokemonType Type {
       get { return type_; }
       set {
@@ -150,8 +149,7 @@ namespace POGOProtos.Settings.Master {
 
     /// <summary>Field number for the "type_2" field.</summary>
     public const int Type2FieldNumber = 5;
-    private global::POGOProtos.Enums.PokemonType type2_ = 0;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    private global::POGOProtos.Enums.PokemonType type2_ = global::POGOProtos.Enums.PokemonType.None;
     public global::POGOProtos.Enums.PokemonType Type2 {
       get { return type2_; }
       set {
@@ -162,7 +160,6 @@ namespace POGOProtos.Settings.Master {
     /// <summary>Field number for the "camera" field.</summary>
     public const int CameraFieldNumber = 6;
     private global::POGOProtos.Settings.Master.Pokemon.CameraAttributes camera_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public global::POGOProtos.Settings.Master.Pokemon.CameraAttributes Camera {
       get { return camera_; }
       set {
@@ -173,7 +170,6 @@ namespace POGOProtos.Settings.Master {
     /// <summary>Field number for the "encounter" field.</summary>
     public const int EncounterFieldNumber = 7;
     private global::POGOProtos.Settings.Master.Pokemon.EncounterAttributes encounter_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public global::POGOProtos.Settings.Master.Pokemon.EncounterAttributes Encounter {
       get { return encounter_; }
       set {
@@ -184,7 +180,6 @@ namespace POGOProtos.Settings.Master {
     /// <summary>Field number for the "stats" field.</summary>
     public const int StatsFieldNumber = 8;
     private global::POGOProtos.Settings.Master.Pokemon.StatsAttributes stats_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public global::POGOProtos.Settings.Master.Pokemon.StatsAttributes Stats {
       get { return stats_; }
       set {
@@ -197,7 +192,6 @@ namespace POGOProtos.Settings.Master {
     private static readonly pb::FieldCodec<global::POGOProtos.Enums.PokemonMove> _repeated_quickMoves_codec
         = pb::FieldCodec.ForEnum(74, x => (int) x, x => (global::POGOProtos.Enums.PokemonMove) x);
     private readonly pbc::RepeatedField<global::POGOProtos.Enums.PokemonMove> quickMoves_ = new pbc::RepeatedField<global::POGOProtos.Enums.PokemonMove>();
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public pbc::RepeatedField<global::POGOProtos.Enums.PokemonMove> QuickMoves {
       get { return quickMoves_; }
     }
@@ -207,7 +201,6 @@ namespace POGOProtos.Settings.Master {
     private static readonly pb::FieldCodec<global::POGOProtos.Enums.PokemonMove> _repeated_cinematicMoves_codec
         = pb::FieldCodec.ForEnum(82, x => (int) x, x => (global::POGOProtos.Enums.PokemonMove) x);
     private readonly pbc::RepeatedField<global::POGOProtos.Enums.PokemonMove> cinematicMoves_ = new pbc::RepeatedField<global::POGOProtos.Enums.PokemonMove>();
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public pbc::RepeatedField<global::POGOProtos.Enums.PokemonMove> CinematicMoves {
       get { return cinematicMoves_; }
     }
@@ -217,7 +210,6 @@ namespace POGOProtos.Settings.Master {
     private static readonly pb::FieldCodec<float> _repeated_animationTime_codec
         = pb::FieldCodec.ForFloat(90);
     private readonly pbc::RepeatedField<float> animationTime_ = new pbc::RepeatedField<float>();
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public pbc::RepeatedField<float> AnimationTime {
       get { return animationTime_; }
     }
@@ -227,7 +219,6 @@ namespace POGOProtos.Settings.Master {
     private static readonly pb::FieldCodec<global::POGOProtos.Enums.PokemonId> _repeated_evolutionIds_codec
         = pb::FieldCodec.ForEnum(98, x => (int) x, x => (global::POGOProtos.Enums.PokemonId) x);
     private readonly pbc::RepeatedField<global::POGOProtos.Enums.PokemonId> evolutionIds_ = new pbc::RepeatedField<global::POGOProtos.Enums.PokemonId>();
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public pbc::RepeatedField<global::POGOProtos.Enums.PokemonId> EvolutionIds {
       get { return evolutionIds_; }
     }
@@ -235,7 +226,6 @@ namespace POGOProtos.Settings.Master {
     /// <summary>Field number for the "evolution_pips" field.</summary>
     public const int EvolutionPipsFieldNumber = 13;
     private int evolutionPips_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int EvolutionPips {
       get { return evolutionPips_; }
       set {
@@ -245,8 +235,7 @@ namespace POGOProtos.Settings.Master {
 
     /// <summary>Field number for the "rarity" field.</summary>
     public const int RarityFieldNumber = 14;
-    private global::POGOProtos.Enums.PokemonRarity rarity_ = 0;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    private global::POGOProtos.Enums.PokemonRarity rarity_ = global::POGOProtos.Enums.PokemonRarity.Normal;
     public global::POGOProtos.Enums.PokemonRarity Rarity {
       get { return rarity_; }
       set {
@@ -257,7 +246,6 @@ namespace POGOProtos.Settings.Master {
     /// <summary>Field number for the "pokedex_height_m" field.</summary>
     public const int PokedexHeightMFieldNumber = 15;
     private float pokedexHeightM_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public float PokedexHeightM {
       get { return pokedexHeightM_; }
       set {
@@ -268,7 +256,6 @@ namespace POGOProtos.Settings.Master {
     /// <summary>Field number for the "pokedex_weight_kg" field.</summary>
     public const int PokedexWeightKgFieldNumber = 16;
     private float pokedexWeightKg_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public float PokedexWeightKg {
       get { return pokedexWeightKg_; }
       set {
@@ -278,8 +265,7 @@ namespace POGOProtos.Settings.Master {
 
     /// <summary>Field number for the "parent_pokemon_id" field.</summary>
     public const int ParentPokemonIdFieldNumber = 17;
-    private global::POGOProtos.Enums.PokemonId parentPokemonId_ = 0;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    private global::POGOProtos.Enums.PokemonId parentPokemonId_ = global::POGOProtos.Enums.PokemonId.Missingno;
     public global::POGOProtos.Enums.PokemonId ParentPokemonId {
       get { return parentPokemonId_; }
       set {
@@ -290,7 +276,6 @@ namespace POGOProtos.Settings.Master {
     /// <summary>Field number for the "height_std_dev" field.</summary>
     public const int HeightStdDevFieldNumber = 18;
     private float heightStdDev_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public float HeightStdDev {
       get { return heightStdDev_; }
       set {
@@ -301,7 +286,6 @@ namespace POGOProtos.Settings.Master {
     /// <summary>Field number for the "weight_std_dev" field.</summary>
     public const int WeightStdDevFieldNumber = 19;
     private float weightStdDev_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public float WeightStdDev {
       get { return weightStdDev_; }
       set {
@@ -312,7 +296,6 @@ namespace POGOProtos.Settings.Master {
     /// <summary>Field number for the "km_distance_to_hatch" field.</summary>
     public const int KmDistanceToHatchFieldNumber = 20;
     private float kmDistanceToHatch_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public float KmDistanceToHatch {
       get { return kmDistanceToHatch_; }
       set {
@@ -322,8 +305,7 @@ namespace POGOProtos.Settings.Master {
 
     /// <summary>Field number for the "family_id" field.</summary>
     public const int FamilyIdFieldNumber = 21;
-    private global::POGOProtos.Enums.PokemonFamilyId familyId_ = 0;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    private global::POGOProtos.Enums.PokemonFamilyId familyId_ = global::POGOProtos.Enums.PokemonFamilyId.FamilyUnset;
     public global::POGOProtos.Enums.PokemonFamilyId FamilyId {
       get { return familyId_; }
       set {
@@ -334,7 +316,6 @@ namespace POGOProtos.Settings.Master {
     /// <summary>Field number for the "candy_to_evolve" field.</summary>
     public const int CandyToEvolveFieldNumber = 22;
     private int candyToEvolve_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int CandyToEvolve {
       get { return candyToEvolve_; }
       set {
@@ -342,12 +323,30 @@ namespace POGOProtos.Settings.Master {
       }
     }
 
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    /// <summary>Field number for the "km_buddy_distance" field.</summary>
+    public const int KmBuddyDistanceFieldNumber = 23;
+    private float kmBuddyDistance_;
+    public float KmBuddyDistance {
+      get { return kmBuddyDistance_; }
+      set {
+        kmBuddyDistance_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "buddy_size" field.</summary>
+    public const int BuddySizeFieldNumber = 24;
+    private global::POGOProtos.Settings.Master.PokemonSettings.Types.BuddySize buddySize_ = global::POGOProtos.Settings.Master.PokemonSettings.Types.BuddySize.BUDDY_MEDIUM;
+    public global::POGOProtos.Settings.Master.PokemonSettings.Types.BuddySize BuddySize {
+      get { return buddySize_; }
+      set {
+        buddySize_ = value;
+      }
+    }
+
     public override bool Equals(object other) {
       return Equals(other as PokemonSettings);
     }
 
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public bool Equals(PokemonSettings other) {
       if (ReferenceEquals(other, null)) {
         return false;
@@ -376,16 +375,17 @@ namespace POGOProtos.Settings.Master {
       if (KmDistanceToHatch != other.KmDistanceToHatch) return false;
       if (FamilyId != other.FamilyId) return false;
       if (CandyToEvolve != other.CandyToEvolve) return false;
+      if (KmBuddyDistance != other.KmBuddyDistance) return false;
+      if (BuddySize != other.BuddySize) return false;
       return true;
     }
 
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override int GetHashCode() {
       int hash = 1;
-      if (PokemonId != 0) hash ^= PokemonId.GetHashCode();
+      if (PokemonId != global::POGOProtos.Enums.PokemonId.Missingno) hash ^= PokemonId.GetHashCode();
       if (ModelScale != 0F) hash ^= ModelScale.GetHashCode();
-      if (Type != 0) hash ^= Type.GetHashCode();
-      if (Type2 != 0) hash ^= Type2.GetHashCode();
+      if (Type != global::POGOProtos.Enums.PokemonType.None) hash ^= Type.GetHashCode();
+      if (Type2 != global::POGOProtos.Enums.PokemonType.None) hash ^= Type2.GetHashCode();
       if (camera_ != null) hash ^= Camera.GetHashCode();
       if (encounter_ != null) hash ^= Encounter.GetHashCode();
       if (stats_ != null) hash ^= Stats.GetHashCode();
@@ -394,26 +394,26 @@ namespace POGOProtos.Settings.Master {
       hash ^= animationTime_.GetHashCode();
       hash ^= evolutionIds_.GetHashCode();
       if (EvolutionPips != 0) hash ^= EvolutionPips.GetHashCode();
-      if (Rarity != 0) hash ^= Rarity.GetHashCode();
+      if (Rarity != global::POGOProtos.Enums.PokemonRarity.Normal) hash ^= Rarity.GetHashCode();
       if (PokedexHeightM != 0F) hash ^= PokedexHeightM.GetHashCode();
       if (PokedexWeightKg != 0F) hash ^= PokedexWeightKg.GetHashCode();
-      if (ParentPokemonId != 0) hash ^= ParentPokemonId.GetHashCode();
+      if (ParentPokemonId != global::POGOProtos.Enums.PokemonId.Missingno) hash ^= ParentPokemonId.GetHashCode();
       if (HeightStdDev != 0F) hash ^= HeightStdDev.GetHashCode();
       if (WeightStdDev != 0F) hash ^= WeightStdDev.GetHashCode();
       if (KmDistanceToHatch != 0F) hash ^= KmDistanceToHatch.GetHashCode();
-      if (FamilyId != 0) hash ^= FamilyId.GetHashCode();
+      if (FamilyId != global::POGOProtos.Enums.PokemonFamilyId.FamilyUnset) hash ^= FamilyId.GetHashCode();
       if (CandyToEvolve != 0) hash ^= CandyToEvolve.GetHashCode();
+      if (KmBuddyDistance != 0F) hash ^= KmBuddyDistance.GetHashCode();
+      if (BuddySize != global::POGOProtos.Settings.Master.PokemonSettings.Types.BuddySize.BUDDY_MEDIUM) hash ^= BuddySize.GetHashCode();
       return hash;
     }
 
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override string ToString() {
       return pb::JsonFormatter.ToDiagnosticString(this);
     }
 
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void WriteTo(pb::CodedOutputStream output) {
-      if (PokemonId != 0) {
+      if (PokemonId != global::POGOProtos.Enums.PokemonId.Missingno) {
         output.WriteRawTag(8);
         output.WriteEnum((int) PokemonId);
       }
@@ -421,11 +421,11 @@ namespace POGOProtos.Settings.Master {
         output.WriteRawTag(29);
         output.WriteFloat(ModelScale);
       }
-      if (Type != 0) {
+      if (Type != global::POGOProtos.Enums.PokemonType.None) {
         output.WriteRawTag(32);
         output.WriteEnum((int) Type);
       }
-      if (Type2 != 0) {
+      if (Type2 != global::POGOProtos.Enums.PokemonType.None) {
         output.WriteRawTag(40);
         output.WriteEnum((int) Type2);
       }
@@ -449,7 +449,7 @@ namespace POGOProtos.Settings.Master {
         output.WriteRawTag(104);
         output.WriteInt32(EvolutionPips);
       }
-      if (Rarity != 0) {
+      if (Rarity != global::POGOProtos.Enums.PokemonRarity.Normal) {
         output.WriteRawTag(112);
         output.WriteEnum((int) Rarity);
       }
@@ -461,7 +461,7 @@ namespace POGOProtos.Settings.Master {
         output.WriteRawTag(133, 1);
         output.WriteFloat(PokedexWeightKg);
       }
-      if (ParentPokemonId != 0) {
+      if (ParentPokemonId != global::POGOProtos.Enums.PokemonId.Missingno) {
         output.WriteRawTag(136, 1);
         output.WriteEnum((int) ParentPokemonId);
       }
@@ -477,7 +477,7 @@ namespace POGOProtos.Settings.Master {
         output.WriteRawTag(165, 1);
         output.WriteFloat(KmDistanceToHatch);
       }
-      if (FamilyId != 0) {
+      if (FamilyId != global::POGOProtos.Enums.PokemonFamilyId.FamilyUnset) {
         output.WriteRawTag(168, 1);
         output.WriteEnum((int) FamilyId);
       }
@@ -485,21 +485,28 @@ namespace POGOProtos.Settings.Master {
         output.WriteRawTag(176, 1);
         output.WriteInt32(CandyToEvolve);
       }
+      if (KmBuddyDistance != 0F) {
+        output.WriteRawTag(189, 1);
+        output.WriteFloat(KmBuddyDistance);
+      }
+      if (BuddySize != global::POGOProtos.Settings.Master.PokemonSettings.Types.BuddySize.BUDDY_MEDIUM) {
+        output.WriteRawTag(192, 1);
+        output.WriteEnum((int) BuddySize);
+      }
     }
 
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int CalculateSize() {
       int size = 0;
-      if (PokemonId != 0) {
+      if (PokemonId != global::POGOProtos.Enums.PokemonId.Missingno) {
         size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) PokemonId);
       }
       if (ModelScale != 0F) {
         size += 1 + 4;
       }
-      if (Type != 0) {
+      if (Type != global::POGOProtos.Enums.PokemonType.None) {
         size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Type);
       }
-      if (Type2 != 0) {
+      if (Type2 != global::POGOProtos.Enums.PokemonType.None) {
         size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Type2);
       }
       if (camera_ != null) {
@@ -518,7 +525,7 @@ namespace POGOProtos.Settings.Master {
       if (EvolutionPips != 0) {
         size += 1 + pb::CodedOutputStream.ComputeInt32Size(EvolutionPips);
       }
-      if (Rarity != 0) {
+      if (Rarity != global::POGOProtos.Enums.PokemonRarity.Normal) {
         size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Rarity);
       }
       if (PokedexHeightM != 0F) {
@@ -527,7 +534,7 @@ namespace POGOProtos.Settings.Master {
       if (PokedexWeightKg != 0F) {
         size += 2 + 4;
       }
-      if (ParentPokemonId != 0) {
+      if (ParentPokemonId != global::POGOProtos.Enums.PokemonId.Missingno) {
         size += 2 + pb::CodedOutputStream.ComputeEnumSize((int) ParentPokemonId);
       }
       if (HeightStdDev != 0F) {
@@ -539,30 +546,35 @@ namespace POGOProtos.Settings.Master {
       if (KmDistanceToHatch != 0F) {
         size += 2 + 4;
       }
-      if (FamilyId != 0) {
+      if (FamilyId != global::POGOProtos.Enums.PokemonFamilyId.FamilyUnset) {
         size += 2 + pb::CodedOutputStream.ComputeEnumSize((int) FamilyId);
       }
       if (CandyToEvolve != 0) {
         size += 2 + pb::CodedOutputStream.ComputeInt32Size(CandyToEvolve);
       }
+      if (KmBuddyDistance != 0F) {
+        size += 2 + 4;
+      }
+      if (BuddySize != global::POGOProtos.Settings.Master.PokemonSettings.Types.BuddySize.BUDDY_MEDIUM) {
+        size += 2 + pb::CodedOutputStream.ComputeEnumSize((int) BuddySize);
+      }
       return size;
     }
 
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void MergeFrom(PokemonSettings other) {
       if (other == null) {
         return;
       }
-      if (other.PokemonId != 0) {
+      if (other.PokemonId != global::POGOProtos.Enums.PokemonId.Missingno) {
         PokemonId = other.PokemonId;
       }
       if (other.ModelScale != 0F) {
         ModelScale = other.ModelScale;
       }
-      if (other.Type != 0) {
+      if (other.Type != global::POGOProtos.Enums.PokemonType.None) {
         Type = other.Type;
       }
-      if (other.Type2 != 0) {
+      if (other.Type2 != global::POGOProtos.Enums.PokemonType.None) {
         Type2 = other.Type2;
       }
       if (other.camera_ != null) {
@@ -590,7 +602,7 @@ namespace POGOProtos.Settings.Master {
       if (other.EvolutionPips != 0) {
         EvolutionPips = other.EvolutionPips;
       }
-      if (other.Rarity != 0) {
+      if (other.Rarity != global::POGOProtos.Enums.PokemonRarity.Normal) {
         Rarity = other.Rarity;
       }
       if (other.PokedexHeightM != 0F) {
@@ -599,7 +611,7 @@ namespace POGOProtos.Settings.Master {
       if (other.PokedexWeightKg != 0F) {
         PokedexWeightKg = other.PokedexWeightKg;
       }
-      if (other.ParentPokemonId != 0) {
+      if (other.ParentPokemonId != global::POGOProtos.Enums.PokemonId.Missingno) {
         ParentPokemonId = other.ParentPokemonId;
       }
       if (other.HeightStdDev != 0F) {
@@ -611,15 +623,20 @@ namespace POGOProtos.Settings.Master {
       if (other.KmDistanceToHatch != 0F) {
         KmDistanceToHatch = other.KmDistanceToHatch;
       }
-      if (other.FamilyId != 0) {
+      if (other.FamilyId != global::POGOProtos.Enums.PokemonFamilyId.FamilyUnset) {
         FamilyId = other.FamilyId;
       }
       if (other.CandyToEvolve != 0) {
         CandyToEvolve = other.CandyToEvolve;
       }
+      if (other.KmBuddyDistance != 0F) {
+        KmBuddyDistance = other.KmBuddyDistance;
+      }
+      if (other.BuddySize != global::POGOProtos.Settings.Master.PokemonSettings.Types.BuddySize.BUDDY_MEDIUM) {
+        BuddySize = other.BuddySize;
+      }
     }
 
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void MergeFrom(pb::CodedInputStream input) {
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
@@ -724,9 +741,31 @@ namespace POGOProtos.Settings.Master {
             CandyToEvolve = input.ReadInt32();
             break;
           }
+          case 189: {
+            KmBuddyDistance = input.ReadFloat();
+            break;
+          }
+          case 192: {
+            buddySize_ = (global::POGOProtos.Settings.Master.PokemonSettings.Types.BuddySize) input.ReadEnum();
+            break;
+          }
         }
       }
     }
+
+    #region Nested types
+    /// <summary>Container for nested types declared in the PokemonSettings message type.</summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+    public static partial class Types {
+      public enum BuddySize {
+        BUDDY_MEDIUM = 0,
+        BUDDY_SHOULDER = 1,
+        BUDDY_BIG = 2,
+        BUDDY_FLYING = 3,
+      }
+
+    }
+    #endregion
 
   }
 

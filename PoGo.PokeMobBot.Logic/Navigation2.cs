@@ -12,6 +12,7 @@ using POGOProtos.Networking.Responses;
 using System.Collections.Generic;
 using PoGo.PokeMobBot.Logic.State;
 using System.Linq;
+using PoGo.PokeMobBot.Logic.API;
 using PoGo.PokeMobBot.Logic.Extensions;
 using PoGo.PokeMobBot.Logic.Event;
 using PoGo.PokeMobBot.Logic.Tasks;
@@ -32,39 +33,6 @@ namespace PoGo.PokeMobBot.Logic
         public HumanNavigation(Client client)
         {
             _client = client;
-        }
-
-
-        public async Task<PlayerUpdateResponse> MoveEH(GeoCoordinate destination, double walkingSpeedInKilometersPerHour,
-            Func<Task<bool>> functionExecutedWhileWalking, Func<Task<bool>> functionExecutedWhileWalking2,
-            CancellationToken cancellationToken, ISession session)
-        {
-            GeoCoordinate currentLocation = new GeoCoordinate(_client.CurrentLatitude, _client.CurrentLongitude, _client.CurrentAltitude);
-            PlayerUpdateResponse result = new PlayerUpdateResponse();
-            List<GeoCoordinate> waypoints = new List<GeoCoordinate>();
-            var routingResponse = Routing.GetRoute(currentLocation, destination);
-            foreach (var item in routingResponse.Coordinates)
-            {
-                //0 = lat, 1 = long (MAYBE NOT THO?)
-                waypoints.Add(new GeoCoordinate(item.ToArray()[1], item.ToArray()[0]));
-            }
-            Navigation navi = new Navigation(_client, UpdatePositionEvent);
-            for (var x = 0; x < waypoints.Count; x++)
-            {
-                var nextSpeed = session.Client.rnd.NextInRange(session.LogicSettings.WalkingSpeedMin, session.LogicSettings.WalkingSpeedMax) * session.Settings.MoveSpeedFactor;
-                await navi.HumanPathWalking(session, waypoints.ToArray()[x], nextSpeed,
-                    functionExecutedWhileWalking, functionExecutedWhileWalking2, cancellationToken);
-                UpdatePositionEvent?.Invoke(waypoints.ToArray()[x].Latitude, waypoints.ToArray()[x].Longitude, waypoints.ToArray()[x].Altitude);
-                //Console.WriteLine("Hit waypoint " + x);
-            }
-            var curcoord = new GeoCoordinate(session.Client.CurrentLatitude, session.Client.CurrentLongitude);
-            if (!(LocationUtils.CalculateDistanceInMeters(curcoord, destination) > 40)) return result;
-            {
-                var nextSpeed = session.Client.rnd.NextInRange(session.LogicSettings.WalkingSpeedMin, session.LogicSettings.WalkingSpeedMax) * session.Settings.MoveSpeedFactor;
-                await navi.HumanPathWalking(session, destination, nextSpeed,
-                    functionExecutedWhileWalking, functionExecutedWhileWalking2, cancellationToken);
-            }
-            return result;
         }
         /// <summary>
         /// 
@@ -97,7 +65,7 @@ namespace PoGo.PokeMobBot.Logic
 	                    switch (session.LogicSettings.RoutingService)
 	                    {
 	                        case RoutingService.MobBot:
-	                            routingResponse = Routing.GetRoute(currentLocation, destination);
+	                            routingResponse = Routing.GetRoute(currentLocation, destination, session);
                                 break;
 	                        case RoutingService.OpenLs:
                                 routingResponse = OsmRouting.GetRoute(currentLocation, destination, session);
@@ -106,6 +74,10 @@ namespace PoGo.PokeMobBot.Logic
 	                            routingResponse = GoogleRouting.GetRoute(currentLocation, destination, session,
 	                                waypointsToVisit);
 	                            break;
+	                        case RoutingService.MapzenValhalla:
+                                routingResponse = MapzenRouting.GetRoute(currentLocation, destination, session,
+                                    waypointsToVisit);
+                                break;
 	                    }
 	                }
 	                catch (NullReferenceException ex)
@@ -129,21 +101,21 @@ namespace PoGo.PokeMobBot.Logic
                                     waypoints.Add(new GeoCoordinate(item[1], item[0]));
                                     break;
                                 case RoutingService.OpenLs:
-                                    waypoints.Add(new GeoCoordinate(item.ToArray()[1], item.ToArray()[0],
-                                        item.ToArray()[2]));
+                                    waypoints.Add(new GeoCoordinate(item.ToArray()[1], item.ToArray()[0], item.ToArray()[2]));
                                     break;
                                 case RoutingService.GoogleDirections:
                                     waypoints.Add(new GeoCoordinate(item[0], item[1]));
                                     break;
+                                case RoutingService.MapzenValhalla:
+                                    waypoints.Add(new GeoCoordinate(item[0], item[1]));
+                                    break;
                             }
                         }
-                        if ((session.LogicSettings.RoutingService == RoutingService.GoogleDirections 
-                            || session.LogicSettings.RoutingService == RoutingService.MobBot) && session.LogicSettings.UseMapzenApiElevation )
+                        if ((session.LogicSettings.RoutingService == RoutingService.GoogleDirections || session.LogicSettings.RoutingService == RoutingService.MobBot || session.LogicSettings.RoutingService == RoutingService.MapzenValhalla) && session.LogicSettings.UseMapzenApiElevation)
                         {
                             waypoints = await session.MapzenApi.FillAltitude(waypoints);
                         }
                     }
-
                 }
 
                 if (waypoints.Count == 0)
@@ -174,13 +146,15 @@ namespace PoGo.PokeMobBot.Logic
                         continue;
 
                     var nextSpeed = session.Client.rnd.NextInRange(walkingSpeedMin, walkingSpeedMax)*session.Settings.MoveSpeedFactor;
-
+                    session.State = BotState.Walk;
                     result = await navi.HumanPathWalking(session, t, nextSpeed, functionExecutedWhileWalking, functionExecutedWhileWalking2, cancellationToken);
                     if (session.Runtime.BreakOutOfPathing)
                         return result;
                     UpdatePositionEvent?.Invoke(t.Latitude, t.Longitude, t.Altitude);
+
                     //Console.WriteLine("Hit waypoint " + x);
                 }
+                session.State = BotState.Idle;
                 var curcoord = new GeoCoordinate(session.Client.CurrentLatitude, session.Client.CurrentLongitude);
                 if (LocationUtils.CalculateDistanceInMeters(curcoord, destination) > 40)
                 {
@@ -208,6 +182,7 @@ namespace PoGo.PokeMobBot.Logic
                     result = await navi.HumanPathWalking(session, destination, nextSpeed, functionExecutedWhileWalking, functionExecutedWhileWalking2, cancellationToken);
                 }
             }
+            session.State = BotState.Idle;
             await MaintenanceTask.Execute(session, cancellationToken);
             return result;
         }
