@@ -659,6 +659,9 @@ namespace Catchem
         {
             bot.PokemonList.Add(new PokemonUiData(bot, 123455678, PokemonId.Mew, "Mew the awesome!", 1337, 99.9, PokemonFamilyId.FamilyMew, 42, 9001, true, true, 97, PokemonMove.Moonblast, PokemonMove.Thunder, PokemonType.Psychic, PokemonType.Flying, 9000, PokemonInfo.GetBaseStats(PokemonId.Mew), 90, 99));
             bot.PokemonList.Add(new PokemonUiData(bot, 123455678, PokemonId.Mewtwo, "Mr.Kickass", 9001, 100, PokemonFamilyId.FamilyMewtwo, 47, 9001, true, true, 97, PokemonMove.HyperBeam, PokemonMove.PsychoCutFast, PokemonType.Psychic, PokemonType.Flying, 10000, PokemonInfo.GetBaseStats(PokemonId.Mewtwo), 90, 99));//PokemonId.Mew.ToInventorySource(),
+            bot.PokemonList.Add(new PokemonUiData(bot, 123455678, PokemonId.Zapdos, "Thunder", 1337, 100, PokemonFamilyId.FamilyZapdos, 47, 9001, true, true, 97, PokemonMove.HyperBeam, PokemonMove.PsychoCutFast, PokemonType.Psychic, PokemonType.Flying, 3000, PokemonInfo.GetBaseStats(PokemonId.Zapdos), 90, 99));
+            bot.PokemonList.Add(new PokemonUiData(bot, 123455678, PokemonId.Articuno, "Ice-ice-baby", 4048, 100, PokemonFamilyId.FamilyArticuno, 47, 9001, true, true, 97, PokemonMove.HyperBeam, PokemonMove.PsychoCutFast, PokemonType.Psychic, PokemonType.Flying, 5000, PokemonInfo.GetBaseStats(PokemonId.Articuno), 90, 99));
+            bot.PokemonList.Add(new PokemonUiData(bot, 123455678, PokemonId.Moltres, "Popcorn machine", 4269, 100, PokemonFamilyId.FamilyMoltres, 47, 9001, true, true, 97, PokemonMove.HyperBeam, PokemonMove.PsychoCutFast, PokemonType.Psychic, PokemonType.Flying, 5000, PokemonInfo.GetBaseStats(PokemonId.Moltres), 90, 99));
         }
 
         private void EnqueOldBot()
