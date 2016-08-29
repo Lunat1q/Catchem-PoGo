@@ -16,5 +16,10 @@
             Lng = lng;
             Uid = uid;
         }
+
+        public NewMapObject()
+        {
+            
+        }
     }
 }

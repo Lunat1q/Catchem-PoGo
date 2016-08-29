@@ -291,6 +291,7 @@ namespace Catchem.Classes
             if (Stats == null) return;
             Stats.TotalPokemons = 0;
             Stats.TotalPokestops = 0;
+            Stats.TotalExperience = 0;
         }
 
         public async void Start()
@@ -556,7 +557,7 @@ namespace Catchem.Classes
                 var stardustSec = tooMuchStarDust
                     ? (StardustRate - GlobalSettings.CatchSettings.MaxStarDustPerHour) / GlobalSettings.CatchSettings.MaxStarDustPerHour * 60 * 60 : 0;
 
-                var stopSec = 10 * 60 + _rnd.Next(60 * 5) + (int)(new double[] { pokestopSec, pokemonSec, xpSec, stardustSec }).Max();
+                var stopSec = 10 * 60 + _rnd.Next(60 * 5) + (int)(new [] { pokestopSec, pokemonSec, xpSec, stardustSec }).Max();
                 var stopMs = stopSec * 1000;
 
                 Session.EventDispatcher.Send(new WarnEvent

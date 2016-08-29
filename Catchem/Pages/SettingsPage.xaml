@@ -5,7 +5,7 @@
              xmlns:local="clr-namespace:Catchem"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              Width="890.487"
-             Height="2047.5"
+             Height="2107.5"
              mc:Ignorable="d">
     <Grid Background="#FFF9F9F9">
         <ScrollViewer Grid.ColumnSpan="2">
@@ -931,7 +931,7 @@
 
                 <GroupBox x:Name="navigationGroupBox3"
                         Grid.Column="1"
-                        Height="476"
+                        Height="527"
                         Margin="5,152,5,0"
                         VerticalAlignment="Top"
                         Header="Navigation">
@@ -1119,7 +1119,7 @@
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Top"
                                 Checked="BotPropertyChanged"
-                                Content="Use Mapzen Api Elevation"
+                                Content="Use Mapzen Elevation API"
                                 Unchecked="BotPropertyChanged" Grid.ColumnSpan="2" />
                         <Label x:Name="c_RoutingServiceLabel"          
                                 Width="179"
@@ -1134,6 +1134,28 @@
                                 Margin="10,423,10,0"  
                                 VerticalAlignment="Top" Grid.Column="1"  
                                 SelectionChanged="BotPropertyChanged" />
+                        <Label x:Name="CustomRouteLabel"          
+                        	Width="179"
+                        	Height="26"
+                        	Margin="10,473,0,0"
+                        	HorizontalAlignment="Left"
+                        	VerticalAlignment="Top"
+                        	Content="Select Custom Route"
+                        	RenderTransformOrigin="0.5,0.423" />
+                        <ComboBox x:Name="CustomRouteComboBox"
+                        	Height="24"
+                        	Margin="10,473,10,0"  
+                        	VerticalAlignment="Top" Grid.Column="1"  
+                        	SelectionChanged="CustomRouteComboBox_SelectionChanged" />
+                        <CheckBox x:Name="c_UseCustomRoute"
+                        	Width="196"
+                        	Height="16"
+                        	Margin="10,452,0,0"
+                        	HorizontalAlignment="Left"
+                        	VerticalAlignment="Top"
+                        	Checked="BotPropertyChanged"
+                        	Content="Use Custom Route"
+                        	Unchecked="BotPropertyChanged" Grid.ColumnSpan="2" />
 
                     </Grid>
                 </GroupBox>
@@ -1141,7 +1163,7 @@
                 <GroupBox x:Name="deviceInfoGroupBox"
                         Grid.Column="1"
                         Height="509"
-                        Margin="5,799,5,0"
+                        Margin="5,850,5,0"
                         VerticalAlignment="Top"
                         Header="Device Info">
                     <Grid>
@@ -1414,7 +1436,7 @@
 
                 <GroupBox x:Name="delaysGroupBox"
                         Height="656"
-                        Margin="5,1308,5,0"
+                        Margin="5,1359,5,0"
                         VerticalAlignment="Top"
                         Header="Delays"
                         RenderTransformOrigin="0.479,0.565" Grid.Column="1">
@@ -1678,7 +1700,7 @@
                         Grid.Column="1"
                         Width="110"
                         Height="30"
-                        Margin="0,1969,10,0"
+                        Margin="0,2020,0,0"
                         HorizontalAlignment="Right"
                         VerticalAlignment="Top"
                         Click="btn_SaveBot_Click"
@@ -1704,7 +1726,7 @@
                 </Button>
                 <GroupBox x:Name="ApiKeysBox"
                 	Height="171"
-                	Margin="5,628,5,0"
+                	Margin="5,679,5,0"
                 	VerticalAlignment="Top"
                 	Header="API Keys" Grid.Column="1">
                     <Grid>
@@ -1718,7 +1740,7 @@
                 			Margin="10,10,0,0"
                 			HorizontalAlignment="Left"
                 			VerticalAlignment="Top"
-                			Content="Mapzen Api Elevation Key"
+                			Content="Mapzen Elevation"
                 			RenderTransformOrigin="0.5,0.423" />
                         <TextBox x:Name="c_MapzenApiElevationKey"
                 			Grid.Column="1"
@@ -1734,7 +1756,7 @@
                 			Margin="10,44,0,0"
                 			HorizontalAlignment="Left"
                 			VerticalAlignment="Top"
-                			Content="Google Directions API Key"
+                			Content="Google Directions"
                 			RenderTransformOrigin="0.5,0.423" />
                         <TextBox x:Name="c_GoogleDirectionsApiKey"
                 			Grid.Column="1"
@@ -1750,7 +1772,7 @@
                         	Margin="10,78,0,0"
                         	HorizontalAlignment="Left"
                         	VerticalAlignment="Top"
-                        	Content="Mapzen Valhalla API Key"
+                        	Content="Mapzen Valhalla Routing"
                         	RenderTransformOrigin="0.5,0.423" />
                         <TextBox x:Name="c_MapzenValhallaApiKey"
                         	Grid.Column="1"
@@ -1766,7 +1788,7 @@
                         	Margin="10,112,0,0"
                         	HorizontalAlignment="Left"
                         	VerticalAlignment="Top"
-                        	Content="MobBot route API Key"
+                        	Content="MobBot Route"
                         	RenderTransformOrigin="0.5,0.423" />
                         <TextBox x:Name="c_MobBotRoutingApiKey"
                         	Grid.Column="1"

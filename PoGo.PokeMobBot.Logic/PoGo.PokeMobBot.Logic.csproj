@@ -141,6 +141,7 @@
     <Compile Include="Navigation.cs" />
     <Compile Include="Navigation2.cs" />
     <Compile Include="API\GoogleRoute.cs" />
+    <Compile Include="PoGoUtils\CustomRoute.cs" />
     <Compile Include="PoGoUtils\PokemonMoveInfo.cs" />
     <Compile Include="PoGoUtils\PokemonInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -165,7 +166,6 @@
     <Compile Include="Tasks\LevelUpPokemonTask.cs" />
     <Compile Include="Tasks\PokemonSettingsTask.cs" />
     <Compile Include="Tasks\PokemonListTask.cs" />
-    <Compile Include="Tasks\Farm.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="State\Session.cs" />
     <Compile Include="Event\ErrorEvent.cs" />
@@ -185,7 +185,7 @@
     <Compile Include="Event\PokemonEvolveEvent.cs" />
     <Compile Include="State\PositionCheckState.cs" />
     <Compile Include="State\StateMachine.cs" />
-    <Compile Include="Tasks\FarmPokestopsGPXTask.cs" />
+    <Compile Include="Tasks\FarmPokestopsCustomRouteTask.cs" />
     <Compile Include="Tasks\FarmPokestopsTask.cs" />
     <Compile Include="Tasks\Login.cs" />
     <Compile Include="Tasks\RecycleSpecificItemTask.cs" />
