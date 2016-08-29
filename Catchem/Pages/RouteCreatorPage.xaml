@@ -48,7 +48,8 @@
             <Slider x:Name="SlMapZoom" Margin="64,4,10,0" VerticalAlignment="Top" RenderTransformOrigin="3.583,0.25" Height="25" Minimum="2" Maximum="18" TickPlacement="BottomRight" Value="18" SmallChange="0" LargeChange="3" ValueChanged="sl_mapZoom_ValueChanged" Grid.Column="3"/>
             <Label x:Name="LblZoom" Content="Zoom:" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Width="49" Height="26" Grid.Column="3"/>
             <Label Grid.Column="0" x:Name="PointsNumber" Content="Number of waypoints: 0" HorizontalAlignment="Left" Margin="10,2,0,2" VerticalAlignment="Center" Height="26" Width="162"/>
-            <CheckBox x:Name="PrefferMapzenOverGoogleCb" Content="Preffer Mapzen Routing Over Google" Grid.Column="1" Margin="10,0,0,0" VerticalAlignment="Center" Checked="PrefferMapzenOverGoogleCb_Checked"/>
+            <CheckBox x:Name="PrefferMapzenOverGoogleCb" Content="Preffer Mapzen Routing Over Google" Grid.Column="1" Margin="10,0,0,0" VerticalAlignment="Center" Checked="PrefferMapzenOverGoogleCb_Checked" Unchecked="PrefferMapzenOverGoogleCb_Checked"/>
+            <CheckBox x:Name="ManualRoute" Content="Manual Route" Grid.Column="2" Margin="0,7" VerticalAlignment="Center" Checked="ManualRoute_Checked" Unchecked="ManualRoute_Checked"/>
         </Grid>
         <Button x:Name="BuildTheRoute" Content="Build the route" Margin="0,0,10,0" Grid.Row="3" VerticalAlignment="Center" Width="170" Height="27" Grid.Column="3" Style="{DynamicResource flatbutton}" HorizontalAlignment="Right" FontWeight="Bold" Click="BuildTheRoute_Click">
             <Button.Background>
