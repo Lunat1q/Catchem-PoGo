@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Threading;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using Catchem.Classes;
 using Catchem.Extensions;
@@ -100,6 +101,7 @@ namespace Catchem.Pages
             if (inputDialog.ShowDialog() != true) return;
             if (int.TryParse(inputDialog.Answer, out amount))
                 RecycleItem(CurSession, item, amount, _bot.CancellationToken);
+
         }
 
         private async void RecycleItem(ISession session, ItemUiData item, int amount, CancellationToken cts)

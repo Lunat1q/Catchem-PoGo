@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
@@ -36,13 +38,14 @@ namespace Catchem
                 source.Remove(pokemonId);
         }
 
-        private void btn_removeTelegramOwnerFromList_Click(object sender, RoutedEventArgs e)
+        private void btn_removeFromListGeneric_Click(object sender, RoutedEventArgs e)
         {
             var btn = sender as Button;
             if (btn?.DataContext == null) return;
-            var botOwner = (TelegramPage.TelegramBotOwner)btn.DataContext;
+            var oType = btn.DataContext.GetType();
+            var botOwner = Convert.ChangeType(btn.DataContext, oType);
             var parentList = btn.Tag as ListBox;
-            var source = parentList?.ItemsSource as ObservableCollection<TelegramPage.TelegramBotOwner>;
+            var source = (IList)parentList?.ItemsSource;
             if (source != null && source.Contains(botOwner))
                 source.Remove(botOwner);
         }

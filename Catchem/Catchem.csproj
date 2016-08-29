@@ -58,6 +58,10 @@
     <ApplicationIcon>unnamed.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="GeoCoordinatePortable, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\GeoCoordinate.1.1.0\lib\portable-net45+wp80+win+wpa81\GeoCoordinatePortable.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="GMap.NET.Core, Version=1.7.0.0, Culture=neutral, PublicKeyToken=b85b9027b614afef, processorArchitecture=MSIL">
       <HintPath>..\packages\GMap.NET.Presentation.1.7.1\lib\net40\GMap.NET.Core.dll</HintPath>
       <Private>True</Private>
@@ -146,6 +150,9 @@
     <Compile Include="Pages\PokemonListPage.xaml.cs">
       <DependentUpon>PokemonListPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\RouteCreatorPage.xaml.cs">
+      <DependentUpon>RouteCreatorPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\TelegramPage.xaml.cs">
       <DependentUpon>TelegramPage.xaml</DependentUpon>
     </Compile>
@@ -183,6 +190,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\PokemonListPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\RouteCreatorPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -815,6 +826,7 @@
     <Content Include="adb\AdbWinUsbApi.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\wp.png" />
     <None Include="Resources\favouredSort.png" />
     <None Include="Resources\gym.png" />
     <None Include="Resources\refresh.png" />

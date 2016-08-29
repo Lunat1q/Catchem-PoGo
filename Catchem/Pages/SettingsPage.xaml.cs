@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using System.Linq;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
@@ -25,7 +26,7 @@ namespace Catchem.Pages
         public void SetGlobalSettings(CatchemSettings settings)
         {
             _globalSettings = settings;
-            
+            CustomRouteComboBox.ItemsSource = _globalSettings.Routes;
         }
 
         public SettingsPage()
@@ -99,6 +100,10 @@ namespace Catchem.Pages
                     uiElem.SelectedItem = val;
                 }
             }
+
+            CustomRouteComboBox.SelectedItem =
+                _globalSettings.Routes.FirstOrDefault(x => x.Name == Bot.GlobalSettings.LocationSettings.CustomRouteName);
+
 
             LoadingUi = false;
         }
@@ -227,6 +232,16 @@ namespace Catchem.Pages
             if (Bot?.GlobalSettings?.Device == null) return;
             Bot.GlobalSettings.Device.NewRandomPhone();
             FillBoxesFromSettings();
+        }
+
+        private void CustomRouteComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (Bot?.GlobalSettings?.LocationSettings == null || LoadingUi) return;
+            var cb = sender as ComboBox;
+            var route = cb?.SelectedItem as BotRoute;
+            if (route == null) return;
+            Bot.GlobalSettings.LocationSettings.CustomRouteName = route.Name;
+            Bot.GlobalSettings.LocationSettings.CustomRoute = route.Route;
         }
     }
 }

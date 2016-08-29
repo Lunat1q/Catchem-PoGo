@@ -9,21 +9,23 @@ using System.Globalization;
 using System.Linq;
 using Newtonsoft.Json;
 using PoGo.PokeMobBot.Logic.Event;
+using PoGo.PokeMobBot.Logic.Utils;
 
 namespace PoGo.PokeMobBot.Logic
 {
     public static class GoogleRouting
     {
         //Catchem project: https://github.com/Lunat1q/Catchem-PoGo - by Lunat1q
-        public static RoutingResponse GetRoute(GeoCoordinate start, GeoCoordinate dest, ISession session, List<GeoCoordinate> waypoints)
+        public static RoutingResponse GetRoute(GeoCoordinate start, GeoCoordinate dest, ISession session, List<GeoCoordinate> waypoints, bool silent = false, bool via = true)
         {
             string apiKey = session.LogicSettings.GoogleDirectionsApiKey;
             if (string.IsNullOrEmpty(apiKey))
             {
-                session.EventDispatcher.Send(new WarnEvent
-                {
-                    Message = "Google API Key is Empty!"
-                });
+                if (!silent)
+                    session.EventDispatcher.Send(new WarnEvent
+                    {
+                        Message = "Google API Key is Empty!"
+                    });
                 return new RoutingResponse();
             }
 
@@ -40,7 +42,7 @@ namespace PoGo.PokeMobBot.Logic
                 var wpList = new List<string>();
                 foreach (var wp in waypoints)
                 {
-                    wpList.Add($"via:{wp.Latitude.ToString(CultureInfo.InvariantCulture)},{wp.Longitude.ToString(CultureInfo.InvariantCulture)}");
+                    wpList.Add($"{(via ? "via:" : "")}{wp.Latitude.ToString(CultureInfo.InvariantCulture)},{wp.Longitude.ToString(CultureInfo.InvariantCulture)}");
                 }
                 waypointsRequest += wpList.Aggregate((x, v) => x + "|" + v);
             }
@@ -74,32 +76,33 @@ namespace PoGo.PokeMobBot.Logic
                 var googleResponse = JsonConvert.DeserializeObject<GoogleResponse>(responseFromServer); ;// HandleResponse(responseFromServer);
 
                 var responseParsed = new RoutingResponse();
-                var googleCoords = new List<List<double>>();
+                //var googleCoords = new List<List<double>>();
                 var route = googleResponse.routes.FirstOrDefault();
                 if (route != null)
                 {
-                    var wpOrder = route.waypoint_order;
-                    var legs = googleResponse.routes.FirstOrDefault()?.legs;
-                    if (legs != null)
-                    {
-                        if (wpOrder != null && wpOrder.Count > 0)
-                        {
-                            var orderedLegs = new List<Leg>();
-                            foreach (int index in wpOrder)
-                            {
-                                orderedLegs.Add(legs[index]);
-                            }
-                            legs = orderedLegs;
-                        }
-                        foreach (var leg in legs)
-                        {
-                            foreach (var step in leg.steps)
-                            {
-                                googleCoords.Add(new List<double> {step.start_location.lat, step.start_location.lng});
-                            }
-                        }
-                    }
-                    responseParsed.Coordinates = googleCoords;
+                    //var wpOrder = route.waypoint_order;
+                    //var legs = googleResponse.routes.FirstOrDefault()?.legs;
+                    //if (legs != null)
+                    //{
+                    //    if (wpOrder != null && wpOrder.Count > 0)
+                    //    {
+                    //        var orderedLegs = new List<Leg>();
+                    //        foreach (int index in wpOrder)
+                    //        {
+                    //            orderedLegs.Add(legs[index]);
+                    //        }
+                    //        legs = orderedLegs;
+                    //    }
+                    //    foreach (var leg in legs)
+                    //    {
+                    //        foreach (var step in leg.steps)
+                    //        {
+                    //            googleCoords.Add(new List<double> {step.start_location.lat, step.start_location.lng});
+                    //        }
+                    //    }
+                    //}
+                    var testCoords = route.overview_polyline.DecodeToList();
+                    responseParsed.Coordinates = testCoords.ToList(); // googleCoords; //
                 }
                 return responseParsed;
             }
@@ -148,13 +151,7 @@ namespace PoGo.PokeMobBot.Logic
         public int value { get; set; }
     }
 
-    public class EndLocation
-    {
-        public double lat { get; set; }
-        public double lng { get; set; }
-    }
-
-    public class StartLocation
+    public class GoogleLocation
     {
         public double lat { get; set; }
         public double lng { get; set; }
@@ -172,31 +169,19 @@ namespace PoGo.PokeMobBot.Logic
         public int value { get; set; }
     }
 
-    public class EndLocation2
-    {
-        public double lat { get; set; }
-        public double lng { get; set; }
-    }
-
     public class Polyline
     {
         public string points { get; set; }
-    }
-
-    public class StartLocation2
-    {
-        public double lat { get; set; }
-        public double lng { get; set; }
     }
 
     public class Step
     {
         public Distance2 distance { get; set; }
         public Duration2 duration { get; set; }
-        public EndLocation2 end_location { get; set; }
+        public GoogleLocation end_location { get; set; }
         public string html_instructions { get; set; }
         public Polyline polyline { get; set; }
-        public StartLocation2 start_location { get; set; }
+        public GoogleLocation start_location { get; set; }
         public string travel_mode { get; set; }
         public string maneuver { get; set; }
     }
@@ -206,9 +191,9 @@ namespace PoGo.PokeMobBot.Logic
         public Distance distance { get; set; }
         public Duration duration { get; set; }
         public string end_address { get; set; }
-        public EndLocation end_location { get; set; }
+        public GoogleLocation end_location { get; set; }
         public string start_address { get; set; }
-        public StartLocation start_location { get; set; }
+        public GoogleLocation start_location { get; set; }
         public List<Step> steps { get; set; }
         public List<object> via_waypoint { get; set; }
     }
@@ -216,6 +201,17 @@ namespace PoGo.PokeMobBot.Logic
     public class OverviewPolyline
     {
         public string points { get; set; }
+
+        public IEnumerable<GoogleLocation> Decode()
+        {
+            return RoutingUtils.DecodePolyline(points);
+        }
+
+        public IEnumerable<List<double>> DecodeToList()
+        {
+            return RoutingUtils.DecodePolylineToList(points);
+        }
+
     }
 
     public class Route
