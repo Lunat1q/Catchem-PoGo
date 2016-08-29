@@ -29,6 +29,8 @@ using LogLevel = PoGo.PokeMobBot.Logic.Logging.LogLevel;
 using System.Reflection;
 using Catchem.Events;
 using PoGo.PokeMobBot.Logic.API;
+using PoGo.PokeMobBot.Logic.PoGoUtils;
+
 // ReSharper disable PossibleLossOfFraction
 
 namespace Catchem
@@ -232,7 +234,8 @@ namespace Catchem
                 receiverBot.GotNewPokemon((ulong) objData[0], (PokemonId) objData[1], (int) objData[2],
                     (double) objData[3], (PokemonFamilyId) objData[4], (int) objData[5], false, false,
                     (double) objData[6],
-                    (PokemonMove) objData[7], (PokemonMove) objData[8]);
+                    (PokemonMove) objData[7], (PokemonMove) objData[8], (PokemonType) objData[9],
+                    (PokemonType) objData[10], (int) objData[11], (int)objData[12], (int)objData[13]);
                 TelegramView.TlgrmBot.EventDispatcher.Send(new TelegramPokemonCaughtEvent
                 {
                     PokemonId = (PokemonId)objData[1],
@@ -637,7 +640,9 @@ namespace Catchem
                 {
                     newBot.GlobalSettings.LocationSettings.CustomRouteName = "";
                 }
-
+    #if DEBUG
+                    SeedTheBot(newBot);
+    #endif
                 BotsCollection.Add(newBot);
                 if (newBot.GlobalSettings.AutoStartThisProfile)
                     newBot.Start();
@@ -647,6 +652,16 @@ namespace Catchem
                 MessageBox.Show("Initializing of new bot failed! ex:\r\n" + ex.Message, "FatalError",
                     MessageBoxButton.OK, MessageBoxImage.Error);
             }
+        }
+
+
+        private void SeedTheBot(BotWindowData bot)
+        {
+            bot.PokemonList.Add(new PokemonUiData(bot, 123455678, PokemonId.Mew, "Mew the awesome!", 1337, 99.9, PokemonFamilyId.FamilyMew, 42, 9001, true, true, 97, PokemonMove.Moonblast, PokemonMove.Thunder, PokemonType.Psychic, PokemonType.Flying, 9000, PokemonInfo.GetBaseStats(PokemonId.Mew), 90, 99));
+            bot.PokemonList.Add(new PokemonUiData(bot, 123455678, PokemonId.Mewtwo, "Mr.Kickass", 9001, 100, PokemonFamilyId.FamilyMewtwo, 47, 9001, true, true, 97, PokemonMove.HyperBeam, PokemonMove.PsychoCutFast, PokemonType.Psychic, PokemonType.Flying, 10000, PokemonInfo.GetBaseStats(PokemonId.Mewtwo), 90, 99));//PokemonId.Mew.ToInventorySource(),
+            bot.PokemonList.Add(new PokemonUiData(bot, 123455678, PokemonId.Zapdos, "Thunder", 1337, 100, PokemonFamilyId.FamilyZapdos, 47, 9001, true, true, 97, PokemonMove.HyperBeam, PokemonMove.PsychoCutFast, PokemonType.Psychic, PokemonType.Flying, 3000, PokemonInfo.GetBaseStats(PokemonId.Zapdos), 90, 99));
+            bot.PokemonList.Add(new PokemonUiData(bot, 123455678, PokemonId.Articuno, "Ice-ice-baby", 4048, 100, PokemonFamilyId.FamilyArticuno, 47, 9001, true, true, 97, PokemonMove.HyperBeam, PokemonMove.PsychoCutFast, PokemonType.Psychic, PokemonType.Flying, 5000, PokemonInfo.GetBaseStats(PokemonId.Articuno), 90, 99));
+            bot.PokemonList.Add(new PokemonUiData(bot, 123455678, PokemonId.Moltres, "Popcorn machine", 4269, 100, PokemonFamilyId.FamilyMoltres, 47, 9001, true, true, 97, PokemonMove.HyperBeam, PokemonMove.PsychoCutFast, PokemonType.Psychic, PokemonType.Flying, 5000, PokemonInfo.GetBaseStats(PokemonId.Moltres), 90, 99));
         }
 
         private void EnqueOldBot()

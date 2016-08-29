@@ -17,5 +17,6 @@ namespace PoGo.PokeMobBot.Logic.Event
         public double Iv;
         public PokemonId Id;
         public bool Favourite;
+        public int MaxCp;
     }
 }

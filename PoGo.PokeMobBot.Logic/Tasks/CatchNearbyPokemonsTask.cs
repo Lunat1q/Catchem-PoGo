@@ -23,7 +23,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
             cancellationToken.ThrowIfCancellationRequested();
             //Refresh inventory so that the player stats are fresh
             //await session.Inventory.RefreshCachedInventory(); too much inventore refresh
-
+            if (!session.LogicSettings.CatchWildPokemon) return;
             session.EventDispatcher.Send(new DebugEvent()
             {
                 Message = session.Translation.GetTranslation(TranslationString.LookingForPokemon)
@@ -33,15 +33,11 @@ namespace PoGo.PokeMobBot.Logic.Tasks
 
             if (session.LogicSettings.UsePokemonToNotCatchFilter)
             {
-                var pokeToCatch =
-                    pokemons.Select(x => x.BaseMapPokemon)
-                        .Where(x => !session.LogicSettings.PokemonsNotToCatch.Contains(x.PokemonId));
-                session.EventDispatcher.Send(new PokemonsFoundEvent {Pokemons = pokeToCatch});
+                pokemons = pokemons.Where(x => !session.LogicSettings.PokemonsNotToCatch.Contains(x.PokemonId)).ToList();
             }
-            else
-            {
-                session.EventDispatcher.Send(new PokemonsFoundEvent { Pokemons = pokemons.Select(x => x.BaseMapPokemon) });
-            }
+
+            session.EventDispatcher.Send(new PokemonsFoundEvent { Pokemons = pokemons.Select(x => x.BaseMapPokemon) });
+            
             foreach (var pokemon in pokemons)
             {
                 cancellationToken.ThrowIfCancellationRequested();
@@ -63,12 +59,14 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                 if (session.LogicSettings.UsePokemonToNotCatchFilter &&
                     session.LogicSettings.PokemonsNotToCatch.Contains(pokemon.PokemonId))
                 {
-                    session.EventDispatcher.Send(new NoticeEvent()
-                    {
-                        Message =
-                            session.Translation.GetTranslation(TranslationString.PokemonSkipped,
-                                session.Translation.GetPokemonName(pokemon.PokemonId))
-                    });
+                    if (!pokemon.Caught)
+                        session.EventDispatcher.Send(new NoticeEvent()
+                        {
+                            Message =
+                                session.Translation.GetTranslation(TranslationString.PokemonSkipped,
+                                    session.Translation.GetPokemonName(pokemon.PokemonId))
+                        });
+                    pokemon.Caught = true;
                     continue;
                 }
 

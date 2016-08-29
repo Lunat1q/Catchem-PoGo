@@ -62,6 +62,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                     Family = family.FamilyId,
                     Candy = family.Candy_,
                     Cp = pokemon.Cp,
+                    MaxCp = (int)PokemonInfo.GetMaxCpAtTrainerLevel(pokemon, session.Runtime.CurrentLevel),
                     Iv = pokemon.CalculatePokemonPerfection(),
                     Favourite = pokemon.Favorite == 1
                 });

@@ -97,6 +97,24 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                 {
                     Message = session.Translation.GetTranslation(TranslationString.PokemonUpgradeSuccess, session.Translation.GetPokemonName(upgradeResult.UpgradedPokemon.PokemonId), upgradeResult.UpgradedPokemon.Cp)
                 });
+                var pokemonFamilies = await session.Inventory.GetPokemonFamilies();
+                var pokemonSettings = (await session.Inventory.GetPokemonSettings()).ToList();
+                var setting = pokemonSettings.Single(q => q.PokemonId == pokemon.PokemonId);
+                var family = pokemonFamilies.First(q => q.FamilyId == setting.FamilyId);
+                session.EventDispatcher.Send(new PokemonStatsChangedEvent
+                {
+                    Name = !string.IsNullOrEmpty(pokemon.Nickname)
+                       ? pokemon.Nickname
+                       : pokemon.PokemonId.ToString(),
+                    Uid = pokemon.Id,
+                    Id = pokemon.PokemonId,
+                    Family = family.FamilyId,
+                    Candy = family.Candy_,
+                    Cp = upgradeResult.UpgradedPokemon.Cp,
+                    MaxCp = (int)PokemonInfo.GetMaxCpAtTrainerLevel(upgradeResult.UpgradedPokemon, session.Runtime.CurrentLevel),
+                    Iv = upgradeResult.UpgradedPokemon.CalculatePokemonPerfection(),
+                    Favourite = pokemon.Favorite == 1
+                });
             }
             else if (upgradeResult.Result == POGOProtos.Networking.Responses.UpgradePokemonResponse.Types.Result.ErrorInsufficientResources)
             {

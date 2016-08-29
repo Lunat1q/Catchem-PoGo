@@ -108,6 +108,7 @@ namespace PoGo.PokeMobBot.Logic
     {
 		public int StopsHit = 0;
         public int PokestopsToCheckGym = 0;
+        public int CurrentLevel = 0;
         public DateTime StartTime = DateTime.Now;
         public bool DelayingScan = false;
         public int PokemonScanDelay = 10000;// in ms
@@ -1014,6 +1015,8 @@ namespace PoGo.PokeMobBot.Logic
         public int MaxStarDustPerHour = 20000;
         public double MissChance = 0.21;
 
+        public bool LootPokestops = true;
+
         //berries
         public int UseBerryMinCp = 1000;
         public float UseBerryMinIv = 95;
@@ -1810,6 +1813,8 @@ namespace PoGo.PokeMobBot.Logic
         public int MinPokeballsWhileSnipe => _settings.SnipeSettings.MinPokeballsWhileSnipe;
         public int MaxPokeballsPerPokemon => _settings.CatchSettings.MaxPokeballsPerPokemon;
         public SnipeSettings PokemonToSnipe => _settings.PokemonToSnipe;
+
+        public bool LootPokestops => _settings.CatchSettings.LootPokestops;
 
         public CustomRoute CustomRoute => _settings.LocationSettings.CustomRoute;
         public string SnipeLocationServer => _settings.SnipeSettings.SnipeLocationServer;

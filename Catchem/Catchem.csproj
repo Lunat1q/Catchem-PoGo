@@ -156,6 +156,9 @@
     <Compile Include="Pages\TelegramPage.xaml.cs">
       <DependentUpon>TelegramPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\TemplateEditor.xaml.cs">
+      <DependentUpon>TemplateEditor.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SupportForms\InputBox.xaml.cs">
       <DependentUpon>InputBox.xaml</DependentUpon>
     </Compile>
@@ -198,6 +201,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\TelegramPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\TemplateEditor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -826,6 +833,13 @@
     <Content Include="adb\AdbWinUsbApi.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\sta.png" />
+    <None Include="Resources\hp.png" />
+    <None Include="Resources\def.png" />
+    <None Include="Resources\atk.png" />
+    <None Include="Resources\Dark_inv.png" />
+    <None Include="Resources\Electric_inv.png" />
+    <None Include="Resources\candy.png" />
     <None Include="Resources\wp.png" />
     <None Include="Resources\favouredSort.png" />
     <None Include="Resources\gym.png" />

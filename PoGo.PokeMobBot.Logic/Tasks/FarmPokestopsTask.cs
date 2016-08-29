@@ -152,6 +152,13 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                         
                         cancellationToken, session);
                     }
+
+                    if (!session.LogicSettings.LootPokestops)
+                    {
+                        session.MapCache.UsedPokestop(pokeStop, session);
+                        continue;
+                    }
+
                     if (!session.ForceMoveJustDone)
                     {
                         FortSearchResponse fortSearch;

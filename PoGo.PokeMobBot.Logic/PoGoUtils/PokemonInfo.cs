@@ -486,7 +486,7 @@ namespace PoGo.PokeMobBot.Logic.PoGoUtils
 
             var maxCPatLevel = maxAttackNoCpM * Math.Sqrt(maxDefenseNoCpM) * Math.Sqrt(maxStaminaNoCpM) * Math.Pow(cpm, 2) / 10;
 
-            return maxCPatLevel;
+            return Math.Max(maxCPatLevel, poke.Cp);
 
         }
 

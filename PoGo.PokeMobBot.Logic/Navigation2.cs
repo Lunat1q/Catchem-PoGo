@@ -13,9 +13,10 @@ using System.Collections.Generic;
 using PoGo.PokeMobBot.Logic.State;
 using System.Linq;
 using PoGo.PokeMobBot.Logic.API;
-using PoGo.PokeMobBot.Logic.Extensions;
 using PoGo.PokeMobBot.Logic.Event;
 using PoGo.PokeMobBot.Logic.Tasks;
+using PokemonGo.RocketAPI.Extensions;
+using RandomExtensions = PoGo.PokeMobBot.Logic.Extensions.RandomExtensions;
 
 #endregion
 
@@ -130,8 +131,9 @@ namespace PoGo.PokeMobBot.Logic
                     destination = waypoints.Last();
                 }
 
-                Navigation navi = new Navigation(_client, UpdatePositionEvent);
+                var navi = new Navigation(_client, UpdatePositionEvent);
                 var waypointsArr = waypoints.ToArray();
+                long nextMaintenceStamp = 0;
                 //MILD REWRITE TO USE HUMANPATHWALKING;
                 foreach (var t in waypointsArr)
                 {
@@ -145,23 +147,28 @@ namespace PoGo.PokeMobBot.Logic
                     if (distanceToTarget <= 5)
                         continue;
 
-                    var nextSpeed = session.Client.rnd.NextInRange(walkingSpeedMin, walkingSpeedMax)*session.Settings.MoveSpeedFactor;
+                    var nextSpeed = RandomExtensions.NextInRange(session.Client.rnd, walkingSpeedMin, walkingSpeedMax)*session.Settings.MoveSpeedFactor;
                     session.State = BotState.Walk;
                     result = await navi.HumanPathWalking(session, t, nextSpeed, functionExecutedWhileWalking, functionExecutedWhileWalking2, cancellationToken);
                     if (session.Runtime.BreakOutOfPathing)
                         return result;
                     UpdatePositionEvent?.Invoke(t.Latitude, t.Longitude, t.Altitude);
 
-                    //Console.WriteLine("Hit waypoint " + x);
+                    if (nextMaintenceStamp < DateTime.UtcNow.ToUnixTime())
+                    {
+                        await MaintenanceTask.Execute(session, cancellationToken);
+                        nextMaintenceStamp = DateTime.UtcNow.AddMinutes(3).ToUnixTime();
+                    }
                 }
                 session.State = BotState.Idle;
                 var curcoord = new GeoCoordinate(session.Client.CurrentLatitude, session.Client.CurrentLongitude);
                 if (LocationUtils.CalculateDistanceInMeters(curcoord, destination) > 40)
                 {
-                    var nextSpeed = session.Client.rnd.NextInRange(walkingSpeedMin, walkingSpeedMax)*session.Settings.MoveSpeedFactor;
+                    var nextSpeed = RandomExtensions.NextInRange(session.Client.rnd, walkingSpeedMin, walkingSpeedMax)*session.Settings.MoveSpeedFactor;
 
                     result = await navi.HumanPathWalking(session, destination, nextSpeed, functionExecutedWhileWalking, functionExecutedWhileWalking2, cancellationToken);
                 }
+                await MaintenanceTask.Execute(session, cancellationToken);
             }
             else
             {
@@ -177,7 +184,7 @@ namespace PoGo.PokeMobBot.Logic
                 var curcoord = new GeoCoordinate(session.Client.CurrentLatitude, session.Client.CurrentLongitude);
                 if (LocationUtils.CalculateDistanceInMeters(curcoord, destination) > 40)
                 {
-                    var nextSpeed = session.Client.rnd.NextInRange(walkingSpeedMin, walkingSpeedMax)*session.Settings.MoveSpeedFactor;
+                    var nextSpeed = RandomExtensions.NextInRange(session.Client.rnd, walkingSpeedMin, walkingSpeedMax)*session.Settings.MoveSpeedFactor;
 
                     result = await navi.HumanPathWalking(session, destination, nextSpeed, functionExecutedWhileWalking, functionExecutedWhileWalking2, cancellationToken);
                 }
