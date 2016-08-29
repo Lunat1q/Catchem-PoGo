@@ -39,22 +39,31 @@
             <ScrollViewer Name="PART_ContentHost" SnapsToDevicePixels="{TemplateBinding UIElement.SnapsToDevicePixels}" />
         </Border>
     </ControlTemplate>
-    <Style TargetType="Button" x:Key="flatbutton">
+    <Style TargetType="{x:Type Button}" x:Key="flatbutton">
         <Setter Property="Background" Value="DarkCyan"/>
         <Setter Property="Foreground" Value="White"/>
         <Setter Property="Width" Value="75"/>
         <Setter Property="Height" Value="35"/>
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="Button">
-                    <Border BorderThickness="0"
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border x:Name="FlatButtonBorder" BorderThickness="0"
                         Background="{TemplateBinding Background}"
                         CornerRadius="13">
-                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <Grid>
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <Rectangle x:Name="FlatButtonOverlay" Fill="#3F93FFE2" Visibility="Collapsed"/>
+                        </Grid>
                     </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="FlatButtonOverlay" Property="Visibility" Value="Visible"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        
     </Style>
 
     <Style TargetType="{x:Type ToolTip}" x:Key="PokeTooltipInfoStyle">
