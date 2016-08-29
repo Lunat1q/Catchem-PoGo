@@ -38,15 +38,16 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                                 session.Client.CurrentLongitude, i.Latitude, i.Longitude)).ToList();
                 var pokeStop = pokestopList[0];
 
+                pokestopList.RemoveAt(0);
+                
+                if (pokeStop.Used)
+                    continue;
+
                 if (!session.LogicSettings.LootPokestops)
                 {
                     session.MapCache.UsedPokestop(pokeStop, session);
                     continue;
                 }
-
-                pokestopList.RemoveAt(0);
-                if (pokeStop.Used)
-                    continue;
                 var fortInfo = await session.Client.Fort.GetFort(pokeStop.Id, pokeStop.Latitude, pokeStop.Longitude);
                 await DelayingUtils.Delay(session.LogicSettings.DelayBetweenPlayerActions, 2000);
                 var fortSearch =

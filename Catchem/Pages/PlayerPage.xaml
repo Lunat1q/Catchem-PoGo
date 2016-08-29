@@ -65,7 +65,7 @@
             </ListBox.Background>
             <ListBox.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <UniformGrid x:Name="PokeWrapper" Columns="3" SizeChanged="PokeWrapper_SizeChanged"/>
+                    <UniformGrid x:Name="PokeWrapper" Columns="3" SizeChanged="PokeWrapper_SizeChanged" VerticalAlignment="Top"/>
                 </ItemsPanelTemplate>
             </ListBox.ItemsPanel>
         </ListBox>
@@ -207,8 +207,8 @@
             <TextBox x:Name="NextLevelInTextBox" HorizontalAlignment="Center" Margin="0" TextWrapping="Wrap" Text="00:00 (100/100)" VerticalAlignment="Center" Background="{x:Null}" SelectionBrush="{x:Null}" BorderBrush="{x:Null}">
                 <TextBox.Foreground>
                     <LinearGradientBrush EndPoint="1,0.3" StartPoint="0,0.5">
-                        <GradientStop Color="#FF0097FF" Offset="0.005"/>
-                        <GradientStop Color="#FF002D47" Offset="1"/>
+                        <GradientStop Color="#FF005895" Offset="0.005"/>
+                        <GradientStop Color="#FF00253A" Offset="1"/>
                     </LinearGradientBrush>
                 </TextBox.Foreground>
             </TextBox>
