@@ -32,6 +32,7 @@ namespace Catchem.Pages
         private List<GeoCoordinate> _buildedRoute;
         private bool _prefferMapzen;
         private bool _manualRoute;
+        private int _currentIndex = 1;
 
         public bool StartExist
         {
@@ -159,7 +160,7 @@ namespace Catchem.Pages
         private void CreateNewMarker(PointLatLng mapPos, bool starter)
         {
             var markerShape = starter ? Properties.Resources.force_move.ToImage("Route Marker - START") :
-               Properties.Resources.wp.ToImage("Route Marker - Waypoint");
+               Properties.Resources.wp.ToImage($"Route Marker - Waypoint {_currentIndex++}");
             var marker = new GMapMarker(mapPos)
             {
                 Shape = markerShape,
@@ -315,6 +316,7 @@ namespace Catchem.Pages
 
         private void ClearRouteBuilder()
         {
+            _currentIndex = 1;
             _currentRoute?.Points.Clear();
             _currentRoute?.RegenerateShape(RouteCreatorMap);
             BuildingProgressBar.Value = 0;

@@ -67,7 +67,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                 },
                 async () =>
                 {
-                    await UseNearbyPokestopsTask.Execute(session, cancellationToken);
+                    await UseNearbyPokestopsTask.Execute(session, cancellationToken, true);
                     return true;
 
                 }, cancellationToken, session);
@@ -106,7 +106,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                         },
                         async () =>
                         {
-                            await UseNearbyPokestopsTask.Execute(session, cancellationToken);
+                            await UseNearbyPokestopsTask.Execute(session, cancellationToken, true);
                             return true;
                         },
                         cancellationToken

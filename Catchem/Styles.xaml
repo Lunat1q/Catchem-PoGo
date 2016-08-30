@@ -242,12 +242,12 @@
     <ContextMenu x:Key="PokemonContextMenu" Tag="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}}}">
         <MenuItem x:Name="mi_levelupPokemon" Header="Level Up Selected Pokemon" Click="mi_levelupPokemon_Click"/>
         <MenuItem x:Name="mi_maxlevelupPokemon" Header="Level Up Selected Pokemon to Max" Click="mi_maxlevelupPokemon_Click"/>
-        <MenuItem x:Name="mi_favouritePokemon" Header="(Un)Favourite Selected Pokemon" Click="mi_favouritePokemon_Click"/>
         <MenuItem x:Name="mi_evolvePokemon" Header="Evolve Selected Pokemon" Click="mi_evolvePokemon_Click"/>
-        <MenuItem x:Name="mi_transferPokemon" Header="Transfer Selected Pokemon" Click="mi_transferPokemon_Click" />
         <MenuItem x:Name="mi_renamePokemon" Header="Rename Selected Pokemon" Click="mi_renamePokemon_Click" />
         <MenuItem x:Name="mi_renametoDefaultPokemon" Header="Rename Selected Pokemon to Default" Click="mi_renametoDefaultPokemon_Click" />
-    </ContextMenu>
+        <MenuItem x:Name="mi_favouritePokemon" Header="(Un)Favourite Selected Pokemon" Click="mi_favouritePokemon_Click"/>
+        <MenuItem x:Name="mi_transferPokemon" Header="Transfer Selected Pokemon" Click="mi_transferPokemon_Click" />
+            </ContextMenu>
     <LinearGradientBrush x:Key="StartBrush" StartPoint="0.5,0" EndPoint="0.5,1">
         <LinearGradientBrush.RelativeTransform>
             <TransformGroup>

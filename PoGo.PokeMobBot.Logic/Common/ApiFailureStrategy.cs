@@ -3,6 +3,7 @@
 using System;
 using System.Threading.Tasks;
 using PoGo.PokeMobBot.Logic.Event;
+using PoGo.PokeMobBot.Logic.Logging;
 using PoGo.PokeMobBot.Logic.State;
 using PokemonGo.RocketAPI.Exceptions;
 using PokemonGo.RocketAPI.Extensions;
@@ -88,7 +89,8 @@ namespace PoGo.PokeMobBot.Logic.Common
                     {
                         Message = _session.Translation.GetTranslation(TranslationString.NianticServerUnstable)
                     });
-                    await Task.Delay(1000);
+                    Logger.Write("[NIANTIC] " + ex.Message, LogLevel.Error);
+                    await Task.Delay(5000);
                 }
             }
 

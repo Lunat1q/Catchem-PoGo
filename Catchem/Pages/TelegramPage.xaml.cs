@@ -195,8 +195,8 @@ namespace Catchem.Pages
             double level, PokemonMove? move1, PokemonMove? move2)
         {
             if ((!_tlgrmSettings.AutoReportSelectedPokemon || !_tlgrmSettings.AutoReportPokemon.Contains(pokemon)) &&
-                (cp <= _tlgrmSettings.ReportAllPokemonsAboveCp || _tlgrmSettings.UseCpReport) &&
-                (iv <= _tlgrmSettings.ReportAllPokemonsAboveIv || _tlgrmSettings.UseIvReport))
+                (cp <= _tlgrmSettings.ReportAllPokemonsAboveCp || !_tlgrmSettings.UseCpReport) &&
+                (iv <= _tlgrmSettings.ReportAllPokemonsAboveIv || !_tlgrmSettings.UseIvReport))
                 return;
             string messageToSend =
                 $"[{botNick}]({profileName}) got {pokemon}! CP:{cp}, Iv:{iv.ToN1()}, Level:{level.ToN1()}, Move 1: {move1}, Move 2: {move2}";

@@ -45,6 +45,9 @@ namespace PoGo.PokeMobBot.Logic.Tasks
 
             //TODO: run through this with a fine-tooth comb and optimize it.
             var pokestopList = await GetPokeStops(session);
+
+            session.EventDispatcher.Send(new PokeStopListEvent { Forts = pokestopList.Select(x => x.BaseFortData).ToList() });
+
             for (int stopsHit = 0; stopsHit < stopsToHit; stopsHit++)
             {
                 session.Runtime.BreakOutOfPathing = false;
@@ -86,8 +89,6 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                             Message = session.Translation.GetTranslation(TranslationString.FarmPokestopsNoUsableFound)
                         });
                     }
-
-                    session.EventDispatcher.Send(new PokeStopListEvent { Forts = session.MapCache.baseFortDatas.ToList() });
 
                     cancellationToken.ThrowIfCancellationRequested();
 
@@ -284,6 +285,9 @@ namespace PoGo.PokeMobBot.Logic.Tasks
             var pokestopList = await GetPokeStops(session);
             //var stopsHit = 0; //Replaced with RuntimeSettings.stopsHit;
             //var displayStatsHit = 0;
+
+            session.EventDispatcher.Send(new PokeStopListEvent { Forts = pokestopList.Select(x=>x.BaseFortData).ToList() });
+
             var eggWalker = new EggWalker(1000, session);
 
             if (pokestopList.Count <= 0)
@@ -478,8 +482,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
             //var mapObjects = await session.Client.Map.GetMapObjects();
 
             List<FortCacheItem> pokeStops = await session.MapCache.FortDatas(session);
-
-            session.EventDispatcher.Send(new PokeStopListEvent { Forts = session.MapCache.baseFortDatas.ToList() });
+            
 
             // Wasn't sure how to make this pretty. Edit as needed.
             if (session.LogicSettings.Teleport)

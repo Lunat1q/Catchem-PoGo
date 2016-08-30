@@ -34,9 +34,8 @@ namespace PoGo.PokeMobBot.Logic
             var mapObjects = await session.Client.Map.GetMapObjectsTuple();
 
             // Wasn't sure how to make this pretty. Edit as needed.
-            var pokeStops = mapObjects.Item1.MapCells.SelectMany(i => i.Forts);
+            IEnumerable<FortData> pokeStops;
             IEnumerable<FortData> gyms;
-            session.EventDispatcher.Send(new PokeStopListEvent { Forts = pokeStops.ToList() });
 
             // Wasn't sure how to make this pretty. Edit as needed.
             if (session.LogicSettings.Teleport)
