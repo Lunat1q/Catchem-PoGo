@@ -68,7 +68,9 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                     Stamina = pokemon.Stamina,
                     MaxStamina = pokemon.StaminaMax,
                     Move1 = evolveResponse.EvolvedPokemonData.Move1,
-                    Move2 = evolveResponse.EvolvedPokemonData.Move2
+                    Move2 = evolveResponse.EvolvedPokemonData.Move2,
+                    PossibleCp = (int)PokemonInfo.GetMaxCpAtTrainerLevel(pokemon, session.Runtime.CurrentLevel),
+                    CandyToEvolve = setting.CandyToEvolve
                 });
             }
             await DelayingUtils.Delay(session.LogicSettings.DelayEvolvePokemon, 25000);

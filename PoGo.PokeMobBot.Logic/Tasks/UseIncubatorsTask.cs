@@ -77,7 +77,9 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                         Type2 = setting.Type2,
                         Stats = setting.Stats,
                         Stamina = hatched.Stamina,
-                        MaxStamina = hatched.StaminaMax
+                        MaxStamina = hatched.StaminaMax,
+                        PossibleCp = (int)PokemonInfo.GetMaxCpAtTrainerLevel(hatched, 40),
+                        CandyToEvolve = setting.CandyToEvolve
                     });
                 }
             }

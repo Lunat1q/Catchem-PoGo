@@ -46,6 +46,18 @@ namespace Catchem.Classes
             }
         }
 
+        private int _possibleCp;
+
+        public int PossibleCp
+        {
+            get { return _possibleCp; }
+            set
+            {
+                _possibleCp = value;
+                OnPropertyChanged();
+            }
+        }
+
         private int _maxCp;
 
         public int MaxCp
@@ -85,6 +97,7 @@ namespace Catchem.Classes
         public PokemonId PokemonId { get; set; }
         public PokemonFamilyId Family { get; set; }
         private int _candy;
+        private int _candyToEvolve;
         public ulong Timestamp { get; set; }
 
         public int Candy
@@ -215,10 +228,21 @@ namespace Catchem.Classes
         }
 
         public string HpText => $"{_stamina}/{_maxStamina}";
+        public string CandyText => $"{Candy} / {(CandyToEvolve > 0 ? CandyToEvolve.ToString() : "-")}";
 
         public int Atk => Stats.BaseAttack;
         public int Def => Stats.BaseDefense;
         public int Sta => Stats.BaseStamina;
+
+        public int CandyToEvolve
+        {
+            get { return _candyToEvolve; }
+            set
+            {
+                _candyToEvolve = value;
+                OnPropertyChanged();
+            }
+        }
 
         private int _stamina;
         private int _maxStamina;
@@ -243,7 +267,7 @@ namespace Catchem.Classes
         public PokemonUiData(BotWindowData ownerBot, ulong id, PokemonId pokemonid, string name, //BitmapSource img,
             int cp, double iv, PokemonFamilyId family, int candy, ulong stamp, bool fav, bool inGym, double level,
             PokemonMove move1, PokemonMove move2, PokemonType type1, PokemonType type2, int maxCp, BaseStats baseStats,
-            int stamina, int maxStamina)
+            int stamina, int maxStamina, int possibleCp, int candyToEvolve)
         {
             OwnerBot = ownerBot;
             Favoured = fav;
@@ -266,6 +290,8 @@ namespace Catchem.Classes
             Stats = baseStats;
             Stamina = stamina;
             MaxStamina = maxStamina;
+            CandyToEvolve = candyToEvolve;
+            PossibleCp = possibleCp;
         }
     }
 }

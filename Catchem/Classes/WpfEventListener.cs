@@ -92,7 +92,7 @@ namespace Catchem.Classes
         {
             Logger.Write($"Evolved into {evt.Id} CP: {evt.Cp} Iv: {evt.Perfection.ToString("0.00")}%", session: session);
 
-            Logger.PushToUi("pm_new", session, evt.Uid, evt.Id, evt.Cp, evt.Perfection, evt.Family, evt.Candy, evt.Level, evt.Move1, evt.Move2, evt.Type1, evt.Type2, evt.MaxCp, evt.Stamina, evt.MaxStamina);
+            Logger.PushToUi("pm_new", session, evt.Uid, evt.Id, evt.Cp, evt.Perfection, evt.Family, evt.Candy, evt.Level, evt.Move1, evt.Move2, evt.Type1, evt.Type2, evt.MaxCp, evt.Stamina, evt.MaxStamina, evt.PossibleCp, evt.CandyToEvolve);
         }
         
         public void HandleEvent(PokemonStatsChangedEvent evt, ISession session)
@@ -197,7 +197,7 @@ namespace Catchem.Classes
             Logger.Write(session.Translation.GetTranslation(TranslationString.IncubatorEggHatched,
                 session.Translation.GetPokemonName(evt.PokemonId), evt.Level, evt.Cp, evt.MaxCp, evt.Perfection),
                 LogLevel.Egg, session: session);
-            Logger.PushToUi("pm_new", session, evt.Id, evt.PokemonId, evt.Cp, evt.Perfection, evt.Family, evt.Candy, evt.Level, evt.Move1, evt.Move2, evt.Type1, evt.Type2, evt.MaxCp, evt.Stamina, evt.MaxStamina);
+            Logger.PushToUi("pm_new", session, evt.Id, evt.PokemonId, evt.Cp, evt.Perfection, evt.Family, evt.Candy, evt.Level, evt.Move1, evt.Move2, evt.Type1, evt.Type2, evt.MaxCp, evt.Stamina, evt.MaxStamina, evt.PossibleCp, evt.CandyToEvolve);
         }
 
         public void HandleEvent(FortUsedEvent evt, ISession session)
@@ -267,7 +267,7 @@ namespace Catchem.Classes
                 case CatchPokemonResponse.Types.CatchStatus.CatchSuccess:
                     strStatus = session.Translation.GetTranslation(TranslationString.CatchStatusSuccess);
                     caughtEscapeFlee = LogLevel.Caught;
-                    Logger.PushToUi("pm_new", session, evt.Uid, evt.Id, evt.Cp, evt.Perfection, evt.Family, evt.FamilyCandies, evt.Level, evt.Move1, evt.Move2, evt.Type1, evt.Type2, evt.MaxCp, evt.Stamina, evt.MaxStamina);
+                    Logger.PushToUi("pm_new", session, evt.Uid, evt.Id, evt.Cp, evt.Perfection, evt.Family, evt.FamilyCandies, evt.Level, evt.Move1, evt.Move2, evt.Type1, evt.Type2, evt.MaxCp, evt.Stamina, evt.MaxStamina, evt.PossibleCp, evt.CandyToEvolve);
                     break;
                 default:
                     strStatus = evt.Status.ToString();

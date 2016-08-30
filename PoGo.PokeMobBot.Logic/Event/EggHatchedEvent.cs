@@ -24,5 +24,7 @@ namespace PoGo.PokeMobBot.Logic.Event
         public StatsAttributes Stats;
         public int Stamina;
         public int MaxStamina;
+        public int PossibleCp;
+        public int CandyToEvolve;
     }
 }

@@ -433,13 +433,15 @@ namespace Catchem.Classes
                     (int)PokemonInfo.GetMaxCpAtTrainerLevel(pokemon.Item1, Level),
                     PokemonInfo.GetBaseStats(pokemon.Item1.PokemonId),
                     pokemon.Item1.Stamina,
-                    pokemon.Item1.StaminaMax);
+                    pokemon.Item1.StaminaMax,
+                    (int)PokemonInfo.GetMaxCpAtTrainerLevel(pokemon.Item1, 40),
+                    setting.CandyToEvolve);
                 PokemonList.Add(mon);
                 mon.UpdateTags(Logic);
             }
         }
 
-        public void GotNewPokemon(ulong uid, PokemonId pokemonId, int cp, double iv, PokemonFamilyId family, int candy, bool fav, bool inGym, double level, PokemonMove move1, PokemonMove move2, PokemonType type1, PokemonType type2, int maxCp, int stamina, int maxStamina)
+        public void GotNewPokemon(ulong uid, PokemonId pokemonId, int cp, double iv, PokemonFamilyId family, int candy, bool fav, bool inGym, double level, PokemonMove move1, PokemonMove move2, PokemonType type1, PokemonType type2, int maxCp, int stamina, int maxStamina, int possibleCp, int candyToEvolve)
         {
             PokemonList.Add(new PokemonUiData(
                     this,
@@ -462,7 +464,9 @@ namespace Catchem.Classes
                     maxCp,
                     PokemonInfo.GetBaseStats(pokemonId),
                     stamina,
-                    maxStamina));
+                    maxStamina,
+                    possibleCp,
+                    candyToEvolve));
             foreach (var pokemon in PokemonList.Where(x => x.Family == family))
             {
                 pokemon.Candy = candy;
