@@ -39,22 +39,6 @@
         <Label x:Name="label6_Copy1" Content="POKESTOPS" HorizontalAlignment="Left" Margin="3,48,0,0" VerticalAlignment="Top" Foreground="#FF363636" FontSize="15" TextOptions.TextFormattingMode="Display" FontFamily="Source Sans Pro Semibold" Grid.Column="2" Height="28" Width="89"/>
         <Label x:Name="l_Pokestops_farmed" Content="+FARMED" HorizontalAlignment="Left" Margin="3,69,0,0" VerticalAlignment="Top" Foreground="#FFBF4F2E" FontSize="15" TextOptions.TextFormattingMode="Display" FontFamily="Source Sans Pro Semibold" Grid.Column="2" Height="28" Width="78"/>
         <Label x:Name="l_Pokemons_transfered" Content="-TRANSFERED" HorizontalAlignment="Left" Margin="193,102,0,0" VerticalAlignment="Top" Foreground="#FF00AE92" FontSize="15" TextOptions.TextFormattingMode="Display" FontFamily="Source Sans Pro Semibold" Height="28" Width="105"/>
-        <Label x:Name="l_level_nextime" Content="%next_level_time%" HorizontalAlignment="Left" Margin="3,17,0,0" VerticalAlignment="Top" FontSize="18" FontFamily="Calibri" Width="152" Height="29" Grid.Column="2">
-            <Label.Foreground>
-                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <LinearGradientBrush.RelativeTransform>
-                        <TransformGroup>
-                            <ScaleTransform CenterY="0.5" CenterX="0.5"/>
-                            <SkewTransform CenterY="0.5" CenterX="0.5"/>
-                            <RotateTransform Angle="90" CenterY="0.5" CenterX="0.5"/>
-                            <TranslateTransform/>
-                        </TransformGroup>
-                    </LinearGradientBrush.RelativeTransform>
-                    <GradientStop Color="#FF7BEEDA" Offset="0"/>
-                    <GradientStop Color="#FF18663C" Offset="1"/>
-                </LinearGradientBrush>
-            </Label.Foreground>
-        </Label>
         <Label Template="{StaticResource LevelLabel}" x:Name="l_level" Content="LV" FontSize="20" FontFamily="Calibri" Foreground="White" Margin="10,13,0,0" ClipToBounds="True"  VerticalAlignment="Top" Height="35" Width="35" HorizontalAlignment="Left" Grid.Column="1">
             <Label.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -71,9 +55,8 @@
                 </LinearGradientBrush>
             </Label.Background>
         </Label>
-        <Label x:Name="label6_Copy3" Content="LvlUp in:" HorizontalAlignment="Left" Margin="50,19,0,0" VerticalAlignment="Top" Foreground="#FF363636" FontSize="15" TextOptions.TextFormattingMode="Display" FontFamily="Source Sans Pro Semibold" Grid.Column="1" Height="28" Width="66"/>
         <Label x:Name="label6_Copy4" Content="POKE" HorizontalAlignment="Left" Margin="11,102,0,0" VerticalAlignment="Top" Foreground="#FF363636" FontSize="15" TextOptions.TextFormattingMode="Display" FontFamily="Source Sans Pro Semibold" Height="28" Width="89"/>
-        <ListBox ItemsSource="{Binding}" x:Name="PokeListBox" Margin="11,130,10,46" ScrollViewer.HorizontalScrollBarVisibility="Disabled" BorderBrush="#FF04C17C" Grid.ColumnSpan="2" SelectionMode="Extended" ContextMenu="{DynamicResource PokemonContextMenu}" HorizontalContentAlignment="Stretch" ItemTemplate="{DynamicResource PokemonDataTemplate}" ItemContainerStyle="{DynamicResource ListBoxItemStyleTransparentSelect}">
+        <ListBox ItemsSource="{Binding}" x:Name="PokeListBox" Margin="11,130,10,46" ScrollViewer.HorizontalScrollBarVisibility="Disabled" BorderBrush="#FF04C17C" Grid.ColumnSpan="2" SelectionMode="Extended" ContextMenu="{DynamicResource PokemonContextMenu}" HorizontalContentAlignment="Stretch" ItemTemplate="{DynamicResource PokemonDataTemplate}" ItemContainerStyle="{DynamicResource ListBoxItemStyleTransparentSelect}" VerticalContentAlignment="Top">
             <ListBox.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="White" Offset="0"/>
@@ -82,7 +65,7 @@
             </ListBox.Background>
             <ListBox.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <UniformGrid x:Name="PokeWrapper" Columns="3" SizeChanged="PokeWrapper_SizeChanged"/>
+                    <UniformGrid x:Name="PokeWrapper" Columns="3" SizeChanged="PokeWrapper_SizeChanged" VerticalAlignment="Top"/>
                 </ItemsPanelTemplate>
             </ListBox.ItemsPanel>
         </ListBox>
@@ -218,6 +201,17 @@
                     </LinearGradientBrush>
                 </Button.Background>
             </Button>
+        </Grid>
+        <Grid Grid.ColumnSpan="2" Grid.Column="1" Height="24" Margin="50,19,140,0" VerticalAlignment="Top">
+            <ProgressBar x:Name="LevelProgressBar" Margin="0" Foreground="#FF04C127"/>
+            <TextBlock x:Name="NextLevelInTextBox" HorizontalAlignment="Center" Margin="0" TextWrapping="Wrap" Text="00:00 (100/100)" VerticalAlignment="Center" Background="{x:Null}">
+                <TextBlock.Foreground>
+                    <LinearGradientBrush EndPoint="1,0.3" StartPoint="0,0.5">
+                        <GradientStop Color="#FF005895" Offset="0.005"/>
+                        <GradientStop Color="#FF00253A" Offset="1"/>
+                    </LinearGradientBrush>
+                </TextBlock.Foreground>
+            </TextBlock>
         </Grid>
     </Grid>
 </UserControl>

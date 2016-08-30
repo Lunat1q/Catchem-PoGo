@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Catchem", "Catchem\Catchem.csproj", "{354AF35C-1CA5-4043-A502-D19292F6FD33}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PoGo.PokeMobBot.CLI", "PoGo.PokeMobBot.CLI\PoGo.PokeMobBot.CLI.csproj", "{1FEA147E-F704-497B-A538-00B053B5F672}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PoGo.PokeMobBot.Logic", "PoGo.PokeMobBot.Logic\PoGo.PokeMobBot.Logic.csproj", "{0739E40D-C589-4AEB-93E5-EE8CD6773C60}"
@@ -10,8 +12,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokemonGo.RocketAPI", "PoGoAPI\PoGo.RocketAPI\PoGo.RocketAPI.csproj", "{05D2DA44-1B8E-4CF7-94ED-4D52451CD095}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "POGOProtos", "POGOProtos\POGOProtos.csproj", "{A03A7BB2-4F0B-467B-84B2-9A76E6AAE6FB}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Catchem", "Catchem\Catchem.csproj", "{354AF35C-1CA5-4043-A502-D19292F6FD33}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GPSOAuthSharp", "GPSOAuthSharp\GPSOAuthSharp.csproj", "{98C4DF94-B0EC-4AB7-9F3C-1874FA803034}"
 EndProject

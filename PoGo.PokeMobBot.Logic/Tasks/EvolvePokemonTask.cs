@@ -86,7 +86,13 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                             Candy = family.Candy_,
                             Level = PokemonInfo.GetLevel(pokemon),
                             Move1 = pokemon.Move1,
-                            Move2 = pokemon.Move2
+                            Move2 = pokemon.Move2,
+                            Type1 = setting.Type,
+                            Type2 = setting.Type2,
+                            Stats = setting.Stats,
+                            MaxCp = (int)PokemonInfo.GetMaxCpAtTrainerLevel(pokemon, session.Runtime.CurrentLevel),
+                            Stamina = pokemon.Stamina,
+                            MaxStamina = pokemon.StaminaMax
                         });
                     }
                     await DelayingEvolveUtils.Delay(session.LogicSettings.DelayEvolvePokemon, 0, session.LogicSettings.DelayEvolveVariation);

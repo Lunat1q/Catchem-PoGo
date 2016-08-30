@@ -2,6 +2,7 @@
 
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 using POGOProtos.Networking.Responses;
 using PoGo.PokeMobBot.Logic.State;
 using PoGo.PokeMobBot.Logic.Event;
@@ -26,37 +27,40 @@ namespace PoGo.PokeMobBot.Logic.Utils
         public int TotalStardust;
         public int TotalPokestops;
 
-        public void Dirty(Inventory inventory)
+        public async void Dirty(Inventory inventory)
         {
             if (ExportStats != null)
                 _currentStats = ExportStats;
 
-            ExportStats = GetCurrentInfo(inventory);
+            ExportStats = await GetCurrentInfo(inventory);
             DirtyEvent?.Invoke();
         }
 
         public void CheckLevelUp(ISession session)
         {
-            if (_currentStats != null)
+            if (_currentStats == null) return;
+            if (_currentStats.Level < ExportStats.Level)
             {
-                if (_currentStats.Level < ExportStats.Level)
+                var response = session.Inventory.GetLevelUpRewards(ExportStats);
+                session.Runtime.CurrentLevel = ExportStats.Level;
+                if (response.Result.ItemsAwarded.Any())
                 {
-                    var response = session.Inventory.GetLevelUpRewards(ExportStats);
-                    if (response.Result.ItemsAwarded.Any())
+                    session.EventDispatcher.Send(new PlayerLevelUpEvent
                     {
-                        session.EventDispatcher.Send(new PlayerLevelUpEvent
-                        {
-                            Items = StringUtils.GetSummedFriendlyNameOfItemAwardList(response.Result.ItemsAwarded)
-                        });
-                        session.EventDispatcher.Send(new InventoryNewItemsEvent()
-                        {
-                            Items = response.Result.ItemsAwarded.ToItemList()
-                        });
-                    }
+                        Items = StringUtils.GetSummedFriendlyNameOfItemAwardList(response.Result.ItemsAwarded)
+                    });
+                    session.EventDispatcher.Send(new InventoryNewItemsEvent()
+                    {
+                        Items = response.Result.ItemsAwarded.ToItemList()
+                    });
                 }
-
-                _currentStats = null;
             }
+            else if (session.Runtime.CurrentLevel == 0)
+            {
+                session.Runtime.CurrentLevel = ExportStats.Level;
+            }
+
+            _currentStats = null;
         }
 
         public event StatisticsDirtyDelegate DirtyEvent;
@@ -66,9 +70,9 @@ namespace PoGo.PokeMobBot.Logic.Utils
             return (DateTime.Now - _initSessionDateTime).ToString(@"dd\.hh\:mm\:ss");
         }
 
-        public StatsExport GetCurrentInfo(Inventory inventory)
+        public async Task<StatsExport> GetCurrentInfo(Inventory inventory)
         {
-            var stats = inventory.GetPlayerStats().Result;
+            var stats = await inventory.GetPlayerStats();
             var stat = stats?.FirstOrDefault();
             if (stat == null) return null;
             var ep = stat.NextLevelXp - stat.PrevLevelXp - (stat.Experience - stat.PrevLevelXp);

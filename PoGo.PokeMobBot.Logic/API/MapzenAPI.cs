@@ -257,7 +257,8 @@ namespace PoGo.PokeMobBot.Logic.API
                 List<GeoCoordinate> pointsToRequest = new List<GeoCoordinate>();
                 foreach (var point in points)
                 {
-                    if (pointsToRequest.Any(x=> LocationUtils.CalculateDistanceInMeters(x, point) <= 30)) continue;
+                    if (pointsToRequest.Any( x=> LocationUtils.CalculateDistanceInMeters(x, point) <= 30)) continue;
+                    if (CheckForExistingAltitude(point.Latitude, point.Longitude)) continue;
                     
                     pointsToRequest.Add(point);
                 }

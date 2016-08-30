@@ -19,6 +19,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
         public static async Task Execute(ISession session, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
+            if (!session.LogicSettings.CatchWildPokemon) return;
 
             var usedItems = await session.Inventory.GetUsedItems();
             if (usedItems == null || usedItems.Count <= 0) return;

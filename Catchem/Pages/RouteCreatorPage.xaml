@@ -22,18 +22,18 @@
         <Rectangle Fill="#FFF4F4F5" StrokeThickness="0" Grid.ColumnSpan="4" Grid.RowSpan="4"/>
         <Label x:Name="LblRouteCreatorHeading" Content="Route Creator" Margin="0,3" VerticalAlignment="Center" FontSize="18" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="34" Grid.Row="0" Grid.ColumnSpan="4"
                Grid.Column="0" />
-        <windowsPresentation:GMapControl x:Name="RouteCreatorMap" MouseWheel="RouteCreatorMap_MouseWheel" Grid.ColumnSpan="3" Grid.Row="1" Grid.RowSpan="2" Grid.Column="1" BorderBrush="#FF006444" BorderThickness="1" Margin="5,0,10,0" ContextMenuOpening="RouteCreatorMap_ContextMenuOpening">
+        <windowsPresentation:GMapControl x:Name="RouteCreatorMap" MouseWheel="RouteCreatorMap_MouseWheel" Grid.ColumnSpan="3" Grid.Row="1" Grid.RowSpan="2" Grid.Column="1" BorderBrush="#FF006444" BorderThickness="1" Margin="5,26,10,5" ContextMenuOpening="RouteCreatorMap_ContextMenuOpening">
             <windowsPresentation:GMapControl.ContextMenu>
                 <ContextMenu x:Name="RouteCm" >
-                    <MenuItem x:Name="MiSetStart" Header="Set start" Click="MiSetStart_Click"/>
-                    <MenuItem x:Name="MiSetWp" Header="Set waypoint" Click="MiSetWp_Click"/>
+                    <MenuItem x:Name="MiSetStart" Header="Set start" Click="MiSetStart_Click" IsCheckable="True" Icon="{Binding Converter={StaticResource LoadImageIconFromResource}, ConverterParameter='force_move'}" Height="24"/>
+                    <MenuItem x:Name="MiSetWp" Header="Set waypoint" Click="MiSetWp_Click" Icon="{Binding Converter={StaticResource LoadImageIconFromResource}, ConverterParameter='wp'}" Height="24"/>
                 </ContextMenu>
             </windowsPresentation:GMapControl.ContextMenu>
         </windowsPresentation:GMapControl>
         <Grid Grid.Row="4" Grid.Column="0"  Grid.ColumnSpan="4">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="155"/>
-                <ColumnDefinition Width="253*"/>
+                <ColumnDefinition Width="172"/>
+                <ColumnDefinition Width="236*"/>
                 <ColumnDefinition Width="93*"/>
                 <ColumnDefinition Width="259*"/>
             </Grid.ColumnDefinitions>
@@ -47,8 +47,9 @@
             </Rectangle>
             <Slider x:Name="SlMapZoom" Margin="64,4,10,0" VerticalAlignment="Top" RenderTransformOrigin="3.583,0.25" Height="25" Minimum="2" Maximum="18" TickPlacement="BottomRight" Value="18" SmallChange="0" LargeChange="3" ValueChanged="sl_mapZoom_ValueChanged" Grid.Column="3"/>
             <Label x:Name="LblZoom" Content="Zoom:" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Width="49" Height="26" Grid.Column="3"/>
-            <Label Grid.Column="0" x:Name="PointsNumber" Content="Number of waypoints: 0" HorizontalAlignment="Left" Margin="10,2,0,2" VerticalAlignment="Center" Height="26" Width="137"/>
-            <CheckBox x:Name="PrefferMapzenOverGoogleCb" Content="Preffer Mapzen Routing Over Google" Grid.Column="1" Margin="10,8,0,8" VerticalAlignment="Center" Height="14" Checked="PrefferMapzenOverGoogleCb_Checked"/>
+            <Label Grid.Column="0" x:Name="PointsNumber" Content="Number of waypoints: 0" HorizontalAlignment="Left" Margin="10,2,0,2" VerticalAlignment="Center" Height="26" Width="162"/>
+            <CheckBox x:Name="PrefferMapzenOverGoogleCb" Content="Preffer Mapzen Routing Over Google" Grid.Column="1" Margin="10,0,0,0" VerticalAlignment="Center" Checked="PrefferMapzenOverGoogleCb_Checked" Unchecked="PrefferMapzenOverGoogleCb_Checked"/>
+            <CheckBox x:Name="ManualRoute" Content="Manual Route" Grid.Column="2" Margin="0,7" VerticalAlignment="Center" Checked="ManualRoute_Checked" Unchecked="ManualRoute_Checked"/>
         </Grid>
         <Button x:Name="BuildTheRoute" Content="Build the route" Margin="0,0,10,0" Grid.Row="3" VerticalAlignment="Center" Width="170" Height="27" Grid.Column="3" Style="{DynamicResource flatbutton}" HorizontalAlignment="Right" FontWeight="Bold" Click="BuildTheRoute_Click">
             <Button.Background>
@@ -81,5 +82,6 @@
         </Button>
         <Label x:Name="CurrentRoutesLabel_Copy" Content="Name:" HorizontalAlignment="Left" Margin="10,0,0,0" Grid.Row="3"
         	Grid.Column="0" VerticalAlignment="Center" Width="49"/>
+        <ProgressBar x:Name="BuildingProgressBar" Grid.Column="3" Height="10" Margin="5,16,10,0" Grid.Row="1" VerticalAlignment="Top"/>
     </Grid>
 </UserControl>

@@ -90,6 +90,8 @@ namespace PoGo.PokeMobBot.Logic
 
         CustomRoute CustomRoute { get; }
 
+        bool LootPokestops { get; }
+
         //MapzenAPI
         bool UseMapzenApiElevation { get; }
         string MapzenApiElevationKey { get; }

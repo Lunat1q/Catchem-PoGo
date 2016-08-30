@@ -53,17 +53,33 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                 var hatched = pokemons.FirstOrDefault(x => !x.IsEgg && x.Id == incubator.PokemonId);
                 if (hatched == null) continue;
 
-                session.EventDispatcher.Send(new EggHatchedEvent
+                var pokemonSettings = await session.Inventory.GetPokemonSettings();
+                var pokemonFamilies = await session.Inventory.GetPokemonFamilies();
+
+                var setting =
+                    pokemonSettings.FirstOrDefault(q => q.PokemonId == hatched?.PokemonId);
+                var family = pokemonFamilies.FirstOrDefault(q => setting != null && q.FamilyId == setting.FamilyId);
+                if (family != null && setting != null)
                 {
-                    Id = hatched.Id,
-                    PokemonId = hatched.PokemonId,
-                    Level = PokemonInfo.GetLevel(hatched),
-                    Cp = hatched.Cp,
-                    MaxCp = PokemonInfo.CalculateMaxCp(hatched),
-                    Perfection = Math.Round(hatched.CalculatePokemonPerfection(), 2),
-                    Move1 = hatched.Move1,
-                    Move2 = hatched.Move2
-                });
+                    session.EventDispatcher.Send(new EggHatchedEvent
+                    {
+                        Id = hatched.Id,
+                        PokemonId = hatched.PokemonId,
+                        Level = PokemonInfo.GetLevel(hatched),
+                        Cp = hatched.Cp,
+                        MaxCp = (int) PokemonInfo.GetMaxCpAtTrainerLevel(hatched, session.Runtime.CurrentLevel),
+                        Perfection = Math.Round(hatched.CalculatePokemonPerfection(), 2),
+                        Move1 = hatched.Move1,
+                        Move2 = hatched.Move2,
+                        Candy = family.Candy_,
+                        Family = family.FamilyId,
+                        Type1 = setting.Type,
+                        Type2 = setting.Type2,
+                        Stats = setting.Stats,
+                        Stamina = hatched.Stamina,
+                        MaxStamina = hatched.StaminaMax
+                    });
+                }
             }
 
             var newRememberedIncubators = new List<IncubatorUsage>();
