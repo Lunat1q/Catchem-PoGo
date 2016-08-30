@@ -87,6 +87,10 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                 {
 
                     session.State = BotState.Walk;
+
+                    var distance = LocationUtils.CalculateDistanceInMeters(session.Client.CurrentLatitude,
+                    session.Client.CurrentLongitude, wp.Latitude, wp.Longitude);
+
                     await navi.HumanPathWalking(
                         session,
                         wp,
@@ -106,7 +110,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                         cancellationToken
                         );
                     session.State = BotState.Idle;
-
+                    await eggWalker.ApplyDistance(distance, cancellationToken);
                     await MaintenanceTask.Execute(session, cancellationToken);
                 }
             }

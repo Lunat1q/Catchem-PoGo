@@ -122,7 +122,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                 session.EventDispatcher.Send(new PokemonDisappearEvent {Pokemon = pokemon.BaseMapPokemon});
 
                 // always wait the delay amount between catches, ideally to prevent you from making another call too early after a catch event
-                await Task.Delay(session.LogicSettings.DelayBetweenPokemonCatch);
+                await Task.Delay(session.LogicSettings.DelayBetweenPokemonCatch, cancellationToken);
             }
             return;
         }

@@ -326,10 +326,13 @@ namespace PoGo.PokeMobBot.Logic.Tasks
 #if DEBUG
                             Logger.Write("Skipping Pokestop due to the rng god's will.", LogLevel.Debug);
 #endif
-                            pokestopList.RemoveAt(0);
+                            if (pokestopList.Count > 0)
+                                pokestopList.RemoveAt(0);
                         }
                     }
                 }
+                if (pokestopList.Count == 0)
+                    break;
 
                 var pokeStop = pokestopList[0];
                 pokestopList.RemoveAt(0);
@@ -370,7 +373,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                         return true;
 
                     } ,
-                    cancellationToken, session, waypointsToVisit: bestRoute);
+                    cancellationToken, session, waypointsToVisit: bestRoute, eggWalker: eggWalker);
                 if (!session.ForceMoveJustDone)
                 {
                     var timesZeroXPawarded = 0;

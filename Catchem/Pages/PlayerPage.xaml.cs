@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -245,6 +245,16 @@ namespace Catchem.Pages
             var uGrid = sender as UniformGrid;
             if (uGrid == null) return;
             uGrid.Columns = (int)(uGrid.ActualWidth/150);
+        }
+        private async void mi_useIncense_Click(object sender, RoutedEventArgs e)
+        {
+            Action<IEvent> action = (evt) => CurSession.EventDispatcher.Send(evt);
+            await UseIncenseFromMenu.Execute(_bot.Session);
+        }
+
+        private void ItemListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
         }
     }
 }

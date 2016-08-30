@@ -326,6 +326,7 @@ namespace Catchem.Classes
             {
                 Session.Translation = Translation.Load(Logic);
             }
+            CheckActiveIncense();
             LaunchBot();
         }
 
@@ -581,6 +582,10 @@ namespace Catchem.Classes
                 var stopSec = 10 * 60 + _rnd.Next(60 * 5) + (int)(new [] { pokestopSec, pokemonSec, xpSec, stardustSec }).Max();
                 var stopMs = stopSec * 1000;
 
+//#if DEBUG
+//                stopMs /= 1000;
+//#endif
+
                 Session.EventDispatcher.Send(new WarnEvent
                 {
                     Message =
@@ -603,12 +608,13 @@ namespace Catchem.Classes
                     Message = "Bot pause routine canceled"
                 });
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 Session.EventDispatcher.Send(new WarnEvent
                 {
                     Message = "Bot pause routine failed badly"
                 });
+                Logger.Write($"[PAUSE FAIL] Error: {ex.Message}", LogLevel.Error);
             }
         }
     }
