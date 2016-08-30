@@ -344,8 +344,13 @@ namespace Catchem.Pages
             var start = true;
             foreach (var wp in selectedRoute.InitialWp)
             {
-                CreateNewMarker(new PointLatLng(wp.Latitude, wp.Longitude), start);
-                if (start) start = false;
+                var point = new PointLatLng(wp.Latitude, wp.Longitude);
+                CreateNewMarker(point, start);
+                if (start)
+                {
+                    RouteCreatorMap.Position = point;
+                    start = false;
+                }
             }
         }
 
