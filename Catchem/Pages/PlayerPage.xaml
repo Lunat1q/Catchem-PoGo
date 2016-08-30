@@ -203,15 +203,15 @@
             </Button>
         </Grid>
         <Grid Grid.ColumnSpan="2" Grid.Column="1" Height="24" Margin="50,19,140,0" VerticalAlignment="Top">
-            <ProgressBar x:Name="LevelProgressBar" Margin="0"/>
-            <TextBox x:Name="NextLevelInTextBox" HorizontalAlignment="Center" Margin="0" TextWrapping="Wrap" Text="00:00 (100/100)" VerticalAlignment="Center" Background="{x:Null}" SelectionBrush="{x:Null}" BorderBrush="{x:Null}">
-                <TextBox.Foreground>
+            <ProgressBar x:Name="LevelProgressBar" Margin="0" Foreground="#FF04C127"/>
+            <TextBlock x:Name="NextLevelInTextBox" HorizontalAlignment="Center" Margin="0" TextWrapping="Wrap" Text="00:00 (100/100)" VerticalAlignment="Center" Background="{x:Null}">
+                <TextBlock.Foreground>
                     <LinearGradientBrush EndPoint="1,0.3" StartPoint="0,0.5">
                         <GradientStop Color="#FF005895" Offset="0.005"/>
                         <GradientStop Color="#FF00253A" Offset="1"/>
                     </LinearGradientBrush>
-                </TextBox.Foreground>
-            </TextBox>
+                </TextBlock.Foreground>
+            </TextBlock>
         </Grid>
     </Grid>
 </UserControl>
