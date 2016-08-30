@@ -195,7 +195,8 @@ namespace Catchem.Pages
             double level, PokemonMove? move1, PokemonMove? move2)
         {
             if ((!_tlgrmSettings.AutoReportSelectedPokemon || !_tlgrmSettings.AutoReportPokemon.Contains(pokemon)) &&
-                (cp <= _tlgrmSettings.ReportAllPokemonsAboveCp || _tlgrmSettings.ReportAllPokemonsAboveCp <= 0))
+                (cp <= _tlgrmSettings.ReportAllPokemonsAboveCp || _tlgrmSettings.UseCpReport) &&
+                (iv <= _tlgrmSettings.ReportAllPokemonsAboveIv || _tlgrmSettings.UseIvReport))
                 return;
             string messageToSend =
                 $"[{botNick}]({profileName}) got {pokemon}! CP:{cp}, Iv:{iv.ToN1()}, Level:{level.ToN1()}, Move 1: {move1}, Move 2: {move2}";
@@ -241,6 +242,9 @@ namespace Catchem.Pages
                             break;
                         case "reportabovecp":
                             HandleReportAboveCp(t.ChatId, t.Args);
+                            break;
+                        case "reportaboveiv":
+                            HandleReportAboveIv(t.ChatId, t.Args);
                             break;
                         default:
                             HandleUnknownCommand(t.ChatId);
@@ -420,7 +424,8 @@ namespace Catchem.Pages
                           "- status [bot Number] \n" +
                           "- top [bot Number] [cp/iv] \n" +
                           "- report [enable/disable] \n" +
-                          "- reportabovecp [cp (0 to disable)]";
+                          "- reportabovecp [cp (0 to disable)] \n" +
+                          "- reportaboveiv [iv (0 to disable)]";
 
             TlgrmBot.SendToTelegram(helpMsg, chatId);
         }
@@ -498,6 +503,30 @@ namespace Catchem.Pages
             TlgrmBot.SendToTelegram("Error Invalid CP Entered!", chatId);
         }
 
+
+        private void HandleReportAboveIv(long chatId, string[] args)
+        {
+            if (args.Length <= 0 || args.Length > 1)
+            {
+                TlgrmBot.SendToTelegram("Error Invalid Command Structure!", chatId);
+                return;
+            }
+            int iv;
+            if (int.TryParse(args[0], out iv))
+            {
+                if (iv < 0 || iv > 100)
+                {
+                    TlgrmBot.SendToTelegram("Error Invalid IV Entered!", chatId);
+                    return;
+                }
+                TbReportAllPokemonsAboveIv.Text = iv.ToString();
+                SaveSettings();
+                TlgrmBot.SendToTelegram($"Set Report Above IV to: {iv}", chatId);
+                return;
+            }
+            TlgrmBot.SendToTelegram("Error Invalid IV Entered!", chatId);
+        }
+
         private async void TelegramLogWorker()
         {
             while (!_windowClosing)
@@ -537,6 +566,11 @@ namespace Catchem.Pages
             public bool AutoReportSelectedPokemon = false;
             public string ApiKey = "";
             public int ReportAllPokemonsAboveCp = 0;
+            public int ReportAllPokemonsAboveIv = 0;
+            [JsonIgnore]
+            public bool UseCpReport => (ReportAllPokemonsAboveCp > 0);
+            [JsonIgnore]
+            public bool UseIvReport => (ReportAllPokemonsAboveIv > 0);
         }
 
         public class TelegramBotOwner : CatchemNotified
