@@ -326,6 +326,7 @@ namespace Catchem.Classes
             {
                 Session.Translation = Translation.Load(Logic);
             }
+            CheckActiveIncense();
             LaunchBot();
         }
 

@@ -13,10 +13,6 @@ using PoGo.PokeMobBot.Logic.Event;
 using PoGo.PokeMobBot.Logic.State;
 using PoGo.PokeMobBot.Logic.Tasks;
 using POGOProtos.Enums;
-using PoGo.PokeMobBot.Logic.Logging;
-using System.Threading.Tasks;
-using POGOProtos.Networking.Responses;
-using POGOProtos.Inventory.Item;
 
 namespace Catchem.Pages
 {
@@ -256,40 +252,9 @@ namespace Catchem.Pages
             await UseIncenseFromMenu.Execute(_bot.Session);
         }
 
-        public class UseIncenseFromMenu
+        private void ItemListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            public static async Task Execute(ISession session)
-            {
-                await session.Inventory.RefreshCachedInventory();
-                var currentAmountOfIncense = await session.Inventory.GetItemAmountByType(ItemId.ItemIncenseOrdinary);
-                if (currentAmountOfIncense == 0)
-                {
-                    Logger.Write("No Incense available");
-                    return;
-                }
-                else
-                {
-                    Logger.Write("Start using Incense");
-                    
-                }
-                var UseIncense = await session.Inventory.UseIncense();
-                if (UseIncense.Result == UseIncenseResponse.Types.Result.Success)
-                {
-                    Logger.Write("Incense activated");
-                    session.EventDispatcher.Send(new WarnEvent
-                    {
-                        Message = "Incense activated"
-                    });
-                }
-                else if (UseIncense.Result == UseIncenseResponse.Types.Result.NoneInInventory)
-                {
-                    Logger.Write("Huh?");
-                }
-                else if (UseIncense.Result == UseIncenseResponse.Types.Result.IncenseAlreadyActive || (UseIncense.AppliedIncense == null))
-                {
-                    Logger.Write("You are already using Incense");
-                }
-            }
+
         }
     }
 }
