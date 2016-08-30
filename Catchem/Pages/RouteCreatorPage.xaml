@@ -1,9 +1,10 @@
-﻿<UserControl x:Class="Catchem.Pages.RouteCreatorPage"
+﻿<UserControl x:Name="RouteMapCreator" x:Class="Catchem.Pages.RouteCreatorPage"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:windowsPresentation="clr-namespace:GMap.NET.WindowsPresentation;assembly=GMap.NET.WindowsPresentation"
+             xmlns:pages="clr-namespace:Catchem.Pages"
              mc:Ignorable="d" d:DesignHeight="600" d:DesignWidth="760">
     <Grid x:Name="RouteCreatorGrid">
         <Grid.ColumnDefinitions>
@@ -24,8 +25,8 @@
                Grid.Column="0" />
         <windowsPresentation:GMapControl x:Name="RouteCreatorMap" MouseWheel="RouteCreatorMap_MouseWheel" Grid.ColumnSpan="3" Grid.Row="1" Grid.RowSpan="2" Grid.Column="1" BorderBrush="#FF006444" BorderThickness="1" Margin="5,26,10,5" ContextMenuOpening="RouteCreatorMap_ContextMenuOpening">
             <windowsPresentation:GMapControl.ContextMenu>
-                <ContextMenu x:Name="RouteCm" >
-                    <MenuItem x:Name="MiSetStart" Header="Set start" Click="MiSetStart_Click" IsCheckable="True" Icon="{Binding Converter={StaticResource LoadImageIconFromResource}, ConverterParameter='force_move'}" Height="24"/>
+                <ContextMenu x:Name="RouteCm">
+                    <MenuItem x:Name="MiSetStart" Header="Set start" Click="MiSetStart_Click" Icon="{Binding Converter={StaticResource LoadImageIconFromResource}, ConverterParameter='force_move'}" Height="24"/>
                     <MenuItem x:Name="MiSetWp" Header="Set waypoint" Click="MiSetWp_Click" Icon="{Binding Converter={StaticResource LoadImageIconFromResource}, ConverterParameter='wp'}" Height="24"/>
                 </ContextMenu>
             </windowsPresentation:GMapControl.ContextMenu>
