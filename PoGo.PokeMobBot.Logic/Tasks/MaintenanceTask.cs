@@ -38,8 +38,6 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                 {
                     await RenamePokemonTask.Execute(session, cancellationToken);
                 }
-                //Do we need this?
-                //await DisplayPokemonStatsTask.Execute(session);
             }
             session.State = prevState;
         }

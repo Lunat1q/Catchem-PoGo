@@ -32,7 +32,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                 cancellationToken.ThrowIfCancellationRequested();
                 session.EventDispatcher.Send(new ItemRecycledEvent { Id = item.ItemId, Count = item.Count });
                 await session.Client.Inventory.RecycleItem(item.ItemId, item.Count);
-                await Task.Delay(session.LogicSettings.DelayRecyleItem, cancellationToken);
+                await Task.Delay(session.LogicSettings.DelayRecycleItem, cancellationToken);
             }
 
             await OptimizedRecycleBalls(session, cancellationToken);
@@ -178,7 +178,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                 cancellationToken.ThrowIfCancellationRequested();
                 session.EventDispatcher.Send(new ItemRecycledEvent { Id = item, Count = itemsToRecycle });
                 await session.Client.Inventory.RecycleItem(item, itemsToRecycle);
-                await Task.Delay(session.LogicSettings.DelayRecyleItem, cancellationToken);
+                await Task.Delay(session.LogicSettings.DelayRecycleItem, cancellationToken);
             }
         }
     }

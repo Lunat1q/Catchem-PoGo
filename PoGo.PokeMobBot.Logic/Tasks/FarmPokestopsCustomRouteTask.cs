@@ -80,6 +80,8 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                 Coords = nextPath
             });
 
+            long nextMaintenceStamp = 0;
+
             while (!cancellationToken.IsCancellationRequested)
             {
 
@@ -87,6 +89,10 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                 {
 
                     session.State = BotState.Walk;
+
+                    var distance = LocationUtils.CalculateDistanceInMeters(session.Client.CurrentLatitude,
+                    session.Client.CurrentLongitude, wp.Latitude, wp.Longitude);
+
                     await navi.HumanPathWalking(
                         session,
                         wp,
@@ -106,8 +112,10 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                         cancellationToken
                         );
                     session.State = BotState.Idle;
-
+                    await eggWalker.ApplyDistance(distance, cancellationToken);
+                    if (nextMaintenceStamp >= DateTime.UtcNow.ToUnixTime()) continue;
                     await MaintenanceTask.Execute(session, cancellationToken);
+                    nextMaintenceStamp = DateTime.UtcNow.AddMinutes(3).ToUnixTime();
                 }
             }
         }

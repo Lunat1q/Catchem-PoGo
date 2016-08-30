@@ -23,6 +23,8 @@ namespace PoGo.PokeMobBot.Logic.Tasks
         {
             cancellationToken.ThrowIfCancellationRequested();
 
+            if (!session.LogicSettings.CatchWildPokemon) return;
+
             Logger.Write(session.Translation.GetTranslation(TranslationString.LookingForPokemon), LogLevel.Debug, session: session);
 
             var pokemons = await GetWildPokemons(session);

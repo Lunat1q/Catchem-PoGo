@@ -802,7 +802,7 @@
                                 Height="26"
                                 Margin="10,110,0,0"
                                 VerticalAlignment="Top"
-                                Content="Amount Of BerriesTo Keep" Grid.ColumnSpan="2" />
+                                Content="Amount Of Berries To Keep" Grid.ColumnSpan="2" />
                         <TextBox x:Name="c_TotalAmountOfRazzToKeep"
                                 Grid.Column="2"
                                 Height="29"
@@ -1641,12 +1641,12 @@
                                 Template="{StaticResource pogo}"
                                 TextChanged="BotPropertyChanged"
                                 TextWrapping="Wrap" />
-                        <Label x:Name="c_DelayRecyleItemLabel"
+                        <Label x:Name="c_DelayRecycleItemLabel"
                                 Height="26"
                                 Margin="10,484,0,0"
                                 VerticalAlignment="Top"
-                                Content="Delay Recyle Item" />
-                        <TextBox x:Name="c_DelayRecyleItem"
+                                Content="Delay Recycle Item" />
+                        <TextBox x:Name="c_DelayRecycleItem"
                                 Grid.Column="1"
                                 Height="29"
                                 Margin="5,483,10,0"

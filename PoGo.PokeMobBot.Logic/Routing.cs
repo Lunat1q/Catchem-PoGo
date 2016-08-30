@@ -24,7 +24,7 @@ namespace PoGo.PokeMobBot.Logic
             {
                 session.EventDispatcher.Send(new WarnEvent
                 {
-                    Message = "Mapzen Valhalla API Key is Empty!"
+                    Message = "MobBotRouting API Key is Empty!"
                 });
                 return new RoutingResponse();
             }

@@ -36,9 +36,9 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                 session.EventDispatcher.Send(new ItemRecycledEvent { Id = item, Count = itemsToRecycle });
                 await session.Client.Inventory.RecycleItem(item, itemsToRecycle);
                 if (session.LogicSettings.Teleport)
-                    await Task.Delay(session.LogicSettings.DelayRecyleItem, cancellationToken);
+                    await Task.Delay(session.LogicSettings.DelayRecycleItem, cancellationToken);
                 else
-                    await DelayingUtils.Delay(session.LogicSettings.DelayRecyleItem, 500);
+                    await DelayingUtils.Delay(session.LogicSettings.DelayRecycleItem, 500);
             }
         }
     }

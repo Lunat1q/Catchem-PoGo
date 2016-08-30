@@ -131,6 +131,7 @@ namespace PoGo.PokeMobBot.Logic.API
                     request.Proxy.Credentials = CredentialCache.DefaultCredentials;
 
                 request.AutomaticDecompression = DecompressionMethods.GZip;
+                request.Timeout = 60000;
                 using (var response = (HttpWebResponse)request.GetResponse())
                 using (var stream = response.GetResponseStream())
                     if (stream != null)
@@ -211,7 +212,8 @@ namespace PoGo.PokeMobBot.Logic.API
         }
         public bool CheckForExistingAltitude(double lat, double lon)
         {
-            return _knownAltitude.Any(x => LocationUtils.CalculateDistanceInMeters(x.Lat, x.Lon, lat, lon) < 30);
+            var knownTemp = _knownAltitude.ToArray();
+            return knownTemp.Any(x => LocationUtils.CalculateDistanceInMeters(x.Lat, x.Lon, lat, lon) < 30);
         }
 
         public double GetExistingAltitude(double lat, double lon)

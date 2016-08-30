@@ -101,6 +101,10 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                     normalizedRecticleSize =
                         Rng.NextInRange(session.LogicSettings.ThrowAccuracyMin, session.LogicSettings.ThrowAccuracyMax)*
                         1.85 + 0.1; // 0.1..1.95
+                    if (normalizedRecticleSize > 1.95)
+                        normalizedRecticleSize = 1.95;
+                    else if (normalizedRecticleSize < 0.1)
+                        normalizedRecticleSize = 0.1;
                     spinModifier = Rng.NextDouble() > session.LogicSettings.ThrowSpinFrequency ? 0.0 : 1.0;
                 }
                 else
@@ -108,7 +112,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                     normalizedRecticleSize = 1.95;
                     spinModifier = 1.00;
                 }
-                                Func<ItemId, string> returnRealBallName = a =>
+                Func<ItemId, string> returnRealBallName = a =>
                 {
                     switch (a)
                     {
@@ -277,7 +281,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                 ? session.LogicSettings.UseGreatBallBelowCatchProbability/100
                 : session.LogicSettings.UseGreatBallBelowCatchProbability;
 
-            //await session.Inventory.RefreshCachedInventory();
+            await session.Inventory.RefreshCachedInventory();
             var pokeBallsCount = await session.Inventory.GetItemAmountByType(ItemId.ItemPokeBall);
             var greatBallsCount = await session.Inventory.GetItemAmountByType(ItemId.ItemGreatBall);
             var ultraBallsCount = await session.Inventory.GetItemAmountByType(ItemId.ItemUltraBall);
