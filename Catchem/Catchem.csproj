@@ -313,7 +313,8 @@
     <None Include="Config\Translations\translation.zh_CN.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Config\Translations\translation.zh_tw.json">
+    <None Include="Config\Translations\translation.zh_HK.json" />
+    <None Include="Config\Translations\translation.zh_TW.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
