@@ -94,7 +94,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                 {
                     Name = !string.IsNullOrEmpty(pokemon.Nickname)
                         ? pokemon.Nickname
-                        : pokemon.PokemonId.ToString(),
+                        : session.Translation.GetPokemonName(pokemon.PokemonId),
                     Uid = pokemonId,
                     Id = pokemon.PokemonId,
                     Family = family.FamilyId,
