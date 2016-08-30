@@ -33,11 +33,6 @@ namespace Catchem.Pages
         private bool _prefferMapzen;
         private bool _manualRoute;
 
-        public bool StartExist
-        {
-            get { return _mapPoints.Any(x => x.IsStart); }
-        }
-
         public void SetGlobalSettings(CatchemSettings settings)
         {
             _globalSettings = settings;
@@ -113,7 +108,6 @@ namespace Catchem.Pages
             _mapPoints.Add(marker);
             RouteCreatorMap.Markers.Add(marker.Marker);
             UpdateMarkerCounter();
-            CheckRouteServicePreffer();
         }
 
         private void UpdateMarkerCounter()
@@ -127,7 +121,6 @@ namespace Catchem.Pages
             rm.Marker.Clear();
             _mapPoints.Remove(rm);
             UpdateMarkerCounter();
-            CheckRouteServicePreffer();
         }
 
         private void MiSetStart_Click(object sender, RoutedEventArgs e)
@@ -152,7 +145,7 @@ namespace Catchem.Pages
         {
             _builded = false;
             var rPoint = point;
-            var mapPos = RouteCreatorMap.FromLocalToLatLng((int) rPoint.X, (int) rPoint.Y);
+            var mapPos = RouteCreatorMap.FromLocalToLatLng((int)rPoint.X, (int)rPoint.Y);
             CreateNewMarker(mapPos, starter);
         }
 
@@ -215,24 +208,14 @@ namespace Catchem.Pages
                 : (botGoogle != null ? "google" : "mapzen");
         }
 
-        private void CheckRouteServicePreffer()
+        private async void BuildTheRoute_Click(object sender, RoutedEventArgs e)
         {
+            if (_mapPoints.Count < 2) return;
             if (_mapPoints.Count > 20 && !_manualRoute)
             {
                 _prefferMapzen = true;
                 PrefferMapzenOverGoogleCb.IsChecked = true;
-                PrefferMapzenOverGoogleCb.IsEnabled = false;
             }
-            else if(_mapPoints.Count <= 20 && (_manualRoute || !PrefferMapzenOverGoogleCb.IsEnabled))
-            {
-                PrefferMapzenOverGoogleCb.IsEnabled = true;
-            }
-        }
-
-        private async void BuildTheRoute_Click(object sender, RoutedEventArgs e)
-        {
-            if (_mapPoints.Count < 2) return;
-            CheckRouteServicePreffer();
             if (_mapPoints.Count > 47 && !_manualRoute)
             {
                 MessageBox.Show(
@@ -291,7 +274,7 @@ namespace Catchem.Pages
             {
                 _currentRoute.Points?.Add(new PointLatLng(item.Latitude, item.Longitude));
             }
-            
+
             _currentRoute?.RegenerateShape(RouteCreatorMap);
             var path = _currentRoute?.Shape as Path;
             if (path != null)
@@ -302,7 +285,7 @@ namespace Catchem.Pages
                        x => !string.IsNullOrEmpty(x.GlobalSettings.LocationSettings.MapzenApiElevationKey));
             if (bot != null)
             {
-               await bot.Session.MapzenApi.FillAltitude(_buildedRoute.ToList());
+                await bot.Session.MapzenApi.FillAltitude(_buildedRoute.ToList());
             }
             BuildingProgressBar.Value = 100;
             _builded = true;
@@ -364,7 +347,6 @@ namespace Catchem.Pages
                 CreateNewMarker(new PointLatLng(wp.Latitude, wp.Longitude), start);
                 if (start) start = false;
             }
-            RouteCreatorMap.ZoomAndCenterMarkers(null);
         }
 
         private void PrefferMapzenOverGoogleCb_Checked(object sender, RoutedEventArgs e)
