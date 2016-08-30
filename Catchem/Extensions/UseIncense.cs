@@ -4,26 +4,42 @@ using PoGo.PokeMobBot.Logic.Logging;
 using System.Threading.Tasks;
 using POGOProtos.Networking.Responses;
 using POGOProtos.Inventory.Item;
-using POGOProtos.Networking.Requests;
-using POGOProtos.Networking.Requests.Messages;
+using Catchem.Classes;
 
 public class UseIncenseFromMenu
 {
-    public static async Task Execute(ISession session)
+    public static async Task<bool> Execute(ISession session, ItemUiData item)
     {
-        await session.Inventory.RefreshCachedInventory();
-        var currentAmountOfIncense = await session.Inventory.GetItemAmountByType(ItemId.ItemIncenseOrdinary);
+        var itemToUse = new ItemId();
+        switch (item.Name)
+        {
+            case "ItemIncenseOrdinary":
+                itemToUse = ItemId.ItemIncenseOrdinary;
+                break;
+            case "ItemIncenseSpicy":
+                itemToUse = ItemId.ItemIncenseSpicy;
+                break;
+            case "ItemIncenseCool":
+                itemToUse = ItemId.ItemIncenseCool;
+                break;
+            case "ItemIncenseFloral":
+                itemToUse = ItemId.ItemIncenseFloral;
+                break;
+            default:
+                itemToUse = ItemId.ItemIncenseOrdinary;
+                break;
+        }
+        var currentAmountOfIncense = await session.Inventory.GetItemAmountByType(itemToUse);
         if (currentAmountOfIncense == 0)
         {
             Logger.Write("No Incense available");
-            return;
+            return false;
         }
         else
         {
             Logger.Write("Start using Incense");
-
         }
-        var UseIncense = await session.Inventory.UseIncense();
+        var UseIncense = await session.Inventory.UseIncense(itemToUse);
         if (UseIncense.Result == UseIncenseResponse.Types.Result.Success)
         {
             Logger.Write("Incense activated");
@@ -31,14 +47,16 @@ public class UseIncenseFromMenu
             {
                 Message = "Incense activated"
             });
+            return true;
         }
         else if (UseIncense.Result == UseIncenseResponse.Types.Result.NoneInInventory)
         {
-            Logger.Write("Huh?");
+            Logger.Write("No Incense available");
             session.EventDispatcher.Send(new WarnEvent
             {
                 Message = "No Incense available"
             });
+            return false;
         }
         else if (UseIncense.Result == UseIncenseResponse.Types.Result.IncenseAlreadyActive || (UseIncense.AppliedIncense == null))
         {
@@ -47,14 +65,10 @@ public class UseIncenseFromMenu
             {
                 Message = "Incense already active"
             });
-        }
-    }
-}
-namespace PokemonGo.RocketAPI.Rpc
-{
-    public async Task<bool> CheckIncense()
-    {
-        await ;
+            return true;
 
+        }
+        return false;
     }
 }
+

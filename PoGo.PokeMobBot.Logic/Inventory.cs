@@ -565,9 +565,9 @@ namespace PoGo.PokeMobBot.Logic
             var favoriteResult = await _client.Inventory.SetFavoritePokemon(pokemonid, favorite);
             return favoriteResult;
         }
-        public async Task<UseIncenseResponse> UseIncense()
+        public async Task<UseIncenseResponse> UseIncense(ItemId item)
         {
-            var UseIncense = await _client.Inventory.UseIncense(ItemId.ItemIncenseOrdinary);
+            var UseIncense = await _client.Inventory.UseIncense(item);
             return UseIncense;
         }
     }

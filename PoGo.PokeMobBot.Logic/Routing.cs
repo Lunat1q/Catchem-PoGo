@@ -19,18 +19,6 @@ namespace PoGo.PokeMobBot.Logic
         public static RoutingResponse GetRoute(GeoCoordinate start, GeoCoordinate dest, ISession session)
         {
 
-<<<<<<< HEAD
-=======
-            string apiKey = session.LogicSettings.MobBotRoutingApiKey;
-            if (string.IsNullOrEmpty(apiKey))
-            {
-                session.EventDispatcher.Send(new WarnEvent
-                {
-                    Message = "MobBotRouting API Key is Empty!"
-                });
-                return new RoutingResponse();
-            }
->>>>>>> e1442858da0e69186d705026e2f9f170af88b305
             try
             {
                 Logger.Write("Requesting routing info from localhost", LogLevel.Debug);
