@@ -75,6 +75,7 @@
                 <ContextMenu>
                     <MenuItem x:Name="mi_recycleItem" Header="Recycle item" Click="mi_recycleItem_Click"/>
                     <MenuItem x:Name="mi_refreshItems" Header="Refresh item list" Click="mi_refreshItems_Click" />
+                    <MenuItem x:Name="mi_useIncense" Header="Use Incense" Click="mi_useIncense_Click" />
                 </ContextMenu>
             </ListBox.ContextMenu>
             <ListBox.Background>
