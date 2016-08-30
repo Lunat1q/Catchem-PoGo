@@ -145,7 +145,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                     await session.Client.Player.UpdatePlayerLocation(fortInfo.Latitude, fortInfo.Longitude,
                         session.Client.Settings.DefaultAltitude);
                 else
-                    await MoveToPokestop(session, cancellationToken, pokeStop, bestRoute);
+                    await MoveToPokestop(session, cancellationToken, pokeStop, bestRoute, eggWalker);
 
                 bestRoute.Clear();
 
@@ -170,7 +170,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                         if (fortSearch.ExperienceAwarded > 0 && timesZeroXPawarded > 0) timesZeroXPawarded = 0;
                         if (fortSearch.ExperienceAwarded == 0)
                         {
-                            if (TimesZeroXPawarded == 0) await MoveToPokestop(session, cancellationToken, pokeStop, null);
+                            if (TimesZeroXPawarded == 0) await MoveToPokestop(session, cancellationToken, pokeStop, null, eggWalker);
                             timesZeroXPawarded++;
                             if ((int) fortSearch.CooldownCompleteTimestampMs != 0)
                             {
@@ -239,7 +239,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
             }
         }
 
-        private static async Task MoveToPokestop(ISession session, CancellationToken cancellationToken, FortCacheItem pokeStop, List<GeoCoordinate> waypoints )
+        private static async Task MoveToPokestop(ISession session, CancellationToken cancellationToken, FortCacheItem pokeStop, List<GeoCoordinate> waypoints, EggWalker eggWalker )
         {
             await session.Navigation.Move(new GeoCoordinate(pokeStop.Latitude, pokeStop.Longitude),
                 session.LogicSettings.WalkingSpeedMin, session.LogicSettings.WalkingSpeedMax,
@@ -259,7 +259,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                     await UseNearbyPokestopsTask.Execute(session, cancellationToken);
                     return true;
 
-                }, cancellationToken, session, waypointsToVisit: waypoints);
+                }, cancellationToken, session, waypointsToVisit: waypoints, eggWalker: eggWalker);
         }
 
         private static async Task<List<FortCacheItem>> GetPokeStops(ISession session)

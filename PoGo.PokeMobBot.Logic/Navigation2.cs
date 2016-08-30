@@ -35,6 +35,7 @@ namespace PoGo.PokeMobBot.Logic
         {
             _client = client;
         }
+
         /// <summary>
         /// 
         /// </summary>
@@ -47,9 +48,10 @@ namespace PoGo.PokeMobBot.Logic
         /// <param name="session">ISession param of the bot, to detect which bot started it</param>
         /// <param name="direct">Directly move to the point, skip routing services</param>
         /// <param name="waypointsToVisit">Waypoints to visit during the move, required to redure Google Directions API usage</param>
+        /// <param name="eggWalker"></param>
         /// <returns></returns>
-        public async Task<PlayerUpdateResponse> Move(GeoCoordinate destination, double walkingSpeedMin, double walkingSpeedMax, Func<Task<bool>> functionExecutedWhileWalking, Func<Task<bool>> functionExecutedWhileWalking2,
-            CancellationToken cancellationToken, ISession session, bool direct = false, List<GeoCoordinate> waypointsToVisit = null )
+        internal async Task<PlayerUpdateResponse> Move(GeoCoordinate destination, double walkingSpeedMin, double walkingSpeedMax, Func<Task<bool>> functionExecutedWhileWalking, Func<Task<bool>> functionExecutedWhileWalking2,
+            CancellationToken cancellationToken, ISession session, bool direct = false, List<GeoCoordinate> waypointsToVisit = null, EggWalker eggWalker = null )
         {
             var currentLocation = new GeoCoordinate(_client.CurrentLatitude, _client.CurrentLongitude, _client.CurrentAltitude);
             var result = new PlayerUpdateResponse();
@@ -159,6 +161,8 @@ namespace PoGo.PokeMobBot.Logic
                         await MaintenanceTask.Execute(session, cancellationToken);
                         nextMaintenceStamp = DateTime.UtcNow.AddMinutes(3).ToUnixTime();
                     }
+                    if (eggWalker != null)
+                        await eggWalker.ApplyDistance(distanceToTarget, cancellationToken);
                 }
                 session.State = BotState.Idle;
                 var curcoord = new GeoCoordinate(session.Client.CurrentLatitude, session.Client.CurrentLongitude);

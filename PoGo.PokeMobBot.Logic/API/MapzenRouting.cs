@@ -55,7 +55,7 @@ namespace PoGo.PokeMobBot.Logic.API
 
                 var request = WebRequest.Create(
                   "https://valhalla.mapzen.com/route?json={" + waypointsRequest +
-                  "\"costing\":\"pedestrian\"}" +
+                  "\"costing\":\"pedestrian\",\"costing_options\":{\"pedestrian\":{\"alley_factor\":1.0, \"driveway_factor\":1.0, \"step_penalty\":1.0}}}" +
                   $"&api_key={apiKey}");
                 request.Credentials = CredentialCache.DefaultCredentials;
                 request.Proxy = WebRequest.DefaultWebProxy;
