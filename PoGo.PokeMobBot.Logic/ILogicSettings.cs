@@ -110,7 +110,7 @@ namespace PoGo.PokeMobBot.Logic
         double DelayEvolveVariation { get; }
         int DelayPokestop { get; }
         int DelayPositionCheckState { get; }
-        int DelayRecyleItem { get; }
+        int DelayRecycleItem { get; }
         int DelaySnipePokemon { get; }
         int DelaySoftbanRetry { get; }
         int DelayTransferPokemon { get; }

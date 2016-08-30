@@ -137,7 +137,7 @@ namespace PoGo.PokeMobBot.Logic
 
     public class DeviceSettings
     {
-	    private static Random random = new Random();
+	    private static Random random = new Random(); 
         public static IDictionary<string, string> phone_item = RandomPhone();
 
         public string DeviceId = RandomString(16, "0123456789abcdef"); // "ro.build.id";
@@ -891,7 +891,7 @@ namespace PoGo.PokeMobBot.Logic
         public int DelayDisplayPokemon = r.Next(FirstRunMin, FirstRunMax);
         public int DelayUseLuckyEgg = r.Next(FirstRunMin, FirstRunMax);
         public int DelaySoftbanRetry = r.Next(FirstRunMin, FirstRunMax);
-        public int DelayRecyleItem = r.Next(FirstRunMin, FirstRunMax);
+        public int DelayRecycleItem = r.Next(FirstRunMin, FirstRunMax);
         public int DelaySnipePokemon = r.Next(FirstRunMin, FirstRunMax);
         public int MinDelayBetweenSnipes = 10000;
         public double SnipingScanOffset = 0.003;
@@ -1452,7 +1452,7 @@ namespace PoGo.PokeMobBot.Logic
                         settings.DelaySettings.DelayDisplayPokemon = random.Next(settings.DelaySettings.MinRandomizeDelayMilliseconds, settings.DelaySettings.MaxRandomizeDelayMilliseconds);
                         settings.DelaySettings.DelayUseLuckyEgg = random.Next(settings.DelaySettings.MinRandomizeDelayMilliseconds, settings.DelaySettings.MaxRandomizeDelayMilliseconds);
                         settings.DelaySettings.DelaySoftbanRetry = random.Next(settings.DelaySettings.MinRandomizeDelayMilliseconds, settings.DelaySettings.MaxRandomizeDelayMilliseconds);
-                        settings.DelaySettings.DelayRecyleItem = random.Next(settings.DelaySettings.MinRandomizeDelayMilliseconds, settings.DelaySettings.MaxRandomizeDelayMilliseconds);
+                        settings.DelaySettings.DelayRecycleItem = random.Next(settings.DelaySettings.MinRandomizeDelayMilliseconds, settings.DelaySettings.MaxRandomizeDelayMilliseconds);
                         settings.DelaySettings.DelaySnipePokemon = random.Next(settings.DelaySettings.MinRandomizeDelayMilliseconds, settings.DelaySettings.MaxRandomizeDelayMilliseconds);
                     }
                     if (settings.LocationSettings.UseMapzenApiElevation)
@@ -1855,7 +1855,7 @@ namespace PoGo.PokeMobBot.Logic
         public int DelayUseLuckyEgg => _settings.DelaySettings.DelayUseLuckyEgg;
         public int DelaySoftbanRetry => _settings.DelaySettings.DelaySoftbanRetry;
         public int DelayPokestop => _settings.DelaySettings.DelayPokestop;
-        public int DelayRecyleItem => _settings.DelaySettings.DelayRecyleItem;
+        public int DelayRecycleItem => _settings.DelaySettings.DelayRecycleItem;
         public int DelaySnipePokemon => _settings.DelaySettings.DelaySnipePokemon;
         public int DelayTransferPokemon => _settings.DelaySettings.DelayTransferPokemon;
         public int DelayEvolvePokemon => _settings.DelaySettings.DelayEvolvePokemon;

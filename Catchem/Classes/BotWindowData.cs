@@ -588,7 +588,7 @@ namespace Catchem.Classes
                 Session.EventDispatcher.Send(new WarnEvent
                 {
                     Message =
-                        $"Max amount of Pokemon ({PokemonsRate.ToN1()})/Pokestops ({PokestopsRate.ToN1()})/XP ({Xpph.ToN1()})/Star Dust ({StardustRate.ToN1()}) per hour reached, bot will be stoped for {(stopMs/60000).ToString("N1")} minutes"
+                        $"Max amount of Pokemon ({PokemonsRate.ToN1()})/Pokestops ({PokestopsRate.ToN1()})/XP ({Xpph.ToN1()})/Star Dust ({StardustRate.ToN1()}) per hour reached, bot will be stopped for {(stopMs/60000).ToString("N1")} minutes"
                 });
                 _realWorkSec += stopSec;
                 Stop(true);

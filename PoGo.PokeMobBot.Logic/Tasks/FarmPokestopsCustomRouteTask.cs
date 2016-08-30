@@ -80,6 +80,8 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                 Coords = nextPath
             });
 
+            long nextMaintenceStamp = 0;
+
             while (!cancellationToken.IsCancellationRequested)
             {
 
@@ -111,7 +113,9 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                         );
                     session.State = BotState.Idle;
                     await eggWalker.ApplyDistance(distance, cancellationToken);
+                    if (nextMaintenceStamp >= DateTime.UtcNow.ToUnixTime()) continue;
                     await MaintenanceTask.Execute(session, cancellationToken);
+                    nextMaintenceStamp = DateTime.UtcNow.AddMinutes(3).ToUnixTime();
                 }
             }
         }
