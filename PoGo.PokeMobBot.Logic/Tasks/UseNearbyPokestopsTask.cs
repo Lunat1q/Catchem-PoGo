@@ -21,11 +21,14 @@ namespace PoGo.PokeMobBot.Logic.Tasks
         //to only find stops within 40 meters
         //this is for gpx pathing, we are not going to the pokestops,
         //so do not make it more than 40 because it will never get close to those stops.
-        public static async Task Execute(ISession session, CancellationToken cancellationToken)
+        public static async Task Execute(ISession session, CancellationToken cancellationToken, bool sendPokeStopsEvent = false)
         {
             cancellationToken.ThrowIfCancellationRequested();
 
             var pokestopList = await GetPokeStops(session);
+
+            if (sendPokeStopsEvent)
+                session.EventDispatcher.Send(new PokeStopListEvent { Forts = pokestopList.Select(x => x.BaseFortData).ToList() });
 
             while (pokestopList.Any())
             {
@@ -84,8 +87,6 @@ namespace PoGo.PokeMobBot.Logic.Tasks
         private static async Task<List<FortCacheItem>> GetPokeStops(ISession session)
         {
             List<FortCacheItem> pokeStops = await session.MapCache.FortDatas(session);
-
-            session.EventDispatcher.Send(new PokeStopListEvent { Forts = session.MapCache.baseFortDatas.ToList() });
 
             // Wasn't sure how to make this pretty. Edit as needed.
             pokeStops = pokeStops.Where(

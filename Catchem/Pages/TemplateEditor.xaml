@@ -54,15 +54,17 @@
         <TextBlock  Text="{Binding Level, FallbackValue=Level: 0, StringFormat=Level: \{0:N1\}}" Grid.Column="1" HorizontalAlignment="Center" Grid.Row="14" TextWrapping="Wrap" VerticalAlignment="Center" FontWeight="Bold" Foreground="#FF00443D" Margin="0" Grid.ColumnSpan="2"/>
         <Grid Grid.ColumnSpan="2" Grid.Column="3" HorizontalAlignment="Center" Grid.Row="14" VerticalAlignment="Center" Margin="0">
             <Image Source="{Binding ConverterParameter=candy, Converter={StaticResource LoadImageSourceFromResource}}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0" Width="18" Height="18"/>
-            <TextBlock  Text="{Binding Candy, FallbackValue=Candy: 0, StringFormat=Candy: \{0:N0\}}" TextWrapping="Wrap" VerticalAlignment="Top" FontWeight="Bold" Foreground="#FF00443D" Margin="23,0,0,0"/>
+            <TextBlock Text="{Binding CandyText, FallbackValue=Candy: 0 / 0, StringFormat=Candy: \{0\}}" TextWrapping="Wrap" VerticalAlignment="Top" FontWeight="Bold" Foreground="#FF00443D" Margin="23,0,0,0"/>
         </Grid>
-        <TextBlock  Text="{Binding Cp, FallbackValue=0, StringFormat=\{0:N0\}}" Grid.Column="2" HorizontalAlignment="Center" Grid.Row="3" TextWrapping="Wrap" VerticalAlignment="Center" FontWeight="Bold" Foreground="#FF00443D" Margin="0" Height="16"/>
+        <TextBlock  Text="{Binding Cp, FallbackValue=0, StringFormat=\{0\}}" Grid.Column="1" HorizontalAlignment="Center" Grid.Row="3" TextWrapping="Wrap" VerticalAlignment="Center" FontWeight="Bold" Foreground="#FF00443D" Margin="0" Grid.ColumnSpan="2"/>
         <TextBlock  Text="{Binding Iv, FallbackValue=Iv: 0%, StringFormat=Iv: \{0:N1\}%}" Grid.Column="2" HorizontalAlignment="Center" Grid.Row="15" TextWrapping="Wrap" VerticalAlignment="Center" FontWeight="Bold" Foreground="#FF00443D" Margin="0" Grid.ColumnSpan="2"/>
-        <TextBlock  Text="{Binding MaxCp, FallbackValue=0, StringFormat=\{0:N0\}}" Grid.Column="3" HorizontalAlignment="Center" Grid.Row="3" TextWrapping="Wrap" VerticalAlignment="Center" FontWeight="Bold" Foreground="#FF00443D" Margin="0" Height="16" RenderTransformOrigin="0.645,0.5"/>
+        <TextBlock  Text="{Binding MaxCp, FallbackValue=0, StringFormat=\{0\}}" Grid.Column="2" HorizontalAlignment="Center" Grid.Row="3" TextWrapping="Wrap" VerticalAlignment="Center" FontWeight="Bold" Foreground="#FF00443D" Margin="0" RenderTransformOrigin="0.645,0.5" Grid.ColumnSpan="2"/>
         <TextBlock  Text="HP" Grid.Column="1" HorizontalAlignment="Center" Grid.Row="4" TextWrapping="Wrap" VerticalAlignment="Center" Foreground="#FF00443D" Margin="0"/>
         <TextBlock  Text="ATK" Grid.Column="2" HorizontalAlignment="Center" Grid.Row="4" TextWrapping="Wrap" VerticalAlignment="Center" Foreground="#FF00443D" Margin="0"/>
         <TextBlock  Text="DEF" Grid.Column="3" HorizontalAlignment="Center" Grid.Row="4" TextWrapping="Wrap" VerticalAlignment="Center" Foreground="#FF00443D" Margin="0"/>
         <TextBlock  Text="STA" Grid.Column="4" HorizontalAlignment="Center" Grid.Row="4" TextWrapping="Wrap" VerticalAlignment="Center" Foreground="#FF00443D" Margin="0"/>
         <ProgressBar Grid.ColumnSpan="4" Grid.Column="1" Height="10" Margin="0,10,0,0" Grid.Row="2" VerticalAlignment="Top" Value="{Binding Cp, FallbackValue=5}" Maximum="{Binding MaxCp, FallbackValue=100}"/>
+        <TextBlock  Text="{Binding PossibleCp, FallbackValue=0, StringFormat=\{0\}}" Grid.Column="3" HorizontalAlignment="Center" Grid.Row="3" TextWrapping="Wrap" VerticalAlignment="Center" FontWeight="Bold" Foreground="#FF00443D" Margin="0" RenderTransformOrigin="0.645,0.5" Grid.ColumnSpan="2"/>
+        <TextBlock  Text="Cp / MaxCp / PossibleCp" HorizontalAlignment="Center" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Center" FontWeight="Bold" Foreground="#FF00443D" Margin="0" Grid.ColumnSpan="4" Grid.Column="1"/>
     </Grid>
 </UserControl>

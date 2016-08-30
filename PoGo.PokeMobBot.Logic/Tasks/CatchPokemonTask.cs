@@ -27,7 +27,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
         public static async Task<bool> Execute(ISession session, dynamic encounter, PokemonCacheItem pokemon, CancellationToken cancellationToken,
             FortData currentFortData = null, ulong encounterId = 0)
         {
-            if (!await CheckBotStateTask.Execute(session, cancellationToken)) return false;
+            //if (!await CheckBotStateTask.Execute(session, cancellationToken)) return false;
             if (encounter is EncounterResponse && pokemon == null)
                 throw new ArgumentException("Parameter pokemon must be set, if encounter is of type EncounterResponse",
                     nameof(pokemon));
@@ -195,7 +195,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                         evt.Type1 = setting.Type;
                         evt.Type2 = setting.Type2;
                         evt.Stats = setting.Stats;
-
+                        evt.CandyToEvolve = setting.CandyToEvolve;
                         PokemonData poke = encounter is EncounterResponse ? encounter.WildPokemon?.PokemonData : encounter?.PokemonData;
                         if (poke != null)
                         {
@@ -242,6 +242,8 @@ namespace PoGo.PokeMobBot.Logic.Tasks
 
                     evt.Move1 = pokeData.Move1;
                     evt.Move2 = pokeData.Move2;
+
+                    evt.PossibleCp = (int)PokemonInfo.GetMaxCpAtTrainerLevel(pokeData, 40);
 
                 }
                 evt.Distance = distance;

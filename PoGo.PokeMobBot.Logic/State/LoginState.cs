@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Google.Protobuf;
 using PoGo.PokeMobBot.Logic.Common;
 using PoGo.PokeMobBot.Logic.Event;
+using PoGo.PokeMobBot.Logic.Logging;
 using PokemonGo.RocketAPI.Enums;
 using PokemonGo.RocketAPI.Exceptions;
 
@@ -57,7 +58,7 @@ namespace PoGo.PokeMobBot.Logic.State
                 await Task.Delay(2000, cancellationToken);
                 return this;
             }
-            catch (InvalidResponseException)
+            catch (InvalidResponseException ex)
             {
                 session.EventDispatcher.Send(new ErrorEvent
                 {
@@ -67,6 +68,7 @@ namespace PoGo.PokeMobBot.Logic.State
                 {
                     Message = session.Translation.GetTranslation(TranslationString.TryingAgainIn, 45)
                 });
+                Logger.Write("[NIANTIC] " + ex.Message, LogLevel.Error);
                 await Task.Delay(45000, cancellationToken);
                 return this;
             }

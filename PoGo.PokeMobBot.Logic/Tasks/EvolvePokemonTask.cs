@@ -92,7 +92,9 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                             Stats = setting.Stats,
                             MaxCp = (int)PokemonInfo.GetMaxCpAtTrainerLevel(pokemon, session.Runtime.CurrentLevel),
                             Stamina = pokemon.Stamina,
-                            MaxStamina = pokemon.StaminaMax
+                            MaxStamina = pokemon.StaminaMax,
+                            PossibleCp = (int)PokemonInfo.GetMaxCpAtTrainerLevel(pokemon, 40),
+                            CandyToEvolve = setting.CandyToEvolve
                         });
                     }
                     await DelayingEvolveUtils.Delay(session.LogicSettings.DelayEvolvePokemon, 0, session.LogicSettings.DelayEvolveVariation);
