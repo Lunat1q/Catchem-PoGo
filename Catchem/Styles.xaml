@@ -52,7 +52,7 @@
                         CornerRadius="13">
                         <Grid>
                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            <Rectangle x:Name="FlatButtonOverlay" Fill="#3F93FFE2" Visibility="Collapsed"/>
+                            <Rectangle x:Name="FlatButtonOverlay" Fill="#3F93FFE2" Visibility="Collapsed" RadiusX="13" RadiusY="13"/>
                         </Grid>
                     </Border>
                     <ControlTemplate.Triggers>
