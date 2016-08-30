@@ -5,6 +5,11 @@
 
 <p align="center"><a href="https://discord.gg/pPwxX8Q"><img src="https://discordapp.com/api/guilds/212977806819196938/widget.png?style=banner2"/></a></p>
 <p align="center"><img src="https://img.shields.io/github/downloads/Lunat1q/Catchem-PoGo/total.svg"/><a href="https://github.com/Lunat1q/Catchem-PoGo/releases/latest"><img src="https://img.shields.io/github/downloads/Lunat1q/Catchem-PoGo/latest/total.svg"/></a></p>
+
+<p align="center">THERE IS ONLY <b>ONE</b> OFFICIAL <a href="https://discord.gg/pPwxX8Q">DISCORD SERVER</a></p>
+
+<h2>Download</h2>
+You can download this bot  <a href="https://github.com/Lunat1q/Catchem-PoGo/releases/latest">HERE</a>
  
 <h2>Donating</h2>
 If you really like this project, feel free to buy <b>pizza</b> :pizza: or :beers: for devs (or a present :rose: :gift: for my gf, she is a bit mad that i'm spending most part of my free time for this project :coffee:):<br/><br/>
