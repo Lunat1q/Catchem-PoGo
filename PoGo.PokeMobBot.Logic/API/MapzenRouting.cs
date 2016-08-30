@@ -80,7 +80,7 @@ namespace PoGo.PokeMobBot.Logic.API
                 var route = valhallaResponse.trip;
                 if (route != null)
                 {
-                    responseParsed.Coordinates = route.GetRoute();
+                    responseParsed.routes[0].geometry.coordinates = route.GetRoute();
                 }
                 return responseParsed;
             }
