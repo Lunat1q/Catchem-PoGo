@@ -21,8 +21,10 @@ namespace PoGo.PokeMobBot.Logic.Tasks
         public static async Task  Execute(ISession session, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
+
             //Refresh inventory so that the player stats are fresh
-            //await session.Inventory.RefreshCachedInventory(); too much inventore refresh
+            //await session.Inventory.RefreshCachedInventory(); too much inventory refresh
+
             if (!session.LogicSettings.CatchWildPokemon) return;
             session.EventDispatcher.Send(new DebugEvent()
             {
