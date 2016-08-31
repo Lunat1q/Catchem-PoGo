@@ -544,6 +544,10 @@ namespace PoGo.PokeMobBot.Logic
                 _cachedInventory = await _client.Inventory.GetInventory();
                 return _cachedInventory;
             }
+            catch
+            {
+                return new GetInventoryResponse();
+            }
             finally
             {
                 ss.Release();
