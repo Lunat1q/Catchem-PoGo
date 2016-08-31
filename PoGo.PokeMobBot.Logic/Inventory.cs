@@ -91,7 +91,7 @@ namespace PoGo.PokeMobBot.Logic
                                              GetPokemonTransferFilter(p.PokemonId).KeepMinIvPercentage))
                     .ToList();
             }
-            else if (!_logicSettings.PrioritizeIvOverCp)
+            else if (_logicSettings.PrioritizeIvOverCp)
             {
                 pokemonList =
                 myPokemon?.Where(

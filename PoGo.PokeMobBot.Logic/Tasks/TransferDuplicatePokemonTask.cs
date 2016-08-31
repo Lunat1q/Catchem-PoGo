@@ -47,13 +47,13 @@ namespace PoGo.PokeMobBot.Logic.Tasks
 
                 if (!string.IsNullOrEmpty(duplicatePokemon.DeployedFortId)) continue;
                 
-                if (duplicatePokemon.Cp >=
-                    session.Inventory.GetPokemonTransferFilter(duplicatePokemon.PokemonId).KeepMinCp ||
-                    duplicatePokemon.CalculatePokemonPerfection() >
-                    session.Inventory.GetPokemonTransferFilter(duplicatePokemon.PokemonId).KeepMinIvPercentage)
-                {
-                    continue;
-                }
+                //if (duplicatePokemon.Cp >=
+                //    session.Inventory.GetPokemonTransferFilter(duplicatePokemon.PokemonId).KeepMinCp ||
+                //    duplicatePokemon.CalculatePokemonPerfection() >
+                //    session.Inventory.GetPokemonTransferFilter(duplicatePokemon.PokemonId).KeepMinIvPercentage)
+                //{
+                //    continue;
+                //}
 
                 await session.Client.Inventory.TransferPokemon(duplicatePokemon.Id);
                 await session.Inventory.DeletePokemonFromInvById(duplicatePokemon.Id);
