@@ -23,7 +23,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
             var pokemons = await session.Inventory.GetPokemons();
             //pokemons not in gym, not favorited, and IV above FavoriteMinIv %
             var pokemonsToBeFavorited = pokemons.Where(p => p.DeployedFortId == string.Empty &&
-                        p.Favorite == 0 && (PokemonInfo.CalculatePokemonPerfection(p) > session.LogicSettings.FavoriteMinIvPercentage)).ToList();
+                        p.Favorite == 0 && (p.CalculatePokemonPerfection() > session.LogicSettings.FavoriteMinIvPercentage)).ToList();
             //favorite
             foreach (var pokemon in pokemonsToBeFavorited)
             {

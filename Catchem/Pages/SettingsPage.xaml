@@ -193,7 +193,7 @@
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Top"
                                 Checked="BotPropertyChanged"
-                                Content="Evolve All Poke Above Iv"
+                                Content="Evolve All Poke Above IV"
                                 Unchecked="BotPropertyChanged" />
                         <Label x:Name="c_EvolveAboveIvValueLabel"
                                 Width="131"
@@ -228,7 +228,7 @@
                                 Margin="10,104,0,0"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Top"
-                                Content="Keep Min Cp" />
+                                Content="Keep Min CP" />
                         <TextBox x:Name="c_KeepMinCp"
                                 Height="29"
                                 Margin="233,103,10,0"
@@ -256,7 +256,7 @@
                                 Margin="10,172,0,0"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Top"
-                                Content="Keep Min Iv %" />
+                                Content="Keep Min IV %" />
                         <TextBox x:Name="c_KeepMinIvPercentage"
                                 Height="29"
                                 Margin="233,171,10,0"
@@ -291,21 +291,21 @@
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Top"
                                 Checked="BotPropertyChanged"
-                                Content="Prioritize Both Iv And Cp For Transfer"
+                                Content="Prioritize both IV and CP for transfer"
                                 Unchecked="BotPropertyChanged" />
                         <CheckBox x:Name="c_PrioritizeIvOverCp"
                                 Margin="10,279,0,0"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Top"
                                 Checked="BotPropertyChanged"
-                                Content="Prioritize Iv Over Cp"
+                                Content="Prioritize IV over CP"
                                 Unchecked="BotPropertyChanged" />
                         <CheckBox x:Name="c_RenameOnlyAboveIv"
                                 Margin="10,300,0,0"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Top"
                                 Checked="BotPropertyChanged"
-                                Content="Rename Only Above Iv"
+                                Content="Rename only above IV"
                                 Unchecked="BotPropertyChanged" />
                         <CheckBox x:Name="c_RenamePokemon"
                                 Margin="10,321,0,0"
@@ -319,7 +319,7 @@
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Top"
                                 Checked="BotPropertyChanged"
-                                Content="Auto Level Poke"
+                                Content="Auto level Poke"
                                 Unchecked="BotPropertyChanged" />
                         <Label x:Name="c_RenameTemplateLabel"
                                 Width="131"
@@ -339,7 +339,7 @@
                                 Margin="10,397,0,0"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Top"
-                                Content="Upgrade Poke Cp Min" />
+                                Content="Upgrade Poke CP Min" />
                         <TextBox x:Name="c_UpgradePokemonCpMinimum"
                                 Height="29"
                                 Margin="233,396,10,0"
@@ -353,7 +353,7 @@
                                 Margin="10,431,0,0"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Top"
-                                Content="Upgrade Poke Iv Min" />
+                                Content="Upgrade Poke IV Min" />
                         <TextBox x:Name="c_UpgradePokemonIvMinimum"
                                 Height="29"
                                 Margin="233,430,10,0"
@@ -390,12 +390,12 @@
                                 Checked="BotPropertyChanged"
                                 Content="Use Egg Incubators"
                                 Unchecked="BotPropertyChanged" />
-                        <CheckBox x:Name="c_AlwaysPrefferLongDistanceEgg"
+                        <CheckBox x:Name="c_AlwaysPreferLongDistanceEgg"
                                 Margin="10,535,0,0"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Top"
                                 Checked="BotPropertyChanged"
-                                Content="Always Preffer Long Distance Egg"
+                                Content="Always Prefer Long Distance Egg"
                                 Unchecked="BotPropertyChanged" />
                         <CheckBox x:Name="c_AutoFavoritePokemon"
                                 Margin="10,577,0,0"
@@ -568,7 +568,7 @@
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Top"
                                 Checked="BotPropertyChanged"
-                                Content="Use Poke Not To Catch Filter"
+                                Content="Use Poke not to catch filter"
                                 Unchecked="BotPropertyChanged" />
                         <Label x:Name="c_UseUltraBallAboveIvLabel"
                                 Width="155"
@@ -576,7 +576,7 @@
                                 Margin="10,275,0,0"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Top"
-                                Content="Use Ultra Ball Above Iv" />
+                                Content="Use Ultra Ball above IV" />
                         <TextBox x:Name="c_UseUltraBallAboveIv"
                                 Grid.Column="1"
                                 Height="29"
@@ -592,7 +592,7 @@
                                 Margin="10,309,0,0"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Top"
-                                Content="Use Great Ball Above Iv" />
+                                Content="Use Great Ball above IV" />
                         <TextBox x:Name="c_UseGreatBallAboveIv"
                                 Grid.Column="1"
                                 Height="29"
@@ -608,7 +608,7 @@
                                 Margin="10,343,0,0"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Top"
-                                Content="Use Berry Min Cp" />
+                                Content="Use Berry Min CP" />
                         <TextBox x:Name="c_UseBerryMinCp"
                                 Grid.Column="1"
                                 Height="29"
@@ -624,7 +624,7 @@
                                 Margin="10,377,0,0"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Top"
-                                Content="Use Berry Min Iv" />
+                                Content="Use Berry Min IV" />
                         <TextBox x:Name="c_UseBerryMinIv"
                                 Grid.Column="1"
                                 Height="29"
@@ -666,7 +666,7 @@
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Top"
                                 Checked="BotPropertyChanged"
-                                Content="Pause Bot On Max Hourly Rates"
+                                Content="Pause Bot on Max hourly rates"
                                 Unchecked="BotPropertyChanged" />
                         <Label x:Name="c_MaxCatchPerHourLabel"
                                 Width="210"
