@@ -13,6 +13,7 @@ using PoGo.PokeMobBot.Logic.Event;
 using PoGo.PokeMobBot.Logic.State;
 using PoGo.PokeMobBot.Logic.Tasks;
 using POGOProtos.Enums;
+using System.Threading.Tasks;
 
 namespace Catchem.Pages
 {
@@ -245,6 +246,27 @@ namespace Catchem.Pages
             var uGrid = sender as UniformGrid;
             if (uGrid == null) return;
             uGrid.Columns = (int)(uGrid.ActualWidth/150);
+        }
+        private async void mi_useIncense_Click(object sender, RoutedEventArgs e)
+        {
+            if (!_bot.Started || _inRefreshItems) return;
+            if (ItemListBox.SelectedIndex == -1 || !_bot.Started) return;
+            var item = GetSelectedItem();
+            if (item == null) return;
+            bool incenseActive = await UseIncenseFromMenu.Execute(_bot.Session, item);
+            if (incenseActive)
+            {
+                l_Incense_Active.Content = "Active";
+                RefreshItems();
+                await Task.Delay(TimeSpan.FromSeconds(1800));
+                ResetActiveIncense();
+            }
+
+        }
+
+        private void ResetActiveIncense()
+        {
+            l_Incense_Active.Content = "Inactive";
         }
     }
 }

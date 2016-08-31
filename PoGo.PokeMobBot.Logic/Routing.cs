@@ -18,21 +18,11 @@ namespace PoGo.PokeMobBot.Logic
     {
         public static RoutingResponse GetRoute(GeoCoordinate start, GeoCoordinate dest, ISession session)
         {
-
-            string apiKey = session.LogicSettings.MobBotRoutingApiKey;
-            if (string.IsNullOrEmpty(apiKey))
-            {
-                session.EventDispatcher.Send(new WarnEvent
-                {
-                    Message = "MobBotRouting API Key is Empty!"
-                });
-                return new RoutingResponse();
-            }
             try
             {
                 Logger.Write("Requesting routing info from MobRouting.com", LogLevel.Debug);
                 var request = WebRequest.Create(
-                  $"http://mobrouting.com" + $"/api/dev/gosmore.php?format=geojson&apikey={apiKey}&flat={start.Latitude.ToString(CultureInfo.InvariantCulture)}&flon={start.Longitude.ToString(CultureInfo.InvariantCulture)}&tlat={dest.Latitude.ToString(CultureInfo.InvariantCulture)}&tlon={dest.Longitude.ToString(CultureInfo.InvariantCulture)}&v=foot&fast=1&layer=mapnik");
+                $"http://localhost:5000" + $"/route/v1/foot/{start.Longitude.ToString(CultureInfo.InvariantCulture)},{start.Latitude.ToString(CultureInfo.InvariantCulture)};{dest.Longitude.ToString(CultureInfo.InvariantCulture)},{dest.Latitude.ToString(CultureInfo.InvariantCulture)}?geometries=geojson");
                 request.Credentials = CredentialCache.DefaultCredentials;
                 request.Proxy = WebRequest.DefaultWebProxy;
                 request.Proxy.Credentials = CredentialCache.DefaultCredentials;
@@ -58,35 +48,29 @@ namespace PoGo.PokeMobBot.Logic
             {
                 Logger.Write("Routing error: " + ex.Message, LogLevel.Debug);
             }
-            var emptyResponse = new RoutingResponse {Coordinates = new List<List<double>>()};
+            var emptyResponse = new RoutingResponse { routes = new List<Route2> { new Route2 { geometry = new Geometry { coordinates = new List<List<double>>() } } } };
             return emptyResponse;  
         }
     }
 
     public class RoutingResponse
     {
-        public string Type { get; set; }
-        public Crs Crs { get; set; }
-        public List<List<double>> Coordinates { get; set; }
-        public Properties2 Properties { get; set; }
-    }
-    public class Properties
-    {
-        public string name { get; set; }
+        public List<Route2> routes { get; set; }
+        public string code { get; set; }
     }
 
-    public class Crs
+    public class Geometry
     {
         public string type { get; set; }
-        public Properties properties { get; set; }
+        public List<List<double>> coordinates { get; set; }
     }
 
-    public class Properties2
+    public class Route2
     {
-        public string distance { get; set; }
-        public string description { get; set; }
-        public string traveltime { get; set; }
+        public double distance { get; set; }
+        public double duration { get; set; }
+        public Geometry geometry { get; set; }
     }
 
-    
+
 }

@@ -75,6 +75,7 @@
                 <ContextMenu>
                     <MenuItem x:Name="mi_recycleItem" Header="Recycle item" Click="mi_recycleItem_Click"/>
                     <MenuItem x:Name="mi_refreshItems" Header="Refresh item list" Click="mi_refreshItems_Click" />
+                    <MenuItem x:Name="mi_useIncense" Header="Use Incense" Click="mi_useIncense_Click" />
                 </ContextMenu>
             </ListBox.ContextMenu>
             <ListBox.Background>
@@ -201,6 +202,10 @@
                     </LinearGradientBrush>
                 </Button.Background>
             </Button>
+        </Grid>
+        <Grid Height="31" Margin="10,0,10,10" VerticalAlignment="Bottom" Grid.ColumnSpan="1" Grid.Column="3">
+            <Label x:Name="l_Incense" Content="INCENSE:" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#FF363636" FontSize="15" TextOptions.TextFormattingMode="Display" FontFamily="Source Sans Pro Semibold" Height="28" Width="82"/>
+            <Label x:Name="l_Incense_Active" Content="UNKNOWN" HorizontalAlignment="Left" Margin="122,0,0,0" VerticalAlignment="Top" Foreground="#FF324AB4" FontSize="15" TextOptions.TextFormattingMode="Display" FontFamily="Source Sans Pro Semibold" Height="28" Width="90"/>
         </Grid>
         <Grid Grid.ColumnSpan="2" Grid.Column="1" Height="24" Margin="50,19,140,0" VerticalAlignment="Top">
             <ProgressBar x:Name="LevelProgressBar" Margin="0" Foreground="#FF04C127"/>
