@@ -20,6 +20,8 @@ namespace PoGo.PokeMobBot.Logic.Tasks
         {
             cancellationToken.ThrowIfCancellationRequested();
 
+            if (!session.LogicSettings.CatchWildPokemon) return;
+            if (session.Runtime.PokeBallsToCollect > 0) return;
             // Refresh inventory so that the player stats are fresh
             await session.Inventory.RefreshCachedInventory();
 
@@ -78,7 +80,12 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                         session.EventDispatcher.Send(new PokemonsFoundEvent { Pokemons = new[] { _pokemon } });
                         PokemonCacheItem pokemon = new PokemonCacheItem(_pokemon);
 
-                        await CatchPokemonTask.Execute(session, encounter, pokemon, cancellationToken, currentFortData, encounterId);
+                        var catchRes = await CatchPokemonTask.Execute(session, encounter, pokemon, cancellationToken, currentFortData, encounterId);
+                        if (!catchRes)
+                        {
+                            session.Runtime.PokeBallsToCollect = 10;
+                            return;
+                        }
                         currentFortData.LureInfo = null;
                         session.EventDispatcher.Send(new PokemonDisappearEvent { Pokemon = _pokemon });
                     }

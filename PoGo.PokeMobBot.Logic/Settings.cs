@@ -116,6 +116,8 @@ namespace PoGo.PokeMobBot.Logic
         public string lastPokeStopId = "69694201337";
         public string TargetStopID = "420Ayylmao";
         public GeoCoordinate lastPokeStopCoordinate = new GeoCoordinate(0,0);
+        public int PokeBallsToCollect = 0;
+
         public bool CheckScan()
         {
             if (DelayingScan)

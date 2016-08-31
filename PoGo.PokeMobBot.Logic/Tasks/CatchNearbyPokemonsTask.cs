@@ -26,6 +26,9 @@ namespace PoGo.PokeMobBot.Logic.Tasks
             //await session.Inventory.RefreshCachedInventory(); too much inventory refresh
 
             if (!session.LogicSettings.CatchWildPokemon) return;
+
+            if (session.Runtime.PokeBallsToCollect > 0) return;
+
             session.EventDispatcher.Send(new DebugEvent()
             {
                 Message = session.Translation.GetTranslation(TranslationString.LookingForPokemon)
@@ -84,7 +87,12 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                     switch (encounter.Status)
                     {
                         case EncounterResponse.Types.Status.EncounterSuccess:
-                            await CatchPokemonTask.Execute(session, encounter, pokemon, cancellationToken);
+                            var catchRes = await CatchPokemonTask.Execute(session, encounter, pokemon, cancellationToken);
+                            if (!catchRes)
+                            {
+                                session.Runtime.PokeBallsToCollect = 10;
+                                return;
+                            }
                             break;
                         case EncounterResponse.Types.Status.PokemonInventoryFull:
                             if (session.LogicSettings.TransferDuplicatePokemon)

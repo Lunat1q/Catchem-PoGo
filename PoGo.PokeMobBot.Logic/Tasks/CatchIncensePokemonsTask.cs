@@ -19,7 +19,9 @@ namespace PoGo.PokeMobBot.Logic.Tasks
         public static async Task Execute(ISession session, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
+
             if (!session.LogicSettings.CatchWildPokemon) return;
+            if (session.Runtime.PokeBallsToCollect > 0) return;
 
             var usedItems = await session.Inventory.GetUsedItems();
             if (usedItems == null || usedItems.Count <= 0) return;
@@ -68,7 +70,12 @@ namespace PoGo.PokeMobBot.Logic.Tasks
 
                     if (encounter.Result == IncenseEncounterResponse.Types.Result.IncenseEncounterSuccess)
                     {
-                        await CatchPokemonTask.Execute(session, encounter, pokemon, cancellationToken);
+                        var catchRes = await CatchPokemonTask.Execute(session, encounter, pokemon, cancellationToken);
+                        if (!catchRes)
+                        {
+                            session.Runtime.PokeBallsToCollect = 10;
+                            return;
+                        }
                     }
                     else if (encounter.Result == IncenseEncounterResponse.Types.Result.PokemonInventoryFull)
                     {

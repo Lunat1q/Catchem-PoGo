@@ -9,6 +9,7 @@ using PoGo.PokeMobBot.Logic.Event;
 using PoGo.PokeMobBot.Logic.State;
 using PoGo.PokeMobBot.Logic.Utils;
 using PokemonGo.RocketAPI.Extensions;
+using POGOProtos.Inventory.Item;
 using POGOProtos.Map.Fort;
 
 #endregion
@@ -75,6 +76,13 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                     {
                         Items = fortSearch.ItemsAwarded.ToItemList()
                     });
+                    if (session.Runtime.PokeBallsToCollect > 0)
+                    {
+                        session.Runtime.PokeBallsToCollect -= fortSearch.ItemsAwarded.ToItemList()
+                            .Where(x => x.Item1 == ItemId.ItemPokeBall ||
+                                        x.Item1 == ItemId.ItemGreatBall || x.Item1 == ItemId.ItemUltraBall ||
+                                        x.Item1 == ItemId.ItemMasterBall).Sum(x => x.Item2);
+                    }
                 }
 				if (pokeStop.LureInfo != null)
                 {//because we're all fucking idiots for not catching this sooner
