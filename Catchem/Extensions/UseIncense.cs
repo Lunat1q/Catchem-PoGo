@@ -5,6 +5,11 @@ using System.Threading.Tasks;
 using POGOProtos.Networking.Responses;
 using POGOProtos.Inventory.Item;
 using Catchem.Classes;
+using System.Threading;
+using System.Collections.Generic;
+using POGOProtos.Inventory;
+using System.Diagnostics;
+using System;
 
 public class UseIncenseFromMenu
 {
@@ -70,5 +75,14 @@ public class UseIncenseFromMenu
         }
         return false;
     }
+    public async Task<bool> Execute(ISession session, CancellationToken cancellationToken)
+    {
+        List<AppliedItem> status = await session.Inventory.GetUsedItems();
+        Debug.WriteLine(String.Join("\n", status));
+        return false;
+    }
+
 }
+
+
 
