@@ -18,6 +18,9 @@ namespace PoGo.PokeMobBot.Logic.Utils
                 var randomFactor = 0.3f;
                 var randomMin = (int)(delay * (1 - randomFactor));
                 var randomMax = (int)(delay * (1 + randomFactor));
+                if (randomMin < defdelay) randomMin = defdelay;
+                if (randomMax > delay) randomMax = delay;
+
                 var randomizedDelay = RandomDevice.Next(randomMin, randomMax);
 
                 await Task.Delay(randomizedDelay);
