@@ -1,19 +1,13 @@
 #region using directives
 
 using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using PoGo.PokeMobBot.Logic.Common;
 using PoGo.PokeMobBot.Logic.Event;
 using PoGo.PokeMobBot.Logic.State;
 using PoGo.PokeMobBot.Logic.Utils;
 using PokemonGo.RocketAPI.Extensions;
-using POGOProtos.Map.Fort;
-using GeoCoordinatePortable;
 
 #endregion
 
@@ -36,14 +30,14 @@ namespace PoGo.PokeMobBot.Logic.Tasks
 
             if (route == null || route.RoutePoints.Count < 2)
             {
-                session.EventDispatcher.Send(new WarnEvent
-                {
-                    Message = "No proper route loaded, or route is too short"
-                });
                 session.EventDispatcher.Send(new BotCompleteFailureEvent()
                 {
                    Shutdown = false,
                    Stop = true
+                });
+                session.EventDispatcher.Send(new WarnEvent
+                {
+                    Message = "No proper route loaded, or route is too short"
                 });
                 return;
             }
@@ -142,7 +136,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                         );
                     session.State = BotState.Idle;
                     await eggWalker.ApplyDistance(distance, cancellationToken);
-                    if (nextMaintenceStamp >= DateTime.UtcNow.ToUnixTime()) continue;
+                    if (nextMaintenceStamp >= DateTime.UtcNow.ToUnixTime() && session.Runtime.StopsHit < 100) continue;
                     await MaintenanceTask.Execute(session, cancellationToken);
                     nextMaintenceStamp = DateTime.UtcNow.AddMinutes(3).ToUnixTime();
                 }
