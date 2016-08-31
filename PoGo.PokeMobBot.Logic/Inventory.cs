@@ -91,13 +91,12 @@ namespace PoGo.PokeMobBot.Logic
                                              GetPokemonTransferFilter(p.PokemonId).KeepMinIvPercentage))
                     .ToList();
             }
-            else if (!_logicSettings.PrioritizeIvOverCp)
+            else if (_logicSettings.PrioritizeIvOverCp)
             {
                 pokemonList =
                 myPokemon?.Where(
                     p => p.DeployedFortId == string.Empty &&
-                         p.Favorite == 0 && (p.Cp < GetPokemonTransferFilter(p.PokemonId).KeepMinCp ||
-                                             p.CalculatePokemonPerfection() <
+                         p.Favorite == 0 && (p.CalculatePokemonPerfection() <
                                              GetPokemonTransferFilter(p.PokemonId).KeepMinIvPercentage))
                     .ToList();
             }
@@ -106,9 +105,7 @@ namespace PoGo.PokeMobBot.Logic
                 pokemonList =
                 myPokemon?.Where(
                     p => p.DeployedFortId == string.Empty &&
-                         p.Favorite == 0 && (p.CalculatePokemonPerfection() <
-                                             GetPokemonTransferFilter(p.PokemonId).KeepMinIvPercentage) ||
-                                             p.Cp < GetPokemonTransferFilter(p.PokemonId).KeepMinCp)
+                         p.Favorite == 0 && (p.Cp < GetPokemonTransferFilter(p.PokemonId).KeepMinCp))
                     .ToList();
             }
             return pokemonList;
@@ -183,8 +180,7 @@ namespace PoGo.PokeMobBot.Logic
                         p =>
                             p.OrderByDescending(PokemonInfo.CalculatePokemonPerfection)
                                 .ThenByDescending(n => n.Cp)
-                                .Skip(GetPokemonTransferFilter(p.Key).KeepMinDuplicatePokemon)
-                                .ToList());
+                                .Skip(GetPokemonTransferFilter(p.Key).KeepMinDuplicatePokemon));
             }
             return pokemonList?
                 .GroupBy(p => p.PokemonId)
@@ -193,8 +189,7 @@ namespace PoGo.PokeMobBot.Logic
                     p =>
                         p.OrderByDescending(x => x.Cp)
                             .ThenByDescending(n => n.CalculatePokemonPerfection())
-                            .Skip(GetPokemonTransferFilter(p.Key).KeepMinDuplicatePokemon)
-                            .ToList());
+                            .Skip(GetPokemonTransferFilter(p.Key).KeepMinDuplicatePokemon));
         }
 
         public async Task<IEnumerable<EggIncubator>> GetEggIncubators()

@@ -24,6 +24,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
             cancellationToken.ThrowIfCancellationRequested();
 
             if (!session.LogicSettings.CatchWildPokemon) return;
+            if (session.Runtime.PokeBallsToCollect > 0) return;
 
             Logger.Write(session.Translation.GetTranslation(TranslationString.LookingForPokemon), LogLevel.Debug, session: session);
 

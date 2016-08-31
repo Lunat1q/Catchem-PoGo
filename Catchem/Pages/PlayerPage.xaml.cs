@@ -202,7 +202,7 @@ namespace Catchem.Pages
 
         private void mi_refreshItems_Click(object sender, RoutedEventArgs e)
         {
-            if (!_bot.Started || _inRefreshItems) return;
+            if (_bot == null || !_bot.Started || _inRefreshItems) return;
             RefreshItems();
         }
 
@@ -245,6 +245,12 @@ namespace Catchem.Pages
             var uGrid = sender as UniformGrid;
             if (uGrid == null) return;
             uGrid.Columns = (int)(uGrid.ActualWidth/150);
+        }
+
+        private void ManualMaintenceButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (_bot == null || !_bot.Started) return;
+            _bot.Session.Runtime.StopsHit = 999;
         }
     }
 }

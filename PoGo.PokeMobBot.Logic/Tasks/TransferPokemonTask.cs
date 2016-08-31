@@ -1,8 +1,6 @@
 ﻿using PoGo.PokeMobBot.Logic.State;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using PoGo.PokeMobBot.Logic.Event;
 
@@ -12,6 +10,8 @@ namespace PoGo.PokeMobBot.Logic.Tasks
     {
         public static async Task Execute(ISession session, ulong pokemonId)
         {
+            if (!await CheckBotStateTask.Execute(session, default(CancellationToken))) return;
+
             var id = pokemonId;
             var prevState = session.State;
             session.State = BotState.Evolve;
@@ -46,14 +46,14 @@ namespace PoGo.PokeMobBot.Logic.Tasks
             family.Candy_++;
 
             // Broadcast event as everyone would benefit
-            session.EventDispatcher.Send(new Logic.Event.TransferPokemonEvent
+            session.EventDispatcher.Send(new TransferPokemonEvent
             {
                 Uid = pokemon.Id,
                 Id = pokemon.PokemonId,
-                Perfection = Logic.PoGoUtils.PokemonInfo.CalculatePokemonPerfection(pokemon),
+                Perfection = PoGoUtils.PokemonInfo.CalculatePokemonPerfection(pokemon),
                 Cp = pokemon.Cp,
                 BestCp = bestPokemonOfType.Cp,
-                BestPerfection = Logic.PoGoUtils.PokemonInfo.CalculatePokemonPerfection(bestPokemonOfType),
+                BestPerfection = PoGoUtils.PokemonInfo.CalculatePokemonPerfection(bestPokemonOfType),
                 FamilyCandies = family.Candy_,
                 Family = family.FamilyId
             });

@@ -116,6 +116,8 @@ namespace PoGo.PokeMobBot.Logic
         public string lastPokeStopId = "69694201337";
         public string TargetStopID = "420Ayylmao";
         public GeoCoordinate lastPokeStopCoordinate = new GeoCoordinate(0,0);
+        public int PokeBallsToCollect = 0;
+
         public bool CheckScan()
         {
             if (DelayingScan)
@@ -1817,6 +1819,8 @@ namespace PoGo.PokeMobBot.Logic
         public bool LootPokestops => _settings.CatchSettings.LootPokestops;
 
         public CustomRoute CustomRoute => _settings.LocationSettings.CustomRoute;
+        public string CustomRouteName => _settings.LocationSettings.CustomRouteName;
+
         public string SnipeLocationServer => _settings.SnipeSettings.SnipeLocationServer;
         public int SnipeLocationServerPort => _settings.SnipeSettings.SnipeLocationServerPort;
         public bool UseSnipeLocationServer => _settings.SnipeSettings.UseSnipeLocationServer;

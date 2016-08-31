@@ -15,6 +15,7 @@ using PokemonGo.RocketAPI.Extensions;
 using POGOProtos.Map.Fort;
 using POGOProtos.Networking.Responses;
 using System.Security.Cryptography;
+using POGOProtos.Inventory.Item;
 
 #endregion
 
@@ -218,6 +219,13 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                                     Description = fortInfo.Description,
                                     url = fortInfo.ImageUrls[0]
                                 });
+                                if (session.Runtime.PokeBallsToCollect > 0)
+                                {
+                                    session.Runtime.PokeBallsToCollect -= fortSearch.ItemsAwarded.ToItemList()
+                                        .Where(x => x.Item1 == ItemId.ItemPokeBall ||
+                                                    x.Item1 == ItemId.ItemGreatBall || x.Item1 == ItemId.ItemUltraBall ||
+                                                    x.Item1 == ItemId.ItemMasterBall).Sum(x => x.Item2);
+                                }
                                 session.MapCache.UsedPokestop(pokeStop, session);
                                 session.EventDispatcher.Send(new InventoryNewItemsEvent()
                                 {
@@ -446,6 +454,13 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                             {
                                 Items = fortSearch.ItemsAwarded.ToItemList()
                             });
+                            if (session.Runtime.PokeBallsToCollect > 0)
+                            {
+                                session.Runtime.PokeBallsToCollect -= fortSearch.ItemsAwarded.ToItemList()
+                                    .Where(x => x.Item1 == ItemId.ItemPokeBall ||
+                                                x.Item1 == ItemId.ItemGreatBall || x.Item1 == ItemId.ItemUltraBall ||
+                                                x.Item1 == ItemId.ItemMasterBall).Sum(x => x.Item2);
+                            }
                             session.MapCache.UsedPokestop(pokeStop, session);
                             break; //Continue with program as loot was succesfull.
                         }

@@ -11,6 +11,7 @@ using PoGo.PokeMobBot.Logic.Event;
 using PoGo.PokeMobBot.Logic.State;
 using PoGo.PokeMobBot.Logic.Utils;
 using PokemonGo.RocketAPI.Extensions;
+using POGOProtos.Inventory.Item;
 using POGOProtos.Map.Fort;
 using POGOProtos.Networking.Responses;
 
@@ -166,11 +167,13 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         if (session.MapCache.CheckPokestopUsed(pokeStop)) break; //already used somehow
-                            var fortSearch = await session.Client.Fort.SearchFort(pokeStop.Id, pokeStop.Latitude, pokeStop.Longitude);
+                        var fortSearch =
+                            await session.Client.Fort.SearchFort(pokeStop.Id, pokeStop.Latitude, pokeStop.Longitude);
                         if (fortSearch.ExperienceAwarded > 0 && timesZeroXPawarded > 0) timesZeroXPawarded = 0;
                         if (fortSearch.ExperienceAwarded == 0)
                         {
-                            if (TimesZeroXPawarded == 0) await MoveToPokestop(session, cancellationToken, pokeStop, null, eggWalker);
+                            if (TimesZeroXPawarded == 0)
+                                await MoveToPokestop(session, cancellationToken, pokeStop, null, eggWalker);
                             timesZeroXPawarded++;
                             if ((int) fortSearch.CooldownCompleteTimestampMs != 0)
                             {
@@ -200,6 +203,13 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                             {
                                 Items = fortSearch.ItemsAwarded.ToItemList()
                             });
+                            if (session.Runtime.PokeBallsToCollect > 0)
+                            {
+                                session.Runtime.PokeBallsToCollect -= fortSearch.ItemsAwarded.ToItemList()
+                                    .Where(x => x.Item1 == ItemId.ItemPokeBall ||
+                                                x.Item1 == ItemId.ItemGreatBall || x.Item1 == ItemId.ItemUltraBall ||
+                                                x.Item1 == ItemId.ItemMasterBall).Sum(x => x.Item2);
+                            }
                             session.MapCache.UsedPokestop(pokeStop, session);
                             session.Runtime.StopsHit++;
                             pokeStop.CooldownCompleteTimestampMS = DateTime.UtcNow.AddMinutes(5).ToUnixTime();

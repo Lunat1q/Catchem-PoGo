@@ -50,8 +50,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                     session.EventDispatcher.Send(new NoPokeballEvent
                     {
                         Id = encounter is EncounterResponse ? pokemon.PokemonId : encounter?.PokemonData.PokemonId,
-                        Cp =
-                            (encounter is EncounterResponse
+                        Cp = (encounter is EncounterResponse
                                 ? encounter.WildPokemon?.PokemonData?.Cp
                                 : encounter?.PokemonData?.Cp) ?? 0
                     });
@@ -301,12 +300,11 @@ namespace PoGo.PokeMobBot.Logic.Tasks
             //so we counted down, now if we don't have pokeballs we need to just use the best one available
             if (pokeBallsCount > 0)
                 return ItemId.ItemPokeBall;
-            else if (greatBallsCount > 0)
+            if (greatBallsCount > 0)
                 return ItemId.ItemGreatBall;
-            else if (ultraBallsCount > 0)
+            if (ultraBallsCount > 0)
                 return ItemId.ItemUltraBall;
-            else
-                return ItemId.ItemUnknown;
+            return ItemId.ItemUnknown;
             //return pokeBallsCount > 0 ? ItemId.ItemPokeBall : ItemId.ItemUnknown;
         }
 

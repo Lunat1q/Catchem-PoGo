@@ -25,7 +25,13 @@ namespace PoGo.PokeMobBot.Logic.Tasks
             var pokemons = all.OrderByDescending(x => x.Cp).ThenBy(n => n.StaminaMax);
             var pokemon = pokemons.FirstOrDefault(p => p.Id == pokemonId);
 
+            
             if (pokemon == null) return;
+
+            var pokemonFamilies = await session.Inventory.GetPokemonFamilies();
+            var pokemonSettings = (await session.Inventory.GetPokemonSettings()).ToList();
+            var setting = pokemonSettings.Single(q => q.PokemonId == pokemon.PokemonId);
+            var family = pokemonFamilies.First(q => q.FamilyId == setting.FamilyId);
 
             if (!string.IsNullOrEmpty(pokemon.DeployedFortId))
             {
@@ -36,8 +42,17 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                 return;
             }
 
+            if (family.Candy_ < setting.CandyToEvolve)
+            {
+                session.EventDispatcher.Send(new WarnEvent()
+                {
+                    Message = $"Miss some candies to evolve ({family.Candy_}/{setting.CandyToEvolve}), cancelling..."
+                });
+                return;
+            }
+
             var evolveResponse = await session.Client.Inventory.EvolvePokemon(pokemon.Id);
-            
+
             session.EventDispatcher.Send(new PokemonEvolveEvent
             {
                 Uid = pokemon.Id,
@@ -48,10 +63,9 @@ namespace PoGo.PokeMobBot.Logic.Tasks
 
             if (evolveResponse.EvolvedPokemonData != null)
             {
-                var pokemonFamilies = await session.Inventory.GetPokemonFamilies();
-                var pokemonSettings = (await session.Inventory.GetPokemonSettings()).ToList();
-                var setting = pokemonSettings.Single(q => q.PokemonId == evolveResponse.EvolvedPokemonData.PokemonId);
-                var family = pokemonFamilies.First(q => q.FamilyId == setting.FamilyId);
+                family.Candy_ -= setting.CandyToEvolve;
+                setting = pokemonSettings.Single(q => q.PokemonId == evolveResponse.EvolvedPokemonData.PokemonId);
+                family = pokemonFamilies.First(q => q.FamilyId == setting.FamilyId);
                 session.EventDispatcher.Send(new PokemonEvolveDoneEvent
                 {
                     Uid = evolveResponse.EvolvedPokemonData.Id,

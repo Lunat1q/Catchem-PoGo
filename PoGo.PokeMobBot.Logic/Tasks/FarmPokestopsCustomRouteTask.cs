@@ -38,21 +38,45 @@ namespace PoGo.PokeMobBot.Logic.Tasks
             {
                 session.EventDispatcher.Send(new WarnEvent
                 {
-                    Message = "No proper route loaded"
+                    Message = "No proper route loaded, or route is too short"
+                });
+                session.EventDispatcher.Send(new BotCompleteFailureEvent()
+                {
+                   Shutdown = false,
+                   Stop = true
                 });
                 return;
             }
+
+            session.EventDispatcher.Send(new NoticeEvent()
+            {
+                Message = $"You are using a custom route named: '{session.LogicSettings.CustomRouteName}' with {session.LogicSettings.CustomRoute.RoutePoints.Count} routing points"
+            });
 
             var navi = new Navigation(session.Client);
             navi.UpdatePositionEvent += (lat, lng, alt) =>
             {
                 session.EventDispatcher.Send(new UpdatePositionEvent {Latitude = lat, Longitude = lng, Altitude = alt});
             };
-            if (LocationUtils.CalculateDistanceInMeters(session.Client.CurrentLatitude, session.Client.CurrentLongitude,
-                route.RoutePoints[0].Latitude, route.RoutePoints[0].Longitude) > 10)
+
+            //Find closest point of route and it's index!
+            var closestPoint =
+                route.RoutePoints.OrderBy(
+                    x =>
+                        LocationUtils.CalculateDistanceInMeters(session.Client.CurrentLatitude,
+                            session.Client.CurrentLongitude,
+                            x.Latitude, x.Longitude)).First();
+            var distToClosest = LocationUtils.CalculateDistanceInMeters(session.Client.CurrentLatitude,
+                session.Client.CurrentLongitude,
+                closestPoint.Latitude, closestPoint.Longitude);
+            if (distToClosest > 10)
             {
                 session.State = BotState.Walk;
-                await session.Navigation.Move(route.RoutePoints[0],
+                session.EventDispatcher.Send(new NoticeEvent()
+                {
+                    Message = $"Found closest point at {closestPoint.Latitude} - {closestPoint.Longitude}, distance to that point: {distToClosest.ToString("N1")} meters, moving there!"
+                });
+                await session.Navigation.Move(closestPoint,
                 session.LogicSettings.WalkingSpeedMin, session.LogicSettings.WalkingSpeedMax,
                 async () =>
                 {
@@ -81,12 +105,17 @@ namespace PoGo.PokeMobBot.Logic.Tasks
             });
 
             long nextMaintenceStamp = 0;
-
+            var initialize = true;
             while (!cancellationToken.IsCancellationRequested)
             {
 
                 foreach (var wp in route.RoutePoints)
                 {
+                    if (initialize)
+                    {
+                        if (wp != closestPoint) continue;
+                        initialize = false;
+                    }
 
                     session.State = BotState.Walk;
 
@@ -117,6 +146,8 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                     await MaintenanceTask.Execute(session, cancellationToken);
                     nextMaintenceStamp = DateTime.UtcNow.AddMinutes(3).ToUnixTime();
                 }
+                if (initialize)
+                    initialize = false;
             }
         }
     }

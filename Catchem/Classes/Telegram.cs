@@ -8,6 +8,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Catchem.Events;
 using PoGo.PokeMobBot.Logic.Event;
+using PoGo.PokeMobBot.Logic.Logging;
 using TelegramMessageEvent = PoGo.PokeMobBot.Logic.Event.TelegramMessageEvent;
 
 namespace Catchem.Classes
@@ -125,8 +126,9 @@ namespace Catchem.Classes
                 {
                     EventDispatcher.Send(new TelegramMessageEvent
                     {
-                        Message = $"Error during request to api.telegram.com, retry in 30 sec, ex: {ex.Message.Substring(0, 40)}..."
+                        Message = "Error during request to api.telegram.com, retry in 30 sec..."
                     });
+                    Logger.Write($"[TLGRM ERROR] {ex.Message}");
                     delay = 30000;
                 }
                 await Task.Delay(delay);
