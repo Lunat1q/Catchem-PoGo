@@ -50,8 +50,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                     session.EventDispatcher.Send(new NoPokeballEvent
                     {
                         Id = encounter is EncounterResponse ? pokemon.PokemonId : encounter?.PokemonData.PokemonId,
-                        Cp =
-                            (encounter is EncounterResponse
+                        Cp = (encounter is EncounterResponse
                                 ? encounter.WildPokemon?.PokemonData?.Cp
                                 : encounter?.PokemonData?.Cp) ?? 0
                     });
