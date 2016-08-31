@@ -26,6 +26,10 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                 {
                     await EvolvePokemonTask.Execute(session, cancellationToken);
                 }
+                if (session.LogicSettings.AutoFavoritePokemon)
+                {
+                    await FavoritePokemonTask.Execute(session, cancellationToken);
+                }
                 if (session.LogicSettings.AutomaticallyLevelUpPokemon)
                 {
                     await LevelUpPokemonTask.Execute(session, cancellationToken);

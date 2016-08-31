@@ -19,7 +19,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
             try
             {
                 cancellationToken.ThrowIfCancellationRequested();
-
+                if (!await CheckBotStateTask.Execute(session, cancellationToken)) return;
                 // Refresh inventory so that the player stats are fresh
                 await session.Inventory.RefreshCachedInventory();
 
