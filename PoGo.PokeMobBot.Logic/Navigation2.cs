@@ -156,7 +156,7 @@ namespace PoGo.PokeMobBot.Logic
                         return result;
                     UpdatePositionEvent?.Invoke(t.Latitude, t.Longitude, t.Altitude);
 
-                    if (nextMaintenceStamp < DateTime.UtcNow.ToUnixTime())
+                    if (nextMaintenceStamp < DateTime.UtcNow.ToUnixTime() && session.Runtime.StopsHit < 100)
                     {
                         await MaintenanceTask.Execute(session, cancellationToken);
                         nextMaintenceStamp = DateTime.UtcNow.AddMinutes(3).ToUnixTime();

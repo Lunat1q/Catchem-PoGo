@@ -629,7 +629,7 @@ namespace Catchem
                     {
                         var route =
                             GlobalCatchemSettings.Routes.FirstOrDefault(
-                                x => x.Name.ToLower() == newBot.GlobalSettings.LocationSettings.CustomRouteName);
+                                x => string.Equals(x.Name, newBot.GlobalSettings.LocationSettings.CustomRouteName, StringComparison.CurrentCultureIgnoreCase));
                         if (route != null)
                         {
                             newBot.GlobalSettings.LocationSettings.CustomRoute = route.Route;
