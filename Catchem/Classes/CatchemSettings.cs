@@ -131,6 +131,7 @@ namespace Catchem.Classes
 
         public List<GeoCoordinate> InitialWp;
 
+        [JsonIgnore]
         public int WpCount => Route.RoutePoints.Count;
 
         public CustomRoute Route = new CustomRoute();

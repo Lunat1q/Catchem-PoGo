@@ -51,7 +51,7 @@ namespace PoGo.PokeMobBot.Logic
         /// <param name="eggWalker"></param>
         /// <returns></returns>
         internal async Task<PlayerUpdateResponse> Move(GeoCoordinate destination, double walkingSpeedMin, double walkingSpeedMax, Func<Task<bool>> functionExecutedWhileWalking, Func<Task<bool>> functionExecutedWhileWalking2,
-            CancellationToken cancellationToken, ISession session, bool direct = false, List<GeoCoordinate> waypointsToVisit = null, EggWalker eggWalker = null )
+            CancellationToken cancellationToken, ISession session, bool direct = false, List<GeoCoordinate> waypointsToVisit = null, EggWalker eggWalker = null)
         {
             var currentLocation = new GeoCoordinate(_client.CurrentLatitude, _client.CurrentLongitude, _client.CurrentAltitude);
             var result = new PlayerUpdateResponse();
