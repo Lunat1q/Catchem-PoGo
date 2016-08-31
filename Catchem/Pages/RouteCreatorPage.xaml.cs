@@ -270,8 +270,8 @@ namespace Catchem.Pages
                 {
                     response = MapzenRouting.GetRoute(start.Location, null, bot.Session, cycleWp, true);
                 }
-                if (response?.Coordinates == null || response.Coordinates.Count == 0) return;
-                routePoints = response.Coordinates.Select(wp => new GeoCoordinate(wp[0], wp[1])).ToList();
+                if (response?.routes[0].geometry.coordinates == null || response.routes[0].geometry.coordinates.Count == 0) return;
+                routePoints = response.routes[0].geometry.coordinates.Select(wp => new GeoCoordinate(wp[0], wp[1])).ToList();
             }
             else
             {

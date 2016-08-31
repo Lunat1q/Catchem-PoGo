@@ -92,9 +92,9 @@ namespace PoGo.PokeMobBot.Logic
 	                    routingResponse = new RoutingResponse();
 	                }
 
-                    if (routingResponse?.Coordinates != null)
+                    if (routingResponse?.routes[0].geometry.coordinates != null)
                     {
-                        foreach (var item in routingResponse.Coordinates)
+                        foreach (var item in routingResponse.routes[0].geometry.coordinates)
                         {
                             if (item == null) continue;
                             //0 = lat, 1 = long (MAYBE NOT THO?)

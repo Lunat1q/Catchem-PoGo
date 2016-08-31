@@ -102,7 +102,7 @@ namespace PoGo.PokeMobBot.Logic
                     //    }
                     //}
                     var testCoords = route.overview_polyline.DecodeToList();
-                    responseParsed.Coordinates = testCoords.ToList(); // googleCoords; //
+                    responseParsed.routes[0].geometry.coordinates = testCoords.ToList(); // googleCoords; //
                 }
                 return responseParsed;
             }
