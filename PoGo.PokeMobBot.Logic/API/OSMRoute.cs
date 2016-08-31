@@ -130,7 +130,7 @@ namespace PoGo.PokeMobBot.Logic
                 {
                     var rnd = new Random();
                     points.AddRange(from XmlNode node in coordNodes select node.InnerText into coordinate where coordinate != string.Empty select coordinate.Split(' ') into xy where xy.Length == 3 let lat = double.Parse(xy[1], CultureInfo.InvariantCulture) let lng = double.Parse(xy[0], CultureInfo.InvariantCulture) let alt = double.Parse(xy[2], CultureInfo.InvariantCulture) + 0.7 + rnd.NextInRange(0.1, 0.3) select new List<double> {lng, lat, alt});
-                    resp.Coordinates = points;
+                    resp.routes[0].geometry.coordinates = points;
                 }
             }
             catch

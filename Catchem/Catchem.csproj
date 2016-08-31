@@ -100,6 +100,7 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Net" />
     <Reference Include="System.Web" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\MahApps.Metro.1.2.4.0\lib\net45\System.Windows.Interactivity.dll</HintPath>
       <Private>True</Private>
@@ -138,6 +139,7 @@
     <Compile Include="Extensions\GifImage.cs" />
     <Compile Include="Extensions\PlayerMovement.cs" />
     <Compile Include="Extensions\UiHandlers.cs" />
+    <Compile Include="Extensions\UseIncense.cs" />
     <Compile Include="Interfaces\IBotPage.cs" />
     <Compile Include="Pages\AccountSettingsTab.xaml.cs">
       <DependentUpon>AccountSettingsTab.xaml</DependentUpon>
@@ -256,6 +258,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="ClassDiagram1.cd" />
     <None Include="Config\Translations\translation.da.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

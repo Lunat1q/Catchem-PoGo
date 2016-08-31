@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+package POGOProtos.Networking.Responses;
+
+import "POGOProtos/Data/DownloadUrlEntry.proto";
+
+message GetDownloadUrlsResponse {
+	repeated POGOProtos.Data.DownloadUrlEntry download_urls = 1;
+}
+

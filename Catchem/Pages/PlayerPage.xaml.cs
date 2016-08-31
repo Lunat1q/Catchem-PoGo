@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -13,6 +13,11 @@ using PoGo.PokeMobBot.Logic.Event;
 using PoGo.PokeMobBot.Logic.State;
 using PoGo.PokeMobBot.Logic.Tasks;
 using POGOProtos.Enums;
+<<<<<<< HEAD
+=======
+using System.Diagnostics;
+using System.Timers;
+>>>>>>> 781e0a3e153e45d564d7eab93b5becb8c5891033
 using System.Threading.Tasks;
 
 namespace Catchem.Pages
@@ -27,6 +32,8 @@ namespace Catchem.Pages
         private bool _loadingUi;
         private bool _inRefresh;
         private bool _inRefreshItems;
+        private System.Timers.Timer aTimer;
+
         public PlayerPage()
         {
             InitializeComponent();
@@ -247,6 +254,15 @@ namespace Catchem.Pages
             if (uGrid == null) return;
             uGrid.Columns = (int)(uGrid.ActualWidth/150);
         }
+<<<<<<< HEAD
+=======
+        
+
+        private void ItemListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+>>>>>>> 781e0a3e153e45d564d7eab93b5becb8c5891033
         private async void mi_useIncense_Click(object sender, RoutedEventArgs e)
         {
             if (!_bot.Started || _inRefreshItems) return;
@@ -254,6 +270,10 @@ namespace Catchem.Pages
             var item = GetSelectedItem();
             if (item == null) return;
             bool incenseActive = await UseIncenseFromMenu.Execute(_bot.Session, item);
+<<<<<<< HEAD
+=======
+            Debug.WriteLine(incenseActive);
+>>>>>>> 781e0a3e153e45d564d7eab93b5becb8c5891033
             if (incenseActive)
             {
                 l_Incense_Active.Content = "Active";
@@ -261,7 +281,11 @@ namespace Catchem.Pages
                 await Task.Delay(TimeSpan.FromSeconds(1800));
                 ResetActiveIncense();
             }
+<<<<<<< HEAD
 
+=======
+            
+>>>>>>> 781e0a3e153e45d564d7eab93b5becb8c5891033
         }
 
         private void ResetActiveIncense()
