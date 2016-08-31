@@ -38,10 +38,20 @@ namespace PoGo.PokeMobBot.Logic.Tasks
             {
                 session.EventDispatcher.Send(new WarnEvent
                 {
-                    Message = "No proper route loaded"
+                    Message = "No proper route loaded, or route is too short"
+                });
+                session.EventDispatcher.Send(new BotCompleteFailureEvent()
+                {
+                   Shutdown = false,
+                   Stop = true
                 });
                 return;
             }
+
+            session.EventDispatcher.Send(new NoticeEvent()
+            {
+                Message = $"You are using a custom route named: '{session.LogicSettings.CustomRouteName}' with {session.LogicSettings.CustomRoute.RoutePoints.Count} waypoints"
+            });
 
             var navi = new Navigation(session.Client);
             navi.UpdatePositionEvent += (lat, lng, alt) =>
