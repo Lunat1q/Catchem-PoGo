@@ -89,6 +89,7 @@ namespace PoGo.PokeMobBot.Logic
         RoutingService RoutingService { get; }
 
         CustomRoute CustomRoute { get; }
+        string CustomRouteName { get; }
 
         bool LootPokestops { get; }
 

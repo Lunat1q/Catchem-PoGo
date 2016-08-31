@@ -50,10 +50,10 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                 }, 
                 async () =>
                 {
-                    await UseNearbyPokestopsTask.Execute(session, cancellationToken);
+                    await UseNearbyPokestopsTask.Execute(session, cancellationToken, true);
                     return true;
 
-                }, cancellationToken, session);
+                }, cancellationToken, session, eggWalker: eggWalker);
 
             session.EventDispatcher.Send(new WarnEvent
             {

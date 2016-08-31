@@ -32,7 +32,7 @@ namespace PoGo.PokeMobBot.Logic
             {
                 Logger.Write("Requesting routing info from MobRouting.com", LogLevel.Debug);
                 var request = WebRequest.Create(
-                  $"http://mobrouting.com" + $"/api/dev/gosmore.php?format=geojson&apikey={apiKey}&flat={start.Latitude.ToString(CultureInfo.InvariantCulture)}&flon={start.Longitude.ToString(CultureInfo.InvariantCulture)}&tlat={dest.Latitude.ToString(CultureInfo.InvariantCulture)}&tlon={dest.Longitude.ToString(CultureInfo.InvariantCulture)}&v=foot&fast=1&layer=mapnik");
+                  $"http://mobrouting.com" + $"/api/dev/gosmore2.php?format=geojson&apikey={apiKey}&flat={start.Latitude.ToString(CultureInfo.InvariantCulture)}&flon={start.Longitude.ToString(CultureInfo.InvariantCulture)}&tlat={dest.Latitude.ToString(CultureInfo.InvariantCulture)}&tlon={dest.Longitude.ToString(CultureInfo.InvariantCulture)}&v=foot&fast=1&layer=mapnik");
                 request.Credentials = CredentialCache.DefaultCredentials;
                 request.Proxy = WebRequest.DefaultWebProxy;
                 request.Proxy.Credentials = CredentialCache.DefaultCredentials;

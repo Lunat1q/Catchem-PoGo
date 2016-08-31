@@ -126,7 +126,6 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                 // always wait the delay amount between catches, ideally to prevent you from making another call too early after a catch event
                 await Task.Delay(session.LogicSettings.DelayBetweenPokemonCatch, cancellationToken);
             }
-            return;
         }
 
         private static async Task<List<PokemonCacheItem>> GetNearbyPokemons(ISession session)

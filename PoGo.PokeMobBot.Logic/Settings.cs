@@ -1817,6 +1817,8 @@ namespace PoGo.PokeMobBot.Logic
         public bool LootPokestops => _settings.CatchSettings.LootPokestops;
 
         public CustomRoute CustomRoute => _settings.LocationSettings.CustomRoute;
+        public string CustomRouteName => _settings.LocationSettings.CustomRouteName;
+
         public string SnipeLocationServer => _settings.SnipeSettings.SnipeLocationServer;
         public int SnipeLocationServerPort => _settings.SnipeSettings.SnipeLocationServerPort;
         public bool UseSnipeLocationServer => _settings.SnipeSettings.UseSnipeLocationServer;

@@ -273,12 +273,23 @@ namespace Catchem.Classes
 
         private void WipeData()
         {
-            Log = new List<Tuple<string, Color>>();
-            MapMarkers = new Dictionary<string, GMapMarker>();
-            MarkersQueue = new Queue<NewMapObject>();
-            LogQueue = new Queue<Tuple<string, Color>>();
-            PathRoute.Points.Clear();
-            PathRoute.RegenerateShape(null);
+            try
+            {
+                Log = new List<Tuple<string, Color>>();
+                MapMarkers = new Dictionary<string, GMapMarker>();
+                MarkersQueue = new Queue<NewMapObject>();
+                LogQueue = new Queue<Tuple<string, Color>>();
+                PathRoute.Points.Clear();
+                PathRoute.RegenerateShape(null);
+            }
+            catch (Exception ex)
+            {
+                Session.EventDispatcher.Send(new WarnEvent
+                {
+                    Message = "Error during wiping bot data!"
+                });
+                Logger.Write($"[WIPE FAIL] Error: {ex.Message}", LogLevel.Error);
+            }
         }
 
         public void Stop(bool soft = false)
@@ -292,7 +303,10 @@ namespace Catchem.Classes
             Session.Client.Login.UpdateHash();
             if (ForceMoveMarker != null)
             {
-                ForceMoveMarker?.Map?.Markers?.Remove(ForceMoveMarker);
+                ForceMoveMarker?.Map.Dispatcher.BeginInvoke(new ThreadStart(delegate
+                {
+                    ForceMoveMarker?.Map?.Markers?.Remove(ForceMoveMarker);
+                }));
                 ForceMoveMarker = null;
             }
             if (soft) return;
@@ -559,7 +573,7 @@ namespace Catchem.Classes
             try
             {
                 if (!GlobalSettings.CatchSettings.PauseBotOnMaxHourlyRates || 
-                    RealWorkH < 1 || 
+                    RealWorkH < 1 || //DEBUG
                     Stats == null) return;
 
                 var countXp = GlobalSettings.CatchSettings.MaxXPPerHour > 0;
@@ -586,7 +600,7 @@ namespace Catchem.Classes
                 var stopMs = stopSec * 1000;
 
 //#if DEBUG
-//                stopMs /= 1000;
+//                stopMs /= 100;
 //#endif
 
                 Session.EventDispatcher.Send(new WarnEvent
