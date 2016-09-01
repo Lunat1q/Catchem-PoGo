@@ -69,8 +69,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                         Exp = evolveResponse.ExperienceAwarded,
                         Result = evolveResponse.Result
                     });
-                    
-                    
+
                     if (evolveResponse.EvolvedPokemonData != null)
                     {
                         var pokemonSettings = session.Inventory.GetPokemonSettings().Result.ToList();
@@ -97,8 +96,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                             CandyToEvolve = setting.CandyToEvolve
                         });
                     }
-                    await DelayingEvolveUtils.Delay(session.LogicSettings.DelayEvolvePokemon, 0, session.LogicSettings.DelayEvolveVariation);
-                    cancellationToken.ThrowIfCancellationRequested();
+                    await DelayingEvolveUtils.Delay(session.LogicSettings.DelayEvolvePokemon, 0, session.LogicSettings.DelayEvolveVariation, cancellationToken);
                 }
             }
             session.State = prevState;

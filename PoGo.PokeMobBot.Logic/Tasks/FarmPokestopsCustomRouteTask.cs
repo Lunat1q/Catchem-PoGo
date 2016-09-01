@@ -71,15 +71,23 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                                 40)).ToList();
 
             session.EventDispatcher.Send(new PokeStopListEvent { Forts = allPokestopsInArea.Select(x => x.BaseFortData) });
-
-            //Find closest point of route and it's index!
-            var closestPoint = await CheckClosestAndMove(session, cancellationToken, route);
-
-            long nextMaintenceStamp = 0;
-            var initialize = true;
+            
             while (!cancellationToken.IsCancellationRequested)
             {
+                await FollowTheYellowbrickroad(session, cancellationToken, route, navi, eggWalker, session.LogicSettings.CustomRouteName);
+            }
+        }
 
+        private static async Task FollowTheYellowbrickroad(ISession session, CancellationToken cancellationToken, CustomRoute route,
+            Navigation navi, EggWalker eggWalker, string prevRouteName)
+        {
+            var initialize = true;
+            //Find closest point of route and it's index!
+            var closestPoint = await CheckClosestAndMove(session, cancellationToken, route);
+            long nextMaintenceStamp = 0;
+            var sameRoute = true;
+            while (sameRoute)
+            {
                 foreach (var wp in route.RoutePoints)
                 {
                     if (session.ForceMoveTo != null)
@@ -90,11 +98,20 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                         if (wp != closestPoint) continue;
                         initialize = false;
                     }
+                    if (prevRouteName != session.LogicSettings.CustomRouteName)
+                    {
+                        sameRoute = false;
+                        session.EventDispatcher.Send(new NoticeEvent()
+                        {
+                            Message = $"Route switched from {prevRouteName} to {session.LogicSettings.CustomRouteName}!"
+                        });
+                        break;
+                    }
 
                     session.State = BotState.Walk;
 
                     var distance = LocationUtils.CalculateDistanceInMeters(session.Client.CurrentLatitude,
-                    session.Client.CurrentLongitude, wp.Latitude, wp.Longitude);
+                        session.Client.CurrentLongitude, wp.Latitude, wp.Longitude);
 
                     await navi.HumanPathWalking(
                         session,
@@ -103,8 +120,8 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                         async () =>
                         {
                             await CatchNearbyPokemonsTask.Execute(session, cancellationToken);
-                                //Catch Incense Pokemon
-                                await CatchIncensePokemonsTask.Execute(session, cancellationToken);
+                            //Catch Incense Pokemon
+                            await CatchIncensePokemonsTask.Execute(session, cancellationToken);
                             return true;
                         },
                         async () =>
