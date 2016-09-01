@@ -252,5 +252,23 @@ namespace Catchem.Pages
             if (_bot == null || !_bot.Started) return;
             _bot.Session.Runtime.StopsHit = 999;
         }
+        private async void mi_useIncense_Click(object sender, RoutedEventArgs e)
+        {
+            if (!_bot.Started || _inRefreshItems) return;
+            if (ItemListBox.SelectedIndex == -1 || !_bot.Started) return;
+            var item = GetSelectedItem();
+            if (item == null) return;
+            long incenseActive = await UseIncenseFromMenu.Execute(_bot.Session, item);
+            if (incenseActive > 0 && incenseActive < 1800000)
+            {
+                l_Incense_Active.Content = "Active";
+                RefreshItems();
+                await ResetAlreadyActiveIncense.Execute(incenseActive, _bot.Session);
+            }
+            else
+            {
+                await ResetAlreadyActiveIncense.Execute(0, _bot.Session);
+            }
+        }
     }
 }

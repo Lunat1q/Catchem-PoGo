@@ -75,6 +75,7 @@
                 <ContextMenu>
                     <MenuItem x:Name="mi_recycleItem" Header="Recycle item" Click="mi_recycleItem_Click"/>
                     <MenuItem x:Name="mi_refreshItems" Header="Refresh item list" Click="mi_refreshItems_Click" />
+                    <MenuItem x:Name="mi_useIncense" Header="Use Incense" Click="mi_useIncense_Click" />
                 </ContextMenu>
             </ListBox.ContextMenu>
             <ListBox.Background>
@@ -202,6 +203,10 @@
                 </Button.Background>
             </Button>
         </Grid>
+        <Grid Height="31" Margin="10,0,10,10" VerticalAlignment="Bottom" Grid.ColumnSpan="1" Grid.Column="3">
+            <Label x:Name="l_Incense" Content="INCENSE:" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#FF363636" FontSize="15" TextOptions.TextFormattingMode="Display" FontFamily="Source Sans Pro Semibold" Height="28" Width="82"/>
+            <Label x:Name="l_Incense_Active" Content="UNKNOWN" HorizontalAlignment="Left" Margin="122,0,0,0" VerticalAlignment="Top" Foreground="#FF324AB4" FontSize="15" TextOptions.TextFormattingMode="Display" FontFamily="Source Sans Pro Semibold" Height="28" Width="90"/>
+        </Grid>
         <Grid Grid.ColumnSpan="2" Grid.Column="1" Height="24" Margin="50,19,140,0" VerticalAlignment="Top">
             <ProgressBar x:Name="LevelProgressBar" Margin="0" Foreground="#FF04C127"/>
             <TextBlock x:Name="NextLevelInTextBox" HorizontalAlignment="Center" Margin="0" TextWrapping="Wrap" Text="00:00 (100/100)" VerticalAlignment="Center" Background="{x:Null}">
@@ -213,21 +218,5 @@
                 </TextBlock.Foreground>
             </TextBlock>
         </Grid>
-        <Button Style="{StaticResource ResourceKey=flatbutton}" x:Name="ManualMaintenceButton" Content="{Binding ConverterParameter=maintence, Converter={StaticResource LoadImageFromResource}}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="50" Height="30" Margin="0,0,10,10" FontFamily="BOLD" TextOptions.TextFormattingMode="Display" FontWeight="Bold" FontSize="14" Click="ManualMaintenceButton_Click" Grid.Column="2">
-            <Button.Background>
-                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <LinearGradientBrush.RelativeTransform>
-                        <TransformGroup>
-                            <ScaleTransform CenterY="0.5" CenterX="0.5"/>
-                            <SkewTransform CenterY="0.5" CenterX="0.5"/>
-                            <RotateTransform Angle="90" CenterY="0.5" CenterX="0.5"/>
-                            <TranslateTransform/>
-                        </TransformGroup>
-                    </LinearGradientBrush.RelativeTransform>
-                    <GradientStop Color="#FFB0EE9C" Offset="0"/>
-                    <GradientStop Color="#FF53C0B1" Offset="1"/>
-                </LinearGradientBrush>
-            </Button.Background>
-        </Button>
     </Grid>
 </UserControl>

@@ -25,7 +25,7 @@ namespace PoGo.PokeMobBot.Logic
         {
             const double maximum = -8.0f;
             const double minimum = 8.0f;
-		    return rand.NextInRange(minimum, maximum);
+		    return rand.NextInRangeMob(minimum, maximum);
         }
 
         public Navigation(Client client, UpdatePositionDelegate updatePos)
@@ -74,7 +74,7 @@ namespace PoGo.PokeMobBot.Logic
             }
             else
             {
-                altitudeStep = (_client.Settings.DefaultAltitude - _client.rnd.NextInRange(_client.Settings.DefaultAltitudeMin, _client.Settings.DefaultAltitudeMax)) / (distanceToTarget / nextWaypointDistance);
+                altitudeStep = (_client.Settings.DefaultAltitude - _client.rnd.NextInRangeMob(_client.Settings.DefaultAltitudeMin, _client.Settings.DefaultAltitudeMax)) / (distanceToTarget / nextWaypointDistance);
                 altitude = Math.Round(_client.Settings.DefaultAltitude - altitudeStep, round);
                 altitudeStep = Math.Round(altitudeStep, round);
                 waypoint = LocationUtils.CreateWaypoint(sourceLocation, nextWaypointDistance, nextWaypointBearing, _client.Settings.DefaultAltitude);
@@ -118,7 +118,7 @@ namespace PoGo.PokeMobBot.Logic
 
                 nextWaypointDistance = Math.Min(currentDistanceToTarget,
                     millisecondsUntilGetUpdatePlayerLocationResponse/1000*speedInMetersPerSecond);
-                nextWaypointBearing = LocationUtils.DegreeBearing(sourceLocation, targetLocation) + _client.rnd.NextInRange(-11.25, 11.25);
+                nextWaypointBearing = LocationUtils.DegreeBearing(sourceLocation, targetLocation) + _client.rnd.NextInRangeMob(-11.25, 11.25);
                 waypoint = LocationUtils.CreateWaypoint(sourceLocation, nextWaypointDistance, nextWaypointBearing);
 
                 requestSendDateTime = DateTime.Now;
@@ -132,9 +132,9 @@ namespace PoGo.PokeMobBot.Logic
                 if (!trueAlt && (altitude < _client.Settings.DefaultAltitudeMin && altitude > _client.Settings.DefaultAltitudeMax)) //Keep altitude in range
                 {
                     if (altitude < _client.Settings.DefaultAltitudeMin)
-                        altitude = _client.Settings.DefaultAltitudeMin + _client.rnd.NextInRange(0.3, 0.5);
+                        altitude = _client.Settings.DefaultAltitudeMin + _client.rnd.NextInRangeMob(0.3, 0.5);
                     else
-                        altitude = _client.Settings.DefaultAltitudeMin - _client.rnd.NextInRange(0.3, 0.5);
+                        altitude = _client.Settings.DefaultAltitudeMin - _client.rnd.NextInRangeMob(0.3, 0.5);
                 }
                 else if (trueAlt) //Keep altitude in range
                 {
