@@ -13,6 +13,7 @@ using PoGo.PokeMobBot.Logic.Event;
 using PoGo.PokeMobBot.Logic.State;
 using PoGo.PokeMobBot.Logic.Tasks;
 using POGOProtos.Enums;
+using System.Threading.Tasks;
 
 namespace Catchem.Pages
 {
@@ -264,9 +265,12 @@ namespace Catchem.Pages
                 l_Incense_Active.Content = "Active";
                 RefreshItems();
                 await ResetAlreadyActiveIncense.Execute(incenseActive, _bot.Session);
+                await Task.Delay(TimeSpan.FromMilliseconds(incenseActive));
+                l_Incense_Active.Content = "Inactive";
             }
             else
             {
+                l_Incense_Active.Content = "Inactive";
                 await ResetAlreadyActiveIncense.Execute(0, _bot.Session);
             }
         }
