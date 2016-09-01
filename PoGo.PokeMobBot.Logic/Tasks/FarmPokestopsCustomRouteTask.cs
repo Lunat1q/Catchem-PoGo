@@ -75,6 +75,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
             while (!cancellationToken.IsCancellationRequested)
             {
                 await FollowTheYellowbrickroad(session, cancellationToken, route, navi, eggWalker, session.LogicSettings.CustomRouteName);
+                route = session.LogicSettings.CustomRoute;
             }
         }
 
