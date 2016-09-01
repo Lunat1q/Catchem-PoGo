@@ -26,6 +26,8 @@ namespace PoGo.PokeMobBot.Logic.Tasks
         {
             cancellationToken.ThrowIfCancellationRequested();
 
+            if (!await CheckBotStateTask.Execute(session, cancellationToken)) return;
+
             var pokestopList = await GetPokeStops(session);
 
             if (sendPokeStopsEvent)

@@ -18,14 +18,17 @@ namespace PoGo.PokeMobBot.Logic.Tasks
         public static async Task Execute(ISession session, CancellationToken cancellationToken)
         {
             var prevState = session.State;
-            session.State = BotState.Recycle;
-            cancellationToken.ThrowIfCancellationRequested();
+            
             await session.Inventory.RefreshCachedInventory();
             var currentTotalItems = await session.Inventory.GetTotalItemCount();
             var recycleInventoryAtUsagePercentage = session.LogicSettings.RecycleInventoryAtUsagePercentage > 1
                 ? session.LogicSettings.RecycleInventoryAtUsagePercentage / 100 : session.LogicSettings.RecycleInventoryAtUsagePercentage;
             if (session.Profile.PlayerData.MaxItemStorage * recycleInventoryAtUsagePercentage > currentTotalItems)
                 return;
+
+            if (!await CheckBotStateTask.Execute(session, cancellationToken)) return;
+            session.State = BotState.Recycle;
+            cancellationToken.ThrowIfCancellationRequested();
             var items = await session.Inventory.GetItemsToRecycle(session);
             foreach (var item in items)
             {

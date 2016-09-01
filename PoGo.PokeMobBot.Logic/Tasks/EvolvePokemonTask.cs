@@ -21,6 +21,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
         public static async Task Execute(ISession session, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
+            if (!await CheckBotStateTask.Execute(session, cancellationToken)) return;
             var prevState = session.State;
             session.State = BotState.Evolve;
             // Refresh inventory so that the player stats are fresh

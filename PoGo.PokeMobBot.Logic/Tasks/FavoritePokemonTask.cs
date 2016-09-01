@@ -16,7 +16,9 @@ namespace PoGo.PokeMobBot.Logic.Tasks
 
             // Refresh inventory so that the player stats are fresh
             await session.Inventory.RefreshCachedInventory();
-
+            if (!await CheckBotStateTask.Execute(session, cancellationToken)) return;
+            var prevState = session.State;
+            session.State = BotState.Busy;
 
             var pokemonSettings = await session.Inventory.GetPokemonSettings();
             var pokemonFamilies = await session.Inventory.GetPokemonFamilies();
@@ -69,6 +71,8 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                 }
                 await Task.Delay(session.LogicSettings.DelayTransferPokemon, cancellationToken);
             }
+
+            session.State = prevState;
         }
     }
 }
