@@ -142,6 +142,7 @@
     <Compile Include="Navigation2.cs" />
     <Compile Include="API\GoogleRoute.cs" />
     <Compile Include="PoGoUtils\CustomRoute.cs" />
+    <Compile Include="PoGoUtils\PokemonAttackInfo.cs" />
     <Compile Include="PoGoUtils\PokemonMoveInfo.cs" />
     <Compile Include="PoGoUtils\PokemonInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
