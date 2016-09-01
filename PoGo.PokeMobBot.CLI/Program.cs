@@ -92,7 +92,7 @@ namespace PoGo.PokeMobBot.CLI
                             session.Translation.GetTranslation(TranslationString.StatsTemplateString),
                             session.Translation.GetTranslation(TranslationString.StatsXpTemplateString));
 
-            var aggregator = new StatisticsAggregator(stats);
+            var aggregator = new StatisticsAggregator();
             var listener = new ConsoleEventListener();
             var websocket = new WebSocketInterface(settings.StartUpSettings.WebSocketPort, session);
 

@@ -3183,6 +3183,16 @@ namespace Catchem.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap candy_white {
+            get {
+                object obj = ResourceManager.GetObject("candy_white", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Dark_inv {
             get {
                 object obj = ResourceManager.GetObject("Dark_inv", resourceCulture);

@@ -12,18 +12,12 @@ namespace PoGo.PokeMobBot.Logic
 {
     public class StatisticsAggregator
     {
-        private readonly Statistics _stats;
-
-        public StatisticsAggregator(Statistics stats)
-        {
-            _stats = stats;
-        }
 
         public void HandleEvent(ProfileEvent evt, ISession session)
         {
-            _stats.SetUsername(evt.Profile);
-            _stats.Dirty(session.Inventory);
-            _stats.CheckLevelUp(session);
+            session.Stats.SetUsername(evt.Profile);
+            session.Stats.Dirty(session.Inventory);
+            session.Stats.CheckLevelUp(session);
         }
 
         public void HandleEvent(ErrorEvent evt, ISession session)
@@ -44,37 +38,37 @@ namespace PoGo.PokeMobBot.Logic
 
         public void HandleEvent(PokemonEvolveEvent evt, ISession session)
         {
-            _stats.TotalExperience += evt.Exp;
-            _stats.Dirty(session.Inventory);
-            _stats.CheckLevelUp(session);
+            session.Stats.TotalExperience += evt.Exp;
+            session.Stats.Dirty(session.Inventory);
+            session.Stats.CheckLevelUp(session);
         }
 
         public void HandleEvent(TransferPokemonEvent evt, ISession session)
         {
-            _stats.TotalPokemonsTransfered++;
-            _stats.Dirty(session.Inventory);
-			_stats.CheckLevelUp(session);
+            session.Stats.TotalPokemonsTransfered++;
+            session.Stats.Dirty(session.Inventory);
+            session.Stats.CheckLevelUp(session);
         }
 
         public void HandleEvent(EggHatchedEvent evt, ISession session)
         {
-            _stats.TotalPokemons++;
-            _stats.Dirty(session.Inventory);
+            session.Stats.TotalPokemons++;
+            session.Stats.Dirty(session.Inventory);
         }
 
         public void HandleEvent(ItemRecycledEvent evt, ISession session)
         {
-            _stats.TotalItemsRemoved += evt.Count;
-            _stats.Dirty(session.Inventory);
-            _stats.CheckLevelUp(session);
+            session.Stats.TotalItemsRemoved += evt.Count;
+            session.Stats.Dirty(session.Inventory);
+            session.Stats.CheckLevelUp(session);
         }
 
         public void HandleEvent(FortUsedEvent evt, ISession session)
         {
-            _stats.TotalExperience += evt.Exp;
-            _stats.TotalPokestops++;
-            _stats.Dirty(session.Inventory);
-            _stats.CheckLevelUp(session);
+            session.Stats.TotalExperience += evt.Exp;
+            session.Stats.TotalPokestops++;
+            session.Stats.Dirty(session.Inventory);
+            session.Stats.CheckLevelUp(session);
         }
 
         public void HandleEvent(FortTargetEvent evt, ISession session)
@@ -85,11 +79,11 @@ namespace PoGo.PokeMobBot.Logic
         {
             if (evt.Status == CatchPokemonResponse.Types.CatchStatus.CatchSuccess)
             {
-                _stats.TotalExperience += evt.Exp;
-                _stats.TotalPokemons++;
-                _stats.TotalStardust = evt.Stardust;
-                _stats.Dirty(session.Inventory);
-                _stats.CheckLevelUp(session);
+                session.Stats.TotalExperience += evt.Exp;
+                session.Stats.TotalPokemons++;
+                session.Stats.TotalStardust = evt.Stardust;
+                session.Stats.Dirty(session.Inventory);
+                session.Stats.CheckLevelUp(session);
             }
         }
 

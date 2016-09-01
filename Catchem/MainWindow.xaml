@@ -85,22 +85,7 @@
                     Content="START ALL"
                     FontWeight="Bold"
                     Style="{StaticResource ResourceKey=flatbutton}"
-                    TextOptions.TextFormattingMode="Display">
-                <Button.Background>
-                    <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
-                        <LinearGradientBrush.RelativeTransform>
-                            <TransformGroup>
-                                <ScaleTransform CenterX="0.5" CenterY="0.5" />
-                                <SkewTransform CenterX="0.5" CenterY="0.5" />
-                                <RotateTransform Angle="90" CenterX="0.5" CenterY="0.5" />
-                                <TranslateTransform />
-                            </TransformGroup>
-                        </LinearGradientBrush.RelativeTransform>
-                        <GradientStop Offset="0" Color="#FFB0EE9C" />
-                        <GradientStop Offset="1" Color="#FF53C0B1" />
-                    </LinearGradientBrush>
-                </Button.Background>
-            </Button>
+                    TextOptions.TextFormattingMode="Display" Background="{DynamicResource NormalButtonColor}"/>
             <Button x:Name="btn_StopAll"
                     Width="111"
                     Height="30"
@@ -141,22 +126,7 @@
                     Content="BATCH CREATION"
                     FontWeight="Bold"
                     Style="{StaticResource ResourceKey=flatbutton}"
-                    TextOptions.TextFormattingMode="Display">
-                <Button.Background>
-                    <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
-                        <LinearGradientBrush.RelativeTransform>
-                            <TransformGroup>
-                                <ScaleTransform CenterX="0.5" CenterY="0.5" />
-                                <SkewTransform CenterX="0.5" CenterY="0.5" />
-                                <RotateTransform Angle="90" CenterX="0.5" CenterY="0.5" />
-                                <TranslateTransform />
-                            </TransformGroup>
-                        </LinearGradientBrush.RelativeTransform>
-                        <GradientStop Offset="0" Color="#FF9CEAEE" />
-                        <GradientStop Offset="1" Color="#FF5398C0" />
-                    </LinearGradientBrush>
-                </Button.Background>
-            </Button>
+                    TextOptions.TextFormattingMode="Display" Background="{DynamicResource LightBlueButtonColor}"/>
         </Grid>
         <Grid x:Name="InputBox" Visibility="Collapsed" Grid.ColumnSpan="2" Grid.Column="0">
             <Grid Background="Black" Opacity="0.45" />

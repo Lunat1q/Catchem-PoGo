@@ -71,7 +71,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                         ? encounter.WildPokemon?.PokemonData
                         : encounter?.PokemonData) >= session.LogicSettings.UseBerryMinIv;
 
-                if (isLowProbability && ((session.LogicSettings.PrioritizeIvOverCp && isHighPerfection) || isHighCp) && canUseBerry)
+                if ((isLowProbability || ((session.LogicSettings.PrioritizeIvOverCp && isHighPerfection) || isHighCp)) && canUseBerry)
                 {
                     await
                         UseBerry(session,

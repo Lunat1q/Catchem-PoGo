@@ -63,7 +63,7 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-        
+
     </Style>
 
     <Style TargetType="{x:Type ToolTip}" x:Key="PokeTooltipInfoStyle">
@@ -207,8 +207,20 @@
             <TextBlock Text="{Binding Amount, FallbackValue='Amount: 0', StringFormat='Amount: {0}'}" HorizontalAlignment="Stretch" Margin="1,46,0,0" VerticalAlignment="Top" Grid.ColumnSpan="1" Width="Auto" Padding="0" Foreground="#FF59C3B0" FontSize="14" TextAlignment="Center" Height="19" Grid.Column="1" />
         </Grid>
     </DataTemplate>
-    <DataTemplate x:Key="BotTemplate">
-        <Grid Width="Auto" Height="90" Margin="3">
+    <LinearGradientBrush x:Key="StopBrush" StartPoint="0.5,0" EndPoint="0.5,1">
+        <LinearGradientBrush.RelativeTransform>
+            <TransformGroup>
+                <ScaleTransform CenterX="0.5" CenterY="0.5" />
+                <SkewTransform CenterX="0.5" CenterY="0.5" />
+                <RotateTransform Angle="90" CenterX="0.5" CenterY="0.5" />
+                <TranslateTransform />
+            </TransformGroup>
+        </LinearGradientBrush.RelativeTransform>
+        <GradientStop Offset="0" Color="#FFEEB29C" />
+        <GradientStop Offset="1" Color="#FFC04F53" />
+    </LinearGradientBrush>
+    <DataTemplate x:Key="BotTemplate" DataType="classes:BotWindowData">
+        <Grid Width="Auto" Height="98" Margin="3">
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="1*"/>
@@ -220,17 +232,24 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <Rectangle Fill="White" HorizontalAlignment="Stretch" Height="Auto" VerticalAlignment="Stretch" Width="Auto" Grid.ColumnSpan="2" Grid.RowSpan="4" RadiusX="3" RadiusY="3" Stroke="#FF00E89E"/>
-            <Button Style="{StaticResource ResourceKey=flatbutton}" x:Name="btn_botStart" Content="{Binding Started, Converter={StaticResource ButtonStatusConverter}, ConverterParameter='Text'}" Background="{Binding Started, Converter={StaticResource ButtonStatusConverter}, ConverterParameter='Background'}" HorizontalAlignment="Right" Margin="0,0,2,2" FontFamily="BOLD" TextOptions.TextFormattingMode="Display" FontWeight="Bold" VerticalAlignment="Bottom" Width="70" Height="24" Grid.Column="1" Grid.Row="2" Click="btn_botStart_Click" BorderThickness="1" Grid.RowSpan="2">
+            <Button Style="{StaticResource ResourceKey=flatbutton}" x:Name="btn_botStart" Content="{Binding Started, Converter={StaticResource ButtonStatusConverter}, ConverterParameter='Text'}" Background="{Binding Started, Converter={StaticResource ButtonStatusConverter}, ConverterParameter='Background'}" HorizontalAlignment="Right" Margin="0,0,2,2" FontFamily="BOLD" TextOptions.TextFormattingMode="Display" FontWeight="Bold" VerticalAlignment="Bottom" Width="70" Height="23" Grid.Column="1" Grid.Row="3" Click="btn_botStart_Click" BorderThickness="1" Grid.RowSpan="1">
 
             </Button>
             <TextBlock Text="{Binding ProfileName, FallbackValue='%PROFILENAME%'}" x:Name="block_botName" HorizontalAlignment="Stretch" Margin="10,0,44,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="22" Width="Auto" Grid.RowSpan="1" Grid.ColumnSpan="2" Foreground="#FF59C3B0" FontSize="18.667" TextAlignment="Left"/>
-            <TextBlock Text="{Binding Errors, FallbackValue='%ERR%'}" x:Name="block_botErrors" Grid.Column="1" HorizontalAlignment="Right" Margin="0,0,3,0" Grid.RowSpan="1" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" Width="41" TextAlignment="Right" Foreground="#FFB61515"/>
+            <TextBlock Text="{Binding Errors, FallbackValue='%ERR%'}" x:Name="block_botErrors" Grid.Column="1" HorizontalAlignment="Right" Margin="0,0,3,0" Grid.RowSpan="1" TextWrapping="Wrap" VerticalAlignment="Top" Height="Auto" Width="Auto" TextAlignment="Right" Foreground="#FFB61515"/>
             <TextBlock Text="{Binding Xpph, FallbackValue='Xp/h: 0', StringFormat='Xp/h: {0:N0}'}" x:Name="block_botName_Copy" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Center" Height="Auto" Width="Auto" Grid.RowSpan="1" Grid.ColumnSpan="1" Foreground="#FF59C3B0" FontSize="13.333" TextAlignment="Center" Grid.Row="1" Margin="10,0,0,0"/>
-            <TextBlock Text="{Binding Ts, FallbackValue='00:00:00'}" x:Name="block_botName_Copy1" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Center" Height="22" Width="Auto" Grid.RowSpan="1" Grid.ColumnSpan="1" Foreground="#FF59C3B0" FontSize="13.333" TextAlignment="Center" Grid.Row="2" Margin="10,0,0,0" Grid.Column="0"/>
-            <TextBlock Text="{Binding Level, FallbackValue=Level: 0, StringFormat=Level: \{0:N0\}}" x:Name="block_botName_Copy2" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Center" Height="Auto" Width="Auto" Grid.RowSpan="1" Grid.ColumnSpan="1" Foreground="#FF59C3B0" FontSize="13.333" TextAlignment="Center" Grid.Row="1" Margin="10,0,0,0" Grid.Column="1"/>
+            <TextBlock Text="{Binding Ts, FallbackValue='00:00:00'}" x:Name="block_botName_Copy1" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Center" Height="Auto" Width="Auto" Grid.RowSpan="1" Grid.ColumnSpan="1" Foreground="#FF59C3B0" FontSize="13.333" TextAlignment="Center" Grid.Row="2" Margin="10,0,0,0" Grid.Column="0"/>
+            <TextBlock Text="{Binding Level, FallbackValue=Level: 0, StringFormat=Level: \{0:N0\}}" x:Name="block_botName_Copy2" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Center" Height="Auto" Width="Auto" Grid.RowSpan="1" Grid.ColumnSpan="1" Foreground="#FF59C3B0" FontSize="13.333" TextAlignment="Center" Grid.Row="1" Margin="5,0,0,0" Grid.Column="1"/>
             <Image Source="{Binding Converter={StaticResource LoadImageSourceFromResource}, ConverterParameter='dust'}" HorizontalAlignment="Left" Height="Auto" Margin="5,0,0,0" Grid.Row="3" VerticalAlignment="Center" Width="Auto" />
-            <TextBlock Text="{Binding StarDust, FallbackValue=0}" x:Name="block_botName_Copy3" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Center" Height="Auto" Width="Auto" Grid.RowSpan="1" Grid.ColumnSpan="1" Foreground="#FF59C3B0" FontSize="13.333" TextAlignment="Center" Grid.Row="3" Margin="30,1,0,4" Grid.Column="0"/>
+            <TextBlock Text="{Binding StarDust, FallbackValue=0}" x:Name="block_botName_Copy3" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Center" Height="Auto" Width="Auto" Grid.RowSpan="1" Grid.ColumnSpan="1" Foreground="#FF59C3B0" FontSize="13.333" TextAlignment="Center" Grid.Row="3" Margin="30,0,0,0" Grid.Column="0"/>
+            <TextBlock Text="{Binding PauseTs, FallbackValue=00:00:00}" x:Name="PauseTimer" HorizontalAlignment="Right" TextWrapping="Wrap" VerticalAlignment="Center" Height="Auto" Width="Auto" Grid.RowSpan="1" Grid.ColumnSpan="1" Foreground="{DynamicResource StopBrush}" FontSize="13.333" TextAlignment="Center" Grid.Row="2" Margin="0,0,5,0" Grid.Column="1" Visibility="Collapsed"/>
+            <TextBlock Text="{Binding Session.State, Converter={StaticResource CamelCaseConverter}, FallbackValue=Unknown }" x:Name="block_botName_Copy5" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Center" Height="Auto" Width="Auto" Grid.RowSpan="1" Grid.ColumnSpan="1" Foreground="#FF59C3B0" FontSize="10.667" TextAlignment="Center" Grid.Row="2" Margin="5,0,0,0" Grid.Column="1"/>
         </Grid>
+        <DataTemplate.Triggers>
+            <DataTrigger Binding="{Binding Paused}" Value="True">
+                <Setter TargetName="PauseTimer" Property="Visibility" Value="Visible"/>
+            </DataTrigger>
+        </DataTemplate.Triggers>
     </DataTemplate>
     <DataTemplate x:Key="PokemonListTemplate">
         <Grid Height="Auto">
@@ -271,7 +290,7 @@
         <MenuItem x:Name="mi_renametoDefaultPokemon" Header="Rename Selected Pokemon to Default" Click="mi_renametoDefaultPokemon_Click" />
         <MenuItem x:Name="mi_favouritePokemon" Header="(Un)Favorite Selected Pokemon" Click="mi_favouritePokemon_Click"/>
         <MenuItem x:Name="mi_transferPokemon" Header="Transfer Selected Pokemon" Click="mi_transferPokemon_Click" />
-            </ContextMenu>
+    </ContextMenu>
     <LinearGradientBrush x:Key="StartBrush" StartPoint="0.5,0" EndPoint="0.5,1">
         <LinearGradientBrush.RelativeTransform>
             <TransformGroup>
@@ -283,18 +302,6 @@
         </LinearGradientBrush.RelativeTransform>
         <GradientStop Offset="0" Color="#FFB0EE9C" />
         <GradientStop Offset="1" Color="#FF53C05D" />
-    </LinearGradientBrush>
-    <LinearGradientBrush x:Key="StopBrush" StartPoint="0.5,0" EndPoint="0.5,1">
-        <LinearGradientBrush.RelativeTransform>
-            <TransformGroup>
-                <ScaleTransform CenterX="0.5" CenterY="0.5" />
-                <SkewTransform CenterX="0.5" CenterY="0.5" />
-                <RotateTransform Angle="90" CenterX="0.5" CenterY="0.5" />
-                <TranslateTransform />
-            </TransformGroup>
-        </LinearGradientBrush.RelativeTransform>
-        <GradientStop Offset="0" Color="#FFEEB29C" />
-        <GradientStop Offset="1" Color="#FFC04F53" />
     </LinearGradientBrush>
     <DataTemplate x:Key="TelegramOwnerTemplate">
         <Grid Height="Auto">
@@ -384,5 +391,41 @@
         </LinearGradientBrush.RelativeTransform>
         <GradientStop Color="#FFB0EE9C" Offset="0"/>
         <GradientStop Color="#FF53C0B1" Offset="1"/>
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="LightBlueButtonColor" StartPoint="0.5,0" EndPoint="0.5,1">
+        <LinearGradientBrush.RelativeTransform>
+            <TransformGroup>
+                <ScaleTransform CenterX="0.5" CenterY="0.5" />
+                <SkewTransform CenterX="0.5" CenterY="0.5" />
+                <RotateTransform Angle="90" CenterX="0.5" CenterY="0.5" />
+                <TranslateTransform />
+            </TransformGroup>
+        </LinearGradientBrush.RelativeTransform>
+        <GradientStop Offset="0" Color="#FF9CEAEE" />
+        <GradientStop Offset="1" Color="#FF5398C0" />
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="GreenBlueButtonColor" StartPoint="0.5,0" EndPoint="0.5,1">
+        <LinearGradientBrush.RelativeTransform>
+            <TransformGroup>
+                <ScaleTransform CenterX="0.5" CenterY="0.5" />
+                <SkewTransform CenterX="0.5" CenterY="0.5" />
+                <RotateTransform Angle="90" CenterX="0.5" CenterY="0.5" />
+                <TranslateTransform />
+            </TransformGroup>
+        </LinearGradientBrush.RelativeTransform>
+        <GradientStop Color="#FF03A419" />
+        <GradientStop Offset="1" Color="#FF02B8A7" />
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="AquaBlueButtonColor" StartPoint="0.5,0" EndPoint="0.5,1">
+        <LinearGradientBrush.RelativeTransform>
+            <TransformGroup>
+                <ScaleTransform CenterX="0.5" CenterY="0.5" />
+                <SkewTransform CenterX="0.5" CenterY="0.5" />
+                <RotateTransform Angle="90" CenterX="0.5" CenterY="0.5" />
+                <TranslateTransform />
+            </TransformGroup>
+        </LinearGradientBrush.RelativeTransform>
+        <GradientStop Offset="0" Color="#FF07D8E2" />
+        <GradientStop Offset="1" Color="#FF008E95" />
     </LinearGradientBrush>
 </ResourceDictionary>

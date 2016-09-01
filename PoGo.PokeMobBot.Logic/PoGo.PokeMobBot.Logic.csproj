@@ -132,6 +132,7 @@
     <Compile Include="Event\EggIncubatorStatusEvent.cs" />
     <Compile Include="Extensions\AsyncHelpers.cs" />
     <Compile Include="Extensions\IoExtensions.cs" />
+    <Compile Include="Extensions\PropertyNotification.cs" />
     <Compile Include="Extensions\RandomExtensions.cs" />
     <Compile Include="MapCache.cs" />
     <Compile Include="Inventory.cs" />
