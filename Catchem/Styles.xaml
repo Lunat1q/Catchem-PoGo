@@ -373,4 +373,16 @@
             </Setter.Value>
         </Setter>
     </Style>
+    <LinearGradientBrush x:Key="NormalButtonColor" EndPoint="0.5,1" StartPoint="0.5,0">
+        <LinearGradientBrush.RelativeTransform>
+            <TransformGroup>
+                <ScaleTransform CenterY="0.5" CenterX="0.5"/>
+                <SkewTransform CenterY="0.5" CenterX="0.5"/>
+                <RotateTransform Angle="90" CenterY="0.5" CenterX="0.5"/>
+                <TranslateTransform/>
+            </TransformGroup>
+        </LinearGradientBrush.RelativeTransform>
+        <GradientStop Color="#FFB0EE9C" Offset="0"/>
+        <GradientStop Color="#FF53C0B1" Offset="1"/>
+    </LinearGradientBrush>
 </ResourceDictionary>

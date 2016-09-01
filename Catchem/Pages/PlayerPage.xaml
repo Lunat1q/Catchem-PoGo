@@ -88,119 +88,14 @@
         <Label x:Name="l_inventory" Content="(HAVE/MAX)" HorizontalAlignment="Right" Margin="0,102,10,0" VerticalAlignment="Top" Foreground="#FF324AB4" FontSize="15" TextOptions.TextFormattingMode="Display" FontFamily="Source Sans Pro Semibold" Height="28" Width="100" HorizontalContentAlignment="Right" Grid.Column="2"/>
         <Image x:Name="team_image" Grid.Column="2" HorizontalAlignment="Right" Height="100" Margin="0" VerticalAlignment="Top" Width="100" Source="pack://siteoforigin:,,,/Resources/team_instinct.png" MouseDown="team_image_MouseDown"/>
         <Grid Height="31" Margin="10,0,0,10" VerticalAlignment="Bottom" Grid.ColumnSpan="2">
-            <Button Style="{StaticResource ResourceKey=flatbutton}" x:Name="sortByCp" Content="CP" HorizontalAlignment="Left" VerticalAlignment="Top" Width="50" Height="30" Margin="85,0,0,0" FontFamily="BOLD" TextOptions.TextFormattingMode="Display" FontWeight="Bold" Click="SortByCpClick">
-                <Button.Background>
-                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                        <LinearGradientBrush.RelativeTransform>
-                            <TransformGroup>
-                                <ScaleTransform CenterY="0.5" CenterX="0.5"/>
-                                <SkewTransform CenterY="0.5" CenterX="0.5"/>
-                                <RotateTransform Angle="90" CenterY="0.5" CenterX="0.5"/>
-                                <TranslateTransform/>
-                            </TransformGroup>
-                        </LinearGradientBrush.RelativeTransform>
-                        <GradientStop Color="#FFB0EE9C" Offset="0"/>
-                        <GradientStop Color="#FF53C0B1" Offset="1"/>
-                    </LinearGradientBrush>
-                </Button.Background>
-            </Button>
+            <Button Style="{StaticResource ResourceKey=flatbutton}" x:Name="sortByCp" Content="CP" HorizontalAlignment="Left" VerticalAlignment="Top" Width="50" Height="30" Margin="85,0,0,0" FontFamily="BOLD" TextOptions.TextFormattingMode="Display" FontWeight="Bold" Click="SortByCpClick" Background="{DynamicResource NormalButtonColor}"/>
             <Label x:Name="label6_Copy" Content="ORDER BY" HorizontalAlignment="Left" Margin="1,0,0,0" VerticalAlignment="Top" Foreground="#FF363636" FontSize="15" TextOptions.TextFormattingMode="Display" FontFamily="Source Sans Pro Semibold" Height="28" Width="79"/>
-            <Button Style="{StaticResource ResourceKey=flatbutton}" x:Name="sortByIv" Content="IV" HorizontalAlignment="Left" VerticalAlignment="Top" Width="50" Height="30" Margin="140,0,0,0" FontFamily="BOLD" TextOptions.TextFormattingMode="Display" FontWeight="Bold" Click="SortByIvClick">
-                <Button.Background>
-                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                        <LinearGradientBrush.RelativeTransform>
-                            <TransformGroup>
-                                <ScaleTransform CenterY="0.5" CenterX="0.5"/>
-                                <SkewTransform CenterY="0.5" CenterX="0.5"/>
-                                <RotateTransform Angle="90" CenterY="0.5" CenterX="0.5"/>
-                                <TranslateTransform/>
-                            </TransformGroup>
-                        </LinearGradientBrush.RelativeTransform>
-                        <GradientStop Color="#FFB0EE9C" Offset="0"/>
-                        <GradientStop Color="#FF53C0B1" Offset="1"/>
-                    </LinearGradientBrush>
-                </Button.Background>
-            </Button>
-            <Button Style="{StaticResource ResourceKey=flatbutton}" x:Name="sortByAz" Content="A-Z" HorizontalAlignment="Left" VerticalAlignment="Top" Width="50" Height="30" Margin="194,0,0,0" FontFamily="BOLD" TextOptions.TextFormattingMode="Display" FontWeight="Bold" Click="sortByAz_Click">
-                <Button.Background>
-                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                        <LinearGradientBrush.RelativeTransform>
-                            <TransformGroup>
-                                <ScaleTransform CenterY="0.5" CenterX="0.5"/>
-                                <SkewTransform CenterY="0.5" CenterX="0.5"/>
-                                <RotateTransform Angle="90" CenterY="0.5" CenterX="0.5"/>
-                                <TranslateTransform/>
-                            </TransformGroup>
-                        </LinearGradientBrush.RelativeTransform>
-                        <GradientStop Color="#FFB0EE9C" Offset="0"/>
-                        <GradientStop Color="#FF53C0B1" Offset="1"/>
-                    </LinearGradientBrush>
-                </Button.Background>
-            </Button>
-            <Button Style="{StaticResource ResourceKey=flatbutton}" x:Name="sortById" Content="#" HorizontalAlignment="Left" VerticalAlignment="Top" Width="50" Height="30" Margin="249,0,0,0" FontFamily="BOLD" TextOptions.TextFormattingMode="Display" FontWeight="Bold" FontSize="18" Click="sortById_Click">
-                <Button.Background>
-                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                        <LinearGradientBrush.RelativeTransform>
-                            <TransformGroup>
-                                <ScaleTransform CenterY="0.5" CenterX="0.5"/>
-                                <SkewTransform CenterY="0.5" CenterX="0.5"/>
-                                <RotateTransform Angle="90" CenterY="0.5" CenterX="0.5"/>
-                                <TranslateTransform/>
-                            </TransformGroup>
-                        </LinearGradientBrush.RelativeTransform>
-                        <GradientStop Color="#FFB0EE9C" Offset="0"/>
-                        <GradientStop Color="#FF53C0B1" Offset="1"/>
-                    </LinearGradientBrush>
-                </Button.Background>
-            </Button>
-            <Button Style="{StaticResource ResourceKey=flatbutton}" x:Name="sortByCatch" Content="{Binding Converter={StaticResource LoadImageFromResource}, ConverterParameter='time'}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="50" Height="30" Margin="304,0,0,0" FontFamily="BOLD" TextOptions.TextFormattingMode="Display" FontWeight="Bold" FontSize="14" Click="sortByCatch_Click">
-                <Button.Background>
-                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                        <LinearGradientBrush.RelativeTransform>
-                            <TransformGroup>
-                                <ScaleTransform CenterY="0.5" CenterX="0.5"/>
-                                <SkewTransform CenterY="0.5" CenterX="0.5"/>
-                                <RotateTransform Angle="90" CenterY="0.5" CenterX="0.5"/>
-                                <TranslateTransform/>
-                            </TransformGroup>
-                        </LinearGradientBrush.RelativeTransform>
-                        <GradientStop Color="#FFB0EE9C" Offset="0"/>
-                        <GradientStop Color="#FF53C0B1" Offset="1"/>
-                    </LinearGradientBrush>
-                </Button.Background>
-            </Button>
-            <Button Style="{StaticResource ResourceKey=flatbutton}" x:Name="refreshPokemonList" Content="{Binding ConverterParameter=refresh, Converter={StaticResource LoadImageFromResource}}" HorizontalAlignment="Right" VerticalAlignment="Center" Width="50" Height="30" Margin="0,0,10,1" FontFamily="BOLD" TextOptions.TextFormattingMode="Display" FontWeight="Bold" FontSize="14" Click="refreshPokemonList_Click">
-                <Button.Background>
-                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                        <LinearGradientBrush.RelativeTransform>
-                            <TransformGroup>
-                                <ScaleTransform CenterY="0.5" CenterX="0.5"/>
-                                <SkewTransform CenterY="0.5" CenterX="0.5"/>
-                                <RotateTransform Angle="90" CenterY="0.5" CenterX="0.5"/>
-                                <TranslateTransform/>
-                            </TransformGroup>
-                        </LinearGradientBrush.RelativeTransform>
-                        <GradientStop Color="#FFB0EE9C" Offset="0"/>
-                        <GradientStop Color="#FF53C0B1" Offset="1"/>
-                    </LinearGradientBrush>
-                </Button.Background>
-            </Button>
-            <Button Style="{StaticResource ResourceKey=flatbutton}" x:Name="sortByFav" Content="{Binding ConverterParameter=favouredSort, Converter={StaticResource LoadImageFromResource}}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="50" Height="30" Margin="359,0,0,0" FontFamily="BOLD" TextOptions.TextFormattingMode="Display" FontWeight="Bold" FontSize="14" Click="sortByFav_Click" >
-                <Button.Background>
-                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                        <LinearGradientBrush.RelativeTransform>
-                            <TransformGroup>
-                                <ScaleTransform CenterY="0.5" CenterX="0.5"/>
-                                <SkewTransform CenterY="0.5" CenterX="0.5"/>
-                                <RotateTransform Angle="90" CenterY="0.5" CenterX="0.5"/>
-                                <TranslateTransform/>
-                            </TransformGroup>
-                        </LinearGradientBrush.RelativeTransform>
-                        <GradientStop Color="#FFB0EE9C" Offset="0"/>
-                        <GradientStop Color="#FF53C0B1" Offset="1"/>
-                    </LinearGradientBrush>
-                </Button.Background>
-            </Button>
+            <Button Style="{StaticResource ResourceKey=flatbutton}" x:Name="sortByIv" Content="IV" HorizontalAlignment="Left" VerticalAlignment="Top" Width="50" Height="30" Margin="140,0,0,0" FontFamily="BOLD" TextOptions.TextFormattingMode="Display" FontWeight="Bold" Click="SortByIvClick" Background="{DynamicResource NormalButtonColor}"/>
+            <Button Style="{StaticResource ResourceKey=flatbutton}" x:Name="sortByAz" Content="A-Z" HorizontalAlignment="Left" VerticalAlignment="Top" Width="50" Height="30" Margin="194,0,0,0" FontFamily="BOLD" TextOptions.TextFormattingMode="Display" FontWeight="Bold" Click="sortByAz_Click" Background="{DynamicResource NormalButtonColor}"/>
+            <Button Style="{StaticResource ResourceKey=flatbutton}" x:Name="sortById" Content="#" HorizontalAlignment="Left" VerticalAlignment="Top" Width="50" Height="30" Margin="249,0,0,0" FontFamily="BOLD" TextOptions.TextFormattingMode="Display" FontWeight="Bold" FontSize="18" Click="sortById_Click" Background="{DynamicResource NormalButtonColor}"/>
+            <Button Style="{StaticResource ResourceKey=flatbutton}" x:Name="sortByCatch" Content="{Binding Converter={StaticResource LoadImageFromResource}, ConverterParameter='time'}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="50" Height="30" Margin="304,0,0,0" FontFamily="BOLD" TextOptions.TextFormattingMode="Display" FontWeight="Bold" FontSize="14" Click="sortByCatch_Click" Background="{DynamicResource NormalButtonColor}"/>
+            <Button Style="{StaticResource ResourceKey=flatbutton}" x:Name="refreshPokemonList" Content="{Binding ConverterParameter=refresh, Converter={StaticResource LoadImageFromResource}}" HorizontalAlignment="Right" VerticalAlignment="Center" Width="50" Height="30" Margin="0,0,10,1" FontFamily="BOLD" TextOptions.TextFormattingMode="Display" FontWeight="Bold" FontSize="14" Click="refreshPokemonList_Click" Background="{DynamicResource NormalButtonColor}"/>
+            <Button Style="{StaticResource ResourceKey=flatbutton}" x:Name="sortByFav" Content="{Binding ConverterParameter=favouredSort, Converter={StaticResource LoadImageFromResource}}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="50" Height="30" Margin="359,0,0,0" FontFamily="BOLD" TextOptions.TextFormattingMode="Display" FontWeight="Bold" FontSize="14" Click="sortByFav_Click" Background="{DynamicResource NormalButtonColor}" />
         </Grid>
         <Grid Grid.ColumnSpan="2" Grid.Column="1" Height="24" Margin="50,19,140,0" VerticalAlignment="Top">
             <ProgressBar x:Name="LevelProgressBar" Margin="0" Foreground="#FF04C127"/>
@@ -224,8 +119,8 @@
                             <TranslateTransform/>
                         </TransformGroup>
                     </LinearGradientBrush.RelativeTransform>
-                    <GradientStop Color="#FFB0EE9C" Offset="0"/>
-                    <GradientStop Color="#FF53C0B1" Offset="1"/>
+                    <GradientStop Color="#FF26A6FF" Offset="0"/>
+                    <GradientStop Color="#FF213195" Offset="1"/>
                 </LinearGradientBrush>
             </Button.Background>
         </Button>
