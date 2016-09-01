@@ -544,6 +544,10 @@ namespace PoGo.PokeMobBot.Logic
                 _cachedInventory = await _client.Inventory.GetInventory();
                 return _cachedInventory;
             }
+            catch
+            {
+                return new GetInventoryResponse();
+            }
             finally
             {
                 ss.Release();
@@ -559,6 +563,11 @@ namespace PoGo.PokeMobBot.Logic
         {
             var favoriteResult = await _client.Inventory.SetFavoritePokemon(pokemonid, favorite);
             return favoriteResult;
+        }
+        public async Task<UseIncenseResponse> UseIncense(ItemId item)
+        {
+            var UseIncense = await _client.Inventory.UseIncense(item);
+            return UseIncense;
         }
     }
 }

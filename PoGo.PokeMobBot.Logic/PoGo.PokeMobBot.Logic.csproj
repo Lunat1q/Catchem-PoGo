@@ -131,6 +131,7 @@
     <Compile Include="Event\UseBerryEvent.cs" />
     <Compile Include="Event\EggIncubatorStatusEvent.cs" />
     <Compile Include="Extensions\AsyncHelpers.cs" />
+    <Compile Include="Extensions\IncenseExtension.cs" />
     <Compile Include="Extensions\IoExtensions.cs" />
     <Compile Include="Extensions\RandomExtensions.cs" />
     <Compile Include="MapCache.cs" />

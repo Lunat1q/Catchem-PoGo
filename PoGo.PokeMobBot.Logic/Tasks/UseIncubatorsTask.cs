@@ -93,7 +93,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                 if (incubator.PokemonId == 0)
                 {
                     // Unlimited incubators prefer short eggs, limited incubators prefer long eggs
-                    var egg = (incubator.ItemId == ItemId.ItemIncubatorBasicUnlimited && !session.LogicSettings.AlwaysPrefferLongDistanceEgg)
+                    var egg = (incubator.ItemId == ItemId.ItemIncubatorBasicUnlimited && !session.LogicSettings.AlwaysPreferLongDistanceEgg)
                         ? unusedEggs.FirstOrDefault()
                         : unusedEggs.LastOrDefault();
 

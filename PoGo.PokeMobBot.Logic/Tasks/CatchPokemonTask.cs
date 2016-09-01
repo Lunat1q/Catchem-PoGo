@@ -98,7 +98,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                 if (session.LogicSettings.HumanizeThrows)
                 {
                     normalizedRecticleSize =
-                        Rng.NextInRange(session.LogicSettings.ThrowAccuracyMin, session.LogicSettings.ThrowAccuracyMax)*
+                        Rng.NextInRangeMob(session.LogicSettings.ThrowAccuracyMin, session.LogicSettings.ThrowAccuracyMax)*
                         1.85 + 0.1; // 0.1..1.95
                     if (normalizedRecticleSize > 1.95)
                         normalizedRecticleSize = 1.95;

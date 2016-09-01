@@ -16,7 +16,7 @@ using PoGo.PokeMobBot.Logic.API;
 using PoGo.PokeMobBot.Logic.Event;
 using PoGo.PokeMobBot.Logic.Tasks;
 using PokemonGo.RocketAPI.Extensions;
-using RandomExtensions = PoGo.PokeMobBot.Logic.Extensions.RandomExtensions;
+using RandomExtensions = PoGo.PokeMobBot.Logic.Extensions.RandomExtensionsMob;
 
 #endregion
 
@@ -149,7 +149,7 @@ namespace PoGo.PokeMobBot.Logic
                     if (distanceToTarget <= 5)
                         continue;
 
-                    var nextSpeed = RandomExtensions.NextInRange(session.Client.rnd, walkingSpeedMin, walkingSpeedMax)*session.Settings.MoveSpeedFactor;
+                    var nextSpeed = RandomExtensions.NextInRangeMob(session.Client.rnd, walkingSpeedMin, walkingSpeedMax)*session.Settings.MoveSpeedFactor;
                     session.State = BotState.Walk;
                     result = await navi.HumanPathWalking(session, t, nextSpeed, functionExecutedWhileWalking, functionExecutedWhileWalking2, cancellationToken);
                     if (session.Runtime.BreakOutOfPathing)
@@ -168,7 +168,7 @@ namespace PoGo.PokeMobBot.Logic
                 var curcoord = new GeoCoordinate(session.Client.CurrentLatitude, session.Client.CurrentLongitude);
                 if (LocationUtils.CalculateDistanceInMeters(curcoord, destination) > 40)
                 {
-                    var nextSpeed = RandomExtensions.NextInRange(session.Client.rnd, walkingSpeedMin, walkingSpeedMax)*session.Settings.MoveSpeedFactor;
+                    var nextSpeed = RandomExtensions.NextInRangeMob(session.Client.rnd, walkingSpeedMin, walkingSpeedMax)*session.Settings.MoveSpeedFactor;
 
                     result = await navi.HumanPathWalking(session, destination, nextSpeed, functionExecutedWhileWalking, functionExecutedWhileWalking2, cancellationToken);
                 }
@@ -188,7 +188,7 @@ namespace PoGo.PokeMobBot.Logic
                 var curcoord = new GeoCoordinate(session.Client.CurrentLatitude, session.Client.CurrentLongitude);
                 if (LocationUtils.CalculateDistanceInMeters(curcoord, destination) > 40)
                 {
-                    var nextSpeed = RandomExtensions.NextInRange(session.Client.rnd, walkingSpeedMin, walkingSpeedMax)*session.Settings.MoveSpeedFactor;
+                    var nextSpeed = RandomExtensions.NextInRangeMob(session.Client.rnd, walkingSpeedMin, walkingSpeedMax)*session.Settings.MoveSpeedFactor;
 
                     result = await navi.HumanPathWalking(session, destination, nextSpeed, functionExecutedWhileWalking, functionExecutedWhileWalking2, cancellationToken);
                 }

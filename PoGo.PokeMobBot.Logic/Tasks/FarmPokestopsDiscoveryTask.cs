@@ -14,6 +14,7 @@ using PokemonGo.RocketAPI.Extensions;
 using POGOProtos.Inventory.Item;
 using POGOProtos.Map.Fort;
 using POGOProtos.Networking.Responses;
+using PoGo.PokeMobBot.Logic.Extensions;
 
 #endregion
 
@@ -50,8 +51,12 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                 {
                     // Catch normal map Pokemon
                     await CatchNearbyPokemonsTask.Execute(session, cancellationToken);
-                    //Catch Incense Pokemon
-                    await CatchIncensePokemonsTask.Execute(session, cancellationToken);
+                    //Catch Incense Pokemon - only when Incense active
+                    long currentIncenseStatus = await CheckIncenseStatus.Execute(session);
+                    if (currentIncenseStatus > 0 && currentIncenseStatus < 1800000)
+                    {
+                        await CatchIncensePokemonsTask.Execute(session, cancellationToken);
+                    }
                     return true;
                 }, 
                 async () =>
@@ -259,8 +264,12 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                     {
                         // Catch normal map Pokemon
                         await CatchNearbyPokemonsTask.Execute(session, cancellationToken);
-                        //Catch Incense Pokemon
-                        await CatchIncensePokemonsTask.Execute(session, cancellationToken);
+                        //Catch Incense Pokemon - only when Incense active
+                        long currentIncenseStatus = await CheckIncenseStatus.Execute(session);
+                        if (currentIncenseStatus > 0 && currentIncenseStatus < 1800000)
+                        {
+                            await CatchIncensePokemonsTask.Execute(session, cancellationToken);
+                        }
                     }
                     return true;
                 }, 
