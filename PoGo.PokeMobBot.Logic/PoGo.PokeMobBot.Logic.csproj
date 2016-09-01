@@ -150,7 +150,6 @@
     <Compile Include="Routing.cs" />
     <Compile Include="Service\BotService.cs" />
     <Compile Include="State\CheckTosState.cs" />
-    <Compile Include="Tasks\CodeFile1.cs" />
     <Compile Include="Tasks\FavoriteSpecificPokemonTask.cs" />
     <Compile Include="Tasks\CheckBotStateTask.cs" />
     <Compile Include="Tasks\LevelUpSpecificPokemonTask.cs" />
