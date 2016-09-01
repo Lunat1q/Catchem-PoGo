@@ -21,11 +21,8 @@ namespace PoGo.PokeMobBot.Logic.Tasks
         {
 
             cancellationToken.ThrowIfCancellationRequested();
-            var checkPs = true;
-#if DEBUG
-            checkPs = false;
-#endif
-            if (session.Runtime.PokestopsToCheckGym > 0 && checkPs) return;
+
+            if (session.Runtime.PokestopsToCheckGym > 0) return;
            
             var gymsNear = (await GetGyms(session)).OrderBy(i =>
                 LocationUtils.CalculateDistanceInMeters(session.Client.CurrentLatitude,
@@ -33,7 +30,6 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                 .ToList();
             if (gymsNear.Count > 0)
             {
-                session.Runtime.PokestopsToCheckGym = 0;
                 session.Runtime.PokestopsToCheckGym = 13 + session.Client.rnd.Next(15);
                 var nearestGym = gymsNear.FirstOrDefault();
                 if (nearestGym != null)
@@ -67,29 +63,15 @@ namespace PoGo.PokeMobBot.Logic.Tasks
             //session.EventDispatcher.Send(new PokeStopListEvent { Forts = session.MapCache.baseFortDatas.ToList() });
 
             // Wasn't sure how to make this pretty. Edit as needed.
-            if (session.LogicSettings.Teleport)
-            {
-                gyms = gyms.Where(
+            gyms = gyms.Where(
                     i =>
                         i.Type == FortType.Gym &&
-                        i.CooldownCompleteTimestampMS < DateTime.UtcNow.ToUnixTime() &&
                         (LocationUtils.CalculateDistanceInMeters(
                                 session.Client.CurrentLatitude, session.Client.CurrentLongitude,
                                 i.Latitude, i.Longitude) < session.LogicSettings.MaxTravelDistanceInMeters) ||
                         session.LogicSettings.MaxTravelDistanceInMeters == 0
-                    ).ToList();
-            }
-            else
-            {
-                gyms = gyms.Where(
-                        i =>
-                            i.Type == FortType.Gym &&
-                            (LocationUtils.CalculateDistanceInMeters(
-                                    session.Settings.DefaultLatitude, session.Settings.DefaultLongitude,
-                                    i.Latitude, i.Longitude) < session.LogicSettings.MaxTravelDistanceInMeters) ||
-                            session.LogicSettings.MaxTravelDistanceInMeters == 0
-                    ).ToList();
-            }
+                ).ToList();
+            
 
             return gyms;
         }

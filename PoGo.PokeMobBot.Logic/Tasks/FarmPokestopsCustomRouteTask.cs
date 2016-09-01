@@ -1,13 +1,17 @@
 #region using directives
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using GeoCoordinatePortable;
 using PoGo.PokeMobBot.Logic.Event;
+using PoGo.PokeMobBot.Logic.PoGoUtils;
 using PoGo.PokeMobBot.Logic.State;
 using PoGo.PokeMobBot.Logic.Utils;
 using PokemonGo.RocketAPI.Extensions;
+using POGOProtos.Map.Fort;
 
 #endregion
 
@@ -56,54 +60,20 @@ namespace PoGo.PokeMobBot.Logic.Tasks
 
             //PreLoad all pokestops which will be hitted during the route - can miss some (prolly)
 
+            var allPokestopsInArea = await GetPokeStops(session);
 
+            allPokestopsInArea =
+                allPokestopsInArea.Where(
+                    x =>
+                        route.RoutePoints.Any(
+                            v =>
+                                LocationUtils.CalculateDistanceInMeters(x.Latitude, x.Longitude, v.Latitude, v.Longitude) <
+                                40)).ToList();
 
-
+            session.EventDispatcher.Send(new PokeStopListEvent { Forts = allPokestopsInArea.Select(x => x.BaseFortData) });
 
             //Find closest point of route and it's index!
-            var closestPoint =
-                route.RoutePoints.OrderBy(
-                    x =>
-                        LocationUtils.CalculateDistanceInMeters(session.Client.CurrentLatitude,
-                            session.Client.CurrentLongitude,
-                            x.Latitude, x.Longitude)).First();
-            var distToClosest = LocationUtils.CalculateDistanceInMeters(session.Client.CurrentLatitude,
-                session.Client.CurrentLongitude,
-                closestPoint.Latitude, closestPoint.Longitude);
-            if (distToClosest > 10)
-            {
-                session.State = BotState.Walk;
-                session.EventDispatcher.Send(new NoticeEvent()
-                {
-                    Message = $"Found closest point at {closestPoint.Latitude} - {closestPoint.Longitude}, distance to that point: {distToClosest.ToString("N1")} meters, moving there!"
-                });
-                await session.Navigation.Move(closestPoint,
-                session.LogicSettings.WalkingSpeedMin, session.LogicSettings.WalkingSpeedMax,
-                async () =>
-                {
-                    if (session.LogicSettings.CatchWildPokemon)
-                    {
-                        // Catch normal map Pokemon
-                        await CatchNearbyPokemonsTask.Execute(session, cancellationToken);
-                        //Catch Incense Pokemon
-                        await CatchIncensePokemonsTask.Execute(session, cancellationToken);
-                    }
-                    return true;
-                },
-                async () =>
-                {
-                    await UseNearbyPokestopsTask.Execute(session, cancellationToken, true);
-                    return true;
-
-                }, cancellationToken, session);
-                session.State = BotState.Idle;
-            }
-
-            var nextPath = route.RoutePoints.Select(item => Tuple.Create(item.Latitude, item.Longitude)).ToList();
-            session.EventDispatcher.Send(new NextRouteEvent
-            {
-                Coords = nextPath
-            });
+            var closestPoint = await CheckClosestAndMove(session, cancellationToken, route);
 
             long nextMaintenceStamp = 0;
             var initialize = true;
@@ -112,6 +82,9 @@ namespace PoGo.PokeMobBot.Logic.Tasks
 
                 foreach (var wp in route.RoutePoints)
                 {
+                    if (session.ForceMoveTo != null)
+                        break;
+
                     if (initialize)
                     {
                         if (wp != closestPoint) continue;
@@ -150,7 +123,102 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                 }
                 if (initialize)
                     initialize = false;
+
+                if (session.ForceMoveTo != null)
+                {
+                    await ForceMoveTask.Execute(session, cancellationToken);
+                    closestPoint = await CheckClosestAndMove(session, cancellationToken, route);
+                    initialize = true;
+                }
             }
+        }
+
+        private static async Task<GeoCoordinate> CheckClosestAndMove(ISession session, CancellationToken cancellationToken, CustomRoute route)
+        {
+            var closestPoint =
+                route.RoutePoints.OrderBy(
+                    x =>
+                        LocationUtils.CalculateDistanceInMeters(session.Client.CurrentLatitude,
+                            session.Client.CurrentLongitude,
+                            x.Latitude, x.Longitude)).First();
+            var distToClosest = LocationUtils.CalculateDistanceInMeters(session.Client.CurrentLatitude,
+                session.Client.CurrentLongitude,
+                closestPoint.Latitude, closestPoint.Longitude);
+            if (distToClosest > 10)
+            {
+                session.State = BotState.Walk;
+                session.EventDispatcher.Send(new NoticeEvent()
+                {
+                    Message =
+                        $"Found closest point at {closestPoint.Latitude} - {closestPoint.Longitude}, distance to that point: {distToClosest.ToString("N1")} meters, moving there!"
+                });
+                await session.Navigation.Move(closestPoint,
+                    session.LogicSettings.WalkingSpeedMin, session.LogicSettings.WalkingSpeedMax,
+                    async () =>
+                    {
+                        if (session.LogicSettings.CatchWildPokemon)
+                        {
+                            // Catch normal map Pokemon
+                            await CatchNearbyPokemonsTask.Execute(session, cancellationToken);
+                            //Catch Incense Pokemon
+                            await CatchIncensePokemonsTask.Execute(session, cancellationToken);
+                        }
+                        return true;
+                    },
+                    async () =>
+                    {
+                        await UseNearbyPokestopsTask.Execute(session, cancellationToken, true);
+                        return true;
+                    }, cancellationToken, session);
+                session.State = BotState.Idle;
+            }
+
+            var nextPath = route.RoutePoints.Select(item => Tuple.Create(item.Latitude, item.Longitude)).ToList();
+            session.EventDispatcher.Send(new NextRouteEvent
+            {
+                Coords = nextPath
+            });
+
+            return closestPoint;
+        }
+
+        private static async Task<List<FortCacheItem>> GetPokeStops(ISession session)
+        {
+            //var mapObjects = await session.Client.Map.GetMapObjects();
+
+            List<FortCacheItem> pokeStops = await session.MapCache.FortDatas(session);
+
+            //session.EventDispatcher.Send(new PokeStopListEvent { Forts = session.MapCache.baseFortDatas.ToList() });
+
+            // Wasn't sure how to make this pretty. Edit as needed.
+            if (session.LogicSettings.Teleport)
+            {
+                pokeStops = pokeStops.Where(
+                    i =>
+                        i.Used == false && i.Type == FortType.Checkpoint &&
+                        i.CooldownCompleteTimestampMS < DateTime.UtcNow.ToUnixTime() &&
+                        ( // Make sure PokeStop is within max travel distance, unless it's set to 0.
+                            LocationUtils.CalculateDistanceInMeters(
+                                session.Client.CurrentLatitude, session.Client.CurrentLongitude,
+                                i.Latitude, i.Longitude) < session.LogicSettings.MaxTravelDistanceInMeters) ||
+                        session.LogicSettings.MaxTravelDistanceInMeters == 0
+                    ).ToList();
+            }
+            else
+            {
+                pokeStops = pokeStops.Where(
+                        i =>
+                            i.Used == false && i.Type == FortType.Checkpoint &&
+                            i.CooldownCompleteTimestampMS < DateTime.UtcNow.ToUnixTime() &&
+                            ( // Make sure PokeStop is within max travel distance, unless it's set to 0.
+                                LocationUtils.CalculateDistanceInMeters(
+                                    session.Settings.DefaultLatitude, session.Settings.DefaultLongitude,
+                                    i.Latitude, i.Longitude) < session.LogicSettings.MaxTravelDistanceInMeters) ||
+                            session.LogicSettings.MaxTravelDistanceInMeters == 0
+                    ).ToList();
+            }
+
+            return pokeStops;
         }
     }
 }

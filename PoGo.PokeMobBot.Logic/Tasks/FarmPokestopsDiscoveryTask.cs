@@ -282,7 +282,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                             i.CooldownCompleteTimestampMS < DateTime.UtcNow.ToUnixTime() &&
                             ( // Make sure PokeStop is within max travel distance, unless it's set to 0.
                                 LocationUtils.CalculateDistanceInMeters(
-                                    session.Settings.DefaultLatitude, session.Settings.DefaultLongitude,
+                                    session.Client.CurrentLatitude, session.Client.CurrentLongitude,
                                     i.Latitude, i.Longitude) < session.LogicSettings.MaxTravelDistanceInMeters) ||
                             session.LogicSettings.MaxTravelDistanceInMeters == 0
                     ).ToList();
