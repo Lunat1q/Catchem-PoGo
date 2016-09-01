@@ -54,3 +54,6 @@ Design ideas: <i><b>[@Morphir](https://github.com/ephran)</b> - Poke info design
  <h2>Rights</h2>
  All rights to trademarks used are going to Nintendo and Niantic 
 
+
+<h2>License</h2>
+Licenced under AGPLv3
