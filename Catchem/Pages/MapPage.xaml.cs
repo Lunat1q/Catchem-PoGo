@@ -107,35 +107,6 @@ namespace Catchem.Pages
             var lat = mapPos.Lat;
             var lng = mapPos.Lng;
 
-            //TEST ROUTING
-            //var startLat = Math.Round(_bot.Lat, 2);
-            //var startLng = Math.Round(_bot.Lng, 2);
-
-            //var top = (startLat + 0.1).ToString(CultureInfo.InvariantCulture);
-            //var bot = (startLat - 0.1).ToString(CultureInfo.InvariantCulture);
-            //var left = (startLng - 0.1).ToString(CultureInfo.InvariantCulture);
-            //var right = (startLng + 0.1).ToString(CultureInfo.InvariantCulture);
-
-            //var routerDb = new RouterDb();
-            //Router router = new Router(routerDb);
-            //var apiRequest = (HttpWebRequest)WebRequest.Create($"http://overpass.osm.rambler.ru/cgi/xapi_meta?*[bbox={left},{bot},{right},{top}]");
-            //apiRequest.Proxy = WebRequest.DefaultWebProxy;
-            //apiRequest.Proxy.Credentials = CredentialCache.DefaultCredentials;
-            //var res = (HttpWebResponse)apiRequest.GetResponse();
-            //using (var urlStream = res.GetResponseStream())
-            //{
-            //    // create source stream.
-            //    var source = new XmlOsmStreamSource(urlStream);
-
-            //    routerDb.LoadOsmData(source, Vehicle.Pedestrian);
-            //}
-            //// calculate a route.
-            //var route = router.Calculate(Vehicle.Pedestrian.Fastest(),
-            //    (float)_bot.Lat, (float)_bot.Lng, (float)lat, (float)lng);
-            //var geoJson = route.ToGeoJson();
-
-
-
             if (_bot.Started)
             {
                 if (_bot.ForceMoveMarker == null)
@@ -342,6 +313,12 @@ namespace Catchem.Pages
                                     CreatePokemonMarker(newMapObj);
                                 }
                                 break;
+                            case "gym":
+                                if (!_bot.MapMarkers.ContainsKey(newMapObj.Uid))
+                                {
+                                    CreateGymMarker(newMapObj);
+                                }
+                                break;
                         }
                     }
                     catch
@@ -350,6 +327,46 @@ namespace Catchem.Pages
                     }
                 }
                 await Task.Delay(10);
+            }
+        }
+
+        private void CreateGymMarker(NewMapObject newMapObj)
+        {
+            try
+            {
+                var team = (TeamColor) newMapObj.ExtraData[0];
+                Image shape;
+                switch (team)
+                {
+                    case TeamColor.Neutral:
+                        shape = Properties.Resources.gym.ToImage(newMapObj.OName);
+                        break;
+                    case TeamColor.Blue:
+                        shape = Properties.Resources.gym_blue.ToImage(newMapObj.OName);
+                        break;
+                    case TeamColor.Red:
+                        shape = Properties.Resources.gym_red.ToImage(newMapObj.OName);
+                        break;
+                    case TeamColor.Yellow:
+                        shape = Properties.Resources.gym_yellow.ToImage(newMapObj.OName);
+                        break;
+                    default:
+                        shape = Properties.Resources.gym.ToImage(newMapObj.OName);
+                        break;
+                }
+
+                var marker = new GMapMarker(new PointLatLng(newMapObj.Lat, newMapObj.Lng))
+                {
+                    Shape = shape,
+                    Offset = new Point(-16, -32),
+                    ZIndex = 6
+                };
+                AddMarker(marker);
+                _bot.MapMarkers.Add(newMapObj.Uid, marker);
+            }
+            catch (Exception)
+            {
+                //ignore
             }
         }
 
@@ -459,7 +476,7 @@ namespace Catchem.Pages
             var provider = cb?.SelectedItem as MapProvider?;
             if (provider == null) return;
 
-            _globalSettings.ProviderEnum = (MapProvider)provider;
+            _globalSettings.ProviderEnum = (MapProvider) provider;
             _globalSettings.LoadProperProvider();
         }
     }

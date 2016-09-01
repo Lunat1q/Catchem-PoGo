@@ -546,7 +546,7 @@ namespace PoGo.PokeMobBot.Logic
             }
             catch
             {
-                return new GetInventoryResponse();
+                return _cachedInventory;
             }
             finally
             {

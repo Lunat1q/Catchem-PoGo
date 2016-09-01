@@ -199,6 +199,7 @@
     <Compile Include="Event\WarnEvent.cs" />
     <Compile Include="Tasks\TransferPokemonTask.cs" />
     <Compile Include="Tasks\UseIncubatorsTask.cs" />
+    <Compile Include="Tasks\PokeNearbyGym.cs" />
     <Compile Include="Tasks\UseNearbyPokestopsTask.cs" />
     <Compile Include="Utils\DelayingEvolveUtils.cs" />
     <Compile Include="Utils\DelayingUtils.cs" />

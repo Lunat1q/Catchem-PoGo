@@ -551,6 +551,9 @@ namespace Catchem
                             case "forcemove_done":
                                 PushRemoveForceMoveMarker(message.Session);
                                 break;
+                            case "gym_poke":
+                                PushNewGymPoke(message.Session, message.ParamObjects);
+                                break;
                             case "ps_opt":
                                 if (message.ParamObjects[0] != null)
                                     DrawNextOptRoute(message.Session, (List<Tuple<double, double>>)message.ParamObjects[0]);
@@ -572,6 +575,32 @@ namespace Catchem
                     delay = 5;
                 
                 await Task.Delay(delay);
+            }
+        }
+
+        private void PushNewGymPoke(ISession session, object[] paramObjects)
+        {
+            var botReceiver = BotsCollection.FirstOrDefault(x => x.Session == session);
+            if (botReceiver == null) return;
+
+            try
+            {
+                var id = (string) paramObjects[0];
+                var name = (string) paramObjects[1];
+                var team = (TeamColor) paramObjects[2];
+                var lat = (double)paramObjects[3];
+                var lon = (double)paramObjects[4];
+
+                if (botReceiver.MapMarkers.ContainsKey(id) ||
+                    botReceiver.MarkersQueue.Count(x => x.Uid == id) != 0) return;
+                var nMapObj = new NewMapObject("gym", name, lat,
+                    lon, id, team);
+                botReceiver.MarkersQueue.Enqueue(nMapObj);
+                
+            }
+            catch (Exception)
+            {
+                //ignore
             }
         }
 

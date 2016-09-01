@@ -7,14 +7,16 @@
         public double Lat;
         public double Lng;
         internal string Uid;
+        public object[] ExtraData;
 
-        public NewMapObject(string oType, string oName, double lat, double lng, string uid)
+        public NewMapObject(string oType, string oName, double lat, double lng, string uid, params object[] extraData)
         {
             OType = oType;
             OName = oName;
             Lat = lat;
             Lng = lng;
             Uid = uid;
+            ExtraData = extraData;
         }
 
         public NewMapObject()

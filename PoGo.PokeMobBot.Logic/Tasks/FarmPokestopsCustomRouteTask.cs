@@ -53,6 +53,13 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                 session.EventDispatcher.Send(new UpdatePositionEvent {Latitude = lat, Longitude = lng, Altitude = alt});
             };
 
+
+            //PreLoad all pokestops which will be hitted during the route - can miss some (prolly)
+
+
+
+
+
             //Find closest point of route and it's index!
             var closestPoint =
                 route.RoutePoints.OrderBy(
@@ -130,6 +137,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                         async () =>
                         {
                             await UseNearbyPokestopsTask.Execute(session, cancellationToken, true);
+                            await PokeNearbyGym.Execute(session, cancellationToken);
                             return true;
                         },
                         cancellationToken
