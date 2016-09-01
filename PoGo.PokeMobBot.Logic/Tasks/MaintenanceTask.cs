@@ -8,11 +8,11 @@ namespace PoGo.PokeMobBot.Logic.Tasks
     {
         public static async Task Execute(ISession session, CancellationToken cancellationToken)
         {
-            var prevState = session.State;
-            session.State = BotState.Busy;
             var currentTotalItems = await session.Inventory.GetTotalItemCount();
             var recycleInventoryAtUsagePercentage = session.LogicSettings.RecycleInventoryAtUsagePercentage > 1
                 ? session.LogicSettings.RecycleInventoryAtUsagePercentage / 100 : session.LogicSettings.RecycleInventoryAtUsagePercentage;
+
+            if (session.Runtime == null || session.Client?.rnd == null || session.Profile?.PlayerData == null) return;
 
             if (session.Runtime.StopsHit + session.Client.rnd.Next(5) > 13 || session.Profile.PlayerData.MaxItemStorage * recycleInventoryAtUsagePercentage < currentTotalItems)
             {
@@ -43,7 +43,6 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                     await RenamePokemonTask.Execute(session, cancellationToken);
                 }
             }
-            session.State = prevState;
         }
         private static async Task DownloadProfile(ISession session)
         {

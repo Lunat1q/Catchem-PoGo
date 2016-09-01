@@ -122,6 +122,42 @@ namespace PoGo.PokeMobBot.Logic.State
                     Stop = true
                 });
             }
+            catch (GoogleOfflineException e)
+            {
+                if (e.Message.Contains("NeedsBrowser"))
+                {
+                    session.EventDispatcher.Send(new ErrorEvent
+                    {
+                        Message = session.Translation.GetTranslation(TranslationString.GoogleTwoFactorAuth)
+                    });
+                    session.EventDispatcher.Send(new ErrorEvent
+                    {
+                        Message = session.Translation.GetTranslation(TranslationString.GoogleTwoFactorAuthExplanation)
+                    });
+                    await Task.Delay(7000, cancellationToken);
+                    try
+                    {
+                        Process.Start("https://security.google.com/settings/security/apppasswords");
+                    }
+                    catch (Exception)
+                    {
+                        session.EventDispatcher.Send(new ErrorEvent
+                        {
+                            Message = "https://security.google.com/settings/security/apppasswords"
+                        });
+                    }
+                }
+                session.EventDispatcher.Send(new ErrorEvent
+                {
+                    Message = "Check your google account/password/2 factor auth and internet connection"
+                });
+                await Task.Delay(2000, cancellationToken);
+                session.EventDispatcher.Send(new BotCompleteFailureEvent
+                {
+                    Shutdown = false,
+                    Stop = true
+                });
+            }
             catch (LoginFailedException)
             {
                 session.EventDispatcher.Send(new ErrorEvent

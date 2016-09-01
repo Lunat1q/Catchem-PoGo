@@ -135,6 +135,12 @@ namespace PoGo.PokeMobBot.Logic
                 return true;
             }
         }
+
+        public RuntimeSettings()
+        {
+            var rnd = new Random();
+            PokestopsToCheckGym = 13 + rnd.Next(5);
+        }
     }
 
     public class DeviceSettings
@@ -925,7 +931,7 @@ namespace PoGo.PokeMobBot.Logic
     {
         //incubator
         public bool UseEggIncubators = true;
-		public bool AlwaysPrefferLongDistanceEgg = false;
+		public bool AlwaysPreferLongDistanceEgg = false;
         public bool UseOnlyUnlimitedIncubator = true;
         //rename
         public bool RenamePokemon = false;
@@ -1542,6 +1548,11 @@ namespace PoGo.PokeMobBot.Logic
         }
     }
 
+    public class ScheduleSettings
+    {
+        
+    }
+
     public class ClientSettings : ISettings
     {
         // Never spawn at the same position.
@@ -1873,7 +1884,7 @@ namespace PoGo.PokeMobBot.Logic
         public int UseBerryMinCp => _settings.CatchSettings.UseBerryMinCp;
         public float UseBerryMinIv => _settings.CatchSettings.UseBerryMinIv;
         public double UseBerryBelowCatchProbability => _settings.CatchSettings.UseBerryBelowCatchProbability;
-        public bool AlwaysPrefferLongDistanceEgg => _settings.PokemonSettings.AlwaysPrefferLongDistanceEgg;
+        public bool AlwaysPreferLongDistanceEgg => _settings.PokemonSettings.AlwaysPreferLongDistanceEgg;
         public bool UseDiscoveryPathing => _settings.LocationSettings.UseDiscoveryPathing;
         public double UseMasterBallBelowCatchProbability => _settings.CatchSettings.UseMasterBallBelowCatchProbability;
         public bool CatchWildPokemon => _settings.CatchSettings.CatchWildPokemon;

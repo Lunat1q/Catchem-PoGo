@@ -14,7 +14,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
 
             var id = pokemonId;
             var prevState = session.State;
-            session.State = BotState.Evolve;
+            session.State = BotState.Transfer;
             var all = await session.Inventory.GetPokemons();
             var pokemons = all.OrderByDescending(x => x.Cp).ThenBy(n => n.StaminaMax);
             var pokemon = pokemons.FirstOrDefault(p => p.Id == id);

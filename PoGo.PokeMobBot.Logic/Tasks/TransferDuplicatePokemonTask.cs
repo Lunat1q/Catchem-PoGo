@@ -22,6 +22,8 @@ namespace PoGo.PokeMobBot.Logic.Tasks
             // Refresh inventory so that the player stats are fresh
             // await session.Inventory.RefreshCachedInventory();
 
+           
+
             var duplicatePokemons =
                 await
                     session.Inventory.GetDuplicatePokemonToTransfer(session.LogicSettings.KeepPokemonsThatCanEvolve,
@@ -39,6 +41,10 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                 Message = session.Translation.GetTranslation(TranslationString.CurrentPokemonUsage,
                     currentPokemonCount, maxPokemonCount)
             });
+
+            if (!await CheckBotStateTask.Execute(session, cancellationToken)) return;
+            var prevState = session.State;
+            session.State = BotState.Transfer;
 
             if (duplicatePokemons != null)
             foreach (var duplicatePokemon in duplicatePokemons)
@@ -78,8 +84,9 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                     FamilyCandies = family.Candy_,
                     Family = family.FamilyId
                 });
-                    await Task.Delay(session.LogicSettings.DelayTransferPokemon);
+                    await Task.Delay(session.LogicSettings.DelayTransferPokemon, cancellationToken);
             }
+            session.State = prevState;
         }
     }
 }

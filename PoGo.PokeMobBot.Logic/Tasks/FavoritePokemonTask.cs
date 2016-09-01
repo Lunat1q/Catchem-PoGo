@@ -16,14 +16,16 @@ namespace PoGo.PokeMobBot.Logic.Tasks
 
             // Refresh inventory so that the player stats are fresh
             await session.Inventory.RefreshCachedInventory();
-
+            if (!await CheckBotStateTask.Execute(session, cancellationToken)) return;
+            var prevState = session.State;
+            session.State = BotState.Busy;
 
             var pokemonSettings = await session.Inventory.GetPokemonSettings();
             var pokemonFamilies = await session.Inventory.GetPokemonFamilies();
             var pokemons = await session.Inventory.GetPokemons();
             //pokemons not in gym, not favorited, and IV above FavoriteMinIv %
             var pokemonsToBeFavorited = pokemons.Where(p => p.DeployedFortId == string.Empty &&
-                        p.Favorite == 0 && (PokemonInfo.CalculatePokemonPerfection(p) > session.LogicSettings.FavoriteMinIvPercentage)).ToList();
+                        p.Favorite == 0 && (p.CalculatePokemonPerfection() > session.LogicSettings.FavoriteMinIvPercentage)).ToList();
             //favorite
             foreach (var pokemon in pokemonsToBeFavorited)
             {
@@ -69,6 +71,8 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                 }
                 await Task.Delay(session.LogicSettings.DelayTransferPokemon, cancellationToken);
             }
+
+            session.State = prevState;
         }
     }
 }

@@ -174,24 +174,25 @@ namespace Catchem.Pages
 
         public void UpdateRunTimeData()
         {
-            var farmedDust = _bot.Stats?.TotalStardust == 0 ? 0 : _bot.Stats?.TotalStardust - _bot.StartStarDust;
+            var farmedDust = _bot.Session?.Stats?.TotalStardust == 0 ? 0 : _bot.Session?.Stats?.TotalStardust - _bot.StartStarDust;
             var dustpH = farmedDust / _bot.Ts.TotalHours;
             if (dustpH != null)
             {
                 var farmedDustH = _bot?.Ts.TotalHours < 0.001 ? "~" : ((double)dustpH).ToString("0");
                 l_Stardust_farmed.Content = $"{farmedDust} ({farmedDustH}/h)";
             }
-            if (_bot.Stats?.ExportStats == null) return;
-            if (_bot.Stats.TotalStardust > 0)
-                _bot.StarDust = _bot.Stats.TotalStardust;
-            l_xp.Content = _bot.Stats.ExportStats.CurrentXp;
-            l_xp_farmed.Content = _bot.Stats.TotalExperience;
-            l_Pokemons_farmed.Content = _bot.Stats.TotalPokemons;
-            l_Pokemons_transfered.Content = _bot.Stats.TotalPokemonsTransfered;
-            l_Pokestops_farmed.Content = _bot.Stats.TotalPokestops;
-            l_level.Content = _bot.Stats.ExportStats.Level;
-            NextLevelInTextBox.Text = $"{_bot.Stats.ExportStats.HoursUntilLvl.ToString("00")}:{_bot.Stats.ExportStats.MinutesUntilLevel.ToString("00")} ({_bot.Stats.ExportStats.CurrentXp}/{_bot.Stats.ExportStats.LevelupXp})";
-            LevelProgressBar.Value = (int)(_bot.Stats.ExportStats.CurrentXp*100/_bot.Stats.ExportStats.LevelupXp);
+            if (_bot.Session?.Stats?.ExportStats == null) return;
+            if (_bot.Session?.Stats.TotalStardust > 0)
+                _bot.StarDust = _bot.Session.Stats.TotalStardust;
+            l_xp.Content = _bot.Session?.Stats.ExportStats.CurrentXp;
+            l_xp_farmed.Content = _bot.Session?.Stats.TotalExperience;
+            l_Pokemons_farmed.Content = _bot.Session?.Stats.TotalPokemons;
+            l_Pokemons_transfered.Content = _bot.Session?.Stats.TotalPokemonsTransfered;
+            l_Pokestops_farmed.Content = _bot.Session?.Stats.TotalPokestops;
+            l_level.Content = _bot.Session?.Stats.ExportStats.Level;
+            NextLevelInTextBox.Text =
+                $"{_bot.Session?.Stats.ExportStats.HoursUntilLvl.ToString("00")}:{_bot.Session?.Stats.ExportStats.MinutesUntilLevel.ToString("00")} ({_bot.Session?.Stats.ExportStats.CurrentXp}/{_bot.Session?.Stats.ExportStats.LevelupXp})";
+            LevelProgressBar.Value = (int)(_bot.Session?.Stats.ExportStats.CurrentXp*100/_bot.Session?.Stats.ExportStats.LevelupXp);
         }
 
         public void ClearData()
@@ -230,7 +231,12 @@ namespace Catchem.Pages
             DoPresorting();
             PokeListBox.Items.SortDescriptions.Add(new SortDescription("Favoured", ListSortDirection.Descending));
         }
-
+        private void sortByCandy_Click(object sender, RoutedEventArgs e)
+        {
+            if (_bot == null || _loadingUi) return;
+            DoPresorting();
+            PokeListBox.Items.SortDescriptions.Add(new SortDescription("Candy", ListSortDirection.Descending));
+        }
         private void team_image_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             if (_bot == null || !_bot.Started || _bot.Team != TeamColor.Neutral || _bot.Level < 5) return;
@@ -252,5 +258,7 @@ namespace Catchem.Pages
             if (_bot == null || !_bot.Started) return;
             _bot.Session.Runtime.StopsHit = 999;
         }
+
+
     }
 }
