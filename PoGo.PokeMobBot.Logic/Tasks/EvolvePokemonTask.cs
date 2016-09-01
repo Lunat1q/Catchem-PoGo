@@ -98,6 +98,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                         });
                     }
                     await DelayingEvolveUtils.Delay(session.LogicSettings.DelayEvolvePokemon, 0, session.LogicSettings.DelayEvolveVariation);
+                    cancellationToken.ThrowIfCancellationRequested();
                 }
             }
             session.State = prevState;
