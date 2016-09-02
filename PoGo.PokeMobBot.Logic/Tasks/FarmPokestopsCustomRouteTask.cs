@@ -76,6 +76,10 @@ namespace PoGo.PokeMobBot.Logic.Tasks
             {
                 await FollowTheYellowbrickroad(session, cancellationToken, route, navi, eggWalker, session.LogicSettings.CustomRouteName);
                 route = session.LogicSettings.CustomRoute;
+                if (!session.LogicSettings.UseCustomRoute)
+                {
+                    break;
+                }
             }
         }
 
@@ -106,6 +110,11 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                         {
                             Message = $"Route switched from {prevRouteName} to {session.LogicSettings.CustomRouteName}!"
                         });
+                        break;
+                    }
+                    if (!session.LogicSettings.UseCustomRoute)
+                    {
+                        sameRoute = false;
                         break;
                     }
 

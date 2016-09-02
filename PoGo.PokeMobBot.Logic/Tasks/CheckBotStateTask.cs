@@ -26,9 +26,9 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                 await Task.Delay(2000, cancellationToken);
             }
             if (attempt < 60 || session.State == BotState.Idle || session.State == BotState.Walk) return true;
-            session.EventDispatcher.Send(new WarnEvent()
+            session.EventDispatcher.Send(new NoticeEvent()
             {
-                Message = "Character is too busy, proballby you are trying to do 2 or more actions at the same time! Please, try later! If you didn't do anything - ignore that message"
+                Message = "Character is too busy, proballby you are trying to do 2 or more actions at the same time! Please, try later! If you didn't do anything - IGNORE that message, and don't send git issue!"
             });
             return false;
         }

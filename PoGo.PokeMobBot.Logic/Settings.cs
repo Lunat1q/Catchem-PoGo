@@ -911,7 +911,7 @@ namespace PoGo.PokeMobBot.Logic
         public bool AutoUpdate = false;
         public bool TransferConfigAndAuthOnUpdate = true;
         public bool DumpPokemonStats = false;
-        public int AmountOfPokemonToDisplayOnStart = 10;
+        public int AmountOfPokemonToDisplayOnStart = 0;
         public bool StartupWelcomeDelay = false;
         public string TranslationLanguageCode = "en";
         public bool AutoCompleteTutorial = false;
