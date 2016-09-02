@@ -162,22 +162,7 @@
                                 FontFamily="BOLD"
                                 FontWeight="Bold"
                                 Style="{StaticResource ResourceKey=flatbutton}"
-                                TextOptions.TextFormattingMode="Display">
-                            <Button.Background>
-                                <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
-                                    <LinearGradientBrush.RelativeTransform>
-                                        <TransformGroup>
-                                            <ScaleTransform CenterX="0.5" CenterY="0.5" />
-                                            <SkewTransform CenterX="0.5" CenterY="0.5" />
-                                            <RotateTransform Angle="90" CenterX="0.5" CenterY="0.5" />
-                                            <TranslateTransform />
-                                        </TransformGroup>
-                                    </LinearGradientBrush.RelativeTransform>
-                                    <GradientStop Offset="0" Color="#FF009CF5" />
-                                    <GradientStop Offset="1" Color="#FF007D89" />
-                                </LinearGradientBrush>
-                            </Button.Background>
-                        </Button>
+                                TextOptions.TextFormattingMode="Display" Background="{DynamicResource NormalButtonColor}"/>
                     </Grid>
                 </GroupBox>
 
@@ -1372,22 +1357,7 @@
                                 FontWeight="Bold"
                                 Style="{StaticResource ResourceKey=flatbutton}"
                                 TextOptions.TextFormattingMode="Display" Width="Auto"
-                                Grid.ColumnSpan="2">
-                            <Button.Background>
-                                <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
-                                    <LinearGradientBrush.RelativeTransform>
-                                        <TransformGroup>
-                                            <ScaleTransform CenterX="0.5" CenterY="0.5" />
-                                            <SkewTransform CenterX="0.5" CenterY="0.5" />
-                                            <RotateTransform Angle="90" CenterX="0.5" CenterY="0.5" />
-                                            <TranslateTransform />
-                                        </TransformGroup>
-                                    </LinearGradientBrush.RelativeTransform>
-                                    <GradientStop Color="#FF03A419" />
-                                    <GradientStop Offset="1" Color="#FF02B8A7" />
-                                </LinearGradientBrush>
-                            </Button.Background>
-                        </Button>
+                                Grid.ColumnSpan="2" Background="{DynamicResource NormalButtonColor}"/>
                         <Button x:Name="b_generateRandomDeviceId"
                                 Grid.Column="1"
                                 Width="62"
@@ -1400,22 +1370,7 @@
                                 FontFamily="BOLD"
                                 FontWeight="Bold"
                                 Style="{StaticResource ResourceKey=flatbutton}"
-                                TextOptions.TextFormattingMode="Display">
-                            <Button.Background>
-                                <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
-                                    <LinearGradientBrush.RelativeTransform>
-                                        <TransformGroup>
-                                            <ScaleTransform CenterX="0.5" CenterY="0.5" />
-                                            <SkewTransform CenterX="0.5" CenterY="0.5" />
-                                            <RotateTransform Angle="90" CenterX="0.5" CenterY="0.5" />
-                                            <TranslateTransform />
-                                        </TransformGroup>
-                                    </LinearGradientBrush.RelativeTransform>
-                                    <GradientStop Offset="0" Color="#FF07D8E2" />
-                                    <GradientStop Offset="1" Color="#FF008E95" />
-                                </LinearGradientBrush>
-                            </Button.Background>
-                        </Button>
+                                TextOptions.TextFormattingMode="Display" Background="{DynamicResource NormalButtonColor}"/>
                         <Button x:Name="b_GenerateNewAndroid"
                         	Height="29"
                         	Margin="10,455,0,0"
@@ -1424,22 +1379,7 @@
                         	FontFamily="BOLD"
                         	FontWeight="Bold"
                         	Style="{StaticResource ResourceKey=flatbutton}"
-                        	TextOptions.TextFormattingMode="Display" Width="96" HorizontalAlignment="Left" Click="b_GenerateNewAndroid_Click">
-                            <Button.Background>
-                                <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
-                                    <LinearGradientBrush.RelativeTransform>
-                                        <TransformGroup>
-                                            <ScaleTransform CenterX="0.5" CenterY="0.5" />
-                                            <SkewTransform CenterX="0.5" CenterY="0.5" />
-                                            <RotateTransform Angle="90" CenterX="0.5" CenterY="0.5" />
-                                            <TranslateTransform />
-                                        </TransformGroup>
-                                    </LinearGradientBrush.RelativeTransform>
-                                    <GradientStop Color="#FF038EA4" />
-                                    <GradientStop Offset="1" Color="#FF02B8A7" />
-                                </LinearGradientBrush>
-                            </Button.Background>
-                        </Button>
+                        	TextOptions.TextFormattingMode="Display" Width="96" HorizontalAlignment="Left" Click="b_GenerateNewAndroid_Click" Background="{DynamicResource NormalButtonColor}"/>
                     </Grid>
                 </GroupBox>
 
@@ -1704,22 +1644,7 @@
                         FontFamily="BOLD"
                         FontWeight="Bold"
                         Style="{StaticResource ResourceKey=flatbutton}"
-                        TextOptions.TextFormattingMode="Display">
-                    <Button.Background>
-                        <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
-                            <LinearGradientBrush.RelativeTransform>
-                                <TransformGroup>
-                                    <ScaleTransform CenterX="0.5" CenterY="0.5" />
-                                    <SkewTransform CenterX="0.5" CenterY="0.5" />
-                                    <RotateTransform Angle="90" CenterX="0.5" CenterY="0.5" />
-                                    <TranslateTransform />
-                                </TransformGroup>
-                            </LinearGradientBrush.RelativeTransform>
-                            <GradientStop Offset="0" Color="#FF9CEAEE" />
-                            <GradientStop Offset="1" Color="#FF5398C0" />
-                        </LinearGradientBrush>
-                    </Button.Background>
-                </Button>
+                        TextOptions.TextFormattingMode="Display" Background="{DynamicResource LightBlueButtonColor}"/>
                 <GroupBox x:Name="ApiKeysBox"
                 	Height="171"
                 	Margin="5,679,5,0"

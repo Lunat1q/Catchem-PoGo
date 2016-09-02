@@ -219,42 +219,21 @@ namespace PoGo.PokeMobBot.Logic.Tasks
 
             return closestPoint;
         }
-            long nextMaintenceStamp = 0;
-            var initialize = true;
-            while (!cancellationToken.IsCancellationRequested)
-            {
 
         private static async Task<List<FortCacheItem>> GetPokeStops(ISession session)
         {
             //var mapObjects = await session.Client.Map.GetMapObjects();
-                foreach (var wp in route.RoutePoints)
-                {
-                    if (initialize)
-                    {
-                        if (wp != closestPoint) continue;
-                        initialize = false;
-                    }
 
             List<FortCacheItem> pokeStops = await session.MapCache.FortDatas(session);
 
             //session.EventDispatcher.Send(new PokeStopListEvent { Forts = session.MapCache.baseFortDatas.ToList() });
-                    var distance = LocationUtils.CalculateDistanceInMeters(session.Client.CurrentLatitude,
-                    session.Client.CurrentLongitude, wp.Latitude, wp.Longitude);
 
             // Wasn't sure how to make this pretty. Edit as needed.
             if (session.LogicSettings.Teleport)
-                    await navi.HumanPathWalking(
-                        session,
-                        wp,
-                        NextMoveSpeed(session),
-                        async () =>
-                        {
-                            await CatchNearbyPokemonsTask.Execute(session, cancellationToken);
                             //Catch Incense Pokemon - only when Incense active
                             long currentIncenseStatus = await CheckIncenseStatus.Execute(session);
                             if (currentIncenseStatus > 0 && currentIncenseStatus < 1800000)
                             {
-                                await CatchIncensePokemonsTask.Execute(session, cancellationToken);
                             }
             {
                 pokeStops = pokeStops.Where(
@@ -280,23 +259,6 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                                     i.Latitude, i.Longitude) < session.LogicSettings.MaxTravelDistanceInMeters) ||
                             session.LogicSettings.MaxTravelDistanceInMeters == 0
                     ).ToList();
-                            return true;
-                        },
-                        async () =>
-                        {
-                            await UseNearbyPokestopsTask.Execute(session, cancellationToken, true);
-                            return true;
-                        },
-                        cancellationToken
-                        );
-                    session.State = BotState.Idle;
-                    await eggWalker.ApplyDistance(distance, cancellationToken);
-                    if (nextMaintenceStamp >= DateTime.UtcNow.ToUnixTime() && session.Runtime.StopsHit < 100) continue;
-                    await MaintenanceTask.Execute(session, cancellationToken);
-                    nextMaintenceStamp = DateTime.UtcNow.AddMinutes(3).ToUnixTime();
-                }
-                if (initialize)
-                    initialize = false;
             }
 
             return pokeStops;

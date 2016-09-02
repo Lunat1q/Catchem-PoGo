@@ -20,7 +20,12 @@ namespace Catchem.Extensions
             long currentIncenseStatus = await CheckIncenseStatus.Execute(session);
             if (currentIncenseStatus > 0 && currentIncenseStatus < 1800000)
             {
-                return currentIncenseStatus;
+                Logger.Write("You are already using Incense");
+                session.EventDispatcher.Send(new WarnEvent
+                {
+                    Message = "Incense already active"
+                });
+                Debug.WriteLine(currentIncenseStatus);
             }
             else
             {
@@ -51,43 +56,41 @@ namespace Catchem.Extensions
                 }
                 else
                 {
-                    Logger.Write("Start using Incense");
-                }
-
-                var UseIncense = await session.Inventory.UseIncense(itemToUse);
-                if (UseIncense.Result == UseIncenseResponse.Types.Result.Success)
-                {
-
-                    Logger.Write("Incense activated");
-                    session.EventDispatcher.Send(new WarnEvent
+                    var UseIncense = await session.Inventory.UseIncense(itemToUse);
+                    if (UseIncense.Result == UseIncenseResponse.Types.Result.Success)
                     {
-                        Message = "Incense activated"
-                    });
-                    await Task.Delay(1000);
-                    currentIncenseStatus = await CheckIncenseStatus.Execute(session);
-                    await session.Inventory.RefreshCachedInventory();
+                        Logger.Write("Incense activated");
+                        session.EventDispatcher.Send(new WarnEvent
+                        {
+                            Message = "Incense activated"
+                        });
+                        await Task.Delay(3000);
+                        currentIncenseStatus = await CheckIncenseStatus.Execute(session);
+                        Debug.WriteLine(currentIncenseStatus);
+                    }
+                    else if (UseIncense.Result == UseIncenseResponse.Types.Result.NoneInInventory)
+                    {
+                        Logger.Write("No Incense available");
+                        session.EventDispatcher.Send(new WarnEvent
+                        {
+                            Message = "No Incense available"
+                        });
+                        currentIncenseStatus = 0;
+                        Debug.WriteLine(currentIncenseStatus);
+                    }
+                    else if (UseIncense.Result == UseIncenseResponse.Types.Result.IncenseAlreadyActive || (UseIncense.AppliedIncense == null))
+                    {
+                        Logger.Write("You are already using Incense");
+                        session.EventDispatcher.Send(new WarnEvent
+                        {
+                            Message = "Incense already active"
+                        });
+                        Debug.WriteLine(currentIncenseStatus);
+                    }
                     return currentIncenseStatus;
-
                 }
-                else if (UseIncense.Result == UseIncenseResponse.Types.Result.NoneInInventory)
-                {
-                    Logger.Write("No Incense available");
-                    session.EventDispatcher.Send(new WarnEvent
-                    {
-                        Message = "No Incense available"
-                    });
-                    currentIncenseStatus = 0;
-                }
-                else if (UseIncense.Result == UseIncenseResponse.Types.Result.IncenseAlreadyActive || (UseIncense.AppliedIncense == null))
-                {
-                    Logger.Write("You are already using Incense");
-                    session.EventDispatcher.Send(new WarnEvent
-                    {
-                        Message = "Incense already active"
-                    });
-                }
-                return currentIncenseStatus;
             }
+            return currentIncenseStatus;
         }
     }
 

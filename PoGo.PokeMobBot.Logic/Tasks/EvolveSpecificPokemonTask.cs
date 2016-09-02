@@ -19,15 +19,16 @@ namespace PoGo.PokeMobBot.Logic.Tasks
         {
             if (!await CheckBotStateTask.Execute(session, cancellationToken)) return;
 
-            var prevState = session.State;
-            session.State = BotState.Evolve;
+           
             var all = await session.Inventory.GetPokemons();
             var pokemons = all.OrderByDescending(x => x.Cp).ThenBy(n => n.StaminaMax);
             var pokemon = pokemons.FirstOrDefault(p => p.Id == pokemonId);
 
             
             if (pokemon == null) return;
-
+            if (!await CheckBotStateTask.Execute(session, cancellationToken)) return;
+            var prevState = session.State;
+            session.State = BotState.Evolve;
             var pokemonFamilies = await session.Inventory.GetPokemonFamilies();
             var pokemonSettings = (await session.Inventory.GetPokemonSettings()).ToList();
             var setting = pokemonSettings.Single(q => q.PokemonId == pokemon.PokemonId);
@@ -39,6 +40,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                 {
                     Message = $"Pokemon {(string.IsNullOrEmpty(pokemon.Nickname) ? pokemon.PokemonId.ToString() : pokemon.Nickname)} is signed to defend a GYM!"
                 });
+                session.State = prevState;
                 return;
             }
 
@@ -48,6 +50,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                 {
                     Message = $"Miss some candies to evolve ({family.Candy_}/{setting.CandyToEvolve}), cancelling..."
                 });
+                session.State = prevState;
                 return;
             }
 

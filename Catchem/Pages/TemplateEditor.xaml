@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Catchem.Pages"
              mc:Ignorable="d" 
-             d:DesignHeight="400" d:DesignWidth="300">
+             d:DesignHeight="500" d:DesignWidth="300">
     <Grid Width="300" Margin="0">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="30"/>
@@ -33,31 +33,33 @@
             <RowDefinition Height="20"/>
             <RowDefinition Height="20"/>
             <RowDefinition Height="20"/>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="20"/>
         </Grid.RowDefinitions>
-        <Rectangle Fill="White" HorizontalAlignment="Stretch" Height="Auto" VerticalAlignment="Stretch" Width="Auto" RadiusX="7" RadiusY="7" Stroke="#FF007A37" StrokeThickness="2" Grid.RowSpan="17" Grid.ColumnSpan="6"/>
+        <Rectangle Fill="White" HorizontalAlignment="Stretch" Height="Auto" VerticalAlignment="Stretch" Width="Auto" RadiusX="7" RadiusY="7" Stroke="#FF007A37" StrokeThickness="2" Grid.RowSpan="20" Grid.ColumnSpan="6"/>
         <TextBlock Text="{Binding Name, FallbackValue=NoName}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" FontWeight="Bold" Foreground="#FF00443D" Margin="0" Grid.Column="1" Grid.ColumnSpan="4"/>
         <Image Source="{Binding Converter={StaticResource LoadImageSourceFromResource}, ConverterParameter='hp'}" Grid.Column="1" Grid.Row="5" Margin="10"/>
         <Image Source="{Binding Converter={StaticResource LoadImageSourceFromResource}, ConverterParameter='atk'}" Grid.Column="2" Grid.Row="5" Margin="10"/>
         <Image Source="{Binding Converter={StaticResource LoadImageSourceFromResource}, ConverterParameter='def'}" Grid.Column="3" Grid.Row="5" Margin="10"/>
         <Image Source="{Binding Converter={StaticResource LoadImageSourceFromResource}, ConverterParameter='sta'}" Grid.Column="4" Grid.Row="5" Margin="10"/>
-        <TextBlock Text="{Binding HpText, FallbackValue=24/30}" Grid.Column="1" HorizontalAlignment="Center" Grid.Row="6" TextWrapping="Wrap" VerticalAlignment="Center" FontWeight="Bold" Foreground="#FF00443D" Margin="0" Height="16"/>
-        <TextBlock Text="{Binding Atk, FallbackValue=12}" Grid.Column="2" HorizontalAlignment="Center" Grid.Row="6" TextWrapping="Wrap" VerticalAlignment="Center" FontWeight="Bold" Foreground="#FF00443D" Margin="0" Height="16"/>
-        <TextBlock Text="{Binding Def, FallbackValue=24}" Grid.Column="3" HorizontalAlignment="Center" Grid.Row="6" TextWrapping="Wrap" VerticalAlignment="Center" FontWeight="Bold" Foreground="#FF00443D" Margin="0" Height="16"/>
-        <TextBlock Text="{Binding Sta, FallbackValue=60}" Grid.Column="4" HorizontalAlignment="Center" Grid.Row="6" TextWrapping="Wrap" VerticalAlignment="Center" FontWeight="Bold" Foreground="#FF00443D" Margin="0" Height="16"/>
-        <TextBlock Text="{Binding TypeText, FallbackValue=Grass/Poison}" Grid.Column="2" HorizontalAlignment="Center" Grid.Row="7" TextWrapping="Wrap" VerticalAlignment="Center" Foreground="#FF00443D" Margin="0" Height="16" Grid.ColumnSpan="2"/>
+        <TextBlock Text="{Binding HpText, FallbackValue=24/30}" Grid.Column="1" HorizontalAlignment="Center" Grid.Row="6" TextWrapping="Wrap" VerticalAlignment="Center" FontWeight="Bold" Foreground="#FF00443D" Margin="0"/>
+        <TextBlock Text="{Binding Atk, FallbackValue=12}" Grid.Column="2" HorizontalAlignment="Center" Grid.Row="6" TextWrapping="Wrap" VerticalAlignment="Center" FontWeight="Bold" Foreground="#FF00443D" Margin="0"/>
+        <TextBlock Text="{Binding Def, FallbackValue=24}" Grid.Column="3" HorizontalAlignment="Center" Grid.Row="6" TextWrapping="Wrap" VerticalAlignment="Center" FontWeight="Bold" Foreground="#FF00443D" Margin="0"/>
+        <TextBlock Text="{Binding Sta, FallbackValue=60}" Grid.Column="4" HorizontalAlignment="Center" Grid.Row="6" TextWrapping="Wrap" VerticalAlignment="Center" FontWeight="Bold" Foreground="#FF00443D" Margin="0"/>
+        <TextBlock Text="{Binding TypeText, FallbackValue=Grass/Poison}" Grid.Column="2" HorizontalAlignment="Center" Grid.Row="7" TextWrapping="Wrap" VerticalAlignment="Center" Foreground="#FF00443D" Margin="0" Grid.ColumnSpan="2"/>
         <Image Source="{Binding Type1, Converter={StaticResource PokeTypeToImageSource}}" Grid.Column="2" Grid.Row="8"/>
         <Image Source="{Binding Type2, Converter={StaticResource PokeTypeToImageSource}}" Grid.Column="3" Grid.Row="8"/>
         <TextBlock Text="Type" Grid.Column="2" HorizontalAlignment="Center" Grid.Row="9" TextWrapping="Wrap" VerticalAlignment="Center" Foreground="#FF00443D" Margin="0" Grid.ColumnSpan="2" FontSize="10"/>
-        <TextBlock Text="{Binding Move1, FallbackValue=Unset}" Grid.Column="1" HorizontalAlignment="Center" Grid.Row="12" TextWrapping="Wrap" VerticalAlignment="Center" FontWeight="Bold" Foreground="#FF00443D" Margin="0" Grid.ColumnSpan="2"/>
+        <TextBlock Text="{Binding Move1, FallbackValue=Unset}" Grid.Column="1" HorizontalAlignment="Left" Grid.Row="13" TextWrapping="Wrap" VerticalAlignment="Center" FontWeight="Bold" Foreground="#FF00443D" Margin="0" Grid.ColumnSpan="2"/>
         <TextBlock Text="Move Set" Grid.Column="2" HorizontalAlignment="Center" Grid.Row="11" TextWrapping="Wrap" VerticalAlignment="Center" Foreground="#FF00443D" Margin="0" Grid.ColumnSpan="2" FontSize="10"/>
-        <TextBlock Text="{Binding Move2, FallbackValue=Unset}" Grid.Column="3" HorizontalAlignment="Center" Grid.Row="12" TextWrapping="Wrap" VerticalAlignment="Center" FontWeight="Bold" Foreground="#FF00443D" Margin="0" Grid.ColumnSpan="2"/>
-        <TextBlock  Text="{Binding Level, FallbackValue=Level: 0, StringFormat=Level: \{0:N1\}}" Grid.Column="1" HorizontalAlignment="Center" Grid.Row="14" TextWrapping="Wrap" VerticalAlignment="Center" FontWeight="Bold" Foreground="#FF00443D" Margin="0" Grid.ColumnSpan="2"/>
-        <Grid Grid.ColumnSpan="2" Grid.Column="3" HorizontalAlignment="Center" Grid.Row="14" VerticalAlignment="Center" Margin="0">
+        <TextBlock Text="{Binding Move2, FallbackValue=Unset}" Grid.Column="1" HorizontalAlignment="Left" Grid.Row="14" TextWrapping="Wrap" VerticalAlignment="Center" FontWeight="Bold" Foreground="#FF00443D" Margin="0" Grid.ColumnSpan="2"/>
+        <TextBlock  Text="{Binding Level, FallbackValue=Level: 0, StringFormat=Level: \{0:N1\}}" Grid.Column="1" HorizontalAlignment="Center" Grid.Row="16" TextWrapping="Wrap" VerticalAlignment="Center" FontWeight="Bold" Foreground="#FF00443D" Margin="0" Grid.ColumnSpan="2"/>
+        <Grid Grid.ColumnSpan="2" Grid.Column="3" HorizontalAlignment="Center" Grid.Row="16" VerticalAlignment="Center" Margin="0">
             <Image Source="{Binding ConverterParameter=candy, Converter={StaticResource LoadImageSourceFromResource}}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0" Width="18" Height="18"/>
             <TextBlock Text="{Binding CandyText, FallbackValue=Candy: 0 / 0, StringFormat=Candy: \{0\}}" TextWrapping="Wrap" VerticalAlignment="Top" FontWeight="Bold" Foreground="#FF00443D" Margin="23,0,0,0"/>
         </Grid>
         <TextBlock  Text="{Binding Cp, FallbackValue=0, StringFormat=\{0\}}" Grid.Column="1" HorizontalAlignment="Center" Grid.Row="3" TextWrapping="Wrap" VerticalAlignment="Center" FontWeight="Bold" Foreground="#FF00443D" Margin="0" Grid.ColumnSpan="2"/>
-        <TextBlock  Text="{Binding Iv, FallbackValue=Iv: 0%, StringFormat=Iv: \{0:N1\}%}" Grid.Column="2" HorizontalAlignment="Center" Grid.Row="15" TextWrapping="Wrap" VerticalAlignment="Center" FontWeight="Bold" Foreground="#FF00443D" Margin="0" Grid.ColumnSpan="2"/>
+        <TextBlock  Text="{Binding Iv, FallbackValue=Iv: 0%, StringFormat=IV: \{0:N1\}%}" Grid.Column="2" HorizontalAlignment="Center" Grid.Row="17" TextWrapping="Wrap" VerticalAlignment="Center" FontWeight="Bold" Foreground="#FF00443D" Margin="0" Grid.ColumnSpan="2"/>
         <TextBlock  Text="{Binding MaxCp, FallbackValue=0, StringFormat=\{0\}}" Grid.Column="2" HorizontalAlignment="Center" Grid.Row="3" TextWrapping="Wrap" VerticalAlignment="Center" FontWeight="Bold" Foreground="#FF00443D" Margin="0" RenderTransformOrigin="0.645,0.5" Grid.ColumnSpan="2"/>
         <TextBlock  Text="HP" Grid.Column="1" HorizontalAlignment="Center" Grid.Row="4" TextWrapping="Wrap" VerticalAlignment="Center" Foreground="#FF00443D" Margin="0"/>
         <TextBlock  Text="ATK" Grid.Column="2" HorizontalAlignment="Center" Grid.Row="4" TextWrapping="Wrap" VerticalAlignment="Center" Foreground="#FF00443D" Margin="0"/>
@@ -65,6 +67,26 @@
         <TextBlock  Text="STA" Grid.Column="4" HorizontalAlignment="Center" Grid.Row="4" TextWrapping="Wrap" VerticalAlignment="Center" Foreground="#FF00443D" Margin="0"/>
         <ProgressBar Grid.ColumnSpan="4" Grid.Column="1" Height="10" Margin="0,10,0,0" Grid.Row="2" VerticalAlignment="Top" Value="{Binding Cp, FallbackValue=5}" Maximum="{Binding MaxCp, FallbackValue=100}"/>
         <TextBlock  Text="{Binding PossibleCp, FallbackValue=0, StringFormat=\{0\}}" Grid.Column="3" HorizontalAlignment="Center" Grid.Row="3" TextWrapping="Wrap" VerticalAlignment="Center" FontWeight="Bold" Foreground="#FF00443D" Margin="0" RenderTransformOrigin="0.645,0.5" Grid.ColumnSpan="2"/>
-        <TextBlock  Text="Cp / MaxCp / PossibleCp" HorizontalAlignment="Center" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Center" FontWeight="Bold" Foreground="#FF00443D" Margin="0" Grid.ColumnSpan="4" Grid.Column="1"/>
+        <TextBlock  Text="CP / Max CP / Possible CP" HorizontalAlignment="Center" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Center" FontWeight="Bold" Foreground="#FF00443D" Margin="0" Grid.ColumnSpan="4" Grid.Column="1"/>
+        <TextBlock Text="Energy" Grid.Column="3" HorizontalAlignment="Center" Grid.Row="12" TextWrapping="Wrap" VerticalAlignment="Center" Foreground="#FF00443D" Margin="0" FontSize="10"/>
+        <TextBlock Text="Damage | DPS" Grid.Column="4" HorizontalAlignment="Left" Grid.Row="12" TextWrapping="Wrap" VerticalAlignment="Center" Foreground="#FF00443D" Margin="0" FontSize="10" Grid.ColumnSpan="2"/>
+        <TextBlock Text="{Binding Move1Stats.Energy, FallbackValue=0}" Grid.Column="3" HorizontalAlignment="Center" Grid.Row="13" TextWrapping="Wrap" VerticalAlignment="Center" FontWeight="Bold" Foreground="#FF00443D" Margin="0"/>
+        <Grid Grid.Column="4" Grid.Row="13" VerticalAlignment="Center">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Text="{Binding Move1Stats.Damage, FallbackValue=00}" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" FontWeight="Bold" Foreground="#FF00443D" RenderTransformOrigin="0.572,0.531" Margin="0"/>
+            <TextBlock Text="{Binding Move1Stats.Dps, FallbackValue=00.0, StringFormat=\{0:N1\}}" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" FontWeight="Bold" Foreground="#FF00443D" RenderTransformOrigin="0.572,0.531" Margin="0" Grid.Column="1"/>
+        </Grid>
+        <TextBlock Text="{Binding Move2Stats.Energy, FallbackValue=0}" Grid.Column="3" HorizontalAlignment="Center" Grid.Row="14" TextWrapping="Wrap" VerticalAlignment="Center" FontWeight="Bold" Foreground="#FF00443D" Margin="0"/>
+        <Grid Grid.Column="4" Grid.Row="14" VerticalAlignment="Center">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Text="{Binding Move2Stats.Damage, FallbackValue=00}" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" FontWeight="Bold" Foreground="#FF00443D" RenderTransformOrigin="0.572,0.531" Margin="0"/>
+            <TextBlock Text="{Binding Move2Stats.Dps, FallbackValue=00.0, StringFormat=\{0:N1\}}" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" FontWeight="Bold" Foreground="#FF00443D" RenderTransformOrigin="0.572,0.531" Margin="0" Grid.Column="1"/>
+        </Grid>
     </Grid>
 </UserControl>

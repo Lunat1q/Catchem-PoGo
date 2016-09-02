@@ -46,6 +46,8 @@ namespace Catchem
 
         private ISession CurSession => Bot?.Session;
         private readonly Queue<BotRpcMessage> _messageQueue = new Queue<BotRpcMessage>();
+        private readonly WpfEventListener _listener;
+        private readonly StatisticsAggregator _statisticsAggregator;
 
         private BotWindowData _bot;
         public BotWindowData Bot
@@ -80,6 +82,9 @@ namespace Catchem
             GlobalMapView.SetGlobalSettings(GlobalCatchemSettings);
             SettingsView.BotSettingsPage.SetGlobalSettings(GlobalCatchemSettings);
             RouteCreatorView.SetGlobalSettings(GlobalCatchemSettings);
+
+            _listener = new WpfEventListener();
+            _statisticsAggregator = new StatisticsAggregator();
         }
 
 
@@ -551,6 +556,9 @@ namespace Catchem
                             case "forcemove_done":
                                 PushRemoveForceMoveMarker(message.Session);
                                 break;
+                            case "gym_poke":
+                                PushNewGymPoke(message.Session, message.ParamObjects);
+                                break;
                             case "ps_opt":
                                 if (message.ParamObjects[0] != null)
                                     DrawNextOptRoute(message.Session, (List<Tuple<double, double>>)message.ParamObjects[0]);
@@ -572,6 +580,32 @@ namespace Catchem
                     delay = 5;
                 
                 await Task.Delay(delay);
+            }
+        }
+
+        private void PushNewGymPoke(ISession session, object[] paramObjects)
+        {
+            var botReceiver = BotsCollection.FirstOrDefault(x => x.Session == session);
+            if (botReceiver == null) return;
+
+            try
+            {
+                var id = (string) paramObjects[0];
+                var name = (string) paramObjects[1];
+                var team = (TeamColor) paramObjects[2];
+                var lat = (double)paramObjects[3];
+                var lon = (double)paramObjects[4];
+
+                if (botReceiver.MapMarkers.ContainsKey(id) ||
+                    botReceiver.MarkersQueue.Count(x => x.Uid == id) != 0) return;
+                var nMapObj = new NewMapObject("gym", name, lat,
+                    lon, id, team);
+                botReceiver.MarkersQueue.Enqueue(nMapObj);
+                
+            }
+            catch (Exception)
+            {
+                //ignore
             }
         }
 
@@ -609,14 +643,14 @@ namespace Catchem
                 newBot.GlobalSettings.MapzenAPI.SetSession(session);
 
                 newBot.Session = session;
-                session.EventDispatcher.EventReceived += evt => newBot.Listener.Listen(evt, session);
-                session.EventDispatcher.EventReceived += evt => newBot.Aggregator.Listen(evt, session);
+                session.EventDispatcher.EventReceived += evt => _listener.Listen(evt, session);
+                session.EventDispatcher.EventReceived += evt => _statisticsAggregator.Listen(evt, session);
                 session.Navigation.UpdatePositionEvent += (lat, lng, alt) => session.EventDispatcher.Send(new UpdatePositionEvent {Latitude = lat, Longitude = lng, Altitude = alt});
 
                 newBot.PokemonList.CollectionChanged += delegate { UpdatePokemonCollection(session); };
                 newBot.ItemList.CollectionChanged += delegate { UpdateItemCollection(session); };
 
-                newBot.Stats.DirtyEvent += () => { StatsOnDirtyEvent(newBot); };
+                session.Stats.DirtyEvent += () => { StatsOnDirtyEvent(newBot); };
 
                 newBot._lat = settings.LocationSettings.DefaultLatitude;
                 newBot._lng = settings.LocationSettings.DefaultLongitude;
@@ -722,9 +756,7 @@ namespace Catchem
 
         private static BotWindowData CreateBowWindowData(GlobalSettings s,string name)
         {
-            var stats = new Statistics();
-
-            return new BotWindowData(name, s, new StateMachine(), stats, new StatisticsAggregator(stats), new WpfEventListener(), new ClientSettings(s), new LogicSettings(s));
+            return new BotWindowData(name, s, new StateMachine(), new ClientSettings(s), new LogicSettings(s));
         }
 
         private void RebuildUi()

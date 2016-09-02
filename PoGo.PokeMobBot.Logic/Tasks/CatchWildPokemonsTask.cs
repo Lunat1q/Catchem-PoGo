@@ -39,6 +39,8 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                 {
                     cancellationToken.ThrowIfCancellationRequested();
 
+                    if (!await CheckBotStateTask.Execute(session, cancellationToken)) return;
+
                     if (session.LogicSettings.Teleport)
                         await session.Client.Player.UpdatePlayerLocation(pokemon.Latitude, pokemon.Longitude,
                             session.Client.Settings.DefaultAltitude);

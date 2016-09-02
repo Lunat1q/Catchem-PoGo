@@ -20,15 +20,15 @@ namespace PoGo.PokeMobBot.Logic.Tasks
         {
             if (session.State == BotState.Idle || session.State == BotState.Walk) return true;
             var attempt = 0;
-            while (session.State != BotState.Idle && session.State != BotState.Walk && attempt < 31) //trying to get free status
+            while (session.State != BotState.Idle && session.State != BotState.Walk && attempt < 61) //trying to get free status
             {
                 attempt++;
                 await Task.Delay(2000, cancellationToken);
             }
-            if (attempt < 30 || session.State == BotState.Idle || session.State == BotState.Walk) return true;
-            session.EventDispatcher.Send(new WarnEvent()
+            if (attempt < 60 || session.State == BotState.Idle || session.State == BotState.Walk) return true;
+            session.EventDispatcher.Send(new NoticeEvent()
             {
-                Message = "Character is too busy, please, try later!"
+                Message = "Character is too busy, proballby you are trying to do 2 or more actions at the same time! Please, try later! If you didn't do anything - IGNORE that message, and don't send git issue!"
             });
             return false;
         }

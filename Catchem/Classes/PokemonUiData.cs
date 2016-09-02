@@ -247,6 +247,9 @@ namespace Catchem.Classes
         private int _stamina;
         private int _maxStamina;
 
+        public PokemonAttackStats Move1Stats => PokemonMoveStatsDictionary.GetMoveData(_move1);
+
+        public PokemonAttackStats Move2Stats => PokemonMoveStatsDictionary.GetMoveData(_move2);
 
         public void UpdateTags(LogicSettings ls)
         {

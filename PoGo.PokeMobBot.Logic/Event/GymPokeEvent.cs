@@ -9,5 +9,7 @@ namespace PoGo.PokeMobBot.Logic.Event
         public string Name;
         public string Description;
         public GymState GymState;
+        public double Lat;
+        public double Lon;
     }
 }

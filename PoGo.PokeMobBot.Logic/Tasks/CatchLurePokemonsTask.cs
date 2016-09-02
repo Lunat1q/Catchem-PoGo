@@ -22,6 +22,9 @@ namespace PoGo.PokeMobBot.Logic.Tasks
 
             if (!session.LogicSettings.CatchWildPokemon) return;
             if (session.Runtime.PokeBallsToCollect > 0) return;
+
+            if (!await CheckBotStateTask.Execute(session, cancellationToken)) return;
+
             // Refresh inventory so that the player stats are fresh
             await session.Inventory.RefreshCachedInventory();
 

@@ -27,7 +27,6 @@ namespace PoGo.PokeMobBot.Logic.Tasks
         public static async Task<bool> Execute(ISession session, dynamic encounter, PokemonCacheItem pokemon, CancellationToken cancellationToken,
             FortData currentFortData = null, ulong encounterId = 0)
         {
-            //if (!await CheckBotStateTask.Execute(session, cancellationToken)) return false;
             if (encounter is EncounterResponse && pokemon == null)
                 throw new ArgumentException("Parameter pokemon must be set, if encounter is of type EncounterResponse",
                     nameof(pokemon));
@@ -71,7 +70,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                         ? encounter.WildPokemon?.PokemonData
                         : encounter?.PokemonData) >= session.LogicSettings.UseBerryMinIv;
 
-                if (isLowProbability && ((session.LogicSettings.PrioritizeIvOverCp && isHighPerfection) || isHighCp) && canUseBerry)
+                if ((isLowProbability || ((session.LogicSettings.PrioritizeIvOverCp && isHighPerfection) || isHighCp)) && canUseBerry)
                 {
                     await
                         UseBerry(session,

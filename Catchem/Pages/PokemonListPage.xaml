@@ -42,22 +42,7 @@
         <ComboBox x:Name="AddToEvolveCb" Margin="135,10,74,0" VerticalAlignment="Top"
                               ItemsSource="{Binding Source={StaticResource PokemonIdDataProvider}}"/>
         <Button Style="{StaticResource ResourceKey=flatbutton}" x:Name="AddPokemonToEvolve" 
-                            Content="Add" HorizontalAlignment="Right" VerticalAlignment="Top" Width="59" Height="22" Margin="0,10,10,0" FontFamily="BOLD" TextOptions.TextFormattingMode="Display" FontWeight="Bold" Click="AddPokemonToEvolve_Click">
-            <Button.Background>
-                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <LinearGradientBrush.RelativeTransform>
-                        <TransformGroup>
-                            <ScaleTransform CenterY="0.5" CenterX="0.5"/>
-                            <SkewTransform CenterY="0.5" CenterX="0.5"/>
-                            <RotateTransform Angle="90" CenterY="0.5" CenterX="0.5"/>
-                            <TranslateTransform/>
-                        </TransformGroup>
-                    </LinearGradientBrush.RelativeTransform>
-                    <GradientStop Color="#FFB0EE9C" Offset="0"/>
-                    <GradientStop Color="#FF53C05D" Offset="1"/>
-                </LinearGradientBrush>
-            </Button.Background>
-        </Button>
+                            Content="Add" HorizontalAlignment="Right" VerticalAlignment="Top" Width="59" Height="22" Margin="0,10,10,0" FontFamily="BOLD" TextOptions.TextFormattingMode="Display" FontWeight="Bold" Click="AddPokemonToEvolve_Click" Background="{DynamicResource NormalButtonColor}"/>
         <ListBox x:Name="NotToTransferList" Margin="10,42,10,10" ItemTemplate="{DynamicResource PokemonListTemplate}" HorizontalContentAlignment="Stretch" Grid.Column="1">
             <ListBox.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -85,22 +70,7 @@
         <ComboBox x:Name="NotToTransferCb" Margin="135,10,74,0" VerticalAlignment="Top"
                     	ItemsSource="{Binding Source={StaticResource PokemonIdDataProvider}}" Grid.Column="1"/>
         <Button Style="{StaticResource ResourceKey=flatbutton}" x:Name="NotToTransferBtn" 
-                    	Content="Add" HorizontalAlignment="Right" VerticalAlignment="Top" Width="59" Height="22" Margin="0,10,10,0" FontFamily="BOLD" TextOptions.TextFormattingMode="Display" FontWeight="Bold" Click="NotToTransferBtn_Click" Grid.Column="1">
-            <Button.Background>
-                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <LinearGradientBrush.RelativeTransform>
-                        <TransformGroup>
-                            <ScaleTransform CenterY="0.5" CenterX="0.5"/>
-                            <SkewTransform CenterY="0.5" CenterX="0.5"/>
-                            <RotateTransform Angle="90" CenterY="0.5" CenterX="0.5"/>
-                            <TranslateTransform/>
-                        </TransformGroup>
-                    </LinearGradientBrush.RelativeTransform>
-                    <GradientStop Color="#FFB0EE9C" Offset="0"/>
-                    <GradientStop Color="#FF53C05D" Offset="1"/>
-                </LinearGradientBrush>
-            </Button.Background>
-        </Button>
+                    	Content="Add" HorizontalAlignment="Right" VerticalAlignment="Top" Width="59" Height="22" Margin="0,10,10,0" FontFamily="BOLD" TextOptions.TextFormattingMode="Display" FontWeight="Bold" Click="NotToTransferBtn_Click" Grid.Column="1" Background="{DynamicResource NormalButtonColor}"/>
         <ListBox x:Name="PokemonsNotToCatchList" Margin="10,42,10,10" ItemTemplate="{DynamicResource PokemonListTemplate}" HorizontalContentAlignment="Stretch" Grid.Row="1">
             <ListBox.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -128,22 +98,7 @@
         <ComboBox x:Name="PokemonsNotToCatchCb" Margin="135,10,74,0" VerticalAlignment="Top"
                     	ItemsSource="{Binding Source={StaticResource PokemonIdDataProvider}}" Grid.Row="1"/>
         <Button Style="{StaticResource ResourceKey=flatbutton}" x:Name="PokemonsNotToCatchBtn" 
-                    	Content="Add" HorizontalAlignment="Right" VerticalAlignment="Top" Width="59" Height="22" Margin="0,10,10,0" FontFamily="BOLD" TextOptions.TextFormattingMode="Display" FontWeight="Bold" Grid.Row="1" Click="PokemonsNotToCatchBtn_Click">
-            <Button.Background>
-                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <LinearGradientBrush.RelativeTransform>
-                        <TransformGroup>
-                            <ScaleTransform CenterY="0.5" CenterX="0.5"/>
-                            <SkewTransform CenterY="0.5" CenterX="0.5"/>
-                            <RotateTransform Angle="90" CenterY="0.5" CenterX="0.5"/>
-                            <TranslateTransform/>
-                        </TransformGroup>
-                    </LinearGradientBrush.RelativeTransform>
-                    <GradientStop Color="#FFB0EE9C" Offset="0"/>
-                    <GradientStop Color="#FF53C05D" Offset="1"/>
-                </LinearGradientBrush>
-            </Button.Background>
-        </Button>
+                    	Content="Add" HorizontalAlignment="Right" VerticalAlignment="Top" Width="59" Height="22" Margin="0,10,10,0" FontFamily="BOLD" TextOptions.TextFormattingMode="Display" FontWeight="Bold" Grid.Row="1" Click="PokemonsNotToCatchBtn_Click" Background="{DynamicResource NormalButtonColor}"/>
         <ListBox x:Name="PokemonToUseMasterballList" Margin="10,42,10,10" ItemTemplate="{DynamicResource PokemonListTemplate}" HorizontalContentAlignment="Stretch" Grid.Row="1" Grid.Column="1">
             <ListBox.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -171,21 +126,6 @@
         <ComboBox x:Name="PokemonToUseMasterballCb" Margin="141,10,74,0" VerticalAlignment="Top"
                     	ItemsSource="{Binding Source={StaticResource PokemonIdDataProvider}}" Grid.Row="1" Grid.Column="1"/>
         <Button Style="{StaticResource ResourceKey=flatbutton}" x:Name="PokemonToUseMasterballBtn" 
-                    	Content="Add" HorizontalAlignment="Right" VerticalAlignment="Top" Width="59" Height="22" Margin="0,10,10,0" FontFamily="BOLD" TextOptions.TextFormattingMode="Display" FontWeight="Bold" Grid.Row="1" Click="PokemonToUseMasterballBtn_Click" Grid.Column="1">
-            <Button.Background>
-                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <LinearGradientBrush.RelativeTransform>
-                        <TransformGroup>
-                            <ScaleTransform CenterY="0.5" CenterX="0.5"/>
-                            <SkewTransform CenterY="0.5" CenterX="0.5"/>
-                            <RotateTransform Angle="90" CenterY="0.5" CenterX="0.5"/>
-                            <TranslateTransform/>
-                        </TransformGroup>
-                    </LinearGradientBrush.RelativeTransform>
-                    <GradientStop Color="#FFB0EE9C" Offset="0"/>
-                    <GradientStop Color="#FF53C05D" Offset="1"/>
-                </LinearGradientBrush>
-            </Button.Background>
-        </Button>
+                    	Content="Add" HorizontalAlignment="Right" VerticalAlignment="Top" Width="59" Height="22" Margin="0,10,10,0" FontFamily="BOLD" TextOptions.TextFormattingMode="Display" FontWeight="Bold" Grid.Row="1" Click="PokemonToUseMasterballBtn_Click" Grid.Column="1" Background="{DynamicResource NormalButtonColor}"/>
     </Grid>
 </UserControl>

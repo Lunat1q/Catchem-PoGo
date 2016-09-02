@@ -24,6 +24,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
         {
             // Refresh inventory so that the player stats are fresh
             await session.Inventory.RefreshCachedInventory();
+            if (!await CheckBotStateTask.Execute(session, cancellationToken)) return;
             var prevState = session.State;
             session.State = BotState.LevelPoke;
             // get the families and the pokemons settings to do some actual smart stuff like checking if you have enough candy in the first place

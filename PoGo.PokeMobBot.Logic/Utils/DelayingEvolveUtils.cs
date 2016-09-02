@@ -1,6 +1,7 @@
 ﻿#region using directives
 
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 
 #endregion
@@ -11,7 +12,7 @@ namespace PoGo.PokeMobBot.Logic.Utils
     {
         private static readonly Random RandomDevice = new Random();
 
-        public static async Task Delay(int delay, int defdelay, double evolvevariation)
+        public static async Task Delay(int delay, int defdelay, double evolvevariation, CancellationToken cancellationToken)
         {
             if (delay > defdelay)
             {
@@ -20,11 +21,11 @@ namespace PoGo.PokeMobBot.Logic.Utils
                 var randomMax = (int)(delay * (1 + randomFactor));
                 var randomizedDelay = RandomDevice.Next(randomMin, randomMax);
 
-                await Task.Delay(randomizedDelay);
+                await Task.Delay(randomizedDelay, cancellationToken);
             }
             else if (defdelay > 0)
             {
-                await Task.Delay(defdelay);
+                await Task.Delay(defdelay, cancellationToken);
             }
         }
     }

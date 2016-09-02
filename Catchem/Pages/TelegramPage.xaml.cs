@@ -352,9 +352,9 @@ namespace Catchem.Pages
                     status.AppendLine(
                         $"Stardust {targetBot.StarDust}, Farmed: {(targetBot.StarDust > 0 ? targetBot.StarDust - targetBot.StartStarDust : 0)} ({targetBot.StardustRate.ToN1()}/h)");
                     status.AppendLine(
-                        $"Poke Caught: {targetBot.Stats?.TotalPokemons} ({targetBot.PokemonsRate.ToN1()}/h)");
+                        $"Poke Caught: {targetBot.Session?.Stats?.TotalPokemons} ({targetBot.PokemonsRate.ToN1()}/h)");
                     status.AppendLine(
-                        $"PokeStops spinned: {targetBot.Stats?.TotalPokestops} ({targetBot.PokestopsRate.ToN1()}/h)");
+                        $"PokeStops spinned: {targetBot.Session?.Stats?.TotalPokestops} ({targetBot.PokestopsRate.ToN1()}/h)");
                     // Status.AppendLine($"Team: {targetBot.Stats.}");
                     TlgrmBot.SendToTelegram(status.ToString(), chatId);
                     return;
