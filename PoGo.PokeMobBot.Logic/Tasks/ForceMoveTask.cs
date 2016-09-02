@@ -23,7 +23,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
 
             var eggWalker = new EggWalker(1000, session);
 
-           
+
             var moveToCoords = session.ForceMoveTo;
             var distance = LocationUtils.CalculateDistanceInMeters(session.Client.CurrentLatitude,
                 session.Client.CurrentLongitude, moveToCoords.Latitude, moveToCoords.Longitude);
@@ -35,7 +35,6 @@ namespace PoGo.PokeMobBot.Logic.Tasks
             session.ForceMoveTo = null;
             PlayerUpdateResponse result;
 
-            session.State = BotState.Walk;
             if (session.LogicSettings.Teleport)
                 result = await session.Client.Player.UpdatePlayerLocation(moveToCoords.Latitude, moveToCoords.Longitude,
                     session.Client.Settings.DefaultAltitude);
@@ -53,7 +52,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                         await CatchIncensePokemonsTask.Execute(session, cancellationToken);
                     }
                     return true;
-                }, 
+                },
                 async () =>
                 {
                     await UseNearbyPokestopsTask.Execute(session, cancellationToken, true);
@@ -65,10 +64,9 @@ namespace PoGo.PokeMobBot.Logic.Tasks
             {
                 Message = "ForceMove Done!"
             });
-            session.State = BotState.Idle;
             session.ForceMoveJustDone = true;
             session.ForceMoveTo = null;
-            session.EventDispatcher.Send(new ForceMoveDoneEvent() );
+            session.EventDispatcher.Send(new ForceMoveDoneEvent());
 
             if (session.LogicSettings.Teleport)
                 await Task.Delay(session.LogicSettings.DelayPokestop, cancellationToken);

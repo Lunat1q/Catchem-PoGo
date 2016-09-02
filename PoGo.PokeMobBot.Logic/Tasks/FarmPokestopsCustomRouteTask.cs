@@ -11,10 +11,7 @@ using PoGo.PokeMobBot.Logic.PoGoUtils;
 using PoGo.PokeMobBot.Logic.State;
 using PoGo.PokeMobBot.Logic.Utils;
 using PokemonGo.RocketAPI.Extensions;
-using PoGo.PokeMobBot.Logic.Extensions;
 using POGOProtos.Map.Fort;
-using System.Collections.Generic;
-using GeoCoordinatePortable;
 
 #endregion
 
@@ -27,7 +24,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
         {
             return
                 session.Client.rnd.NextInRange(session.LogicSettings.WalkingSpeedMin,
-                    session.LogicSettings.WalkingSpeedMax)*session.Settings.MoveSpeedFactor;
+                    session.LogicSettings.WalkingSpeedMax) * session.Settings.MoveSpeedFactor;
         }
 
         public static async Task Execute(ISession session, CancellationToken cancellationToken)
@@ -39,8 +36,8 @@ namespace PoGo.PokeMobBot.Logic.Tasks
             {
                 session.EventDispatcher.Send(new BotCompleteFailureEvent()
                 {
-                   Shutdown = false,
-                   Stop = true
+                    Shutdown = false,
+                    Stop = true
                 });
                 session.EventDispatcher.Send(new WarnEvent
                 {
@@ -57,7 +54,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
             var navi = new Navigation(session.Client);
             navi.UpdatePositionEvent += (lat, lng, alt) =>
             {
-                session.EventDispatcher.Send(new UpdatePositionEvent {Latitude = lat, Longitude = lng, Altitude = alt});
+                session.EventDispatcher.Send(new UpdatePositionEvent { Latitude = lat, Longitude = lng, Altitude = alt });
             };
 
 
@@ -74,7 +71,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                                 40)).ToList();
 
             session.EventDispatcher.Send(new PokeStopListEvent { Forts = allPokestopsInArea.Select(x => x.BaseFortData) });
-            
+
             while (!cancellationToken.IsCancellationRequested)
             {
                 await FollowTheYellowbrickroad(session, cancellationToken, route, navi, eggWalker, session.LogicSettings.CustomRouteName);
@@ -194,13 +191,9 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                         {
                             // Catch normal map Pokemon
                             await CatchNearbyPokemonsTask.Execute(session, cancellationToken);
-                        //Catch Incense Pokemon
-                        long currentIncenseStatus = await CheckIncenseStatus.Execute(session);
-                        if (currentIncenseStatus > 0 && currentIncenseStatus < 1800000)
-                        {
+                            //Catch Incense Pokemon
                             await CatchIncensePokemonsTask.Execute(session, cancellationToken);
                         }
-                    }
                         return true;
                     },
                     async () =>
@@ -219,43 +212,17 @@ namespace PoGo.PokeMobBot.Logic.Tasks
 
             return closestPoint;
         }
-            long nextMaintenceStamp = 0;
-            var initialize = true;
-            while (!cancellationToken.IsCancellationRequested)
-            {
 
         private static async Task<List<FortCacheItem>> GetPokeStops(ISession session)
         {
             //var mapObjects = await session.Client.Map.GetMapObjects();
-                foreach (var wp in route.RoutePoints)
-                {
-                    if (initialize)
-                    {
-                        if (wp != closestPoint) continue;
-                        initialize = false;
-                    }
 
             List<FortCacheItem> pokeStops = await session.MapCache.FortDatas(session);
 
             //session.EventDispatcher.Send(new PokeStopListEvent { Forts = session.MapCache.baseFortDatas.ToList() });
-                    var distance = LocationUtils.CalculateDistanceInMeters(session.Client.CurrentLatitude,
-                    session.Client.CurrentLongitude, wp.Latitude, wp.Longitude);
 
             // Wasn't sure how to make this pretty. Edit as needed.
             if (session.LogicSettings.Teleport)
-                    await navi.HumanPathWalking(
-                        session,
-                        wp,
-                        NextMoveSpeed(session),
-                        async () =>
-                        {
-                            await CatchNearbyPokemonsTask.Execute(session, cancellationToken);
-                            //Catch Incense Pokemon - only when Incense active
-                            long currentIncenseStatus = await CheckIncenseStatus.Execute(session);
-                            if (currentIncenseStatus > 0 && currentIncenseStatus < 1800000)
-                            {
-                                await CatchIncensePokemonsTask.Execute(session, cancellationToken);
-                            }
             {
                 pokeStops = pokeStops.Where(
                     i =>
@@ -280,23 +247,6 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                                     i.Latitude, i.Longitude) < session.LogicSettings.MaxTravelDistanceInMeters) ||
                             session.LogicSettings.MaxTravelDistanceInMeters == 0
                     ).ToList();
-                            return true;
-                        },
-                        async () =>
-                        {
-                            await UseNearbyPokestopsTask.Execute(session, cancellationToken, true);
-                            return true;
-                        },
-                        cancellationToken
-                        );
-                    session.State = BotState.Idle;
-                    await eggWalker.ApplyDistance(distance, cancellationToken);
-                    if (nextMaintenceStamp >= DateTime.UtcNow.ToUnixTime() && session.Runtime.StopsHit < 100) continue;
-                    await MaintenanceTask.Execute(session, cancellationToken);
-                    nextMaintenceStamp = DateTime.UtcNow.AddMinutes(3).ToUnixTime();
-                }
-                if (initialize)
-                    initialize = false;
             }
 
             return pokeStops;
