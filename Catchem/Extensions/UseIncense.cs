@@ -18,14 +18,14 @@ namespace Catchem.Extensions
         public static async Task<long> Execute(ISession session, ItemUiData item)
         {
             long currentIncenseStatus = await CheckIncenseStatus.Execute(session);
-            if (currentIncenseStatus > 0 && currentIncenseStatus < 1800000)
+            if (currentIncenseStatus > 0 && currentIncenseStatus < 1805000)
             {
                 Logger.Write("You are already using Incense");
                 session.EventDispatcher.Send(new WarnEvent
                 {
                     Message = "Incense already active"
                 });
-                Debug.WriteLine(currentIncenseStatus);
+                Debug.WriteLine("ALready active: "+ currentIncenseStatus);
             }
             else
             {
@@ -64,9 +64,9 @@ namespace Catchem.Extensions
                         {
                             Message = "Incense activated"
                         });
-                        await Task.Delay(3000);
+                        await Task.Delay(10000); //Await Animation, takes a time to be activated
                         currentIncenseStatus = await CheckIncenseStatus.Execute(session);
-                        Debug.WriteLine(currentIncenseStatus);
+                        Debug.WriteLine("Activated new: "+currentIncenseStatus);
                     }
                     else if (UseIncense.Result == UseIncenseResponse.Types.Result.NoneInInventory)
                     {
@@ -76,7 +76,7 @@ namespace Catchem.Extensions
                             Message = "No Incense available"
                         });
                         currentIncenseStatus = 0;
-                        Debug.WriteLine(currentIncenseStatus);
+                        Debug.WriteLine("Broken: "+currentIncenseStatus);
                     }
                     else if (UseIncense.Result == UseIncenseResponse.Types.Result.IncenseAlreadyActive || (UseIncense.AppliedIncense == null))
                     {
@@ -85,7 +85,7 @@ namespace Catchem.Extensions
                         {
                             Message = "Incense already active"
                         });
-                        Debug.WriteLine(currentIncenseStatus);
+                        Debug.WriteLine("Already active: "+currentIncenseStatus);
                     }
                     return currentIncenseStatus;
                 }

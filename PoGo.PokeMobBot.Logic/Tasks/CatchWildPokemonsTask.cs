@@ -69,7 +69,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                     await CatchNearbyPokemonsTask.Execute(session, cancellationToken);
                     //Catch Incense Pokemon - only when Incense active
                     long currentIncenseStatus = await CheckIncenseStatus.Execute(session);
-                    if (currentIncenseStatus > 0 && currentIncenseStatus < 1800000)
+                    if (currentIncenseStatus > 0 && currentIncenseStatus < 1805000)
                     {
                         await CatchIncensePokemonsTask.Execute(session, cancellationToken);
                     }

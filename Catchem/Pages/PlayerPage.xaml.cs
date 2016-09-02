@@ -266,7 +266,7 @@ namespace Catchem.Pages
             var item = GetSelectedItem();
             if (item == null) return;
             long incenseActive = await UseIncenseFromMenu.Execute(_bot.Session, item);
-            if (incenseActive > 0 && incenseActive < 1800000)
+            if (incenseActive > 0 && incenseActive < 1805000)
             {
                 l_Incense_Active.Content = "Active";
                 RefreshItems();
