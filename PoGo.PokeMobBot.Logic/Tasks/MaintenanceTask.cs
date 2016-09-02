@@ -16,10 +16,8 @@ namespace PoGo.PokeMobBot.Logic.Tasks
 
             if (session.Runtime.StopsHit + session.Client.rnd.Next(5) > 13 || session.Profile.PlayerData.MaxItemStorage * recycleInventoryAtUsagePercentage < currentTotalItems)
             {
-                session.Runtime.StopsHit = 0;
                 // need updated stardust information for upgrading, so refresh your profile now
                 await DownloadProfile(session);
-
                 await RecycleItemsTask.Execute(session, cancellationToken);
                 if (session.LogicSettings.EvolveAllPokemonWithEnoughCandy ||
                     session.LogicSettings.EvolveAllPokemonAboveIv)
@@ -42,6 +40,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                 {
                     await RenamePokemonTask.Execute(session, cancellationToken);
                 }
+                session.Runtime.StopsHit = 0;
             }
         }
         private static async Task DownloadProfile(ISession session)

@@ -23,7 +23,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
             var currentTotalItems = await session.Inventory.GetTotalItemCount();
             var recycleInventoryAtUsagePercentage = session.LogicSettings.RecycleInventoryAtUsagePercentage > 1
                 ? session.LogicSettings.RecycleInventoryAtUsagePercentage / 100 : session.LogicSettings.RecycleInventoryAtUsagePercentage;
-            if (session.Profile.PlayerData.MaxItemStorage * recycleInventoryAtUsagePercentage > currentTotalItems)
+            if (session.Profile.PlayerData.MaxItemStorage * recycleInventoryAtUsagePercentage > currentTotalItems || session.Runtime.StopsHit > 100)
                 return;
 
             if (!await CheckBotStateTask.Execute(session, cancellationToken)) return;
