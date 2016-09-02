@@ -115,6 +115,10 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                     if (!session.LogicSettings.UseCustomRoute)
                     {
                         sameRoute = false;
+                        session.EventDispatcher.Send(new NoticeEvent()
+                        {
+                            Message = "CustomRoute disabled, going back to normal routine!"
+                        });
                         break;
                     }
 
