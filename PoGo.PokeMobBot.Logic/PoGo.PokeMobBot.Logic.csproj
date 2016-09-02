@@ -133,6 +133,7 @@
     <Compile Include="Extensions\AsyncHelpers.cs" />
     <Compile Include="Extensions\IncenseExtension.cs" />
     <Compile Include="Extensions\IoExtensions.cs" />
+    <Compile Include="Extensions\PropertyNotification.cs" />
     <Compile Include="Extensions\RandomExtensions.cs" />
     <Compile Include="MapCache.cs" />
     <Compile Include="Inventory.cs" />
@@ -143,6 +144,7 @@
     <Compile Include="Navigation2.cs" />
     <Compile Include="API\GoogleRoute.cs" />
     <Compile Include="PoGoUtils\CustomRoute.cs" />
+    <Compile Include="PoGoUtils\PokemonAttackInfo.cs" />
     <Compile Include="PoGoUtils\PokemonMoveInfo.cs" />
     <Compile Include="PoGoUtils\PokemonInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -200,6 +202,7 @@
     <Compile Include="Event\WarnEvent.cs" />
     <Compile Include="Tasks\TransferPokemonTask.cs" />
     <Compile Include="Tasks\UseIncubatorsTask.cs" />
+    <Compile Include="Tasks\PokeNearbyGym.cs" />
     <Compile Include="Tasks\UseNearbyPokestopsTask.cs" />
     <Compile Include="Utils\DelayingEvolveUtils.cs" />
     <Compile Include="Utils\DelayingUtils.cs" />

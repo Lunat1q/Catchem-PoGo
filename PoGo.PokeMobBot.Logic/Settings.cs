@@ -135,6 +135,12 @@ namespace PoGo.PokeMobBot.Logic
                 return true;
             }
         }
+
+        public RuntimeSettings()
+        {
+            var rnd = new Random();
+            PokestopsToCheckGym = 13 + rnd.Next(5);
+        }
     }
 
     public class DeviceSettings
@@ -905,7 +911,7 @@ namespace PoGo.PokeMobBot.Logic
         public bool AutoUpdate = false;
         public bool TransferConfigAndAuthOnUpdate = true;
         public bool DumpPokemonStats = false;
-        public int AmountOfPokemonToDisplayOnStart = 10;
+        public int AmountOfPokemonToDisplayOnStart = 0;
         public bool StartupWelcomeDelay = false;
         public string TranslationLanguageCode = "en";
         public bool AutoCompleteTutorial = false;
@@ -1540,6 +1546,11 @@ namespace PoGo.PokeMobBot.Logic
             Save(configFile);
             Auth.Save(Path.Combine(profileConfigPath, "auth.json"));
         }
+    }
+
+    public class ScheduleSettings
+    {
+        
     }
 
     public class ClientSettings : ISettings

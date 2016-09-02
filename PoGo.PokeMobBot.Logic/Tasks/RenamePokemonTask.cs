@@ -20,9 +20,12 @@ namespace PoGo.PokeMobBot.Logic.Tasks
         {
             cancellationToken.ThrowIfCancellationRequested();
 
-            var pokemons = await session.Inventory.GetPokemons();
+            if (!await CheckBotStateTask.Execute(session, cancellationToken)) return;
             var prevState = session.State;
             session.State = BotState.Renaming;
+
+            var pokemons = await session.Inventory.GetPokemons();
+            
             foreach (var pokemon in pokemons)
             {
                 cancellationToken.ThrowIfCancellationRequested();

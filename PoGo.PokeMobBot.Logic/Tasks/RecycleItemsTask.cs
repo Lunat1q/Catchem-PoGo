@@ -1,5 +1,6 @@
 ﻿#region using directives
 
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using PoGo.PokeMobBot.Logic.Event;
@@ -18,14 +19,17 @@ namespace PoGo.PokeMobBot.Logic.Tasks
         public static async Task Execute(ISession session, CancellationToken cancellationToken)
         {
             var prevState = session.State;
-            session.State = BotState.Recycle;
-            cancellationToken.ThrowIfCancellationRequested();
+            
             await session.Inventory.RefreshCachedInventory();
             var currentTotalItems = await session.Inventory.GetTotalItemCount();
             var recycleInventoryAtUsagePercentage = session.LogicSettings.RecycleInventoryAtUsagePercentage > 1
                 ? session.LogicSettings.RecycleInventoryAtUsagePercentage / 100 : session.LogicSettings.RecycleInventoryAtUsagePercentage;
-            if (session.Profile.PlayerData.MaxItemStorage * recycleInventoryAtUsagePercentage > currentTotalItems)
+            if (session.Profile.PlayerData.MaxItemStorage * recycleInventoryAtUsagePercentage > currentTotalItems && session.Runtime.StopsHit < 100)
                 return;
+
+            if (!await CheckBotStateTask.Execute(session, cancellationToken)) return;
+            session.State = BotState.Recycle;
+            cancellationToken.ThrowIfCancellationRequested();
             var items = await session.Inventory.GetItemsToRecycle(session);
             foreach (var item in items)
             {
@@ -34,6 +38,29 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                 await session.Client.Inventory.RecycleItem(item.ItemId, item.Count);
                 await Task.Delay(session.LogicSettings.DelayRecycleItem, cancellationToken);
             }
+
+            int totalItemsToStore = session.LogicSettings.TotalAmountOfPokeballsToKeep +
+                                    session.LogicSettings.TotalAmountOfPotionsToKeep +
+                                    session.LogicSettings.TotalAmountOfRazzToKeep
+                                    + session.LogicSettings.TotalAmountOfRevivesToKeep;
+
+            int extraItemsInInventory = await session.Inventory.GetItemAmountByType(ItemId.ItemIncenseOrdinary);
+            extraItemsInInventory += await session.Inventory.GetItemAmountByType(ItemId.ItemTroyDisk);
+            extraItemsInInventory += await session.Inventory.GetItemAmountByType(ItemId.ItemIncubatorBasic);
+            extraItemsInInventory += 2; //unlimited incubator + camera
+            extraItemsInInventory += await session.Inventory.GetItemAmountByType(ItemId.ItemLuckyEgg);
+
+            if (totalItemsToStore + extraItemsInInventory >
+                session.Profile.PlayerData.MaxItemStorage*recycleInventoryAtUsagePercentage)
+            {
+                session.EventDispatcher.Send(new WarnEvent()
+                {
+                    Message = $"You have failed with item settings! You asked to keep it at {recycleInventoryAtUsagePercentage.ToString("P1")} clean,"+ 
+                    $"which is {(session.Profile.PlayerData.MaxItemStorage * recycleInventoryAtUsagePercentage).ToString("N1")} items, and asked to keep " +
+                    $"{totalItemsToStore} items at the same time, while you have {extraItemsInInventory} extra items like Lucky Eggs/Incubators/etc..."
+                });
+            }
+
 
             await OptimizedRecycleBalls(session, cancellationToken);
             await Task.Delay(session.LogicSettings.DelayBetweenPlayerActions, cancellationToken);

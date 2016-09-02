@@ -21,7 +21,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
         public static async Task  Execute(ISession session, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
-
+            
             //Refresh inventory so that the player stats are fresh
             //await session.Inventory.RefreshCachedInventory(); too much inventory refresh
 
@@ -46,6 +46,8 @@ namespace PoGo.PokeMobBot.Logic.Tasks
             foreach (var pokemon in pokemons)
             {
                 cancellationToken.ThrowIfCancellationRequested();
+
+                if (!await CheckBotStateTask.Execute(session, cancellationToken)) return;
 
                 var pokeBallsCount = await session.Inventory.GetItemAmountByType(ItemId.ItemPokeBall);
                 var greatBallsCount = await session.Inventory.GetItemAmountByType(ItemId.ItemGreatBall);

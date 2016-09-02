@@ -7,7 +7,9 @@ using POGOProtos.Networking.Responses;
 using System.Net;
 using GeoCoordinatePortable;
 using PoGo.PokeMobBot.Logic.API;
+using PoGo.PokeMobBot.Logic.Extensions;
 using PoGo.PokeMobBot.Logic.PoGoUtils;
+using PoGo.PokeMobBot.Logic.Utils;
 
 #endregion
 
@@ -29,6 +31,8 @@ namespace PoGo.PokeMobBot.Logic.State
         GeoCoordinate ForceMoveTo { get; set; }
         MapzenAPI MapzenApi { get; set; }
 
+        Statistics Stats { get; }
+
         RuntimeSettings Runtime { get; set; }
 
         bool ForceMoveJustDone { get; set; }
@@ -46,11 +50,12 @@ namespace PoGo.PokeMobBot.Logic.State
         LevelPoke,
         Renaming,
         Recycle,
-        Busy
+        Busy,
+        Paused
     }
 
 
-    public class Session : ISession
+    public class Session : PropertyNotification, ISession
     {
         public Session(ISettings settings, ILogicSettings logicSettings)
         {
@@ -62,11 +67,27 @@ namespace PoGo.PokeMobBot.Logic.State
             Reset(settings, LogicSettings);
             Runtime = new RuntimeSettings();
             State = BotState.Idle;
+            Stats = new Statistics();
         }
 
-        public BotState State { get; set; }
+        private BotState _botState;
+
+        public BotState State
+        {
+            get
+            {
+                return _botState;
+            }
+            set
+            {
+                _botState = value;
+                OnPropertyChanged();
+            }
+        }
 
         public ISettings Settings { get; }
+
+        public Statistics Stats { get; set; }
 
         public Inventory Inventory { get; private set; }
 

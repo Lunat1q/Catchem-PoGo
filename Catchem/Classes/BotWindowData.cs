@@ -15,7 +15,6 @@ using PoGo.PokeMobBot.Logic;
 using PoGo.PokeMobBot.Logic.Event;
 using PoGo.PokeMobBot.Logic.State;
 using PoGo.PokeMobBot.Logic.Tasks;
-using PoGo.PokeMobBot.Logic.Utils;
 using PokemonGo.RocketAPI.Extensions;
 using POGOProtos.Data;
 using POGOProtos.Enums;
@@ -52,9 +51,11 @@ namespace Catchem.Classes
             }
         }
 
+        private bool _paused;
+
         public string Errors => _errosCount == 0 ? "" : _errosCount.ToString();
         private readonly Random _rnd = new Random();
-        public Session Session;
+        public Session Session { get; set; }
         private CancellationTokenSource _cts;
         public CancellationToken CancellationToken => _cts.Token;
         private CancellationTokenSource _pauseCts;
@@ -68,9 +69,6 @@ namespace Catchem.Classes
         public Queue<NewMapObject> MarkersDelayRemove = new Queue<NewMapObject>();
         public GMapRoute PathRoute { get; internal set; }
         public readonly StateMachine Machine;
-        public readonly Statistics Stats;
-        public readonly StatisticsAggregator Aggregator;
-        public readonly WpfEventListener Listener;
         public readonly ClientSettings Settings;
         public readonly LogicSettings Logic;
         public readonly GlobalSettings GlobalSettings;
@@ -97,6 +95,7 @@ namespace Catchem.Classes
         private bool _started;
 
         private readonly DispatcherTimer _timer;
+        private readonly DispatcherTimer _pauseTimer;
         private TimeSpan _ts;
 
         public double Lat;
@@ -147,16 +146,16 @@ namespace Catchem.Classes
         {
             get
             {
-                if (Stats == null || RealWorkH < 0.001) return 0;
-                return Stats.TotalPokemons/RealWorkH;
+                if (Session?.Stats == null || RealWorkH < 0.001) return 0;
+                return Session.Stats.TotalPokemons/RealWorkH;
             }
         }
         public double PokestopsRate
         {
             get
             {
-                if (Stats == null || RealWorkH < 0.001) return 0;
-                return Stats.TotalPokestops / RealWorkH;
+                if (Session?.Stats == null || RealWorkH < 0.001) return 0;
+                return Session.Stats.TotalPokestops / RealWorkH;
             }
         }
 
@@ -164,8 +163,8 @@ namespace Catchem.Classes
         {
             get
             {
-                if (Stats == null || RealWorkH < 0.001 || Stats.TotalStardust == 0) return 0;
-                return (Stats.TotalStardust - StartStarDust) / RealWorkH;
+                if (Session?.Stats == null || RealWorkH < 0.001 || Session.Stats.TotalStardust == 0) return 0;
+                return (Session.Stats.TotalStardust - StartStarDust) / RealWorkH;
             }
         }
 
@@ -175,6 +174,16 @@ namespace Catchem.Classes
             set
             {
                 _ts = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public TimeSpan PauseTs
+        {
+            get { return _pauseTs; }
+            set
+            {
+                _pauseTs = value;
                 OnPropertyChanged();
             }
         }
@@ -209,17 +218,29 @@ namespace Catchem.Classes
             }
         }
 
+        public bool Paused
+        {
+            get { return _paused; }
+            set
+            {
+                _paused = value;
+                OnPropertyChanged();
+                if (_paused == false && _pauseTimer.IsEnabled)
+                {
+                    _pauseTimer.Stop();
+                }
+            }
+        }
+
         public double LatStep, LngStep;
         internal int StartStarDust;
+        private TimeSpan _pauseTs;
 
-        public BotWindowData(string name, GlobalSettings gs, StateMachine sm, Statistics st, StatisticsAggregator sa, WpfEventListener wel, ClientSettings cs, LogicSettings l)
+        public BotWindowData(string name, GlobalSettings gs, StateMachine sm, ClientSettings cs, LogicSettings l)
         {
             ProfileName = name;
             GlobalSettings = gs;
             Machine = sm;
-            Stats = st;
-            Aggregator = sa;
-            Listener = wel;
             Settings = cs;
             Logic = l;
             Lat = gs.LocationSettings.DefaultLatitude;
@@ -227,11 +248,18 @@ namespace Catchem.Classes
 
             Ts = new TimeSpan();
             _timer = new DispatcherTimer { Interval = new TimeSpan(0, 0, 1) };
+            _pauseTimer = new DispatcherTimer { Interval = new TimeSpan(0, 0, 1) };
             _timer.Tick += delegate
             {
                 Ts += new TimeSpan(0, 0, 1);
                 _realWorkSec++;
             };
+            _pauseTimer.Tick += delegate
+            {
+                PauseTs -= new TimeSpan(0, 0, 1);
+            };
+
+
             _cts = new CancellationTokenSource();
             _pauseCts = new CancellationTokenSource();
             PlayerRoute = new GMapRoute(_routePoints);
@@ -247,14 +275,14 @@ namespace Catchem.Classes
 
         public void UpdateRunTime()
         {
-            if (Stats == null || Math.Abs(RealWorkH) < 0.0000001)
+            if (Session?.Stats == null || Math.Abs(RealWorkH) < 0.0000001)
                 Xpph = 0;
             else
-                Xpph = Stats.TotalExperience / RealWorkH;
+                Xpph = Session.Stats.TotalExperience / RealWorkH;
 
-            if (Stats?.ExportStats != null)
+            if (Session?.Stats?.ExportStats != null)
             {
-                Level = Stats.ExportStats.Level;
+                Level = Session.Stats.ExportStats.Level;
                 Session.Runtime.CurrentLevel = Level;
             }
         }
@@ -311,10 +339,10 @@ namespace Catchem.Classes
             }
             if (soft) return;
             _realWorkSec = 0;
-            if (Stats == null) return;
-            Stats.TotalPokemons = 0;
-            Stats.TotalPokestops = 0;
-            Stats.TotalExperience = 0;
+            if (Session?.Stats == null) return;
+            Session.Stats.TotalPokemons = 0;
+            Session.Stats.TotalPokestops = 0;
+            Session.Stats.TotalExperience = 0;
         }
 
         public async void Start()
@@ -341,10 +369,14 @@ namespace Catchem.Classes
                 Session.Translation = Translation.Load(Logic);
             }
             LaunchBot();
+
+            if (Paused)
+                Paused = false;
         }
 
         private void LaunchBot()
         {
+            Session.State = BotState.Idle;
             Machine.AsyncStart(new VersionCheckState(), Session, CancellationToken);
             if (Session.LogicSettings.UseSnipeLocationServer)
                 SnipePokemonTask.AsyncStart(Session, CancellationToken);
@@ -574,7 +606,7 @@ namespace Catchem.Classes
             {
                 if (!GlobalSettings.CatchSettings.PauseBotOnMaxHourlyRates || 
                     RealWorkH < 1 || //DEBUG
-                    Stats == null) return;
+                    Session?.Stats == null) return;
 
                 var countXp = GlobalSettings.CatchSettings.MaxXPPerHour > 0;
                 var countSd = GlobalSettings.CatchSettings.MaxStarDustPerHour > 0;
@@ -615,7 +647,7 @@ namespace Catchem.Classes
 
                 RandomizePosition();
 
-                await Task.Delay(stopMs, CancellationTokenPause);
+                await SetPause(stopMs);
                 Start();
             }
             catch (OperationCanceledException)
@@ -633,6 +665,17 @@ namespace Catchem.Classes
                 });
                 Logger.Write($"[PAUSE FAIL] Error: {ex.Message}", LogLevel.Error);
             }
+        }
+
+        public async Task SetPause(int stopMs)
+        {
+            Paused = true;
+            Session.State = BotState.Paused;
+            PauseTs = new TimeSpan(0, 0, 0, 0, stopMs);
+            _pauseTimer.Start();
+            await Task.Delay(stopMs, CancellationTokenPause);
+            _pauseTimer.Stop();
+            Paused = false;
         }
     }
 }

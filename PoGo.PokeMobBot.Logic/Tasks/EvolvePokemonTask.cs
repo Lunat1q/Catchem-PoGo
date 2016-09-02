@@ -21,6 +21,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
         public static async Task Execute(ISession session, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
+            if (!await CheckBotStateTask.Execute(session, cancellationToken)) return;
             var prevState = session.State;
             session.State = BotState.Evolve;
             // Refresh inventory so that the player stats are fresh
@@ -53,6 +54,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                             CurrCount = pokemonToEvolve.Count,
                             MinPokemon = session.LogicSettings.UseLuckyEggsMinPokemonAmount
                         });
+                        session.State = prevState;
                         return;
                     }
                 }
@@ -69,8 +71,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                         Exp = evolveResponse.ExperienceAwarded,
                         Result = evolveResponse.Result
                     });
-                    
-                    
+
                     if (evolveResponse.EvolvedPokemonData != null)
                     {
                         var pokemonSettings = session.Inventory.GetPokemonSettings().Result.ToList();
@@ -97,7 +98,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                             CandyToEvolve = setting.CandyToEvolve
                         });
                     }
-                    await DelayingEvolveUtils.Delay(session.LogicSettings.DelayEvolvePokemon, 0, session.LogicSettings.DelayEvolveVariation);
+                    await DelayingEvolveUtils.Delay(session.LogicSettings.DelayEvolvePokemon, 0, session.LogicSettings.DelayEvolveVariation, cancellationToken);
                 }
             }
             session.State = prevState;

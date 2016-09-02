@@ -116,6 +116,7 @@ namespace Catchem.Classes
             var guardList = defendersInfo.Count > 0 ? defendersInfo.Aggregate((x, v) => x + ", " + v) : "";
             var gymDesc = string.IsNullOrEmpty(evt.Description) ? "" : $" ({evt.Description})";
             Logger.Write($"Touched a gym: {evt.Name}{gymDesc} - {evt.GymState.FortData.OwnedByTeam}, points: {evt.GymState.FortData.GymPoints}, Guards: {guardList}) ", LogLevel.Gym, session: session);
+            Logger.PushToUi("gym_poke", session, evt.Id, evt.Name, evt.GymState.FortData.OwnedByTeam, evt.Lat, evt.Lon);
         }
 
         public void HandleEvent(BotCompleteFailureEvent evt, ISession session)

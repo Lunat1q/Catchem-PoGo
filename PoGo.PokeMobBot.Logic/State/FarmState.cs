@@ -83,9 +83,9 @@ namespace PoGo.PokeMobBot.Logic.State
                 });
                 session.EventDispatcher.Send(new NoticeEvent
                 {
-                    Message = session.Translation.GetTranslation(TranslationString.TryingAgainIn, 2)
+                    Message = session.Translation.GetTranslation(TranslationString.TryingAgainIn, 60)
                 });
-                await Task.Delay(2000, cancellationToken);
+                await Task.Delay(60000, cancellationToken);
                 return new LoginState();
             }
             catch (InvalidResponseException ex)

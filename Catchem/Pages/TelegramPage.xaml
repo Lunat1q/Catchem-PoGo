@@ -40,22 +40,7 @@
                 <TextBox x:Name="TbApiKey" Margin="0,0,10,0" TextWrapping="Wrap" VerticalAlignment="Center" Template="{Binding Mode=OneWay, Source={StaticResource pogo}}" TextChanged="ElementPropertyChanged" Grid.Row="1" Grid.Column="1"/>
                 <TextBox x:Name="BotOwnerTextBox" Margin="0,0,98,0" TextWrapping="Wrap" Template="{Binding Mode=OneWay, Source={StaticResource pogo}}" TextChanged="ElementPropertyChanged" BorderThickness="1,0" Grid.Row="2" Grid.Column="1" VerticalAlignment="Center"/>
                 <Button Style="{StaticResource ResourceKey=flatbutton}" x:Name="AddBotOwner" 
-                	Content="Add" Width="83" Height="28" FontFamily="BOLD" TextOptions.TextFormattingMode="Display" FontWeight="Bold" Click="AddBotOwner_Click" Grid.Column="1" HorizontalAlignment="Right" Grid.Row="2" VerticalAlignment="Center" Margin="0,0,10,0">
-                    <Button.Background>
-                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                            <LinearGradientBrush.RelativeTransform>
-                                <TransformGroup>
-                                    <ScaleTransform CenterY="0.5" CenterX="0.5"/>
-                                    <SkewTransform CenterY="0.5" CenterX="0.5"/>
-                                    <RotateTransform Angle="90" CenterY="0.5" CenterX="0.5"/>
-                                    <TranslateTransform/>
-                                </TransformGroup>
-                            </LinearGradientBrush.RelativeTransform>
-                            <GradientStop Color="#FFB0EE9C" Offset="0"/>
-                            <GradientStop Color="#FF53C05D" Offset="1"/>
-                        </LinearGradientBrush>
-                    </Button.Background>
-                </Button>
+                	Content="Add" Width="83" Height="28" FontFamily="BOLD" TextOptions.TextFormattingMode="Display" FontWeight="Bold" Click="AddBotOwner_Click" Grid.Column="1" HorizontalAlignment="Right" Grid.Row="2" VerticalAlignment="Center" Margin="0,0,10,0" Background="{DynamicResource NormalButtonColor}"/>
                 <ListBox x:Name="OwnerBox" Margin="10,7,10,0"
                 	ItemTemplate="{DynamicResource TelegramOwnerTemplate}" HorizontalContentAlignment="Stretch" Grid.ColumnSpan="2" Grid.Row="3"/>
                 <Label x:Name="OwnerAddLabel" Content="Owners" Margin="10,0,0,0"
@@ -71,8 +56,8 @@
             </FlowDocument>
         </RichTextBox>
         <Button x:Name="StartButton" Content="START" Margin="0" Grid.Row="2" Grid.Column="1"
-                VerticalAlignment="Center" Style="{Binding Mode=OneWay, Source={StaticResource flatbutton}}" Width="165" Height="30" Background="{Binding Mode=OneWay, Source={StaticResource StartBrush}}" FontWeight="Bold" Click="StartButton_Click" HorizontalAlignment="Center"/>
-        <Button x:Name="StopButton" Content="STOP" Margin="0" Grid.Row="2" Grid.Column="0" Style="{Binding Mode=OneWay, Source={StaticResource flatbutton}}" Width="165" Height="30" Background="{Binding Mode=OneWay, Source={StaticResource StopBrush}}" FontWeight="Bold" Click="StopButton_Click" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                VerticalAlignment="Center" Style="{Binding Mode=OneWay, Source={StaticResource flatbutton}}" Width="165" Height="30" Background="{DynamicResource StartBrush}" FontWeight="Bold" Click="StartButton_Click" HorizontalAlignment="Center"/>
+        <Button x:Name="StopButton" Content="STOP" Margin="0" Grid.Row="2" Grid.Column="0" Style="{Binding Mode=OneWay, Source={StaticResource flatbutton}}" Width="165" Height="30" Background="{DynamicResource StopBrush}" FontWeight="Bold" Click="StopButton_Click" VerticalAlignment="Center" HorizontalAlignment="Center"/>
         <ListBox x:Name="PokemonList" Grid.Column="2" Margin="10,71,10,10" Grid.Row="1" Grid.RowSpan="3" RenderTransformOrigin="0.52,0.51" Grid.ColumnSpan="2" ItemTemplate="{DynamicResource PokemonListTemplate}" HorizontalContentAlignment="Stretch"/>
         <Label x:Name="PokemonsToEvolve" Content="To Auto Report" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16" FontFamily="Calibri" Width="112" Margin="10,36,0,0" Grid.Row="1" Grid.Column="2" Height="30">
             <Label.Foreground>
@@ -93,22 +78,7 @@
         <ComboBox x:Name="AddToAutoReport" VerticalAlignment="Top"
         		ItemsSource="{Binding Source={StaticResource PokemonIdDataProvider}}" Margin="127,40,70,0" Grid.Row="1" Grid.ColumnSpan="2" Grid.Column="2" Height="22"/>
         <Button Style="{StaticResource ResourceKey=flatbutton}" x:Name="AddPokemonToReport" 
-        		Content="Add" HorizontalAlignment="Right" VerticalAlignment="Top" Width="55" Height="22" FontFamily="BOLD" TextOptions.TextFormattingMode="Display" FontWeight="Bold" Margin="0,40,10,0" Grid.Row="1" Grid.Column="3" Click="AddPokemonToReport_Click">
-            <Button.Background>
-                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <LinearGradientBrush.RelativeTransform>
-                        <TransformGroup>
-                            <ScaleTransform CenterY="0.5" CenterX="0.5"/>
-                            <SkewTransform CenterY="0.5" CenterX="0.5"/>
-                            <RotateTransform Angle="90" CenterY="0.5" CenterX="0.5"/>
-                            <TranslateTransform/>
-                        </TransformGroup>
-                    </LinearGradientBrush.RelativeTransform>
-                    <GradientStop Color="#FFB0EE9C" Offset="0"/>
-                    <GradientStop Color="#FF53C05D" Offset="1"/>
-                </LinearGradientBrush>
-            </Button.Background>
-        </Button>
+        		Content="Add" HorizontalAlignment="Right" VerticalAlignment="Top" Width="55" Height="22" FontFamily="BOLD" TextOptions.TextFormattingMode="Display" FontWeight="Bold" Margin="0,40,10,0" Grid.Row="1" Grid.Column="3" Click="AddPokemonToReport_Click" Background="{DynamicResource NormalButtonColor}"/>
         <GroupBox x:Name="ExtraSettingsGroupBox" Header="Extra settings" Margin="12,10,8,10" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2">
             <Grid>
                 <Grid.RowDefinitions>
