@@ -34,6 +34,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
             session.ForceMoveTo = null;
             PlayerUpdateResponse result;
 
+            session.State = BotState.Walk;
             if (session.LogicSettings.Teleport)
                 result = await session.Client.Player.UpdatePlayerLocation(moveToCoords.Latitude, moveToCoords.Longitude,
                     session.Client.Settings.DefaultAltitude);
@@ -59,6 +60,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
             {
                 Message = "ForceMove Done!"
             });
+            session.State = BotState.Idle;
             session.ForceMoveJustDone = true;
             session.ForceMoveTo = null;
             session.EventDispatcher.Send(new ForceMoveDoneEvent() );

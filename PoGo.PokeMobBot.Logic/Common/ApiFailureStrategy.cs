@@ -36,13 +36,6 @@ namespace PoGo.PokeMobBot.Logic.Common
                     Message = "APIFailureStrategy: " + ae.Flatten().InnerException.Message
                 });
             }
-            catch (Exception ex)
-            {
-                _session.EventDispatcher.Send(new ErrorEvent
-                {
-                    Message = "APIFailureStrategy (Exception): " + ex.Message
-                });
-            }
         }
 
         public async Task<ApiOperation> HandleApiFailure(RequestEnvelope request, ResponseEnvelope response)
@@ -79,9 +72,9 @@ namespace PoGo.PokeMobBot.Logic.Common
                     });
                     _session.EventDispatcher.Send(new NoticeEvent
                     {
-                        Message = _session.Translation.GetTranslation(TranslationString.TryingAgainIn, 2)
+                        Message = _session.Translation.GetTranslation(TranslationString.TryingAgainIn, 60)
                     });
-                    await Task.Delay(2000);
+                    await Task.Delay(60000);
                 }
                 catch (Exception ex) when (ex is InvalidResponseException || ex is TaskCanceledException)
                 {
@@ -91,6 +84,13 @@ namespace PoGo.PokeMobBot.Logic.Common
                     });
                     Logger.Write("[NIANTIC] " + ex.Message, LogLevel.Error);
                     await Task.Delay(5000);
+                }
+                catch (Exception ex)
+                {
+                    _session.EventDispatcher.Send(new ErrorEvent
+                    {
+                        Message = "APIFailureStrategy (Exception): " + ex.Message
+                    });
                 }
             }
 

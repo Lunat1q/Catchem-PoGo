@@ -10,16 +10,14 @@ namespace PoGo.PokeMobBot.Logic.Tasks
     {
         public static async Task Execute(ISession session, ulong pokemonId)
         {
-            if (!await CheckBotStateTask.Execute(session, default(CancellationToken))) return;
+            
 
             var id = pokemonId;
-            var prevState = session.State;
-            session.State = BotState.Transfer;
+            
             var all = await session.Inventory.GetPokemons();
-            var pokemons = all.OrderByDescending(x => x.Cp).ThenBy(n => n.StaminaMax);
-            var pokemon = pokemons.FirstOrDefault(p => p.Id == id);
+            var pokemon = all.FirstOrDefault(p => p.Id == id);
 
-            if (pokemon == null) return;
+            if (pokemon == null || pokemon.Favorite == 1) return;
 
             if (!string.IsNullOrEmpty(pokemon.DeployedFortId))
             {
@@ -29,6 +27,10 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                 });
                 return;
             }
+
+            if (!await CheckBotStateTask.Execute(session, default(CancellationToken))) return;
+            var prevState = session.State;
+            session.State = BotState.Transfer;
 
             var pokemonSettings = await session.Inventory.GetPokemonSettings();
             var pokemonFamilies = await session.Inventory.GetPokemonFamilies();

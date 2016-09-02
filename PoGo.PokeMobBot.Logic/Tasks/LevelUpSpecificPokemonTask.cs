@@ -21,12 +21,17 @@ namespace PoGo.PokeMobBot.Logic.Tasks
         {
 
             if (!await CheckBotStateTask.Execute(session, cancellationToken)) return;
-
             var prevState = session.State;
             session.State = BotState.LevelPoke;
+
             var all = await session.Inventory.GetPokemons();
             var pokemon = all.FirstOrDefault(p => p.Id == pokemonId);
-            if (pokemon == null) return;
+            if (pokemon == null)
+            {
+                session.State = prevState;
+                return;
+            }
+
 
             if (!string.IsNullOrEmpty(pokemon.DeployedFortId))
             {
@@ -34,8 +39,11 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                 {
                     Message = $"Pokemon {(string.IsNullOrEmpty(pokemon.Nickname) ? pokemon.PokemonId.ToString() : pokemon.Nickname)} is signed to defend a GYM!"
                 });
+                session.State = prevState;
                 return;
             }
+
+           
 
             bool success;
             UpgradePokemonResponse latestSuccessResponse = null;

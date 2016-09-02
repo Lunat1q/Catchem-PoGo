@@ -54,6 +54,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                             CurrCount = pokemonToEvolve.Count,
                             MinPokemon = session.LogicSettings.UseLuckyEggsMinPokemonAmount
                         });
+                        session.State = prevState;
                         return;
                     }
                 }
