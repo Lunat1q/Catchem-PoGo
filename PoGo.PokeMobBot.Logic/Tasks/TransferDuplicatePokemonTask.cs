@@ -22,16 +22,15 @@ namespace PoGo.PokeMobBot.Logic.Tasks
             // Refresh inventory so that the player stats are fresh
             // await session.Inventory.RefreshCachedInventory();
 
-           
+            if (!await CheckBotStateTask.Execute(session, cancellationToken)) return;
+            var prevState = session.State;
+            session.State = BotState.Transfer;
 
             var duplicatePokemons =
                 await
                     session.Inventory.GetDuplicatePokemonToTransfer(session.LogicSettings.KeepPokemonsThatCanEvolve,
                         session.LogicSettings.PrioritizeIvOverCp,
                         session.LogicSettings.PokemonsNotToTransfer);
-
-            var pokemonSettings = await session.Inventory.GetPokemonSettings();
-            var pokemonFamilies = await session.Inventory.GetPokemonFamilies();
 
             var currentPokemonCount = await session.Inventory.GetPokemonsCount();
             var maxPokemonCount = session.Profile.PlayerData.MaxPokemonStorage;
@@ -42,9 +41,8 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                     currentPokemonCount, maxPokemonCount)
             });
 
-            if (!await CheckBotStateTask.Execute(session, cancellationToken)) return;
-            var prevState = session.State;
-            session.State = BotState.Transfer;
+            var pokemonSettings = await session.Inventory.GetPokemonSettings();
+            var pokemonFamilies = await session.Inventory.GetPokemonFamilies();
 
             if (duplicatePokemons != null)
             foreach (var duplicatePokemon in duplicatePokemons)
