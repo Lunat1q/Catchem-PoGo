@@ -30,6 +30,7 @@ namespace PoGo.PokeMobBot.Logic
 
         private GetInventoryResponse _cachedInventory;
         private DateTime _lastRefresh;
+        public long incenseExpiresMs = 0;
 
         public Inventory(Client client, ILogicSettings logicSettings)
         {
