@@ -7,6 +7,7 @@ using PoGo.PokeMobBot.Logic.Event;
 using PoGo.PokeMobBot.Logic.State;
 using PoGo.PokeMobBot.Logic.Utils;
 using POGOProtos.Networking.Responses;
+using PoGo.PokeMobBot.Logic.Extensions;
 
 #endregion
 
@@ -22,7 +23,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
 
             var eggWalker = new EggWalker(1000, session);
 
-           
+
             var moveToCoords = session.ForceMoveTo;
             var distance = LocationUtils.CalculateDistanceInMeters(session.Client.CurrentLatitude,
                 session.Client.CurrentLongitude, moveToCoords.Latitude, moveToCoords.Longitude);
@@ -34,7 +35,6 @@ namespace PoGo.PokeMobBot.Logic.Tasks
             session.ForceMoveTo = null;
             PlayerUpdateResponse result;
 
-            session.State = BotState.Walk;
             if (session.LogicSettings.Teleport)
                 result = await session.Client.Player.UpdatePlayerLocation(moveToCoords.Latitude, moveToCoords.Longitude,
                     session.Client.Settings.DefaultAltitude);
@@ -45,10 +45,14 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                 {
                     // Catch normal map Pokemon
                     await CatchNearbyPokemonsTask.Execute(session, cancellationToken);
-                    //Catch Incense Pokemon
-                    await CatchIncensePokemonsTask.Execute(session, cancellationToken);
+                    //Catch Incense Pokemon - only when Incense active
+                    long currentIncenseStatus = await CheckIncenseStatus.Execute(session);
+                    if (currentIncenseStatus > 0 && currentIncenseStatus < 1805000)
+                    {
+                        await CatchIncensePokemonsTask.Execute(session, cancellationToken);
+                    }
                     return true;
-                }, 
+                },
                 async () =>
                 {
                     await UseNearbyPokestopsTask.Execute(session, cancellationToken, true);
@@ -60,10 +64,9 @@ namespace PoGo.PokeMobBot.Logic.Tasks
             {
                 Message = "ForceMove Done!"
             });
-            session.State = BotState.Idle;
             session.ForceMoveJustDone = true;
             session.ForceMoveTo = null;
-            session.EventDispatcher.Send(new ForceMoveDoneEvent() );
+            session.EventDispatcher.Send(new ForceMoveDoneEvent());
 
             if (session.LogicSettings.Teleport)
                 await Task.Delay(session.LogicSettings.DelayPokestop, cancellationToken);

@@ -30,7 +30,8 @@ namespace PoGo.PokeMobBot.Logic
 
         private GetInventoryResponse _cachedInventory;
         private DateTime _lastRefresh;
-
+        public long incenseExpiresMs = 0;
+        public long incenseLastUpdated = 0;
         public Inventory(Client client, ILogicSettings logicSettings)
         {
             _client = client;
@@ -563,6 +564,11 @@ namespace PoGo.PokeMobBot.Logic
         {
             var favoriteResult = await _client.Inventory.SetFavoritePokemon(pokemonid, favorite);
             return favoriteResult;
+        }
+        public async Task<UseIncenseResponse> UseIncense(ItemId item)
+        {
+            var UseIncense = await _client.Inventory.UseIncense(item);
+            return UseIncense;
         }
     }
 }

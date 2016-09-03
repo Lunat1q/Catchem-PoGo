@@ -9,6 +9,7 @@ using GeoCoordinatePortable;
 using PoGo.PokeMobBot.Logic.Event;
 using PoGo.PokeMobBot.Logic.PoGoUtils;
 using PoGo.PokeMobBot.Logic.State;
+using PoGo.PokeMobBot.Logic.Extensions;
 using PoGo.PokeMobBot.Logic.Utils;
 using PokemonGo.RocketAPI.Extensions;
 using POGOProtos.Map.Fort;
@@ -24,7 +25,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
         {
             return
                 session.Client.rnd.NextInRange(session.LogicSettings.WalkingSpeedMin,
-                    session.LogicSettings.WalkingSpeedMax)*session.Settings.MoveSpeedFactor;
+                    session.LogicSettings.WalkingSpeedMax) * session.Settings.MoveSpeedFactor;
         }
 
         public static async Task Execute(ISession session, CancellationToken cancellationToken)
@@ -36,8 +37,8 @@ namespace PoGo.PokeMobBot.Logic.Tasks
             {
                 session.EventDispatcher.Send(new BotCompleteFailureEvent()
                 {
-                   Shutdown = false,
-                   Stop = true
+                    Shutdown = false,
+                    Stop = true
                 });
                 session.EventDispatcher.Send(new WarnEvent
                 {
@@ -54,7 +55,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
             var navi = new Navigation(session.Client);
             navi.UpdatePositionEvent += (lat, lng, alt) =>
             {
-                session.EventDispatcher.Send(new UpdatePositionEvent {Latitude = lat, Longitude = lng, Altitude = alt});
+                session.EventDispatcher.Send(new UpdatePositionEvent { Latitude = lat, Longitude = lng, Altitude = alt });
             };
 
 
@@ -71,7 +72,7 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                                 40)).ToList();
 
             session.EventDispatcher.Send(new PokeStopListEvent { Forts = allPokestopsInArea.Select(x => x.BaseFortData) });
-            
+
             while (!cancellationToken.IsCancellationRequested)
             {
                 await FollowTheYellowbrickroad(session, cancellationToken, route, navi, eggWalker, session.LogicSettings.CustomRouteName);
@@ -135,7 +136,12 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                         {
                             await CatchNearbyPokemonsTask.Execute(session, cancellationToken);
                             //Catch Incense Pokemon
-                            await CatchIncensePokemonsTask.Execute(session, cancellationToken);
+                            //Catch Incense Pokemon - only when Incense active
+                            long currentIncenseStatus = await CheckIncenseStatus.Execute(session);
+                            if (currentIncenseStatus > 0 && currentIncenseStatus < 1805000)
+                            {
+                                await CatchIncensePokemonsTask.Execute(session, cancellationToken);
+                            }
                             return true;
                         },
                         async () =>
@@ -191,8 +197,12 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                         {
                             // Catch normal map Pokemon
                             await CatchNearbyPokemonsTask.Execute(session, cancellationToken);
-                            //Catch Incense Pokemon
-                            await CatchIncensePokemonsTask.Execute(session, cancellationToken);
+                            //Catch Incense Pokemon - only when Incense active
+                            long currentIncenseStatus = await CheckIncenseStatus.Execute(session);
+                            if (currentIncenseStatus > 0 && currentIncenseStatus < 1805000)
+                            {
+                                await CatchIncensePokemonsTask.Execute(session, cancellationToken);
+                            }
                         }
                         return true;
                     },

@@ -132,6 +132,7 @@
     <Compile Include="Events\TelegramMessageEvent.cs" />
     <Compile Include="Events\TelegramCommandEvent.cs" />
     <Compile Include="Extensions\AsyncHelpers.cs" />
+    <Compile Include="Extensions\UseIncense.cs" />
     <Compile Include="Extensions\Converters.cs" />
     <Compile Include="Extensions\Extensions.cs" />
     <Compile Include="Extensions\GifImage.cs" />

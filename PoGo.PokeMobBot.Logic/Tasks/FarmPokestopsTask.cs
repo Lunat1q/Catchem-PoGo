@@ -16,6 +16,7 @@ using POGOProtos.Map.Fort;
 using POGOProtos.Networking.Responses;
 using System.Security.Cryptography;
 using POGOProtos.Inventory.Item;
+using PoGo.PokeMobBot.Logic.Extensions;
 
 #endregion
 
@@ -251,8 +252,12 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                             // Catch normal map Pokemon
                             if (session.LogicSettings.Teleport)
                                 await CatchNearbyPokemonsTask.Execute(session, cancellationToken);
-                            //Catch Incense Pokemon
-                            await CatchIncensePokemonsTask.Execute(session, cancellationToken);
+                            //Catch Incense Pokemon - only when Incense active
+                            long currentIncenseStatus = await CheckIncenseStatus.Execute(session);
+                            if (currentIncenseStatus > 0 && currentIncenseStatus < 1805000)
+                            {
+                                await CatchIncensePokemonsTask.Execute(session, cancellationToken);
+                            }
                         }
 
 

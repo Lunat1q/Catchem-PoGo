@@ -10,9 +10,9 @@ using PoGo.PokeMobBot.Logic.Event;
 using PoGo.PokeMobBot.Logic.Logging;
 using PoGo.PokeMobBot.Logic.State;
 using PoGo.PokeMobBot.Logic.Utils;
+using PoGo.PokeMobBot.Logic.Extensions;
 using POGOProtos.Map.Pokemon;
 using GeoCoordinatePortable;
-
 #endregion
 
 namespace PoGo.PokeMobBot.Logic.Tasks
@@ -67,8 +67,12 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                 {
                     // Catch normal map Pokemon
                     await CatchNearbyPokemonsTask.Execute(session, cancellationToken);
-                    //Catch Incense Pokemon
-                    await CatchIncensePokemonsTask.Execute(session, cancellationToken);
+                    //Catch Incense Pokemon - only when Incense active
+                    long currentIncenseStatus = await CheckIncenseStatus.Execute(session);
+                    if (currentIncenseStatus > 0 && currentIncenseStatus < 1805000)
+                    {
+                        await CatchIncensePokemonsTask.Execute(session, cancellationToken);
+                    }
                     return true;
                 }, null, cancellationToken, session);
                 if (session.MapCache.CheckPokemonCaught(pokemon.EncounterId)) return;
