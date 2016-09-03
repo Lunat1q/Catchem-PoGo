@@ -25,7 +25,6 @@ namespace Catchem.Extensions
                 {
                     Message = "Incense already active"
                 });
-                Debug.WriteLine("ALready active: "+ currentIncenseStatus);
             }
             else
             {
@@ -66,7 +65,6 @@ namespace Catchem.Extensions
                         });
                         await Task.Delay(10000); //Await Animation, takes a time to be activated
                         currentIncenseStatus = await CheckIncenseStatus.Execute(session);
-                        Debug.WriteLine("Activated new: "+currentIncenseStatus);
                     }
                     else if (UseIncense.Result == UseIncenseResponse.Types.Result.NoneInInventory)
                     {
@@ -99,39 +97,51 @@ namespace Catchem.Extensions
         private static readonly DateTime Jan1st1970 = new DateTime
                 (1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
 
-        private static long CurrentTimeMillis()
+        public static long CurrentTimeMillis()
         {
             return (long)(DateTime.UtcNow - Jan1st1970).TotalMilliseconds;
         }
 
         public static async Task<long> Execute(ISession session)
         {
-            List<AppliedItem> status = await session.Inventory.GetUsedItems();
             long timeRemainingIncense = new long();
-            if (status.Count > 0)
+            var currentMillis = CurrentTimeMillis();
+            if ((session.Inventory.incenseExpiresMs == 0 || session.Inventory.incenseExpiresMs < currentMillis)
+                        && (currentMillis - session.Inventory.incenseLastUpdated) > 60000)
             {
-                status.ForEach(delegate (AppliedItem singleAppliedItem)
+                session.Inventory.incenseLastUpdated = currentMillis;
+                List<AppliedItem> status = await session.Inventory.GetUsedItems();
+                if (status.Count > 0)
                 {
-                    if (singleAppliedItem.ItemType == ItemType.Incense)
+                    status.ForEach(delegate (AppliedItem singleAppliedItem)
                     {
-                        var _expireMs = singleAppliedItem.ExpireMs;
-                        var _appliedMs = singleAppliedItem.AppliedMs;
-                        var currentMillis = CurrentTimeMillis();
-                        if (currentMillis < _expireMs)
+                        if (singleAppliedItem.ItemType == ItemType.Incense)
                         {
-                            timeRemainingIncense = _expireMs - currentMillis;
-                        }
-                        else
-                        {
-                            timeRemainingIncense = 0;
-                        }
+                            var _expireMs = singleAppliedItem.ExpireMs;
+                            var _appliedMs = singleAppliedItem.AppliedMs;
+                            if (currentMillis < _expireMs)
+                            {
+                                timeRemainingIncense = _expireMs - currentMillis;
+                                session.Inventory.incenseExpiresMs = _expireMs;
+                            }
+                            else
+                            {
+                                timeRemainingIncense = 0;
+                                session.Inventory.incenseExpiresMs = 0;
+                            }
 
-                    }
-                });
+                        }
+                    });
+                }
+                else
+                {
+                    timeRemainingIncense = 0;
+                }
             }
             else
             {
-                timeRemainingIncense = 0;
+                timeRemainingIncense = session.Inventory.incenseExpiresMs - currentMillis;
+
             }
             return timeRemainingIncense;
         }

@@ -23,8 +23,10 @@ namespace PoGo.PokeMobBot.Logic.Extensions
         {
             long timeRemainingIncense = new long();
             var currentMillis = CurrentTimeMillis();
-            if (session.Inventory.incenseExpiresMs == 0 || session.Inventory.incenseExpiresMs < currentMillis)
+            if ((session.Inventory.incenseExpiresMs == 0 || session.Inventory.incenseExpiresMs < currentMillis) 
+                        && (currentMillis - session.Inventory.incenseLastUpdated) > 60000)
             {
+                session.Inventory.incenseLastUpdated = currentMillis;
                 List<AppliedItem> status = await session.Inventory.GetUsedItems();
                 if (status.Count > 0)
                 {
