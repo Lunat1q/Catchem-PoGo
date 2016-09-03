@@ -75,6 +75,16 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                 if (session.ForceMoveJustDone)
                     session.ForceMoveJustDone = false;
 
+                if (session.LogicSettings.UseCustomRoute && session.LogicSettings.CustomRoute != null &&
+                    session.LogicSettings.CustomRoute.RoutePoints.Count > 2)
+                {
+                    session.EventDispatcher.Send(new NoticeEvent()
+                    {
+                        Message = "CustomRoute enabled, shutting down normal routine!"
+                    });
+                    break;
+                }
+
                 if (session.ForceMoveTo != null)
                 {
                     await ForceMoveTask.Execute(session, cancellationToken);

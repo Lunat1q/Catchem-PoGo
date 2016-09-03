@@ -318,6 +318,16 @@ namespace PoGo.PokeMobBot.Logic.Tasks
                     pokestopList = await GetPokeStops(session);
                 }
 
+                if (session.LogicSettings.UseCustomRoute && session.LogicSettings.CustomRoute != null &&
+                   session.LogicSettings.CustomRoute.RoutePoints.Count > 2)
+                {
+                    session.EventDispatcher.Send(new NoticeEvent()
+                    {
+                        Message = "CustomRoute enabled, shutting down normal routine!"
+                    });
+                    break;
+                }
+
                 //resort
                 pokestopList =
                     pokestopList.OrderBy(
