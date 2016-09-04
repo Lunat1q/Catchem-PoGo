@@ -12,9 +12,10 @@
 You can download this bot  <a href="https://github.com/Lunat1q/Catchem-PoGo/releases/latest">HERE</a>
 
 <h2>OpenSource</h2>
-This project will not provide source codes for everyone anymore, since they are being stolen and being sold.<br/>
-I'll continue to develope this project, and regular user will not see any changes!<br/>
-If you'll need source codes, or part of them, contact me in Discord.
+This project will not provide source code for everyone anymore, due to it being stolen and being sold.<br/>
+I'll continue to develop this project, however the regular user will not be able to see any changes in the source code!<br/>
+We will still continue to release compiled updates of this software, so this will not effect most of our users.<br/>
+If you'll need source codes, or part of them, contact me in <a href="https://discord.gg/pPwxX8Q">Discord</a>.
 
 <h2>Donating</h2>
 If you really like this project, feel free to buy <b>pizza</b> :pizza: or :beers: for devs (or a present :rose: :gift: for my gf, she is a bit mad that i'm spending most part of my free time for this project :coffee:):<br/><br/>
