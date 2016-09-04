@@ -13,7 +13,8 @@ You can download this bot  <a href="https://github.com/Lunat1q/Catchem-PoGo/rele
 
 <h2>OpenSource</h2>
 This project will not provide source code for everyone anymore, due to it being stolen and being sold.<br/>
-I'll continue to develop this project, however the regular user will not be able to see any changes in the source code!<br/>
+I'll continue to develop this project, absolutely the save as i did before.<br/>
+However i'll no longer will publish Source Code for the Catchem.<br/>
 We will still continue to release compiled updates of this software, so this will not effect most of our users.<br/>
 If you'll need source codes, or part of them, contact me in <a href="https://discord.gg/pPwxX8Q">Discord</a>.
 
