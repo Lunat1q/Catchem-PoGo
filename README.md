@@ -31,6 +31,11 @@ If you really like this project, feel free to buy <b>pizza</b> :pizza: or :beers
 <h2>Extra features (from PokeMobBot) project)</h2>
 
  - [Discovery pathing function -> bot continue to walk in radom direction from pokestop to pokestop, it pick closest pokestop each turn!]
+ - [Detailed info for every Poke you have]
+ - [CustomRoute feature! You can create custom routes right from UI]
+ - [Manual Transfer/Favorite/Evolve/LevelUp/Recycle from UI!]
+ - [Batch creation of accounts]
+ - [Bot schedule! Set desired working time for every day of the week!]
  - [Force move option, just double click to the map and bot will start moving there!]
  - [Proxy support]
  - [All settings from UI]
