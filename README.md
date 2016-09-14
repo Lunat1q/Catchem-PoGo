@@ -21,7 +21,8 @@ If you'll need source codes, or part of them, contact me in <a href="https://dis
 <h2>Donating</h2>
 If you really like this project, feel free to buy <b>pizza</b> :pizza: or :beers: for devs (or a present :rose: :gift: for my gf, she is a bit mad that i'm spending most part of my free time for this project :coffee:):<br/><br/>
 <p align="center"><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=RFAU4PYCAAGML"><img src="https://www.paypalobjects.com/en_US/GB/i/btn/btn_donateCC_LG.gif"/></a></p>
-<p align="center"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Bitcoin.svg/64px-Bitcoin.svg.png"/>BitCoin: 1LTQdD6cnxhqSAYyNAa7PpcfSu6uCmxrdn</p>
+<p align="center"><img src="http://i.imgur.com/bP0Lxi4.png"/>BitCoin: 1LTQdD6cnxhqSAYyNAa7PpcfSu6uCmxrdn</p>
+<p align="center"><a href="https://money.yandex.ru/transfer?_openstat=template%3Bimenu%3Bp2p"><img src="http://i.imgur.com/6n2la5V.png"/>Yandex.Money 410014552246550</a></p>
 ###We really appreciate all the donations made, so everyone who donated to our project will get access to privileged support channel!
 #####If you don't have PayPal account but still want to donate for my work, Please contact me in Discord :)
 
