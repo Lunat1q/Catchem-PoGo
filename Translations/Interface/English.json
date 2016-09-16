@@ -236,6 +236,7 @@
     "%ADPS%": "ADPS",
     "%CP_MaxCP_Possible_CP%": "CP / Max CP / Possible CP",
     "%ENERGY%": "Energy",
-    "%DAMAGE_DPS%": "Damage | DPS"
+    "%DAMAGE_DPS%": "Damage | DPS",
+    "%EVOLVE_CP_AFTER": "CP after Evolution: "
   }
 }
