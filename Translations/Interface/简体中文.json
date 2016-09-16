@@ -26,7 +26,7 @@
     "%PAUSE_BOT_ON_MAX_HOURLY_RATES%": "当达到时间上限时停止bot",
     "%LOOT_POKESTOPS%": "访问补给站",
     "%USE_CHEDULE%": "使用控制器",
-    "%TELEPORT%": "通信 (高封号风险)",
+    "%TELEPORT%": "瞬间移动 (高封号风险)",
     "%USE_DISCOVERY_PATHING%": "使用探索路径控制",
     "%USE_HUMAN_PATHING%": "使用拟人路径",
     "%STOP_BOT_TO_AVOID_BAN%": "当遇到未知登录错误时停止Bot，预防封号",
