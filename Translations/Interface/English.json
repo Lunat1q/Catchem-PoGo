@@ -68,7 +68,7 @@
     "%PASSWORD%": "Password",
     "%DESIRED_NICK%": "Desired nick",
     "%HOST_PORT%": "Host:port",
-    "%EVOLVE_IV_VALUE%": "Evolve Iv Value",
+    "%EVOLVE_IV_VALUE%": "Evolve IV Value",
     "%KEEP_MIN_CP%": "Keep Min CP",
     "%KEEP_MIN_DUPLICATE%": "Keep Min Duplicate",
     "%KEEP_MIN_IV%": "Keep Min IV %",
