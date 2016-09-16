@@ -236,6 +236,27 @@
     "%ADPS%": "ADPS",
     "%CP_MaxCP_Possible_CP%": "CP / Max CP / Possible CP",
     "%ENERGY%": "Energy",
-    "%DAMAGE_DPS%": "Damage | DPS"
+    "%DAMAGE_DPS%": "Damage | DPS",
+	"%EVOLVE_CP_AFTER": "CP after Evolution: ",
+	"%PREFFER_MAPZEN_ROUTING_OVER_GOOGLE%": "Prefer Mapzen Routing Over Google",
+    "%MANUAL_ROUTE%": "Manual Route",
+    "%SHOW_EXACT_POKE_ON_THE_MAP%": "Show exact poke on the map",
+    "%NAME%": "Name:",
+    "%BUILD_THE_ROUTE%": "Build the route",
+    "%SAVE_THE_ROUTE%": "Save the route",
+    "%CLEAR_THE_ROUTE%": "Clear the route",
+    "%ROUTE_CREATOR%": "Route Creator",
+    "%CURRENT_ROUTES%": "Current routes:",
+    "%AUTOSTART_TELEGRAM_BOT%": "Auto start Telegram bot",
+    "%REPORT_LEVELUP%": "Report Level Up",
+    "%AUTO_REPORT_CELECTED_POKE%": "Auto report selected poke",
+    "%TELEGRAM_CONTROL_PAGE%": "Telegram control page",
+    "%BOT_API_KEY%": "Bot API Key",
+    "%OWNERS%": "Owners",
+    "%TO_AUTO_REPORT%": "To Auto Report",
+    "%REPORT_ANY_ABOVE_CP%": "Report any above CP (set 0 to disable)",
+    "%REPORT_ANY_ABOVE_IV%": "Report any above Iv (set 0 to disable)",
+    "%MAINSETTINGSBOX%": "Main settings",
+    "%EXTRA_SETTINGS%": "Extra settings"
   }
 }

@@ -228,14 +228,14 @@
     "%USE_LURE_MOD%": "使用引诱模式",
     "%POKE_NAME_INPUT%": "输入想要改的名称:",
     "%SELECT_TEAM_INPUT%": "请选择一个队伍:",
-    "%TYPE%": "Type",
-    "%MOVE_SET%": "Move Set",
-    "%HP%": "HP",
-    "%ATK%": "ATK",
-    "%DEF%": "DEF",
-    "%ADPS%": "ADPS",
-    "%CP_MaxCP_Possible_CP%": "CP / Max CP / Possible CP",
-    "%ENERGY%": "Energy",
-    "%DAMAGE_DPS%": "Damage | DPS"
+    "%TYPE%": "类型",
+    "%MOVE_SET%": "技能",
+    "%HP%": "血量",
+    "%ATK%": "攻击",
+    "%DEF%": "防御",
+    "%ADPS%": "属性攻击",
+    "%CP_MaxCP_Possible_CP%": "CP / 最大 CP / 可能 CP",
+    "%ENERGY%": "能量",
+    "%DAMAGE_DPS%": "伤害 | 攻击"
   }
 }
