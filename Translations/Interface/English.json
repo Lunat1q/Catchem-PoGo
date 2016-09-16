@@ -227,6 +227,15 @@
     "%RECYCLE_INPUT%": "Please, enter amout to recycle:",
     "%USE_LURE_MOD%": "Use Lure Module",
     "%POKE_NAME_INPUT%": "Please Enter a Name to Rename Pokemon:",
-	"%SELECT_TEAM_INPUT%": "Please, select a team:"
+    "%SELECT_TEAM_INPUT%": "Please, select a team:",
+    "%TYPE%": "Type",
+    "%MOVE_SET%": "Move Set",
+    "%HP%": "HP",
+    "%ATK%": "ATK",
+    "%DEF%": "DEF",
+    "%ADPS%": "ADPS",
+    "%CP_MaxCP_Possible_CP%": "CP / Max CP / Possible CP",
+    "%ENERGY%": "Energy",
+    "%DAMAGE_DPS%": "Damage | DPS"
   }
 }
