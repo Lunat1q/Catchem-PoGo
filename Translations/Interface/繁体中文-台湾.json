@@ -94,7 +94,7 @@
     "%MAX_POKESTOPS_PER_HOUR%": "每小時補給站訪問上限",
     "%MAX_XP_PER_HOUR%": "每小時經驗上限",
     "%MAX_STARDUST_PER_HOUR%": "每小時星塵獲取上限",
-    "%AMOUNT_OF_POKEBALLS_TO_KEEP%": "所有寶貝球保留總數",
+    "%AMOUNT_OF_POKEBALLS_TO_KEEP%": "所有寶貝球保球總數",
     "%AMOUNT_OF_POTIONS_TO_KEEP%": "保留藥劑總數",
     "%AMOUNT_OF_REVIVES_TO_KEEP%": "保留恢復藥總數",
     "%AMOUNT_OF_BERRIES_TO_KEEP%": "保留漿果總數",
