@@ -64,7 +64,7 @@
     "%DELAYS_BOX%": "Tiempo Entre Acciones",
     "%API_KEYS%": "API Keys (Codigo API)",
     "%AUTH_TYPE%": "Tipo de Autenticacion",
-    "%LOGIN%": "Iniciar Sesion",
+    "%LOGIN%": "Usuario/Email",
     "%PASSWORD%": "Contraseña",
     "%DESIRED_NICK%": "Apodo",
     "%HOST_PORT%": "Host:puerto",
