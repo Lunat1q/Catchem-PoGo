@@ -361,7 +361,7 @@
       "Value": "RECICLANDO"
     },
     {
-      "Key": "logEntryPKMN",
+      "Key": "logEntryPkmn",
       "Value": "PEGAR"
     },
     {
@@ -552,7 +552,7 @@
       "Key": "encounterProblemLurePokemon",
       "Value": "Problema encontrado: Lure pokemon {0}"
     },
-        {
+    {
       "Key": "encounterProblemPokemonFlee",
       "Value": "Problema encontrado: Pokemon Fugiu {0}!"
     },
@@ -711,7 +711,7 @@
     {
       "Key": "skipLaggedMaintenance",
       "Value": "SkipLagged Servidor está fora do ar para manutenção."
-    }
+    },
     {
       "Key": "checkingForMaximumInventorySize",
       "Value": "[Inventário] Itens para manter excedem o tamanho máximo do inventário! {0}/{1}"
