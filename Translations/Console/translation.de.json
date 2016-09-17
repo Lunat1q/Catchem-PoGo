@@ -386,55 +386,55 @@
     },
     {
       "Key": "updatesAt",
-      "Value": "During that pause, consider to check fresh updates at"
+      "Value": "Schaue vielleicht während dieser Pause nach neuen Updates auf"
     },
     {
       "Key": "discordLink",
-      "Value": "or join our friendly Discord chat:"
+      "Value": "oder tritt unserer freundlichen Discord Chatcommunity bei:"
     },
     {
       "Key": "scheduleAction",
-      "Value": "Schedule Action [{0}], with args: [{1}] performed successfully"
+      "Value": "Zeitplan Aktion [{0}], mit Argumenten: [{1}] erfolgreich durchgeführt"
     },
     {
       "Key": "scheduleActionFailed",
-      "Value": "Schedule Action Failed to perform action {0}, with args: {1}"
+      "Value": "Zeitplan Aktion scheiterte beim Durchführen der Aktion {0}, mit Argumenten: {1}"
     },
     {
       "Key": "schedulePause",
-      "Value": "Bot paused for {0}h, case of Schedule settings, will be started again at {1}, {2}:{3}"
+      "Value": "Aufgrund von Zeitplaneinstellungen pausiert der Bot für {0}std und startet wieder um {1}, {2}:{3}"
     },
     {
       "Key": "throwPokeball",
-      "Value": "Throwing {0}{1}{2} - {3}"
+      "Value": "Werfe {0}{1}{2} - {3}"
     },
     {
       "Key": "foundHiding",
-      "Value": "Found some hiding poke in the area, trying to catch'em now!"
+      "Value": "Versteckte Pokémon in der Gegend entdeckt, versuche sie zu fangen!"
     },
     {
       "Key": "pokeInGym",
-      "Value": "Pokemon {0} is signed to defend a GYM!"
+      "Value": "Pokémon {0} wurde ausgewählt eine Arena zu verteidigen!"
     },
     {
       "Key": "failedCoords",
-      "Value": "Coordinate failure, please check them again!"
+      "Value": "Koordinatenfehler, bitte erneut überprüfen!"
     },
     {
       "Key": "errorCatchNearby",
-      "Value": "Coordinate failure, please check them again!"
+      "Value": "Koordinatenfehler, bitte erneut überprüfen!"
     },
     {
       "Key": "candyMiss",
-      "Value": "Miss some candies to evolve (0), cancelling..."
+      "Value": "Es fehlen Bonbons, um (0) zu entwickeln, stoppe Aktion..."
     },
     {
       "Key": "noRoute",
-      "Value": "No proper route loaded, or route is too short"
+      "Value": "Fehlerhafte Route geladen oder Route ist zu kurz!"
     },
     {
       "Key": "customRouteData",
-      "Value": "You are using a custom route named: '{0}' with {1} routing points"
+      "Value": "Individuelle Route '{0}' mit {1} Wegpunkten wird verwendet"
     },
     {
       "Key": "unDoneForceMove",
