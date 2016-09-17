@@ -1,6 +1,202 @@
 {
   "TranslationStrings": [
     {
+      "Key": "setLure",
+      "Value": "Lure utilizado no Pokestop: {0}, distância: {1}, restando: {2}"
+    },
+    {
+      "Key": "levelUp",
+      "Value": "Level up! Recompensas: "
+    },
+    {
+      "Key": "evolvedInto",
+      "Value": "Evoluiu para {0} CP: {1} Iv: {2}%"
+    },
+    {
+      "Key": "gymTouch",
+      "Value": "Ginásio encontrado: {0}{1} - {2}, points: {3}, Guards: {4}) "
+    },
+    {
+      "Key": "eggFound",
+      "Value": "Um ovo encontrado, distância: {0}km do PokeStop: {1}"
+    },
+    {
+      "Key": "pokeListEmpty",
+      "Value": "A lista de pokemons está vazia"
+    },
+    {
+      "Key": "proxyAlready",
+      "Value": "{0} está rodando com esse proxy!"
+    },
+    {
+      "Key": "yourIpProxyIp",
+      "Value": "Seu IP é: {0} / Seu IP do proxy é: {1}"
+    },
+    {
+      "Key": "ipMatch",
+      "Value": "Seu IP em conflito! Eu te avisei!"
+    },
+    {
+      "Key": "yourIpIs",
+      "Value": "Seu IP é: {0}"
+    },
+    {
+      "Key": "proxyDown",
+      "Value": "O proxy caiu? Tentando entrar em contato com o server"
+    },
+    {
+      "Key": "hourRateReached",
+      "Value": "Quantidade máxima de Pokemons ({0})/Pokestops ({1})/XP ({2})/Star Dust ({3}) por hora atingido, o bot ficará pausado por {4} minutos"
+    },
+    {
+      "Key": "botPauseCancel",
+      "Value": "A rotina de pause do bot foi cancelada"
+    },
+    {
+      "Key": "botPauseFail",
+      "Value": "A rotina de pause do bot falhou"
+    },
+    {
+      "Key": "updatesAt",
+      "Value": "Durante o pause, lembre-se de checkar por novas atualizações em"
+    },
+    {
+      "Key": "discordLink",
+      "Value": "ou participe do nosso bate-papo no Discord:"
+    },
+    {
+      "Key": "scheduleAction",
+      "Value": "As ações do Cronograma [{0}], com os argumentos: [{1}] realizadas com sucesso"
+    },
+    {
+      "Key": "scheduleActionFailed",
+      "Value": "Falha ao realizar as ações do Cronograma {0}, com os argumentos: {1}"
+    },
+    {
+      "Key": "schedulePause",
+      "Value": "Bot pausado por {0}h, ação configurada no Cronograma, será iniciado novamente em {1}, {2}:{3}"
+    },
+    {
+      "Key": "throwPokeball",
+      "Value": "Throwing {0}{1}{2} - {3}"
+    },
+    {
+      "Key": "foundHiding",
+      "Value": "Encontrado um poke escondindo nessa área, tentando capturá-lo!"
+    },
+    {
+      "Key": "pokeInGym",
+      "Value": "O pokemon {0} foi colocado para defender o Ginásio!"
+    },
+    {
+      "Key": "failedCoords",
+      "Value": "Falha nas coordenadas, por favor verifique novamente!"
+    },
+    {
+      "Key": "errorCatchNearby",
+      "Value": "Falha nas coordenadas, por favor verifique novamente!"
+    },
+    {
+      "Key": "candyMiss",
+      "Value": "Falta alguns doces para evoluir (0), cancelando..."
+    },
+    {
+      "Key": "noRoute",
+      "Value": "Nenhuma rota carregada de forma correta, ou a rota é muito pequena"
+    },
+    {
+      "Key": "customRouteData",
+      "Value": "Você está usando uma rota personalização chamada de: '{0}' com {1} pontos de roteamento"
+    },
+    {
+      "Key": "unDoneForceMove",
+      "Value": "Não foi possível Forçar o Percurso, retornando para Lat: {0} Lon:{1}"
+    },
+    {
+      "Key": "routeSwitched",
+      "Value": "Rota modificada de {0} para {1}!"
+    },
+    {
+      "Key": "customRouteDisabled",
+      "Value": "Rota Personalizada desabilitada, voltando para a rota normal!"
+    },
+    {
+      "Key": "foundClosest",
+      "Value": "Encontrado o ponto mais próximo em {0} - {1}, distância até esse ponto: {2} metros, indo até lá!"
+    },
+    {
+      "Key": "customRouteEnabled",
+      "Value": "Rota personalizada habilitada, desabilitando a rota normal!"
+    },
+    {
+      "Key": "forceMove",
+      "Value": "Forçar o Percurso para {0} - {1} Iniciado! Distância: {2}m"
+    },
+    {
+      "Key": "forceMoveDone",
+      "Value": "Forçar o Percurso feito!"
+    },
+    {
+      "Key": "inventorySettingsFailed",
+      "Value": "Você errou ao configurar os itens! Você disse para mantê-los em {0} limpar, quando estiver com {1} itens, e disse para manter {2} itens ao mesmo tempo, enquanto você tivesse {3} itens extras, como Lucky Eggs/Incubators/etc..."
+    },
+    {
+      "Key": "readTos",
+      "Value": "Leia os termos da Niantic, parece legítimo, aceitando!"
+    },
+    {
+      "Key": "genderSelect",
+      "Value": "Seu avatar foi selecionado, agora você é {0}!"
+    },
+    {
+      "Key": "tutorialPokestop",
+      "Value": "Primeiros passos concluidos, parece que eu me tornei um pokestop virtual :P"
+    },
+    {
+      "Key": "tutorialPoke",
+      "Value": "Tutorial de Captura pokemon! Este é um {0}!"
+    },
+    {
+      "Key": "tutorialNameNotPicked",
+      "Value": "Você não pode escolher este apelido!"
+    },
+    {
+      "Key": "tutorialNameTooLong",
+      "Value": "Você escolheu um apelido muito grande, comprimento máximo: 15!"
+    },
+    {
+      "Key": "tutorialNameDone",
+      "Value": "Seu apelido agora é: {0}"
+    },
+    {
+      "Key": "tutorialNameFailed",
+      "Value": "Falha na seleção do apelido! Erro: {0}"
+    },
+    {
+      "Key": "tutorialNameErrorUnset",
+      "Value": "De alguma forma, não foi selecionado"
+    },
+    {
+      "Key": "tutorialNameErrorChanged",
+      "Value": "Sem erros, apelido modificado"
+    },
+    {
+      "Key": "tutorialNameErrorNotAvail",
+      "Value": "Este apelido não está disponível, escolha outro e reinicie o bot!"
+    },
+    {
+      "Key": "tutorialNameErrorNotValid",
+      "Value": "Esse apelido não é válido, escolha outro!"
+    },
+    {
+      "Key": "tutorialNameErrorOwner",
+      "Value": "Você selecionou esse apelido!"
+    },
+    {
+      "Key": "tutorialNameErrorNoMore",
+      "Value": "Você não pode modificar seu apelido novamente!"
+    },
+    {
       "Key": "pokeball",
       "Value": "PokeBall"
     },
@@ -310,7 +506,7 @@
     },
     {
       "Key": "currentInvUsage",
-      "Value": "[Inventory] inventário utilizado: {0}/{1}"
+      "Value": "[Inventory] Inventário utilizado: {0}/{1}"
     },
     {
       "Key": "currentPokemonUsage",
