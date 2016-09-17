@@ -51,7 +51,7 @@
     },
 	{
       "Key": "eventUseLuckyEggMinPokemonCheck",
-      "Value": "Not enough Pokemon to trigger a lucky egg. Waiting for {0} more. ({1}/{2})"
+      "Value": "Non ci sono abbastanza Pokemon per usare un Fortunuovo. Ne servono altri {0}. ({1}/{2})"
     },
     {
       "Key": "eventPokemonEvolvedSuccess",
@@ -200,7 +200,7 @@
     },
     {
       "Key": "accessTokenExpired",
-      "Value": "Access token expired. Relogin to get a new token."
+      "Value": "Il token di accesso è scaduto. Esegui di nuovo il login per averne uno nuovo."
     },
     {
       "Key": "tryingAgainIn",
