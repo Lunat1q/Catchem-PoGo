@@ -101,11 +101,11 @@
     },
     {
       "Key": "commonWordPerfect",
-      "Value": "perfecto"
+      "Value": "Perfecto"
     },
     {
       "Key": "commonWordName",
-      "Value": "nombre"
+      "Value": "Nombre"
     },
     {
       "Key": "commonWordUnknown",
@@ -202,7 +202,7 @@
     },
     {
       "Key": "accessTokenExpired",
-      "Value": "Access token expired. Relogin to get a new token."
+      "Value": "Ha expirado el Token de Acceso. Re-Login para obtener uno nuevo."
     },
     {
       "Key": "tryingAgainIn",
