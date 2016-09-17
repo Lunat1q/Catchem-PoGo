@@ -126,11 +126,11 @@
     },
     {
       "Key": "displayHighestsHeader",
-      "Value": "Pokémons"
+      "Value": "Pokémon"
     },
     {
       "Key": "commonWordPerfect",
-      "Value": "perfekt"
+      "Value": "Perfekt"
     },
     {
       "Key": "commonWordName",
@@ -230,7 +230,7 @@
     },
     {
       "Key": "accessTokenExpired",
-      "Value": "Access Token ausgelaufen. Logge mich neu ein für ein neues Token."
+      "Value": "Access Token ausgelaufen. Logge mich erneut ein für neuen Token."
     },
     {
       "Key": "tryingAgainIn",
@@ -330,59 +330,59 @@
     },
     {
       "Key": "setLure",
-      "Value": "Set lure at PokeStop: {0}, distance: {1}, lures left: {2}"
+      "Value": "Setze Lockmodul in PokeStop ein: {0}, Entfernung: {1}, übrige Module: {2}"
     },
     {
       "Key": "levelUp",
-      "Value": "Level up! Rewards: "
+      "Value": "Level aufgestiegen! Belohnung: "
     },
     {
       "Key": "evolvedInto",
-      "Value": "Evolved into {0} CP: {1} Iv: {2}%"
+      "Value": "Entwickelt in {0} WP: {1} Iv: {2}%"
     },
     {
       "Key": "gymTouch",
-      "Value": "Touched a gym: {0}{1} - {2}, points: {3}, Guards: {4}) "
+      "Value": "Arena berührt: {0}{1} - {2}, Punkte: {3}, Verteidiger: {4}) "
     },
     {
       "Key": "eggFound",
-      "Value": "Found an egg, distance: {0}km from PokeStop: {1}"
+      "Value": "Ei gefunden, Entfernung: {0}km von PokeStop: {1}"
     },
     {
       "Key": "pokeListEmpty",
-      "Value": "Highests Pokemon List is empty"
+      "Value": "Höchstes Pokémon Liste ist leer"
     },
     {
       "Key": "proxyAlready",
-      "Value": "{0} is already running with this proxy!"
+      "Value": "{0} läuft bereits mit diesem Proxy!"
     },
     {
       "Key": "yourIpProxyIp",
-      "Value": "Your IP is: {0} / Proxy IP is: {1}"
+      "Value": "Deine IP lautet: {0} / Proxy IP lautet: {1}"
     },
     {
       "Key": "ipMatch",
-      "Value": "Your ip match! I warned you!"
+      "Value": "Übereinstimmende IPs entdeckt! Warnung!"
     },
     {
       "Key": "yourIpIs",
-      "Value": "Your IP is: {0}"
+      "Value": "Deine IP lautet: {0}"
     },
     {
       "Key": "proxyDown",
-      "Value": "Proxy Down? Will try to interact with server anyway"
+      "Value": "Proxy nicht erreichbar? Versuche dennoch mit dem Server zu kommunizieren."
     },
     {
       "Key": "hourRateReached",
-      "Value": "Max amount of Pokemon ({0})/Pokestops ({1})/XP ({2})/Star Dust ({3}) per hour reached, bot will be stopped for {4} minutes"
+      "Value": "Maximale Anzahl an Pokémon ({0})/Pokestops ({1})/XP ({2})/Sternenstaub ({3}) pro Stunde erreicht, Bot wird für {4} Minuten pausieren."
     },
     {
       "Key": "botPauseCancel",
-      "Value": "Bot pause routine canceled"
+      "Value": "Pausenroutine des Bots unterbrochen!"
     },
     {
       "Key": "botPauseFail",
-      "Value": "Bot pause routine failed badly"
+      "Value": "Pausenroutine des Bots hat schwerwiegenden Fehler!"
     },
     {
       "Key": "updatesAt",
