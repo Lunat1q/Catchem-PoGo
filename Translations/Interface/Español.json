@@ -4,7 +4,7 @@
   "Translation": {
     "$type": "System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[System.String, mscorlib]], mscorlib",
     "%AUTOSTART%": "Autoinicio",
-    "%AUTO_TUTORIAL%": "Completar tutorial y asignar el Apodo (Usuario)",
+    "%AUTO_TUTORIAL%": "Completar tutorial y asignar Nombre de Usuario",
     "%USE_PROXY%": "Usar Proxy",
     "%EVOLVE_ALL_POKE_ABOVE_IV%": "Evolucionar todos segun el IV%",
     "%EVOLVE_ALL_POKE_WITH_ENOUGH_CANDY%": "Evolucionar todo cuando se alcancen los caramelos necesarios",
