@@ -14,7 +14,7 @@
     },
     {
       "Key": "gymTouch",
-      "Value": "Ginásio encontrado: {0}{1} - {2}, points: {3}, Guards: {4}) "
+      "Value": "Ginásio encontrado: {0}{1} - {2}, pontos: {3}, Líderes: {4}) "
     },
     {
       "Key": "eggFound",
@@ -34,7 +34,7 @@
     },
     {
       "Key": "ipMatch",
-      "Value": "Seu IP em conflito! Eu te avisei!"
+      "Value": "Seu IP está em conflito! Eu te avisei!"
     },
     {
       "Key": "yourIpIs",
@@ -78,7 +78,7 @@
     },
     {
       "Key": "throwPokeball",
-      "Value": "Throwing {0}{1}{2} - {3}"
+      "Value": "Arremesso {0}{1}{2} - {3}"
     },
     {
       "Key": "foundHiding",
@@ -134,7 +134,7 @@
     },
     {
       "Key": "forceMoveDone",
-      "Value": "Forçar o Percurso feito!"
+      "Value": "Forçar o Percurso concluído!"
     },
     {
       "Key": "inventorySettingsFailed",
@@ -226,7 +226,7 @@
     },
     {
       "Key": "eventFortUsed",
-      "Value": "Nome: {0} XP: {1}, Gemas: {2}, Itens: {3}"
+      "Value": "Nome: {0} XP: {1}, Ovos: {2}, Itens: {3}"
     },
     {
       "Key": "eventFortFailed",
@@ -270,7 +270,7 @@
     },
     {
       "Key": "eventPokemonCapture",
-      "Value": "({0}) | ({1}) {2} nível: {3} CP: ({4}/{5}) IV: {6}% | Chance: {7}% | {8}m de distância | com uma {9} (restando {10}). | {11}"
+      "Value": "({0}) | ({1}) {2} nível: {3} CP: ({4}/{5}) IV: {6}% | Chance: {7}% | {8}m de distância | com uma {9} (restando {10}). | XP: {11} | {12}"
     },
     {
       "Key": "eventNoPokeballs",
@@ -378,7 +378,7 @@
     },
     {
       "Key": "logEntryEgg",
-      "Value": "EGG"
+      "Value": "OVO"
     },
     {
       "Key": "logEntryDebug",
@@ -661,7 +661,7 @@
     },
     {
       "Key": "useBerry",
-      "Value": "Usando Razzberry. Berries sobrando: {0}"
+      "Value": "Usando Razzberry. Berries restando: {0}"
     },
     {
       "Key": "nianticServerUnstable",
