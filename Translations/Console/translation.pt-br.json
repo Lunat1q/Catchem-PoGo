@@ -14,7 +14,7 @@
     },
     {
       "Key": "gymTouch",
-      "Value": "Ginásio encontrado: {0}{1} - {2}, points: {3}, Guards: {4}) "
+      "Value": "Ginásio encontrado: {0}{1} - {2}, pontos: {3}, Defensores: {4}) "
     },
     {
       "Key": "eggFound",
@@ -26,7 +26,7 @@
     },
     {
       "Key": "proxyAlready",
-      "Value": "{0} está rodando com esse proxy!"
+      "Value": "{0} já está rodando com esse proxy!"
     },
     {
       "Key": "yourIpProxyIp",
@@ -42,23 +42,23 @@
     },
     {
       "Key": "proxyDown",
-      "Value": "O proxy caiu? Tentando entrar em contato com o server"
+      "Value": "O proxy não está respondendo? Tentando entrar em contato com o servidor"
     },
     {
       "Key": "hourRateReached",
-      "Value": "Quantidade máxima de Pokemons ({0})/Pokestops ({1})/XP ({2})/Star Dust ({3}) por hora atingido, o bot ficará pausado por {4} minutos"
+      "Value": "Quantidade máxima de Pokemons ({0})/Pokestops ({1})/XP ({2})/Star Dust ({3}) por hora alcançado, o bot ficará pausado por {4} minutos"
     },
     {
       "Key": "botPauseCancel",
-      "Value": "A rotina de pause do bot foi cancelada"
+      "Value": "A rotina de pausa do bot foi cancelada"
     },
     {
       "Key": "botPauseFail",
-      "Value": "A rotina de pause do bot falhou"
+      "Value": "A rotina de pausa do bot falhou"
     },
     {
       "Key": "updatesAt",
-      "Value": "Durante o pause, lembre-se de checkar por novas atualizações em"
+      "Value": "Durante a pausa, lembre-se de verificar por novas atualizações em"
     },
     {
       "Key": "discordLink",
@@ -66,11 +66,11 @@
     },
     {
       "Key": "scheduleAction",
-      "Value": "As ações do Cronograma [{0}], com os argumentos: [{1}] realizadas com sucesso"
+      "Value": "As ações programadas [{0}], com os parametros: [{1}] realizadas com sucesso"
     },
     {
       "Key": "scheduleActionFailed",
-      "Value": "Falha ao realizar as ações do Cronograma {0}, com os argumentos: {1}"
+      "Value": "Falha ao realizar as ações programadas {0}, com os parametros: {1}"
     },
     {
       "Key": "schedulePause",
@@ -78,7 +78,7 @@
     },
     {
       "Key": "throwPokeball",
-      "Value": "Throwing {0}{1}{2} - {3}"
+      "Value": "Arremessando {0}{1}{2} - {3}"
     },
     {
       "Key": "foundHiding",
@@ -86,27 +86,27 @@
     },
     {
       "Key": "pokeInGym",
-      "Value": "O pokemon {0} foi colocado para defender o Ginásio!"
+      "Value": "O pokemon {0} foi selecionado para defender o Ginásio!"
     },
     {
       "Key": "failedCoords",
-      "Value": "Falha nas coordenadas, por favor verifique novamente!"
+      "Value": "Falha nas coordenadas, por favor verifique-as!"
     },
     {
       "Key": "errorCatchNearby",
-      "Value": "Falha nas coordenadas, por favor verifique novamente!"
+      "Value": "errorCatchNearby"
     },
     {
       "Key": "candyMiss",
-      "Value": "Falta alguns doces para evoluir (0), cancelando..."
+      "Value": "Falta alguns candies para evoluir (0), cancelando..."
     },
     {
       "Key": "noRoute",
-      "Value": "Nenhuma rota carregada de forma correta, ou a rota é muito pequena"
+      "Value": "Nenhuma rota adequada carregada, ou a rota é muito curta"
     },
     {
       "Key": "customRouteData",
-      "Value": "Você está usando uma rota personalização chamada de: '{0}' com {1} pontos de roteamento"
+      "Value": "Você está usando uma rota personalização chamada: '{0}' com {1} pontos de roteamento"
     },
     {
       "Key": "unDoneForceMove",
@@ -114,7 +114,7 @@
     },
     {
       "Key": "routeSwitched",
-      "Value": "Rota modificada de {0} para {1}!"
+      "Value": "Rota alterada de {0} para {1}!"
     },
     {
       "Key": "customRouteDisabled",
@@ -122,7 +122,7 @@
     },
     {
       "Key": "foundClosest",
-      "Value": "Encontrado o ponto mais próximo em {0} - {1}, distância até esse ponto: {2} metros, indo até lá!"
+      "Value": "Encontrado o ponto mais próximo de {0} - {1}, distância até esse ponto: {2} metros, movendo até lá!"
     },
     {
       "Key": "customRouteEnabled",
@@ -134,15 +134,15 @@
     },
     {
       "Key": "forceMoveDone",
-      "Value": "Forçar o Percurso feito!"
+      "Value": "Forçar o Percurso Concluído!"
     },
     {
       "Key": "inventorySettingsFailed",
-      "Value": "Você errou ao configurar os itens! Você disse para mantê-los em {0} limpar, quando estiver com {1} itens, e disse para manter {2} itens ao mesmo tempo, enquanto você tivesse {3} itens extras, como Lucky Eggs/Incubators/etc..."
+      "Value": "Você errou na configuração dos itens! Você disse para manter {0} limpo, quando estiver com {1} itens, e disse para manter {2} itens ao mesmo tempo, enquanto você têm {3} itens extras, como Lucky Eggs/Incubators/etc..."
     },
     {
       "Key": "readTos",
-      "Value": "Leia os termos da Niantic, parece legítimo, aceitando!"
+      "Value": "Lendo os termos da Niantic, parece legítimo, aceitando!"
     },
     {
       "Key": "genderSelect",
@@ -150,11 +150,11 @@
     },
     {
       "Key": "tutorialPokestop",
-      "Value": "Primeiros passos concluidos, parece que eu me tornei um pokestop virtual :P"
+      "Value": "Primeiros passos concluidos, parece que eu girei um pokestop virtual :P"
     },
     {
       "Key": "tutorialPoke",
-      "Value": "Tutorial de Captura pokemon! Este é um {0}!"
+      "Value": "Pokemon do tutorial pego! Ele é um {0}!"
     },
     {
       "Key": "tutorialNameNotPicked",
@@ -174,7 +174,7 @@
     },
     {
       "Key": "tutorialNameErrorUnset",
-      "Value": "De alguma forma, não foi selecionado"
+      "Value": "Erro de apelido"
     },
     {
       "Key": "tutorialNameErrorChanged",
@@ -322,7 +322,7 @@
     },
     {
       "Key": "welcomeWarning",
-      "Value": "Verifique se a Lat & Long estão corretas. Caso contrário, o bot será fechado! Lat: {0} Long: {1}"
+      "Value": "Verifique se a Lat & Long estão corretas. Caso contrário, saia do programa! Lat: {0} Long: {1}"
     },
     {
       "Key": "incubatorPuttingEgg",
@@ -378,7 +378,7 @@
     },
     {
       "Key": "logEntryEgg",
-      "Value": "EGG"
+      "Value": "OVO"
     },
     {
       "Key": "logEntryDebug",
@@ -390,7 +390,7 @@
     },
     {
       "Key": "loggingIn",
-      "Value": "Entrando utilizando {0}"
+      "Value": "Logando usando a conta {0}"
     },
     {
       "Key": "ptcOffline",
@@ -398,7 +398,7 @@
     },
     {
       "Key": "accessTokenExpired",
-      "Value": "Acesso Token expirado. Entre novamente para obter novo um Token."
+      "Value": "Acesso Token expirado. Entre novamente para obter um novo Token."
     },
     {
       "Key": "tryingAgainIn",
@@ -407,6 +407,10 @@
     {
       "Key": "accountNotVerified",
       "Value": "Conta não verificada! Saindo..."
+    },
+    {
+      "Key": "ptcLoginFailed",
+      "Value": "PTC login falhou. Certifique-se que você digitou o e-mail e senha corretos. Se você continuar a receber esta mensagem, verifique um possível banimento no seu celular ou Nox. Saindo ..."
     },
     {
       "Key": "openingGoogleDevicePage",
@@ -506,7 +510,7 @@
     },
     {
       "Key": "currentInvUsage",
-      "Value": "[Inventory] Inventário utilizado: {0}/{1}"
+      "Value": "[Inventory] inventário utilizado: {0}/{1}"
     },
     {
       "Key": "currentPokemonUsage",
@@ -534,8 +538,7 @@
     },
     {
       "Key": "invFullTransferManually",
-      "Value":
-        "O inventário de pokemons está cheio. Transfira seus pokemons manualmente ou altere TransferDuplicatePokemon para true nas configurações..."
+      "Value": "O inventário de pokemons está cheio. Transfira seus pokemons manualmente ou altere as configurações de transferencia pokemons..."
     },
     {
       "Key": "invFullPokestopLooting",
@@ -547,11 +550,15 @@
     },
     {
       "Key": "encounterProblemLurePokemon",
-      "Value": "Problema encontrado: Atraindo pokemon {0}"
+      "Value": "Problema encontrado: Lure pokemon {0}"
+    },
+        {
+      "Key": "encounterProblemPokemonFlee",
+      "Value": "Problema encontrado: Pokemon Fugiu {0}!"
     },
     {
       "Key": "desiredDestTooFar",
-      "Value": "Seu destino desejado de {0}, {1} é muito longe de sua posição atual {2}, {3}"
+      "Value": "Seu destino desejado {0}, {1} é muito longe de sua posição atual {2}, {3}"
     },
     {
       "Key": "pokemonRename",
@@ -603,8 +610,7 @@
     },
     {
       "Key": "statsTemplateString",
-      "Value":
-        "{0} - Sessão {1} - Nível: {2} | EXP/H: {3:0} | P/H: {4:0} | Stardust: {5:0} | Transferidos: {6:0} | Reciclados: {7:0}"
+      "Value": "{0} - Sessão {1} - Nível: {2} | EXP/H: {3:0} | P/H: {4:0} | Stardust: {5:0} | Transferidos: {6:0} | Reciclados: {7:0}"
     },
     {
       "Key": "statsXpTemplateString",
@@ -616,8 +622,7 @@
     },
     {
       "Key": "googleTwoFactorAuth",
-      "Value":
-        "Como você possui o Google Two Factor Auth ativado, você precisará informar o App Specific Password no arquivo auth.json"
+      "Value": "Como você possui o Google Two Factor Auth ativado, você precisará informar o App Specific Password no arquivo auth.json"
     },
     {
       "Key": "googleTwoFactorAuthExplanation",
@@ -707,8 +712,39 @@
       "Key": "skipLaggedMaintenance",
       "Value": "SkipLagged Servidor está fora do ar para manutenção."
     }
+    {
+      "Key": "checkingForMaximumInventorySize",
+      "Value": "[Inventário] Itens para manter excedem o tamanho máximo do inventário! {0}/{1}"
+    },
+    {
+      "Key": "logEntryFavorite",
+      "Value": "+FAVORITO"
+    },
+    {
+      "Key": "logEntryUnFavorite",
+      "Value": "-FAVORITO"
+    },
+    {
+      "Key": "pokemonFavorite",
+      "Value": "{0}"
+    },
+    {
+      "Key": "pokemonUnFavorite",
+      "Value": "{0}"
+    },
+    {
+      "Key": "walkingSpeedRandomized",
+      "Value": "{0}"
+    },
+    {
+      "Key": "stopBotToAvoidBan",
+      "Value": "O bot foi interrompido para evitar um BAN!"
+    },
+    {
+      "Key": "botNotStoppedRiskOfBan",
+      "Value": "Aconteceu algo que não deveria e bot não parou. Maior possibilidade de BAN. (Ação sugerida: parar o bot)."
+    }
   ],
-
   "Pokemon": [
     {
       "Key": "missingno",
