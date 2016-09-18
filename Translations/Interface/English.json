@@ -261,6 +261,11 @@
     "%CP_MaxCP_Possible_CP%": "CP / Max CP / Possible CP",
     "%ENERGY%": "Energy",
     "%DAMAGE_DPS%": "Damage | DPS",
-    "%EVOLVE_CP_AFTER": "CP after Evolution: "
+    "%EVOLVE_CP_AFTER": "CP after Evolution: ",
+    "%IMPORT_ROUTE%": "Import route",
+    "%EXPORT_ROUTE%": "Export route",
+    "%IMPOT_EXPORT_ROUTE%": "Import/Export Route",
+    "%IMPORT_INSTRUCTION%": "Enter a route below to Import it into Catchem, once entered click import.",
+    "%EXPORT_INSTRUCTION%": "Copy the below route to create a backup or share with others."
   }
 }
