@@ -262,6 +262,11 @@
     "%CP_MaxCP_Possible_CP%": "PL / Max PL / Possibili PL",
     "%ENERGY%": "Energia",
     "%DAMAGE_DPS%": "Danno | DPS",
-    "%EVOLVE_CP_AFTER": "PL dopo evoluzione: "
+    "%EVOLVE_CP_AFTER": "PL dopo evoluzione: ",
+    "%IMPORT_ROUTE%": "Importa percorso",
+    "%EXPORT_ROUTE%": "Esporta percorso",
+    "%IMPOT_EXPORT_ROUTE%": "Importa/Esporta Percorso",
+    "%IMPORT_INSTRUCTION%": "Inserisci un percorso qua sotto per Importarlo in Catchem, una volta inserito clicca 'Importa'",
+    "%EXPORT_INSTRUCTION%": "Copia il percorso qua sotto per farne un backup o per condividerlo con altri"
   }
 }
