@@ -223,7 +223,7 @@
     "%RENAME_DEFAULT_SELECTED_POKE%": "Quitarle el nombre a los pokemon seleccionados (Mote)",
     "%FAV_UNFAV_SELECTED_POKE%": "Dar/Quitar favorito a los pokemon seleccionados",
     "%TRANSFER_SELECTED_POKE%": "Transferir pokemon seleccionados",
-    "%AMOUNT%": "Cantidad: ",
+    "%AMOUNT%": "Cantidad:",
     "%RECYCLE_INPUT%": "Por favor, escriba la cantidad de objetos que deseas reciclar",
     "%USE_LURE_MOD%": "Usar Módulo Cebo",
     "%POKE_NAME_INPUT%": "Escribe el nombre que le(s) quieres poner:",
