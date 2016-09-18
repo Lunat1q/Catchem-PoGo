@@ -117,7 +117,7 @@
     "%DEVICE_BRAND%": "Marca del dispositivo",
     "%DEVICE_MODEL%": "Modelo del dispositivo",
     "%DEVICE_MODEL_IDENTIFIER%": "Identificador del modelo del dispositivo",
-    "%DEVICE_MODEL_BOOT%": "Tipo de arranque del dispositivo,
+    "%DEVICE_MODEL_BOOT%": "Tipo de arranque del dispositivo",
     "%HARDWARE_MANUFACTURER%": "Fabricante del hardware",
     "%HARDWARE_MODEL%": "Modelo del hardware",
     "%FIRMWARE_BRAND%": "Marca del firmware",
@@ -223,7 +223,7 @@
     "%RENAME_DEFAULT_SELECTED_POKE%": "Quitarle el nombre a los pokemon seleccionados (Mote)",
     "%FAV_UNFAV_SELECTED_POKE%": "Dar/Quitar favorito a los pokemon seleccionados",
     "%TRANSFER_SELECTED_POKE%": "Transferir pokemon seleccionados",
-    "%AMOUNT%": "Cantidad:",
+    "%AMOUNT%": "Cantidad: ",
     "%RECYCLE_INPUT%": "Por favor, escriba la cantidad de objetos que deseas reciclar",
     "%USE_LURE_MOD%": "Usar Módulo Cebo",
     "%POKE_NAME_INPUT%": "Escribe el nombre que le(s) quieres poner:",
@@ -262,7 +262,7 @@
     "%CP_MaxCP_Possible_CP%": "PC / PC máximo / Posible PC",
     "%ENERGY%": "Energía",
     "%DAMAGE_DPS%": "Daño | DPS",
-    "%EVOLVE_CP_AFTER": "PC despues de evolucionar: "
+    "%EVOLVE_CP_AFTER": "PC despues de evolucionar:",
     "%IMPORT_ROUTE%": "Importar ruta",
     "%EXPORT_ROUTE%": "Exportar ruta",
     "%IMPOT_EXPORT_ROUTE%": "Importar/Exportar Ruta",
@@ -270,4 +270,3 @@
     "%EXPORT_INSTRUCTION%": "Copiar la ruta para crear una copia de seguridad o compartir con otros."
     }
   }
-}
