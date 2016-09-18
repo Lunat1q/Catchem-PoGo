@@ -263,5 +263,10 @@
     "%ENERGY%": "エネルギー",
     "%DAMAGE_DPS%": "損害 | DPS",
     "%EVOLVE_CP_AFTER": "進化後のcp： "
+    "%IMPORT_ROUTE%": "輸入ルート",
+    "%EXPORT_ROUTE%": "輸出ルート",
+    "%IMPOT_EXPORT_ROUTE%": "輸入／輸出ルート",
+    "%IMPORT_INSTRUCTION%": "一度入力されたCatchemかちり輸入に輸入するために次ルートに入りなさい。",
+    "%EXPORT_INSTRUCTION%": "下記がバックアップを作製するか、他と分担するために送るコピー。"
   }
 }
