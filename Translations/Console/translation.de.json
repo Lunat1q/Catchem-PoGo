@@ -126,11 +126,11 @@
     },
     {
       "Key": "displayHighestsHeader",
-      "Value": "Pokémons"
+      "Value": "Pokémon"
     },
     {
       "Key": "commonWordPerfect",
-      "Value": "perfekt"
+      "Value": "Perfekt"
     },
     {
       "Key": "commonWordName",
@@ -230,7 +230,7 @@
     },
     {
       "Key": "accessTokenExpired",
-      "Value": "Access Token ausgelaufen. Logge mich neu ein für ein neues Token."
+      "Value": "Access Token ausgelaufen. Logge mich erneut ein für neuen Token."
     },
     {
       "Key": "tryingAgainIn",
@@ -330,111 +330,111 @@
     },
     {
       "Key": "setLure",
-      "Value": "Set lure at PokeStop: {0}, distance: {1}, lures left: {2}"
+      "Value": "Setze Lockmodul in PokeStop ein: {0}, Entfernung: {1}, übrige Module: {2}"
     },
     {
       "Key": "levelUp",
-      "Value": "Level up! Rewards: "
+      "Value": "Level aufgestiegen! Belohnung: "
     },
     {
       "Key": "evolvedInto",
-      "Value": "Evolved into {0} CP: {1} Iv: {2}%"
+      "Value": "Entwickelt in {0} WP: {1} Iv: {2}%"
     },
     {
       "Key": "gymTouch",
-      "Value": "Touched a gym: {0}{1} - {2}, points: {3}, Guards: {4}) "
+      "Value": "Arena berührt: {0}{1} - {2}, Punkte: {3}, Verteidiger: {4}) "
     },
     {
       "Key": "eggFound",
-      "Value": "Found an egg, distance: {0}km from PokeStop: {1}"
+      "Value": "Ei gefunden, Entfernung: {0}km von PokeStop: {1}"
     },
     {
       "Key": "pokeListEmpty",
-      "Value": "Highests Pokemon List is empty"
+      "Value": "Höchstes Pokémon Liste ist leer"
     },
     {
       "Key": "proxyAlready",
-      "Value": "{0} is already running with this proxy!"
+      "Value": "{0} läuft bereits mit diesem Proxy!"
     },
     {
       "Key": "yourIpProxyIp",
-      "Value": "Your IP is: {0} / Proxy IP is: {1}"
+      "Value": "Deine IP lautet: {0} / Proxy IP lautet: {1}"
     },
     {
       "Key": "ipMatch",
-      "Value": "Your ip match! I warned you!"
+      "Value": "Übereinstimmende IPs entdeckt! Warnung!"
     },
     {
       "Key": "yourIpIs",
-      "Value": "Your IP is: {0}"
+      "Value": "Deine IP lautet: {0}"
     },
     {
       "Key": "proxyDown",
-      "Value": "Proxy Down? Will try to interact with server anyway"
+      "Value": "Proxy nicht erreichbar? Versuche dennoch mit dem Server zu kommunizieren."
     },
     {
       "Key": "hourRateReached",
-      "Value": "Max amount of Pokemon ({0})/Pokestops ({1})/XP ({2})/Star Dust ({3}) per hour reached, bot will be stopped for {4} minutes"
+      "Value": "Maximale Anzahl an Pokémon ({0})/Pokestops ({1})/XP ({2})/Sternenstaub ({3}) pro Stunde erreicht, Bot wird für {4} Minuten pausieren."
     },
     {
       "Key": "botPauseCancel",
-      "Value": "Bot pause routine canceled"
+      "Value": "Pausenroutine des Bots unterbrochen!"
     },
     {
       "Key": "botPauseFail",
-      "Value": "Bot pause routine failed badly"
+      "Value": "Pausenroutine des Bots hat schwerwiegenden Fehler!"
     },
     {
       "Key": "updatesAt",
-      "Value": "During that pause, consider to check fresh updates at"
+      "Value": "Schaue vielleicht während dieser Pause nach neuen Updates auf"
     },
     {
       "Key": "discordLink",
-      "Value": "or join our friendly Discord chat:"
+      "Value": "oder tritt unserer freundlichen Discord Chatcommunity bei:"
     },
     {
       "Key": "scheduleAction",
-      "Value": "Schedule Action [{0}], with args: [{1}] performed successfully"
+      "Value": "Zeitplan Aktion [{0}], mit Argumenten: [{1}] erfolgreich durchgeführt"
     },
     {
       "Key": "scheduleActionFailed",
-      "Value": "Schedule Action Failed to perform action {0}, with args: {1}"
+      "Value": "Zeitplan Aktion scheiterte beim Durchführen der Aktion {0}, mit Argumenten: {1}"
     },
     {
       "Key": "schedulePause",
-      "Value": "Bot paused for {0}h, case of Schedule settings, will be started again at {1}, {2}:{3}"
+      "Value": "Aufgrund von Zeitplaneinstellungen pausiert der Bot für {0}std und startet wieder um {1}, {2}:{3}"
     },
     {
       "Key": "throwPokeball",
-      "Value": "Throwing {0}{1}{2} - {3}"
+      "Value": "Werfe {0}{1}{2} - {3}"
     },
     {
       "Key": "foundHiding",
-      "Value": "Found some hiding poke in the area, trying to catch'em now!"
+      "Value": "Versteckte Pokémon in der Gegend entdeckt, versuche sie zu fangen!"
     },
     {
       "Key": "pokeInGym",
-      "Value": "Pokemon {0} is signed to defend a GYM!"
+      "Value": "Pokémon {0} wurde ausgewählt eine Arena zu verteidigen!"
     },
     {
       "Key": "failedCoords",
-      "Value": "Coordinate failure, please check them again!"
+      "Value": "Koordinatenfehler, bitte erneut überprüfen!"
     },
     {
       "Key": "errorCatchNearby",
-      "Value": "Coordinate failure, please check them again!"
+      "Value": "Koordinatenfehler, bitte erneut überprüfen!"
     },
     {
       "Key": "candyMiss",
-      "Value": "Miss some candies to evolve (0), cancelling..."
+      "Value": "Es fehlen Bonbons, um (0) zu entwickeln, stoppe Aktion..."
     },
     {
       "Key": "noRoute",
-      "Value": "No proper route loaded, or route is too short"
+      "Value": "Fehlerhafte Route geladen oder Route ist zu kurz!"
     },
     {
       "Key": "customRouteData",
-      "Value": "You are using a custom route named: '{0}' with {1} routing points"
+      "Value": "Individuelle Route '{0}' mit {1} Wegpunkten wird verwendet"
     },
     {
       "Key": "unDoneForceMove",
