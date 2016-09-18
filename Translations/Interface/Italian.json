@@ -262,7 +262,7 @@
     "%CP_MaxCP_Possible_CP%": "PL / Max PL / Possibili PL",
     "%ENERGY%": "Energia",
     "%DAMAGE_DPS%": "Danno | DPS",
-    "%EVOLVE_CP_AFTER": "PL dopo evoluzione: "
+    "%EVOLVE_CP_AFTER": "PL dopo evoluzione: ",
     "%IMPORT_ROUTE%": "Importa percorso",
     "%EXPORT_ROUTE%": "Esporta percorso",
     "%IMPOT_EXPORT_ROUTE%": "Importa/Esporta Percorso",
