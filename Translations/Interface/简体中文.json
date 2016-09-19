@@ -261,6 +261,11 @@
     "%TAB_MAP_CONSOLE%": "地图&控制台",
     "%TAB_PLAYER%": "玩家",
     "%TAB_POKE%": "宠物",
-    "%TAB_POKE_LIST%": "宠物设置列表"
+    "%TAB_POKE_LIST%": "宠物设置列表",
+    "%IMPORT_ROUTE%": "导入路线",
+    "%EXPORT_ROUTE%": "导出路线",
+    "%IMPOT_EXPORT_ROUTE%": "导入/导出路线",
+    "%IMPORT_INSTRUCTION%": "输入一个需要导入到Catchem的路线，点击后导入.",
+    "%EXPORT_INSTRUCTION%": "拷贝下面路线用于备份或者分享给其他人."
   }
 }
