@@ -266,6 +266,7 @@
     "%EXPORT_ROUTE%": "Export route",
     "%IMPOT_EXPORT_ROUTE%": "Import/Export Route",
     "%IMPORT_INSTRUCTION%": "Enter a route below to Import it into Catchem, once entered click import.",
-    "%EXPORT_INSTRUCTION%": "Copy the below route to create a backup or share with others."
+    "%EXPORT_INSTRUCTION%": "Copy the below route to create a backup or share with others.",
+    "%BUSY%" : "Busy"
   }
 }
