@@ -1,0 +1,1358 @@
+{
+  "TranslationStrings": [
+    {
+      "Key": "setLure",
+      "Value": "루어를 설치 할 포케스탑: {0}, 거리: {1}, 남은 루어 개수: {2}"
+    },
+    {
+      "Key": "levelUp",
+      "Value": "레벨 업! 보상: "
+    },
+    {
+      "Key": "evolvedInto",
+      "Value": "{0} 으로 진화됨 CP: {1} Iv: {2}%"
+    },
+    {
+      "Key": "gymTouch",
+      "Value": "체육관 방문: {0}{1} - {2}, 포인트: {3}, 방어 포켓몬: {4}) "
+    },
+    {
+      "Key": "eggFound",
+      "Value": "알 발견, 거리: {0}km 발견된 포케스탑: {1}"
+    },
+    {
+      "Key": "pokeListEmpty",
+      "Value": "제일 강한 포켓몬 리스트가 비어있음"
+    },
+    {
+      "Key": "proxyAlready",
+      "Value": "{0} 이/가 이 프록시를 이미 사용하고 있음!"
+    },
+    {
+      "Key": "yourIpProxyIp",
+      "Value": "현재 IP 주소: {0} / 프록시 IP 주소: {1}"
+    },
+    {
+      "Key": "ipMatch",
+      "Value": "IP 가 같음! 경고 했습니다!"
+    },
+    {
+      "Key": "yourIpIs",
+      "Value": "현재 IP 주소: {0}"
+    },
+    {
+      "Key": "proxyDown",
+      "Value": "프록시가 다운되었나요? 서버와의 교신을 여전히 시도합니다."
+    },
+    {
+      "Key": "hourRateReached",
+      "Value": "한 시간 내 최대 포켓몬 갯수에 도달함 ({0})/포케스탑 ({1})/XP ({2})/스타더스트 ({3}) , 봇이 {4}분동안 정지됩니다"
+    },
+    {
+      "Key": "botPauseCancel",
+      "Value": "봇의 정지가 취소됨"
+    },
+    {
+      "Key": "botPauseFail",
+      "Value": "봇을 정지하는 동안 큰 오류발생"
+    },
+    {
+      "Key": "updatesAt",
+      "Value": "정지 되어 있을 동안 업데이트가 있는지 확인하세요:"
+    },
+    {
+      "Key": "discordLink",
+      "Value": "아니면 디스코드 채팅에 참여하세요:"
+    },
+    {
+      "Key": "scheduleAction",
+      "Value": "지정값 [{1}] 과 함께 예정돼 있던 스케줄 [{0}]: 성공적으로 실행완료"
+    },
+    {
+      "Key": "scheduleActionFailed",
+      "Value": "지정값 {1} 과 함께 예정돼 있던 스케줄 {0}: 실행 실패함"
+    },
+    {
+      "Key": "schedulePause",
+      "Value": "스케줄 설정에 따라 봇이 {0}시간동안 정지됨, {1}, {2}:{3} 에 다시 시작"
+    },
+    {
+      "Key": "throwPokeball",
+      "Value": "{0}{1}{2} - {3} 던짐"
+    },
+    {
+      "Key": "foundHiding",
+      "Value": "근처에 숨어있는 포켓몬 발견, 지금 포획 시도!"
+    },
+    {
+      "Key": "pokeInGym",
+      "Value": "{0} 포켓몬이 체육관을 지키고 있음!"
+    },
+    {
+      "Key": "failedCoords",
+      "Value": "좌표가 잘못되었음, 다시 확인하세요!"
+    },
+    {
+      "Key": "errorCatchNearby",
+      "Value": "좌표가 잘못 되었음, 다시 확인하세요!"
+    },
+    {
+      "Key": "candyMiss",
+      "Value": "(0) 을/를 진화하기 위한 캔디가 부족함, 취소중..."
+    },
+    {
+      "Key": "noRoute",
+      "Value": "제대로 된 루트가 입력되지 않았거나 루트가 너무 짧음"
+    },
+    {
+      "Key": "customRouteData",
+      "Value": "현재 사용하고 있는 커스텀루트의 이름: '{0}', 설정 된 루트지점 개수: {1}"
+    },
+    {
+      "Key": "unDoneForceMove",
+      "Value": "끝나지 않은 강제이동이 있음, 좌표 Lat: {0} Lon:{1} 으로 이동 계속 함"
+    },
+    {
+      "Key": "routeSwitched",
+      "Value": "루트가 {0} 에서 {1} 로 변경 됨!"
+    },
+    {
+      "Key": "customRouteDisabled",
+      "Value": "커스텀루트 비활성화됨, 보통 루트로 돌아감!"
+    },
+    {
+      "Key": "foundClosest",
+      "Value": "가장 가까운 위치 {0} - {1} 에서 발견, 그곳까지의 거리: {2} 미터, 바로 이동함!"
+    },
+    {
+      "Key": "customRouteEnabled",
+      "Value": "커스텀루트 활성화됨, 보통 루트를 끝냄!"
+    },
+    {
+      "Key": "forceMove",
+      "Value": "{0} - {1} 으로 강제이동 시작! 거리: {2}m"
+    },
+    {
+      "Key": "forceMoveDone",
+      "Value": "강제이동 완료!"
+    },
+    {
+      "Key": "inventorySettingsFailed",
+      "Value": "아이템 설정에 실패했습니다! {0} 퍼센트일때 ({1}개의 아이템이 모아졌을 때) 청소를 시작하기로 설정함과 동시에 {2}개의 아이템을 유지하라고 설정했습니다. 거기에는 럭키에그, 인큐베이터등 {3}개의 포함되지 않은 아이템도 있습니다."
+    },
+    {
+      "Key": "readTos",
+      "Value": "Niantic 의 서비스 조건을 읽습니다. 조건을 받아들입니다!"
+    },
+    {
+      "Key": "genderSelect",
+      "Value": "아바타를 선택합니다, {0}으로 설정되었습니다!"
+    },
+    {
+      "Key": "tutorialPokestop",
+      "Value": "처음 사용자 튜터리얼이 끝났습니다. 가상의 포케스탑을 방금 돌린 것 같네요 :P"
+    },
+    {
+      "Key": "tutorialPoke",
+      "Value": "튜터리얼 포켓몬을 잡았습니다! 바로 {0}!"
+    },
+    {
+      "Key": "tutorialNameNotPicked",
+      "Value": "원하는 닉네임을 고르지 않았네요!"
+    },
+    {
+      "Key": "tutorialNameTooLong",
+      "Value": "원하는 닉네임이 너무 길어요. 최대길이: 15!"
+    },
+    {
+      "Key": "tutorialNameDone",
+      "Value": "닉네임 설정됨: {0}"
+    },
+    {
+      "Key": "tutorialNameFailed",
+      "Value": "닉네임 설정 실패! 오류: {0}"
+    },
+    {
+      "Key": "tutorialNameErrorUnset",
+      "Value": "어떻게든 지정 안함"
+    },
+    {
+      "Key": "tutorialNameErrorChanged",
+      "Value": "성공, 닉네임 바뀜"
+    },
+    {
+      "Key": "tutorialNameErrorNotAvail",
+      "Value": "그 닉네임은 이미 사용되었습니다. 다른 이름을 선택하고 봇을 재시작하세요!"
+    },
+    {
+      "Key": "tutorialNameErrorNotValid",
+      "Value": "그 닉네임은 사용할 수 없습니다. 다른 이름을 선택하세요!"
+    },
+    {
+      "Key": "tutorialNameErrorOwner",
+      "Value": "이미 그 닉네임을 사용중입니다!"
+    },
+    {
+      "Key": "tutorialNameErrorNoMore",
+      "Value": "더이상 닉네임을 바꿀 수 없습니다!"
+    },
+    {
+      "Key": "pokeball",
+      "Value": "포켓볼"
+    },
+    {
+      "Key": "greatPokeball",
+      "Value": "그레이트볼"
+    },
+    {
+      "Key": "ultraPokeball",
+      "Value": "울트라볼"
+    },
+    {
+      "Key": "masterPokeball",
+      "Value": "마스터볼"
+    },
+    {
+      "Key": "wrongAuthType",
+      "Value": "config.json 파일에 알 수 없는 AuthType이 설정되었습니다"
+    },
+    {
+      "Key": "farmPokestopsOutsideRadius",
+      "Value": "지정한 최대 이동거리를 벗어났습니다! 5초후 시작지점 ({0}m 떨어져 있음) 으로 이동합니다. Coords.ini 파일이 제대로 설정되었는지 확인하세요."
+    },
+    {
+      "Key": "farmPokestopsNoUsableFound",
+      "Value": "사용 가능한 포케스탑이 주위에 없음. 최대 이동거리가 너무 짧지는 않나요?"
+    },
+    {
+      "Key": "eventFortUsed",
+      "Value": "이름: {0} XP: {1}, Gems: {2}, 아이템: {3}"
+    },
+    {
+      "Key": "eventFortFailed",
+      "Value": "이름: {0} 정보: 루팅 실패, 소프트밴일 가능성이 있음. 언밴 시도 {1}/{2}"
+    },
+    {
+      "Key": "eventFortTargeted",
+      "Value": "포케스탑으로 이동: {0} ({1}m 거리)"
+    },
+    {
+      "Key": "eventProfileLogin",
+      "Value": "{0} 으로 플레이 시작"
+    },
+    {
+      "Key": "eventLevelUpRewards",
+      "Value": "레벨업: {0} | 아이템: {1}"
+    },
+    {
+      "Key": "eventUsedLuckyEgg",
+      "Value": "럭키에그 사용, 남은 개수: {0}"
+    },
+    {
+      "Key": "eventUseLuckyEggMinPokemonCheck",
+      "Value": "럭키에그를 사용하기위한 충분한 포켓몬이 모이지 않음. {0} 포켓몬이 더 필요함. ({1}/{2})"
+    },
+    {
+      "Key": "eventPokemonEvolvedSuccess",
+      "Value": "{0} 성공적으로 진화함, {1}xp 획득"
+    },
+    {
+      "Key": "eventPokemonEvolvedFailed",
+      "Value": "{0} 진화 실패. 결과: {1}, {2} 의 진화 정지됨"
+    },
+    {
+      "Key": "eventPokemonTransferred",
+      "Value": "{0,-12} - CP: {1,4}  IV: {2,6}%  [최상의 CP: {3,4}  IV: {4,6}%] (캔디: {5})"
+    },
+    {
+      "Key": "eventItemRecycled",
+      "Value": "{0}x {1}"
+    },
+    {
+      "Key": "eventPokemonCapture",
+      "Value": "({0}) | {2}, 레벨: {3} | CP: ({4}/{5}) | IV: {6}% | 타입: {1} | 찬스: {7}% | 거리: {8}m | 사용: {9} ({10}개 남음) | XP: {11} | {12}"
+    },
+    {
+      "Key": "eventNoPokeballs",
+      "Value": "포켓볼이 없음 - CP {1} 인 {0} 놓침"
+    },
+    {
+      "Key": "catchStatusAttempt",
+      "Value": "{0} 시도 #{1}"
+    },
+    {
+      "Key": "catchStatus",
+      "Value": "{0}"
+    },
+    {
+      "Key": "candies",
+      "Value": "캔디: {0}"
+    },
+    {
+      "Key": "unhandledGpxData",
+      "Value": "GPX 파일을 읽을 수 없음, 건너뛰기 시도."
+    },
+    {
+      "Key": "displayHighestsHeader",
+      "Value": "포켓몬"
+    },
+    {
+      "Key": "commonWordPerfect",
+      "Value": "완벽"
+    },
+    {
+      "Key": "commonWordName",
+      "Value": "이름"
+    },
+    {
+      "Key": "commonWordUnknown",
+      "Value": "알 수 없음"
+    },
+    {
+      "Key": "displayHighestsCpHeader",
+      "Value": "최상의 CP 리스트"
+    },
+    {
+      "Key": "displayHighestsPerfectHeader",
+      "Value": "최상의 IV 리스트"
+    },
+    {
+      "Key": "displayHighestsLevelHeader",
+      "Value": "최상의 레벨 리스트"
+    },
+    {
+      "Key": "welcomeWarning",
+      "Value": "좌표가 정확한지 확인하고 아니라면 프로그램을 닫으세요! Lat: {0} Lng: {1} Alt: {2}"
+    },
+    {
+      "Key": "incubatorPuttingEgg",
+      "Value": "알을 인큐베이터에 넣음: {0:0.00}km 남음"
+    },
+    {
+      "Key": "incubatorStatusUpdate",
+      "Value": "인큐베이터 상태 업데이트: {0:0.00}km 남음"
+    },
+    {
+      "Key": "incubatorEggHatched",
+      "Value": "인큐베이터에서 알이 부화함: {0} | 레벨: {1} CP: ({2}/{3}) IV: {4}%"
+    },
+    {
+      "Key": "logEntryError",
+      "Value": "오류"
+    },
+    {
+      "Key": "logEntryAttention",
+      "Value": "주목"
+    },
+    {
+      "Key": "logEntryInfo",
+      "Value": "정보"
+    },
+    {
+      "Key": "logEntryPokestop",
+      "Value": "포케스탑"
+    },
+    {
+      "Key": "logEntryFarming",
+      "Value": "파밍"
+    },
+    {
+      "Key": "logEntryRecycling",
+      "Value": "아이템 버리기"
+    },
+    {
+      "Key": "logEntryPkmn",
+      "Value": "포획"
+    },
+    {
+      "Key": "logEntryTransfered",
+      "Value": "포켓몬 내보내기"
+    },
+    {
+      "Key": "logEntryEvolved",
+      "Value": "진화"
+    },
+    {
+      "Key": "logEntryBerry",
+      "Value": "베리"
+    },
+    {
+      "Key": "logEntryEgg",
+      "Value": "알"
+    },
+    {
+      "Key": "logEntryDebug",
+      "Value": "디버그"
+    },
+    {
+      "Key": "logEntryUpdate",
+      "Value": "업데이트"
+    },
+    {
+      "Key": "loggingIn",
+      "Value": "{0} 계정을 사용해서 로그인"
+    },
+    {
+      "Key": "ptcOffline",
+      "Value": "PTC 서버가 다운되었거나 아이디, 비밀번호가 틀림. 구글로 시도 해보세요"
+    },
+    {
+      "Key": "accessTokenExpired",
+      "Value": "접근토큰 만료됨. 새로운 토큰을 얻기 위해 다시 로그인하세요."
+    },
+    {
+      "Key": "tryingAgainIn",
+      "Value": "{0}초 후 다시 시도..."
+    },
+    {
+      "Key": "accountNotVerified",
+      "Value": "계정이 확인(이메일 확인)되지 않음! 끝내는 중..."
+    },
+    {
+      "Key": "ptcLoginFailed",
+      "Value": "PTC 로그인 실패. 이메일과 비밀번호를 정확히 입력했는지 확인하세요. 이 메세지가 계속 나온다면 휴대폰 또는 Nox 를 이용해서 밴 당한것은 아닌지 확인하세요. 끝내는 중..."
+    },
+    {
+      "Key": "openingGoogleDevicePage",
+      "Value": "구글 기기등록 페이지 여는 중. CTRL+V 를 사용하여 코드를 붙여넣기 하세요"
+    },
+    {
+      "Key": "couldntCopyToClipboard",
+      "Value": "클립보드에 복사하기 실패, 직접 하세요"
+    },
+    {
+      "Key": "couldntCopyToClipboard2",
+      "Value": "{0} 에 가서 {1} 입력"
+    },
+    {
+      "Key": "realisticTravelDetected",
+      "Value": "UserSettings.settings 를 이용한 사실적인 이동 감지됨"
+    },
+    {
+      "Key": "notRealisticTravel",
+      "Value": "{0} 에서 사실적인 이동 설정 안 됨, 마지막으로 저장 된 Coords.ini 를 사용함"
+    },
+    {
+      "Key": "coordinatesAreInvalid",
+      "Value": "\"Coords.ini\" 파일에 잘못된 좌표가 입력됨, 기본값 좌표를 사용함"
+    },
+    {
+      "Key": "gotUpToDateVersion",
+      "Value": "좋아요! 최신 버전을 사용하고 있습니다 - {0}"
+    },
+    {
+      "Key": "autoUpdaterDisabled",
+      "Value": "자동 업데이트가 비활성화 되어 있습니다. {0}\n 에서 최신버전을 다운받으세요"
+    },
+    {
+      "Key": "downloadingUpdate",
+      "Value": "업데이트를 다운로드 하는 중..."
+    },
+    {
+      "Key": "finishedDownloadingRelease",
+      "Value": "최신 버전 다운로드 완료..."
+    },
+    {
+      "Key": "finishedUnpackingFiles",
+      "Value": "압축 풀기 완료..."
+    },
+    {
+      "Key": "finishedTransferringConfig",
+      "Value": "최신 버전으로 config 세팅 옮기기 완료..."
+    },
+    {
+      "Key": "updateFinished",
+      "Value": "업데이트 완료, 이제 이 창을 닫아도 됩니다."
+    },
+    {
+      "Key": "lookingForIncensePokemon",
+      "Value": "인센스 포켓몬 찾는 중..."
+    },
+    {
+      "Key": "lookingForPokemon",
+      "Value": "포켓몬 찾는 중..."
+    },
+    {
+      "Key": "lookingForLurePokemon",
+      "Value": "루어 포켓몬 찾는 중..."
+    },
+    {
+      "Key": "pokemonSkipped",
+      "Value": "{0} 포켓몬 무시됨"
+    },
+    {
+      "Key": "zeroPokeballInv",
+      "Value": "인벤토리에 포켓볼이 없습니다, 포켓몬을 더이상 잡을 수 없습니다!"
+    },
+    {
+      "Key": "currentPokeballInv",
+      "Value": "[인벤토리] 포켓볼: {0} | 그레이트볼: {1} | 울트라볼: {2} | 마스터볼: {3} | 합계: {4}"
+    },
+    {
+      "Key": "currentPotionInv",
+      "Value": "[인벤토리] 포션: {0} | 슈퍼포션: {1} | 하이퍼포션: {2} | 맥스포션: {3} | 합계: {4}"
+    },
+    {
+      "Key": "currentBerryInv",
+      "Value": "[인벤토리] 라즈베리: {0} | 블리베리: {1} | 나나베리: {2} | 파인베리: {3} | 서배베리: {4} | 합계: {5}"
+    },
+    {
+      "Key": "currentReviveInv",
+      "Value": "[인벤토리] 부활: {0} | 맥스부활: {1} | 합계: {2}"
+    },
+    {
+      "Key": "currentIncenseInv",
+      "Value": "[인벤토리] 인센스: {0} | 쿨인센스: {1} | 플로럴인센스: {2} | 스파이시인센스: {3} | 합계: {4}"
+    },
+    {
+      "Key": "currentMiscInv",
+      "Value": "[인벤토리] 루어모듈: {0} | 럭키에그: {1} | 인큐베이터: {2} | 합계: {3}"
+    },
+    {
+      "Key": "currentInvUsage",
+      "Value": "[인벤토리] 인벤토리 상황: {0}/{1}"
+    },
+    {
+      "Key": "currentPokemonUsage",
+      "Value": "[인벤토리] 현재 포켓몬 수: {0}/{1}"
+    },
+    {
+      "Key": "checkingForBallsToRecycle",
+      "Value": "버릴 볼을 체크 하는 중, {0}개 유지"
+    },
+    {
+      "Key": "checkingForPotionsToRecycle",
+      "Value": "버릴 포션 체크하는 중, {0}개 유지"
+    },
+    {
+      "Key": "checkingForRevivesToRecycle",
+      "Value": "버릴 부활 아이템 체크하는 중, {0}개 유지"
+    },
+    {
+      "Key": "pokeballsToKeepIncorrect",
+      "Value": "TotalAmountOfPokeballsToKeep 설정이 잘못되었습니다. 숫자가 1보다 적음."
+    },
+    {
+      "Key": "invFullTransferring",
+      "Value": "포켓몬 인벤토리가 꽉 찼습니다, 포켓몬을 내보내는 중..."
+    },
+    {
+      "Key": "invFullTransferManually",
+      "Value": "포켓몬 인벤토리가 꽉 찼습니다! 직접 포켓몬을 내보내거나 세팅에서 TransferDuplicatePokemon 을 true 로 지정하세요..."
+    },
+    {
+      "Key": "invFullPokestopLooting",
+      "Value": "인벤토리가 꽉 차서 아이템이 루팅되지 않음!"
+    },
+    {
+      "Key": "encounterProblem",
+      "Value": "문제 발견: {0}"
+    },
+    {
+      "Key": "encounterProblemLurePokemon",
+      "Value": "문제 발견: 루어 포켓몬 {0}"
+    },
+    {
+      "Key": "encounterProblemPokemonFlee",
+      "Value": "발견된 포켓몬이 도망침 {0}!"
+    },
+    {
+      "Key": "desiredDestTooFar",
+      "Value": "원하는 목적지 {0}, {1} 은 현재 위치 {2}, {3} 에서 너무 멉니다."
+    },
+    {
+      "Key": "pokemonRename",
+      "Value": "포켓몬 {0} ({1}) 가 {2} 에서 {3} 으로 이름 바뀜."
+    },
+    {
+      "Key": "pokemonIgnoreFilter",
+      "Value": "[무시할 포켓몬 필터] - 설정에 따라 {0} 포켓몬을 무시함"
+    },
+    {
+      "Key": "catchStatusAttempt",
+      "Value": "시도"
+    },
+    {
+      "Key": "catchStatusError",
+      "Value": "오류"
+    },
+    {
+      "Key": "catchStatusEscape",
+      "Value": "빠져나옴"
+    },
+    {
+      "Key": "catchStatusFlee",
+      "Value": "도망침"
+    },
+    {
+      "Key": "catchStatusMissed",
+      "Value": "못맞힘"
+    },
+    {
+      "Key": "catchStatusSuccess",
+      "Value": "성공"
+    },
+    {
+      "Key": "catchTypeNormal",
+      "Value": "일반"
+    },
+    {
+      "Key": "catchTypeLure",
+      "Value": "루어"
+    },
+    {
+      "Key": "catchTypeIncense",
+      "Value": "인센스"
+    },
+    {
+      "Key": "webSocketFailStart",
+      "Value": "포트 : {0} 에서 WebSocketServer 시작 실패"
+    },
+    {
+      "Key": "statsTemplateString",
+      "Value": "{0} - 런타임 {1} - 레벨: {2} | EXP/H: {3:n0} | P/H: {4:n0} | 스타더스트: {5:n0} | 내보낸 포켓몬: {6:n0} | 버린 아이템: {7:n0}"
+    },
+    {
+      "Key": "statsXpTemplateString",
+      "Value": "{0} ({1}시간 {2}분후 레벨업 | {3:n0}/{4:n0} XP)"
+    },
+    {
+      "Key": "requireInputText",
+      "Value": "아무 키나 누르면 프로그램이 계속 진행됨..."
+    },
+    {
+      "Key": "googleTwoFactorAuth",
+      "Value": "구글 2단계 인증을 활성화 했기 때문에 구글 설정에서 앱 비밀번호를 생성한 뒤 auth.json 에 입력해야 합니다."
+    },
+    {
+      "Key": "googleTwoFactorAuthExplanation",
+      "Value": "구글 앱 비밀번호 페이지를 여는 중. (기기선택을 기타로 하고) 새로운 앱 비밀번호를 생성하세요."
+    },
+    {
+      "Key": "googleError",
+      "Value": "정확한 이메일과 비밀번호를 입력했는지 확인하세요."
+    },
+    {
+      "Key": "missingCredentialsGoogle",
+      "Value": "auth.json 파일에 GoogleUsername 과 GooglePassword 를 입력해야 합니다!"
+    },
+    {
+      "Key": "missingCredentialsPtc",
+      "Value": "auth.json 파일에 PtcUsername 과 PtcPassword 를 입력해야 합니다!"
+    },
+    {
+      "Key": "snipeScan",
+      "Value": "[스나이퍼] {0} 에서 스나이프 할 수 있는 포켓몬 스캔중..."
+    },
+    {
+      "Key": "snipeScanEx",
+      "Value": "[스나이퍼] {2} 에서 {0} 스나이프 중 - {1} IV..."
+    },
+    {
+      "Key": "noPokemonToSnipe",
+      "Value": "[스나이퍼] 스나이프 할 포켓몬을 찾지 못함!"
+    },
+    {
+      "Key": "notEnoughPokeballsToSnipe",
+      "Value": "스나이프를 시작할 포켓볼이 충분하지 않음! ({0}/{1})"
+    },
+    {
+      "Key": "displayHighestMove1Header",
+      "Value": "무브1"
+    },
+    {
+      "Key": "displayHighestMove2Header",
+      "Value": "무브2"
+    },
+    {
+      "Key": "useBerry",
+      "Value": "라즈베리 사용함. 남은 베리 수: {0}"
+    },
+    {
+      "Key": "nianticServerUnstable",
+      "Value": "Niantic 서버 불안정, API call 조정함."
+    },
+    {
+      "Key": "operationCanceled",
+      "Value": "현재 활동이 취소됨. 봇 정지/일시정지 됨."
+    },
+    {
+      "Key": "pokemonUpgradeSuccess",
+      "Value": "업그레이드 된 포켓몬: {0}:{1}"
+    },
+    {
+      "Key": "pokemonUpgradeFailed",
+      "Value": "자원 (스타더스트) 부족으로 포켓몬 업그레이드 실패."
+    },
+    {
+      "Key": "pokemonUpgradeUnavailable",
+      "Value": "포켓몬 업그레이드 불가능함: {0}:{1}/{2}"
+    },
+    {
+      "Key": "pokemonUpgradeFailedError",
+      "Value": "알 수 없는 오류로 포켓몬 업그레이드 실패. 현재 플레이어 레벨에서 가질 수 있는 포켓몬의 최대레벨일 가능성이 있음. 문제의 포켓몬: {0}"
+    },
+    {
+      "Key": "webErrorBadGateway",
+      "Value": "502 Bad Gateway: 서버가 과부화 됨!"
+    },
+    {
+      "Key": "webErrorGatewayTimeout",
+      "Value": "504 Gateway Time-out: 서버가 재시간안에 반응하지 않음."
+    },
+    {
+      "Key": "webErrorNotFound",
+      "Value": "404 Not Found: 서버에서 파일을 불러올 수 없음!"
+    },
+    {
+      "Key": "skipLaggedTimeout",
+      "Value": "SkipLagged 서버가 다운되었거나 SnipeRequestTimeoutSeconds 가 너무 작게 설정 됨!"
+    },
+    {
+      "Key": "skipLaggedMaintenance",
+      "Value": "SkipLagged 서버가 유지 보수중이므로 다운됨."
+    },
+    {
+      "Key": "checkingForMaximumInventorySize",
+      "Value": "[인벤토리] 유지할 아이템 수가 최대 인벤토리 크기보다 많음! {0}/{1}"
+    },
+    {
+      "Key": "logEntryFavorite",
+      "Value": "페이버릿"
+    },
+    {
+      "Key": "logEntryUnFavorite",
+      "Value": "페이버릿 안함"
+    },
+    {
+      "Key": "pokemonFavorite",
+      "Value": "{0}"
+    },
+    {
+      "Key": "pokemonUnFavorite",
+      "Value": "{0}"
+    },
+    {
+      "Key": "walkingSpeedRandomized",
+      "Value": "{0}"
+    },
+    {
+      "Key": "stopBotToAvoidBan",
+      "Value": "밴을 피하기 위해서 봇이 정지 됨!"
+    },
+    {
+      "Key": "botNotStoppedRiskOfBan",
+      "Value": "일어나지 말아야 할 경우가 생겼음에도 봇이 멈추지 않았음. 밴 걸렸을 가능성이 높음. (권장되는 행동: 봇을 멈추세요 \"Control+C\")."
+    }
+  ],
+  "Pokemon": [
+    {
+      "Key": "missingno",
+      "Value": "미싱노"
+    },
+    {
+      "Key": "bulbasaur",
+      "Value": "이상해씨"
+    },
+    {
+      "Key": "ivysaur",
+      "Value": "이상해풀"
+    },
+    {
+      "Key": "venusaur",
+      "Value": "이상해꽃"
+    },
+    {
+      "Key": "charmander",
+      "Value": "파이리"
+    },
+    {
+      "Key": "charmeleon",
+      "Value": "리자드"
+    },
+    {
+      "Key": "charizard",
+      "Value": "리자몽"
+    },
+    {
+      "Key": "squirtle",
+      "Value": "꼬부기"
+    },
+    {
+      "Key": "wartortle",
+      "Value": "어니부기"
+    },
+    {
+      "Key": "blastoise",
+      "Value": "거북왕"
+    },
+    {
+      "Key": "caterpie",
+      "Value": "캐터피"
+    },
+    {
+      "Key": "metapod",
+      "Value": "단데기"
+    },
+    {
+      "Key": "butterfree",
+      "Value": "버터플"
+    },
+    {
+      "Key": "weedle",
+      "Value": "뿔충이"
+    },
+    {
+      "Key": "kakuna",
+      "Value": "딱충이"
+    },
+    {
+      "Key": "beedrill",
+      "Value": "독침붕"
+    },
+    {
+      "Key": "pidgey",
+      "Value": "구구"
+    },
+    {
+      "Key": "pidgeotto",
+      "Value": "피죤"
+    },
+    {
+      "Key": "pidgeot",
+      "Value": "피죤투"
+    },
+    {
+      "Key": "rattata",
+      "Value": "꼬렛"
+    },
+    {
+      "Key": "raticate",
+      "Value": "레트라"
+    },
+    {
+      "Key": "spearow",
+      "Value": "깨비참"
+    },
+    {
+      "Key": "fearow",
+      "Value": "깨비드릴조"
+    },
+    {
+      "Key": "ekans",
+      "Value": "아보"
+    },
+    {
+      "Key": "arbok",
+      "Value": "아보크"
+    },
+    {
+      "Key": "pikachu",
+      "Value": "피카츄"
+    },
+    {
+      "Key": "raichu",
+      "Value": "라이츄"
+    },
+    {
+      "Key": "sandshrew",
+      "Value": "모래두지"
+    },
+    {
+      "Key": "sandslash",
+      "Value": "고지"
+    },
+    {
+      "Key": "nidoranFemale",
+      "Value": "니드런암컷"
+    },
+    {
+      "Key": "nidorina",
+      "Value": "니드리나"
+    },
+    {
+      "Key": "nidoqueen",
+      "Value": "니드퀸"
+    },
+    {
+      "Key": "nidoranMale",
+      "Value": "니드런수컷"
+    },
+    {
+      "Key": "nidorino",
+      "Value": "니드리노"
+    },
+    {
+      "Key": "nidoking",
+      "Value": "니드킹"
+    },
+    {
+      "Key": "clefairy",
+      "Value": "삐삐"
+    },
+    {
+      "Key": "clefable",
+      "Value": "픽시"
+    },
+    {
+      "Key": "vulpix",
+      "Value": "식스테일"
+    },
+    {
+      "Key": "ninetales",
+      "Value": "나인테일"
+    },
+    {
+      "Key": "jigglypuff",
+      "Value": "푸린"
+    },
+    {
+      "Key": "wigglytuff",
+      "Value": "푸크린"
+    },
+    {
+      "Key": "zubat",
+      "Value": "주뱃"
+    },
+    {
+      "Key": "golbat",
+      "Value": "골뱃"
+    },
+    {
+      "Key": "oddish",
+      "Value": "뚜벅쵸"
+    },
+    {
+      "Key": "gloom",
+      "Value": "냄새꼬"
+    },
+    {
+      "Key": "vileplume",
+      "Value": "라플레시아"
+    },
+    {
+      "Key": "paras",
+      "Value": "파라스"
+    },
+    {
+      "Key": "parasect",
+      "Value": "파라섹트"
+    },
+    {
+      "Key": "venonat",
+      "Value": "콘팡"
+    },
+    {
+      "Key": "venomoth",
+      "Value": "도나리"
+    },
+    {
+      "Key": "diglett",
+      "Value": "디그다"
+    },
+    {
+      "Key": "dugtrio",
+      "Value": "닥트리오"
+    },
+    {
+      "Key": "meowth",
+      "Value": "나옹"
+    },
+    {
+      "Key": "persian",
+      "Value": "페르시온"
+    },
+    {
+      "Key": "psyduck",
+      "Value": "고라파덕"
+    },
+    {
+      "Key": "golduck",
+      "Value": "골덕"
+    },
+    {
+      "Key": "mankey",
+      "Value": "망키"
+    },
+    {
+      "Key": "primeape",
+      "Value": "성원숭"
+    },
+    {
+      "Key": "growlithe",
+      "Value": "가디"
+    },
+    {
+      "Key": "arcanine",
+      "Value": "윈디"
+    },
+    {
+      "Key": "poliwag",
+      "Value": "발챙이"
+    },
+    {
+      "Key": "poliwhirl",
+      "Value": "수륙챙이"
+    },
+    {
+      "Key": "poliwrath",
+      "Value": "강챙이"
+    },
+    {
+      "Key": "abra",
+      "Value": "캐이시"
+    },
+    {
+      "Key": "kadabra",
+      "Value": "윤겔라"
+    },
+    {
+      "Key": "alakazam",
+      "Value": "후딘"
+    },
+    {
+      "Key": "machop",
+      "Value": "알통몬"
+    },
+    {
+      "Key": "machoke",
+      "Value": "근육몬"
+    },
+    {
+      "Key": "machamp",
+      "Value": "괴력몬"
+    },
+    {
+      "Key": "bellsprout",
+      "Value": "모다피"
+    },
+    {
+      "Key": "weepinbell",
+      "Value": "우츠동"
+    },
+    {
+      "Key": "victreebel",
+      "Value": "우츠보트"
+    },
+    {
+      "Key": "tentacool",
+      "Value": "왕눈해"
+    },
+    {
+      "Key": "tentacruel",
+      "Value": "독파리"
+    },
+    {
+      "Key": "geodude",
+      "Value": "꼬마돌"
+    },
+    {
+      "Key": "graveler",
+      "Value": "데구리"
+    },
+    {
+      "Key": "golem",
+      "Value": "딱구리"
+    },
+    {
+      "Key": "ponyta",
+      "Value": "포니타"
+    },
+    {
+      "Key": "rapidash",
+      "Value": "날쌩마"
+    },
+    {
+      "Key": "slowpoke",
+      "Value": "야돈"
+    },
+    {
+      "Key": "slowbro",
+      "Value": "야도란"
+    },
+    {
+      "Key": "magnemite",
+      "Value": "코일"
+    },
+    {
+      "Key": "magneton",
+      "Value": "레어코일"
+    },
+    {
+      "Key": "farfetchd",
+      "Value": "파오리"
+    },
+    {
+      "Key": "doduo",
+      "Value": "두두"
+    },
+    {
+      "Key": "dodrio",
+      "Value": "두트리오"
+    },
+    {
+      "Key": "seel",
+      "Value": "쥬쥬"
+    },
+    {
+      "Key": "dewgong",
+      "Value": "쥬레곤"
+    },
+    {
+      "Key": "grimer",
+      "Value": "질퍽이"
+    },
+    {
+      "Key": "muk",
+      "Value": "질뻐기"
+    },
+    {
+      "Key": "shellder",
+      "Value": "셀러"
+    },
+    {
+      "Key": "cloyster",
+      "Value": "파르셀"
+    },
+    {
+      "Key": "gastly",
+      "Value": "고오스"
+    },
+    {
+      "Key": "haunter",
+      "Value": "고우스트"
+    },
+    {
+      "Key": "gengar",
+      "Value": "팬텀"
+    },
+    {
+      "Key": "onix",
+      "Value": "롱스톤"
+    },
+    {
+      "Key": "drowzee",
+      "Value": "슬리프"
+    },
+    {
+      "Key": "hypno",
+      "Value": "슬리퍼"
+    },
+    {
+      "Key": "krabby",
+      "Value": "크랩"
+    },
+    {
+      "Key": "kingler",
+      "Value": "킹크랩"
+    },
+    {
+      "Key": "voltorb",
+      "Value": "찌리리공"
+    },
+    {
+      "Key": "electrode",
+      "Value": "붐볼"
+    },
+    {
+      "Key": "exeggcute",
+      "Value": "아라리"
+    },
+    {
+      "Key": "exeggutor",
+      "Value": "나시"
+    },
+    {
+      "Key": "cubone",
+      "Value": "탕구리"
+    },
+    {
+      "Key": "marowak",
+      "Value": "텅구리"
+    },
+    {
+      "Key": "hitmonlee",
+      "Value": "시라소몬"
+    },
+    {
+      "Key": "hitmonchan",
+      "Value": "홍수몬"
+    },
+    {
+      "Key": "lickitung",
+      "Value": "내루미"
+    },
+    {
+      "Key": "koffing",
+      "Value": "또가스"
+    },
+    {
+      "Key": "weezing",
+      "Value": "또도가스"
+    },
+    {
+      "Key": "rhyhorn",
+      "Value": "뿔카노"
+    },
+    {
+      "Key": "rhydon",
+      "Value": "코뿌리"
+    },
+    {
+      "Key": "chansey",
+      "Value": "럭키"
+    },
+    {
+      "Key": "tangela",
+      "Value": "덩쿠리"
+    },
+    {
+      "Key": "kangaskhan",
+      "Value": "캥카"
+    },
+    {
+      "Key": "horsea",
+      "Value": "쏘드라"
+    },
+    {
+      "Key": "seadra",
+      "Value": "시드라"
+    },
+    {
+      "Key": "goldeen",
+      "Value": "콘치"
+    },
+    {
+      "Key": "seaking",
+      "Value": "왕콘치"
+    },
+    {
+      "Key": "staryu",
+      "Value": "별가사리"
+    },
+    {
+      "Key": "starmie",
+      "Value": "아쿠스타"
+    },
+    {
+      "Key": "mrMime",
+      "Value": "마임맨"
+    },
+    {
+      "Key": "scyther",
+      "Value": "스라크"
+    },
+    {
+      "Key": "jynx",
+      "Value": "루주라"
+    },
+    {
+      "Key": "electabuzz",
+      "Value": "에레브"
+    },
+    {
+      "Key": "magmar",
+      "Value": "마그마"
+    },
+    {
+      "Key": "pinsir",
+      "Value": "쁘사이저"
+    },
+    {
+      "Key": "tauros",
+      "Value": "켄타로스"
+    },
+    {
+      "Key": "magikarp",
+      "Value": "잉어킹"
+    },
+    {
+      "Key": "gyarados",
+      "Value": "갸라도스"
+    },
+    {
+      "Key": "lapras",
+      "Value": "라프라스"
+    },
+    {
+      "Key": "ditto",
+      "Value": "메타몽"
+    },
+    {
+      "Key": "eevee",
+      "Value": "이브이"
+    },
+    {
+      "Key": "vaporeon",
+      "Value": "샤미드"
+    },
+    {
+      "Key": "jolteon",
+      "Value": "쥬피썬더"
+    },
+    {
+      "Key": "flareon",
+      "Value": "부스터"
+    },
+    {
+      "Key": "porygon",
+      "Value": "폴리곤"
+    },
+    {
+      "Key": "omanyte",
+      "Value": "암나이트"
+    },
+    {
+      "Key": "omastar",
+      "Value": "암스타"
+    },
+    {
+      "Key": "kabuto",
+      "Value": "투구"
+    },
+    {
+      "Key": "kabutops",
+      "Value": "투구푸스"
+    },
+    {
+      "Key": "aerodactyl",
+      "Value": "프테라"
+    },
+    {
+      "Key": "snorlax",
+      "Value": "잠만보"
+    },
+    {
+      "Key": "articuno",
+      "Value": "프리져"
+    },
+    {
+      "Key": "zapdos",
+      "Value": "썬더"
+    },
+    {
+      "Key": "moltres",
+      "Value": "파이어"
+    },
+    {
+      "Key": "dratini",
+      "Value": "미뇽"
+    },
+    {
+      "Key": "dragonair",
+      "Value": "신뇽"
+    },
+    {
+      "Key": "dragonite",
+      "Value": "망나뇽"
+    },
+    {
+      "Key": "mewtwo",
+      "Value": "뮤츠"
+    },
+    {
+      "Key": "mew",
+      "Value": "뮤"
+    }
+  ]
+}
