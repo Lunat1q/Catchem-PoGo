@@ -267,5 +267,10 @@
     "%IMPOT_EXPORT_ROUTE%": "루트 불러오기/내보내기",
     "%IMPORT_INSTRUCTION%": "Catchem 으로 불러올 루트를 아래에 입력후 불러오기를 클릭하세요.",
     "%EXPORT_INSTRUCTION%": "아래의 루트를 복사해서 백업 또는 다른사람과 공유하세요."
+    "%BUSY%" : "바쁨"
+    "%LEVEL_UP%" : "레벨업",
+    "%TRANSFER%" : "트렌스퍼",
+    "%FAVORITE%" : "별표"
+    "%ACTION_QUEUE%" : "액션리스트"
   }
 }
