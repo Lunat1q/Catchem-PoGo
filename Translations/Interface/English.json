@@ -270,6 +270,7 @@
     "%BUSY%" : "Busy",
     "%LEVEL_UP%" : "Level up",
     "%TRANSFER%" : "Transfer",
-    "%FAVORITE%" : "Favorite"
+    "%FAVORITE%" : "Favorite",
+    "%ACTION_QUEUE%" : "Action Queue"
   }
 }
