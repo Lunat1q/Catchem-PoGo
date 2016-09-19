@@ -642,7 +642,7 @@
     },
     {
       "Key": "errorCatchNearby",
-      "Value": "Coordinate failure, please check them again!"
+      "Value": "Error during catch process!"
     },
     {
       "Key": "candyMiss",
