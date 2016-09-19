@@ -78,7 +78,7 @@
     },
     {
       "Key": "throwPokeball",
-      "Value": "{0}{1}{2} - {3} 던짐"
+      "Value": "{0}{1}{2} 던짐 - {3}"
     },
     {
       "Key": "foundHiding",
@@ -94,7 +94,7 @@
     },
     {
       "Key": "errorCatchNearby",
-      "Value": "좌표가 잘못 되었음, 다시 확인하세요!"
+      "Value": "좌표가 잘못되었음, 다시 확인하세요!"
     },
     {
       "Key": "candyMiss",
@@ -178,7 +178,7 @@
     },
     {
       "Key": "tutorialNameErrorChanged",
-      "Value": "성공, 닉네임 바뀜"
+      "Value": "성공, 닉네임 변경"
     },
     {
       "Key": "tutorialNameErrorNotAvail",
@@ -226,15 +226,15 @@
     },
     {
       "Key": "eventFortUsed",
-      "Value": "이름: {0} XP: {1}, Gems: {2}, 아이템: {3}"
+      "Value": "포케스탑: {0}, XP: {1}, Gems: {2}, 아이템: {3}"
     },
     {
       "Key": "eventFortFailed",
-      "Value": "이름: {0} 정보: 루팅 실패, 소프트밴일 가능성이 있음. 언밴 시도 {1}/{2}"
+      "Value": "포케스탑: {0}, 정보: 루팅 실패, 소프트밴일 가능성이 있음. 언밴 시도 {1}/{2}"
     },
     {
       "Key": "eventFortTargeted",
-      "Value": "포케스탑으로 이동: {0} ({1}m 거리)"
+      "Value": "포케스탑으로 이동: {0} (거리: {1}m)"
     },
     {
       "Key": "eventProfileLogin",
@@ -270,7 +270,7 @@
     },
     {
       "Key": "eventPokemonCapture",
-      "Value": "({0}) | {2}, 레벨: {3} | CP: ({4}/{5}) | IV: {6}% | 타입: {1} | 찬스: {7}% | 거리: {8}m | 사용: {9} ({10}개 남음) | XP: {11} | {12}"
+      "Value": "({0}) | {2}, 레벨: {3} | CP: ({4}/{5}) | IV: {6}% | 타입: {1} | 확률: {7}% | 거리: {8}m | 사용: {9} ({10}개 남음) | XP: {11} | {12}"
     },
     {
       "Key": "eventNoPokeballs",
@@ -278,7 +278,7 @@
     },
     {
       "Key": "catchStatusAttempt",
-      "Value": "{0} 시도 #{1}"
+      "Value": "{1}번째 시도 - {0}"
     },
     {
       "Key": "catchStatus",
@@ -298,7 +298,7 @@
     },
     {
       "Key": "commonWordPerfect",
-      "Value": "완벽"
+      "Value": "완벽도"
     },
     {
       "Key": "commonWordName",
@@ -322,7 +322,7 @@
     },
     {
       "Key": "welcomeWarning",
-      "Value": "좌표가 정확한지 확인하고 아니라면 프로그램을 닫으세요! Lat: {0} Lng: {1} Alt: {2}"
+      "Value": "좌표가 정확한지 확인하고 정확하지 않으면 프로그램을 닫으세요! Lat: {0} Lon: {1} Alt: {2}"
     },
     {
       "Key": "incubatorPuttingEgg",
@@ -366,7 +366,7 @@
     },
     {
       "Key": "logEntryTransfered",
-      "Value": "포켓몬 내보내기"
+      "Value": "포켓몬 트렌스퍼"
     },
     {
       "Key": "logEntryEvolved",
@@ -438,7 +438,7 @@
     },
     {
       "Key": "gotUpToDateVersion",
-      "Value": "좋아요! 최신 버전을 사용하고 있습니다 - {0}"
+      "Value": "좋아요! 최신버전을 사용하고 있습니다 - {0}"
     },
     {
       "Key": "autoUpdaterDisabled",
@@ -450,7 +450,7 @@
     },
     {
       "Key": "finishedDownloadingRelease",
-      "Value": "최신 버전 다운로드 완료..."
+      "Value": "최신버전 다운로드 완료..."
     },
     {
       "Key": "finishedUnpackingFiles",
@@ -458,7 +458,7 @@
     },
     {
       "Key": "finishedTransferringConfig",
-      "Value": "최신 버전으로 config 세팅 옮기기 완료..."
+      "Value": "최신버전으로 config 세팅 옮기기 완료..."
     },
     {
       "Key": "updateFinished",
@@ -534,11 +534,11 @@
     },
     {
       "Key": "invFullTransferring",
-      "Value": "포켓몬 인벤토리가 꽉 찼습니다, 포켓몬을 내보내는 중..."
+      "Value": "포켓몬 인벤토리가 꽉 찼습니다, 포켓몬 트렌스퍼중..."
     },
     {
       "Key": "invFullTransferManually",
-      "Value": "포켓몬 인벤토리가 꽉 찼습니다! 직접 포켓몬을 내보내거나 세팅에서 TransferDuplicatePokemon 을 true 로 지정하세요..."
+      "Value": "포켓몬 인벤토리가 꽉 찼습니다! 직접 포켓몬을 트렌스퍼 하거나 세팅에서 TransferDuplicatePokemon 을 true 로 지정하세요..."
     },
     {
       "Key": "invFullPokestopLooting",
@@ -586,7 +586,7 @@
     },
     {
       "Key": "catchStatusMissed",
-      "Value": "못맞힘"
+      "Value": "빗나감"
     },
     {
       "Key": "catchStatusSuccess",
@@ -610,7 +610,7 @@
     },
     {
       "Key": "statsTemplateString",
-      "Value": "{0} - 런타임 {1} - 레벨: {2} | EXP/H: {3:n0} | P/H: {4:n0} | 스타더스트: {5:n0} | 내보낸 포켓몬: {6:n0} | 버린 아이템: {7:n0}"
+      "Value": "{0} - 런타임 {1} - 레벨: {2} | EXP/H: {3:n0} | P/H: {4:n0} | 스타더스트: {5:n0} | 트렌스퍼: {6:n0} | 버린 아이템: {7:n0}"
     },
     {
       "Key": "statsXpTemplateString",
@@ -670,7 +670,7 @@
     },
     {
       "Key": "nianticServerUnstable",
-      "Value": "Niantic 서버 불안정, API call 조정함."
+      "Value": "Niantic 서버 불안정, API call 조정됨."
     },
     {
       "Key": "operationCanceled",
@@ -718,11 +718,11 @@
     },
     {
       "Key": "logEntryFavorite",
-      "Value": "페이버릿"
+      "Value": "포켓몬 별표함"
     },
     {
       "Key": "logEntryUnFavorite",
-      "Value": "페이버릿 안함"
+      "Value": "포켓몬 별표 안함"
     },
     {
       "Key": "pokemonFavorite",
