@@ -262,7 +262,7 @@
     "%CP_MaxCP_Possible_CP%": "CP / CP最大限 / CPの可能性",
     "%ENERGY%": "エネルギー",
     "%DAMAGE_DPS%": "損害 | DPS",
-    "%EVOLVE_CP_AFTER": "進化後のcp： "
+    "%EVOLVE_CP_AFTER": "進化後のcp： ",
     "%IMPORT_ROUTE%": "輸入ルート",
     "%EXPORT_ROUTE%": "輸出ルート",
     "%IMPOT_EXPORT_ROUTE%": "輸入／輸出ルート",

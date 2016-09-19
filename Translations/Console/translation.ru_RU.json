@@ -578,7 +578,7 @@
     },
     {
       "Key": "tutorialNameErrorOwner",
-      "Value": "У вас уже установлено это
+      "Value": "У вас уже установлено это имя!"
     },
     {
       "Key": "tutorialNameErrorNoMore",
@@ -643,7 +643,7 @@
     {
       "Key": "pokeballsToKeepIncorrect",
       "Value": "Количество покемонов в инвенторе настроено неверно. значение меньше 1."
-    }
+    },
     {
       "Key": "encounterProblemPokemonFlee",
       "Value": "Схватка с покемоном не удалась {0}!"
