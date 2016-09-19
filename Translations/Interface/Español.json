@@ -249,7 +249,7 @@
     "%BOT_API_KEY%": "Código API del Bot",
     "%OWNERS%": "Administradores",
     "%TO_AUTO_REPORT%": "Auto-Notificar",
-    "%REPORT_ANY_ABOVE_CP%": "Auto-Notificar cualquier pokemon con un min PC(0 para desactivarlo)",
+    "%REPORT_ANY_ABOVE_CP%": "Auto-Notificar cualquier pokemon con un min PC (0 para desactivarlo)",
     "%REPORT_ANY_ABOVE_IV%": "Auto-Notificar cualquier pokemon con un min IV (0 para desactivarlo)",
     "%MAINSETTINGSBOX%": "Ajustes principales",
     "%EXTRA_SETTINGS%": "Ajustes adicionales",
