@@ -6,7 +6,7 @@
     },
     {
       "Key": "greatPokeball",
-      "Value": "SuperBall"
+      "Value": "GreatBall"
     },
     {
       "Key": "ultraPokeball",
@@ -14,7 +14,7 @@
     },
     {
       "Key": "masterPokeball",
-      "Value": "MeesterBall"
+      "Value": "MasterBall"
     },
     {
       "Key": "wrongAuthType",
@@ -50,7 +50,7 @@
     },
     {
       "Key": "eventUseLuckyEggMinPokemonCheck",
-      "Value": "Not enough Pokemon to trigger a lucky egg. Waiting for {0} more. ({1}/{2})"
+      "Value": "Niet genoeg pokemon voor een lucky egg. aan het wachten op {0} meer. ({1}/{2})"
     },
     {
       "Key": "eventPokemonEvolvedSuccess",
@@ -74,7 +74,7 @@
     },
     {
       "Key": "eventNoPokeballs",
-      "Value": "Geen PokeBallen - Een {0} met CP {1} misgelopen"
+      "Value": "Geen PokeBalls - Een {0} met CP {1} misgelopen"
     },
     {
       "Key": "catchStatusAttempt",
@@ -182,7 +182,7 @@
     },
     {
       "Key": "loggingIn",
-      "Value": "Proberen in te loggen met {0}"
+      "Value": " inloggen met {0}"
     },
     {
       "Key": "ptcOffline",
@@ -190,7 +190,7 @@
     },
     {
       "Key": "accessTokenExpired",
-      "Value": "Access token expired. Relogin to get a new token."
+      "Value": "Access token verlopen. Opnieuw inloggen voor een nieuwe token."
     },
     {
       "Key": "tryingAgainIn",
@@ -210,7 +210,7 @@
     },
     {
       "Key": "couldntCopyToClipboard",
-      "Value": "Kon niet kopiëren naar het klembord, doe het handmatig!"
+      "Value": "Kan niet kopiëren naar klembord, doe het handmatig!"
     },
     {
       "Key": "couldntCopyToClipboard2",
@@ -226,7 +226,7 @@
     },
     {
       "Key": "coordinatesAreInvalid",
-      "Value": "Coördinaten in \"Coords.ini\" zijn ongeldig, gebruiken maken van de standaard coördinaten!"
+      "Value": "Coördinaten in \"Coords.ini\" zijn ongeldig, maak gebruik van de standaard coördinaten!"
     },
     {
       "Key": "gotUpToDateVersion",
@@ -250,11 +250,11 @@
     },
     {
       "Key": "finishedTransferringConfig",
-      "Value": "Klaar met het overzetten uw config naar de nieuwe versie..."
+      "Value": "Klaar met het overzetten van uw config naar de nieuwere versie..."
     },
     {
       "Key": "updateFinished",
-      "Value": "Update klaar is, kunt u dit venster nu sluiten."
+      "Value": "Als de update klaar is, kunt u dit venster nu sluiten."
     },
     {
       "Key": "lookingForIncensePokemon",
@@ -270,23 +270,23 @@
     },
     {
       "Key": "currentPokeballInv",
-      "Value": "[Huidige inventaris] Pokeballs: {0} | SuperBalls: {1} | UltraBalls: {2} | MeesterBalls: {3} "
+      "Value": "[Huidige inventaris] Pokeballs: {0} | GreatBalls: {1} | UltraBalls: {2} | MasterBalls: {3} "
     },
     {
       "Key": "checkingForBallsToRecycle",
-      "Value": "Controle of we PokeBalls moeten recyclen, houden van {0} Pokeballs"
+      "Value": "Aan het Controleren of we PokeBalls moeten recyclen, {0} Pokeballs houden"
     },
     {
       "Key": "checkingForPotionsToRecycle",
-      "Value": "Controle of we Drankjes moeten recyclen, houden van {0} Drankjes"
+      "Value": "Aan het Controlerene of we Drankjes moeten recyclen, {0} Drankjes houden"
     },
     {
       "Key": "checkingForRevivesToRecycle",
-      "Value": "Controle of we Revives moeten recyclen, houden van {0} Revives"
+      "Value": "Aan het Controleren of we Revives moeten recyclen,  {0} Revives houden"
     },
     {
       "Key": "invFullTransferring",
-      "Value": "Pokemon Inventaris is vol, transferring Pokemon..."
+      "Value": "Pokemon Inventaris is vol,Pokemon transferen..."
     },
     {
       "Key": "invFullTransferManually",
@@ -422,35 +422,35 @@
     },
     {
       "Key": "setLure",
-      "Value": "Set lure at PokeStop: {0}, distance: {1}, lures left: {2}"
+      "Value": "Lure bij PokeStop: {0}, aftsnad: {1}, lures over: {2}"
     },
     {
       "Key": "levelUp",
-      "Value": "Level up! Rewards: "
+      "Value": "Level up! beloningen: "
     },
     {
       "Key": "evolvedInto",
-      "Value": "Evolved into {0} CP: {1} Iv: {2}%"
+      "Value": "ge-Evolved naar {0} CP: {1} Iv: {2}%"
     },
     {
       "Key": "gymTouch",
-      "Value": "Touched a gym: {0}{1} - {2}, points: {3}, Guards: {4}) "
+      "Value": "gym gevonden: {0}{1} - {2}, punten: {3}, verdedigers: {4}) "
     },
     {
       "Key": "eggFound",
-      "Value": "Found an egg, distance: {0}km from PokeStop: {1}"
+      "Value": "Een ij gevonden, afstand: {0}km van de PokeStop: {1}"
     },
     {
       "Key": "pokeListEmpty",
-      "Value": "Highests Pokemon List is empty"
+      "Value": "Hoogste Pokemon Lijst is leeg"
     },
     {
       "Key": "proxyAlready",
-      "Value": "{0} is already running with this proxy!"
+      "Value": "{0} is al bezig op deze Proxy!"
     },
     {
       "Key": "yourIpProxyIp",
-      "Value": "Your IP is: {0} / Proxy IP is: {1}"
+      "Value": "Je IP is: {0} / Proxy IP is: {1}"
     },
     {
       "Key": "ipMatch",
@@ -458,7 +458,7 @@
     },
     {
       "Key": "yourIpIs",
-      "Value": "Your IP is: {0}"
+      "Value": "Je IP is: {0}"
     },
     {
       "Key": "proxyDown",
@@ -466,23 +466,23 @@
     },
     {
       "Key": "hourRateReached",
-      "Value": "Max amount of Pokemon ({0})/Pokestops ({1})/XP ({2})/Star Dust ({3}) per hour reached, bot will be stopped for {4} minutes"
+      "Value": "Maximum aantal Pokemon ({0})/Pokestops ({1})/XP ({2})/Star Dust ({3}) per uur behaald, bot wordt gestopt voor{4} minuten"
     },
     {
       "Key": "botPauseCancel",
-      "Value": "Bot pause routine canceled"
+      "Value": "Bot pauze-routine gecancelt"
     },
     {
       "Key": "botPauseFail",
-      "Value": "Bot pause routine failed badly"
+      "Value": "Bot pauze-routine heel erg mislukt"
     },
     {
       "Key": "updatesAt",
-      "Value": "During that pause, consider to check fresh updates at"
+      "Value": "Tijdens deze pauze, kijk mischien even op de github voor updates"
     },
     {
       "Key": "discordLink",
-      "Value": "or join our friendly Discord chat:"
+      "Value": "of join de discord chat:"
     },
     {
       "Key": "scheduleAction",
@@ -494,15 +494,15 @@
     },
     {
       "Key": "schedulePause",
-      "Value": "Bot paused for {0}h, case of Schedule settings, will be started again at {1}, {2}:{3}"
+      "Value": "Bot gepauzeerd voor {0}u, case of Schedule settings, zal weer gestart worden na {1}, {2}:{3}"
     },
     {
       "Key": "throwPokeball",
-      "Value": "Throwing {0}{1}{2} - {3}"
+      "Value": "Gooit {0}{1}{2} - {3}"
     },
     {
       "Key": "foundHiding",
-      "Value": "Found some hiding poke in the area, trying to catch'em now!"
+      "Value": "Een aantal Pokemon gevonden in de buurt, probeer ze nu te vangen!"
     },
     {
       "Key": "pokeInGym",
@@ -510,87 +510,87 @@
     },
     {
       "Key": "failedCoords",
-      "Value": "Coordinate failure, please check them again!"
+      "Value": "Coordinaten fout, graag opnieuw checken!"
     },
     {
       "Key": "errorCatchNearby",
-      "Value": "Coordinate failure, please check them again!"
+      "Value": "Coordinaten fout, graag opnieuw checken!"
     },
     {
       "Key": "candyMiss",
-      "Value": "Miss some candies to evolve (0), cancelling..."
+      "Value": "nog snoepjes nodig om te evolven (0), afbreken..."
     },
     {
       "Key": "noRoute",
-      "Value": "No proper route loaded, or route is too short"
+      "Value": "Geen goederoute gelaaden, of de  route is te kort"
     },
     {
       "Key": "customRouteData",
-      "Value": "You are using a custom route named: '{0}' with {1} routing points"
+      "Value": "je gebruikt een zelfgemaakte route genaamd: '{0}' met {1} route punten"
     },
     {
       "Key": "unDoneForceMove",
-      "Value": "Found not-done ForceMove, resuming movement to Lat: {0} Lon:{1}"
+      "Value": "Niet afgemaakte ForceMove gevonden, bewegen naar Lat: {0} Lon:{1} hergevat"
     },
     {
       "Key": "routeSwitched",
-      "Value": "Route switched from {0} to {1}!"
+      "Value": "Route gewisseld van {0} naar {1}!"
     },
     {
       "Key": "customRouteDisabled",
-      "Value": "CustomRoute disabled, going back to normal routine!"
+      "Value": "CustomRoute niet aangevinkt, terug naar de normale routine!"
     },
     {
       "Key": "foundClosest",
-      "Value": "Found closest point at {0} - {1}, distance to that point: {2} meters, moving there!"
+      "Value": "Dichtsbijzijnde punt gevonden op {0} - {1}, Afstand tot dat punt: {2} meter, daarnaartoe aan het bewegen!"
     },
     {
       "Key": "customRouteEnabled",
-      "Value": "CustomRoute enabled, shutting down normal routine!"
+      "Value": "CustomRoute aangevinkt, normale routine gestopt!"
     },
     {
       "Key": "forceMove",
-      "Value": "ForceMove to {0} - {1} Started! Distance: {2}m"
+      "Value": "ForceMove naar {0} - {1} gestart! Afstand: {2}m"
     },
     {
       "Key": "forceMoveDone",
-      "Value": "ForceMove Done!"
+      "Value": "ForceMove Gedaan!"
     },
     {
       "Key": "inventorySettingsFailed",
-      "Value": "You have failed with item settings! You asked to keep it at {0} clean, which is {1} items, and asked to keep {2} items at the same time, while you have {3} extra items like Lucky Eggs/Incubators/etc..."
+      "Value": "Je hebt een blunder begaan in de item opties! je hebt gevraagd om het op {0} te houden, maar dat zijn {1} items, en vroeg tegelijkertijd om {2} items te houden, terwijl je {3} extra items hebt zoals Lucky Eggs/Incubators/etc..."
     },
     {
       "Key": "readTos",
-      "Value": "Just read the Niantic ToS, looks legit, accepting!"
+      "Value": "Net de Niantic ToS gelezen, ziet er legit uit, geaccepteerd!"
     },
     {
       "Key": "genderSelect",
-      "Value": "Selected your avatar, now you are {0}!"
+      "Value": "Je avatar geselecteerd, nu ben je{0}!"
     },
     {
       "Key": "tutorialPokestop",
-      "Value": "First time experience complete, looks like i just spinned an virtual pokestop :P"
+      "Value": "Eerste ervaring af, het ziet er naar uit dat ik net m'n eerste virtuele pokestop heb gespint :P"
     },
     {
       "Key": "tutorialPoke",
-      "Value": "Caught Tutorial pokemon! it's {0}!"
+      "Value": "Tutorial Pokemon gevangen! het is {0}!"
     },
     {
       "Key": "tutorialNameNotPicked",
-      "Value": "You didn't pick the desired nickname!"
+      "Value": "Je hebt geen bijnaam gekozen!"
     },
     {
       "Key": "tutorialNameTooLong",
-      "Value": "You selected too long Desired name, max length: 15!"
+      "Value": "Je hebt een te lange gewenste naam, maximum lengte: 15!"
     },
     {
       "Key": "tutorialNameDone",
-      "Value": "Your name is now: {0}"
+      "Value": "Je naam is nu: {0}"
     },
     {
       "Key": "tutorialNameFailed",
-      "Value": "Name selection failed! Error: {0}"
+      "Value": "Naam selectie mislukt! Error: {0}"
     },
     {
       "Key": "tutorialNameErrorUnset",
@@ -598,23 +598,23 @@
     },
     {
       "Key": "tutorialNameErrorChanged",
-      "Value": "No errors, nickname changed"
+      "Value": "Geen errors, Bijnaam verranderd"
     },
     {
       "Key": "tutorialNameErrorNotAvail",
-      "Value": "That nickname isn't available, pick another one and restart the bot!"
+      "Value": "Die bijnaam is niet beschikbaar, Kies een andere en herstart de Bot!"
     },
     {
       "Key": "tutorialNameErrorNotValid",
-      "Value": "That nickname isn't valid, pick another one!"
+      "Value": "Die bijnaam is niet geldig, probeer een andere!"
     },
     {
       "Key": "tutorialNameErrorOwner",
-      "Value": "You already own that nickname!"
+      "Value": "Die naam gebruik je al"
     },
     {
       "Key": "tutorialNameErrorNoMore",
-      "Value": "You can't change your nickname anymore!"
+      "Value": "Je kan je naam niet meer verranderen!"
     },
     {
       "Key": "eventLevelUpRewards",
@@ -622,7 +622,7 @@
     },
     {
       "Key": "ptcLoginFailed",
-      "Value": "PTC login failed. Make sure you have entered the right Email & Password. If you continue to get this, check your phone or Nox for a ban. Exiting..."
+      "Value": "PTC login mislukt. zorg er voor dat je het juiste Email & Wachtwoord hebt in gevuld. Als je dit blijft krijgen check je Mobiel of Nox voor een ban. Stoppen..."
     },
     {
       "Key": "currentPotionInv",
@@ -646,47 +646,47 @@
     },
     {
       "Key": "currentInvUsage",
-      "Value": "[Inventory] Inventory Usage: {0}/{1}"
+      "Value": "[Inventory] Inventory Gebruikt: {0}/{1}"
     },
     {
       "Key": "currentPokemonUsage",
-      "Value": "[Inventory] Pokemon Stored: {0}/{1}"
+      "Value": "[Inventory] Pokemon Gevangen: {0}/{1}"
     },
     {
       "Key": "pokeballsToKeepIncorrect",
-      "Value": "TotalAmountOfPokeballsToKeep is configured incorrectly. The number is smaller than 1."
+      "Value": "TotalAmountOfPokeballsToKeep is verkeerd geconfigureerd. het nummer is minder dan 1."
     },
     {
       "Key": "encounterProblemPokemonFlee",
-      "Value": "Encounter Pokemon Fled {0}!"
+      "Value": "Gevonden Pokemon Gevlucht{0}!"
     },
     {
       "Key": "useBerry",
-      "Value": "Using Razzberry. Berries left: {0}"
+      "Value": "Razzberry gebruikt. Berries over: {0}"
     },
     {
       "Key": "nianticServerUnstable",
-      "Value": "Niantic Servers unstable, throttling API Calls."
+      "Value": "Niantic Servers onstabiel, throttling API Calls."
     },
     {
       "Key": "operationCanceled",
-      "Value": "Current Operation was canceled. Bot stopped/paused."
+      "Value": "lopende operatie geannuleerd. Bot gestopt/gepauzeerd."
     },
     {
       "Key": "pokemonUpgradeSuccess",
-      "Value": "Pokemon upgraded: {0}:{1}"
+      "Value": "Pokemon ge-upgrade: {0}:{1}"
     },
     {
       "Key": "pokemonUpgradeFailed",
-      "Value": "Pokemon upgrade failed, not enough resources, probably not enough stardust"
+      "Value": "Pokemon upgrade mislukt, niet genoeg middelen, waarschijnlijk niet genoeg stardust"
     },
     {
       "Key": "pokemonUpgradeUnavailable",
-      "Value": "Pokemon upgrade unavailable for: {0}:{1}/{2}"
+      "Value": "Pokemon upgrade niet beschikbaar voor: {0}:{1}/{2}"
     },
     {
       "Key": "pokemonUpgradeFailedError",
-      "Value": "Pokemon upgrade failed duo to an unknown error, pokemon could be max level for your level. The Pokemon that caused issue was: {0}"
+      "Value": "Pokemon upgrade mislukt door een onbekende fout, pokemon pokemon kan max level zijn voor jou level. de pokemon die dit veroorzaakte was: {0}"
     },
     {
       "Key": "webErrorBadGateway",
@@ -706,11 +706,11 @@
     },
     {
       "Key": "skipLaggedMaintenance",
-      "Value": "SkipLagged servers are down for maintenance."
+      "Value": "SkipLagged servers zijn offline voor reparatie."
     },
     {
       "Key": "checkingForMaximumInventorySize",
-      "Value": "[Inventory] Items to Keep exceeds maximum inventory size! {0}/{1}"
+      "Value": "[Inventory] voorwerpen die je wilt houden overschrijden maximale inhoud! {0}/{1}"
     },
     {
       "Key": "logEntryFavorite",
@@ -734,11 +734,11 @@
     },
     {
       "Key": "stopBotToAvoidBan",
-      "Value": "The bot was stopped to avoid ban!"
+      "Value": "de bot is gestopt om een ban te voorkomen!"
     },
     {
       "Key": "botNotStoppedRiskOfBan",
-      "Value": "Somethng happened that shouldn't have and bot hasn't stopped. Higher possibility of ban. (suggested action: stop the bot \"Control+C\")."
+      "Value": "Er is iets gebeurd dat niet hoort en de bot is gestopt. Hogere kans op een ban. (Voorgestelde actie: stop de bot \"Control+C\")."
     }
   ],
   "Pokemon": [
