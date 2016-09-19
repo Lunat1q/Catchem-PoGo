@@ -78,7 +78,7 @@
     },
     {
       "Key": "throwPokeball",
-      "Value": "{0}{1}{2} - {3} 던짐"
+      "Value": "{0}{1}{2} 던짐 - {3}"
     },
     {
       "Key": "foundHiding",
