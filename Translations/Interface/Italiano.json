@@ -267,8 +267,8 @@
     "%IMPOT_EXPORT_ROUTE%": "Importa/Esporta Percorso",
     "%IMPORT_INSTRUCTION%": "Inserisci un percorso qua sotto per Importarlo in Catchem, una volta inserito clicca 'Importa'",
     "%EXPORT_INSTRUCTION%": "Copia il percorso qua sotto per farne un backup o per condividerlo con altri"
-    "%BUSY%" : "Busy",
-    "%LEVEL_UP%" : "Level up",
+    "%BUSY%" : "Occupato",
+    "%LEVEL_UP%" : "Avanzamento livello",
     "%TRANSFER%" : "Trasferisci",
     "%FAVORITE%" : "Preferito",
     "%ACTION_QUEUE%" : "Coda Azioni"
