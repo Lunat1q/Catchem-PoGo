@@ -1,6 +1,6 @@
 {
   "$type": "Catchem.UiTranslation.UiTranslation, Catchem",
-  "LanguageName": "Turkish",
+  "LanguageName": "Türkçe",
   "Translation": {
     "$type": "System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[System.String, mscorlib]], mscorlib",
     "%AUTOSTART%": "Otomatik Başlat",
