@@ -267,6 +267,11 @@
     "%EXPORT_ROUTE%": "輸出ルート",
     "%IMPOT_EXPORT_ROUTE%": "輸入／輸出ルート",
     "%IMPORT_INSTRUCTION%": "一度入力されたCatchemかちり輸入に輸入するために次ルートに入りなさい。",
-    "%EXPORT_INSTRUCTION%": "下記がバックアップを作製するか、他と分担するために送るコピー。"
+    "%EXPORT_INSTRUCTION%": "下記がバックアップを作製するか、他と分担するために送るコピー。",
+    "%BUSY%" : "忙しい",
+    "%LEVEL_UP%" : "レベルアップする",
+    "%TRANSFER%" : "博士に送る",
+    "%FAVORITE%" : "お気に入り",
+    "%ACTION_QUEUE%" : "アクション キュー"
   }
 }
