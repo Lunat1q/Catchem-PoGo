@@ -271,6 +271,9 @@
     "%LEVEL_UP%" : "Level up",
     "%TRANSFER%" : "Transfer",
     "%FAVORITE%" : "Favorite",
-    "%ACTION_QUEUE%" : "Action Queue"
+    "%ACTION_QUEUE%" : "Action Queue",
+    "%CAUGHT%" : "Caught",
+    "%SEEN%" : "Seen",
+    "%TOTAL%" : "Total"
   }
 }
