@@ -94,7 +94,7 @@
     },
     {
       "Key": "errorCatchNearby",
-      "Value": "좌표가 잘못되었음, 다시 확인하세요!"
+      "Value": "포획 중 오류 발생!"
     },
     {
       "Key": "candyMiss",
