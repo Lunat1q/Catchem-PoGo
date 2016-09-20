@@ -214,7 +214,7 @@
     },
     {
       "Key": "ptcLoginFailed",
-      "Value": "La connection avec un compte PTC a échouée. Vérifiez votre nom d'utilisateur et votre mot de passe. Si vous ne pouvez toujours pas vous connecter, essayez avec votre téléphone ou avec Nox afin de vérifier si vous avez été banni. Sortie de l'application..."
+      "Value": "La connexion avec un compte PTC a échouée. Vérifiez votre nom d'utilisateur et votre mot de passe. Si vous ne pouvez toujours pas vous connecter, essayez avec votre téléphone ou avec Nox afin de vérifier si vous avez été banni. Sortie de l'application..."
     },
     {
       "Key": "openingGoogleDevicePage",
@@ -302,7 +302,7 @@
     },
     {
       "Key": "currentReviveInv",
-      "Value": "[Inventaire] Résurections: {0} | Max Résurections: {1} | Total: {2}"
+      "Value": "[Inventaire] Rappels: {0} | Rappels Max: {1} | Total: {2}"
     },
     {
       "Key": "currentIncenseInv",
@@ -550,67 +550,67 @@
     },
     {
       "Key": "setLure",
-      "Value": "Set lure at PokeStop: {0}, distance: {1}, lures left: {2}"
+      "Value": "Pose d'un leurre au PokeStop: {0}, distance: {1}, temps restant: {2}"
     },
     {
       "Key": "levelUp",
-      "Value": "Level up! Rewards: "
+      "Value": "Niveau supérieur! Récompenses: "
     },
     {
       "Key": "evolvedInto",
-      "Value": "Evolved into {0} CP: {1} Iv: {2}%"
+      "Value": "Evolué en {0} CP: {1} Iv: {2}%"
     },
     {
       "Key": "gymTouch",
-      "Value": "Touched a gym: {0}{1} - {2}, points: {3}, Guards: {4}) "
+      "Value": "Arène: {0}{1} - {2}, points: {3}, Nb Pokémon: {4}) "
     },
     {
       "Key": "eggFound",
-      "Value": "Found an egg, distance: {0}km from PokeStop: {1}"
+      "Value": "Trouvé un œuf, distance: {0}km du PokeStop: {1}"
     },
     {
       "Key": "pokeListEmpty",
-      "Value": "Highests Pokemon List is empty"
+      "Value": "Le classement des meilleures Pokemons est vide"
     },
     {
       "Key": "proxyAlready",
-      "Value": "{0} is already running with this proxy!"
+      "Value": "{0} est déjà en cours d'exécution avec ce proxy!"
     },
     {
       "Key": "yourIpProxyIp",
-      "Value": "Your IP is: {0} / Proxy IP is: {1}"
+      "Value": "Votre adresse  IP est: {0} / Adresse du Proxy IP: {1}"
     },
     {
       "Key": "ipMatch",
-      "Value": "Your ip match! I warned you!"
+      "Value": "Votre ip est détectée! Je vous avez prévenu!"
     },
     {
       "Key": "yourIpIs",
-      "Value": "Your IP is: {0}"
+      "Value": "Votre IP est: {0}"
     },
     {
       "Key": "proxyDown",
-      "Value": "Proxy Down? Will try to interact with server anyway"
+      "Value": "Proxy HS? Nous allons essayer d'interagir avec le serveur"
     },
     {
       "Key": "hourRateReached",
-      "Value": "Max amount of Pokemon ({0})/Pokestops ({1})/XP ({2})/Star Dust ({3}) per hour reached, bot will be stopped for {4} minutes"
+      "Value": "Nombre Max de ({0})/Pokestops ({1})/XP ({2})/Star Dust ({3}) par heure atteint, le bot va s'arréter pendant {4} minutes"
     },
     {
       "Key": "botPauseCancel",
-      "Value": "Bot pause routine canceled"
+      "Value": "Bot en pause,  routine annulée"
     },
     {
       "Key": "botPauseFail",
-      "Value": "Bot pause routine failed badly"
+      "Value": "Bot en pause, routine coupée inopinément"
     },
     {
       "Key": "updatesAt",
-      "Value": "During that pause, consider to check fresh updates at"
+      "Value": "Pendant cette pause , pensez à vérifier les dernière mises à jour à"
     },
     {
       "Key": "discordLink",
-      "Value": "or join our friendly Discord chat:"
+      "Value": "ou se joindre à notre sympathique chat:"
     },
     {
       "Key": "scheduleAction",
@@ -622,39 +622,39 @@
     },
     {
       "Key": "schedulePause",
-      "Value": "Bot paused for {0}h, case of Schedule settings, will be started again at {1}, {2}:{3}"
+      "Value": "Bot en pause pour {0}h, défini dans les paramètres. Le bot reprendra dans {1}, {2}:{3}"
     },
     {
       "Key": "throwPokeball",
-      "Value": "Throwing {0}{1}{2} - {3}"
+      "Value": "Effet {0}{1}{2} - {3}"
     },
     {
       "Key": "foundHiding",
-      "Value": "Found some hiding poke in the area, trying to catch'em now!"
+      "Value": "Pokémons trouvés dans les environs. Nous essayons de les capturer!"
     },
     {
       "Key": "pokeInGym",
-      "Value": "Pokemon {0} is signed to defend a GYM!"
+      "Value": "Pokemon {0} à été assigné pour défendre une arène"
     },
     {
       "Key": "failedCoords",
-      "Value": "Coordinate failure, please check them again!"
+      "Value": "Coordonner en échec, s'il vous plaît vérifier à nouveau !"
     },
     {
       "Key": "errorCatchNearby",
-      "Value": "Coordinate failure, please check them again!"
+      "Value": "Coordonner en échec, s'il vous plaît vérifier à nouveau !"
     },
     {
       "Key": "candyMiss",
-      "Value": "Miss some candies to evolve (0), cancelling..."
+      "Value": "Il manque quelques bonbons pour évoluer (0), annulation..."
     },
     {
       "Key": "noRoute",
-      "Value": "No proper route loaded, or route is too short"
+      "Value": "Aucun itinéraire approprié chargé, ou la route est trop courte"
     },
     {
       "Key": "customRouteData",
-      "Value": "You are using a custom route named: '{0}' with {1} routing points"
+      "Value": "Vous utilisez un itinéraire personnalisé nommé: '{0}' avec {1} points"
     },
     {
       "Key": "unDoneForceMove",
@@ -662,27 +662,27 @@
     },
     {
       "Key": "routeSwitched",
-      "Value": "Route switched from {0} to {1}!"
+      "Value": "Itinéraire changé de {0} à {1}!"
     },
     {
       "Key": "customRouteDisabled",
-      "Value": "CustomRoute disabled, going back to normal routine!"
+      "Value": "Route personnalisée désactivé pour revenir à la routine normale !"
     },
     {
       "Key": "foundClosest",
-      "Value": "Found closest point at {0} - {1}, distance to that point: {2} meters, moving there!"
+      "Value": "Point le plus proche trouvé à {0} - {1}, distance de ce point: {2} metre, déplacement..."
     },
     {
       "Key": "customRouteEnabled",
-      "Value": "CustomRoute enabled, shutting down normal routine!"
+      "Value": "Route personnalisée démarrée, la routine est coupée!"
     },
     {
       "Key": "forceMove",
-      "Value": "ForceMove to {0} - {1} Started! Distance: {2}m"
+      "Value": "Mouvement forcé {0} - {1} commencé! Distance: {2}m"
     },
     {
       "Key": "forceMoveDone",
-      "Value": "ForceMove Done!"
+      "Value": "Mouvement forcé fini!"
     },
     {
       "Key": "inventorySettingsFailed",
@@ -690,59 +690,59 @@
     },
     {
       "Key": "readTos",
-      "Value": "Just read the Niantic ToS, looks legit, accepting!"
+      "Value": "Il faut lire les conditions d'utilisations Niantic et les accepter !"
     },
     {
       "Key": "genderSelect",
-      "Value": "Selected your avatar, now you are {0}!"
+      "Value": "Sélectionné votre avatar , vous êtes maintenant {0}!"
     },
     {
       "Key": "tutorialPokestop",
-      "Value": "First time experience complete, looks like i just spinned an virtual pokestop :P"
+      "Value": "Tuto complété, il semble que vous ayez tourné un pokestop virtuel :P"
     },
     {
       "Key": "tutorialPoke",
-      "Value": "Caught Tutorial pokemon! it's {0}!"
+      "Value": "Pokémon du Tuto attrapé! C'est {0}!"
     },
     {
       "Key": "tutorialNameNotPicked",
-      "Value": "You didn't pick the desired nickname!"
+      "Value": "Vous n'avez pas entré le pseudo désiré !"
     },
     {
       "Key": "tutorialNameTooLong",
-      "Value": "You selected too long Desired name, max length: 15!"
+      "Value": "Votre pseudo est trop long, taille Max: 15!"
     },
     {
       "Key": "tutorialNameDone",
-      "Value": "Your name is now: {0}"
+      "Value": "Maintenant, votre pseudo est: {0}"
     },
     {
       "Key": "tutorialNameFailed",
-      "Value": "Name selection failed! Error: {0}"
+      "Value": "Selection du pseudo annulé! Erreur: {0}"
     },
     {
       "Key": "tutorialNameErrorUnset",
-      "Value": "Unset, somehow"
+      "Value": "Vous etes désarmé, en quelque sorte"
     },
     {
       "Key": "tutorialNameErrorChanged",
-      "Value": "No errors, nickname changed"
+      "Value": "Pas d'erreurs, Pseudo changé"
     },
     {
       "Key": "tutorialNameErrorNotAvail",
-      "Value": "That nickname isn't available, pick another one and restart the bot!"
+      "Value": "Pseudo déja utilisé, choisissez-en un autre ou redémarrez le bot !"
     },
     {
       "Key": "tutorialNameErrorNotValid",
-      "Value": "That nickname isn't valid, pick another one!"
+      "Value": "Ce pseudo n'est pas valide, choisissez-en un autre !"
     },
     {
       "Key": "tutorialNameErrorOwner",
-      "Value": "You already own that nickname!"
+      "Value": "Vous avez déja ce pseudo !"
     },
     {
       "Key": "tutorialNameErrorNoMore",
-      "Value": "You can't change your nickname anymore!"
+      "Value": "Vous ne pouvez plus changer votre pseudo !"
     }
   ],
   "Pokemon": [
