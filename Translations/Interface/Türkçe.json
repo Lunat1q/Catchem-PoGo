@@ -271,6 +271,9 @@
     "%LEVEL_UP%" : "Level Atla",
     "%TRANSFER%" : "Transfer Et",
     "%FAVORITE%" : "Favorilere Ekle",
-    "%ACTION_QUEUE%" : "Yapılacaklar Listesi"
+    "%ACTION_QUEUE%" : "Yapılacaklar Listesi",
+    "%CAUGHT%" : "Yakalanan",
+    "%SEEN%" : "Görülen",
+    "%TOTAL%" : "Toplam"
   }
 }
