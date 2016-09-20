@@ -130,7 +130,7 @@
     "%DELAY_CATCH_POKE%": "Ritardo nella cattura dei Pokemon",
     "%DELAY_BETWEEN_POKE_CATCH%": "Ritardo tra cattura Pokemon",
     "%DELAY_CATCH_NEARBY_POKE%": "Ritardo cattura Pokemon vicini",
-    "%DELAY_CATCH_LURE_POKE%": "Ritardo cattura Pokemon con esca",
+    "%DELAY_CATCH_LURE_POKE%": "Ritardo cattura Pokemon con Modulo Esca",
     "%DELAY_CATCH_INCENSE_POKE%": "Ritardo cattura Pokemon con Aroma",
     "%DELAY_EVOLVE_POKE%": "Ritardo evoluzione Pokemon",
     "%DELAY_EVOLVE_VARIATION%": "Variazione ritardo evoluzione",
