@@ -272,5 +272,9 @@
     "%TRANSFER%" : "Trasferisci",
     "%FAVORITE%" : "Preferito",
     "%ACTION_QUEUE%" : "Coda Azioni"
+    "%CAUGHT%" : "Catturati",
+    "%SEEN%" : "Visti",
+    "%TOTAL%" : "Totale",
+    "%AUTO_UNFAVORITE_POKE%" : "Rimuovi Pokemon dai preferiti in automatico"
   }
 }
