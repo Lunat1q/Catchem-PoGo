@@ -54,7 +54,7 @@
     },
     {
       "Key": "farmPokestopsOutsideRadius",
-      "Value": "Du bist außerhalb des festgelegten Radius! Laufe zurück zum Anfang ({0}m weit weg). Sind die Koordinaten in der config.json korrekt?"
+      "Value": "Du bist außerhalb des festgelegten Radius! Laufe zurück zum Anfang ({0}m weit weg). Sind die Koordinaten in der Coors.ini korrekt?"
     },
     {
       "Key": "farmPokestopsNoUsableFound",
@@ -62,11 +62,11 @@
     },
     {
       "Key": "eventFortUsed",
-      "Value": "Name: {0} EP: {1}, Gems: {2}, Items: {3}"
+      "Value": "Name: {0} EP: {1}, Münzen: {2}, Items: {3}"
     },
     {
       "Key": "eventFortFailed",
-      "Value": "Name: {0} INFO: Loot sammeln fehlgeschlagen, eventueller Softban. Unban in: {1}/{2}"
+      "Value": "Name: {0} INFO: Sammeln fehlgeschlagen, eventueller Softban. Unban in: {1}/{2}"
     },
     {
       "Key": "eventFortTargeted",
@@ -102,7 +102,7 @@
     },
     {
       "Key": "eventPokemonCapture",
-      "Value": "({0}) | ({1}) {2} Lvl: {3} WP: ({4}/{5}) IV: {6}% | Chance: {7}% | {8}m entfernt | mit {9} ({10} verbleibend). | {11}"
+      "Value": "({0}) | ({1}) {2} Lvl: {3} WP: ({4}/{5}) IV: {6}% | Chance: {7}% | {8}m entfernt | mit {9} ({10} verbleibend). | EP: {11} | {12}"
     },
     {
       "Key": "eventNoPokeballs",
@@ -146,7 +146,7 @@
     },
     {
       "Key": "displayHighestsPerfectHeader",
-      "Value": "ZeigeHöchstesPerfektes"
+      "Value": "ZeigeHöchsteIV"
     },
     {
       "Key": "displayHighestsLevelHeader",
@@ -154,7 +154,7 @@
     },
     {
       "Key": "welcomeWarning",
-      "Value": "Gehe sicher, dass Lat & Lng richtig sind. Schließe das Programm falls nicht! Lat: {0} Lng: {1}"
+      "Value": "Gehe sicher, dass Länge & Breite richtig sind. Schließe das Programm falls nicht! Länge: {0} Breite: {1}"
     },
     {
       "Key": "incubatorPuttingEgg",
@@ -186,7 +186,7 @@
     },
     {
       "Key": "logEntryFarming",
-      "Value": "FARMING"
+      "Value": "SAMMELN"
     },
     {
       "Key": "logEntryRecycling",
@@ -230,7 +230,7 @@
     },
     {
       "Key": "accessTokenExpired",
-      "Value": "Access Token ausgelaufen. Logge mich erneut ein für neuen Token."
+      "Value": "Access Token ausgelaufen. Logge mich erneut ein für neues Token."
     },
     {
       "Key": "tryingAgainIn",
@@ -250,7 +250,7 @@
     },
     {
       "Key": "coordinatesAreInvalid",
-      "Value": "Koordinaten in \"Coords.ini\" sind ungültig! Benutze standart Koordinaten."
+      "Value": "Koordinaten in \"Coords.ini\" sind ungültig! Benutze Standard-Koordinaten."
     },
     {
       "Key": "gotUpToDateVersion",
@@ -262,11 +262,11 @@
     },
     {
       "Key": "downloadingUpdate",
-      "Value": "Download und entpacken vom Update..."
+      "Value": "Download und Entpacken vom Update..."
     },
     {
       "Key": "finishedDownloadingRelease",
-      "Value": "Download des neusten Release abgeschlossen..."
+      "Value": "Download des neuesten Release abgeschlossen..."
     },
     {
       "Key": "finishedUnpackingFiles",
@@ -274,7 +274,7 @@
     },
     {
       "Key": "finishedTransferringConfig",
-      "Value": "Beendet Ihre Konfiguration auf die neue Version übertragen..."
+      "Value": "Beendet. Ihre Konfiguration wird auf die neue Version übertragen..."
     },
     {
       "Key": "updateFinished",
@@ -334,7 +334,7 @@
     },
     {
       "Key": "levelUp",
-      "Value": "Level aufgestiegen! Belohnung: "
+      "Value": "Level aufgestiegen! Belohnungen: "
     },
     {
       "Key": "evolvedInto",
@@ -350,7 +350,7 @@
     },
     {
       "Key": "pokeListEmpty",
-      "Value": "Höchstes Pokémon Liste ist leer"
+      "Value": "Pokémon Liste ist leer"
     },
     {
       "Key": "proxyAlready",
@@ -402,7 +402,7 @@
     },
     {
       "Key": "schedulePause",
-      "Value": "Aufgrund von Zeitplaneinstellungen pausiert der Bot für {0}std und startet wieder um {1}, {2}:{3}"
+      "Value": "Aufgrund von Zeitplaneinstellungen pausiert der Bot für {0}Std und startet wieder um {1}, {2}:{3}"
     },
     {
       "Key": "throwPokeball",
@@ -414,7 +414,7 @@
     },
     {
       "Key": "pokeInGym",
-      "Value": "Pokémon {0} wurde ausgewählt eine Arena zu verteidigen!"
+      "Value": "Pokémon {0} wurde ausgewählt, um eine Arena zu verteidigen!"
     },
     {
       "Key": "failedCoords",
@@ -422,7 +422,7 @@
     },
     {
       "Key": "errorCatchNearby",
-      "Value": "Koordinatenfehler, bitte erneut überprüfen!"
+      "Value": "Fehler beim Fangen!"
     },
     {
       "Key": "candyMiss",
@@ -434,291 +434,291 @@
     },
     {
       "Key": "customRouteData",
-      "Value": "Individuelle Route '{0}' mit {1} Wegpunkten wird verwendet"
+      "Value": "Eigene Route '{0}' mit {1} Wegpunkten wird verwendet"
     },
     {
       "Key": "unDoneForceMove",
-      "Value": "Found not-done ForceMove, resuming movement to Lat: {0} Lon:{1}"
+      "Value": "Unfertiges ForceMove gefunden, gehe weiter zu Länge: {0} Breite:{1}"
     },
     {
       "Key": "routeSwitched",
-      "Value": "Route switched from {0} to {1}!"
+      "Value": "Route gewechselt von {0} zu {1}!"
     },
     {
       "Key": "customRouteDisabled",
-      "Value": "CustomRoute disabled, going back to normal routine!"
+      "Value": "Eigene Route deaktiviert, mache normal weiter!"
     },
     {
       "Key": "foundClosest",
-      "Value": "Found closest point at {0} - {1}, distance to that point: {2} meters, moving there!"
+      "Value": "Nächsten Punkt gefunden bei {0} - {1}, Entfernung: {2} Meter, gehe hin!"
     },
     {
       "Key": "customRouteEnabled",
-      "Value": "CustomRoute enabled, shutting down normal routine!"
+      "Value": "Eigene Route aktiviert, beende normale Routine!"
     },
     {
       "Key": "forceMove",
-      "Value": "ForceMove to {0} - {1} Started! Distance: {2}m"
+      "Value": "ForceMove nach {0} - {1} gestartet! Entfernung: {2}m"
     },
     {
       "Key": "forceMoveDone",
-      "Value": "ForceMove Done!"
+      "Value": "ForceMove fertig!"
     },
     {
       "Key": "inventorySettingsFailed",
-      "Value": "You have failed with item settings! You asked to keep it at {0} clean, which is {1} items, and asked to keep {2} items at the same time, while you have {3} extra items like Lucky Eggs/Incubators/etc..."
+      "Value": "Falsche Item-Einstellungen! Du hast  {0}% maximal eingestellt, was {1} Items entspricht, und wolltest {2} Items gleichzeitig behalten, während Du {3} extra Items wie Glückseier/Brutmaschienn/etc behalten willst..."
     },
     {
       "Key": "readTos",
-      "Value": "Just read the Niantic ToS, looks legit, accepting!"
+      "Value": "Habe gerade die Niantic ToS gelesen, passt alles, akzeptiere!"
     },
     {
       "Key": "genderSelect",
-      "Value": "Selected your avatar, now you are {0}!"
+      "Value": "Habe Avatar gewählt, Du bist jetzt {0}!"
     },
     {
       "Key": "tutorialPokestop",
-      "Value": "First time experience complete, looks like i just spinned an virtual pokestop :P"
+      "Value": "Tutorial fertig, sieht aus, als ob ich einen virtuellen Pokestop gesammelt habe :P"
     },
     {
       "Key": "tutorialPoke",
-      "Value": "Caught Tutorial pokemon! it's {0}!"
+      "Value": "Tutorial Pokemon gefangen! Es ist {0}!"
     },
     {
       "Key": "tutorialNameNotPicked",
-      "Value": "You didn't pick the desired nickname!"
+      "Value": "Du hast keinen Wunsch-Nicknamen angegeben!"
     },
     {
       "Key": "tutorialNameTooLong",
-      "Value": "You selected too long Desired name, max length: 15!"
+      "Value": "Wunsch-Nickname zu lang, max Länge: 15!"
     },
     {
       "Key": "tutorialNameDone",
-      "Value": "Your name is now: {0}"
+      "Value": "Dein Name ist jetzt: {0}"
     },
     {
       "Key": "tutorialNameFailed",
-      "Value": "Name selection failed! Error: {0}"
+      "Value": "Namensgebung fehlgeschlagen! Fehler: {0}"
     },
     {
       "Key": "tutorialNameErrorUnset",
-      "Value": "Unset, somehow"
+      "Value": "Name zurückgesetzt, irgendwie"
     },
     {
       "Key": "tutorialNameErrorChanged",
-      "Value": "No errors, nickname changed"
+      "Value": "Keine Fehler, Nickname geändert"
     },
     {
       "Key": "tutorialNameErrorNotAvail",
-      "Value": "That nickname isn't available, pick another one and restart the bot!"
+      "Value": "Nickname nicht verfügbar, nimm einen anderen und starte den Bot neu!"
     },
     {
       "Key": "tutorialNameErrorNotValid",
-      "Value": "That nickname isn't valid, pick another one!"
+      "Value": "Nickname nicht gültig, nimm einen anderen!"
     },
     {
       "Key": "tutorialNameErrorOwner",
-      "Value": "You already own that nickname!"
+      "Value": "Das ist schon dein Nickname!"
     },
     {
       "Key": "tutorialNameErrorNoMore",
-      "Value": "You can't change your nickname anymore!"
+      "Value": "Kann den Nicknamen nicht mehr ändern!"
     },
     {
       "Key": "eventLevelUpRewards",
-      "Value": "Leveled Up: {0} | Items: {1}"
+      "Value": "Aufgelevelt: {0} | Items: {1}"
     },
     {
       "Key": "ptcLoginFailed",
-      "Value": "PTC login failed. Make sure you have entered the right Email & Password. If you continue to get this, check your phone or Nox for a ban. Exiting..."
+      "Value": "PTC login fehlgeschlagen. EMail und Passwort überprüfen. Wenn das Problem weiter auftritt, auf einen Ban überprüfen. Beende..."
     },
     {
       "Key": "openingGoogleDevicePage",
-      "Value": "Opening Google Device page. Please paste the code using CTRL+V"
+      "Value": "Öffne Google Geräte Seite. Bitte Code mit CTRL+V einfügen"
     },
     {
       "Key": "couldntCopyToClipboard",
-      "Value": "Couldnt copy to clipboard, do it manually"
+      "Value": "Konnte nicht in Zwischenablage kopieren, bitte manuell machen"
     },
     {
       "Key": "couldntCopyToClipboard2",
-      "Value": "Goto: {0} & enter {1}"
+      "Value": "Gehe zu: {0} & gib {1} ein"
     },
     {
       "Key": "zeroPokeballInv",
-      "Value": "You have no pokeballs in your inventory, no more Pokemon can be caught!"
+      "Value": "Du hast keine Pokebälle mehr und kannst keine Pokemon mehr fangen!"
     },
     {
       "Key": "currentPokeballInv",
-      "Value": "[Inventory] Pokeballs: {0} | Greatballs: {1} | Ultraballs: {2} | Masterballs: {3} | Total: {4}"
+      "Value": "[Inventar] Pokebälle: {0} | Superbälle: {1} | Hyperbälle: {2} | Meisterbälle: {3} | Insgesamt: {4}"
     },
     {
       "Key": "currentPotionInv",
-      "Value": "[Inventory] Potions: {0} | Super Potions: {1} | Hyper Potions: {2} | Max Potions: {3} | Total: {4}"
+      "Value": "[Inventar] Tränke: {0} | Superträbke: {1} | Hyperträbke: {2} | Top-Trank: {3} | Insgesamt: {4}"
     },
     {
       "Key": "currentBerryInv",
-      "Value": "[Inventory] Razz Berries: {0} | Bluk Berries: {1} | Nanab Berries: {2} | Pinap Berries: {3} | Wepar Berries: {4} | Total: {5}"
+      "Value": "[Inventar] Himmihbeeren: {0} | Blaubeeren: {1} | Nanab-Beeren: {2} | Pinap-Beeren: {3} | Wepar-Beeren: {4} | Insgesamt: {5}"
     },
     {
       "Key": "currentReviveInv",
-      "Value": "[Inventory] Revives: {0} | Max Revives: {1} | Total: {2}"
+      "Value": "[Inventar] Beleber: {0} | Top-Beleber: {1} | Insgesamt: {2}"
     },
     {
       "Key": "currentIncenseInv",
-      "Value": "[Inventory] Incense: {0} | Cool Incense: {1} | Floral Incense: {2} | Spicy Incense: {3} | Total {4}"
+      "Value": "[Inventar] Rauch: {0} | Kühl-Rauch: {1} | Pflanzen-Rauch: {2} | Scharfer Rauch: {3} | Insgesamt {4}"
     },
     {
       "Key": "currentMiscInv",
-      "Value": "[Inventory] Lure Modules: {0} | Lucky Eggs: {1} | Incubators: {2} | Total: {3}"
+      "Value": "[Inventar] Lockmodule: {0} | Glückseier: {1} | Brutmaschinen: {2} | Insgesamt: {3}"
     },
     {
       "Key": "currentInvUsage",
-      "Value": "[Inventory] Inventory Usage: {0}/{1}"
+      "Value": "[Inventar] Inventarnutzung: {0}/{1}"
     },
     {
       "Key": "currentPokemonUsage",
-      "Value": "[Inventory] Pokemon Stored: {0}/{1}"
+      "Value": "[Inventar] Pokemon: {0}/{1}"
     },
     {
       "Key": "checkingForBallsToRecycle",
-      "Value": "Checking for balls to recycle, keeping {0}"
+      "Value": "Überprüfe Bälle zum Verwerten, behalte {0}"
     },
     {
       "Key": "checkingForPotionsToRecycle",
-      "Value": "Checking for potions to recycle, keeping {0}"
+      "Value": "Überprüfe Tränke zum Verwerten, behalte {0}"
     },
     {
       "Key": "checkingForRevivesToRecycle",
-      "Value": "Checking for revives to recycle, keeping {0}"
+      "Value": "Überprüfe Beleber zum Verwerten, behalte {0}"
     },
     {
       "Key": "pokeballsToKeepIncorrect",
-      "Value": "TotalAmountOfPokeballsToKeep is configured incorrectly. The number is smaller than 1."
+      "Value": "TotalAmountOfPokeballsToKeep ist falsch konfiguriert. Die Nummer ist kleiner als 1."
     },
     {
       "Key": "invFullPokestopLooting",
-      "Value": "Inventory is full, no items looted!"
+      "Value": "Inventar voll, keine Items gesammelt!"
     },
     {
       "Key": "encounterProblemPokemonFlee",
-      "Value": "Encounter Pokemon Fled {0}!"
+      "Value": "Begegnung Pokemon geflohen {0}!"
     },
     {
       "Key": "webSocketFailStart",
-      "Value": "Failed to start WebSocketServer on port : {0}"
+      "Value": "Fehlgeschlagen WebSocketServer auf Port zu starten: {0}"
     },
     {
       "Key": "statsTemplateString",
-      "Value": "{0} - Runtime {1} - Lvl: {2} | EXP/H: {3:n0} | P/H: {4:n0} | Stardust: {5:n0} | Transfered: {6:n0} | Recycled: {7:n0}"
+      "Value": "{0} - Laufzeit {1} - Lvl: {2} | EXP/Std: {3:n0} | P/Std: {4:n0} | Sternenstaub: {5:n0} | Verschickt: {6:n0} | Verwertet: {7:n0}"
     },
     {
       "Key": "statsXpTemplateString",
-      "Value": "{0} (Advance in {1}h {2}m | {3:n0}/{4:n0} XP)"
+      "Value": "{0} (Aufleveln in {1}Std {2}m | {3:n0}/{4:n0} EP)"
     },
     {
       "Key": "requireInputText",
-      "Value": "Program will continue after the key press..."
+      "Value": "Programm fortführen nach Tastendruck..."
     },
     {
       "Key": "googleTwoFactorAuth",
-      "Value": "As you have Google Two Factor Auth enabled, you will need to insert an App Specific Password into the auth.json"
+      "Value": "Da Du Google Zwei-Faktor Auth aktiviert hast, musst du ein App-spezifisches Passwort in die auth.json eintragen"
     },
     {
       "Key": "googleTwoFactorAuthExplanation",
-      "Value": "Opening Google App-Passwords. Please make a new App Password (use Other as Device)"
+      "Value": "Öffne Google App-Passwörter. Bitte ein neues App-Passwort erstellen (benutze "Andere" als Gerät)"
     },
     {
       "Key": "googleError",
-      "Value": "Make sure you have entered the right Email & Password."
+      "Value": "Bitte EMail und Passwort überprüfen."
     },
     {
       "Key": "missingCredentialsGoogle",
-      "Value": "You need to fill out GoogleUsername and GooglePassword in auth.json!"
+      "Value": "GoogleUsername und GooglePassword in auth.json müssen eingetragen werden!"
     },
     {
       "Key": "missingCredentialsPtc",
-      "Value": "You need to fill out PtcUsername and PtcPassword in auth.json!"
+      "Value": "PtcUsername und PtcPassword in auth.json müssen eingetragen werden!"
     },
     {
       "Key": "snipeScan",
-      "Value": "[Sniper] Scanning for Snipeable Pokemon at {0}..."
+      "Value": "[Sniper] Suche nach Snipebaren Pokemon bei {0}..."
     },
     {
       "Key": "snipeScanEx",
-      "Value": "[Sniper] Sniping a {0} with {1} IV at {2}..."
+      "Value": "[Sniper] Snipe ein {0} mit {1} IV bei {2}..."
     },
     {
       "Key": "noPokemonToSnipe",
-      "Value": "[Sniper] No Pokemon found to snipe!"
+      "Value": "[Sniper] Keine Pokemon zum Snipen gefunden!"
     },
     {
       "Key": "notEnoughPokeballsToSnipe",
-      "Value": "Not enough Pokeballs to start sniping! ({0}/{1})"
+      "Value": "Nicht genug Pokebälle zum Snipen! ({0}/{1})"
     },
     {
       "Key": "displayHighestMove1Header",
-      "Value": "MOVE1"
+      "Value": "ATK1"
     },
     {
       "Key": "displayHighestMove2Header",
-      "Value": "MOVE2"
+      "Value": "ATK2"
     },
     {
       "Key": "nianticServerUnstable",
-      "Value": "Niantic Servers unstable, throttling API Calls."
+      "Value": "Niantic Server instabil, reduziere API Calls."
     },
     {
       "Key": "operationCanceled",
-      "Value": "Current Operation was canceled. Bot stopped/paused."
+      "Value": "Momentane Aktion abgebrochen. Bot gestoppt/pausiert."
     },
     {
       "Key": "pokemonUpgradeSuccess",
-      "Value": "Pokemon upgraded: {0}:{1}"
+      "Value": "Pokemon verstärkt: {0}:{1}"
     },
     {
       "Key": "pokemonUpgradeFailed",
-      "Value": "Pokemon upgrade failed, not enough resources, probably not enough stardust"
+      "Value": "Pokemon Verstärken fehlgeschlagen, nicht genug Ressourcen, wahrscheinlich zu wenig Sternenstaub"
     },
     {
       "Key": "pokemonUpgradeUnavailable",
-      "Value": "Pokemon upgrade unavailable for: {0}:{1}/{2}"
+      "Value": "Pokemon Verstärken nicht verfügbar für: {0}:{1}/{2}"
     },
     {
       "Key": "pokemonUpgradeFailedError",
-      "Value": "Pokemon upgrade failed duo to an unknown error, pokemon could be max level for your level. The Pokemon that caused issue was: {0}"
+      "Value": "Pokemon Verstärken mit unbekanntem Fehler fehlgeschlagen, Pokemon könnte max für dein Level sein. Pokemon, das den Fehler ausgelöst hat: {0}"
     },
     {
       "Key": "webErrorBadGateway",
-      "Value": "502 Bad Gateway: Server is under heavy load!"
+      "Value": "502 Bad Gateway: Server ist unter schwerer Last!"
     },
     {
       "Key": "webErrorGatewayTimeout",
-      "Value": "504 Gateway Time-out: The server didn't respond in time."
+      "Value": "504 Gateway Time-out: Server hat nicht rechtzeitig geantwortet."
     },
     {
       "Key": "webErrorNotFound",
-      "Value": "404 Not Found: Not able to retrieve file from server!"
+      "Value": "404 Not Found: Kann Datei nicht von Server abrufen!"
     },
     {
       "Key": "skipLaggedTimeout",
-      "Value": "SkipLagged is down or SnipeRequestTimeoutSeconds is too small!"
+      "Value": "SkipLagged ist down oder SnipeRequestTimeoutSeconds ist zu klein!"
     },
     {
       "Key": "skipLaggedMaintenance",
-      "Value": "SkipLagged servers are down for maintenance."
+      "Value": "SkipLagged Server sind in Wartung."
     },
     {
       "Key": "checkingForMaximumInventorySize",
-      "Value": "[Inventory] Items to Keep exceeds maximum inventory size! {0}/{1}"
+      "Value": "[Inventar] Items zu Behalten übersteigen die Inventargröße! {0}/{1}"
     },
     {
       "Key": "logEntryFavorite",
-      "Value": "FAVORITE"
+      "Value": "FAVORISIEREN"
     },
     {
       "Key": "logEntryUnFavorite",
-      "Value": "UNFAVORITE"
+      "Value": "ENTFAVORISIEREN"
     },
     {
       "Key": "pokemonFavorite",
@@ -734,11 +734,11 @@
     },
     {
       "Key": "stopBotToAvoidBan",
-      "Value": "The bot was stopped to avoid ban!"
+      "Value": "Bot wurde angehalten, um einen Bann zu verhindern!"
     },
     {
       "Key": "botNotStoppedRiskOfBan",
-      "Value": "Somethng happened that shouldn't have and bot hasn't stopped. Higher possibility of ban. (suggested action: stop the bot \"Control+C\")."
+      "Value": "Etwas Unerwartetes ist passiert und der Bot wurde nicht gestoppt. Erhöhte Chance eines Banns. (Vorschlag: Stoppe den Bot \"STRG+C\")."
     }
   ],
   "Pokemon": [
