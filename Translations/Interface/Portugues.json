@@ -267,5 +267,14 @@
     "%IMPOT_EXPORT_ROUTE%": "Importar/Exportar Rota",
     "%IMPORT_INSTRUCTION%": "Insira uma rota abaixo para importá-lo para o Catchem, clique em Importar.",
     "%EXPORT_INSTRUCTION%": "Copiar a rota abaixo para criar um backup ou compartilhar com outras pessoas."
+    "%BUSY%" : "Ocupado",
+    "%LEVEL_UP%" : "Level up",
+    "%TRANSFER%" : "Transferir",
+    "%FAVORITE%" : "Favoritar",
+    "%ACTION_QUEUE%" : "Fila de Ação",
+    "%CAUGHT%" : "Capturado",
+    "%SEEN%" : "Visto",
+    "%TOTAL%" : "Total",
+    "%AUTO_UNFAVORITE_POKE%" : "Auto (Des)Favoritar Poke"
   }
 }
