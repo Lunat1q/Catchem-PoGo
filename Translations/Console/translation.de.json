@@ -626,7 +626,7 @@
     },
     {
       "Key": "googleTwoFactorAuthExplanation",
-      "Value": "Öffne Google App-Passwörter. Bitte ein neues App-Passwort erstellen (benutze "Andere" als Gerät)"
+      "Value": "Öffne Google App-Passwörter. Bitte ein neues App-Passwort erstellen (benutze 'Andere' als Gerät)"
     },
     {
       "Key": "googleError",
