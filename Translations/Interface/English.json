@@ -275,6 +275,6 @@
     "%CAUGHT%" : "Caught",
     "%SEEN%" : "Seen",
     "%TOTAL%" : "Total",
-    "%AUTO_UNFAVORITE_POKE%" : "Auto Unfavorite Poke",
+    "%AUTO_UNFAVORITE_POKE%" : "Auto Unfavorite Poke"
   }
 }
