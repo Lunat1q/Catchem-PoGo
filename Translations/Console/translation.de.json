@@ -434,15 +434,15 @@
     },
     {
       "Key": "customRouteData",
-      "Value": "Eigene Route '{0}' mit {1} Wegpunkten wird verwendet"
+      "Value": "Eigene Route '{0}' mit {1} Wegpunkten wird verwendet."
     },
     {
       "Key": "unDoneForceMove",
-      "Value": "Unfertiges ForceMove gefunden, gehe weiter zu Länge: {0} Breite:{1}"
+      "Value": "Unvollständiger ForceMove gefunden, gehe weiter zu Längengrad: {0} Breitengrad:{1}"
     },
     {
       "Key": "routeSwitched",
-      "Value": "Route gewechselt von {0} zu {1}!"
+      "Value": "Route wurde von {0} zu {1} gewechselt!"
     },
     {
       "Key": "customRouteDisabled",
@@ -466,23 +466,23 @@
     },
     {
       "Key": "inventorySettingsFailed",
-      "Value": "Falsche Item-Einstellungen! Du hast  {0}% maximal eingestellt, was {1} Items entspricht, und wolltest {2} Items gleichzeitig behalten, während Du {3} extra Items wie Glückseier/Brutmaschienn/etc behalten willst..."
+      "Value": "Falsche Item-Einstellungen! Du wolltest dein Inventar bei {0}% Auslastung säubern, was {1} Items entspricht, und wolltest {2} Items gleichzeitig behalten, während Du {3} extra Items wie Glückseier/Brutmaschienn/usw. besitzt..."
     },
     {
       "Key": "readTos",
-      "Value": "Habe gerade die Niantic ToS gelesen, passt alles, akzeptiere!"
+      "Value": "Habe gerade die Niantic ToS gelesen, alles in Orndung, akzeptiere!"
     },
     {
       "Key": "genderSelect",
-      "Value": "Habe Avatar gewählt, Du bist jetzt {0}!"
+      "Value": "Habe Avatar gewählt, du bist nun {0}!"
     },
     {
       "Key": "tutorialPokestop",
-      "Value": "Tutorial fertig, sieht aus, als ob ich einen virtuellen Pokestop gesammelt habe :P"
+      "Value": "Tutorial erfolgreich abgeschlossen, sieht so aus, als ob ich gerade einen virtuellen Pokestop geplündert habe :P"
     },
     {
       "Key": "tutorialPoke",
-      "Value": "Tutorial Pokemon gefangen! Es ist {0}!"
+      "Value": "Starterpokémon gefangen! Es ist ein {0}!"
     },
     {
       "Key": "tutorialNameNotPicked",
@@ -490,7 +490,7 @@
     },
     {
       "Key": "tutorialNameTooLong",
-      "Value": "Wunsch-Nickname zu lang, max Länge: 15!"
+      "Value": "Wunsch-Nickname zu lang, max. Länge: 15!"
     },
     {
       "Key": "tutorialNameDone",
@@ -502,7 +502,7 @@
     },
     {
       "Key": "tutorialNameErrorUnset",
-      "Value": "Name zurückgesetzt, irgendwie"
+      "Value": "Name zurückgesetzt"
     },
     {
       "Key": "tutorialNameErrorChanged",
@@ -538,7 +538,7 @@
     },
     {
       "Key": "couldntCopyToClipboard",
-      "Value": "Konnte nicht in Zwischenablage kopieren, bitte manuell machen"
+      "Value": "Konnte nicht in Zwischenablage kopieren, bitte manuell versuchen"
     },
     {
       "Key": "couldntCopyToClipboard2",
@@ -546,15 +546,15 @@
     },
     {
       "Key": "zeroPokeballInv",
-      "Value": "Du hast keine Pokebälle mehr und kannst keine Pokemon mehr fangen!"
+      "Value": "Du hast keine Pokébälle mehr und kannst keine Pokémon mehr fangen!"
     },
     {
       "Key": "currentPokeballInv",
-      "Value": "[Inventar] Pokebälle: {0} | Superbälle: {1} | Hyperbälle: {2} | Meisterbälle: {3} | Insgesamt: {4}"
+      "Value": "[Inventar] Pokébälle: {0} | Superbälle: {1} | Hyperbälle: {2} | Meisterbälle: {3} | Insgesamt: {4}"
     },
     {
       "Key": "currentPotionInv",
-      "Value": "[Inventar] Tränke: {0} | Superträbke: {1} | Hyperträbke: {2} | Top-Trank: {3} | Insgesamt: {4}"
+      "Value": "[Inventar] Tränke: {0} | Supertränke: {1} | Hypertränke: {2} | Top-Tränke: {3} | Insgesamt: {4}"
     },
     {
       "Key": "currentBerryInv",
@@ -578,7 +578,7 @@
     },
     {
       "Key": "currentPokemonUsage",
-      "Value": "[Inventar] Pokemon: {0}/{1}"
+      "Value": "[Inventar] Pokémon: {0}/{1}"
     },
     {
       "Key": "checkingForBallsToRecycle",
@@ -602,11 +602,11 @@
     },
     {
       "Key": "encounterProblemPokemonFlee",
-      "Value": "Begegnung Pokemon geflohen {0}!"
+      "Value": "Begegnung Pokémon geflohen {0}!"
     },
     {
       "Key": "webSocketFailStart",
-      "Value": "Fehlgeschlagen WebSocketServer auf Port zu starten: {0}"
+      "Value": "WebSocketServer auf Port zu starten ist fehlgeschlagen: {0}"
     },
     {
       "Key": "statsTemplateString",
@@ -622,7 +622,7 @@
     },
     {
       "Key": "googleTwoFactorAuth",
-      "Value": "Da Du Google Zwei-Faktor Auth aktiviert hast, musst du ein App-spezifisches Passwort in die auth.json eintragen"
+      "Value": "Weil du Google Zwei-Faktor-Auth aktiviert hast, musst du ein App-spezifisches Passwort in die auth.json eintragen"
     },
     {
       "Key": "googleTwoFactorAuthExplanation",
@@ -642,7 +642,7 @@
     },
     {
       "Key": "snipeScan",
-      "Value": "[Sniper] Suche nach Snipebaren Pokemon bei {0}..."
+      "Value": "[Sniper] Suche nach Snipebaren Pokémon bei {0}..."
     },
     {
       "Key": "snipeScanEx",
@@ -650,11 +650,11 @@
     },
     {
       "Key": "noPokemonToSnipe",
-      "Value": "[Sniper] Keine Pokemon zum Snipen gefunden!"
+      "Value": "[Sniper] Keine Pokémon zum Snipen gefunden!"
     },
     {
       "Key": "notEnoughPokeballsToSnipe",
-      "Value": "Nicht genug Pokebälle zum Snipen! ({0}/{1})"
+      "Value": "Nicht genug Pokébälle zum Snipen! ({0}/{1})"
     },
     {
       "Key": "displayHighestMove1Header",
@@ -666,7 +666,7 @@
     },
     {
       "Key": "nianticServerUnstable",
-      "Value": "Niantic Server instabil, reduziere API Calls."
+      "Value": "Niantic Server instabil, reduziere API Anfragen!"
     },
     {
       "Key": "operationCanceled",
@@ -674,23 +674,23 @@
     },
     {
       "Key": "pokemonUpgradeSuccess",
-      "Value": "Pokemon verstärkt: {0}:{1}"
+      "Value": "Pokémon verstärkt: {0}:{1}"
     },
     {
       "Key": "pokemonUpgradeFailed",
-      "Value": "Pokemon Verstärken fehlgeschlagen, nicht genug Ressourcen, wahrscheinlich zu wenig Sternenstaub"
+      "Value": "Pokémon verstärken fehlgeschlagen, nicht genug Ressourcen vorhanden, wahrscheinlich zu wenig Sternenstaub."
     },
     {
       "Key": "pokemonUpgradeUnavailable",
-      "Value": "Pokemon Verstärken nicht verfügbar für: {0}:{1}/{2}"
+      "Value": "Pokémon verstärken nicht verfügbar für: {0}:{1}/{2}"
     },
     {
       "Key": "pokemonUpgradeFailedError",
-      "Value": "Pokemon Verstärken mit unbekanntem Fehler fehlgeschlagen, Pokemon könnte max für dein Level sein. Pokemon, das den Fehler ausgelöst hat: {0}"
+      "Value": "Pokémon verstärken mit unbekanntem Fehler abgebrochen, Pokémon könnte bereits für dein Level maximal sein. Pokémon, dass den Fehler ausgelöst hat: {0}"
     },
     {
       "Key": "webErrorBadGateway",
-      "Value": "502 Bad Gateway: Server ist unter schwerer Last!"
+      "Value": "502 Bad Gateway: Server ist ausgelastet!"
     },
     {
       "Key": "webErrorGatewayTimeout",
@@ -710,7 +710,7 @@
     },
     {
       "Key": "checkingForMaximumInventorySize",
-      "Value": "[Inventar] Items zu Behalten übersteigen die Inventargröße! {0}/{1}"
+      "Value": "[Inventar] zu behaltende Items übersteigen die Inventargröße! {0}/{1}"
     },
     {
       "Key": "logEntryFavorite",
@@ -860,7 +860,7 @@
     },
     {
       "Key": "nidoranFemale",
-      "Value": "NidoranF"
+      "Value": "NidoranW"
     },
     {
       "Key": "nidorina",
