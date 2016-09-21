@@ -271,9 +271,9 @@
     "%LEVEL_UP%" : "Level up",
     "%TRANSFER%" : "Transferir",
     "%FAVORITE%" : "Favoritar",
-    "%ACTION_QUEUE%" : "Fila de Ação",
-    "%CAUGHT%" : "Capturado",
-    "%SEEN%" : "Visto",
+    "%ACTION_QUEUE%" : "Fila de Ações",
+    "%CAUGHT%" : "Capturados",
+    "%SEEN%" : "Vistos",
     "%TOTAL%" : "Total",
     "%AUTO_UNFAVORITE_POKE%" : "Auto (Des)Favoritar Poke"
   }
