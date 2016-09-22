@@ -266,7 +266,7 @@
     "%EXPORT_ROUTE%": "匯出路線",
     "%IMPOT_EXPORT_ROUTE%": "匯入/匯出路線",
     "%IMPORT_INSTRUCTION%": "輸入一個需要導入至Catchem的路線，點擊後匯入。",
-    "%EXPORT_INSTRUCTION%": "複製下方的路線建立備份或與他人分享。"
+    "%EXPORT_INSTRUCTION%": "複製下方的路線建立備份或與他人分享。",
     "%BUSY%" : "忙碌",
     "%LEVEL_UP%" : "等級提升",
     "%TRANSFER%" : "傳送",
