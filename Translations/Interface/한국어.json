@@ -271,6 +271,10 @@
     "%LEVEL_UP%" : "레벨업",
     "%TRANSFER%" : "트렌스퍼",
     "%FAVORITE%" : "별표",
-    "%ACTION_QUEUE%" : "액션리스트"
+    "%ACTION_QUEUE%" : "액션리스트",
+    "%CAUGHT%" : "포획",
+    "%SEEN%" : "발견",
+    "%TOTAL%" : "합계",
+    "%AUTO_UNFAVORITE_POKE%" : "자동으로 별표 취소"
   }
 }
