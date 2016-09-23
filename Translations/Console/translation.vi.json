@@ -530,7 +530,7 @@
     },
     {
       "Key": "candyMiss",
-      "Value": "Miss some candies to evolve (0), cancelling..."
+      "Value": "Miss some candies to evolve {0} - {1}, cancelling..."
     },
     {
       "Key": "noRoute",

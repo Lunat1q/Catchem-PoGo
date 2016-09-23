@@ -486,7 +486,7 @@
     },
     {
       "Key": "candyMiss",
-      "Value": "Mi mancano delle caramelle per evolvere (0), annullo..."
+      "Value": "Mi mancano delle caramelle per evolvere {0} - {1}, annullo..."
     },
     {
       "Key": "noRoute",

@@ -518,7 +518,7 @@
     },
     {
       "Key": "candyMiss",
-      "Value": "nog snoepjes nodig om te evolven (0), afbreken..."
+      "Value": "nog snoepjes nodig om te evolven {0} - {1}, afbreken..."
     },
     {
       "Key": "noRoute",

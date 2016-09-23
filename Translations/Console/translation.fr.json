@@ -646,7 +646,7 @@
     },
     {
       "Key": "candyMiss",
-      "Value": "Il manque quelques bonbons pour évoluer (0), annulation..."
+      "Value": "Il manque quelques bonbons pour évoluer {0} - {1}, annulation..."
     },
     {
       "Key": "noRoute",

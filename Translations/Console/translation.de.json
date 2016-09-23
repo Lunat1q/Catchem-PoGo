@@ -426,7 +426,7 @@
     },
     {
       "Key": "candyMiss",
-      "Value": "Es fehlen Bonbons, um (0) zu entwickeln, stoppe Aktion..."
+      "Value": "Es fehlen Bonbons, um {0} - {1} zu entwickeln, stoppe Aktion..."
     },
     {
       "Key": "noRoute",

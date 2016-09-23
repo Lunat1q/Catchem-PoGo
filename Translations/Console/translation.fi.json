@@ -646,7 +646,7 @@
     },
     {
       "Key": "candyMiss",
-      "Value": "Ei ole paria karkkia tarpeeksi (0), Lopetetaan..."
+      "Value": "Ei ole paria karkkia tarpeeksi {0} - {1}, Lopetetaan..."
     },
     {
       "Key": "noRoute",
