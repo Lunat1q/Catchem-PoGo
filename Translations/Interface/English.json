@@ -276,6 +276,7 @@
     "%SEEN%" : "Seen",
     "%TOTAL%" : "Total",
     "%AUTO_UNFAVORITE_POKE%" : "Auto Unfavorite Poke",
-    "%USING%" : "Using"
+    "%USING%" : "Using",
+    "%USE_ITEM%" : "Use Item"
   }
 }
