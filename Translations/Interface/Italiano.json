@@ -105,7 +105,7 @@
     "%ALTITUDE_MAX%": "Altitudine Max",
     "%LATITUDE%": "Latitudine",
     "%LONGITUDE%": "Longitudine",
-    "%MAX_SPAWN_LOCATION_OFFSET%": "Max Offset Spawn Locazione",
+    "%MAX_SPAWN_LOCATION_OFFSET%": "Max Offset di Spawn",
     "%MAX_TRAVEL_DISTANCE_IN_METERS%": "Max Distanza Di Viaggio (metri)",
     "%WALKING_SPEED_MIN%": "Velocita’ camminata Min (km/h)",
     "%WALKING_SPEED_MAX%": "Velocita’ camminata Max (km/h)",
