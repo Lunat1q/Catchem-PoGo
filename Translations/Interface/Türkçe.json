@@ -274,6 +274,7 @@
     "%ACTION_QUEUE%" : "Yapılacaklar Listesi",
     "%CAUGHT%" : "Yakalanan",
     "%SEEN%" : "Görülen",
-    "%TOTAL%" : "Toplam"
+    "%TOTAL%" : "Toplam",
+    "%AUTO_UNFAVORITE_POKE%" : "Otomatik Pokemonu Favoriden Çıkar"
   }
 }
