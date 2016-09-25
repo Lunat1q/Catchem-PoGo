@@ -275,7 +275,7 @@
     "%CAUGHT%" : "Capturados",
     "%SEEN%" : "Vistos",
     "%TOTAL%" : "Total",
-    "%AUTO_UNFAVORITE_POKE%" : "Auto (Des)Favoritar Poke"
+    "%AUTO_UNFAVORITE_POKE%" : "Auto (Des)Favoritar Poke",
     "%USING%" : "Usando",
     "%USE_ITEM%" : "Utilizar Item"
   }
