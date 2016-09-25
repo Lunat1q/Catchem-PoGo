@@ -276,6 +276,7 @@
     "%SEEN%" : "Görülen",
     "%TOTAL%" : "Toplam",
     "%AUTO_UNFAVORITE_POKE%" : "Otomatik Pokemonu Favoriden Çıkar",
-    "%USING%" : "Kıllanılan"
+    "%USING%" : "Kullanılan",
+    "%USE_ITEM%" : "Eşyayı Kullan"
   }
 }
