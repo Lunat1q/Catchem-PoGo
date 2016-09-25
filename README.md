@@ -41,8 +41,8 @@ If you really like this project, feel free to buy <b>pizza</b> :pizza: or :beers
  - [Proxy support]
  - [All settings from UI]
  - [You can set startup location from the map, just select the bot (don't hit Start), go to the map tab, and just double-click to desired position]
- - [Full controll of your inventory/poke]
- - [Smooth controll of movement speed on the run via MoveSpeedFactor slider]
+ - [Full control of your inventory/poke]
+ - [Smooth control of movement speed on the run via MoveSpeedFactor slider]
  - [Make map follow your player]
 
 <br/>
@@ -58,15 +58,15 @@ Get Device data from real android device:
 If you have any problems with getting device info, consider watching this post: [AdbDrivers](http://forum.xda-developers.com/showthread.php?p=48915118#post48915118)
 
 <h2>Credits</h2>
-Thanks to Feroxs' hard work on the API & Console we are able to manage something like this.
+Thanks to <i>[Feroxs'](https://github.com/FeroxRev)</i> hard work on the API & Console we are able to manage something like this.
 Without him, this would not have been available.</br>
 Design ideas: <i><b>[@Morphir](https://github.com/ephran)</b> - Poke info design</i>, <i><b>Su**ro</b> - initial design idea</i>
 
  
  
- <h2>Rights</h2>
- All rights to trademarks used are going to Nintendo and Niantic 
+<h2>Rights / Legal</h2>
+This Bot is in no way affiliated with, authorized, maintained, sponsored or endorsed by Niantic, The Pokémon Company, Nintendo or any of its affiliates or subsidiaries. This is an independent and unofficial API for educational use ONLY. Use at your own risk.
 
 
-<h2>Licence</h2>
-Licenced under AGPLv3
+<h2>License</h2>
+This Bot is Licensed under AGPLv3 (General Public License V3.0), & You can View it [Here](https://raw.githubusercontent.com/Lunat1q/Catchem-PoGo/master/LICENSE.md)
