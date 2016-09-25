@@ -47,7 +47,8 @@ If you really like this project, feel free to buy <b>pizza</b> :pizza: or :beers
 
 <br/>
 <h2>Screenshots</h2>
-![Map/Console tab](http://i.imgur.com/UD0hc2B.png)<br/>
+![Map/Console tab](http://i.imgur.com/h0fGday.png)<br/>
+![Player Tab](http://i.imgur.com/EPdRtqs.png)<br/>
 
  
 Get Device data from real android device:
@@ -57,12 +58,6 @@ Get Device data from real android device:
  <br/><br/>
 If you have any problems with getting device info, consider watching this post: [AdbDrivers](http://forum.xda-developers.com/showthread.php?p=48915118#post48915118)
 
-<h2>Credits</h2>
-Thanks to <i>[Feroxs'](https://github.com/FeroxRev)</i> hard work on the API & Console we are able to manage something like this.
-Without him, this would not have been available.</br>
-Design ideas: <i><b>[@Morphir](https://github.com/ephran)</b> - Poke info design</i>, <i><b>Su**ro</b> - initial design idea</i>
-
- 
  
 <h2>Rights / Legal</h2>
 This Bot is in no way affiliated with, authorized, maintained, sponsored or endorsed by Niantic, The Pokémon Company, Nintendo or any of its affiliates or subsidiaries. This is an independent and unofficial API for educational use ONLY. Use at your own risk.
@@ -70,3 +65,9 @@ This Bot is in no way affiliated with, authorized, maintained, sponsored or endo
 
 <h2>License</h2>
 This Bot is Licensed under AGPLv3 (General Public License V3.0), & You can View it [Here](https://raw.githubusercontent.com/Lunat1q/Catchem-PoGo/master/LICENSE.md)
+
+
+<h2>Credits</h2>
+Thanks to <i><b>[Feroxs'](https://github.com/FeroxRev)</b></i> hard work on the API & Console we are able to manage something like this.
+Without him, this would not have been available.</br>
+Design ideas: <i><b>[@Morphir](https://github.com/ephran)</b> - Poke Info Design</i>, <i><b>Su**ro</b> - Initial Design Idea</i>
