@@ -14,7 +14,7 @@
     },
     {
       "Key": "masterPokeball",
-      "Value": "大師球"
+      "Value": "掌門球"
     },
     {
       "Key": "wrongAuthType",
@@ -618,7 +618,7 @@
     },
     {
       "Key": "currentMiscInv",
-      "Value": "[背包] 誘餌模塊: {0} | 幸運蛋: {1} | 孵化器: {2} | 全部: {3}"
+      "Value": "[背包] 誘餌模組: {0} | 幸運蛋: {1} | 孵化器: {2} | 全部: {3}"
     },
     {
       "Key": "currentInvUsage",
