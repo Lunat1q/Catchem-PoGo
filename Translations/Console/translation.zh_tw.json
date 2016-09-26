@@ -2,7 +2,7 @@
   "TranslationStrings": [
     {
       "Key": "pokeball",
-      "Value": "寶貝球"
+      "Value": "精靈球"
     },
     {
       "Key": "greatPokeball",
@@ -50,7 +50,7 @@
     },
     {
       "Key": "eventUseLuckyEggMinPokemonCheck",
-      "Value": "因為神奇寶貝不足，不足以觸發使用幸運蛋道具的規則。需要 {0} 隻或以上。({1}/{2})"
+      "Value": "因為精靈寶可夢不足，無法觸發使用幸運蛋的規則。需要 {0} 隻或以上。({1}/{2})"
     },
     {
       "Key": "eventPokemonEvolvedSuccess",
@@ -74,7 +74,7 @@
     },
     {
       "Key": "eventNoPokeballs",
-      "Value": "沒有神奇寶貝球了，我們錯過了一隻 CP 值為 {1} 的 {0} "
+      "Value": "沒有精靈球了，我們錯過了一隻 CP 值為 {1} 的 {0} "
     },
     {
       "Key": "catchStatusAttempt",
@@ -94,7 +94,7 @@
     },
     {
       "Key": "displayHighestsHeader",
-      "Value": "神奇寶貝"
+      "Value": "精靈寶可夢"
     },
     {
       "Key": "commonWordPerfect",
@@ -262,15 +262,15 @@
     },
     {
       "Key": "lookingForIncensePokemon",
-      "Value": "正在搜尋薰香引來的神奇寶貝..."
+      "Value": "正在搜尋薰香引來的精靈寶可夢..."
     },
     {
       "Key": "lookingForPokemon",
-      "Value": "正在搜尋神奇寶貝..."
+      "Value": "正在搜尋精靈寶可夢..."
     },
     {
       "Key": "lookingForLurePokemon",
-      "Value": "正在搜尋誘餌吸引來的神奇寶貝..."
+      "Value": "正在搜尋誘餌吸引來的精靈寶可夢..."
     },
     {
       "Key": "pokemonSkipped",
@@ -278,15 +278,15 @@
     },
     {
       "Key": "invFullTransferring",
-      "Value": "背包已滿，正在傳送神奇寶貝..."
+      "Value": "背包已滿，正在傳送精靈寶可夢..."
     },
     {
       "Key": "invFullTransferManually",
-      "Value": "背包已滿，請手動傳送神奇寶貝或者修改 TransferDuplicatePokemon 為 true..."
+      "Value": "背包已滿，請手動傳送精靈寶可夢或者修改 TransferDuplicatePokemon 為 true..."
     },
     {
       "Key": "invFullPokestopLooting",
-      "Value": "背包已滿,無法捕捉神奇寶貝!"
+      "Value": "背包已滿,無法捕捉精靈寶可夢!"
     },
     {
       "Key": "encounterProblem",
@@ -294,7 +294,7 @@
     },
     {
       "Key": "encounterProblemLurePokemon",
-      "Value": "發生錯誤：誘餌吸引來的神奇寶貝 {0}"
+      "Value": "發生錯誤：誘餌吸引來的精靈寶可夢 {0}"
     },
     {
       "Key": "desiredDestTooFar",
@@ -302,11 +302,11 @@
     },
     {
       "Key": "pokemonRename",
-      "Value": "正在將神奇寶貝 {0} ({1}) 從 {2} 重新命名為 {3}."
+      "Value": "正在將精靈寶可夢 {0} ({1}) 從 {2} 重新命名為 {3}."
     },
     {
       "Key": "pokemonIgnoreFilter",
-      "Value": "[神奇寶貝忽略過濾器] - 在設定中定義忽略 {0} "
+      "Value": "[精靈寶可夢忽略過濾器] - 在設定中定義忽略 {0} "
     },
     {
       "Key": "catchStatusAttempt",
@@ -434,7 +434,7 @@
     },
     {
       "Key": "hourRateReached",
-      "Value": "已達到每小時最大容許量的神奇寶貝 ({0})/補給站 ({1})/經驗值 ({2})/星塵 ({3})，機器人將停止 {4} 分鐘"
+      "Value": "已達到每小時最大容許量的精靈寶可夢 ({0})/補給站 ({1})/經驗值 ({2})/星塵 ({3})，機器人將停止 {4} 分鐘"
     },
     {
       "Key": "botPauseCancel",
@@ -470,11 +470,11 @@
     },
     {
       "Key": "foundHiding",
-      "Value": "在這個區域發現隱藏的的神奇寶貝，正在嘗試尋找及補捉!"
+      "Value": "在這個區域發現隱藏的精靈寶可夢，正在嘗試尋找及補捉!"
     },
     {
       "Key": "pokeInGym",
-      "Value": "神奇寶貝 {0} 已被指定去保護道館!"
+      "Value": "精靈寶可夢 {0} 已被指定去保護道館!"
     },
     {
       "Key": "failedCoords",
@@ -542,7 +542,7 @@
     },
     {
       "Key": "tutorialPoke",
-      "Value": "補捉第一隻神奇寶貝! 它是 {0}!"
+      "Value": "補捉第一隻精靈寶可夢! 它是 {0}!"
     },
     {
       "Key": "tutorialNameNotPicked",
@@ -594,31 +594,31 @@
     },
     {
       "Key": "zeroPokeballInv",
-      "Value": "背包中已經沒有神奇寶貝球，無法補捉神奇寶貝!"
+      "Value": "背包中已經沒有精靈球，無法補捉精靈寶可夢!"
     },
     {
       "Key": "currentPokeballInv",
-      "Value": "[背包] 寶貝球: {0} | 高級球: {1} | 超級球: {2} | 大師球: {3} | 全部: {4}"
+      "Value": "[背包] 精靈球: {0} | 超級球: {1} | 高級球: {2} | 掌門球: {3} | 全部: {4}"
     },
     {
       "Key": "currentPotionInv",
-      "Value": "[背包] 藥水: {0} | 強效藥水: {1} | 超級藥水: {2} | 完全恢復藥水: {3} | 全部: {4}"
+      "Value": "[背包] 藥水: {0} | 超級藥水: {1} | 超高級藥水: {2} | 全滿藥水: {3} | 全部: {4}"
     },
     {
       "Key": "currentBerryInv",
-      "Value": "[背包] 莓果: {0} | Bluk Berries: {1} | Nanab Berries: {2} | Pinap Berries: {3} | Wepar Berries: {4} | 全部: {5}"
+      "Value": "[背包] 紅蔓莓: {0} | 藍莓: {1} | 粉蕉: {2} | 黃旺梨: {3} | 青梨: {4} | 全部: {5}"
     },
     {
       "Key": "currentReviveInv",
-      "Value": "[背包] 復甦劑: {0} | 完全復甦劑: {1} | 全部: {2}"
+      "Value": "[背包] 更生劑: {0} | 特級更生劑: {1} | 全部: {2}"
     },
     {
       "Key": "currentIncenseInv",
-      "Value": "[背包] 薰香: {0} | Cool Incense: {1} | Floral Incense: {2} | Spicy Incense: {3} | 全部: {4}"
+      "Value": "[背包] 薰香: {0} | 涼爽薰香: {1} | 花香薰香: {2} | 火辣薰香: {3} | 全部: {4}"
     },
     {
       "Key": "currentMiscInv",
-      "Value": "[背包] 誘餌組件: {0} | 幸運蛋: {1} | 孵蛋器: {2} | 全部: {3}"
+      "Value": "[背包] 誘餌模塊: {0} | 幸運蛋: {1} | 孵化器: {2} | 全部: {3}"
     },
     {
       "Key": "currentInvUsage",
@@ -626,11 +626,11 @@
     },
     {
       "Key": "currentPokemonUsage",
-      "Value": "[背包] 神奇寶貝數量: {0}/{1}"
+      "Value": "[背包] 精靈寶可夢數量: {0}/{1}"
     },
     {
       "Key": "checkingForBallsToRecycle",
-      "Value": "檢查需要回收的寶貝球，將保留 {0}"
+      "Value": "檢查需要回收的精靈球，將保留 {0}"
     },
     {
       "Key": "checkingForPotionsToRecycle",
@@ -654,7 +654,7 @@
     },
     {
       "Key": "notEnoughPokeballsToSnipe",
-      "Value": "沒有足夠的神奇寶貝球可以狙擊! ({0}/{1})"
+      "Value": "沒有足夠的精靈球可以狙擊! ({0}/{1})"
     },
     {
       "Key": "displayHighestMove1Header",
@@ -666,7 +666,7 @@
     },
     {
       "Key": "useBerry",
-      "Value": "正在使用莓果. 剩餘莓果: {0}"
+      "Value": "正在使用紅蔓莓. 剩餘紅蔓莓: {0}"
     },
     {
       "Key": "nianticServerUnstable",
@@ -678,19 +678,19 @@
     },
     {
       "Key": "pokemonUpgradeSuccess",
-      "Value": "神奇寶貝已升級: {0}:{1}"
+      "Value": "精靈寶可夢已升級: {0}:{1}"
     },
     {
       "Key": "pokemonUpgradeFailed",
-      "Value": "神奇寶貝升級失敗，沒有足夠的資源，可能是缺少星塵"
+      "Value": "精靈寶可夢升級失敗，沒有足夠的資源，可能是缺少星塵"
     },
     {
       "Key": "pokemonUpgradeUnavailable",
-      "Value": "神奇寶貝已無法再升級，因為: {0}:{1}/{2}"
+      "Value": "精靈寶可夢已無法再升級，因為: {0}:{1}/{2}"
     },
     {
       "Key": "pokemonUpgradeFailedError",
-      "Value": "神奇寶貝升級失敗，原因未明，可能是已升至目前最高等級。神奇寶貝造成的因素為: {0}"
+      "Value": "精靈寶可夢升級失敗，原因未明，可能是已升至目前最高等級。造成的原因為: {0}"
     },
     {
       "Key": "webErrorBadGateway",
@@ -748,7 +748,7 @@
   "Pokemon": [
     {
       "Key": "missingno",
-      "Value": "粉紅乳頭"
+      "Value": "遺失號碼"
     },
     {
       "Key": "bulbasaur",
@@ -872,7 +872,7 @@
     },
     {
       "Key": "nidoqueen",
-      "Value": "尼美後"
+      "Value": "尼多后"
     },
     {
       "Key": "nidoranMale",
@@ -940,7 +940,7 @@
     },
     {
       "Key": "venonat",
-      "Value": "毛毛蟲"
+      "Value": "毛球"
     },
     {
       "Key": "venomoth",
@@ -1016,7 +1016,7 @@
     },
     {
       "Key": "machoke",
-      "Value": "大力"
+      "Value": "豪力"
     },
     {
       "Key": "machamp",
@@ -1084,7 +1084,7 @@
     },
     {
       "Key": "doduo",
-      "Value": "多多"
+      "Value": "嘟嘟"
     },
     {
       "Key": "dodrio",
@@ -1132,11 +1132,11 @@
     },
     {
       "Key": "drowzee",
-      "Value": "素利普"
+      "Value": "催眠貘"
     },
     {
       "Key": "hypno",
-      "Value": "素利拍"
+      "Value": "引夢貘人"
     },
     {
       "Key": "krabby",
@@ -1328,11 +1328,11 @@
     },
     {
       "Key": "zapdos",
-      "Value": "雷鳥"
+      "Value": "閃電鳥"
     },
     {
       "Key": "moltres",
-      "Value": "火鳥"
+      "Value": "火焰鳥"
     },
     {
       "Key": "dratini",
