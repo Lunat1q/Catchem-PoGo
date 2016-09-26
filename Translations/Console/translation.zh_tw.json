@@ -642,11 +642,11 @@
     },
     {
       "Key": "pokeballsToKeepIncorrect",
-      "Value": "TotalAmountOfPokeballsToKeep 設定有問題。數字不能小於 1。"
+      "Value": "保持總數的精靈球設定有問題。數字不能小於 1。"
     },
     {
       "Key": "encounterProblemPokemonFlee",
-      "Value": "Encounter Pokemon Fled {0}!"
+      "Value": "遭遇的寶可夢 {0} 逃離!"
     },
     {
       "Key": "snipeScanEx",
@@ -706,7 +706,7 @@
     },
     {
       "Key": "skipLaggedTimeout",
-      "Value": "SkipLagged 伺服器離線或 SnipeRequestTimeoutSeconds 逾時秒數設定太短!"
+      "Value": "SkipLagged 伺服器離線或狙擊請求超時，逾時秒數設定太短!"
     },
     {
       "Key": "skipLaggedMaintenance",
