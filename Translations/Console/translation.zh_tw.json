@@ -748,7 +748,7 @@
   "Pokemon": [
     {
       "Key": "missingno",
-      "Value": "粉紅乳頭"
+      "Value": "遺失號碼"
     },
     {
       "Key": "bulbasaur",
@@ -872,7 +872,7 @@
     },
     {
       "Key": "nidoqueen",
-      "Value": "尼美後"
+      "Value": "尼多后"
     },
     {
       "Key": "nidoranMale",
@@ -940,7 +940,7 @@
     },
     {
       "Key": "venonat",
-      "Value": "毛毛蟲"
+      "Value": "毛球"
     },
     {
       "Key": "venomoth",
@@ -1016,7 +1016,7 @@
     },
     {
       "Key": "machoke",
-      "Value": "大力"
+      "Value": "豪力"
     },
     {
       "Key": "machamp",
@@ -1084,7 +1084,7 @@
     },
     {
       "Key": "doduo",
-      "Value": "多多"
+      "Value": "嘟嘟"
     },
     {
       "Key": "dodrio",
@@ -1132,11 +1132,11 @@
     },
     {
       "Key": "drowzee",
-      "Value": "素利普"
+      "Value": "催眠貘"
     },
     {
       "Key": "hypno",
-      "Value": "素利拍"
+      "Value": "引夢貘人"
     },
     {
       "Key": "krabby",
@@ -1328,11 +1328,11 @@
     },
     {
       "Key": "zapdos",
-      "Value": "雷鳥"
+      "Value": "閃電鳥"
     },
     {
       "Key": "moltres",
-      "Value": "火鳥"
+      "Value": "火焰鳥"
     },
     {
       "Key": "dratini",
