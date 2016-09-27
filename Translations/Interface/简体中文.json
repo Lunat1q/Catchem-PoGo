@@ -275,6 +275,8 @@
     "%CAUGHT%" : "抓捕",
     "%SEEN%" : "看到过的",
     "%TOTAL%" : "总计",
-    "%AUTO_UNFAVORITE_POKE%" : "自动取消收藏宠物"
+    "%AUTO_UNFAVORITE_POKE%" : "自动取消收藏宠物",
+    "%USING%" : "使用",
+    "%USE_ITEM%" : "使用道具"
   }
 }
