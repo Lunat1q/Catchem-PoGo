@@ -174,7 +174,7 @@
     },
     {
       "Key": "logEntryBerry",
-      "Value": "漿果"
+      "Value": "莓果"
     },
     {
       "Key": "logEntryEgg",
@@ -282,7 +282,7 @@
     },
     {
       "Key": "invFullTransferManually",
-      "Value": "背包已滿，請手動傳送精靈寶可夢或者修改 TransferDuplicatePokemon 為 true..."
+      "Value": "背包已滿，請手動傳送精靈寶可夢或者勾選[傳送重複的寶可夢]"
     },
     {
       "Key": "invFullPokestopLooting",
@@ -306,7 +306,7 @@
     },
     {
       "Key": "pokemonIgnoreFilter",
-      "Value": "[精靈寶可夢忽略過濾器] - 在設定中定義忽略 {0} "
+      "Value": "[寶可夢設定列表] - 在設定中定義忽略 {0} "
     },
     {
       "Key": "catchStatusAttempt",
@@ -362,7 +362,7 @@
     },
     {
       "Key": "googleTwoFactorAuth",
-      "Value": "當你啟用了 Google 的兩步驟驗證後，需要在 auth.json 中輸入App 專屬密碼"
+      "Value": "當你啟用了 Google 的兩步驟驗證後，需要在 auth.json 中輸入 App 專屬密碼"
     },
     {
       "Key": "googleTwoFactorAuthExplanation",
@@ -410,7 +410,7 @@
     },
     {
       "Key": "pokeListEmpty",
-      "Value": "Highests Pokemon List is empty"
+      "Value": "最高精靈寶可夢列表為空"
     },
     {
       "Key": "proxyAlready",
@@ -434,7 +434,7 @@
     },
     {
       "Key": "hourRateReached",
-      "Value": "已達到每小時最大容許量的精靈寶可夢 ({0})/補給站 ({1})/經驗值 ({2})/星塵 ({3})，機器人將停止 {4} 分鐘"
+      "Value": "已達到每小時最大容許量的精靈寶可夢 ({0})/補給站 ({1})/經驗值 ({2})/星塵 ({3}) 機器人將停止 {4} 分鐘"
     },
     {
       "Key": "botPauseCancel",
@@ -454,11 +454,11 @@
     },
     {
       "Key": "scheduleAction",
-      "Value": "排程任務 [{0}], with args: [{1}] 已成功執行"
+      "Value": "排程任務 [{0}], 及ARGS: [{1}] 已成功執行"
     },
     {
       "Key": "scheduleActionFailed",
-      "Value": "排程任務無法執行任務 {0}, with args: {1}"
+      "Value": "排程任務無法執行任務 {0}, 及ARGS: {1}"
     },
     {
       "Key": "schedulePause",
