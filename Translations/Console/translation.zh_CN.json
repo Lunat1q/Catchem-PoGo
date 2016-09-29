@@ -282,7 +282,7 @@
     },
     {
       "Key": "invFullTransferManually",
-      "Value": "背包已满，请手动传输精灵或者修改 TransferDuplicatePokemon 为 true "
+      "Value": "背包已满，请手动传输精灵或者勾选[放生重复宠物]"
     },
     {
       "Key": "invFullPokestopLooting",
@@ -306,7 +306,7 @@
     },
     {
       "Key": "pokemonIgnoreFilter",
-      "Value": "[精灵忽略过滤器] - 在设置中定义忽略：{0} "
+      "Value": "[宠物设置列表] - 在设置中定义忽略：{0} "
     },
     {
       "Key": "catchStatusAttempt",
@@ -390,123 +390,123 @@
     },
     {
       "Key": "setLure",
-      "Value": "Set lure at PokeStop: {0}, distance: {1}, lures left: {2}"
+      "Value": "设定诱饵于补给站: {0}, 距离: {1}, 剩余诱饵: {2}"
     },
     {
       "Key": "levelUp",
-      "Value": "Level up! Rewards: "
+      "Value": "等级提升! 奖励: "
     },
     {
       "Key": "evolvedInto",
-      "Value": "Evolved into {0} CP: {1} Iv: {2}%"
+      "Value": "进化至 {0} CP: {1} Iv: {2}%"
     },
     {
       "Key": "gymTouch",
-      "Value": "Touched a gym: {0}{1} - {2}, points: {3}, Guards: {4}) "
+      "Value": "邻近道馆: {0}{1} - {2}, 分数: {3}, 守卫: {4}) "
     },
     {
       "Key": "eggFound",
-      "Value": "Found an egg, distance: {0}km from PokeStop: {1}"
+      "Value": "从补给站: {0} 发现蛋，距离: {1} 千米"
     },
     {
       "Key": "pokeListEmpty",
-      "Value": "Highests Pokemon List is empty"
+      "Value": "最高宠物小精灵列表为空"
     },
     {
       "Key": "proxyAlready",
-      "Value": "{0} is already running with this proxy!"
+      "Value": "{0} 已经透过 Proxy 执行中!"
     },
     {
       "Key": "yourIpProxyIp",
-      "Value": "Your IP is: {0} / Proxy IP is: {1}"
+      "Value": "你的 IP 为: {0} / Proxy IP 为: {1}"
     },
     {
       "Key": "ipMatch",
-      "Value": "Your ip match! I warned you!"
+      "Value": "你的 IP 重复! 我已经警告过你!"
     },
     {
       "Key": "yourIpIs",
-      "Value": "Your IP is: {0}"
+      "Value": "你的 IP 为: {0}"
     },
     {
       "Key": "proxyDown",
-      "Value": "Proxy Down? Will try to interact with server anyway"
+      "Value": "Proxy 离线? 将持续连接至伺服器"
     },
     {
       "Key": "hourRateReached",
-      "Value": "Max amount of Pokemon ({0})/Pokestops ({1})/XP ({2})/Star Dust ({3}) per hour reached, bot will be stopped for {4} minutes"
+      "Value": "已达到每小时最大容许量的宠物小精灵 ({0})/补给站 ({1})/经验值 ({2})/星尘 ({3}) 机器人将停止 {4} 分钟"
     },
     {
       "Key": "botPauseCancel",
-      "Value": "Bot pause routine canceled"
+      "Value": "机器人暂停程序已取消"
     },
     {
       "Key": "botPauseFail",
-      "Value": "Bot pause routine failed badly"
+      "Value": "机器人暂停程序失效"
     },
     {
       "Key": "updatesAt",
-      "Value": "During that pause, consider to check fresh updates at"
+      "Value": "暂停期间，请考虑检查是否有新版本，发布于"
     },
     {
       "Key": "discordLink",
-      "Value": "or join our friendly Discord chat:"
+      "Value": "或加入我们的 Discord 聊天室:"
     },
     {
       "Key": "scheduleAction",
-      "Value": "Schedule Action [{0}], with args: [{1}] performed successfully"
+      "Value": "排程任务 [{0}], 与ARGS: [{1}] 已成功执行"
     },
     {
       "Key": "scheduleActionFailed",
-      "Value": "Schedule Action Failed to perform action {0}, with args: {1}"
+      "Value": "排程任务无法执行任务 {0}, 与ARGS: {1}"
     },
     {
       "Key": "schedulePause",
-      "Value": "Bot paused for {0}h, case of Schedule settings, will be started again at {1}, {2}:{3}"
+      "Value": "机器人将暂停 {0}小时，因为排程设定的缘故，并将再重新启动于 {1}, {2}:{3}"
     },
     {
       "Key": "throwPokeball",
-      "Value": "Throwing {0}{1}{2} - {3}"
+      "Value": "丢掷 {0}{1}{2} - {3}"
     },
     {
       "Key": "foundHiding",
-      "Value": "Found some hiding poke in the area, trying to catch'em now!"
+      "Value": "在这个区域发现隐藏的宠物小精灵，正在尝试寻找及补捉!"
     },
     {
       "Key": "pokeInGym",
-      "Value": "Pokemon {0} is signed to defend a GYM!"
+      "Value": "宠物小精灵 {0} 已被指定去保护道馆!"
     },
     {
       "Key": "failedCoords",
-      "Value": "Coordinate failure, please check them again!"
+      "Value": "座标错误，请再次检查!"
     },
     {
       "Key": "errorCatchNearby",
-      "Value": "Coordinate failure, please check them again!"
+      "Value": "座标错误，请再次检查!"
     },
     {
       "Key": "candyMiss",
-      "Value": "Miss some candies to evolve {0} - {1}, cancelling..."
+      "Value": "缺少些许糖果来进化 {0} - {1}, 取消中..."
     },
     {
       "Key": "noRoute",
-      "Value": "No proper route loaded, or route is too short"
+      "Value": "无法载入适当的路线或路线太短!"
     },
     {
       "Key": "customRouteData",
-      "Value": "You are using a custom route named: '{0}' with {1} routing points"
+      "Value": "你正在使用自订路线，名称为: '{0}' ，共有 {1} 个路径点"
     },
     {
       "Key": "unDoneForceMove",
-      "Value": "Found not-done ForceMove, resuming movement to Lat: {0} Lon:{1}"
+      "Value": "强制移动未完成，重新执行移动至纬度: {0} 经度:{1}"
     },
     {
       "Key": "routeSwitched",
-      "Value": "Route switched from {0} to {1}!"
+      "Value": "切换路线从 {0} 为 {1}!"
     },
     {
       "Key": "customRouteDisabled",
-      "Value": "CustomRoute disabled, going back to normal routine!"
+      "Value": "自订路线已取消，返回执行标准程序!"
     },
     {
       "Key": "foundClosest",
