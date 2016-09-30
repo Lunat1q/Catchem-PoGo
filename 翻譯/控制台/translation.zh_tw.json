@@ -22,7 +22,7 @@
     },
     {
       "Key": "farmPokestopsOutsideRadius",
-      "Value": "你已經走出範圍!5秒後返回起點（距離 {0} 公尺），請確認設定是否正確？"
+      "Value": "你已經走出範圍！五秒後返回起點（距離 {0} 公尺），請確認設定是否正確？"
     },
     {
       "Key": "farmPokestopsNoUsableFound",
@@ -30,7 +30,7 @@
     },
     {
       "Key": "eventFortUsed",
-      "Value": "名稱：{0} 經驗值：{1}, 金幣：{2}, 物品：{3}"
+      "Value": "名稱：{0} 經驗值：{1} 金幣：{2} 物品：{3}"
     },
     {
       "Key": "eventFortFailed",
@@ -43,6 +43,10 @@
     {
       "Key": "eventProfileLogin",
       "Value": "登入帳號 {0}"
+    },
+    {
+      "Key": "eventLevelUpRewards",
+      "Value": "等級提升: {0} | 物品: {1}"
     },
     {
       "Key": "eventUsedLuckyEgg",
@@ -58,11 +62,11 @@
     },
     {
       "Key": "eventPokemonEvolvedFailed",
-      "Value": " {0} 進化失敗，原因是 {1}，已取消進化 {2}"
+      "Value": "{0} 進化失敗，原因是 {1}，已取消進化 {2}"
     },
     {
       "Key": "eventPokemonTransferred",
-      "Value": "{0}\t- CP 值：{1} IV 值：{2}% [已擁有 CP 值：{3} IV 值：{4}%] （還有 {5} 顆該種類的糖果）"
+      "Value": "{0}\t- CP 值：{1} IV 值：{2}％ 【已擁有 CP 值：{3} IV 值：{4}％】 （還有 {5} 顆該種類的糖果）"
     },
     {
       "Key": "eventItemRecycled",
@@ -70,7 +74,7 @@
     },
     {
       "Key": "eventPokemonCapture",
-      "Value": "({0}) | ({1}) {2} 等級：{3} CP 值：({4}/{5}) IV 值：{6}% | 捕獲機率：{7}% | 距離 {8} 公尺 | 剩餘 {10} 個 {9} | {11} "
+      "Value": "({0}) | {2} 等級：{3} | CP 值：({4}/{5}) | IV 值：{6}％ | 類型: {1} | 捕獲機率：{7}％ | 距離 {8} 公尺 | 使用: {9} （剩餘 {10} 個） | 經驗: {11} | {12}"
     },
     {
       "Key": "eventNoPokeballs",
@@ -122,7 +126,7 @@
     },
     {
       "Key": "welcomeWarning",
-      "Value": "確認經緯度是否正確，如果錯誤將會使程式關閉! 緯度：{0} 經度：{1}"
+      "Value": "確認經緯度是否正確，如果錯誤將會使程式關閉！ 緯度：{0} 經度：{1}"
     },
     {
       "Key": "incubatorPuttingEgg",
@@ -134,7 +138,7 @@
     },
     {
       "Key": "incubatorEggHatched",
-      "Value": "孵化器已經孵出：{0}"
+      "Value": "孵化器已經孵出： {0} | 等級： {1} | CP 值：({2}/{3}) | IV 值： {4}％"
     },
     {
       "Key": "logEntryError",
@@ -198,7 +202,7 @@
     },
     {
       "Key": "accessTokenExpired",
-      "Value": "該 token 已經過期。請重新登入獲取新的 token。"
+      "Value": "該詞法分析器已經過期。請重新登入獲取新的詞法分析器。"
     },
     {
       "Key": "tryingAgainIn",
@@ -206,7 +210,11 @@
     },
     {
       "Key": "accountNotVerified",
-      "Value": "帳號或密碼錯誤!退出..."
+      "Value": "帳號或密碼錯誤！退出..."
+    },
+    {
+      "Key": "ptcLoginFailed",
+      "Value": "PTC 登入失敗。請確定已輸入正確的 Email 和密碼。 如果持續有問題，請檢查你的手機或網站以確定這個帳號是否已被封鎖。程式離開中..."
     },
     {
       "Key": "openingGoogleDevicePage",
@@ -226,7 +234,7 @@
     },
     {
       "Key": "notRealisticTravel",
-      "Value": "偵測到非實際的旅行 {0}, 使用上一次儲存的設定"
+      "Value": "偵測到非實際的旅行 {0}，使用上一次儲存的設定"
     },
     {
       "Key": "coordinatesAreInvalid",
@@ -234,7 +242,7 @@
     },
     {
       "Key": "gotUpToDateVersion",
-      "Value": "恭喜!你已經更新至最新版本：{0}"
+      "Value": "恭喜！你已經更新至最新版本：{0}"
     },
     {
       "Key": "autoUpdaterDisabled",
@@ -249,12 +257,12 @@
       "Value": "成功下載新版本..."
     },
     {
-      "Key": "finishedTransferringConfig",
-      "Value": "完成設定值轉移到新版本..."
-    },
-    {
       "Key": "finishedUnpackingFiles",
       "Value": "成功解壓縮..."
+    },
+    {
+      "Key": "finishedTransferringConfig",
+      "Value": "完成設定值轉移到新版本..."
     },
     {
       "Key": "updateFinished",
@@ -276,17 +284,69 @@
       "Key": "pokemonSkipped",
       "Value": "略過：{0}"
     },
+     {
+      "Key": "zeroPokeballInv",
+      "Value": "背包中已經沒有精靈球，無法補捉精靈寶可夢！"
+    },
+    {
+      "Key": "currentPokeballInv",
+      "Value": "[背包] 精靈球: {0} | 超級球: {1} | 高級球: {2} | 掌門球: {3} | 全部: {4}"
+    },
+    {
+      "Key": "currentPotionInv",
+      "Value": "[背包] 藥水: {0} | 超級藥水: {1} | 超高級藥水: {2} | 全滿藥水: {3} | 全部: {4}"
+    },
+    {
+      "Key": "currentBerryInv",
+      "Value": "[背包] 紅蔓莓: {0} | 藍莓: {1} | 粉蕉: {2} | 黃旺梨: {3} | 青梨: {4} | 全部: {5}"
+    },
+    {
+      "Key": "currentReviveInv",
+      "Value": "[背包] 更生劑: {0} | 特級更生劑: {1} | 全部: {2}"
+    },
+    {
+      "Key": "currentIncenseInv",
+      "Value": "[背包] 薰香: {0} | 涼爽薰香: {1} | 花香薰香: {2} | 火辣薰香: {3} | 全部: {4}"
+    },
+    {
+      "Key": "currentMiscInv",
+      "Value": "[背包] 誘餌模組: {0} | 幸運蛋: {1} | 孵化器: {2} | 全部: {3}"
+    },
+    {
+      "Key": "currentInvUsage",
+      "Value": "[背包] 背包使用情形: {0}/{1}"
+    },
+    {
+      "Key": "currentPokemonUsage",
+      "Value": "[背包] 精靈寶可夢數量: {0}/{1}"
+    },
+    {
+      "Key": "checkingForBallsToRecycle",
+      "Value": "檢查需要回收的精靈球，將保留 {0}"
+    },
+    {
+      "Key": "checkingForPotionsToRecycle",
+      "Value": "檢查需要回收的藥水，將保留 {0}"
+    },
+    {
+      "Key": "checkingForRevivesToRecycle",
+      "Value": "檢查需要回收的復甦劑，將保留 {0}"
+    },
+    {
+      "Key": "pokeballsToKeepIncorrect",
+      "Value": "保持總數的精靈球設定有問題。數字不能小於 1。"
+    },
     {
       "Key": "invFullTransferring",
       "Value": "背包已滿，正在傳送精靈寶可夢..."
     },
     {
       "Key": "invFullTransferManually",
-      "Value": "背包已滿，請手動傳送精靈寶可夢或者勾選[傳送重複的寶可夢]"
+      "Value": "背包已滿，請手動傳送精靈寶可夢或者勾選【傳送重複的寶可夢】"
     },
     {
       "Key": "invFullPokestopLooting",
-      "Value": "背包已滿,無法捕捉精靈寶可夢!"
+      "Value": "背包已滿,無法捕捉精靈寶可夢！"
     },
     {
       "Key": "encounterProblem",
@@ -297,8 +357,12 @@
       "Value": "發生錯誤：誘餌吸引來的精靈寶可夢 {0}"
     },
     {
+      "Key": "encounterProblemPokemonFlee",
+      "Value": "遭遇的寶可夢 {0} 逃離！"
+    },
+    {
       "Key": "desiredDestTooFar",
-      "Value": "你要去的地方 {0}, {1} 距離目前位置太遠了 {2}, {3}"
+      "Value": "你要去的地方 {0}，{1} 距離目前位置太遠了 {2}，{3}"
     },
     {
       "Key": "pokemonRename",
@@ -306,7 +370,7 @@
     },
     {
       "Key": "pokemonIgnoreFilter",
-      "Value": "[寶可夢設定列表] - 在設定中定義忽略 {0} "
+      "Value": "【寶可夢設定列表】 - 在設定中定義忽略：{0}"
     },
     {
       "Key": "catchStatusAttempt",
@@ -362,7 +426,7 @@
     },
     {
       "Key": "googleTwoFactorAuth",
-      "Value": "當你啟用了 Google 的兩步驟驗證後，需要在 auth.json 中輸入 App 專屬密碼"
+      "Value": "當你啟用了 Google 的兩步驟驗證後，請在專案設定中填入 App 專屬密碼"
     },
     {
       "Key": "googleTwoFactorAuthExplanation",
@@ -374,31 +438,127 @@
     },
     {
       "Key": "missingCredentialsGoogle",
-      "Value": "你需要在 auth.json 中填寫 Google 帳戶和密碼!"
+      "Value": "你需要在專案設定中填寫 Google 帳戶和密碼！"
     },
     {
       "Key": "missingCredentialsPtc",
-      "Value": "你需要在 auth.json 中填寫 PTC 帳戶和密碼!"
+      "Value": "你需要在專案設定中填寫 PTC 帳戶和密碼！"
     },
     {
       "Key": "snipeScan",
       "Value": "[狙擊] 正在搜尋特殊寵物，坐標：{0}"
     },
     {
-      "Key": "noPokemonToSnipe",
-      "Value": "[狙擊] 沒有找到特殊寵物!"
+      "Key": "snipeScanEx",
+      "Value": "[狙擊] 正在狙擊 {0} ( {1} IV ) 在 {2}..."
     },
+    {
+      "Key": "noPokemonToSnipe",
+      "Value": "[狙擊] 沒有找到特殊寵物！"
+    },
+    {
+      "Key": "notEnoughPokeballsToSnipe",
+      "Value": "沒有足夠的精靈球可以狙擊！ ({0}/{1})"
+    },
+    {
+      "Key": "displayHighestMove1Header",
+      "Value": "MOVE1"
+    },
+    {
+      "Key": "displayHighestMove2Header",
+      "Value": "MOVE2"
+    },
+    {
+      "Key": "useBerry",
+      "Value": "正在使用紅蔓莓. 剩餘紅蔓莓: {0}"
+    },
+    {
+      "Key": "nianticServerUnstable",
+      "Value": "Niantic 伺服器不穩，減少 API 呼叫。"
+    },
+    {
+      "Key": "operationCanceled",
+      "Value": "目前的操作已取消，機器人已停止或暫停中。"
+    },
+    {
+      "Key": "pokemonUpgradeSuccess",
+      "Value": "精靈寶可夢已升級: {0}:{1}"
+    },
+    {
+      "Key": "pokemonUpgradeFailed",
+      "Value": "精靈寶可夢升級失敗，沒有足夠的資源，可能是缺少星塵"
+    },
+    {
+      "Key": "pokemonUpgradeUnavailable",
+      "Value": "精靈寶可夢已無法再升級，因為: {0}:{1}/{2}"
+    },
+    {
+      "Key": "pokemonUpgradeFailedError",
+      "Value": "精靈寶可夢升級失敗，原因未明，可能是已升至目前最高等級。造成的原因為: {0}"
+    },
+    {
+      "Key": "webErrorBadGateway",
+      "Value": "502 Bad Gateway: 伺服器負荷過重！"
+    },
+    {
+      "Key": "webErrorGatewayTimeout",
+      "Value": "504 Gateway Time-out: 伺服器目前無回應。"
+    },
+    {
+      "Key": "webErrorNotFound",
+      "Value": "404 Not Found: 無法從伺服器取得檔案！"
+    },
+    {
+      "Key": "skipLaggedTimeout",
+      "Value": "SkipLagged 伺服器離線或狙擊請求超時，逾時秒數設定太短！"
+    },
+    {
+      "Key": "skipLaggedMaintenance",
+      "Value": "SkipLagged 伺服器維護中。"
+    },
+    {
+      "Key": "checkingForMaximumInventorySize",
+      "Value": "[背包] 物品已超過背包最大容量！ {0}/{1}"
+    },
+    {
+      "Key": "logEntryFavorite",
+      "Value": "加入收藏"
+    },
+    {
+      "Key": "logEntryUnFavorite",
+      "Value": "取消收藏"
+    },
+    {
+      "Key": "pokemonFavorite",
+      "Value": "{0}"
+    },
+    {
+      "Key": "pokemonUnFavorite",
+      "Value": "{0}"
+    },
+    {
+      "Key": "walkingSpeedRandomized",
+      "Value": "{0}"
+    },
+    {
+      "Key": "stopBotToAvoidBan",
+      "Value": "機器人已中止以避免被封鎖！"
+    },
+    {
+      "Key": "botNotStoppedRiskOfBan",
+      "Value": "發生不應該發生的錯誤，同時機器人並沒有停止。 很可能已經被封鎖。 (建議動作: 中止機器人 \"CTRL+C\")."
+    }
     {
       "Key": "setLure",
       "Value": "設定誘餌於補給站: {0}, 距離: {1}, 剩餘誘餌: {2}"
     },
     {
       "Key": "levelUp",
-      "Value": "等級提升! 獎勵: "
+      "Value": "等級提升！ 獎勵: "
     },
     {
       "Key": "evolvedInto",
-      "Value": "進化至 {0} CP: {1} IV: {2}%"
+      "Value": "進化至 {0} CP: {1} IV: {2}％"
     },
     {
       "Key": "gymTouch",
@@ -414,7 +574,7 @@
     },
     {
       "Key": "proxyAlready",
-      "Value": "{0} 已經透過 Proxy 執行中!"
+      "Value": "{0} 已經透過 Proxy 執行中！"
     },
     {
       "Key": "yourIpProxyIp",
@@ -422,7 +582,7 @@
     },
     {
       "Key": "ipMatch",
-      "Value": "你的 IP 重複! 我已經警告過你!"
+      "Value": "你的 IP 重複！ 我已經警告過你！"
     },
     {
       "Key": "yourIpIs",
@@ -470,19 +630,19 @@
     },
     {
       "Key": "foundHiding",
-      "Value": "在這個區域發現隱藏的精靈寶可夢，正在嘗試尋找及補捉!"
+      "Value": "在這個區域發現隱藏的精靈寶可夢，正在嘗試尋找及補捉！"
     },
     {
       "Key": "pokeInGym",
-      "Value": "精靈寶可夢 {0} 已被指定去保護道館!"
+      "Value": "精靈寶可夢 {0} 已被指定去保護道館！"
     },
     {
       "Key": "failedCoords",
-      "Value": "座標錯誤，請再次檢查!"
+      "Value": "座標錯誤，請再次檢查！"
     },
     {
       "Key": "errorCatchNearby",
-      "Value": "座標錯誤，請再次檢查!"
+      "Value": "捕捉錯誤，請再次檢查！"
     },
     {
       "Key": "candyMiss",
@@ -490,7 +650,7 @@
     },
     {
       "Key": "noRoute",
-      "Value": "無法載入適當的路線或路線太短!"
+      "Value": "無法載入適當的路線或路線太短！"
     },
     {
       "Key": "customRouteData",
@@ -502,39 +662,39 @@
     },
     {
       "Key": "routeSwitched",
-      "Value": "切換路線從 {0} 為 {1}!"
+      "Value": "切換路線從 {0} 為 {1}！"
     },
     {
       "Key": "customRouteDisabled",
-      "Value": "自訂路線已取消，返回執行標準程序!"
+      "Value": "自訂路線已取消，返回執行標準程序！"
     },
     {
       "Key": "foundClosest",
-      "Value": "找到最近的點為 {0} - {1}，距離約: {2} 公尺，正在前往中!"
+      "Value": "找到最近的點為 {0} - {1}，距離約: {2} 公尺，正在前往中！"
     },
     {
       "Key": "customRouteEnabled",
-      "Value": "自訂路線已啟用，取消執行標準程序!"
+      "Value": "自訂路線已啟用，取消執行標準程序！"
     },
     {
       "Key": "forceMove",
-      "Value": "強制移動至 {0} - {1} 已啟用! 距離: {2} 公尺"
+      "Value": "強制移動至 {0} - {1} 已啟用！ 距離: {2} 公尺"
     },
     {
       "Key": "forceMoveDone",
-      "Value": "強制移動完成!"
+      "Value": "強制移動完成！"
     },
     {
       "Key": "inventorySettingsFailed",
-      "Value": "物品設定錯誤! 你要求當有 {1} 個物品時，在 {0} 清理時要保留它，但又同時要求保留 {2} 個物品，當你有額外 {3} 個物品，例如幸運蛋 / 孵化器 等等"
+      "Value": "物品設定錯誤！ 你要求當有 {0} 個物品時，在 {1} 清理時要保留它，但又同時要求保留 {2} 個物品，當你有額外 {3} 個物品，例如幸運蛋 / 孵化器 等等"
     },
     {
       "Key": "readTos",
-      "Value": "正在讀取 Niantic 服務條款, 看起來合法, 接受中!"
+      "Value": "正在讀取 Niantic 服務條款, 看起來合法, 接受中！"
     },
     {
       "Key": "genderSelect",
-      "Value": "已選取你的頭像，現在你是 {0}!"
+      "Value": "已選取你的頭像，現在你是 {0}！"
     },
     {
       "Key": "tutorialPokestop",
@@ -542,15 +702,15 @@
     },
     {
       "Key": "tutorialPoke",
-      "Value": "補捉第一隻精靈寶可夢! 它是 {0}!"
+      "Value": "補捉第一隻精靈寶可夢！ 它是 {0}！"
     },
     {
       "Key": "tutorialNameNotPicked",
-      "Value": "你無法設定這個暱稱!"
+      "Value": "你無法設定這個暱稱！"
     },
     {
       "Key": "tutorialNameTooLong",
-      "Value": "你設定的名稱太長，最大長度為: 15!"
+      "Value": "你設定的名稱太長，最大長度為: 15！"
     },
     {
       "Key": "tutorialNameDone",
@@ -558,7 +718,7 @@
     },
     {
       "Key": "tutorialNameFailed",
-      "Value": "名稱選取失敗! 錯誤原因: {0}"
+      "Value": "名稱選取失敗！ 錯誤原因: {0}"
     },
     {
       "Key": "tutorialNameErrorUnset",
@@ -570,180 +730,20 @@
     },
     {
       "Key": "tutorialNameErrorNotAvail",
-      "Value": "這個暱稱不被允許，請選另一個暱稱或重新開啟機器人!"
+      "Value": "這個暱稱不被允許，請選另一個暱稱或重新開啟機器人！"
     },
     {
       "Key": "tutorialNameErrorNotValid",
-      "Value": "暱稱不正確，請選另一個暱稱!"
+      "Value": "暱稱不正確，請選另一個暱稱！"
     },
     {
       "Key": "tutorialNameErrorOwner",
-      "Value": "你已經設定過暱稱!"
+      "Value": "你已經設定過暱稱！"
     },
     {
       "Key": "tutorialNameErrorNoMore",
-      "Value": "你無法再變更暱稱!"
+      "Value": "你無法再變更暱稱！"
     },
-    {
-      "Key": "eventLevelUpRewards",
-      "Value": "等級提升: {0} | 物品: {1}"
-    },
-    {
-      "Key": "ptcLoginFailed",
-      "Value": "PTC 登入失敗。請確定已輸入正確的 Email 和密碼。 如果持續有問題，請檢查你的手機或網站以確定這個帳號是否已被封鎖。程式離開中..."
-    },
-    {
-      "Key": "zeroPokeballInv",
-      "Value": "背包中已經沒有精靈球，無法補捉精靈寶可夢!"
-    },
-    {
-      "Key": "currentPokeballInv",
-      "Value": "[背包] 精靈球: {0} | 超級球: {1} | 高級球: {2} | 掌門球: {3} | 全部: {4}"
-    },
-    {
-      "Key": "currentPotionInv",
-      "Value": "[背包] 藥水: {0} | 超級藥水: {1} | 超高級藥水: {2} | 全滿藥水: {3} | 全部: {4}"
-    },
-    {
-      "Key": "currentBerryInv",
-      "Value": "[背包] 紅蔓莓: {0} | 藍莓: {1} | 粉蕉: {2} | 黃旺梨: {3} | 青梨: {4} | 全部: {5}"
-    },
-    {
-      "Key": "currentReviveInv",
-      "Value": "[背包] 更生劑: {0} | 特級更生劑: {1} | 全部: {2}"
-    },
-    {
-      "Key": "currentIncenseInv",
-      "Value": "[背包] 薰香: {0} | 涼爽薰香: {1} | 花香薰香: {2} | 火辣薰香: {3} | 全部: {4}"
-    },
-    {
-      "Key": "currentMiscInv",
-      "Value": "[背包] 誘餌模組: {0} | 幸運蛋: {1} | 孵化器: {2} | 全部: {3}"
-    },
-    {
-      "Key": "currentInvUsage",
-      "Value": "[背包] 背包使用情形: {0}/{1}"
-    },
-    {
-      "Key": "currentPokemonUsage",
-      "Value": "[背包] 精靈寶可夢數量: {0}/{1}"
-    },
-    {
-      "Key": "checkingForBallsToRecycle",
-      "Value": "檢查需要回收的精靈球，將保留 {0}"
-    },
-    {
-      "Key": "checkingForPotionsToRecycle",
-      "Value": "檢查需要回收的藥水，將保留 {0}"
-    },
-    {
-      "Key": "checkingForRevivesToRecycle",
-      "Value": "檢查需要回收的復甦劑，將保留 {0}"
-    },
-    {
-      "Key": "pokeballsToKeepIncorrect",
-      "Value": "保持總數的精靈球設定有問題。數字不能小於 1。"
-    },
-    {
-      "Key": "encounterProblemPokemonFlee",
-      "Value": "遭遇的寶可夢 {0} 逃離!"
-    },
-    {
-      "Key": "snipeScanEx",
-      "Value": "[狙擊] 正在狙擊 {0} ( {1} IV ) 在 {2}..."
-    },
-    {
-      "Key": "notEnoughPokeballsToSnipe",
-      "Value": "沒有足夠的精靈球可以狙擊! ({0}/{1})"
-    },
-    {
-      "Key": "displayHighestMove1Header",
-      "Value": "MOVE1"
-    },
-    {
-      "Key": "displayHighestMove2Header",
-      "Value": "MOVE2"
-    },
-    {
-      "Key": "useBerry",
-      "Value": "正在使用紅蔓莓. 剩餘紅蔓莓: {0}"
-    },
-    {
-      "Key": "nianticServerUnstable",
-      "Value": "Niantic 伺服器不穩，減少 API 呼叫。"
-    },
-    {
-      "Key": "operationCanceled",
-      "Value": "目前的操作已取消。 機器人已停止或暫停中。"
-    },
-    {
-      "Key": "pokemonUpgradeSuccess",
-      "Value": "精靈寶可夢已升級: {0}:{1}"
-    },
-    {
-      "Key": "pokemonUpgradeFailed",
-      "Value": "精靈寶可夢升級失敗，沒有足夠的資源，可能是缺少星塵"
-    },
-    {
-      "Key": "pokemonUpgradeUnavailable",
-      "Value": "精靈寶可夢已無法再升級，因為: {0}:{1}/{2}"
-    },
-    {
-      "Key": "pokemonUpgradeFailedError",
-      "Value": "精靈寶可夢升級失敗，原因未明，可能是已升至目前最高等級。造成的原因為: {0}"
-    },
-    {
-      "Key": "webErrorBadGateway",
-      "Value": "502 Bad Gateway: 伺服器負荷過重!"
-    },
-    {
-      "Key": "webErrorGatewayTimeout",
-      "Value": "504 Gateway Time-out: 伺服器目前無回應。"
-    },
-    {
-      "Key": "webErrorNotFound",
-      "Value": "404 Not Found: 無法從伺服器取得檔案!"
-    },
-    {
-      "Key": "skipLaggedTimeout",
-      "Value": "SkipLagged 伺服器離線或狙擊請求超時，逾時秒數設定太短!"
-    },
-    {
-      "Key": "skipLaggedMaintenance",
-      "Value": "SkipLagged 伺服器維護中。"
-    },
-    {
-      "Key": "checkingForMaximumInventorySize",
-      "Value": "[背包] 物品已超過背包最大容量! {0}/{1}"
-    },
-    {
-      "Key": "logEntryFavorite",
-      "Value": "加入收藏"
-    },
-    {
-      "Key": "logEntryUnFavorite",
-      "Value": "取消收藏"
-    },
-    {
-      "Key": "pokemonFavorite",
-      "Value": "{0}"
-    },
-    {
-      "Key": "pokemonUnFavorite",
-      "Value": "{0}"
-    },
-    {
-      "Key": "walkingSpeedRandomized",
-      "Value": "{0}"
-    },
-    {
-      "Key": "stopBotToAvoidBan",
-      "Value": "機器人已中止以避免被封鎖!"
-    },
-    {
-      "Key": "botNotStoppedRiskOfBan",
-      "Value": "發生不應該發生的錯誤，同時機器人並沒有停止。 很可能已經被封鎖。 (建議動作: 中止機器人 \"CTRL+C\")."
-    }
   ],
   "Pokemon": [
     {
