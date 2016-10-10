@@ -9,7 +9,7 @@
 <p align="center">THERE IS ONLY <b>ONE</b> OFFICIAL <a href="https://discord.gg/pPwxX8Q">DISCORD SERVER</a></p>
 
 <h2>Download</h2>
-You can download this bot  <a href="https://github.com/Lunat1q/Catchem-PoGo/releases/latest">HERE</a>
+You can download this bot  <a href="https://github.com/Lunat1q/Catchem-PoGo/releases/latest">HERE</a><br>
 Beware! This bot is still 0.35 API, please, to be safe - wait untill we update it to 0.39.1
 
 <h2>OpenSource</h2>
