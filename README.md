@@ -10,17 +10,18 @@
 
 <h2>Download</h2>
 You can download this bot  <a href="https://github.com/Lunat1q/Catchem-PoGo/releases/latest">HERE</a>
+Beware! This bot is still 0.35 API, please, to be safe - wait untill we update it to 0.39.1
 
 <h2>OpenSource</h2>
 This project will not provide source code for everyone anymore, due to it being stolen and being sold.<br/>
 We will continue to develop this project, absolutely the same as i did before.<br/>
 However Source Code  will not be published anymore.<br/>
 We will still continue to release compiled updates (on release tab as it was before) of this software, so this will not effect most of our users.<br/>
-If you'll need source codes, or part of them, contact me in <a href="https://discord.gg/pPwxX8Q">Discord</a>.
+If you'll need explanations for any module, please contact me in <a href="https://discord.gg/pPwxX8Q">Discord</a>.
 
 <h2>Donating</h2>
 If you really like this project, feel free to buy <b>pizza</b> :pizza: or :beers: for devs (or a present :rose: :gift: for my gf, she is a bit mad that i'm spending most part of my free time for this project :coffee:):<br/><br/>
-<p align="center"><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=RFAU4PYCAAGML"><img src="https://www.paypalobjects.com/en_US/GB/i/btn/btn_donateCC_LG.gif"/></a></p>
+<p align="center"><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=RFAU4PYCAAGML"><img src="https://www.paypalobjects.com/en_US/GB/i/btn/btn_donateCC_LG.gif"/></a> <br>or directly to catchem.project@yandex.ru (less fee :P)</p>
 <p align="center"><img src="http://i.imgur.com/bP0Lxi4.png"/>BitCoin: 1LTQdD6cnxhqSAYyNAa7PpcfSu6uCmxrdn</p>
 <p align="center"><a href="https://money.yandex.ru/to/410014552246550"><img src="http://i.imgur.com/6n2la5V.png"/>Yandex.Money</a>: 410014552246550</p>
 ###We really appreciate all the donations made, so everyone who donated to our project will get access to privileged support channel!
