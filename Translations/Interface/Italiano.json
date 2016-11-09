@@ -276,5 +276,13 @@
     "%SEEN%" : "Visti",
     "%TOTAL%" : "Totale",
     "%AUTO_UNFAVORITE_POKE%" : "Rimuovi Pokemon dai preferiti in automatico"
+    "%USE_ITEM%" : "Usa Oggetto",
+    "%BUDDY%" : "COMPAGNO",
+    "%DISTANCE%" : "DISTANZA",
+    "%GOT_CANDIES%" : "CARAMELLE OTTENUTE",
+    "%SET_SELECTED_POKE_AS_BUDDY%" : "Imposta Pokemon Selezionato Come Compagno",
+    "%REPORT_CAPTCHA%" : "Report Captcha Richiesto",
+    "%GOT_CAPTCHA%" : "E' apparso un Captcha!",
+    "%DO_CAPTCHA_BELOW%" : "Per favore, completa il captcha coi bottoni qua sotto"
   }
 }
