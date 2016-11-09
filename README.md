@@ -10,7 +10,6 @@
 
 <h2>Download</h2>
 You can download this bot  <a href="https://github.com/Lunat1q/Catchem-PoGo/releases/latest">HERE</a><br>
-Beware! This bot is stil using the 0.35 API, To  Refrain from Possible Flagging & Permanent Bans, Please wait until we update the API to 0.39.1
 
 <h2>OpenSource</h2>
 This project will not provide source code for everyone anymore, due to it being stolen and being sold.<br/>
