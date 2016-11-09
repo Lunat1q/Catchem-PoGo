@@ -277,6 +277,13 @@
     "%TOTAL%" : "Total",
     "%AUTO_UNFAVORITE_POKE%" : "Auto Unfavorite Poke",
     "%USING%" : "Using",
-    "%USE_ITEM%" : "Use Item"
+    "%USE_ITEM%" : "Use Item",
+    "%BUDDY%" : "BUDDY,
+    "%DISTANCE%" : "DISTANCE",
+    "%GOT_CANDIES%" : "GOT CANDIES",
+    "%SET_SELECTED_POKE_AS_BUDDY%" : "Set Selected Poke as Buddy",
+    "%REPORT_CAPTCHA%" : "Report Captcha Required",
+    "%GOT_CAPTCHA%" : "Captcha has been encountered!",
+    "%DO_CAPTCHA_BELOW%" : "Please complete the captcha with the buttons below"
   }
 }
