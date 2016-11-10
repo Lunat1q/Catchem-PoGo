@@ -266,7 +266,7 @@
     "%GOT_CANDIES%" : "Récuperer des bonbons",
     "%SET_SELECTED_POKE_AS_BUDDY%" : "définir le pokémon qui accompagne",
     "%REPORT_CAPTCHA%" : "Captcha requis",
-    "%GOT_CAPTCHA%" : "Captcha has been encountered!",
+    "%GOT_CAPTCHA%" : "Captcha detecté!",
     "%DO_CAPTCHA_BELOW%" : "Merci de compléter le captcha avec le bouton ci-dessous"
   }
 }
