@@ -276,5 +276,14 @@
     "%SEEN%" : "발견",
     "%TOTAL%" : "합계",
     "%AUTO_UNFAVORITE_POKE%" : "자동으로 별표 취소"
+    "%USING%" : "사용중:",
+    "%USE_ITEM%" : "아이템 사용",
+    "%BUDDY%" : "버디",
+    "%DISTANCE%" : "거리",
+    "%GOT_CANDIES%" : "캔디 획득",
+    "%SET_SELECTED_POKE_AS_BUDDY%" : "선택한 포켓몬을 버디로 설정",
+    "%REPORT_CAPTCHA%" : "캡차 (Captcha) 알림",
+    "%GOT_CAPTCHA%" : "캡차 나타남",
+    "%DO_CAPTCHA_BELOW%" : "아래 버튼을 사용하여 캡차를 통과하세요"
   }
 }
