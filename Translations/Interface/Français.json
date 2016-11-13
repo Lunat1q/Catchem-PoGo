@@ -261,6 +261,12 @@
     "%CP_MaxCP_Possible_CP%": "CP / Max CP / Possible CP",
     "%ENERGY%": "Energie",
     "%DAMAGE_DPS%": "Dégâts | DPS",
-    "%EVOLVE_CP_AFTER": "CP après Evolution: "
+    "%EVOLVE_CP_AFTER": "CP après Evolution: ",
+    "%DISTANCE%" : "DISTANCE",
+    "%GOT_CANDIES%" : "Récuperer des bonbons",
+    "%SET_SELECTED_POKE_AS_BUDDY%" : "définir le pokémon qui accompagne",
+    "%REPORT_CAPTCHA%" : "Captcha requis",
+    "%GOT_CAPTCHA%" : "Captcha detecté!",
+    "%DO_CAPTCHA_BELOW%" : "Merci de compléter le captcha avec le bouton ci-dessous"
   }
 }
