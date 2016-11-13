@@ -268,5 +268,23 @@
     "%IMPOT_EXPORT_ROUTE%": "Importar/Exportar Ruta",
     "%IMPORT_INSTRUCTION%": "Seleccione una ruta para importarla a Catch'em, una vez seleccionada precione Importar.",
     "%EXPORT_INSTRUCTION%": "Copiar la ruta para crear una copia de seguridad o compartir con otros."
+    "%BUSY%" : "Ocupado",
+    "%LEVEL_UP%" : "Level up",
+    "%TRANSFER%" : "Transferir",
+    "%FAVORITE%" : "Favorito",
+    "%ACTION_QUEUE%" : "Acción agregada",
+    "%CAUGHT%" : "Cazado",
+    "%SEEN%" : "Visto",
+    "%TOTAL%" : "Total",
+    "%AUTO_UNFAVORITE_POKE%" : "Auto-quitar favorito al pokemon",
+    "%USING%" : "Usando",
+    "%USE_ITEM%" : "Usar Item",
+    "%BUDDY%" : "COMPAÑERO",
+    "%DISTANCE%" : "DISTANCIA",
+    "%GOT_CANDIES%" : "OBTUBO CARAMELOS",
+    "%SET_SELECTED_POKE_AS_BUDDY%" : "poner Pokemon seleccionado como compañero",
+    "%REPORT_CAPTCHA%" : "Reporte de Captcha Requiredo",
+    "%GOT_CAPTCHA%" : "Captcha ha sido encontrado!",
+    "%DO_CAPTCHA_BELOW%" : "Por favor complete el captcha con los botones de abajo"
     }
   }
