@@ -267,7 +267,7 @@
     "%EXPORT_ROUTE%": "Exportar ruta",
     "%IMPOT_EXPORT_ROUTE%": "Importar/Exportar Ruta",
     "%IMPORT_INSTRUCTION%": "Seleccione una ruta para importarla a Catch'em, una vez seleccionada precione Importar.",
-    "%EXPORT_INSTRUCTION%": "Copiar la ruta para crear una copia de seguridad o compartir con otros."
+    "%EXPORT_INSTRUCTION%": "Copiar la ruta para crear una copia de seguridad o compartir con otros.",
     "%BUSY%" : "Ocupado",
     "%LEVEL_UP%" : "Level up",
     "%TRANSFER%" : "Transferir",
