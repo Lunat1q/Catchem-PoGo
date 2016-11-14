@@ -278,5 +278,12 @@
     "%AUTO_UNFAVORITE_POKE%" : "自動取消收藏的寶可夢",
     "%USING%" : "使用中",
     "%USE_ITEM%" : "使用道具"
+    "%BUDDY%" : "夥伴,
+    "%DISTANCE%" : "距離",
+    "%GOT_CANDIES%" : "取得糖果",
+    "%SET_SELECTED_POKE_AS_BUDDY%" : "將所選取的寶可夢設為夥伴",
+    "%REPORT_CAPTCHA%" : "要求回報驗證碼",
+    "%GOT_CAPTCHA%" : "收到驗證碼請求!",
+    "%DO_CAPTCHA_BELOW%" : "請使用下面的按鈕填寫驗證碼"
   }
 }
