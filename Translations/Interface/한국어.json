@@ -275,7 +275,7 @@
     "%CAUGHT%" : "포획",
     "%SEEN%" : "발견",
     "%TOTAL%" : "합계",
-    "%AUTO_UNFAVORITE_POKE%" : "자동으로 별표 취소"
+    "%AUTO_UNFAVORITE_POKE%" : "자동으로 별표 취소",
     "%USING%" : "사용중:",
     "%USE_ITEM%" : "아이템 사용",
     "%BUDDY%" : "버디",
