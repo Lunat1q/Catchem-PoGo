@@ -739,6 +739,26 @@
     {
       "Key": "botNotStoppedRiskOfBan",
       "Value": "Etwas Unerwartetes ist passiert und der Bot wurde nicht gestoppt. Erhöhte Chance eines Banns. (Vorschlag: Stoppe den Bot \"STRG+C\")."
+    },
+    {
+      "Key": "nianticPlayerWarn",
+      "Value": "Niantic warn message about bot usage! Please, stop using it!"
+    },
+    {
+      "Key": "nianticPlayerBanned",
+      "Value": "Niantic ban message! You are done, sorry!"
+    },
+    {
+      "Key": "cantGetAPIVersion",
+      "Value": "Unable to get API version Information"
+    },
+    {
+      "Key": "oldAPIErr",
+      "Value": "Catchem API version is less than the minimum stop botting to avoid ban!"
+    },
+    {
+      "Key": "apiVersionOK",
+      "Value": "Catchem API Version {0}, Minimum API Version {1}"
     }
   ],
   "Pokemon": [

@@ -2,7 +2,7 @@
   "TranslationStrings": [
     {
       "Key": "pokeball",
-      "Value": "PokéBall"
+      "Value": "PokeBall"
     },
     {
       "Key": "greatPokeball",
@@ -26,7 +26,7 @@
     },
     {
       "Key": "farmPokestopsNoUsableFound",
-      "Value": "Impossible de trouver des PokéStops dans les environs. La valeur de MaxTravelDistanceInMeters dans config.json est peut-être trop faible?"
+      "Value": "Impossible de trouver des PokeStops dans les environs. La valeur de MaxTravelDistanceInMeters dans config.json est peut-être trop faible?"
     },
     {
       "Key": "eventFortUsed",
@@ -38,7 +38,7 @@
     },
     {
       "Key": "eventFortTargeted",
-      "Value": "Déplacement vers le Pokéstop : {0} (Distance {1}m)"
+      "Value": "Déplacement vers le Pokestop : {0} (Distance {1}m)"
     },
     {
       "Key": "eventProfileLogin",
@@ -54,7 +54,7 @@
     },
     {
       "Key": "eventUseLuckyEggMinPokemonCheck",
-      "Value": "Pas assez de pokémon à évoluer pour utiliser un Oeuf Chance. Il en manque {0}. ({1}/{2})"
+      "Value": "Pas assez de pokemon à évoluer pour utiliser un Oeuf Chance. Il en manque {0}. ({1}/{2})"
     },
     {
       "Key": "eventPokemonEvolvedSuccess",
@@ -78,7 +78,7 @@
     },
     {
       "Key": "eventNoPokeballs",
-      "Value": "Plus de Pokéball - Nous avons manqué un {0} avec {1} CP"
+      "Value": "Plus de Pokeball - Nous avons manqué un {0} avec {1} CP"
     },
     {
       "Key": "catchStatusAttempt",
@@ -94,7 +94,7 @@
     },
     {
       "Key": "unhandledGpxData",
-      "Value": "Données invalides dans le fichier GPX, ignore."
+      "Value": "Donnée invalide dans le fichier GPX, ignore."
     },
     {
       "Key": "displayHighestsHeader",
@@ -310,7 +310,7 @@
     },
     {
       "Key": "currentMiscInv",
-      "Value": "[Inventaire] Leurres: {0} | Oeufs Chance: {1} | Incubateurs: {2} | Total: {3}"
+      "Value": "[Inventaire] Leures: {0} | Oeufs Chance: {1} | Incubateurs: {2} | Total: {3}"
     },
     {
       "Key": "currentInvUsage",
@@ -318,7 +318,7 @@
     },
     {
       "Key": "currentPokemonUsage",
-      "Value": "[Inventaire] Pokémon Stockés: {0}/{1}"
+      "Value": "[Inventaire] Pokemon Stockés: {0}/{1}"
     },
     {
       "Key": "checkingForBallsToRecycle",
@@ -458,7 +458,7 @@
     },
     {
       "Key": "notEnoughPokeballsToSnipe",
-      "Value": "Pas assez de Pokéballs pour commencer à sniper! ({0}/{1})"
+      "Value": "Pas assez de Pokeballs pour commencer à sniper! ({0}/{1})"
     },
     {
       "Key": "displayHighestMove1Header",
@@ -474,7 +474,7 @@
     },
     {
       "Key": "nianticServerUnstable",
-      "Value": "Les serveurs de Niantic sont instables, diminution des appels de l'API."
+      "Value": "Les serveurs de Niantic sont instables, diminution des appels à l'API."
     },
     {
       "Key": "operationCanceled",
@@ -494,7 +494,7 @@
     },
     {
       "Key": "pokemonUpgradeFailedError",
-      "Value": "L'évolution du Pokémon a échouée pour une raison inconnue. Le Pokémon est peut être déjà à son niveau maximum par rapport au vôtre. Le Pokémon qui a provoqué le problème est: {0}"
+      "Value": "L'évolution du Pokémon a échouée pour une raison inconnue. Le Pokémon est peut être déjà à son niveau maximul par rapport au vôtre. Le Pokémon qui a provoqué le problème est: {0}"
     },
     {
       "Key": "webErrorBadGateway",
@@ -550,7 +550,7 @@
     },
     {
       "Key": "setLure",
-      "Value": "Pose d'un leurre au PokéStop: {0}, distance: {1}, temps restant: {2}"
+      "Value": "Pose d'un leurre au PokeStop: {0}, distance: {1}, temps restant: {2}"
     },
     {
       "Key": "levelUp",
@@ -566,11 +566,11 @@
     },
     {
       "Key": "eggFound",
-      "Value": "Trouvé un œuf, distance: {0}km du PokéStop: {1}"
+      "Value": "Trouvé un œuf, distance: {0}km du PokeStop: {1}"
     },
     {
       "Key": "pokeListEmpty",
-      "Value": "Le classement des meilleurs Pokemons est vide"
+      "Value": "Le classement des meilleures Pokemons est vide"
     },
     {
       "Key": "proxyAlready",
@@ -594,7 +594,7 @@
     },
     {
       "Key": "hourRateReached",
-      "Value": "Nombre Max de ({0})/Pokéstops ({1})/XP ({2})/Poussière d'étoiles ({3}) par heure atteint, le bot va s'arréter pendant {4} minutes"
+      "Value": "Nombre Max de ({0})/Pokestops ({1})/XP ({2})/Star Dust ({3}) par heure atteint, le bot va s'arréter pendant {4} minutes"
     },
     {
       "Key": "botPauseCancel",
@@ -606,7 +606,7 @@
     },
     {
       "Key": "updatesAt",
-      "Value": "Pendant cette pause , pensez à vérifier les dernière mises à jour"
+      "Value": "Pendant cette pause , pensez à vérifier les dernière mises à jour à"
     },
     {
       "Key": "discordLink",
@@ -614,11 +614,11 @@
     },
     {
       "Key": "scheduleAction",
-      "Value": "Action programmée [{0}], avec l'argument: [{1}] correctement créé"
+      "Value": "Schedule Action [{0}], with args: [{1}] performed successfully"
     },
     {
       "Key": "scheduleActionFailed",
-      "Value": "Echec de l'action {0}, avec l'argument: {1}"
+      "Value": "Schedule Action Failed to perform action {0}, with args: {1}"
     },
     {
       "Key": "schedulePause",
@@ -634,15 +634,15 @@
     },
     {
       "Key": "pokeInGym",
-      "Value": "Pokémon {0} à été assigné pour défendre une arène"
+      "Value": "Pokemon {0} à été assigné pour défendre une arène"
     },
     {
       "Key": "failedCoords",
-      "Value": "Coordonnées en échec, s'il vous plaît vérifiez à nouveau !"
+      "Value": "Coordonner en échec, s'il vous plaît vérifier à nouveau !"
     },
     {
       "Key": "errorCatchNearby",
-      "Value": "Coordonnées en échec, s'il vous plaît vérifiez à nouveau !"
+      "Value": "Coordonner en échec, s'il vous plaît vérifier à nouveau !"
     },
     {
       "Key": "candyMiss",
@@ -694,7 +694,7 @@
     },
     {
       "Key": "genderSelect",
-      "Value": "Sélectionnez votre avatar , vous êtes maintenant {0}!"
+      "Value": "Sélectionné votre avatar , vous êtes maintenant {0}!"
     },
     {
       "Key": "tutorialPokestop",
@@ -743,6 +743,26 @@
     {
       "Key": "tutorialNameErrorNoMore",
       "Value": "Vous ne pouvez plus changer votre pseudo !"
+    },
+    {
+      "Key": "nianticPlayerWarn",
+      "Value": "Niantic warn message about bot usage! Please, stop using it!"
+    },
+    {
+      "Key": "nianticPlayerBanned",
+      "Value": "Niantic ban message! You are done, sorry!"
+    },
+    {
+      "Key": "cantGetAPIVersion",
+      "Value": "Unable to get API version Information"
+    },
+    {
+      "Key": "oldAPIErr",
+      "Value": "Catchem API version is less than the minimum stop botting to avoid ban!"
+    },
+    {
+      "Key": "apiVersionOK",
+      "Value": "Catchem API Version {0}, Minimum API Version {1}"
     }
   ],
   "Pokemon": [
