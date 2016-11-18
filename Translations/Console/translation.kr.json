@@ -738,31 +738,31 @@
     },
     {
       "Key": "stopBotToAvoidBan",
-      "Value": "밴을 피하기 위해서 봇이 정지 됨!"
+      "Value": "영구정지를 피하기 위해서 봇이 정지 됨!"
     },
     {
       "Key": "botNotStoppedRiskOfBan",
-      "Value": "일어나지 말아야 할 경우가 생겼음에도 봇이 멈추지 않았음. 밴 걸렸을 가능성이 높음. (권장되는 행동: 봇을 멈추세요 \"Control+C\")."
+      "Value": "일어나지 말아야 할 경우가 생겼음에도 봇이 멈추지 않았음. 영구정지 됐을 가능성이 높음. (권장되는 행동: 봇을 멈추세요 \"Control+C\")."
     },
     {
       "Key": "nianticPlayerWarn",
-      "Value": "Niantic warn message about bot usage! Please, stop using it!"
+      "Value": "Niantic 에서 봇 사용에 대한 경고메세지 보냄! 사용을 중지하세요!"
     },
     {
       "Key": "nianticPlayerBanned",
-      "Value": "Niantic ban message! You are done, sorry!"
+      "Value": "Niantic 에서 영구정지 메세지 보냄! 죄송하지만 이제 끝났습니다!"
     },
     {
       "Key": "cantGetAPIVersion",
-      "Value": "Unable to get API version Information"
+      "Value": "API 버전 정보를 불러 올 수 없습니다"
     },
     {
       "Key": "oldAPIErr",
-      "Value": "Catchem API version is less than the minimum stop botting to avoid ban!"
+      "Value": "캣챔 API 버전이 낮습니다. 영구정지를 피하기 위해 봇 사용을 중지하세요!"
     },
     {
       "Key": "apiVersionOK",
-      "Value": "Catchem API Version {0}, Minimum API Version {1}"
+      "Value": "캣챔 API 버전: {0}, 필요한 최소 API 버전: {1}"
     }
   ],
   "Pokemon": [
