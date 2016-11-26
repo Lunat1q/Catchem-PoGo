@@ -46,7 +46,7 @@
     },
     {
       "Key": "eventLevelUpRewards",
-      "Value": "Leveled Up: {0} | Itens: {1}"
+      "Value": "Nivel aumentado: {0} | Itens: {1}"
     },
     {
       "Key": "eventUsedLuckyEgg",
@@ -74,7 +74,7 @@
     },
     {
       "Key": "eventPokemonCapture",
-      "Value": "({0}) | {2}, Nível: {3} | CP: ({4}/{5}) | IV: {6}% | Type: {1} | Chance: {7}% | Dist: {8}m | Usada: {9} ({10} restando) | XP: {11} | {12}"
+      "Value": "({0}) | {2}, Nível: {3} | CP: ({4}/{5}) | IV: {6}% | Tipo: {1} | Chance: {7}% | Dist: {8}m | Usada: {9} ({10} restando) | XP: {11} | {12}"
     },
     {
       "Key": "eventNoPokeballs",
@@ -426,7 +426,7 @@
     },
     {
       "Key": "googleTwoFactorAuth",
-      "Value": "Como você possui o Google Two Factor Auth ativado, você precisará informar o App Specific Password no arquivo auth.json"
+      "Value": "Como você possui a autenticação em duas etapas ativada, você precisará informar a senha específica para aplicativos no arquivo auth.json"
     },
     {
       "Key": "googleTwoFactorAuthExplanation",
@@ -746,23 +746,23 @@
     },
     {
       "Key": "nianticPlayerWarn",
-      "Value": "Niantic warn message about bot usage! Please, stop using it!"
+      "Value": "Mensagem da Niantic acerca do uso de BOT. Por favor, pare de usar!"
     },
     {
       "Key": "nianticPlayerBanned",
-      "Value": "Niantic ban message! You are done, sorry!"
+      "Value": "Mensagem de BAN recebida! Acabou, desculpe!"
     },
     {
       "Key": "cantGetAPIVersion",
-      "Value": "Unable to get API version Information"
+      "Value": "Impossível receber mensagem sobre versão da API"
     },
     {
       "Key": "oldAPIErr",
-      "Value": "Catchem API version is less than the minimum stop botting to avoid ban!"
+      "Value": "Versão da API do Catchem é menor que o mínimo para evitar que o bot leve ban!"
     },
     {
       "Key": "apiVersionOK",
-      "Value": "Catchem API Version {0}, Minimum API Version {1}"
+      "Value": "Versão de API do Catchem: {0}, Versão mínima de API {1}"
     }
   ],
   "Pokemon": [
