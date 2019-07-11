@@ -1,0 +1,1631 @@
+<UserControl xmlns:controllers="clr-namespace:Catchem.Controllers"  x:Class="Catchem.Pages.SettingsPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             Width="890.487"
+             Height="2107.5"
+             mc:Ignorable="d">
+    <Grid Background="#FFF9F9F9">
+        <ScrollViewer Margin="0,0,0,10">
+            <Grid x:Name="SettingsGrid">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="300*" />
+                    <ColumnDefinition Width="300*" />
+                </Grid.ColumnDefinitions>
+
+                <Grid Grid.Column="1" Margin="2,0,5,0" VerticalAlignment="Top">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <GroupBox x:Name="ProxyGroupBox"
+            			Height="147"
+            			Header="Proxy"
+            			Tag="%PROXY_WORK%" Margin="0,5,0,0">
+                        <Grid Margin="0,0,0,0" IsEnabled="True">
+                            <CheckBox x:Name="c_UseProxy"
+            					Width="101"
+            					Height="21"
+            					Margin="10,6,0,0"
+            					HorizontalAlignment="Left"
+            					VerticalAlignment="Top"
+            					Checked="BotPropertyChanged"
+            					Content="UseProxy"
+            					Unchecked="BotPropertyChanged" Tag="%USE_PROXY%" />
+                            <TextBlock x:Name="c_ProxyLoginLabel"
+            					Width="79"
+            					Margin="10,31,0,0"
+            					HorizontalAlignment="Left"
+            					VerticalAlignment="Top"
+            					Text="Login" Tag="%LOGIN%" />
+                            <TextBox x:Name="c_ProxyLogin"
+            					Height="34"
+            					Margin="145,22,125,0"
+            					VerticalAlignment="Top"
+            					Foreground="#FF56C2B0"
+            					Template="{StaticResource Pogo}"
+            					Text="Username"
+            					TextChanged="BotPropertyChanged"
+            					TextWrapping="Wrap" />
+                            <TextBlock x:Name="c_ProxyPassLabel"
+            					Width="79"
+            					Margin="10,62,0,0"
+            					HorizontalAlignment="Left"
+            					VerticalAlignment="Top"
+            					Text="Password" Tag="%PASSWORD%" />
+                            <PasswordBox x:Name="c_ProxyPass"
+            					Height="28"
+            					Margin="145,59,10,0"
+            					VerticalAlignment="Top"
+            					Foreground="#FF56C2B0"
+            					Password="password"
+            					PasswordChanged="BotPropertyChanged"
+            					Template="{StaticResource PogoPassword}" />
+                            <TextBlock x:Name="c_ProxyUriLabel"
+            					Width="79"
+            					Margin="10,98,0,0"
+            					HorizontalAlignment="Left"
+            					VerticalAlignment="Top"
+            					Text="Host:port"
+            					RenderTransformOrigin="0.494,0.5" Tag="%HOST_PORT%" />
+                            <TextBox x:Name="c_ProxyUri"
+            					Height="29"
+            					Margin="145,92,10,0"
+            					VerticalAlignment="Top"
+            					Foreground="#FF56C2B0"
+            					Template="{StaticResource Pogo}"
+            					TextChanged="BotPropertyChanged"
+            					TextWrapping="Wrap" />
+                            <Button x:Name="btn_textProxy"
+            					Width="110"
+            					Height="29"
+            					Margin="0,25,10,0"
+            					HorizontalAlignment="Right"
+            					VerticalAlignment="Top"
+            					Click="btn_textProxy_Click"
+            					Content="TEST PROXY"
+            					FontFamily="BOLD"
+            					FontWeight="Bold"
+            					Style="{StaticResource ResourceKey=Flatbutton}"
+            					TextOptions.TextFormattingMode="Display" Background="{DynamicResource NormalButtonColor}" Tag="%TEST_PROXY%"/>
+                        </Grid>
+                    </GroupBox>
+                    <GroupBox x:Name="NavigationGroupBox"
+            			Height="527"
+            			Margin="0,5,0,0"
+            			VerticalAlignment="Top"
+            			Header="Navigation" Tag="%NAVIGATION_BOX%" Grid.Row="1">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock x:Name="c_DefaultAltitudeLabel"
+                    			Margin="10,18,0,0"
+                    			VerticalAlignment="Top"
+                    			Text="Altitude Current"
+                    			RenderTransformOrigin="0.5,0.423" Tag="%ALTITUDE_CURRENT%" />
+                            <TextBox x:Name="c_DefaultAltitude"
+                    			Grid.Column="1"
+                    			Height="29"
+                    			Margin="15,13,10,0"
+                    			VerticalAlignment="Top"
+                    			Template="{StaticResource Pogo}"
+                    			TextChanged="BotPropertyChanged"
+                    			TextWrapping="Wrap" />
+                            <TextBlock Grid.Column="0" x:Name="c_DefaultAltitudeMinLabel"
+                    			Margin="10,52,0,0"
+                    			VerticalAlignment="Top"
+                    			Text="Altitude Min"
+                    			RenderTransformOrigin="0.5,0.423" Tag="%ALTITUDE_MIN%" />
+                            <TextBox x:Name="c_DefaultAltitudeMin"
+                    			Grid.Column="1"
+                    			Height="29"
+                    			Margin="15,47,10,0"
+                    			VerticalAlignment="Top"
+                    			Template="{StaticResource Pogo}"
+                    			TextChanged="BotPropertyChanged"
+                    			TextWrapping="Wrap" />
+                            <TextBlock Grid.Column="0" x:Name="c_DefaultAltitudeMaxLabel"
+                    			Margin="10,86,0,0"
+                    			VerticalAlignment="Top"
+                    			Text="Altitude Max"
+                    			RenderTransformOrigin="0.5,0.423" Tag="%ALTITUDE_MAX%" />
+                            <TextBox x:Name="c_DefaultAltitudeMax"
+                    			Grid.Column="1"
+                    			Height="29"
+                    			Margin="15,81,10,0"
+                    			VerticalAlignment="Top"
+                    			Template="{StaticResource Pogo}"
+                    			TextChanged="BotPropertyChanged"
+                    			TextWrapping="Wrap" />
+                            <TextBlock Grid.Column="0" x:Name="c_DefaultLatitudeLabel"
+                    			Margin="10,120,0,0"
+                    			VerticalAlignment="Top"
+                    			Text="Latitude"
+                    			RenderTransformOrigin="0.5,0.423" Tag="%LATITUDE%" />
+                            <TextBox x:Name="c_DefaultLatitude"
+                    			Grid.Column="1"
+                    			Height="29"
+                    			Margin="15,115,10,0"
+                    			VerticalAlignment="Top"
+                    			Template="{StaticResource Pogo}"
+                    			TextChanged="BotPropertyChanged"
+                    			TextWrapping="Wrap" />
+                            <TextBlock Grid.Column="0" x:Name="c_DefaultLongitudeLabel"
+                    			Margin="10,154,0,0"
+                    			VerticalAlignment="Top"
+                    			Text="Longitude"
+                    			RenderTransformOrigin="0.5,0.423" Tag="%LONGITUDE%" />
+                            <TextBox x:Name="c_DefaultLongitude"
+                    			Grid.Column="1"
+                    			Height="29"
+                    			Margin="15,149,10,0"
+                    			VerticalAlignment="Top"
+                    			Template="{StaticResource Pogo}"
+                    			TextChanged="BotPropertyChanged"
+                    			TextWrapping="Wrap" />
+
+                            <CheckBox x:Name="c_Teleport"
+                    			Height="16"
+                    			Margin="10,183,10,0"
+                    			VerticalAlignment="Top"
+                    			Checked="BotPropertyChanged"
+                    			Content="Teleport (High ban chance)"
+                    			Unchecked="BotPropertyChanged" Tag="%TELEPORT%" Grid.ColumnSpan="2" Grid.Column="0" />
+                            <TextBlock Grid.Column="0" x:Name="c_MaxSpawnLocationOffsetLabel"
+                    			Margin="10,209,0,0"
+                    			VerticalAlignment="Top"
+                    			Text="Max Spawn Location Offset"
+                    			RenderTransformOrigin="0.5,0.423" Tag="%MAX_SPAWN_LOCATION_OFFSET%" />
+
+                            <TextBox x:Name="c_MaxSpawnLocationOffset"
+                    			Grid.Column="1"
+                    			Height="29"
+                    			Margin="15,204,10,0"
+                    			VerticalAlignment="Top"
+                    			Template="{StaticResource Pogo}"
+                    			TextChanged="BotPropertyChanged"
+                    			TextWrapping="Wrap" />
+                            <TextBlock Grid.Column="0" x:Name="c_MaxTravelDistanceInMetersLabel"
+                    			Margin="10,243,0,0"
+                    			VerticalAlignment="Top"
+                    			Text="Max Travel Distance In Meters"
+                    			RenderTransformOrigin="0.5,0.423" Tag="%MAX_TRAVEL_DISTANCE_IN_METERS%" />
+                            <TextBox x:Name="c_MaxTravelDistanceInMeters"
+                    			Grid.Column="1"
+                    			Height="29"
+                    			Margin="15,238,10,0"
+                    			VerticalAlignment="Top"
+                    			Template="{StaticResource Pogo}"
+                    			TextChanged="BotPropertyChanged"
+                    			TextWrapping="Wrap" />
+                            <CheckBox x:Name="c_UseDiscoveryPathing"
+                    			Height="16"
+                    			Margin="10,269,0,0"
+                    			VerticalAlignment="Top"
+                    			Checked="BotPropertyChanged"
+                    			Content="Use Discovery Pathing"
+                    			Unchecked="BotPropertyChanged" Tag="%USE_DISCOVERY_PATHING%" Grid.ColumnSpan="2" Grid.Column="0" />
+                            <TextBlock Grid.Column="0" x:Name="c_WalkingSpeedMinLabel"
+                    			Margin="10,295,0,0"
+                    			VerticalAlignment="Top"
+                    			Text="Walking Speed Min (km/h)"
+                    			RenderTransformOrigin="0.5,0.423" Tag="%WALKING_SPEED_MIN%" />
+                            <TextBox x:Name="c_WalkingSpeedMin"
+                    			Grid.Column="1"
+                    			Height="29"
+                    			Margin="15,290,10,0"
+                    			VerticalAlignment="Top"
+                    			Template="{StaticResource Pogo}"
+                    			TextChanged="BotPropertyChanged"
+                    			TextWrapping="Wrap" />
+                            <TextBlock Grid.Column="0" x:Name="c_WalkingSpeedMaxLabel"
+                    			Margin="10,329,0,0"
+                    			VerticalAlignment="Top"
+                    			Text="Walking Speed Max (km/h)"
+                    			RenderTransformOrigin="0.5,0.423" Tag="%WALKING_SPEED_MAX%" />
+                            <TextBox x:Name="c_WalkingSpeedMax"
+                    			Grid.Column="1"
+                    			Height="29"
+                    			Margin="15,324,10,0"
+                    			VerticalAlignment="Top"
+                    			Template="{StaticResource Pogo}"
+                    			TextChanged="BotPropertyChanged"
+                    			TextWrapping="Wrap" />
+                            <CheckBox x:Name="c_UseHumanPathing"
+                    			Height="16"
+                    			Margin="10,358,0,0"
+                    			VerticalAlignment="Top"
+                    			Checked="BotPropertyChanged"
+                    			Content="Use Human Pathing"
+                    			Unchecked="BotPropertyChanged" Grid.ColumnSpan="2" Grid.Column="0" Tag="%USE_HUMAN_PATHING%" />
+                            <CheckBox x:Name="c_StopBotToAvoidBanOnUnknownLoginError"
+                    			Height="16"
+                    			Margin="10,379,0,0"
+                    			VerticalAlignment="Top"
+                    			Checked="BotPropertyChanged"
+                    			Content="Stop Bot To Avoid Ban On Unknown Login Error"
+                    			Unchecked="BotPropertyChanged" Grid.ColumnSpan="2" Grid.Column="0" Tag="%STOP_BOT_TO_AVOID_BAN%" />
+                            <CheckBox x:Name="c_UseMapzenApiElevation"
+                    			Height="16"
+                    			Margin="10,400,0,0"
+                    			VerticalAlignment="Top"
+                    			Checked="BotPropertyChanged"
+                    			Content="Use Mapzen Elevation API"
+                    			Unchecked="BotPropertyChanged" Grid.ColumnSpan="2" Grid.Column="0" Tag="%USE_MAPZEN_ELEVATION_API%" />
+                            <TextBlock Grid.Column="0" x:Name="c_RoutingServiceLabel"
+                    			Margin="10,426,0,0"
+                    			VerticalAlignment="Top"
+                    			Text="Routing service"
+                    			RenderTransformOrigin="0.5,0.423" Tag="%ROUTING_SERVICE%" />
+                            <ComboBox x:Name="c_RoutingService"
+                    			Height="24"
+                    			Margin="15,423,10,0"  
+                    			VerticalAlignment="Top" Grid.Column="1"  
+                    			SelectionChanged="BotPropertyChanged" />
+                            <TextBlock Grid.Column="0" x:Name="CustomRouteLabel"
+                    			Margin="10,478,0,0"
+                    			VerticalAlignment="Top"
+                    			Text="Select Custom Route"
+                    			RenderTransformOrigin="0.5,0.423" Tag="%SELECT_CUSTOM_PATH%" />
+                            <ComboBox x:Name="CustomRouteComboBox"
+                    			Height="24"
+                    			Margin="15,473,10,0"  
+                    			VerticalAlignment="Top" Grid.Column="1"  
+                    			SelectionChanged="CustomRouteComboBox_SelectionChanged" />
+                            <CheckBox x:Name="c_UseCustomRoute"
+                    			Height="16"
+                    			Margin="10,452,0,0"
+                    			VerticalAlignment="Top"
+                    			Checked="BotPropertyChanged"
+                    			Content="Use Custom Route"
+                    			Unchecked="BotPropertyChanged" Grid.ColumnSpan="2" Grid.Column="0" Tag="%USE_CUSTOM_PATH%" />
+
+                        </Grid>
+                    </GroupBox>
+
+                    <GroupBox x:Name="DeviceInfoGroupBox"
+            			Height="508"
+            			Margin="0,5,0,0"
+            			VerticalAlignment="Top"
+            			Header="Device Info" Tag="%DEVICE_INFO_BOX%" Grid.Row="3">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock x:Name="c_DeviceIdLabel"
+            					Margin="10,18,0,0"
+            					VerticalAlignment="Top"
+            					Text="Device Id"
+            					RenderTransformOrigin="0.5,0.423" Tag="%DEVICE_ID%" />
+                            <TextBox x:Name="c_DeviceId"
+            					Grid.Column="1"
+            					Height="29"
+            					Margin="10,13,77,0"
+            					VerticalAlignment="Top"
+            					Template="{StaticResource Pogo}"
+            					TextChanged="BotPropertyChanged"
+            					TextWrapping="Wrap" />
+                            <TextBlock Grid.Column="0" x:Name="c_AndroidBoardNameLabel"
+            					Margin="10,52,0,0"
+            					VerticalAlignment="Top"
+            					Text="Android Board Name"
+            					RenderTransformOrigin="0.5,0.423" Tag="%ANDROID_BOARD_NAME%" />
+                            <TextBox x:Name="c_AndroidBoardName"
+            					Grid.Column="1"
+            					Height="29"
+            					Margin="10,47,10,0"
+            					VerticalAlignment="Top"
+            					Template="{StaticResource Pogo}"
+            					TextChanged="BotPropertyChanged"
+            					TextWrapping="Wrap" />
+                            <TextBlock Grid.Column="0" x:Name="c_AndroidBootLoaderLabel"
+            					Margin="10,86,0,0"
+            					VerticalAlignment="Top"
+            					Text="Android Bootloader"
+            					RenderTransformOrigin="0.5,0.423" Tag="%ANDROID_BOOTLOADER%" />
+                            <TextBox x:Name="c_AndroidBootLoader"
+            					Grid.Column="1"
+            					Height="29"
+            					Margin="10,81,10,0"
+            					VerticalAlignment="Top"
+            					Template="{StaticResource Pogo}"
+            					TextChanged="BotPropertyChanged"
+            					TextWrapping="Wrap" />
+                            <TextBlock Grid.Column="0" x:Name="c_DeviceBrandLabel"
+            					Margin="10,120,0,0"
+            					VerticalAlignment="Top"
+            					Text="Device Brand"
+            					RenderTransformOrigin="0.5,0.423" Tag="%DEVICE_BRAND%" />
+                            <TextBox x:Name="c_DeviceBrand"
+            					Grid.Column="1"
+            					Height="29"
+            					Margin="10,115,10,0"
+            					VerticalAlignment="Top"
+            					Template="{StaticResource Pogo}"
+            					TextChanged="BotPropertyChanged"
+            					TextWrapping="Wrap" />
+                            <TextBlock Grid.Column="0" x:Name="c_DeviceModelLabel"
+            					Margin="10,154,0,0"
+            					VerticalAlignment="Top"
+            					Text="Device Model"
+            					RenderTransformOrigin="0.5,0.423" Tag="%DEVICE_MODEL%" />
+                            <TextBox x:Name="c_DeviceModel"
+            					Grid.Column="1"
+            					Height="29"
+            					Margin="10,149,10,0"
+            					VerticalAlignment="Top"
+            					Template="{StaticResource Pogo}"
+            					TextChanged="BotPropertyChanged"
+            					TextWrapping="Wrap" />
+                            <TextBlock Grid.Column="0" x:Name="c_DeviceModelIdentifierLabel"
+            					Margin="10,188,0,0"
+            					VerticalAlignment="Top"
+            					Text="Device Model Identifier"
+            					RenderTransformOrigin="0.5,0.423" Tag="%DEVICE_MODEL_IDENTIFIER%" />
+                            <TextBox x:Name="c_DeviceModelIdentifier"
+            					Grid.Column="1"
+            					Height="29"
+            					Margin="10,183,10,0"
+            					VerticalAlignment="Top"
+            					Template="{StaticResource Pogo}"
+            					TextChanged="BotPropertyChanged"
+            					TextWrapping="Wrap" />
+                            <TextBlock Grid.Column="0" x:Name="c_DeviceModelBootLabel"
+            					Margin="10,222,0,0"
+            					VerticalAlignment="Top"
+            					Text="Device Model Boot"
+            					RenderTransformOrigin="0.5,0.423" Tag="%DEVICE_MODEL_BOOT%" />
+                            <TextBox x:Name="c_DeviceModelBoot"
+            					Grid.Column="1"
+            					Height="29"
+            					Margin="10,217,10,0"
+            					VerticalAlignment="Top"
+            					Template="{StaticResource Pogo}"
+            					TextChanged="BotPropertyChanged"
+            					TextWrapping="Wrap" />
+                            <TextBlock Grid.Column="0" x:Name="c_HardwareManufacturerLabel"
+            					Margin="10,256,0,0"
+            					VerticalAlignment="Top"
+            					Text="Hardware Manufacturer"
+            					RenderTransformOrigin="0.5,0.423" Tag="%HARDWARE_MANUFACTURER%" />
+                            <TextBox x:Name="c_HardwareManufacturer"
+            					Grid.Column="1"
+            					Height="29"
+            					Margin="10,251,10,0"
+            					VerticalAlignment="Top"
+            					Template="{StaticResource Pogo}"
+            					TextChanged="BotPropertyChanged"
+            					TextWrapping="Wrap" />
+                            <TextBlock Grid.Column="0" x:Name="c_HardWareModelLabel"
+            					Margin="10,290,0,0"
+            					VerticalAlignment="Top"
+            					Text="Hardware Model"
+            					RenderTransformOrigin="0.5,0.423" Tag="%HARDWARE_MODEL%" />
+                            <TextBox x:Name="c_HardWareModel"
+            					Grid.Column="1"
+            					Height="29"
+            					Margin="10,285,10,0"
+            					VerticalAlignment="Top"
+            					Template="{StaticResource Pogo}"
+            					TextChanged="BotPropertyChanged"
+            					TextWrapping="Wrap" />
+                            <TextBlock Grid.Column="0" x:Name="c_FirmwareBrandLabel"
+            					Margin="10,324,0,0"
+            					VerticalAlignment="Top"
+            					Text="Firmware Brand"
+            					RenderTransformOrigin="0.5,0.423" Tag="%FIRMWARE_BRAND%" />
+                            <TextBox x:Name="c_FirmwareBrand"
+            					Grid.Column="1"
+            					Height="29"
+            					Margin="10,319,10,0"
+            					VerticalAlignment="Top"
+            					Template="{StaticResource Pogo}"
+            					TextChanged="BotPropertyChanged"
+            					TextWrapping="Wrap" />
+                            <TextBlock Grid.Column="0" x:Name="c_FirmwareTagsLabel"
+            					Margin="10,358,0,0"
+            					VerticalAlignment="Top"
+            					Text="Firmware Tags"
+            					RenderTransformOrigin="0.5,0.423" Tag="%FIRMWARE_TAGS%" />
+                            <TextBox x:Name="c_FirmwareTags"
+            					Grid.Column="1"
+            					Height="29"
+            					Margin="10,353,10,0"
+            					VerticalAlignment="Top"
+            					Template="{StaticResource Pogo}"
+            					TextChanged="BotPropertyChanged"
+            					TextWrapping="Wrap" />
+                            <TextBlock Grid.Column="0" x:Name="c_FirmwareTypeLabel"
+            					Margin="10,392,0,0"
+            					VerticalAlignment="Top"
+            					Text="Firmware Type"
+            					RenderTransformOrigin="0.5,0.423" Tag="%FIRMWARE_TYPE%" />
+                            <TextBox x:Name="c_FirmwareType"
+            					Grid.Column="1"
+            					Height="29"
+            					Margin="10,387,10,0"
+            					VerticalAlignment="Top"
+            					Template="{StaticResource Pogo}"
+            					TextChanged="BotPropertyChanged"
+            					TextWrapping="Wrap" />
+                            <TextBlock Grid.Column="0" x:Name="c_FirmwareFingerprintLabel"
+            					Margin="10,426,0,0"
+            					VerticalAlignment="Top"
+            					Text="Firmware Fingerprint"
+            					RenderTransformOrigin="0.5,0.423" Tag="%FIRMWARE_FINGERPRINT%" />
+                            <TextBox x:Name="c_FirmwareFingerprint"
+            					Grid.Column="1"
+            					Height="29"
+            					Margin="10,421,10,0"
+            					VerticalAlignment="Top"
+            					Template="{StaticResource Pogo}"
+            					TextChanged="BotPropertyChanged"
+            					TextWrapping="Wrap" />
+                            <Button x:Name="b_getDataFromRealPhone"
+            					Height="29"
+            					Margin="10,455,10,0"
+            					VerticalAlignment="Top"
+            					Click="b_getDataFromRealPhone_Click"
+            					Content="Get Data from Your Android (DISABLED)"
+            					FontFamily="BOLD"
+            					FontWeight="Bold"
+            					Style="{StaticResource ResourceKey=Flatbutton}"
+            					TextOptions.TextFormattingMode="Display" Width="Auto" Grid.Column="1" Tag="%GET_DATA_FROM_YOUR_ANDROID%" IsEnabled="False">
+                                <Button.Background>
+                                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                        <LinearGradientBrush.RelativeTransform>
+                                            <TransformGroup>
+                                                <ScaleTransform CenterY="0.5" CenterX="0.5"/>
+                                                <SkewTransform CenterY="0.5" CenterX="0.5"/>
+                                                <RotateTransform Angle="90" CenterY="0.5" CenterX="0.5"/>
+                                                <TranslateTransform/>
+                                            </TransformGroup>
+                                        </LinearGradientBrush.RelativeTransform>
+                                        <GradientStop Color="LightGray" Offset="0"/>
+                                        <GradientStop Color="#FF898989" Offset="1"/>
+                                    </LinearGradientBrush>
+                                </Button.Background>
+                            </Button>
+                            <Button x:Name="b_generateRandomDeviceId"
+            					Grid.Column="1"
+            					Width="62"
+            					Height="29"
+            					Margin="0,12,10,0"
+            					HorizontalAlignment="Right"
+            					VerticalAlignment="Top"
+            					Click="b_generateRandomDeviceId_Click"
+            					Content="Random"
+            					FontFamily="BOLD"
+            					FontWeight="Bold"
+            					Style="{StaticResource ResourceKey=Flatbutton}"
+            					TextOptions.TextFormattingMode="Display" Background="{DynamicResource NormalButtonColor}" Tag="%RANDOM_DEVICE_ID%"/>
+                            <Button Grid.Column="0" x:Name="b_GenerateNewAndroid"
+            					Height="29"
+            					Margin="10,455,0,0"
+            					VerticalAlignment="Top"
+            					Content="Create new"
+            					FontFamily="BOLD"
+            					FontWeight="Bold"
+            					Style="{StaticResource ResourceKey=Flatbutton}"
+            					TextOptions.TextFormattingMode="Display" Width="Auto" Click="b_GenerateNewAndroid_Click" Background="{DynamicResource NormalButtonColor}" Tag="%CREATE_NEW%"/>
+                        </Grid>
+                    </GroupBox>
+
+                    <GroupBox x:Name="DelaysGroupBox"
+            			Height="624"
+            			Margin="0,5,0,0"
+            			VerticalAlignment="Top"
+            			Header="Delays"
+            			RenderTransformOrigin="0.479,0.565" Tag="%DELAYS_BOX%" Grid.Row="4">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock x:Name="c_DelayBetweenPlayerActionsLabel"
+                    			Margin="10,13,0,0"
+                    			VerticalAlignment="Top"
+                    			Text="Delay Between Player Actions" Tag="%DELAY_BETWEEN_PLAYER_ACTIONS%" />
+                            <TextBox x:Name="c_DelayBetweenPlayerActions"
+                    			Grid.Column="1"
+                    			Height="29"
+                    			Margin="15,7,10,0"
+                    			VerticalAlignment="Top"
+                    			Template="{StaticResource Pogo}"
+                    			Text="0"
+                    			TextChanged="BotPropertyChanged"
+                    			TextWrapping="Wrap" />
+                            <TextBlock Grid.Column="0" x:Name="c_DelayPositionCheckStateLabel"
+                    			Margin="10,47,0,0"
+                    			VerticalAlignment="Top"
+                    			Text="Delay Position Check State" Tag="%DELAY_POSTION_CHECK_STATE%" />
+                            <TextBox x:Name="c_DelayPositionCheckState"
+                    			Grid.Column="1"
+                    			Height="29"
+                    			Margin="15,41,10,0"
+                    			VerticalAlignment="Top"
+                    			Template="{StaticResource Pogo}"
+                    			Text="0"
+                    			TextChanged="BotPropertyChanged"
+                    			TextWrapping="Wrap" />
+                            <TextBlock Grid.Column="0" x:Name="c_DelayPokestopLabel"
+                    			Margin="10,81,0,0"
+                    			VerticalAlignment="Top"
+                    			Text="Delay Pokestop" Tag="%DELAY_POKESTOP%" />
+                            <TextBox x:Name="c_DelayPokestop"
+                    			Grid.Column="1"
+                    			Height="29"
+                    			Margin="15,75,10,0"
+                    			VerticalAlignment="Top"
+                    			Template="{StaticResource Pogo}"
+                    			Text="0"
+                    			TextChanged="BotPropertyChanged"
+                    			TextWrapping="Wrap" />
+                            <TextBlock Grid.Column="0" x:Name="c_DelayCatchPokemonLabel"
+                    			Margin="10,115,0,0"
+                    			VerticalAlignment="Top"
+                    			Text="Delay Catch Poke" Tag="%DELAY_CATCH_POKE%" />
+                            <TextBox x:Name="c_DelayCatchPokemon"
+                    			Grid.Column="1"
+                    			Height="29"
+                    			Margin="15,109,10,0"
+                    			VerticalAlignment="Top"
+                    			Template="{StaticResource Pogo}"
+                    			Text="0"
+                    			TextChanged="BotPropertyChanged"
+                    			TextWrapping="Wrap" />
+                            <TextBlock Grid.Column="0" x:Name="c_DelayBetweenPokemonCatchLabel"
+                    			Margin="10,149,0,0"
+                    			VerticalAlignment="Top"
+                    			Text="Delay Between Poke Catch" Tag="%DELAY_BETWEEN_POKE_CATCH%" />
+                            <TextBox x:Name="c_DelayBetweenPokemonCatch"
+                    			Grid.Column="1"
+                    			Height="29"
+                    			Margin="15,143,10,0"
+                    			VerticalAlignment="Top"
+                    			Template="{StaticResource Pogo}"
+                    			Text="0"
+                    			TextChanged="BotPropertyChanged"
+                    			TextWrapping="Wrap" />
+                            <TextBlock Grid.Column="0" x:Name="c_DelayCatchNearbyPokemonLabel"
+                    			Margin="10,183,0,0"
+                    			VerticalAlignment="Top"
+                    			Text="Delay Catch Nearby Poke" Tag="%DELAY_CATCH_NEARBY_POKE%" />
+                            <TextBox x:Name="c_DelayCatchNearbyPokemon"
+                    			Grid.Column="1"
+                    			Height="29"
+                    			Margin="15,177,10,0"
+                    			VerticalAlignment="Top"
+                    			Template="{StaticResource Pogo}"
+                    			TextChanged="BotPropertyChanged"
+                    			TextWrapping="Wrap" />
+                            <TextBlock Grid.Column="0" x:Name="c_DelayCatchLurePokemonLabel"
+                    			Margin="10,217,0,0"
+                    			VerticalAlignment="Top"
+                    			Text="Delay Catch Lure Poke" Tag="%DELAY_CATCH_LURE_POKE%" />
+                            <TextBox x:Name="c_DelayCatchLurePokemon"
+                    			Grid.Column="1"
+                    			Height="29"
+                    			Margin="15,211,10,0"
+                    			VerticalAlignment="Top"
+                    			Template="{StaticResource Pogo}"
+                    			TextChanged="BotPropertyChanged"
+                    			TextWrapping="Wrap" />
+                            <TextBlock Grid.Column="0" x:Name="c_DelayCatchIncensePokemonLabel"
+                    			Margin="10,251,0,0"
+                    			VerticalAlignment="Top"
+                    			Text="Delay Catch Incense Poke" Tag="%DELAY_CATCH_INCENSE_POKE%" />
+                            <TextBox x:Name="c_DelayCatchIncensePokemon"
+                    			Grid.Column="1"
+                    			Height="29"
+                    			Margin="15,245,10,0"
+                    			VerticalAlignment="Top"
+                    			Template="{StaticResource Pogo}"
+                    			TextChanged="BotPropertyChanged"
+                    			TextWrapping="Wrap" />
+                            <TextBlock Grid.Column="0" x:Name="c_DelayEvolvePokemonLabel"
+                    			Margin="10,285,0,0"
+                    			VerticalAlignment="Top"
+                    			Text="Delay Evolve Poke" Tag="%DELAY_EVOLVE_POKE%" />
+                            <TextBox x:Name="c_DelayEvolvePokemon"
+                    			Grid.Column="1"
+                    			Height="29"
+                    			Margin="15,279,10,0"
+                    			VerticalAlignment="Top"
+                    			Template="{StaticResource Pogo}"
+                    			TextChanged="BotPropertyChanged"
+                    			TextWrapping="Wrap" />
+                            <TextBlock Grid.Column="0" x:Name="c_DelayEvolveVariationLabel"
+                    			Margin="10,319,0,0"
+                    			VerticalAlignment="Top"
+                    			Text="Delay Evolve Variation" Tag="%DELAY_EVOLVE_VARIATION%" />
+                            <TextBox x:Name="c_DelayEvolveVariation"
+                    			Grid.Column="1"
+                    			Height="29"
+                    			Margin="15,313,10,0"
+                    			VerticalAlignment="Top"
+                    			Template="{StaticResource Pogo}"
+                    			TextChanged="BotPropertyChanged"
+                    			TextWrapping="Wrap" />
+                            <TextBlock Grid.Column="0" x:Name="c_DelayTransferPokemonLabel"
+                    			Margin="10,353,0,0"
+                    			VerticalAlignment="Top"
+                    			Text="Delay Transfer Poke" Tag="%DELAY_TRANSFER_POKE%" />
+                            <TextBox x:Name="c_DelayTransferPokemon"
+                    			Grid.Column="1"
+                    			Height="29"
+                    			Margin="15,347,10,0"
+                    			VerticalAlignment="Top"
+                    			Template="{StaticResource Pogo}"
+                    			TextChanged="BotPropertyChanged"
+                    			TextWrapping="Wrap" />
+                            <TextBlock Grid.Column="0" x:Name="c_DelayDisplayPokemonLabel"
+                    			Margin="10,387,0,0"
+                    			VerticalAlignment="Top"
+                    			Text="Delay Display Poke" Tag="%DELAY_DISPLAY_POKE%" />
+                            <TextBox x:Name="c_DelayDisplayPokemon"
+                    			Grid.Column="1"
+                    			Height="29"
+                    			Margin="15,381,10,0"
+                    			VerticalAlignment="Top"
+                    			Template="{StaticResource Pogo}"
+                    			TextChanged="BotPropertyChanged"
+                    			TextWrapping="Wrap" />
+                            <TextBlock Grid.Column="0" x:Name="c_DelayUseLuckyEggLabel"
+                    			Margin="10,421,0,0"
+                    			VerticalAlignment="Top"
+                    			Text="Delay Use Lucky Egg" Tag="%DELAY_USE_LUCKY_EGG%" />
+                            <TextBox x:Name="c_DelayUseLuckyEgg"
+                    			Grid.Column="1"
+                    			Height="29"
+                    			Margin="15,415,10,0"
+                    			VerticalAlignment="Top"
+                    			Template="{StaticResource Pogo}"
+                    			TextChanged="BotPropertyChanged"
+                    			TextWrapping="Wrap" />
+                            <TextBlock Grid.Column="0" x:Name="c_DelaySoftbanRetryLabel"
+                    			Margin="10,455,0,0"
+                    			VerticalAlignment="Top"
+                    			Text="Delay Softban Retry" Tag="%DELAY_SOFTBAN_RETRY%" />
+                            <TextBox x:Name="c_DelaySoftbanRetry"
+                    			Grid.Column="1"
+                    			Height="29"
+                    			Margin="15,449,10,0"
+                    			VerticalAlignment="Top"
+                    			Template="{StaticResource Pogo}"
+                    			TextChanged="BotPropertyChanged"
+                    			TextWrapping="Wrap" />
+                            <TextBlock Grid.Column="0" x:Name="c_DelayRecycleItemLabel"
+                    			Margin="10,489,0,0"
+                    			VerticalAlignment="Top"
+                    			Text="Delay Recycle Item" Tag="%DELAY_RECYCLE_ITEM%" />
+                            <TextBox x:Name="c_DelayRecycleItem"
+                    			Grid.Column="1"
+                    			Height="29"
+                    			Margin="15,483,10,0"
+                    			VerticalAlignment="Top"
+                    			Template="{StaticResource Pogo}"
+                    			TextChanged="BotPropertyChanged"
+                    			TextWrapping="Wrap" />
+                            <CheckBox x:Name="c_ReRandomizeDelayOnStart"
+                    			Margin="10,515,0,0"
+                    			HorizontalAlignment="Left"
+                    			VerticalAlignment="Top"
+                    			Checked="BotPropertyChanged"
+                    			Content="Re Randomize Delay On Start"
+                    			Unchecked="BotPropertyChanged" Grid.ColumnSpan="2" Grid.Column="0" Tag="%RE_RANDOMIZE_DELAY_ON_START%" />
+                            <TextBlock Grid.Column="0" x:Name="c_MinRandomizeDelayMillisecondsLabel"
+                    			Margin="10,541,0,0"
+                    			VerticalAlignment="Top"
+                    			Text="Min Randomize Delay (ms)" Tag="%MIN_RANDOMIZE_DELAY%" />
+                            <TextBox x:Name="c_MinRandomizeDelayMilliseconds"
+                    			Grid.Column="1"
+                    			Height="29"
+                    			Margin="15,535,10,0"
+                    			VerticalAlignment="Top"
+                    			Template="{StaticResource Pogo}"
+                    			TextChanged="BotPropertyChanged"
+                    			TextWrapping="Wrap" />
+                            <TextBlock Grid.Column="0" x:Name="c_MaxRandomizeDelayMillisecondsLabel"
+                    			Margin="10,575,0,0"
+                    			VerticalAlignment="Top"
+                    			Text="Max Randomize Delay (ms)" Tag="%MAX_RANDOMIZE_DELAY%" />
+                            <TextBox x:Name="c_MaxRandomizeDelayMilliseconds"
+                    			Grid.Column="1"
+                    			Height="29"
+                    			Margin="15,569,10,0"
+                    			VerticalAlignment="Top"
+                    			Template="{StaticResource Pogo}"
+                    			TextChanged="BotPropertyChanged"
+                    			TextWrapping="Wrap" />
+
+                        </Grid>
+                    </GroupBox>
+                    <GroupBox x:Name="ApiKeysBox"
+            			Margin="0,5,0,0"
+            			VerticalAlignment="Top"
+            			Header="API Keys" Tag="%API_KEYS%" Grid.Row="2">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="34"/>
+                                <RowDefinition Height="34"/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock x:Name="c_MapzenApiKey1"
+            					Margin="10,9,0,9"
+            					VerticalAlignment="Center"
+            					Text="Mapzen API"
+            					RenderTransformOrigin="0.5,0.423" Tag="%MAPZEN_API%" Height="16" />
+                            <TextBox x:Name="c_MapzenApiKey"
+            					Grid.Column="1"
+            					Height="30"
+            					Margin="10,2"
+            					VerticalAlignment="Center"
+            					Template="{StaticResource Pogo}"
+            					TextChanged="BotPropertyChanged"
+            					TextWrapping="Wrap" />
+                            <TextBlock x:Name="c_GoogleDirectionsApiKeyLabel1"
+            					Margin="10,9,0,9"
+            					VerticalAlignment="Center"
+            					Text="Google Directions"
+            					RenderTransformOrigin="0.5,0.423" Tag="%GOOGLE_DIRECTIONS%" Grid.Row="1" Height="16" />
+                            <TextBox x:Name="c_GoogleDirectionsApiKey"
+            					Grid.Column="1"
+            					Height="30"
+            					Margin="10,2"
+            					VerticalAlignment="Center"
+            					Template="{StaticResource Pogo}"
+            					TextChanged="BotPropertyChanged"
+            					TextWrapping="Wrap" Grid.Row="1" />
+
+                        </Grid>
+                    </GroupBox>
+                    <Button x:Name="btn_SaveBot"
+                	Width="110"
+                	Height="30"
+                	Margin="0,5,0,0"
+                	HorizontalAlignment="Right"
+                	VerticalAlignment="Top"
+                	Click="btn_SaveBot_Click"
+                	Content="SAVE SETTINGS"
+                	FontFamily="BOLD"
+                	FontWeight="Bold"
+                	Style="{StaticResource ResourceKey=Flatbutton}"
+                	TextOptions.TextFormattingMode="Display" Background="{DynamicResource LightBlueButtonColor}" 
+                    Tag="%SAVE_SETTINGS%" RenderTransformOrigin="0.173,0.433" Grid.Row="5"/>
+                </Grid>
+
+                <GroupBox Grid.Column="0" x:Name="SnipeGroupBox"
+                        Height="224"
+                        Margin="0,1614,0,0"
+                        VerticalAlignment="Top"
+                        Header="Snipe"
+                        IsEnabled="False"
+                        RenderTransformOrigin="0.479,0.565" Visibility="Collapsed">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="230" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock x:Name="c_MinDelayBetweenSnipesLabel"
+                                Height="26"
+                                Margin="10,8,0,0"
+                                VerticalAlignment="Top"
+                                Text="Min Delay Between Snipes" />
+                        <TextBox x:Name="c_MinDelayBetweenSnipes"
+                                Grid.Column="1"
+                                Height="29"
+                                Margin="5,7,10,0"
+                                VerticalAlignment="Top"
+                                Template="{StaticResource Pogo}"
+                                Text="0"
+                                TextChanged="BotPropertyChanged"
+                                TextWrapping="Wrap" Width="178" />
+                        <TextBlock x:Name="c_MinPokeballsToSnipeLabel"
+                                Height="26"
+                                Margin="10,42,0,0"
+                                VerticalAlignment="Top"
+                                Text="Min Pokeballs To Snipe" />
+                        <TextBox x:Name="c_MinPokeballsToSnipe"
+                                Grid.Column="1"
+                                Height="29"
+                                Margin="5,41,10,0"
+                                VerticalAlignment="Top"
+                                Template="{StaticResource Pogo}"
+                                Text="0"
+                                TextChanged="BotPropertyChanged"
+                                TextWrapping="Wrap" />
+                        <TextBlock x:Name="c_MinPokeballsWhileSnipeLabel"
+                                Height="26"
+                                Margin="10,76,0,0"
+                                VerticalAlignment="Top"
+                                Text="Min Pokeballs While Snipe" />
+                        <TextBox x:Name="c_MinPokeballsWhileSnipe"
+                                Grid.Column="1"
+                                Height="29"
+                                Margin="5,75,10,0"
+                                VerticalAlignment="Top"
+                                Template="{StaticResource Pogo}"
+                                Text="0"
+                                TextChanged="BotPropertyChanged"
+                                TextWrapping="Wrap" />
+                        <CheckBox x:Name="c_SnipeAtPokestops"
+                                Width="171"
+                                Margin="10,107,0,0"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Top"
+                                Checked="BotPropertyChanged"
+                                Content="Snipe At Pokestops"
+                                Unchecked="BotPropertyChanged" Height="15" />
+                        <CheckBox x:Name="c_SnipeIgnoreUnknownIv"
+                                Width="171"
+                                Margin="10,128,0,0"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Top"
+                                Checked="BotPropertyChanged"
+                                Content="Snipe Ignore Unknown Iv"
+                                Unchecked="BotPropertyChanged" Height="15" />
+                        <CheckBox x:Name="c_UseTransferIvForSnipe"
+                                Width="171"
+                                Margin="10,149,0,0"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Top"
+                                Checked="BotPropertyChanged"
+                                Content="Use Transfer Iv For Snipe"
+                                Unchecked="BotPropertyChanged" Height="15" />
+                        <TextBlock x:Name="c_SnipingScanOffsetLabel"
+                                Height="26"
+                                Margin="10,170,0,0"
+                                VerticalAlignment="Top"
+                                Text="Sniping Scan Offset" />
+                        <TextBox x:Name="c_SnipingScanOffset"
+                                Grid.Column="1"
+                                Height="29"
+                                Margin="5,169,10,0"
+                                VerticalAlignment="Top"
+                                Template="{StaticResource Pogo}"
+                                TextChanged="BotPropertyChanged"
+                                TextWrapping="Wrap" />
+
+                    </Grid>
+                </GroupBox>
+                <Grid Grid.Column="0" Margin="5,0,2.5,0" VerticalAlignment="Top">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="1*"/>
+                    </Grid.RowDefinitions>
+                    <GroupBox x:Name="BotSettingsGroupBox"
+            			Height="104"
+            			Margin="0,5,0.5,0"
+            			VerticalAlignment="Top"
+            			Header="Bot Settings"
+            			RenderTransformOrigin="0.479,0.565" Tag="%BOT_SETTINGS%" Grid.Row="4" Grid.RowSpan="2">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock x:Name="c_TotalAmountOfPokeballsToKeepLabel1"
+                    			Margin="10,25,0,0"
+                    			VerticalAlignment="Top"
+                    			Text="Restart Delay" Tag="%RESTART_DELAY%" Height="16" />
+                            <TextBox x:Name="c_FailureRestartDelay"
+                    			Grid.Column="1"
+                    			Height="29"
+                    			Margin="5,19,10,0"
+                    			VerticalAlignment="Top"
+                    			Template="{StaticResource Pogo}"
+                    			Text="0"
+                    			TextChanged="BotPropertyChanged"
+                    			TextWrapping="Wrap" />
+                            <CheckBox Grid.Column="0" x:Name="c_RestartBotOnFailure"
+                    			Height="16"
+                    			Margin="10,3,0,0"
+                    			VerticalAlignment="Top"
+                    			Checked="BotPropertyChanged"
+                    			Content="Attempt to Restart Bot On Failure"
+                    			Unchecked="BotPropertyChanged" Tag="%RESTART_ON_FAILURE%" />
+                            <TextBlock Grid.Column="0" x:Name="c_TotalAmountOfPokeballsToKeepLabel1_Copy"
+                    			Margin="10,58,0,0"
+                    			Text="Max Retries" Tag="%MAX_RETRIES%" VerticalAlignment="Top" />
+                            <TextBox x:Name="c_FailureMaxRetries"
+                    			Grid.Column="1"
+                    			Margin="5,53,10,0"
+                    			Template="{StaticResource Pogo}"
+                    			Text="0"
+                    			TextChanged="BotPropertyChanged"
+                    			TextWrapping="Wrap" VerticalAlignment="Top" />
+
+                        </Grid>
+                    </GroupBox>
+                    <GroupBox x:Name="ItemsGroupBox"
+            			Height="232"
+            			Margin="0,5,0,0"
+            			VerticalAlignment="Top"
+            			Header="Items"
+            			RenderTransformOrigin="0.479,0.565" Tag="%ITEMSBOX%" Grid.Row="3">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock x:Name="c_TotalAmountOfPokeballsToKeepLabel"
+            					Margin="10,14,10,0"
+            					VerticalAlignment="Top"
+            					Text="Amount Of Pokeballs To Keep" Tag="%AMOUNT_OF_POKEBALLS_TO_KEEP%" Height="16" />
+                            <TextBox x:Name="c_TotalAmountOfPokeballsToKeep"
+            					Grid.Column="1"
+            					Height="29"
+            					Margin="5,7,10,0"
+            					VerticalAlignment="Top"
+            					Template="{StaticResource Pogo}"
+            					Text="0"
+            					TextChanged="BotPropertyChanged"
+            					TextWrapping="Wrap" />
+                            <TextBlock x:Name="c_TotalAmountOfPotionsToKeepLabel"
+            					Margin="10,48,10,0"
+            					VerticalAlignment="Top"
+            					Text="Amount Of Potions To Keep" Tag="%AMOUNT_OF_POTIONS_TO_KEEP%" Height="16" />
+                            <TextBox x:Name="c_TotalAmountOfPotionsToKeep"
+            					Grid.Column="1"
+            					Height="29"
+            					Margin="5,41,10,0"
+            					VerticalAlignment="Top"
+            					Template="{StaticResource Pogo}"
+            					Text="0"
+            					TextChanged="BotPropertyChanged"
+            					TextWrapping="Wrap" />
+                            <TextBlock x:Name="c_TotalAmountOfRevivesToKeepLabel"
+            					Margin="10,82,10,0"
+            					VerticalAlignment="Top"
+            					Text="Amount Of Revives To Keep" Tag="%AMOUNT_OF_REVIVES_TO_KEEP%" Height="16" />
+                            <TextBox x:Name="c_TotalAmountOfRevivesToKeep"
+            					Grid.Column="1"
+            					Height="29"
+            					Margin="5,75,10,0"
+            					VerticalAlignment="Top"
+            					Template="{StaticResource Pogo}"
+            					Text="0"
+            					TextChanged="BotPropertyChanged"
+            					TextWrapping="Wrap" />
+                            <TextBlock x:Name="c_TotalAmountOfRazzToKeepLabel"
+            					Margin="10,116,10,0"
+            					VerticalAlignment="Top"
+            					Text="Amount Of Berries To Keep" Tag="%AMOUNT_OF_BERRIES_TO_KEEP%" Height="16" />
+                            <TextBox x:Name="c_TotalAmountOfRazzToKeep"
+            					Grid.Column="1"
+            					Height="29"
+            					Margin="5,109,10,0"
+            					VerticalAlignment="Top"
+            					Template="{StaticResource Pogo}"
+            					Text="0"
+            					TextChanged="BotPropertyChanged"
+            					TextWrapping="Wrap" />
+                            <TextBlock x:Name="c_RecycleInventoryAtUsagePercentageLabel"
+            					Margin="10,150,10,0"
+            					VerticalAlignment="Top"
+            					Text="Recycle At Usage Percentage" Tag="%RECYCLE_AT_USAGE_PERCENTAGE%" Height="16" />
+                            <TextBox x:Name="c_RecycleInventoryAtUsagePercentage"
+            					Grid.Column="1"
+            					Height="29"
+            					Margin="5,143,10,0"
+            					VerticalAlignment="Top"
+            					Template="{StaticResource Pogo}"
+            					Text="0"
+            					TextChanged="BotPropertyChanged"
+            					TextWrapping="Wrap" />
+                            <TextBlock x:Name="c_TranslationLanguageCodeLabel"
+            					Margin="10,184,10,0"
+            					VerticalAlignment="Top"
+            					Text="Translation Language Code" Tag="%TRANSLATION_LANG_CODE%" Height="16" />
+                            <TextBox x:Name="c_TranslationLanguageCode"
+            					Grid.Column="1"
+            					Height="29"
+            					Margin="5,177,10,0"
+            					VerticalAlignment="Top"
+            					Template="{StaticResource Pogo}"
+            					TextChanged="BotPropertyChanged"
+            					TextWrapping="Wrap" />
+
+                        </Grid>
+                    </GroupBox>
+                    <GroupBox x:Name="CatchGroupBox"
+            			Height="698"
+            			Margin="0,5,0,0"
+            			VerticalAlignment="Top"
+            			Header="Catch"
+            			RenderTransformOrigin="0.479,0.565" Tag="%CATCHBOX%" Grid.Row="2">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock x:Name="c_UseGreatBallBelowCatchProbabilityLabel"
+            					Margin="9,5,0,0"
+            					VerticalAlignment="Top"
+            					Text="Great Ball Below Catch Probability"
+            					RenderTransformOrigin="0.5,0.5" Tag="%GREAT_BALL_BELOW_CATCH_PROBABILITY%" />
+                            <TextBox x:Name="c_UseGreatBallBelowCatchProbability"
+            					Grid.Column="1"
+            					Height="29"
+            					Margin="15,-1,10,0"
+            					VerticalAlignment="Top"
+            					Template="{StaticResource Pogo}"
+            					Text="0"
+            					TextChanged="BotPropertyChanged"
+            					TextWrapping="Wrap" />
+                            <TextBlock x:Name="c_UseUltraBallBelowCatchProbabilityLabel"
+            					Margin="11,39,0,0"
+            					VerticalAlignment="Top"
+            					Text="Ultra Ball Below Catch Probability" Tag="%ULTRA_BALL_BELOW_CATCH_PROBABILITY%" />
+                            <TextBox x:Name="c_UseUltraBallBelowCatchProbability"
+            					Grid.Column="1"
+            					Height="29"
+            					Margin="15,33,10,0"
+            					VerticalAlignment="Top"
+            					Template="{StaticResource Pogo}"
+            					Text="0"
+            					TextChanged="BotPropertyChanged"
+            					TextWrapping="Wrap" />
+                            <TextBlock x:Name="c_UseMasterBallBelowCatchProbabilityLabel"
+            					Margin="9,73,0,0"
+            					VerticalAlignment="Top"
+            					Text="Master Ball Below Catch Probability" Tag="%MASTER_BALL_BELOW_CATCH_PROBABILITY%" />
+                            <TextBox x:Name="c_UseMasterBallBelowCatchProbability"
+            					Grid.Column="1"
+            					Height="29"
+            					Margin="15,67,10,0"
+            					VerticalAlignment="Top"
+            					Template="{StaticResource Pogo}"
+            					Text="0"
+            					TextChanged="BotPropertyChanged"
+            					TextWrapping="Wrap" />
+                            <CheckBox x:Name="c_HumanizeThrows"
+            					Height="16"
+            					Margin="10,100,0,0"
+            					VerticalAlignment="Top"
+            					Checked="BotPropertyChanged"
+            					Content="Humanize Throws"
+            					Unchecked="BotPropertyChanged" Tag="%HUMANIZE_THROWS%" Grid.ColumnSpan="2" />
+                            <TextBlock x:Name="c_ThrowAccuracyMinLabel"
+            					Margin="9,126,0,0"
+            					VerticalAlignment="Top"
+            					Text="Throw Accuracy Min" Tag="%THROW_ACCURACY_MIN%" />
+                            <TextBox x:Name="c_ThrowAccuracyMin"
+            					Grid.Column="1"
+            					Height="29"
+            					Margin="15,120,10,0"
+            					VerticalAlignment="Top"
+            					Template="{StaticResource Pogo}"
+            					Text="0"
+            					TextChanged="BotPropertyChanged"
+            					TextWrapping="Wrap" />
+                            <TextBlock x:Name="c_ThrowAccuracyMaxLabel"
+            					Margin="9,160,0,0"
+            					VerticalAlignment="Top"
+            					Text="Throw Accuracy Max" Tag="%THROW_ACCURACY_MAX%" />
+                            <TextBox x:Name="c_ThrowAccuracyMax"
+            					Grid.Column="1"
+            					Height="29"
+            					Margin="15,154,10,0"
+            					VerticalAlignment="Top"
+            					Template="{StaticResource Pogo}"
+            					Text="0"
+            					TextChanged="BotPropertyChanged"
+            					TextWrapping="Wrap" />
+                            <TextBlock x:Name="c_ThrowSpinFrequencyLabel"
+            					Margin="9,194,0,0"
+            					VerticalAlignment="Top"
+            					Text="Throw Spin Frequency" Tag="%THROW_SPIN_FREQUENCY%" />
+                            <TextBox x:Name="c_ThrowSpinFrequency"
+            					Grid.Column="1"
+            					Height="29"
+            					Margin="15,188,10,0"
+            					VerticalAlignment="Top"
+            					Template="{StaticResource Pogo}"
+            					Text="0"
+            					TextChanged="BotPropertyChanged"
+            					TextWrapping="Wrap" />
+                            <TextBlock x:Name="c_MissChanceLabel"
+            					Margin="9,228,0,0"
+            					VerticalAlignment="Top"
+            					Text="Miss Chance" Tag="%MISS_CHANCE%" />
+                            <TextBox x:Name="c_MissChance"
+            					Grid.Column="1"
+            					Height="29"
+            					Margin="15,222,10,0"
+            					VerticalAlignment="Top"
+            					Template="{StaticResource Pogo}"
+            					Text="0"
+            					TextChanged="BotPropertyChanged"
+            					TextWrapping="Wrap" />
+                            <CheckBox x:Name="c_UsePokemonToNotCatchFilter"
+            					Height="16"
+            					Margin="10,254,0,0"
+            					VerticalAlignment="Top"
+            					Checked="BotPropertyChanged"
+            					Content="Use Poke not to catch filter"
+            					Unchecked="BotPropertyChanged" Tag="%USE_POKE_NOT_TO_CATCH_FILTER%" Grid.ColumnSpan="2" />
+                            <TextBlock x:Name="c_UseUltraBallAboveIvLabel"
+            					Margin="10,280,0,0"
+            					VerticalAlignment="Top"
+            					Text="Use Ultra Ball above IV" Tag="%USE_ULTRA_BALL_ABOVE_IV%" />
+                            <TextBox x:Name="c_UseUltraBallAboveIv"
+            					Grid.Column="1"
+            					Height="29"
+            					Margin="15,274,10,0"
+            					VerticalAlignment="Top"
+            					Template="{StaticResource Pogo}"
+            					Text="0"
+            					TextChanged="BotPropertyChanged"
+            					TextWrapping="Wrap" />
+                            <TextBlock x:Name="c_UseGreatBallAboveIvLabel"
+            					Margin="10,314,0,0"
+            					VerticalAlignment="Top"
+            					Text="Use Great Ball above IV" Tag="%USE_GREAT_BALL_ABOVE_IV%" />
+                            <TextBox x:Name="c_UseGreatBallAboveIv"
+            					Grid.Column="1"
+            					Height="29"
+            					Margin="15,308,10,0"
+            					VerticalAlignment="Top"
+            					Template="{StaticResource Pogo}"
+            					Text="0"
+            					TextChanged="BotPropertyChanged"
+            					TextWrapping="Wrap" />
+                            <TextBlock x:Name="c_UseBerryMinCpLabel"
+            					Margin="10,348,0,0"
+            					VerticalAlignment="Top"
+            					Text="Use Berry Min CP" Tag="%USE_BERRY_MIN_CP%" />
+                            <TextBox x:Name="c_UseBerryMinCp"
+            					Grid.Column="1"
+            					Height="29"
+            					Margin="15,342,10,0"
+            					VerticalAlignment="Top"
+            					Template="{StaticResource Pogo}"
+            					Text="0"
+            					TextChanged="BotPropertyChanged"
+            					TextWrapping="Wrap" />
+                            <TextBlock x:Name="c_UseBerryMinIvLabel"
+            					Margin="10,382,0,0"
+            					VerticalAlignment="Top"
+            					Text="Use Berry Min IV" Tag="%USE_BERRY_MIN_IV%" />
+                            <TextBox x:Name="c_UseBerryMinIv"
+            					Grid.Column="1"
+            					Height="29"
+            					Margin="15,376,10,0"
+            					VerticalAlignment="Top"
+            					Template="{StaticResource Pogo}"
+            					Text="0"
+            					TextChanged="BotPropertyChanged"
+            					TextWrapping="Wrap" />
+                            <TextBlock x:Name="c_UseBerryBelowCatchProbabilityLabel"
+            					Margin="10,416,0,0"
+            					VerticalAlignment="Top"
+            					Text="Use Berry Below Catch Probability" Tag="%USE_BERRY_BELOW_CATCH_PROBABILITY%" />
+                            <TextBox x:Name="c_UseBerryBelowCatchProbability"
+            					Grid.Column="1"
+            					Height="29"
+            					Margin="15,410,10,0"
+            					VerticalAlignment="Top"
+            					Template="{StaticResource Pogo}"
+            					Text="0"
+            					TextChanged="BotPropertyChanged"
+            					TextWrapping="Wrap" />
+                            <CheckBox x:Name="c_CatchWildPokemon"
+            					Height="16"
+            					Margin="10,442,0,0"
+            					VerticalAlignment="Top"
+            					Checked="BotPropertyChanged"
+            					Content="Catch Wild Poke"
+            					Unchecked="BotPropertyChanged" Tag="%CATCH_WILD_POKE%" Grid.ColumnSpan="3" />
+                            <CheckBox x:Name="c_PauseBotOnMaxHourlyRates"
+            					Height="16"
+            					Margin="10,484,0,0"
+            					VerticalAlignment="Top"
+            					Checked="BotPropertyChanged"
+            					Content="Pause Bot on Max hourly rates"
+            					Unchecked="BotPropertyChanged" Tag="%PAUSE_BOT_ON_MAX_HOURLY_RATES%" Grid.ColumnSpan="3" />
+                            <TextBlock x:Name="c_MaxCatchPerHourLabel"
+            					Margin="10,510,0,0"
+            					VerticalAlignment="Top"
+            					Text="Max Catch Per Hour" Tag="%MAX_CATCH_PER_HOUR%" />
+                            <TextBox x:Name="c_MaxCatchPerHour"
+            					Grid.Column="1"
+            					Height="29"
+            					Margin="15,506,10,0"
+            					VerticalAlignment="Top"
+            					Template="{StaticResource Pogo}"
+            					Text="0"
+            					TextChanged="BotPropertyChanged"
+            					TextWrapping="Wrap" />
+                            <TextBlock x:Name="c_MaxPokestopsPerHourLabel"
+            					Margin="10,544,0,0"
+            					VerticalAlignment="Top"
+            					Text="Max Pokestops Per Hour" Tag="%MAX_POKESTOPS_PER_HOUR%" />
+                            <TextBox x:Name="c_MaxPokestopsPerHour"
+            					Grid.Column="1"
+            					Height="29"
+            					Margin="15,540,10,0"
+            					VerticalAlignment="Top"
+            					Template="{StaticResource Pogo}"
+            					Text="0"
+            					TextChanged="BotPropertyChanged"
+            					TextWrapping="Wrap" />
+                            <TextBox x:Name="c_MaxXPPerHour"
+            					Grid.Column="1"
+            					Height="29"
+            					Margin="15,574,10,0"
+            					VerticalAlignment="Top"
+            					Template="{StaticResource Pogo}"
+            					Text="0"
+            					TextChanged="BotPropertyChanged"
+            					TextWrapping="Wrap" />
+                            <TextBox x:Name="c_MaxStarDustPerHour"
+            					Grid.Column="1"
+            					Height="29"
+            					Margin="15,608,10,0"
+            					VerticalAlignment="Top"
+            					Template="{StaticResource Pogo}"
+            					Text="0"
+            					TextChanged="BotPropertyChanged"
+            					TextWrapping="Wrap" />
+                            <TextBlock x:Name="c_MaxXPPerHourLabel"
+            					Margin="10,580,0,0"
+            					VerticalAlignment="Top"
+            					Text="Max XP Per Hour" Tag="%MAX_XP_PER_HOUR%" />
+                            <TextBlock x:Name="c_MaxStarDustPerHourLabel_Copy"
+            					Margin="10,614,0,0"
+            					VerticalAlignment="Top"
+            					Text="Max Star Dust Per Hour" Tag="%MAX_STARDUST_PER_HOUR%" />
+                            <CheckBox x:Name="c_LootPokestops"
+            					Height="16"
+            					Margin="10,463,0,0"
+            					VerticalAlignment="Top"
+            					Checked="BotPropertyChanged"
+            					Content="Loot PokeStops"
+            					Unchecked="BotPropertyChanged" Tag="%LOOT_POKESTOPS%" Grid.ColumnSpan="3" />
+                            <CheckBox x:Name="c_UseSchedule"
+            					Height="16"
+            					Margin="10,653,0,0"
+            					VerticalAlignment="Top"
+            					Checked="BotPropertyChanged"
+            					Content="Use Schedule"
+            					Unchecked="BotPropertyChanged" Tag="%USE_CHEDULE%" />
+                            <Button x:Name="btn_OpenSchedule"
+            					Width="Auto"
+            					Height="30"
+            					Margin="15,642,10,0"
+            					VerticalAlignment="Top"
+            					Click="btn_OpenSchedule_Click"
+            					Content="SCHEDULE"
+            					FontFamily="BOLD"
+            					FontWeight="Bold"
+            					Style="{StaticResource ResourceKey=Flatbutton}"
+            					TextOptions.TextFormattingMode="Display" Background="{DynamicResource LightBlueButtonColor}" Grid.Column="1" Tag="%SCHEDULE%"/>
+                        </Grid>
+                    </GroupBox>
+                    <GroupBox x:Name="PokemonGroupBox"
+            			Height="674"
+            			Margin="0,7,0,0"
+            			VerticalAlignment="Top"
+            			Header="Poke" Tag="%POKEBOX%" Grid.Row="1">
+                        <Grid Margin="0,5,0,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+
+                            <CheckBox x:Name="c_EvolveAllPokemonAboveIv"
+            					Margin="10,10,0,0"
+            					VerticalAlignment="Top"
+            					Checked="BotPropertyChanged"
+            					Content="Evolve All Poke Above IV"
+            					Unchecked="BotPropertyChanged" Tag="%EVOLVE_ALL_POKE_ABOVE_IV%" />
+                            <TextBlock x:Name="c_EvolveAboveIvValueLabel"
+            					Margin="10,39,0,0"
+            					VerticalAlignment="Top"
+            					Text="Evolve IV Value" Tag="%EVOLVE_IV_VALUE%" />
+                            <TextBox x:Name="c_EvolveAboveIvValue"
+            					Height="29"
+            					Margin="7,33,10,0"
+            					VerticalAlignment="Top"
+            					Template="{StaticResource Pogo}"
+            					Text="0"
+            					TextChanged="BotPropertyChanged"
+            					TextWrapping="Wrap" Grid.Column="1" />
+                            <CheckBox x:Name="c_EvolveAllPokemonWithEnoughCandy"
+            					Margin="10,67,5,0"
+            					VerticalAlignment="Top"
+            					Checked="BotPropertyChanged"
+            					Content="Evolve All Poke With Enough Candy"
+            					Unchecked="BotPropertyChanged" Tag="%EVOLVE_ALL_POKE_WITH_ENOUGH_CANDY%" Grid.ColumnSpan="2" />
+                            <CheckBox x:Name="c_TransferDuplicatePokemon"
+            					Margin="10,88,5,0"
+            					VerticalAlignment="Top"
+            					Checked="BotPropertyChanged"
+            					Content="Transfer Duplicate Poke"
+            					Unchecked="BotPropertyChanged" Tag="%TRANSFER_DUPLICATE_POKE%" Grid.ColumnSpan="2" />
+                            <TextBlock x:Name="c_KeepMinCpLabel"
+            					Margin="10,109,0,0"
+            					VerticalAlignment="Top"
+            					Text="Keep Min CP" Tag="%KEEP_MIN_CP%" />
+                            <TextBox x:Name="c_KeepMinCp"
+            					Height="29"
+            					Margin="7,103,10,0"
+            					VerticalAlignment="Top"
+            					Template="{StaticResource Pogo}"
+            					Text="0"
+            					TextChanged="BotPropertyChanged"
+            					TextWrapping="Wrap" Grid.Column="1" />
+                            <TextBlock x:Name="c_KeepMinDuplicatePokemonLabel"
+            					Margin="10,143,0,0"
+            					VerticalAlignment="Top"
+            					Text="Keep Min Duplicate" Tag="%KEEP_MIN_DUPLICATE%" />
+                            <TextBox x:Name="c_KeepMinDuplicatePokemon"
+            					Height="29"
+            					Margin="7,137,10,0"
+            					VerticalAlignment="Top"
+            					Template="{StaticResource Pogo}"
+            					Text="0"
+            					TextChanged="BotPropertyChanged"
+            					TextWrapping="Wrap" Grid.Column="1" />
+                            <TextBlock x:Name="c_KeepMinIvPercentageLevel"
+            					Margin="10,177,0,0"
+            					VerticalAlignment="Top"
+            					Text="Keep Min IV %" Tag="%KEEP_MIN_IV%" />
+                            <TextBox x:Name="c_KeepMinIvPercentage"
+            					Height="29"
+            					Margin="7,171,10,0"
+            					VerticalAlignment="Top"
+            					Template="{StaticResource Pogo}"
+            					Text="0"
+            					TextChanged="BotPropertyChanged"
+            					TextWrapping="Wrap" Grid.Column="1" />
+                            <TextBlock x:Name="c_MaxPokeballsPerPokemonLabel"
+            					Margin="10,211,0,0"
+            					VerticalAlignment="Top"
+            					Text="PBalls/Poke" Tag="%PBALLS_POKE%" />
+                            <TextBox x:Name="c_MaxPokeballsPerPokemon"
+            					Height="29"
+            					Margin="7,205,10,0"
+            					VerticalAlignment="Top"
+            					Template="{StaticResource Pogo}"
+            					Text="0"
+            					TextChanged="BotPropertyChanged"
+            					TextWrapping="Wrap" Grid.Column="1" />
+                            <CheckBox x:Name="c_KeepPokemonsThatCanEvolve"
+            					Margin="10,237,0,0"
+            					VerticalAlignment="Top"
+            					Checked="BotPropertyChanged"
+            					Content="Keep Poke That Can Evolve"
+            					Unchecked="BotPropertyChanged" Tag="%KEEP_POKE_THAT_CAN_EVOLVE%" Grid.ColumnSpan="2" />
+                            <CheckBox x:Name="c_PrioritizeBothIvAndCpForTransfer"
+            					Margin="10,258,0,0"
+            					VerticalAlignment="Top"
+            					Checked="BotPropertyChanged"
+            					Content="Prioritize both IV and CP for transfer"
+            					Unchecked="BotPropertyChanged" Tag="%PRIORITIZE_BOTH_TV_AND_CP_FOR_TRANSFER%" Grid.ColumnSpan="2" />
+                            <CheckBox x:Name="c_PrioritizeIvOverCp"
+            					Margin="10,279,0,0"
+            					VerticalAlignment="Top"
+            					Checked="BotPropertyChanged"
+            					Content="Prioritize IV over CP"
+            					Unchecked="BotPropertyChanged" Tag="%PRIORITIZE_IV_OVER_CP%" Grid.ColumnSpan="2" />
+                            <CheckBox x:Name="c_RenameOnlyAboveIv"
+            					Margin="10,300,0,0"
+            					VerticalAlignment="Top"
+            					Checked="BotPropertyChanged"
+            					Content="Rename only above IV"
+            					Unchecked="BotPropertyChanged" Tag="%RENAME_ONLY_ABOVE_IV%" Grid.ColumnSpan="2" />
+                            <CheckBox x:Name="c_RenamePokemon"
+            					Margin="10,321,0,0"
+            					VerticalAlignment="Top"
+            					Checked="BotPropertyChanged"
+            					Content="Rename Poke"
+            					Unchecked="BotPropertyChanged" Tag="%RENAME_POKE%" Grid.ColumnSpan="2" />
+                            <CheckBox x:Name="c_AutomaticallyLevelUpPokemon"
+            					Margin="10,342,0,0"
+            					VerticalAlignment="Top"
+            					Checked="BotPropertyChanged"
+            					Content="Auto level Poke"
+            					Unchecked="BotPropertyChanged" Tag="%AUTO_LEVEL_POKE%" Grid.ColumnSpan="2" />
+                            <TextBlock x:Name="c_RenameTemplateLabel"
+            					Margin="10,369,0,0"
+            					VerticalAlignment="Top"
+            					Text="Rename Template" Tag="%RENAME_TEMPLATE%" />
+                            <TextBox x:Name="c_RenameTemplate"
+            					Height="29"
+            					Margin="7,362,10,0"
+            					VerticalAlignment="Top"
+            					Template="{StaticResource Pogo}"
+            					TextChanged="BotPropertyChanged"
+            					TextWrapping="Wrap" Grid.Column="1" />
+                            <TextBlock x:Name="c_UpgradePokemonCpMinimumLabel"
+            					Margin="10,402,0,0"
+            					VerticalAlignment="Top"
+            					Text="Upgrade Poke CP Min" Tag="%UPGRADE_POKE_CP_MIN%" />
+                            <TextBox x:Name="c_UpgradePokemonCpMinimum"
+            					Height="29"
+            					Margin="7,396,10,0"
+            					VerticalAlignment="Top"
+            					Template="{StaticResource Pogo}"
+            					Text="0"
+            					TextChanged="BotPropertyChanged"
+            					TextWrapping="Wrap" Grid.Column="1" />
+                            <TextBlock x:Name="c_UpgradePokemonIvMinimumLabel"
+            					Margin="10,436,0,0"
+            					VerticalAlignment="Top"
+            					Text="Upgrade Poke IV Min" Tag="%UPGRADE_POKE_IV_MIN%" />
+                            <TextBox x:Name="c_UpgradePokemonIvMinimum"
+            					Height="29"
+            					Margin="7,430,10,0"
+            					VerticalAlignment="Top"
+            					Template="{StaticResource Pogo}"
+            					Text="0"
+            					TextChanged="BotPropertyChanged"
+            					TextWrapping="Wrap" Grid.Column="1" />
+                            <TextBlock x:Name="c_UseLuckyEggsMinPokemonAmountLabel"
+            					Margin="10,470,0,0"
+            					VerticalAlignment="Top"
+            					Text="Lucky Eggs Min Poke" Tag="%LUCKY_EGGS_MIN_POKE%" />
+                            <TextBox x:Name="c_UseLuckyEggsMinPokemonAmount"
+            					Height="29"
+            					Margin="7,464,10,0"
+            					VerticalAlignment="Top"
+            					Template="{StaticResource Pogo}"
+            					Text="0"
+            					TextChanged="BotPropertyChanged"
+            					TextWrapping="Wrap" Grid.Column="1" />
+                            <CheckBox x:Name="c_UseLuckyEggsWhileEvolving"
+            					Margin="10,493,0,0"
+            					VerticalAlignment="Top"
+            					Checked="BotPropertyChanged"
+            					Content="Use Lucky Eggs While Evolving"
+            					Unchecked="BotPropertyChanged" Tag="%USE_LUCKY_EGGS_WHILE_EVOLVING%" Grid.ColumnSpan="2" />
+                            <CheckBox x:Name="c_UseEggIncubators"
+            					Margin="10,514,0,0"
+            					VerticalAlignment="Top"
+            					Checked="BotPropertyChanged"
+            					Content="Use Egg Incubators"
+            					Unchecked="BotPropertyChanged" Tag="%USE_EGG_INCUBATORS%" Grid.ColumnSpan="2" />
+                            <CheckBox x:Name="c_AlwaysPreferLongDistanceEgg"
+            					Margin="10,535,0,0"
+            					VerticalAlignment="Top"
+            					Checked="BotPropertyChanged"
+            					Content="Always Prefer Long Distance Egg"
+            					Unchecked="BotPropertyChanged" Tag="%ALWAYS_PREFFER_LONG_DISTANCE_EGG%" Grid.ColumnSpan="2" />
+                            <CheckBox x:Name="c_AutoFavoritePokemon"
+            					Margin="10,577,0,0"
+            					VerticalAlignment="Top"
+            					Checked="BotPropertyChanged"
+            					Content="Auto Favorite Poke"
+            					Unchecked="BotPropertyChanged" Tag="%AUTO_FAVORITE_POKE%" Grid.ColumnSpan="2" />
+                            <TextBlock x:Name="c_FavoriteMinIvPercentageLabel"
+            					Margin="10,601,0,0"
+            					VerticalAlignment="Top"
+            					Text="Favorite Min IV Percentage" Tag="%FAVORITE_MIN_IV_PERCENTAGE%" />
+                            <TextBox x:Name="c_FavoriteMinIvPercentage"
+            					Height="29"      
+            					Margin="7,595,10,0"
+            					VerticalAlignment="Top"
+            					Template="{StaticResource Pogo}"
+            					Text="0"
+            					TextChanged="BotPropertyChanged"
+            					TextWrapping="Wrap" Grid.Column="1" />
+                            <CheckBox x:Name="c_UseOnlyUnlimitedIncubator"
+            					Margin="10,556,0,0"
+            					VerticalAlignment="Top"
+            					Checked="BotPropertyChanged"
+            					Content="Use Only Unlimited Incubator"
+            					Unchecked="BotPropertyChanged" Tag="%USE_ONLY_UNTILITED_INCUBATOR%" Grid.ColumnSpan="2" />
+                            <CheckBox x:Name="c_AutoUnfavoritePokemon"
+            					Margin="10,629,0,0"
+            					VerticalAlignment="Top"
+            					Checked="BotPropertyChanged"
+            					Content="Auto Unfavorite Poke"
+            					Unchecked="BotPropertyChanged" Tag="%AUTO_UNFAVORITE_POKE%" Grid.ColumnSpan="2" />
+                        </Grid>
+                    </GroupBox>
+                    <GroupBox Grid.Row="0" x:Name="AuthGroupBox"
+            			Height="222"
+            			VerticalAlignment="Top"
+            			Header="Authentication" Tag="%AUTH_BOX%" Margin="0,5,0,0">
+                        <Grid Margin="0,0,0,0">
+                            <TextBlock x:Name="authBoxLabel"
+            					Width="80"
+            					Margin="10,20,0,0"
+            					HorizontalAlignment="Left"
+            					VerticalAlignment="Top"
+            					Text="Auth type" Tag="%AUTH_TYPE%" />
+                            <TextBlock x:Name="loginBoxLabel"
+            					Width="80"
+            					Margin="10,57,0,0"
+            					HorizontalAlignment="Left"
+            					VerticalAlignment="Top"
+            					Text="Login" Tag="%LOGIN%"/>
+                            <TextBox x:Name="loginBox"
+            					Height="32"
+            					Margin="152,50,10,0"
+            					VerticalAlignment="Top"
+            					Foreground="#FF56C2B0"
+            					Template="{StaticResource Pogo}"
+            					Text="Username"
+            					TextChanged="loginBox_TextChanged"
+            					TextWrapping="Wrap"/>
+                            <TextBlock x:Name="passwordBoxLabel"
+            					Width="80"
+            					Margin="10,90,0,0"
+            					HorizontalAlignment="Left"
+            					VerticalAlignment="Top"
+            					Text="Password" Tag="%PASSWORD%" />
+                            <PasswordBox x:Name="passwordBox"
+            					Height="28"
+            					Margin="152,87,10,0"
+            					VerticalAlignment="Top"
+            					Foreground="#FF56C2B0"
+            					Password="password"
+            					PasswordChanged="passwordBox_PasswordChanged"
+            					Template="{StaticResource PogoPassword}" />
+                            <CheckBox x:Name="c_AutoCompleteTutorial"
+            					Margin="42,127,0,0"
+            					HorizontalAlignment="Left"
+            					VerticalAlignment="Top"
+            					Checked="BotPropertyChanged"
+            					Content="Auto Complete Tutorial and set name as below"
+            					Unchecked="BotPropertyChanged" FontSize="14.667" Tag="%AUTO_TUTORIAL%" />
+                            <TextBlock x:Name="LbDesiredNick"
+            					Width="80"
+            					Margin="10,167,0,0"
+            					HorizontalAlignment="Left"
+            					VerticalAlignment="Top"
+            					Text="Desired nick" Tag="%DESIRED_NICK%" />
+                            <TextBox x:Name="c_DesiredNickname"
+            					Height="29"
+            					Margin="152,161,10,0"
+            					VerticalAlignment="Top"
+            					Template="{StaticResource Pogo}"
+            					Text="CatchemFan"
+            					TextChanged="BotPropertyChanged"
+            					TextWrapping="Wrap" />
+                            <Grid Margin="152,20,10,0" VerticalAlignment="Top">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <ComboBox x:Name="authBox"
+            						Height="24"
+            						Margin="0,0,10,0"
+            						VerticalAlignment="Top"
+            						SelectionChanged="authBox_SelectionChanged"/>
+                                <CheckBox x:Name="c_AutoStartThisProfile"
+            						HorizontalAlignment="Right"
+            						VerticalAlignment="Center"
+            						Checked="BotPropertyChanged"
+            						Content="Autostart"
+            						Unchecked="BotPropertyChanged" Tag="%AUTOSTART%" Grid.Column="1" Margin="0,4"/>
+                            </Grid>
+                        </Grid>
+                    </GroupBox>
+                </Grid>
+
+            </Grid>
+        </ScrollViewer>
+        <controllers:Schedule x:Name="ScheduleOrganizer" Visibility="Collapsed" />
+    </Grid>
+</UserControl>

@@ -1,0 +1,328 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{0739E40D-C589-4AEB-93E5-EE8CD6773C60}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>PoGo.PokeMobBot.Logic</RootNamespace>
+    <AssemblyName>PoGo.PokeMobBot.Logic</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="C5, Version=2.2.5073.27396, Culture=neutral, PublicKeyToken=282361b99ded7e8e, processorArchitecture=MSIL">
+      <HintPath>$(SolutionDir)\packages\C5.2.2.5073.27396\lib\portable-net40+sl50+wp80+win\C5.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServerCompact, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.SqlServerCompact.6.2.0\lib\net45\EntityFramework.SqlServerCompact.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Protobuf, Version=3.0.0.0, Culture=neutral, PublicKeyToken=a7d26565bac4d604, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Protobuf.3.0.0\lib\net45\Google.Protobuf.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="S2Geometry, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>$(SolutionDir)\packages\S2Geometry.1.0.1\lib\portable-net45+wp8+win8\S2Geometry.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.SqlServerCe, Version=4.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.SqlServer.Compact.4.0.8876.1\lib\net40\System.Data.SqlServerCe.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Device" />
+    <Reference Include="System.IO.Compression.FileSystem" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="GeoCoordinatePortable">
+      <HintPath>..\packages\GeoCoordinate.1.1.0\lib\portable-net45+wp80+win+wpa81\GeoCoordinatePortable.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="API\MapzenAPI.cs" />
+    <Compile Include="API\MapzenRouting.cs" />
+    <Compile Include="Common\ApiFailureStrategy.cs" />
+    <Compile Include="DataDumper\IDumper.cs" />
+    <Compile Include="DataDumper\Dumper.cs" />
+    <Compile Include="Common\Translations.cs" />
+    <Compile Include="DataStorage\BotContext.cs" />
+    <Compile Include="DataStorage\DbClasses.cs" />
+    <Compile Include="DataStorage\DBHandler.cs" />
+    <Compile Include="Enums\MainRPC.cs" />
+    <Compile Include="Event\Pokemon\BuddySetEvent.cs" />
+    <Compile Include="Event\Pokemon\BuddyWalkedEvent.cs" />
+    <Compile Include="Event\Logic\CheckChallengeEvent.cs" />
+    <Compile Include="Event\Item\ItemUsedEvent.cs" />
+    <Compile Include="Event\Fort\FortLureStartedEvent.cs" />
+    <Compile Include="Event\Fort\GymPokeEvent.cs" />
+    <Compile Include="Event\Egg\EggFoundEvent.cs" />
+    <Compile Include="Event\Item\ItemLostEvent.cs" />
+    <Compile Include="Event\GUI\NewVersionEvent.cs" />
+    <Compile Include="Event\Logic\BotCompleteFailureEvent.cs" />
+    <Compile Include="Event\Global\DebugEvent.cs" />
+    <Compile Include="Event\Item\InventoryNewItemsEvent.cs" />
+    <Compile Include="Event\Item\InvalidKeepAmountEvent.cs" />
+    <Compile Include="Event\Pokemon\BaseNewPokemonEvent.cs" />
+    <Compile Include="Event\Pokemon\PokemonActionDoneEvent.cs" />
+    <Compile Include="Event\Fort\PokestopsOptimalPathEvent.cs" />
+    <Compile Include="Event\Pokemon\PokemonEvolveDoneEvent.cs" />
+    <Compile Include="Event\Pokemon\PokemonFavoriteEvent.cs" />
+    <Compile Include="Event\Player\PlayerLevelUpEvent.cs" />
+    <Compile Include="Event\Pokemon\PokemonStatsChangedEvent.cs" />
+    <Compile Include="Event\Pokemon\PokemonSettingsEvent.cs" />
+    <Compile Include="Event\Logic\NextRouteEvent.cs" />
+    <Compile Include="Event\Player\TeamSetEvent.cs" />
+    <Compile Include="Event\Global\TelegramMessageEvent.cs" />
+    <Compile Include="Event\Item\UseLuckyEggMinPokemonEvent.cs" />
+    <Compile Include="Event\GUI\DisplayHighestsPokemonEvent.cs" />
+    <Compile Include="Event\Egg\EggHatchedEvent.cs" />
+    <Compile Include="Event\Egg\EggsListEvent.cs" />
+    <Compile Include="Event\EventDispatcher.cs" />
+    <Compile Include="Event\Fort\FortTargetEvent.cs" />
+    <Compile Include="Event\Fort\FortFailedEvent.cs" />
+    <Compile Include="Event\Fort\FortUsedEvent.cs" />
+    <Compile Include="Event\Item\InventoryListEvent.cs" />
+    <Compile Include="Event\Item\ItemRecycledEvent.cs" />
+    <Compile Include="Event\Item\NoPokeballEvent.cs" />
+    <Compile Include="Event\Obsolete\SnipeEvent.cs" />
+    <Compile Include="Event\GUI\ForceMoveDoneEvent.cs" />
+    <Compile Include="Event\Pokemon\PokemonDisappearEvent.cs" />
+    <Compile Include="Event\Player\PlayerStatsEvent.cs" />
+    <Compile Include="Event\Pokemon\PokemonsFoundEvent.cs" />
+    <Compile Include="Event\Obsolete\SnipeModeEvent.cs" />
+    <Compile Include="Event\Pokemon\PokemonListEvent.cs" />
+    <Compile Include="Event\Obsolete\SnipeScanEvent.cs" />
+    <Compile Include="Event\GUI\UpdateEvent.cs" />
+    <Compile Include="Event\Pokemon\PokemonCaptureEvent.cs" />
+    <Compile Include="Event\Fort\PokeStopListEvent.cs" />
+    <Compile Include="Event\Player\ProfileEvent.cs" />
+    <Compile Include="Event\Pokemon\TransferPokemonEvent.cs" />
+    <Compile Include="Event\Player\UpdatePositionEvent.cs" />
+    <Compile Include="Event\Pokemon\UseBerryEvent.cs" />
+    <Compile Include="Event\Egg\EggIncubatorStatusEvent.cs" />
+    <Compile Include="Event\Logic\VerifyChallengeEvent.cs" />
+    <Compile Include="Extensions\AsyncHelpers.cs" />
+    <Compile Include="Extensions\IoExtensions.cs" />
+    <Compile Include="Extensions\PropertyNotification.cs" />
+    <Compile Include="Extensions\RandomExtensions.cs" />
+    <Compile Include="MapCache.cs" />
+    <Compile Include="Inventory.cs" />
+    <Compile Include="Localization\Localizer.cs" />
+    <Compile Include="Logging\Logger.cs" />
+    <Compile Include="ILogicSettings.cs" />
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Navigation.cs" />
+    <Compile Include="Navigation2.cs" />
+    <Compile Include="API\GoogleRoute.cs" />
+    <Compile Include="PoGoUtils\CustomRoute.cs" />
+    <Compile Include="PoGoUtils\PokeDexRecord.cs" />
+    <Compile Include="PoGoUtils\PokemonAttackInfo.cs" />
+    <Compile Include="PoGoUtils\PokemonMoveInfo.cs" />
+    <Compile Include="PoGoUtils\PokemonInfo.cs" />
+    <Compile Include="PoGoUtils\PokeRareStatus.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="API\OSMRoute.cs" />
+    <Compile Include="Routing.cs" />
+    <Compile Include="Service\BotService.cs" />
+    <Compile Include="State\APIVersionCheckState.cs" />
+    <Compile Include="State\CheckTosState.cs" />
+    <Compile Include="Tasks\CheckChallengeDoneTask.cs" />
+    <Compile Include="Tasks\CheckChallengeTask.cs" />
+    <Compile Include="Tasks\CrazyTeleporter.cs" />
+    <Compile Include="Tasks\ActionQueueTask.cs" />
+    <Compile Include="Tasks\GetBuddyWalkedTask.cs" />
+    <Compile Include="Tasks\SetBuddyPokemonTask.cs" />
+    <Compile Include="Tasks\UseItemTask.cs" />
+    <Compile Include="Tasks\UseLureModule.cs" />
+    <Compile Include="Tasks\FavoriteSpecificPokemonTask.cs" />
+    <Compile Include="Tasks\CheckBotStateTask.cs" />
+    <Compile Include="Tasks\LevelUpSpecificPokemonTask.cs" />
+    <Compile Include="Tasks\SetPlayerTeamTask.cs" />
+    <Compile Include="Tasks\PlayerStatsTask.cs" />
+    <Compile Include="Tasks\CatchWildPokemonsTask.cs" />
+    <Compile Include="Tasks\FavoritePokemonTask.cs" />
+    <Compile Include="Tasks\MaintenanceTask.cs" />
+    <Compile Include="Tasks\EggsListTask.cs" />
+    <Compile Include="Tasks\GetPokeDexCount.cs" />
+    <Compile Include="Tasks\EvolveSpecificPokemonTask.cs" />
+    <Compile Include="Tasks\InventoryListTask.cs" />
+    <Compile Include="Tasks\ForceMoveTask.cs" />
+    <Compile Include="Tasks\FarmPokestopsDiscoveryTask.cs" />
+    <Compile Include="Tasks\LevelUpPokemonTask.cs" />
+    <Compile Include="Tasks\PokemonSettingsTask.cs" />
+    <Compile Include="Tasks\PokemonListTask.cs" />
+    <Compile Include="Settings.cs" />
+    <Compile Include="State\Session.cs" />
+    <Compile Include="Event\Global\ErrorEvent.cs" />
+    <Compile Include="State\FarmState.cs" />
+    <Compile Include="State\InfoState.cs" />
+    <Compile Include="StatisticsAggregator.cs" />
+    <Compile Include="Tasks\CatchIncensePokemonsTask.cs" />
+    <Compile Include="Tasks\CatchLurePokemonsTask.cs" />
+    <Compile Include="Tasks\CatchNearbyPokemonsTask.cs" />
+    <Compile Include="Tasks\CatchPokemonTask.cs" />
+    <Compile Include="Tasks\DisplayPokemonStatsTask.cs" />
+    <Compile Include="Tasks\EvolvePokemonTask.cs" />
+    <Compile Include="Event\IEvent.cs" />
+    <Compile Include="State\IState.cs" />
+    <Compile Include="State\LoginState.cs" />
+    <Compile Include="Event\Global\NoticeEvent.cs" />
+    <Compile Include="Event\Pokemon\PokemonEvolveEvent.cs" />
+    <Compile Include="State\PositionCheckState.cs" />
+    <Compile Include="State\StateMachine.cs" />
+    <Compile Include="Tasks\FarmPokestopsCustomRouteTask.cs" />
+    <Compile Include="Tasks\FarmPokestopsTask.cs" />
+    <Compile Include="Tasks\Login.cs" />
+    <Compile Include="Tasks\RecycleSpecificItemTask.cs" />
+    <Compile Include="Tasks\RecycleItemsTask.cs" />
+    <Compile Include="Tasks\RenameSpecificPokemonTask.cs" />
+    <Compile Include="Tasks\RenamePokemonTask.cs" />
+    <Compile Include="Tasks\SnipePokemonTask.cs" />
+    <Compile Include="Tasks\TransferDuplicatePokemonTask.cs" />
+    <Compile Include="Event\Item\UseLuckyEggEvent.cs" />
+    <Compile Include="State\VersionCheckState.cs" />
+    <Compile Include="Event\Global\WarnEvent.cs" />
+    <Compile Include="Tasks\TransferPokemonTask.cs" />
+    <Compile Include="Tasks\UseIncubatorsTask.cs" />
+    <Compile Include="Tasks\PokeNearbyGym.cs" />
+    <Compile Include="Tasks\UseNearbyPokestopsTask.cs" />
+    <Compile Include="Tasks\VerifyChallengeTask.cs" />
+    <Compile Include="Utils\DelayingEvolveUtils.cs" />
+    <Compile Include="Utils\DelayingUtils.cs" />
+    <Compile Include="Utils\Dynamic.cs" />
+    <Compile Include="Utils\EggWalker.cs" />
+    <Compile Include="Utils\ErrorHandler.cs" />
+    <Compile Include="Utils\GPXReader.cs" />
+    <Compile Include="Logging\ILogger.cs" />
+    <Compile Include="Utils\InventoryUtils.cs" />
+    <Compile Include="Utils\JitterUtils.cs" />
+    <Compile Include="Utils\LocationUtils.cs" />
+    <Compile Include="Utils\PhoneGenerator.cs" />
+    <Compile Include="Utils\RoutingUtils.cs" />
+    <Compile Include="Utils\ScheduleAction.cs" />
+    <Compile Include="Utils\SerializeUtils.cs" />
+    <Compile Include="Utils\Statistics.cs" />
+    <Compile Include="Utils\StringUtils.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="amd64\sqlceca40.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="amd64\sqlcecompact40.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="amd64\sqlceer40EN.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="amd64\sqlceme40.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="amd64\sqlceqp40.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="amd64\sqlcese40.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="app.config" />
+    <Content Include="x86\sqlceca40.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="x86\sqlcecompact40.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="x86\sqlceer40EN.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="x86\sqlceme40.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="x86\sqlceqp40.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="x86\sqlcese40.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PoGoAPI\PoGo.RocketAPI\PoGo.RocketAPI.csproj">
+      <Project>{05D2DA44-1B8E-4CF7-94ED-4D52451CD095}</Project>
+      <Name>PoGo.RocketAPI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\POGOProtos\POGOProtos.csproj">
+      <Project>{a03a7bb2-4f0b-467b-84b2-9a76e6aae6fb}</Project>
+      <Name>POGOProtos</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>
+    if not exist "$(TargetDir)x86" md "$(TargetDir)x86"
+    xcopy /s /y "$(SolutionDir)packages\Microsoft.SqlServer.Compact.4.0.8876.1\NativeBinaries\x86\*.*" "$(TargetDir)x86"
+    if not exist "$(TargetDir)amd64" md "$(TargetDir)amd64"
+    xcopy /s /y "$(SolutionDir)packages\Microsoft.SqlServer.Compact.4.0.8876.1\NativeBinaries\amd64\*.*" "$(TargetDir)amd64"</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

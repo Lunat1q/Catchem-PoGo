@@ -1,0 +1,81 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25123.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Catchem", "Catchem\Catchem.csproj", "{354AF35C-1CA5-4043-A502-D19292F6FD33}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PoGo.PokeMobBot.CLI", "PoGo.PokeMobBot.CLI\PoGo.PokeMobBot.CLI.csproj", "{1FEA147E-F704-497B-A538-00B053B5F672}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PoGo.PokeMobBot.Logic", "PoGo.PokeMobBot.Logic\PoGo.PokeMobBot.Logic.csproj", "{0739E40D-C589-4AEB-93E5-EE8CD6773C60}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PoGo.RocketAPI", "PoGoAPI\PoGo.RocketAPI\PoGo.RocketAPI.csproj", "{05D2DA44-1B8E-4CF7-94ED-4D52451CD095}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "POGOProtos", "POGOProtos\POGOProtos.csproj", "{A03A7BB2-4F0B-467B-84B2-9A76E6AAE6FB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GPSOAuthSharp", "GPSOAuthSharp\GPSOAuthSharp.csproj", "{98C4DF94-B0EC-4AB7-9F3C-1874FA803034}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{354AF35C-1CA5-4043-A502-D19292F6FD33}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{354AF35C-1CA5-4043-A502-D19292F6FD33}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{354AF35C-1CA5-4043-A502-D19292F6FD33}.Debug|x64.ActiveCfg = Debug|x64
+		{354AF35C-1CA5-4043-A502-D19292F6FD33}.Debug|x64.Build.0 = Debug|x64
+		{354AF35C-1CA5-4043-A502-D19292F6FD33}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{354AF35C-1CA5-4043-A502-D19292F6FD33}.Release|Any CPU.Build.0 = Release|Any CPU
+		{354AF35C-1CA5-4043-A502-D19292F6FD33}.Release|x64.ActiveCfg = Release|x64
+		{354AF35C-1CA5-4043-A502-D19292F6FD33}.Release|x64.Build.0 = Release|x64
+		{1FEA147E-F704-497B-A538-00B053B5F672}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1FEA147E-F704-497B-A538-00B053B5F672}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1FEA147E-F704-497B-A538-00B053B5F672}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{1FEA147E-F704-497B-A538-00B053B5F672}.Debug|x64.Build.0 = Debug|Any CPU
+		{1FEA147E-F704-497B-A538-00B053B5F672}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1FEA147E-F704-497B-A538-00B053B5F672}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1FEA147E-F704-497B-A538-00B053B5F672}.Release|x64.ActiveCfg = Release|Any CPU
+		{1FEA147E-F704-497B-A538-00B053B5F672}.Release|x64.Build.0 = Release|Any CPU
+		{0739E40D-C589-4AEB-93E5-EE8CD6773C60}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0739E40D-C589-4AEB-93E5-EE8CD6773C60}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0739E40D-C589-4AEB-93E5-EE8CD6773C60}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{0739E40D-C589-4AEB-93E5-EE8CD6773C60}.Debug|x64.Build.0 = Debug|Any CPU
+		{0739E40D-C589-4AEB-93E5-EE8CD6773C60}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0739E40D-C589-4AEB-93E5-EE8CD6773C60}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0739E40D-C589-4AEB-93E5-EE8CD6773C60}.Release|x64.ActiveCfg = Release|Any CPU
+		{0739E40D-C589-4AEB-93E5-EE8CD6773C60}.Release|x64.Build.0 = Release|Any CPU
+		{05D2DA44-1B8E-4CF7-94ED-4D52451CD095}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{05D2DA44-1B8E-4CF7-94ED-4D52451CD095}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{05D2DA44-1B8E-4CF7-94ED-4D52451CD095}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{05D2DA44-1B8E-4CF7-94ED-4D52451CD095}.Debug|x64.Build.0 = Debug|Any CPU
+		{05D2DA44-1B8E-4CF7-94ED-4D52451CD095}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{05D2DA44-1B8E-4CF7-94ED-4D52451CD095}.Release|Any CPU.Build.0 = Release|Any CPU
+		{05D2DA44-1B8E-4CF7-94ED-4D52451CD095}.Release|x64.ActiveCfg = Release|Any CPU
+		{05D2DA44-1B8E-4CF7-94ED-4D52451CD095}.Release|x64.Build.0 = Release|Any CPU
+		{A03A7BB2-4F0B-467B-84B2-9A76E6AAE6FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A03A7BB2-4F0B-467B-84B2-9A76E6AAE6FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A03A7BB2-4F0B-467B-84B2-9A76E6AAE6FB}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{A03A7BB2-4F0B-467B-84B2-9A76E6AAE6FB}.Debug|x64.Build.0 = Debug|Any CPU
+		{A03A7BB2-4F0B-467B-84B2-9A76E6AAE6FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A03A7BB2-4F0B-467B-84B2-9A76E6AAE6FB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A03A7BB2-4F0B-467B-84B2-9A76E6AAE6FB}.Release|x64.ActiveCfg = Release|Any CPU
+		{A03A7BB2-4F0B-467B-84B2-9A76E6AAE6FB}.Release|x64.Build.0 = Release|Any CPU
+		{98C4DF94-B0EC-4AB7-9F3C-1874FA803034}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{98C4DF94-B0EC-4AB7-9F3C-1874FA803034}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{98C4DF94-B0EC-4AB7-9F3C-1874FA803034}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{98C4DF94-B0EC-4AB7-9F3C-1874FA803034}.Debug|x64.Build.0 = Debug|Any CPU
+		{98C4DF94-B0EC-4AB7-9F3C-1874FA803034}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{98C4DF94-B0EC-4AB7-9F3C-1874FA803034}.Release|Any CPU.Build.0 = Release|Any CPU
+		{98C4DF94-B0EC-4AB7-9F3C-1874FA803034}.Release|x64.ActiveCfg = Release|Any CPU
+		{98C4DF94-B0EC-4AB7-9F3C-1874FA803034}.Release|x64.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.TransientFaultHandling.6.0.1304.0\lib\portable-net45+win+wp8;packages\EnterpriseLibrary.TransientFaultHandling.Data.6.0.1304.1\lib\NET45
+	EndGlobalSection
+EndGlobal

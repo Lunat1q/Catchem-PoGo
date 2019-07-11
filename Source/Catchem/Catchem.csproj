@@ -1,0 +1,1320 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{354AF35C-1CA5-4043-A502-D19292F6FD33}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Catchem</RootNamespace>
+    <AssemblyName>Catchem</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>none</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <Prefer32Bit>true</Prefer32Bit>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>unnamed.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <PlatformTarget>x64</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>false</SignManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>DC6F42B791AF44E60AED115F79F2BF160FFB2346</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>Catchem_TemporaryKey.pfx</ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="GeoCoordinatePortable, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\GeoCoordinate.1.1.0\lib\portable-net45+wp80+win+wpa81\GeoCoordinatePortable.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="GMap.NET.Core, Version=1.7.0.0, Culture=neutral, PublicKeyToken=b85b9027b614afef, processorArchitecture=MSIL">
+      <HintPath>..\packages\GMap.NET.Presentation.1.7.1\lib\net40\GMap.NET.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="GMap.NET.WindowsPresentation, Version=1.7.0.0, Culture=neutral, PublicKeyToken=b85b9027b614afef, processorArchitecture=MSIL">
+      <HintPath>..\packages\GMap.NET.Presentation.1.7.1\lib\net40\GMap.NET.WindowsPresentation.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Google.Protobuf, Version=3.0.0.0, Culture=neutral, PublicKeyToken=a7d26565bac4d604, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Protobuf.3.0.0\lib\net45\Google.Protobuf.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MahApps.Metro, Version=1.2.4.0, Culture=neutral, PublicKeyToken=f4fb5a3c4d1e5b4f, processorArchitecture=MSIL">
+      <HintPath>..\packages\MahApps.Metro.1.2.4.0\lib\net45\MahApps.Metro.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MaterialDesignColors, Version=1.1.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MaterialDesignColors.1.1.2\lib\net45\MaterialDesignColors.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MaterialDesignThemes.Wpf, Version=2.0.0.638, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MaterialDesignThemes.2.0.0.638\lib\net45\MaterialDesignThemes.Wpf.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NetTelegramBotApi, Version=3.9.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NetTelegramBotApi.3.9.0-beta1\lib\net45\NetTelegramBotApi.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\MahApps.Metro.1.2.4.0\lib\net45\System.Windows.Interactivity.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="UIAutomationProvider" />
+    <Reference Include="WebDriver, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Selenium.WebDriver.3.0.0\lib\net40\WebDriver.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="WebDriver.Support, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Selenium.Support.3.0.0\lib\net40\WebDriver.Support.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="WindowsFormsIntegration" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="Classes\Adb.cs" />
+    <Compile Include="Classes\BotRpcMessage.cs" />
+    <Compile Include="Classes\BotWindowData.cs" />
+    <Compile Include="Classes\CatchemNotified.cs" />
+    <Compile Include="Classes\CatchemSettings.cs" />
+    <Compile Include="Classes\Telegram.cs" />
+    <Compile Include="Classes\TelegramSettings.cs" />
+    <Compile Include="Controllers\Schedule.xaml.cs">
+      <DependentUpon>Schedule.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controllers\ScheduleActionEditor.xaml.cs">
+      <DependentUpon>ScheduleActionEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controllers\UsedItemProgres.xaml.cs">
+      <DependentUpon>UsedItemProgres.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Events\TelegramCaptchaRequiredEvent.cs" />
+    <Compile Include="Events\TelegramPlayerLevelUpEvent.cs" />
+    <Compile Include="Events\TelegramPokemonCaughtEvent.cs" />
+    <Compile Include="Events\TelegramMessageEvent.cs" />
+    <Compile Include="Events\TelegramCommandEvent.cs" />
+    <Compile Include="Extensions\AsyncHelpers.cs" />
+    <Compile Include="Extensions\Converters.cs" />
+    <Compile Include="Extensions\Extensions.cs" />
+    <Compile Include="Extensions\GifImage.cs" />
+    <Compile Include="Extensions\ImageExtensins.cs" />
+    <Compile Include="Extensions\PlayerMovement.cs" />
+    <Compile Include="Extensions\RichTextBoxExtensions.cs" />
+    <Compile Include="Extensions\ThreadSafeCollection.cs" />
+    <Compile Include="Extensions\UiHandlers.cs" />
+    <Compile Include="Helpers\HeatMapHelper.cs" />
+    <Compile Include="Helpers\IpAddress.cs" />
+    <Compile Include="Interfaces\IBotPage.cs" />
+    <Compile Include="MainWindowHelpers\DebugHelper.cs" />
+    <Compile Include="MainWindowHelpers\RpcHelper.cs" />
+    <Compile Include="MainWindowHelpers\SelfIntegrity.cs" />
+    <Compile Include="Pages\AccountSettingsTab.xaml.cs">
+      <DependentUpon>AccountSettingsTab.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\GlobalMapPage.xaml.cs">
+      <DependentUpon>GlobalMapPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\MapPage.xaml.cs">
+      <DependentUpon>MapPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\PokedexPage.xaml.cs">
+      <DependentUpon>PokedexPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\PokePage.xaml.cs">
+      <DependentUpon>PokePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\PokemonListPage.xaml.cs">
+      <DependentUpon>PokemonListPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\RouteCreatorPage.xaml.cs">
+      <DependentUpon>RouteCreatorPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\TelegramPage.xaml.cs">
+      <DependentUpon>TelegramPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\TemplateEditor.xaml.cs">
+      <DependentUpon>TemplateEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Styling\Templates.xaml.cs">
+      <DependentUpon>Templates.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SupportForms\ChallengeBox.xaml.cs">
+      <DependentUpon>ChallengeBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SupportForms\InputBox.xaml.cs">
+      <DependentUpon>InputBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Classes\ItemUiData.cs" />
+    <Compile Include="Classes\NewMapObject.cs" />
+    <Compile Include="Pages\PlayerPage.xaml.cs">
+      <DependentUpon>PlayerPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Classes\PokemonUiData.cs" />
+    <Compile Include="Pages\SettingsPage.xaml.cs">
+      <DependentUpon>SettingsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Styling\Styles.xaml.cs">
+      <DependentUpon>Styles.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Classes\WpfEventListener.cs" />
+    <Compile Include="Classes\WpfLogger.cs" />
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UiTranslation\TranslationEngine.cs" />
+    <Compile Include="UiTranslation\TranslationSerializer.cs" />
+    <Compile Include="UiTranslation\UiTranslation.cs" />
+    <Page Include="Controllers\Schedule.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controllers\ScheduleActionEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controllers\UsedItemProgres.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\AccountSettingsTab.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\GlobalMapPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\MapPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\PokedexPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\PokePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\PokemonListPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\RouteCreatorPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\TelegramPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\TemplateEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styling\ControlStyling.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styling\Templates.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="SupportForms\ChallengeBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SupportForms\InputBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="Pages\PlayerPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\SettingsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styling\Styles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Theme.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="Config\Translations\translation.da.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Config\Translations\translation.de.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Config\Translations\translation.es.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Config\Translations\translation.et.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Config\Translations\translation.fi.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Config\Translations\translation.fr.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Config\Translations\translation.gr.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Config\Translations\translation.hu.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Config\Translations\translation.id.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Config\Translations\translation.it.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Config\Translations\translation.kr.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Config\Translations\translation.nl.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Config\Translations\translation.no.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Config\Translations\translation.pl.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Config\Translations\translation.pt-br.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Config\Translations\translation.pt-pt.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Config\Translations\translation.ru_RU.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Config\Translations\translation.sv.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Config\Translations\translation.th.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Config\Translations\translation.tr.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Config\Translations\translation.uk_UA.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Config\Translations\translation.vi.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Config\Translations\translation.zh_CN.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Config\Translations\translation.zh_tw.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PoGo.PokeMobBot.Logic\PoGo.PokeMobBot.Logic.csproj">
+      <Project>{0739e40d-c589-4aeb-93e5-ee8cd6773c60}</Project>
+      <Name>PoGo.PokeMobBot.Logic</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\POGOProtos\POGOProtos.csproj">
+      <Project>{a03a7bb2-4f0b-467b-84b2-9a76e6aae6fb}</Project>
+      <Name>POGOProtos</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PoGoAPI\PoGo.RocketAPI\PoGo.RocketAPI.csproj">
+      <Project>{05d2da44-1b8e-4cf7-94ed-4d52451cd095}</Project>
+      <Name>PoGo.RocketAPI</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\force_move.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\pstop.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\pstop_lured.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\113.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\114.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\115.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\116.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\117.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\118.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\119.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\120.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\121.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\122.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\123.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\124.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\125.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\126.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\127.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\128.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\129.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\130.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\131.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\132.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\133.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\134.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\135.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\136.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\137.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\138.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\139.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\140.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\141.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\142.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\143.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\144.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\145.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\146.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\147.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\148.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\149.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\150.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\151.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\5.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\6.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\7.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\8.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\9.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\10.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\11.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\12.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\13.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\14.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\15.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\17.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\18.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\19.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\20.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\21.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\22.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\23.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\25.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\26.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\27.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\28.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\29.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\30.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\31.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\33.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\34.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\35.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\36.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\37.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\38.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\39.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\40.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\41.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\42.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\43.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\44.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\45.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\46.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\47.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\49.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\50.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\51.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\52.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\53.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\54.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\55.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\56.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\57.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\58.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\59.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\60.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\61.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\62.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\63.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\64.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\65.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\66.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\67.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\68.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\69.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\70.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\71.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\72.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\73.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\74.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\75.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\76.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\77.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\78.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\79.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\80.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\81.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\82.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\83.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\84.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\85.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\86.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\87.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\88.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\89.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\90.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\91.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\92.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\93.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\94.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\95.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\96.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\97.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\98.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\99.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\100.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\101.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\102.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\103.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\104.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\105.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\106.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\107.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\108.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\109.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\110.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\111.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\112.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\no_name.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="unnamed.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.5.2 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\trainer.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="adb\adb.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="adb\AdbWinApi.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="adb\AdbWinUsbApi.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="amd64\geckodriver.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Include="Resources\buddy.png" />
+    <None Include="Resources\155.png" />
+    <None Include="Resources\156.png" />
+    <None Include="Resources\157.png" />
+    <None Include="Resources\158.png" />
+    <None Include="Resources\159.png" />
+    <None Include="Resources\160.png" />
+    <None Include="Resources\161.png" />
+    <None Include="Resources\162.png" />
+    <None Include="Resources\163.png" />
+    <None Include="Resources\164.png" />
+    <None Include="Resources\165.png" />
+    <None Include="Resources\166.png" />
+    <None Include="Resources\167.png" />
+    <None Include="Resources\168.png" />
+    <None Include="Resources\169.png" />
+    <None Include="Resources\170.png" />
+    <None Include="Resources\171.png" />
+    <None Include="Resources\172.png" />
+    <None Include="Resources\173.png" />
+    <None Include="Resources\174.png" />
+    <None Include="Resources\175.png" />
+    <None Include="Resources\176.png" />
+    <None Include="Resources\177.png" />
+    <None Include="Resources\178.png" />
+    <None Include="Resources\179.png" />
+    <None Include="Resources\180.png" />
+    <None Include="Resources\181.png" />
+    <None Include="Resources\181m.png" />
+    <None Include="Resources\183.png" />
+    <None Include="Resources\184.png" />
+    <None Include="Resources\185.png" />
+    <None Include="Resources\187.png" />
+    <None Include="Resources\188.png" />
+    <None Include="Resources\189.png" />
+    <None Include="Resources\190.png" />
+    <None Include="Resources\191.png" />
+    <None Include="Resources\192.png" />
+    <None Include="Resources\193.png" />
+    <None Include="Resources\194.png" />
+    <None Include="Resources\195.png" />
+    <None Include="Resources\197.png" />
+    <None Include="Resources\198.png" />
+    <None Include="Resources\199.png" />
+    <None Include="Resources\200.png" />
+    <None Include="Resources\201.png" />
+    <None Include="Resources\202.png" />
+    <None Include="Resources\203.png" />
+    <None Include="Resources\204.png" />
+    <None Include="Resources\205.png" />
+    <None Include="Resources\206.png" />
+    <None Include="Resources\207.png" />
+    <None Include="Resources\208.png" />
+    <None Include="Resources\208_f2.png" />
+    <None Include="Resources\209.png" />
+    <None Include="Resources\210.png" />
+    <None Include="Resources\211.png" />
+    <None Include="Resources\212_f2.png" />
+    <None Include="Resources\213.png" />
+    <None Include="Resources\214.png" />
+    <None Include="Resources\214_f2.png" />
+    <None Include="Resources\215.png" />
+    <None Include="Resources\216.png" />
+    <None Include="Resources\217.png" />
+    <None Include="Resources\218.png" />
+    <None Include="Resources\219.png" />
+    <None Include="Resources\220.png" />
+    <None Include="Resources\221.png" />
+    <None Include="Resources\222.png" />
+    <None Include="Resources\223.png" />
+    <None Include="Resources\224.png" />
+    <None Include="Resources\225.png" />
+    <None Include="Resources\226.png" />
+    <None Include="Resources\227.png" />
+    <None Include="Resources\228.png" />
+    <None Include="Resources\229.png" />
+    <None Include="Resources\229m.png" />
+    <None Include="Resources\231.png" />
+    <None Include="Resources\232.png" />
+    <None Include="Resources\234.png" />
+    <None Include="Resources\235.png" />
+    <None Include="Resources\241.png" />
+    <None Include="Resources\243.png" />
+    <None Include="Resources\244.png" />
+    <None Include="Resources\245.png" />
+    <None Include="Resources\246.png" />
+    <None Include="Resources\247.png" />
+    <None Include="Resources\248.png" />
+    <None Include="Resources\248m.png" />
+    <None Include="Resources\249.png" />
+    <None Include="Resources\250.png" />
+    <None Include="Resources\251.png" />
+    <None Include="Resources\152.png" />
+    <None Include="Resources\153.png" />
+    <None Include="Resources\154.png" />
+    <None Include="Resources\182.png" />
+    <None Include="Resources\196.png" />
+    <None Include="Resources\186.png" />
+    <None Include="Resources\212.png" />
+    <None Include="Resources\230.png" />
+    <None Include="Resources\233.png" />
+    <None Include="Resources\236.png" />
+    <None Include="Resources\237.png" />
+    <None Include="Resources\238.jpg" />
+    <None Include="Resources\239.png" />
+    <None Include="Resources\240.png" />
+    <None Include="Resources\242.png" />
+    <Content Include="x86\geckodriver.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Include="Resources\Pokeball.png" />
+    <None Include="Resources\adps.png" />
+    <None Include="Resources\weight.png" />
+    <None Include="Resources\candy_white.png" />
+    <None Include="Resources\gym_yellow.png" />
+    <None Include="Resources\gym_red.png" />
+    <None Include="Resources\gym_blue.png" />
+    <None Include="Resources\maintence.png" />
+    <None Include="Resources\sta.png" />
+    <None Include="Resources\hp.png" />
+    <None Include="Resources\def.png" />
+    <None Include="Resources\atk.png" />
+    <None Include="Resources\Dark_inv.png" />
+    <None Include="Resources\Electric_inv.png" />
+    <None Include="Resources\candy.png" />
+    <None Include="Resources\wp.png" />
+    <None Include="Resources\favouredSort.png" />
+    <None Include="Resources\gym.png" />
+    <None Include="Resources\refresh.png" />
+    <None Include="Resources\time.png" />
+    <None Include="Resources\favoured.png" />
+    <None Include="Resources\dust.png" />
+    <None Include="Resources\trainer_right.gif" />
+    <None Include="Resources\trainer_left.gif" />
+    <None Include="Resources\trainer_down.gif" />
+    <None Include="Resources\trainer_top.gif" />
+    <None Include="Resources\trainer_stay.gif" />
+    <Resource Include="FodyWeavers.xml" />
+    <None Include="Resources\team_neutral.png" />
+    <None Include="Resources\team_valor.png" />
+    <None Include="Resources\team_mystic.png" />
+    <None Include="Resources\team_instinct.png" />
+    <None Include="Resources\revive_2.png" />
+    <None Include="Resources\revive_1.png" />
+    <None Include="Resources\potion_4.png" />
+    <None Include="Resources\potion_3.png" />
+    <None Include="Resources\potion_2.png" />
+    <None Include="Resources\potion_1.png" />
+    <None Include="Resources\pokeball_4.png" />
+    <None Include="Resources\pokeball_3.png" />
+    <None Include="Resources\pokeball_2.png" />
+    <None Include="Resources\pokeball_1.png" />
+    <None Include="Resources\lure_mod.png" />
+    <None Include="Resources\lucky_egg.png" />
+    <None Include="Resources\jar_1.png" />
+    <None Include="Resources\incubator-unlimited.png" />
+    <None Include="Resources\incubator.png" />
+    <None Include="Resources\ince.png" />
+    <None Include="Resources\egg.png" />
+    <None Include="Resources\camera.png" />
+    <None Include="Resources\berry_5.png" />
+    <None Include="Resources\berry_4.png" />
+    <None Include="Resources\berry_3.png" />
+    <None Include="Resources\berry_2.png" />
+    <None Include="Resources\berry_1.png" />
+    <None Include="Resources\bag_upgrade.png" />
+    <None Include="Resources\113_inv.png" />
+    <None Include="Resources\112_inv.png" />
+    <None Include="Resources\111_inv.png" />
+    <None Include="Resources\110_inv.png" />
+    <None Include="Resources\109_inv.png" />
+    <None Include="Resources\108_inv.png" />
+    <None Include="Resources\107_inv.png" />
+    <None Include="Resources\106_inv.png" />
+    <None Include="Resources\105_inv.png" />
+    <None Include="Resources\104_inv.png" />
+    <None Include="Resources\103_inv.png" />
+    <None Include="Resources\102_inv.png" />
+    <None Include="Resources\101_inv.png" />
+    <None Include="Resources\100_inv.png" />
+    <None Include="Resources\099_inv.png" />
+    <None Include="Resources\098_inv.png" />
+    <None Include="Resources\097_inv.png" />
+    <None Include="Resources\096_inv.png" />
+    <None Include="Resources\095_inv.png" />
+    <None Include="Resources\094_inv.png" />
+    <None Include="Resources\093_inv.png" />
+    <None Include="Resources\092_inv.png" />
+    <None Include="Resources\091_inv.png" />
+    <None Include="Resources\090_inv.png" />
+    <None Include="Resources\089_inv.png" />
+    <None Include="Resources\088_inv.png" />
+    <None Include="Resources\087_inv.png" />
+    <None Include="Resources\086_inv.png" />
+    <None Include="Resources\085_inv.png" />
+    <None Include="Resources\084_inv.png" />
+    <None Include="Resources\083_inv.png" />
+    <None Include="Resources\082_inv.png" />
+    <None Include="Resources\081_inv.png" />
+    <None Include="Resources\080_inv.png" />
+    <None Include="Resources\079_inv.png" />
+    <None Include="Resources\078_inv.png" />
+    <None Include="Resources\077_inv.png" />
+    <None Include="Resources\076_inv.png" />
+    <None Include="Resources\075_inv.png" />
+    <None Include="Resources\074_inv.png" />
+    <None Include="Resources\073_inv.png" />
+    <None Include="Resources\072_inv.png" />
+    <None Include="Resources\071_inv.png" />
+    <None Include="Resources\070_inv.png" />
+    <None Include="Resources\069_inv.png" />
+    <None Include="Resources\068_inv.png" />
+    <None Include="Resources\067_inv.png" />
+    <None Include="Resources\066_inv.png" />
+    <None Include="Resources\065_inv.png" />
+    <None Include="Resources\064_inv.png" />
+    <None Include="Resources\063_inv.png" />
+    <None Include="Resources\062_inv.png" />
+    <None Include="Resources\061_inv.png" />
+    <None Include="Resources\060_inv.png" />
+    <None Include="Resources\059_inv.png" />
+    <None Include="Resources\058_inv.png" />
+    <None Include="Resources\057_inv.png" />
+    <None Include="Resources\056_inv.png" />
+    <None Include="Resources\055_inv.png" />
+    <None Include="Resources\054_inv.png" />
+    <None Include="Resources\053_inv.png" />
+    <None Include="Resources\052_inv.png" />
+    <None Include="Resources\051_inv.png" />
+    <None Include="Resources\050_inv.png" />
+    <None Include="Resources\049_inv.png" />
+    <None Include="Resources\048_inv.png" />
+    <None Include="Resources\047_inv.png" />
+    <None Include="Resources\046_inv.png" />
+    <None Include="Resources\045_inv.png" />
+    <None Include="Resources\044_inv.png" />
+    <None Include="Resources\043_inv.png" />
+    <None Include="Resources\042_inv.png" />
+    <None Include="Resources\041_inv.png" />
+    <None Include="Resources\040_inv.png" />
+    <None Include="Resources\039_inv.png" />
+    <None Include="Resources\038_inv.png" />
+    <None Include="Resources\037_inv.png" />
+    <None Include="Resources\036_inv.png" />
+    <None Include="Resources\035_inv.png" />
+    <None Include="Resources\034_inv.png" />
+    <None Include="Resources\033_inv.png" />
+    <None Include="Resources\032_inv.png" />
+    <None Include="Resources\031_inv.png" />
+    <None Include="Resources\030_inv.png" />
+    <None Include="Resources\029_inv.png" />
+    <None Include="Resources\028_inv.png" />
+    <None Include="Resources\027_inv.png" />
+    <None Include="Resources\026_inv.png" />
+    <None Include="Resources\025_inv.png" />
+    <None Include="Resources\024_inv.png" />
+    <None Include="Resources\023_inv.png" />
+    <None Include="Resources\022_inv.png" />
+    <None Include="Resources\021_inv.png" />
+    <None Include="Resources\020_inv.png" />
+    <None Include="Resources\019_inv.png" />
+    <None Include="Resources\018_inv.png" />
+    <None Include="Resources\017_inv.png" />
+    <None Include="Resources\016_inv.png" />
+    <None Include="Resources\015_inv.png" />
+    <None Include="Resources\014_inv.png" />
+    <None Include="Resources\013_inv.png" />
+    <None Include="Resources\012_inv.png" />
+    <None Include="Resources\011_inv.png" />
+    <None Include="Resources\010_inv.png" />
+    <None Include="Resources\009_inv.png" />
+    <None Include="Resources\008_inv.png" />
+    <None Include="Resources\007_inv.png" />
+    <None Include="Resources\006_inv.png" />
+    <None Include="Resources\005_inv.png" />
+    <None Include="Resources\004_inv.png" />
+    <None Include="Resources\003_inv.png" />
+    <None Include="Resources\002_inv.png" />
+    <None Include="Resources\001_inv.png" />
+    <None Include="Resources\Water_inv.png" />
+    <None Include="Resources\Steel_inv.png" />
+    <None Include="Resources\Rock_inv.png" />
+    <None Include="Resources\Psychic_inv.png" />
+    <None Include="Resources\Poison_inv.png" />
+    <None Include="Resources\Normal_inv.png" />
+    <None Include="Resources\Ice_inv.png" />
+    <None Include="Resources\Ground_inv.png" />
+    <None Include="Resources\Grass_inv.png" />
+    <None Include="Resources\Ghost_inv.png" />
+    <None Include="Resources\Flying_inv.png" />
+    <None Include="Resources\Fire_inv.png" />
+    <None Include="Resources\Fighting_inv.png" />
+    <None Include="Resources\Fairy_inv.png" />
+    <None Include="Resources\Dragon_inv.png" />
+    <None Include="Resources\Bug_inv.png" />
+    <None Include="Resources\151_inv.png" />
+    <None Include="Resources\150_inv.png" />
+    <None Include="Resources\149_inv.png" />
+    <None Include="Resources\148_inv.png" />
+    <None Include="Resources\147_inv.png" />
+    <None Include="Resources\146_inv.png" />
+    <None Include="Resources\145_inv.png" />
+    <None Include="Resources\144_inv.png" />
+    <None Include="Resources\143_inv.png" />
+    <None Include="Resources\142_inv.png" />
+    <None Include="Resources\141_inv.png" />
+    <None Include="Resources\140_inv.png" />
+    <None Include="Resources\139_inv.png" />
+    <None Include="Resources\138_inv.png" />
+    <None Include="Resources\137_inv.png" />
+    <None Include="Resources\136_inv.png" />
+    <None Include="Resources\135_inv.png" />
+    <None Include="Resources\134_inv.png" />
+    <None Include="Resources\133_inv.png" />
+    <None Include="Resources\132_inv.png" />
+    <None Include="Resources\131_inv.png" />
+    <None Include="Resources\130_inv.png" />
+    <None Include="Resources\129_inv.png" />
+    <None Include="Resources\128_inv.png" />
+    <None Include="Resources\127_inv.png" />
+    <None Include="Resources\126_inv.png" />
+    <None Include="Resources\125_inv.png" />
+    <None Include="Resources\124_inv.png" />
+    <None Include="Resources\123_inv.png" />
+    <None Include="Resources\122_inv.png" />
+    <None Include="Resources\121_inv.png" />
+    <None Include="Resources\120_inv.png" />
+    <None Include="Resources\119_inv.png" />
+    <None Include="Resources\118_inv.png" />
+    <None Include="Resources\117_inv.png" />
+    <None Include="Resources\116_inv.png" />
+    <None Include="Resources\115_inv.png" />
+    <None Include="Resources\114_inv.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Config\UILanguages\" />
+    <Folder Include="Themes\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\packages\Fody.1.29.4\build\dotnet\Fody.targets" Condition="Exists('..\packages\Fody.1.29.4\build\dotnet\Fody.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Fody.1.29.4\build\dotnet\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Fody.1.29.4\build\dotnet\Fody.targets'))" />
+    <Error Condition="!Exists('..\packages\Selenium.WebDriver.ChromeDriver.2.25.0.8-beta\build\Selenium.WebDriver.ChromeDriver.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Selenium.WebDriver.ChromeDriver.2.25.0.8-beta\build\Selenium.WebDriver.ChromeDriver.targets'))" />
+  </Target>
+  <Import Project="..\packages\Selenium.WebDriver.ChromeDriver.2.25.0.8-beta\build\Selenium.WebDriver.ChromeDriver.targets" Condition="Exists('..\packages\Selenium.WebDriver.ChromeDriver.2.25.0.8-beta\build\Selenium.WebDriver.ChromeDriver.targets')" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

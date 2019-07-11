@@ -1,0 +1,60 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                    xmlns:utils="clr-namespace:PoGo.PokeMobBot.Logic.Utils;assembly=PoGo.PokeMobBot.Logic"
+                    xmlns:t="clr-namespace:Catchem.UiTranslation"
+                    xmlns:tasks="clr-namespace:PoGo.PokeMobBot.Logic.Tasks;assembly=PoGo.PokeMobBot.Logic"
+                    mc:Ignorable="d"
+                    x:Class="Catchem.Styling.Templates">
+    <DataTemplate x:Key="EggTemplate" DataType="utils:PokeEgg">
+        <Grid Height="75" MinWidth="150">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="75"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Rectangle x:Name="EggBg" Fill="#FFFDFFFE" HorizontalAlignment="Stretch" Height="Auto" VerticalAlignment="Stretch" Width="Auto" RadiusX="5" RadiusY="5" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
+            <Grid HorizontalAlignment="Stretch" Height="Auto" VerticalAlignment="Stretch" Width="Auto" Grid.Column="0"
+                  Grid.Row="0" Grid.RowSpan="2">
+                <Image Source="{Binding IncubatorType, Converter={StaticResource EggImageSourceConvertor}, ConverterParameter='egg'}" x:Name="image" HorizontalAlignment="Center" Height="Auto" Margin="0" VerticalAlignment="Center" Width="Auto"/>
+            </Grid>
+            <TextBlock Text="{Binding DistanceStatusText, FallbackValue=0}" HorizontalAlignment="Center" Margin="0" VerticalAlignment="Center" Grid.Column="1" Width="Auto" Padding="0" Foreground="#FF59C3B0" FontSize="16" TextAlignment="Center"
+                       Grid.Row="0" Height="21"/>
+            <ProgressBar x:Name="EggProgress" Height="10" Margin="3,0" Value="{Binding DistanceDone}" Maximum="{Binding Distance}"  VerticalAlignment="Center" Width="Auto" Grid.Column="1" Grid.Row="1" Visibility="Collapsed"/>
+        </Grid>
+        <DataTemplate.Triggers>
+            <DataTrigger Value="True" Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}}">
+                <Setter Property="Fill" TargetName="EggBg" >
+                    <Setter.Value>
+                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                            <GradientStop Color="#1900B9FF" Offset="1"/>
+                            <GradientStop Color="#0C00FFFF"/>
+                        </LinearGradientBrush>
+                    </Setter.Value>
+                </Setter>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding InsideIncubator}" Value="True">
+                <Setter TargetName="EggProgress" Property="Visibility" Value="Visible"/>
+            </DataTrigger>
+        </DataTemplate.Triggers>
+    </DataTemplate>
+    <DataTemplate x:Key="ManualActionTemplate" DataType="tasks:ManualAction">
+        <Grid  d:DesignWidth="200" d:DesignHeight="40">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Rectangle Fill="{DynamicResource PokeBackground}" HorizontalAlignment="Stretch" Height="Auto" Margin="0" Stroke="{x:Null}" VerticalAlignment="Stretch" RadiusX="7" RadiusY="7" Grid.ColumnSpan="2"/>
+            <Button x:Name="RemoveAction" 
+                    Content="{Binding Path=(t:TranslationEngine.CurrentTranslationLanguage), FallbackValue='DELETE', Converter={StaticResource LoadTranslatedString}, ConverterParameter='%DELETE%;DELETE'}" 
+                    HorizontalAlignment="Right" Margin="0,5,10,5" VerticalAlignment="Center"
+                    Style="{DynamicResource Flatbutton}" Background="{DynamicResource StopBrush}" Height="30" FontWeight="Bold" Width="Auto" Grid.Column="1" Click="RemoveAction_Click"
+                    Tag="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}}}"/>
+            <TextBlock Grid.Column="0" HorizontalAlignment="Left" Margin="10,12,0,12" TextWrapping="WrapWithOverflow" Text="{Binding Name}" VerticalAlignment="Center" Foreground="{DynamicResource PokeTextColor}" FontWeight="Bold"/>
+        </Grid>
+    </DataTemplate>
+</ResourceDictionary>

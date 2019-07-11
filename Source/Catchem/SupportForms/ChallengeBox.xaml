@@ -1,0 +1,29 @@
+﻿<Window x:Class="Catchem.SupportForms.ChallengeBox"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      mc:Ignorable="d" d:DesignWidth="500" Height="185.269" Width="500"
+      Title="Captcha Encountered">
+    <Window.Background>
+        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+            <GradientStop Color="#FFDAFBFA" Offset="1"/>
+            <GradientStop Color="#FF00A662"/>
+        </LinearGradientBrush>
+    </Window.Background>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <TextBlock x:Name="lbl_1" Text="Captcha has been encountered!" Margin="0" FontSize="18" FontWeight="Bold" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" Height="24" Grid.ColumnSpan="2" Tag="%GOT_CAPTCHA%"/>
+        <TextBlock x:Name="lbl_2" Text="Please complete the captcha with the buttons below" Margin="74,11" FontSize="14" FontWeight="Bold" Foreground="White" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" Height="18" Grid.ColumnSpan="2" Tag="%DO_CAPTCHA_BELOW%"/>
+        <Button x:Name="ChromeBtn" Content="Chrome" HorizontalAlignment="Center" Margin="0" Grid.Row="2" VerticalAlignment="Center" Width="100" Height="36" Background="{DynamicResource AquaBlueButtonColor}" Style="{DynamicResource Flatbutton}" FontWeight="Bold" Click="ChromeBtn_Click"/>
+        <Button x:Name="FirefoxBtn" Content="Firefox" HorizontalAlignment="Center" Margin="0" Grid.Row="2" VerticalAlignment="Center" Width="100" Height="36" Background="{DynamicResource AquaBlueButtonColor}" Style="{DynamicResource Flatbutton}" FontWeight="Bold" Grid.Column="1" Click="FirefoxBtn_Click"/>
+    </Grid>
+</Window>

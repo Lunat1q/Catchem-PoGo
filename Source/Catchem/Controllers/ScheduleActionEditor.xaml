@@ -1,0 +1,49 @@
+﻿<UserControl x:Class="Catchem.Controllers.ScheduleActionEditor"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:dtype="clr-namespace:PoGo.PokeMobBot.Logic.Utils;assembly=PoGo.PokeMobBot.Logic"
+             mc:Ignorable="d" 
+             d:DesignHeight="400" d:DesignWidth="600">
+    <Grid x:Name="ScheduleActionEditorGrid">
+        <Rectangle Fill="#59000000"/>
+        <Grid VerticalAlignment="Center" Margin="50,0" Height="300">
+            <Rectangle Fill="White" RadiusX="10" RadiusY="10" />
+            <ListBox x:Name="ListBox" Margin="10,90,10,40" ItemTemplate="{DynamicResource DataTemplate1}" HorizontalContentAlignment="Stretch" Background="{DynamicResource PokeBackground}">
+                <ListBox.Resources>
+                    <DataTemplate x:Key="DataTemplate1" DataType="dtype:ScheduleAction">
+                        <Grid MinWidth="400" Height="40">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="130*"/>
+                                <ColumnDefinition Width="209*"/>
+                                <ColumnDefinition Width="61"/>
+                            </Grid.ColumnDefinitions>
+                            <Rectangle Fill="White" Grid.ColumnSpan="3" />
+                            <TextBlock Grid.Column="0" HorizontalAlignment="Stretch" Margin="10,12,0,12" TextWrapping="Wrap" Text="{Binding ActionType, Converter={StaticResource CamelCaseConverter}}" VerticalAlignment="Center" Height="16" Foreground="#FF00353A"/>
+                            <Button x:Name="button" Content="Delete" Grid.Column="2" HorizontalAlignment="Stretch" Margin="0,6,5,6" VerticalAlignment="Center" Width="Auto" Style="{DynamicResource Flatbutton}" Background="{DynamicResource StopBrush}" Height="28" Click="button_Click"/>
+                            <TextBlock HorizontalAlignment="Stretch" Margin="5,0" TextWrapping="Wrap" Text="{Binding Args}" VerticalAlignment="Center" Height="16" Grid.Column="1" Foreground="#FF003C1E"/>
+
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.Resources>
+            </ListBox>
+            <GroupBox x:Name="GroupBoxp" Header="New Action" Margin="10,0" VerticalAlignment="Top" Height="85" Tag="%NEW_ACTION%">
+                <Grid>
+                    <Button x:Name="AddNewActionButton" Content="Add Action" HorizontalAlignment="Right" Margin="0,0,0,34" VerticalAlignment="Bottom" Width="133" Style="{DynamicResource Flatbutton}" Background="{DynamicResource NormalButtonColor}" Height="27" FontWeight="Bold" Click="AddNewActionButton_Click" Tag="%ADD_ACTION%"/>
+                    <ComboBox x:Name="ComboBox" HorizontalAlignment="Left" Margin="157,5,0,0" VerticalAlignment="Top" Width="173" SelectionChanged="ComboBox_SelectionChanged"/>
+                    <TextBlock x:Name="TextBlock" HorizontalAlignment="Left" Margin="10,8,0,0" TextWrapping="Wrap" Text="Select action type" VerticalAlignment="Top" Tag="%SELECT_ACTION_TYPE%" Width="142"/>
+                    <Grid x:Name="ParamsGrid" Height="31" Margin="0,32,0,0" VerticalAlignment="Top">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                    </Grid>
+
+                </Grid>
+            </GroupBox>
+            <Button x:Name="CloseActionSetter" Content="Close" HorizontalAlignment="Right" Margin="0,0,10,8" VerticalAlignment="Bottom" Width="90" Style="{DynamicResource Flatbutton}" Background="{DynamicResource LightBlueButtonColor}" Height="27" FontWeight="Bold" Click="CloseActionSetter_Click" Tag="%CLOSE%"/>
+
+        </Grid>
+    </Grid>
+</UserControl>

@@ -1,0 +1,95 @@
+﻿<Window x:Class="Catchem.SupportForms.InputDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Input" SizeToContent="WidthAndHeight" WindowStartupLocation="CenterScreen"
+        ContentRendered="Window_ContentRendered" Width="360" Height="160" MaxHeight="160" MaxWidth="900" MinHeight="160" MinWidth="360">
+    <Window.Background>
+        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+            <GradientStop Color="#FFDAFBFA" Offset="0.721"/>
+            <GradientStop Color="#FF00A662"/>
+        </LinearGradientBrush>
+    </Window.Background>
+    <Grid Margin="15">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+
+        <Label Name="lblQuestion" Grid.Column="1">Question:</Label>
+
+
+        <TextBox x:Name="txtAnswer"
+                                 Grid.Column="1"
+                                 Grid.Row="1"
+                                 Height="29"
+                                 Margin="0,5,10,0"
+                                 VerticalAlignment="Top"
+                                 Template="{StaticResource Pogo}"
+                                 Text=""
+                                 TextWrapping="Wrap" />
+
+        <Grid Grid.RowSpan="2" Width="72" Margin="0,0,0,1">
+            <Image x:Name="image"/>
+        </Grid>
+        <Button x:Name="btnDialogOk"
+        	IsDefault="True"
+        	Width="70"
+        	Height="30"
+        	Margin="0,4,10,0"
+        	Click="btnDialogOk_Click"
+        	Content="Ok"
+        	FontFamily="BOLD"
+        	FontWeight="Bold"
+        	Style="{StaticResource ResourceKey=Flatbutton}"
+        	TextOptions.TextFormattingMode="Display" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+            <Button.Background>
+                <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                    <LinearGradientBrush.RelativeTransform>
+                        <TransformGroup>
+                            <ScaleTransform CenterX="0.5" CenterY="0.5" />
+                            <SkewTransform CenterX="0.5" CenterY="0.5" />
+                            <RotateTransform Angle="90" CenterX="0.5" CenterY="0.5" />
+                            <TranslateTransform />
+                        </TransformGroup>
+                    </LinearGradientBrush.RelativeTransform>
+                    <GradientStop Offset="0" Color="#FFB0EE9C" />
+                    <GradientStop Offset="1" Color="#FF53C05D" />
+                </LinearGradientBrush>
+            </Button.Background>
+        </Button>
+        <Button x:Name="btnDialogCancel"
+        	IsCancel="True"
+        	Width="70"
+        	Height="30"
+        	Margin="0,4,85,0"
+        	HorizontalAlignment="Right"
+        	VerticalAlignment="Bottom"
+        	Content="Cancel"
+        	FontFamily="BOLD"
+        	FontWeight="Bold"
+        	Style="{StaticResource ResourceKey=Flatbutton}"
+        	TextOptions.TextFormattingMode="Display" Grid.Column="1" Grid.Row="2">
+            <Button.Background>
+                <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                    <LinearGradientBrush.RelativeTransform>
+                        <TransformGroup>
+                            <ScaleTransform CenterX="0.5" CenterY="0.5" />
+                            <SkewTransform CenterX="0.5" CenterY="0.5" />
+                            <RotateTransform Angle="90" CenterX="0.5" CenterY="0.5" />
+                            <TranslateTransform />
+                        </TransformGroup>
+                    </LinearGradientBrush.RelativeTransform>
+                    <GradientStop Offset="0" Color="#FFEE9C9C" />
+                    <GradientStop Offset="1" Color="#FFC05353" />
+                </LinearGradientBrush>
+            </Button.Background>
+        </Button>
+        <ComboBox x:Name="comboBox" Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" Visibility="Collapsed"/>
+    </Grid>
+</Window>

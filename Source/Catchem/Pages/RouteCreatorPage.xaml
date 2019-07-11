@@ -1,0 +1,128 @@
+﻿<UserControl x:Name="RouteMapCreator" x:Class="Catchem.Pages.RouteCreatorPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:windowsPresentation="clr-namespace:GMap.NET.WindowsPresentation;assembly=GMap.NET.WindowsPresentation"
+             xmlns:pages="clr-namespace:Catchem.Pages"
+             xmlns:t="clr-namespace:Catchem.UiTranslation"
+             mc:Ignorable="d" d:DesignHeight="600" d:DesignWidth="760" Loaded="RouteMapCreator_Loaded">
+    <Grid x:Name="RouteCreatorGrid">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="4*"/>
+            <ColumnDefinition Width="2.4*"/>
+            <ColumnDefinition Width="2.4*"/>
+            <ColumnDefinition Width="2.4*"/>
+            <ColumnDefinition Width="2.4*"/>
+            <ColumnDefinition Width="2.4*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="3*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="33"/>
+            <RowDefinition Height="30"/>
+        </Grid.RowDefinitions>
+        <Rectangle Fill="#FFF4F4F5" StrokeThickness="0" Grid.ColumnSpan="6" Grid.RowSpan="4"/>
+        <TextBlock x:Name="LblRouteCreatorHeading" Text="Route Creator" Margin="0,3" VerticalAlignment="Center" FontSize="18" Grid.Row="0" Grid.ColumnSpan="6"
+               Grid.Column="0" HorizontalAlignment="Center" Tag="%ROUTE_CREATOR%"/>
+        <windowsPresentation:GMapControl x:Name="RouteCreatorMap" MouseWheel="RouteCreatorMap_MouseWheel" Grid.ColumnSpan="5" Grid.Row="1" Grid.RowSpan="2" Grid.Column="1" BorderBrush="#FF006444" BorderThickness="1" Margin="5,26,10,5" ContextMenuOpening="RouteCreatorMap_ContextMenuOpening">
+            <windowsPresentation:GMapControl.ContextMenu>
+                <ContextMenu x:Name="RouteCm">
+                    <MenuItem x:Name="MiSetStart" Header="{Binding Path=(t:TranslationEngine.CurrentTranslationLanguage), Converter={StaticResource LoadTranslatedString}, ConverterParameter='%SET_START%;Set start'}" Click="MiSetStart_Click" Icon="{Binding Converter={StaticResource LoadImageIconFromResource}, ConverterParameter='force_move'}" Height="24"/>
+                    <MenuItem x:Name="MiSetWp" Header="{Binding Path=(t:TranslationEngine.CurrentTranslationLanguage), Converter={StaticResource LoadTranslatedString}, ConverterParameter='%SET_WP%;Set waypoint'}" Click="MiSetWp_Click" Icon="{Binding Converter={StaticResource LoadImageIconFromResource}, ConverterParameter='wp'}" Height="24"/>
+                </ContextMenu>
+            </windowsPresentation:GMapControl.ContextMenu>
+        </windowsPresentation:GMapControl>
+        <Expander Grid.Row="1" x:Name="MapSettingsExpander" Header="" ExpandDirection="Left" VerticalAlignment="Top" Height="29" Margin="0,56,16,0" HorizontalAlignment="Right" Grid.ColumnSpan="4" Grid.Column="2">
+            <Grid Width="400">
+                <TextBox x:Name="MapSearchBox" Margin="0,0,10,0" TextWrapping="Wrap" Text="Search for location" VerticalAlignment="Center" Template="{DynamicResource Pogo}" KeyDown="MapSearchBox_KeyDown" GotFocus="MapSearchBox_GotFocus"/>
+            </Grid>
+        </Expander>
+        <Grid Grid.Row="4" Grid.Column="0"  Grid.ColumnSpan="6">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="172"/>
+                <ColumnDefinition Width="236*"/>
+                <ColumnDefinition Width="93*"/>
+                <ColumnDefinition Width="259*"/>
+            </Grid.ColumnDefinitions>
+            <Rectangle Margin="0" Grid.ColumnSpan="4">
+                <Rectangle.Fill>
+                    <LinearGradientBrush EndPoint="0,0.5" StartPoint="1,0.5">
+                        <GradientStop Color="#FF9AFF7D"/>
+                        <GradientStop Color="#FF97FFC2" Offset="1"/>
+                    </LinearGradientBrush>
+                </Rectangle.Fill>
+            </Rectangle>
+            <Slider x:Name="SlMapZoom" Margin="64,4,10,0" VerticalAlignment="Top" RenderTransformOrigin="3.583,0.25" Height="25" Minimum="2" Maximum="18" TickPlacement="BottomRight" Value="18" SmallChange="0" LargeChange="3" ValueChanged="sl_mapZoom_ValueChanged" Grid.Column="3"/>
+            <TextBlock x:Name="LblZoom" Text="Zoom:" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center" Grid.Column="3" Tag="%ZOOM%"/>
+            <TextBlock Grid.Column="0" x:Name="PointsNumber" Text="Number of waypoints:" HorizontalAlignment="Left" Margin="10,2,0,2" VerticalAlignment="Center" Tag="%NUMBER_OF_WAYPOINTS%"/>
+            <CheckBox x:Name="PreferMapzenOverGoogleCb" Content="Prefer Mapzen Routing Over Google" Grid.Column="1" Margin="10,0,0,0" VerticalAlignment="Center" Checked="PreferMapzenOverGoogleCb_Checked" Unchecked="PreferMapzenOverGoogleCb_Checked" Tag="%PREFFER_MAPZEN_ROUTING_OVER_GOOGLE%"/>
+            <CheckBox x:Name="ManualRoute" Content="Manual Route" Grid.Column="2" Margin="0,7" VerticalAlignment="Center" Checked="ManualRoute_Checked" Unchecked="ManualRoute_Checked" Tag="%MANUAL_ROUTE%"/>
+        </Grid>
+        <Button x:Name="BuildTheRoute" Content="Build route" Margin="6,4,6,3" Grid.Row="3" Width="Auto" Height="Auto" Grid.Column="5" Style="{DynamicResource Flatbutton}" FontWeight="Bold" Click="BuildTheRoute_Click" Tag="%BUILD_THE_ROUTE%" Background="{DynamicResource StartBrush}"/>
+        <TextBlock x:Name="CurrentRoutesLabel" Text="Current routes:" HorizontalAlignment="Left" Margin="10,0,0,0" Grid.Row="1"
+               Grid.Column="0" VerticalAlignment="Top" Width="170" Tag="%CURRENT_ROUTES%"/>
+        <ListBox x:Name="RoutesListBox" Margin="10,26,5,5" Grid.Row="1" Grid.RowSpan="2"
+                 Grid.Column="0" ItemTemplate="{DynamicResource RouteListTemplate}" HorizontalContentAlignment="Stretch" SelectionChanged="RoutesListBox_SelectionChanged" />
+        <TextBox x:Name="NewRouteNameBox" Margin="59,3,5,3" Grid.Row="3" Grid.Column="0" TextWrapping="Wrap" VerticalAlignment="Center" Template="{DynamicResource Pogo}"/>
+        <Button x:Name="SaveTheRoute" Content="Save route" Margin="6,4,6,3" Grid.Row="3" Width="Auto" Height="Auto" Grid.Column="1" Style="{DynamicResource Flatbutton}" FontWeight="Bold" Click="SaveTheRoute_Click" Tag="%SAVE_THE_ROUTE%" Background="{DynamicResource LightBlueButtonColor}"/>
+        <Button x:Name="ClearTheRoute" Content="Clear route" Margin="6,4,6,3" Grid.Row="3" Width="Auto" Height="Auto" Grid.Column="4" Style="{DynamicResource Flatbutton}" FontWeight="Bold" Click="ClearTheRoute_Click" Tag="%CLEAR_THE_ROUTE%" Background="{DynamicResource OrangeButton}"/>
+        <Label x:Name="RouteNameLabel" Content="Name:" HorizontalAlignment="Left" Margin="10,0,0,0" Grid.Row="3"
+        	Grid.Column="0" VerticalAlignment="Center" Width="49" Tag="%NAME%"/>
+        <Grid Grid.Column="4" Height="24" Margin="0,27,11,0" VerticalAlignment="Top" Grid.Row="1" Grid.ColumnSpan="2">
+            <ProgressBar x:Name="BuildingProgressBar" Margin="0" Foreground="#FF03E82D"/>
+            <TextBlock x:Name="ProgressText" HorizontalAlignment="Center" Margin="0" TextWrapping="Wrap" Text="Route progress" VerticalAlignment="Center" Tag="%ROUTE_PROGRESS_1%"/>
+        </Grid>
+        <CheckBox Content="Show exact poke on the map" Grid.Column="4" Margin="0,0,16,10" Grid.Row="2" Checked="CheckBox_Checked" Unchecked="CheckBox_Checked" VerticalAlignment="Bottom" Tag="%SHOW_EXACT_POKE_ON_THE_MAP%" Grid.ColumnSpan="2" HorizontalAlignment="Right" />
+        <Button x:Name="ImportRoute" Content="Import route" Margin="6,4,6,3" Grid.Row="3" Width="Auto" Height="Auto" Grid.Column="2" Style="{DynamicResource Flatbutton}" FontWeight="Bold" Click="ImportRoute_Click" Background="{DynamicResource AquaBlueButtonColor}" Tag="%IMPORT_ROUTE%"/>
+        <Button x:Name="ExportRoute" Content="Export route" Margin="6,4,6,3" Grid.Row="3" Width="Auto" Height="Auto" Grid.Column="3" Style="{DynamicResource Flatbutton}" FontWeight="Bold" Click="ExportRoute_Click" Background="{DynamicResource AquaBlueButtonColor}" Tag="%EXPORT_ROUTE%"/>
+        <Grid x:Name="ImportExportRoute" Grid.ColumnSpan="6" Grid.RowSpan="5" Grid.Row="0" Grid.Column="0" Visibility="Collapsed">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="4*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="5*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <Grid Background="Black" Opacity="0.45" Grid.Row="0" Grid.Column="0" Grid.RowSpan="3" Grid.ColumnSpan="3"/>
+            <Border BorderThickness="1" Grid.Row="1" Grid.Column="1" CornerRadius="25,25,25,25" BorderBrush="White">
+                <Border.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#FFF8FFF7" Offset="0"/>
+                        <GradientStop Color="#FFC5F3BF"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+                <Rectangle  Stretch="UniformToFill" ClipToBounds="True"  />
+            </Border>
+            <Grid Grid.Row="1" Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="48"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition/>
+                    <RowDefinition Height="47"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="2*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock x:Name="ImportExportHeading" Text="Import/Export Route" Margin="0" VerticalAlignment="Center" FontSize="18" Grid.Row="0" Grid.ColumnSpan="5" HorizontalAlignment="Center" Tag="%IMPOT_EXPORT_ROUTE%" Width="172"/>
+                <TextBlock x:Name="ImportExportInstructions" Text="Instructions" Margin="0" VerticalAlignment="Center" FontSize="12" Grid.Row="1" Grid.ColumnSpan="4"
+                           Grid.Column="0" HorizontalAlignment="Center" TextWrapping="WrapWithOverflow"/>
+                <TextBox x:Name="ImportExportRouteText"
+                             BorderBrush="White"
+                             Grid.Row="2"
+                             Grid.ColumnSpan="3" Grid.Column="0"
+                         AcceptsReturn="True"
+                             Text=""
+                             TextWrapping="Wrap" Margin="10" />
+                <Button x:Name="ImportExportRouteSubmit" Content="Import" Grid.Row="3" Grid.Column="0" Width="Auto" Height="24" Style="{DynamicResource Flatbutton}" FontWeight="Bold" Click="ImportRouteSubmit_Click" Margin="0" Background="{DynamicResource AquaBlueButtonColor}" VerticalAlignment="Center" Tag="%IMPORT_ROUTE%" HorizontalAlignment="Center"/>
+                <Button x:Name="ImportExportRouteCancel" Content="Cancel" Grid.Row="3" Width="Auto" Height="24" Grid.Column="2" Style="{DynamicResource Flatbutton}" FontWeight="Bold" Click="ImportExportRouteCancel_Click" Margin="0" Background="{DynamicResource AquaBlueButtonColor}" VerticalAlignment="Center" Tag="%CANCEL%" HorizontalAlignment="Center"/>
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>
